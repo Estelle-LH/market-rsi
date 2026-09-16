@@ -689,3 +689,8 @@ canary `local-runtime-canary-20260916-02` 通过 18 tools、4 合成 CPU fit、
 Paid CLI 加了本机路径闸门：代码、Python、workspace、预算、canary、密钥文件和
 tokenizer cache 必须都在独立本机 `MarketRSI` 目录；否则在付费前失败。
 这只解决文件驻留和误用旧路径，不证明单账本已迁移。
+
+已发布的精确 source commit 为 `67297357a447b62832b11b968121a07a437f1319`，
+annotated tag `dsh-v1.6.19` 只推送到用户 origin；本机 release receipt digest
+`92947cbe80bb8ab3b0b62ac02be4d6d8d588c9abe53ef31015312bb615ee90e8`。
+旧 v1.6.18 的失败 run 不会复用。预算权威迁移仍未完成，因此新 paid 工作为 0。

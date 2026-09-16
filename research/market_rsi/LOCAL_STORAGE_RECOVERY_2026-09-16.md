@@ -84,3 +84,14 @@ Apple documents Finder's “Keep Downloaded” for individual iCloud Drive files
 or folders. It may help the archival side, but the tested fix for execution is
 the independent local code/runtime. The Finder Repair prompt remains a separate
 account-wide decision for the user.
+
+## Progress after this note was opened
+
+Gate 1 is satisfied for code/runtime and the zero-cost canary. Gate 2 is
+satisfied by `dsh-v1.6.19`, commit
+`67297357a447b62832b11b968121a07a437f1319`, with local release digest
+`92947cbe80bb8ab3b0b62ac02be4d6d8d588c9abe53ef31015312bb615ee90e8`.
+The paid CLI now rejects any code, runtime, workspace, budget, canary,
+credential file or tokenizer cache outside the dedicated local-only tree.
+Gate 3 is **not** satisfied: the local ledger remains an integrity-checked
+snapshot, not spending authority. Gate 4 and a fresh paid run have not begun.
