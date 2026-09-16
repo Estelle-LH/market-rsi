@@ -52,3 +52,27 @@ claim of prediction improvement. Link detailed evidence rather than pasting it.
   objective and rerunning all baselines on matching rows.
 - **Confidence:** Moderate in the diagnostic priority; unknown that a longer
   horizon will yield better out-of-sample predictability.
+
+## 2026-09-16, work block: make the next test executable
+
+- **Current goal:** Check whether the next target/strong-baseline test can run
+  from the repaired local environment.
+- **What I did:** Checked the frozen 2024 source commitments and searched the
+  local MarketRSI tree for the cohort plan, batch receipts and PBP source.
+- **Why:** The next test needs actual opened-Train rows, not just the aggregate
+  coverage numbers that were copied for the controller.
+- **What we learned:** The local tree has the seven aggregate input receipts but
+  not the frozen full-cohort raw source/batches. The audit can be cited, but a
+  new target-value or model comparison cannot yet run locally from those files.
+- **Result:** Direct blocker identified; no new forecast result.
+- **Evidence:** The frozen support lock binds 12 batch manifests and one PBP
+  source hash; the local tree contains none of the matching source/batch file
+  names. The 284-game audit remains a historical coverage result only.
+- **Time/effort:** One bounded file-inventory check; zero paid calls.
+- **Current blocker:** Stage only the already-frozen opened-Train source from
+  an authorized resident archive with hash checks, without another iCloud
+  hydration loop.
+- **Next action:** Locate the existing backup of those exact files and verify
+  its hashes before copying the minimum needed into the local tree.
+- **Confidence:** High that this is a direct prerequisite; it does not yet
+  imply the 300-second target is useful or the model improves.

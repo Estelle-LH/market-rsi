@@ -44,6 +44,12 @@ previous activity, reason for redirect, higher-priority action, missed
 information, and a general rule. Extract a reusable rule only when supported
 by the record; do not invent the human's intent.
 
+The existing scheduled `market-rsi` task performs a supervisor check about
+every two hours. Give the human one short result-first digest on that cadence,
+even if the honest status is "no meaningful result"; report a material failure
+or needed decision sooner. This periodic digest is not permission to poll
+expensive providers or repeat an unchanged diagnostic experiment.
+
 ## Hard boundaries for the current research
 
 - A Train-only MSE reduction is not an unseen-date result. A support/coverage
