@@ -168,3 +168,27 @@ untouched test.
   in the benchmark without an explicit scope decision.
 - **Confidence:** High in the queried series counts; low in any conclusion
   about five-year usable trade coverage.
+
+## 2026-09-16, work block: alternative historical exchange screen
+
+- **Current goal:** Find a legal five-year source instead of assuming that
+  paying a vendor can create older markets that did not exist.
+- **What I did:** Checked the exchange's own historical-data catalog,
+  granularity tiers, American-Football inclusion, public price guidance and
+  access restrictions. No account was opened and nothing was purchased.
+- **What we learned:** Betfair advertises archived exchange data back to 2015
+  and includes American Football in Other Sports. Its free BASIC tier is
+  one-minute last-traded price without volume; paid ADVANCED offers one-second
+  prices/volume. Public Other Sports guidance lists £39/month or £399/12
+  months for ADVANCED, but NFL game-level coverage and a quote are unverified.
+  This would be a *different exchange* and require a distinct benchmark.
+- **Result:** A plausible source lead, not P0 admission or approval to spend.
+- **Evidence:** Official Betfair links and the scope boundary are recorded in
+  `P0_FIVE_SEASON_DATA.md`.
+- **Time/effort:** Public documentation review; zero spend.
+- **Current blocker:** Exact NFL market coverage, account/jurisdiction access,
+  permitted research use and full price are unknown.
+- **Next action:** Verify a sample/market count or direct quote before any
+  purchase or exchange switch.
+- **Confidence:** Medium that Betfair has some usable NFL history; unknown
+  whether five full seasons can match the current prediction target.

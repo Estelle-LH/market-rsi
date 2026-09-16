@@ -77,6 +77,11 @@ not map 2021–2023 or 2025 to the NFL schedule. A market page count is not the
 number of usable 60-second/300-second labels, and the older contracts must not
 be silently pooled with 2024–2025 moneylines.
 
+A separate bounded `title_search=NFL` query for the 2023-season window
+returned 11 events, including non-game NFL topics and unrelated inflation/war
+questions. That search's text filter is too noisy to certify absence or
+coverage, but it did not reveal a 2024-style full-game moneyline catalog.
+
 Kalshi's [January 2025 sports-market announcement](https://news.kalshi.com/p/game-on-kalshi-sports-trading-is-now-100-legal-in-all-50-states-2)
 is evidence against assuming that its API can supply five earlier NFL seasons,
 even though [historical endpoints](https://docs.kalshi.com/getting_started/historical_data)
@@ -85,6 +90,18 @@ advertises market/price history since 2015 and is a candidate *different
 exchange* to investigate for five-year NFL coverage and a quote. It cannot
 be substituted for Polymarket/Kalshi in the formal benchmark without an
 explicit scope decision and separate matched baselines.
+
+Betfair's [own tier guide](https://betfair-datascientists.github.io/data/usingHistoricDataSite/)
+describes free BASIC as one-minute last-traded price without volume, ADVANCED
+as one-second top-three ladder with volume, and PRO as tick-level full ladder.
+Its [Other Sports description](https://support.developer.betfair.com/hc/en-us/articles/8085210924957-Which-Sports-Are-Included-in-the-Other-Sports-package)
+explicitly includes American Football. Public [bulk-price guidance](https://support.developer.betfair.com/hc/en-us/articles/360019984158-Are-bulk-purchase-discounts-available)
+lists Other Sports ADVANCED at £39/month or £399 for any 12 months, but this
+is **not** an NFL coverage quote or purchase authorization. Registered-account
+and [jurisdiction restrictions](https://support.developer.betfair.com/hc/en-us/articles/360008664937-Which-juristictions-is-Betfair-Exchange-Historical-Data-available-to-)
+may block access. A free one-minute series could support a different,
+predeclared horizon but cannot be treated as the same event-level trade/quote
+target without a separate label and baseline design.
 
 ### First public metadata probe (not a season inventory)
 
