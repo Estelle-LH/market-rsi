@@ -265,3 +265,17 @@ untouched test.
   vendor inventory and itemized quote before any purchase or benchmark claim.
 - **Confidence:** High that isolated older winner markets existed; low that
   their full 2021–2023 trade history is obtainable now.
+
+## 2026-09-16, supervisor handoff resumed
+
+- **Current goal:** Put the continuing P0 data-acquisition oversight back on
+  the existing scheduled supervisor, not a second paid research process.
+- **What changed:** The user explicitly directed the supervisor to take over.
+  The existing `market-rsi` task was changed from PAUSED to ACTIVE, retaining
+  its two-hour cadence and this same task. Its saved prompt now reflects the
+  corrected 2025 count and the older-market counterexamples.
+- **Result:** Scheduled supervision resumed. No model run, vendor purchase,
+  Dev/Final opening or budget change was authorized by this status change.
+- **Next action:** At its next review, continue the exact old-season trade and
+  lawful five-season supplier checks; report a concise result or an honest
+  no-change status, keeping P0 closed to formal model comparison until proven.

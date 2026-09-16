@@ -52,8 +52,8 @@ previous activity, reason for redirect, higher-priority action, missed
 information, and a general rule. Extract a reusable rule only when supported
 by the record; do not invent the human's intent.
 
-The `market-rsi` scheduled task is currently **paused** pending explicit
-resumption. When active, it performs a supervisor check about every two hours.
+The `market-rsi` scheduled task was explicitly resumed by the user on
+2026-09-16 and is **active**. It performs a supervisor check about every two hours.
 Give the human one short result-first digest on that cadence, even if the
 honest status is "no meaningful result"; report a material failure or needed
 decision sooner. This periodic digest is not permission to poll expensive
