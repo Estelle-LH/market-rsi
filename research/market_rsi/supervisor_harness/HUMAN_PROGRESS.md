@@ -4,6 +4,12 @@ This is an append-only plain-language summary, separate from engineering logs.
 No entry may turn a diagnostic, infrastructure repair or spent budget into a
 claim of prediction improvement. Link detailed evidence rather than pasting it.
 
+Quick terms: **HGB** means histogram-based gradient boosting, a series of
+decision trees that correct earlier errors. **Ridge** is a regularized linear
+regression. **MSE** is mean squared error; lower is better on the *same* rows.
+"Opened Train" means the data was already available for development, not an
+untouched test.
+
 ## 2026-09-16, work block: stop the iCloud loop
 
 - **Current goal:** Get back to a trustworthy NFL prediction experiment.
