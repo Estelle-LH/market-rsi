@@ -12,7 +12,7 @@ from supervisor_harness import inventory_polymarket_nfl_metadata as inventory
 
 
 def event(identifier: str, slug: str, market_type: str = "moneyline") -> dict:
-    return {"id": identifier, "slug": slug, "markets": [{
+    return {"id": identifier, "slug": slug, "startTime": slug[-10:] + "T20:00:00Z", "markets": [{
         "id": "market-" + identifier, "sportsMarketType": market_type,
         "outcomes": '["Away","Home"]', "clobTokenIds": '["token-a","token-b"]',
         "conditionId": "condition-" + identifier,
@@ -68,6 +68,7 @@ class InventoryTests(unittest.TestCase):
             report = inventory.fetch(Path(directory) / "inventory", seasons=(2025,))
         self.assertEqual(seen[0][1]["slug"], "nfl-2025")
         self.assertEqual(seen[1][1]["series_id"], "2025-id")
+        self.assertNotIn("start_date_min", seen[1][1])
         self.assertEqual(report["seasons"]["2025"]["events_with_one_tokenized_moneyline"], 1)
 
 

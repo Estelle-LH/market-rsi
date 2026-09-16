@@ -112,7 +112,15 @@ def fetch(output: Path, seasons: tuple[int, ...] = SEASONS, timeout: float = 30,
         receipts: list[dict] = []
         for page in range(max_pages_per_season):
             params = {"series_id": series_id, "closed": "true",
-                      "start_date_min": start, "start_date_max": end, "limit": 100}
+                      "start_date_min": start, "start_date_max": end,
+                      "limit": 25 if season == 2025 else 100}
+            # Gamma's date filter excludes some closed Week 1 2025 games even
+            # though their startTime lies inside the requested window. The
+            # nfl-2025 series is season-specific, so page it without that
+            # filter and validate the returned event dates below instead.
+            if season == 2025:
+                params.pop("start_date_min")
+                params.pop("start_date_max")
             if cursor:
                 params["after_cursor"] = cursor
             page_raw, url = get("/events/keyset", params, timeout)
@@ -136,6 +144,10 @@ def fetch(output: Path, seasons: tuple[int, ...] = SEASONS, timeout: float = 30,
         ids = [str(row.get("id") or "") for row in events]
         if any(not row for row in ids) or len(set(ids)) != len(ids):
             raise ValueError(f"season {season} has missing or duplicate event IDs")
+        for row in events:
+            event_start = str(row.get("eventStartTime") or row.get("startTime") or "")
+            if not (start <= event_start < end):
+                raise ValueError(f"season {season} series returned an event outside the window")
         report["seasons"][str(season)] = {"window": [start, end],
                                           "series_slug": series_slug,
                                           "series_id": series_id,

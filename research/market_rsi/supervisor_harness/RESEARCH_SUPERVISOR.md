@@ -15,6 +15,14 @@ cleanup. Do not make cleanup the main branch without evidence that it blocks
 the first four. Keep experiment definitions, data and evaluation gates from
 `AGENTS.md` and the published release; this supervisor cannot waive them.
 
+When the user asks for faster code work, split independent source checks,
+tests or components into bounded parallel tasks with distinct owners and
+outputs. Keep one supervisor responsible for merging evidence, shared source
+hashes, protected-data boundaries and the sole budget ledger. Do not run
+competing paid experiments, mutate the same frozen artifact concurrently, or
+use parallelism to skip a dependency or admission gate. Record what ran in
+parallel and whether it actually shortened the critical path.
+
 ## Review triggers and decision
 
 Review after roughly 5–10 meaningful actions, after about an hour without a
@@ -44,11 +52,12 @@ previous activity, reason for redirect, higher-priority action, missed
 information, and a general rule. Extract a reusable rule only when supported
 by the record; do not invent the human's intent.
 
-The existing scheduled `market-rsi` task performs a supervisor check about
-every two hours. Give the human one short result-first digest on that cadence,
-even if the honest status is "no meaningful result"; report a material failure
-or needed decision sooner. This periodic digest is not permission to poll
-expensive providers or repeat an unchanged diagnostic experiment.
+The `market-rsi` scheduled task is currently **paused** pending explicit
+resumption. When active, it performs a supervisor check about every two hours.
+Give the human one short result-first digest on that cadence, even if the
+honest status is "no meaningful result"; report a material failure or needed
+decision sooner. This periodic digest is not permission to poll expensive
+providers or repeat an unchanged diagnostic experiment.
 
 ## Hard boundaries for the current research
 

@@ -192,3 +192,76 @@ untouched test.
   purchase or exchange switch.
 - **Confidence:** Medium that Betfair has some usable NFL history; unknown
   whether five full seasons can match the current prediction target.
+
+## 2026-09-16, work block: 2025 directory correction and one trade canary
+
+- **Current goal:** Verify whether 2025's public game catalog and trade stream
+  are real enough to count as a possible second season of source data.
+- **What I did:** Matched the frozen public 2025 metadata to the nflverse
+  schedule using only game identity fields. The first mapping gave 235/285
+  because I had not normalized the schedule's `LA` alias. After fixing that
+  and retaining the first artifact, it gave 271/285: the missing 14 were all
+  Week 1 games. A direct public lookup proved a missing game did exist and
+  was closed; the catalog date filter was excluding it. I kept that flawed
+  receipt, removed only the misleading filter from the season-specific
+  query, reduced page size after a 20 MB safety-limit failure, and reran with
+  fresh artifact IDs. The corrected catalog has 285/285 typed moneylines,
+  each uniquely mapped to one of the 285 scheduled games. Then a fixed
+  earliest-game canary fetched 2,148 public timestamped trades in a 17-hour
+  window (733 before game start; 1,415 in the next five hours).
+- **Why:** Otherwise we would have falsely reported 14 absent markets and
+  designed the benchmark around an incomplete API query.
+- **What we learned:** 2025 has a complete *market identity* catalog in this
+  series, plus at least one game with a usable public trade stream. Neither
+  says that all 285 games have sufficient event-aligned labels or that a model
+  improved. The earlier 271 count in this log is explicitly superseded.
+- **Result:** P0 still open; no formal data admission, training, Dev/Final
+  opening, model score or purchase.
+- **Evidence:** Local ignored artifacts `p0-polymarket-2025-series-metadata-20260916-04/`,
+  `p0-polymarket-2025-schedule-screen-20260916-03/`, and
+  `p0-polymarket-2025-trade-canary-20260916-01/` have source hashes and
+  receipts; all six no-network tests passed. Flawed `-01`/`-02`/`-03`
+  attempts remain preserved for the record.
+- **Time/effort:** One catalog pagination correction, one schedule mapping
+  correction and one bounded public-game trade screen; zero provider spend.
+- **Current blocker:** No comparable 2021–2023 market/trade history or vendor
+  quote; 2025 whole-season trade/PBP coverage remains untested.
+- **Next action:** Prioritize old-season source and licensing/cost verification;
+  do not spend effort on a full 2025 trade download until the five-year path
+  is credible or the user explicitly changes scope.
+- **Confidence:** High in the 285 identity matches and one 2,148-row trade
+  canary; low in any five-year training-data conclusion.
+
+## 2026-09-16, work block: parallel source and vendor checks
+
+- **Current goal:** Resolve the oldest missing seasons faster without
+  launching another model experiment or duplicating paid work.
+- **Parallel ownership:** One independent audit checked 2021–2023 official
+  Polymarket/Kalshi event evidence; another checked Betfair/other exchange
+  coverage, prices, access and rights. The supervisor reviewed code/tests and
+  integrated only the supported findings. A separate bounded 2025 trade-
+  coverage *code-only* task was assigned; it is not a new data collection.
+- **What changed:** Official Polymarket event pages show some older NFL game-
+  winner markets. This corrects the tempting but false interpretation that
+  zero modern-schema matches meant no older markets. The pages do not prove
+  season-wide timestamped trade availability. Betfair has American Football
+  in its historical Other Sports package and published package prices, but
+  neither five-season NFL coverage nor US delivery/commercial-use rights has
+  been confirmed. Matchbook is another inquiry lead, not verified data.
+- **Result:** Parallel checks settled the catalog-interpretation error and
+  separated advertised package price from data rights. P0 remains open; no
+  formal model run, protected-set access, vendor contact or provider spend.
+- **Evidence:** `P0_FIVE_SEASON_DATA.md` links the official event/API, Betfair
+  and Matchbook pages. Thirteen local no-network inventory/mapping/canary/
+  coverage-code tests pass. The 2025 whole-season coverage code has **not**
+  been run against the public API; its SHA receipts would not be independently
+  recheckable later unless raw pages were separately preserved.
+- **Critical-path effect:** The two independent reviews completed during the
+  local code/document review, rather than waiting for it serially. They
+  narrowed the next question to actual older fills and lawful delivery; they
+  did not shorten the five-season admission gate itself.
+- **Next action:** Check whether specific older condition IDs return dated
+  fills within the documented history window, then obtain a season-by-season
+  vendor inventory and itemized quote before any purchase or benchmark claim.
+- **Confidence:** High that isolated older winner markets existed; low that
+  their full 2021–2023 trade history is obtainable now.
