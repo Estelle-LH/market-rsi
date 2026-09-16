@@ -70,3 +70,12 @@ every attempt, including failures. Machine observations and the controller's
 explanation must remain distinguishable. Do not request hidden chain of thought.
 Opened-Train diagnostics are not independent improvement; new target/data/harness
 changes need a separate definition, not rewritten old outcomes.
+
+# Local execution after iCloud eviction
+
+Do not start another paid Market RSI run from the iCloud-backed project or a
+Python environment inside it. A fresh local-only code/runtime canary passed,
+but the budget authority and published release still require a single-writer
+handoff before any further payment. Preserve iCloud originals and all failed
+attempts. Do not repeatedly hydrate evicted files as an execution strategy.
+See `LOCAL_STORAGE_RECOVERY_2026-09-16.md` for exact evidence and gates.
