@@ -93,5 +93,35 @@ satisfied by `dsh-v1.6.19`, commit
 `92947cbe80bb8ab3b0b62ac02be4d6d8d588c9abe53ef31015312bb615ee90e8`.
 The paid CLI now rejects any code, runtime, workspace, budget, canary,
 credential file or tokenizer cache outside the dedicated local-only tree.
-Gate 3 is **not** satisfied: the local ledger remains an integrity-checked
-snapshot, not spending authority. Gate 4 and a fresh paid run have not begun.
+At the time v1.6.19 was published, Gate 3 was **not** satisfied: the local
+ledger was only an integrity-checked snapshot. The handoff below supersedes
+that status. Gate 4 and a fresh paid run have not begun.
+
+## Single-writer handoff at 2026-09-16 20:21 UTC
+
+The hourly `market-rsi` task was paused before the handoff. No Market RSI or
+Tinker experiment process was active. Immediately before the handoff, the old
+iCloud journal still had the snapshot's 2,246,668-byte size and modification
+time, and its directory still contained 1,905 files. The original snapshot had
+already passed byte-for-byte comparison of all 1,905 files. The old iCloud
+`.lock` now has the macOS `uchg` flag. A direct `PaidBudget.snapshot()` test on
+the old path failed at opening that lock with `PermissionError` *before* reading
+the evicted journal; the old path must never be unlocked for payment.
+
+The verified local copy was renamed without changing its files to the sole
+authoritative budget at
+`/Users/estelle/Library/Application Support/MarketRSI/budget-authoritative-20260916-01`.
+It still has 1,905 files; its journal SHA256 is
+`4589c3d6f8bcc0a1770dd32337fd492f3c1f6e554cb48b816500b63dfdcaf84f`.
+The append-only budget validator passed at the new path: `$200` cap,
+`$85.044572612` metered, `$89.903153492` effective, `$2.30` reserved and
+`$107.796846508` globally available. The 23 unresolved dispatched holds
+remain protected. The local MarketRSI tree has zero `dataless` files.
+
+This completes the *budget-location* handoff, not a new research round. No paid
+request was sent and no prediction score changed. The iCloud copy is an
+unmodified data archive apart from its lock flag; do not point an automation
+or a fresh run at it. Before the next paid request, use a fresh run ID, local
+workspace and pinned v1.6.19 release/canary, recheck the current ledger and
+provider preflight, and keep source/runtime/inputs local. Do not interpret the
+remaining budget as permission to skip those gates.

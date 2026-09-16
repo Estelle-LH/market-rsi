@@ -74,8 +74,11 @@ changes need a separate definition, not rewritten old outcomes.
 # Local execution after iCloud eviction
 
 Do not start another paid Market RSI run from the iCloud-backed project or a
-Python environment inside it. A fresh local-only code/runtime canary passed,
-but the budget authority and published release still require a single-writer
-handoff before any further payment. Preserve iCloud originals and all failed
-attempts. Do not repeatedly hydrate evicted files as an execution strategy.
+Python environment inside it. The v1.6.19 local-only release and canary passed.
+The sole budget authority is now the local
+`/Users/estelle/Library/Application Support/MarketRSI/budget-authoritative-20260916-01`;
+the old iCloud budget lock is immutable and its path must never be unlocked or
+used for payment. Recheck local source, runtime, receipts and budget before any
+fresh paid run. Preserve iCloud originals and all failed attempts. Do not
+repeatedly hydrate evicted files as an execution strategy.
 See `LOCAL_STORAGE_RECOVERY_2026-09-16.md` for exact evidence and gates.
