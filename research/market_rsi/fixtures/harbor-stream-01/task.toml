@@ -1,0 +1,19 @@
+schema_version = "1.3"
+
+[metadata]
+evidence_class = "synthetic-worker-integration"
+
+[agent]
+timeout_sec = 60
+network_mode = "no-network"
+user = "root"
+
+[environment]
+build_timeout_sec = 45
+network_mode = "no-network"
+cpus = 2
+memory_mb = 512
+
+[verifier]
+timeout_sec = 10
+network_mode = "no-network"

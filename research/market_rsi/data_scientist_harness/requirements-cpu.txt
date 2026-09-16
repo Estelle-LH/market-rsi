@@ -1,0 +1,7 @@
+# CPU diagnostics/free scripted-controller canaries only; not the paid Tinker SDK.
+# Match the existing reviewed Python 3.12 numerical runtime; do not upgrade in place.
+numpy==1.26.4
+scipy==1.14.0
+scikit-learn==1.6.1
+threadpoolctl==3.5.0
+joblib==1.4.2

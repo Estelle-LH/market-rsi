@@ -1,0 +1,22 @@
+{
+  "declared_changed_stage": "prediction",
+  "baseline_component_ids": {
+    "raw_data": "fixed-data",
+    "raw_indicator_signal": "fixed-features",
+    "prediction": "parent",
+    "objective": "fixed-target",
+    "pnl": "disabled"
+  },
+  "candidate_component_ids": {
+    "raw_data": "fixed-data",
+    "raw_indicator_signal": "fixed-features",
+    "prediction": "child",
+    "objective": "fixed-target",
+    "pnl": "disabled"
+  },
+  "development_dates": ["2026-09-01"],
+  "calibration_dates": ["2026-09-02"],
+  "final_test_dates": ["2026-09-06", "2026-09-07"],
+  "imputation_policy": "forbidden",
+  "evidence_class": "test-fixture-not-real-promotion"
+}

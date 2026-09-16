@@ -1,0 +1,49 @@
+{
+  "schema": "memory_policy_final_recovery_v1",
+  "recovery_id": "memory-policy-final-recovery-20260914-01",
+  "source_experiment_id": "memory-policy-20260914-01",
+  "source_claim_sha256": "2039062d1d0f8adb5ba91497c8ab59865dcd073878a1d95fc2fcb44f6340cf65",
+  "source_experiment_spec_sha256": "a5ecccfb901eac894d3cb4e62b9248d0073222eb3358277b1c1895fd38e4b2da",
+  "source_failure_sha256": "65130f879f2df1fd18b6828f0f95b2b792ce39e2e1e755ae44646140937d2bcb",
+  "source_final_model_freeze_sha256": "c591e40b994b5efe834ed5bf3291a6bf5b783f0e2621b5faed5971dc30674b28",
+  "source_preflight_sha256": "4471dcf384bc2a35cf66c4f24b7de981f55666e78c505796bbd5afa2d78433db",
+  "failed_session": "2026-09-09T20",
+  "changed_stage": "raw_data_materialization_resource_envelope",
+  "unchanged_scientific_state": {
+    "controller_rounds": 8,
+    "controller_calls": 24,
+    "model_selection": "frozen Round 8 submissions",
+    "target": "unchanged",
+    "features": "unchanged per frozen arm model",
+    "train_rows": "unchanged",
+    "final_sessions": "exact original ordered manifest",
+    "evaluation": "unchanged paired evaluator",
+    "final_scores_seen_before_recovery": 0
+  },
+  "resource_policy": {
+    "parent_address_space_bytes": 4294967296,
+    "decoder_address_space_bytes": 268435456,
+    "max_decoded_bytes": 4294967296,
+    "max_entities": 10000,
+    "max_total_observations": 12000000,
+    "max_entity_observations": 200000,
+    "remote_wall_seconds": 1120,
+    "remote_process_seconds": 1200,
+    "local_transport_seconds": 1230
+  },
+  "large_canary": {
+    "session": "2026-09-14T03",
+    "prior_report_sha256": "1f284527cebe067c7c4a7cef8c6a2cbf4396b57c2a7feea0bd79d1a1464e331d",
+    "expected_cache_sha256": "de7ce26a1d1ba56460213b39231ded3af0b89b940ba11e29f9bf504e8f4c50ff",
+    "expected_selected_observations": 3867212,
+    "evidence_class": "previously opened diagnostic only"
+  },
+  "recovery_rules": {
+    "controller_or_training_calls": 0,
+    "model_changes": 0,
+    "session_replacement": false,
+    "score_retry": false,
+    "automatic_second_recovery": false,
+    "qualification": "same preregistered Final after one runner-only no-score infrastructure failure"
+  }
+}
