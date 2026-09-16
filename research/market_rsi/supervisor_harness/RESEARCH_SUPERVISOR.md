@@ -59,6 +59,10 @@ expensive providers or repeat an unchanged diagnostic experiment.
   baseline; preserve all attempts, not only the winner.
 - The old iCloud copy is an archive. The local-only migration removed the
   execution blocker; do not spend another work block perfecting iCloud sync.
+- P0 is five-season historical-data admission as defined in
+  `P0_FIVE_SEASON_DATA.md`. Interrupt a proposed formal model run that uses
+  only the 2024 feasibility cohort. Free source inventory and bounded data
+  acquisition are on the critical path; a larger dataset is not a model gain.
 - Do not create a new paid process until the exact published harness, local
   ledger, run-ID claim and budget gates pass. This protocol is not spending
   authorization.

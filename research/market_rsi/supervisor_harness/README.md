@@ -9,6 +9,10 @@ while `HUMAN_PROGRESS.md` and `HUMAN_INTERVENTIONS.md` are append-only human
 records. The project's `AGENTS.md` and the active `market-rsi` scheduled task
 point here, so the protocol is read at each new work block.
 
+`P0_FIVE_SEASON_DATA.md` is the current supervisor gate: the one-year pilot
+cannot become a formal five-year benchmark until source coverage and admission
+are verified. This is a decision gate, not a claim that five seasons were found.
+
 This is the *outer* Codex research supervisor, not the GLM experiment's
 `data_scientist_harness`. It does not change frozen scientific code, its
 published release, the $200 cap, or sealed evaluation boundaries. Research

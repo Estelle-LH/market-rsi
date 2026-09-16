@@ -93,3 +93,12 @@ when the decision state changed. Record human redirects in
 `supervisor_harness/HUMAN_INTERVENTIONS.md`. A completed tool call, code change, canary or paid
 turn is not a research result by itself. When a review says REPLAN or DEFER,
 do not continue the old local debugging loop merely because it is easy to do.
+
+The current P0 gate is `supervisor_harness/P0_FIVE_SEASON_DATA.md`: inventory
+and admit roughly five completed NFL seasons of time-resolved market and game
+data before the next *formal* model comparison. The 2024 one-season coverage
+audit does not pass this gate. Do not quietly mix exchanges, move already
+inspected dates into an untouched final, or spend the $200 Tinker cap on a
+data purchase. Document a vendor quote, rights, coverage and separate cost
+before any purchase. If five seasons cannot be obtained, report the evidence
+and ask the user to change the scope rather than silently relaxing P0.

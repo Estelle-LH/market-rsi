@@ -82,3 +82,89 @@ untouched test.
   its hashes before copying the minimum needed into the local tree.
 - **Confidence:** High that this is a direct prerequisite; it does not yet
   imply the 300-second target is useful or the model improves.
+
+## 2026-09-16, work block: five-year data intervention
+
+- **Current goal:** Make sure the next experiment can test the five-year
+  prediction question rather than a convenient single-year pilot.
+- **What I did:** Interrupted the planned 2024-only baseline run, reviewed the
+  actual data scope, and made five-season acquisition a P0 Harness gate.
+- **Why:** A model score on one season cannot establish the multi-year result
+  the user asked us to seek.
+- **What we learned:** 2024 has one full-season support audit; a limited 2025
+  opened-Train baseline exists. We have not verified comparable market trades
+  for 2021–2023 or all of 2025. Official Polymarket and Kalshi APIs provide
+  historical access routes, but endpoint existence does not prove five-year
+  NFL coverage. No vendor quote or data purchase has happened.
+- **Result:** Replanned; five-year data problem remains open, no new prediction
+  result.
+- **Evidence:** The 2024 audit counted 284 games and 407,225 trades; its
+  training-admission flag is false. The official source links and per-season
+  unknowns are in `P0_FIVE_SEASON_DATA.md`.
+- **Time/effort:** One bounded source and trajectory review; zero new data or
+  Tinker spend.
+- **Current blocker:** Per-year market/price granularity and legitimate access
+  costs have not been established.
+- **Next action:** Inventory official market metadata for 2021–2025, then seek
+  a concrete paid quote only for the gaps.
+- **Confidence:** High that P0 data is the correct priority; unknown whether
+  any single exchange can supply five comparable seasons.
+
+## 2026-09-16, work block: first five-season metadata probe
+
+- **Current goal:** Find out whether public history can support a five-season
+  NFL market inventory before selecting a data vendor.
+- **What I did:** Read the official historical API descriptions and queried a
+  small public event-metadata page for each candidate season, without keys,
+  trades or payment.
+- **Why:** We need to distinguish “the endpoint exists” from “the same kind of
+  NFL contract and sufficient trades existed every year.”
+- **What we learned:** A 2021 NFL-labeled example was a point-spread market,
+  not the 2024 moneyline task. The broad text query also returned unrelated
+  events, and several first pages had continuation cursors. Its page counts
+  cannot establish coverage.
+- **Result:** A source-discovery failure mode found; five-year data remains
+  unverified. No model experiment or score.
+- **Evidence:** Official Gamma keyset API and the bounded public probe are
+  described in `P0_FIVE_SEASON_DATA.md`; no complete per-season count exists.
+- **Time/effort:** One short public metadata probe; zero vendor/Tinker spend.
+- **Current blocker:** Exact contract classification and full cursor inventory
+  by season/exchange.
+- **Next action:** Build a strict, schedule-matched metadata inventory with
+  immutable source receipts, then request a vendor quote only for true gaps.
+- **Confidence:** High that this avoids a false five-year claim; still unknown
+  how much comparable data exists.
+
+## 2026-09-16, work block: paginated public NFL catalog audit
+
+- **Current goal:** Test whether the free exchange catalogs even contain five
+  seasons of the same kind of NFL game market before paying for history.
+- **What I did:** Built and tested a receipt-preserving, no-trades inventory;
+  paged the public Polymarket `nfl` series for 2021–2024 and its separate
+  `nfl-2025` series for 2025. Checked Kalshi's historical-access documentation
+  and its dated sports-market launch notice.
+- **Why:** The first broad search mixed unrelated events and old formats. A
+  zero in the generic 2025 series was misleading until the separate series
+  was checked.
+- **What we learned:** 2024 has 284 modern typed-moneyline candidates,
+  matching the previous support-audit cohort. 2025 has 271 such metadata
+  candidates; no trade or schedule support has been checked. The generic
+  catalog has 199 legacy 2021 events, 35 legacy/grouped 2022 events and no
+  2023 records in the queried window. The old events do not fit the modern
+  schema; that is not proof of no historical winner markets. Kalshi publicly
+  announced sports markets in January 2025, so its historical API alone is
+  not evidence of five seasons of NFL trading.
+- **Result:** P0 remains open. This is source coverage evidence, **not** a
+  model score or formal data admission.
+- **Evidence:** The two local artifact manifests and raw SHA-256 page receipts
+  are listed in `P0_FIVE_SEASON_DATA.md`; two no-network tests passed. Public
+  Kalshi and Betfair source links are there as well.
+- **Time/effort:** One bounded metadata fetch (five seasons, no trades), two
+  tests and source review; zero paid data or Tinker spend.
+- **Current blocker:** Comparable 2021–2023 game-trading history and 2025
+  event-aligned trade coverage are not established. No vendor quote.
+- **Next action:** Check other catalog/provider paths and get a concrete
+  quote for the missing years/granularity; do not substitute a new exchange
+  in the benchmark without an explicit scope decision.
+- **Confidence:** High in the queried series counts; low in any conclusion
+  about five-year usable trade coverage.
