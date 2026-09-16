@@ -279,3 +279,23 @@ untouched test.
 - **Next action:** At its next review, continue the exact old-season trade and
   lawful five-season supplier checks; report a concise result or an honest
   no-change status, keeping P0 closed to formal model comparison until proven.
+
+## 2026-09-16, paid-experiment ownership clarified
+
+- **Current goal:** Keep source acquisition and eventual paid experiments under
+  one supervisor, without a second process or a new budget.
+- **What changed:** The user authorized the resumed supervisor to take on
+  qualifying paid work too. The active scheduled task now says it may run an
+  in-cap Tinker experiment after P0 data admission and all release, split,
+  run-ID, process and ledger checks. Ordinary in-cap execution needs no further
+  handoff. The existing $200 cap is unchanged; vendor purchase has a separate
+  price/rights decision.
+- **Current evidence:** P0 is still not passed: 2024 has one audited season,
+  2025 has a full market-identity map but only one trade canary, and 2021–2023
+  season-wide timestamped fills are unverified. A process-name check found no
+  Market RSI/Tinker runner at this review. That check alone is not a paid-run
+  preflight or a fresh budget reconciliation.
+- **Result:** Authorization and ownership changed; no paid experiment was
+  launched, no cost incurred, and no score claimed.
+- **Next action:** Resolve the exact old-season trade availability or lawful
+  five-season supplier path before a formal paid model comparison.
