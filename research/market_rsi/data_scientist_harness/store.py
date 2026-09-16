@@ -20,9 +20,15 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def runtime_identity():
+    packages = ("numpy", "scipy", "scikit-learn", "threadpoolctl", "joblib",
+                "tinker", "transformers", "tokenizers", "huggingface-hub",
+                "httpx", "python-dotenv")
+    installed = sorted((str(dist.metadata.get("Name", "")).casefold().replace("_", "-"),
+                        dist.version) for dist in importlib.metadata.distributions())
     return {"python":sys.version, "executable":str(Path(sys.executable).resolve()),
             "environment_prefix": str(Path(sys.prefix).resolve()),
-            "packages":{k:importlib.metadata.version(k) for k in ("numpy","scipy","scikit-learn","threadpoolctl","joblib")},
+            "packages":{k:importlib.metadata.version(k) for k in packages},
+            "installed_distributions_sha256": digest(installed),
             "cpu_requirements_sha256": file_hash(ROOT/"data_scientist_harness/requirements-cpu.txt"),
             "shared_core": dependency_identity()}
 

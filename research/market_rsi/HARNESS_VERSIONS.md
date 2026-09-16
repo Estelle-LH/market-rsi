@@ -667,3 +667,25 @@ ID、原始成交、play、Dev/Final。Controller 可以研究和提出下一步
 exact-source canary `data-scientist-codex-canary-20260916-18` 通过 18 tools、
 4 合成 CPU fit、0 Tinker，result SHA256
 `eecd24029ab9348826b976f093258ecb20f3584f275cac177a83b82226886ea5`。
+
+# dsh-v1.6.19 — 本机执行环境隔离（human-directed；不改变研究方法）
+
+观察：v1.6.18 的付费 controller 在运行中遇到 iCloud 文件再次变成
+`dataless`，21 次 provider turn 后没有有效决定。单把输出搬到本机临时目录
+不够，因为源码和 Python 依赖还在 iCloud。详见
+[本机存储恢复记录](LOCAL_STORAGE_RECOVERY_2026-09-16.md)。
+
+这版只改变 Harness 版本和运行时绑定：在独立、本机常驻的 Git clone 与
+Python 环境运行；runtime identity 现在同时绑定 CPU 包、Tinker/Tokenizer/
+HTTP/dotenv 的直接版本和全部已安装 distributions 的汇总 hash。没有改数据、
+目标、feature、算法、reward、split 或任何旧工作目录。iCloud 原件保留作归档。
+本机 canary、测试、发布 commit/tag/release 以实际回执为准；没有这些，不能
+迁移预算账本或进行下一次付费实验。这个版本不代表模型表现提升。
+
+本机完整 Harness 277/277、sports-event 105/105 测试通过。免费 exact-source
+canary `local-runtime-canary-20260916-02` 通过 18 tools、4 合成 CPU fit、
+0 Tinker，result SHA256
+`87de0a97b7892ed89d45d09710062d2d2b85ae2d3d80a3f4c6dbabe07bab2654`。
+Paid CLI 加了本机路径闸门：代码、Python、workspace、预算、canary、密钥文件和
+tokenizer cache 必须都在独立本机 `MarketRSI` 目录；否则在付费前失败。
+这只解决文件驻留和误用旧路径，不证明单账本已迁移。

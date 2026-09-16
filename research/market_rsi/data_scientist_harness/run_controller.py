@@ -26,7 +26,7 @@ from run_source_review import command_for_source_review
 from data_scientist_harness.broker import Broker, INSTRUCTIONS, ALLOWED_TOOLS, DECISION
 from data_scientist_harness.store import Store
 from data_scientist_harness.release import identity, verify_git_publication
-from data_scientist_harness.io_preflight import require_budget_resident
+from data_scientist_harness.io_preflight import require_budget_resident, require_local_execution
 
 
 def source_hashes(store):
@@ -154,6 +154,7 @@ def paid_preflight(root, manifest, budget_path, authorization_sha256, canary_pat
 
 def main(a):
     root=a.workspace.resolve(); budget=a.budget.resolve()
+    require_local_execution((ROOT,Path(sys.prefix),root,budget,a.canary,a.env_file,a.tokenizer_cache))
     # Share the existing dispatcher lock, not a separate lock per new adapter.
     with (root.parent/"historical-ingest-controller.lock").open("a+") as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)

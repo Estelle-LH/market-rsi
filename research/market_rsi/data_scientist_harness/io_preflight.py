@@ -5,6 +5,21 @@ import stat
 from market_rsi import digest, fresh_json
 
 
+def require_local_execution(paths):
+    """Fail paid dispatch before I/O if any active dependency is under iCloud.
+
+    This installation deliberately keeps its archival Documents tree in iCloud
+    and executes only from the dedicated, persistent local Application Support
+    tree. A symlink back into Documents is rejected by path resolution.
+    """
+    anchor = (Path.home() / "Library" / "Application Support" / "MarketRSI").resolve()
+    for path in paths:
+        candidate = Path(path)
+        if candidate.is_symlink() or not candidate.resolve().is_relative_to(anchor):
+            raise ValueError("paid execution requires the local-only MarketRSI tree")
+    return {"local_execution_root": str(anchor), "checked_paths": len(paths)}
+
+
 def inspect_paths(paths):
     failures=[];total=0
     for path in paths:
