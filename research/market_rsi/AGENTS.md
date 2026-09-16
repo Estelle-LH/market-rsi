@@ -82,3 +82,14 @@ used for payment. Recheck local source, runtime, receipts and budget before any
 fresh paid run. Preserve iCloud originals and all failed attempts. Do not
 repeatedly hydrate evicted files as an execution strategy.
 See `LOCAL_STORAGE_RECOVERY_2026-09-16.md` for exact evidence and gates.
+
+# Research trajectory supervision
+
+Read `RESEARCH_STATE.md` before choosing the next work block, and apply
+`RESEARCH_SUPERVISOR.md` during it. The compact state is a decision aid, not a
+transcript or a substitute for experiment artifacts. After material work,
+append a plain-language entry to `HUMAN_PROGRESS.md` and update the state only
+when the decision state changed. Record human redirects in
+`HUMAN_INTERVENTIONS.md`. A completed tool call, code change, canary or paid
+turn is not a research result by itself. When a review says REPLAN or DEFER,
+do not continue the old local debugging loop merely because it is easy to do.
