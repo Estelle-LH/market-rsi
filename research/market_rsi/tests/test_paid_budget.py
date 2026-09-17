@@ -97,6 +97,27 @@ class PaidBudgetTests(unittest.TestCase):
             self.reserve("two", upper="0.01")
         self.reserve("final-job", bucket="final", upper="50")
 
+    def test_explicit_append_only_transfer_preserves_global_cap(self):
+        self.b.transfer_allocation("repair", "setup", "0.20", "user approved exact transfer on 2026-09-17")
+        snap = PaidBudget(self.root).snapshot()
+        self.assertEqual(snap["cap_usd"], "200")
+        self.assertEqual(snap["buckets"]["setup"]["allocation_usd"], "10.20")
+        self.assertEqual(snap["buckets"]["repair"]["allocation_usd"], "19.80")
+        self.assertEqual(snap["buckets"]["final"]["allocation_usd"], "50")
+        self.b.reserve("canary", "setup", "0.20", "fixture", "a" * 64)
+        self.assertEqual(self.b.snapshot()["available_usd"], "199.80")
+        self.assertEqual(self.b.snapshot()["buckets"]["setup"]["reserved_usd"], "0.20")
+
+    def test_transfer_cannot_take_occupied_or_protected_money(self):
+        self.reserve(upper="119.90")
+        with self.assertRaises(ValueError):
+            self.b.transfer_allocation("learning", "setup", "0.20", "fixture")
+        with self.assertRaises(ValueError):
+            self.b.transfer_allocation("repair", "setup", "20.01", "fixture")
+        with self.assertRaises(ValueError):
+            self.b.transfer_allocation("repair", "setup", "0.20", "")
+        self.assertEqual(self.b.snapshot()["buckets"]["repair"]["allocation_usd"], "20")
+
     def test_duplicate_run_and_job_and_dispatch_rejected(self):
         with self.assertRaises(FileExistsError):
             PaidBudget.create(self.root, self.auth)

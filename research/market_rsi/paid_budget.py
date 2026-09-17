@@ -53,8 +53,34 @@ class PaidBudget:
         if not records or records[0]["event"] != "authorized" or records[0]["payload"] != {"authorization_sha256": digest(auth)}:
             raise ValueError("authorization integrity failure")
         jobs = {}
+        allocations = {key: money(value) for key, value in auth["buckets_usd"].items()}
         for record in records[1:]:
             kind, payload = record["event"], record["payload"]
+            if kind == "allocation_transfer":
+                if set(payload) != {"from_bucket", "to_bucket", "usd", "authority"}:
+                    raise ValueError("invalid allocation transfer")
+                source, target, amount = payload["from_bucket"], payload["to_bucket"], money(payload["usd"])
+                if (source == target or source not in allocations or target not in allocations
+                        or amount <= 0 or not isinstance(payload["authority"], str)
+                        or not payload["authority"].strip() or len(payload["authority"]) > 1000):
+                    raise ValueError("invalid allocation transfer")
+                occupied = Decimal(0)
+                for job in jobs.values():
+                    if job["bucket"] != source:
+                        continue
+                    if job["state"] in {"reserved", "dispatched"}:
+                        occupied += money(job["upper_usd"])
+                    elif job["invoice_usd"] is not None:
+                        occupied += money(job["invoice_usd"])
+                    elif job["state"] == "metered_terminal":
+                        occupied += money(job["metered_usd"])
+                    elif job["state"] == "uncertain_terminal":
+                        occupied += money(job["uncertain_upper_usd"])
+                if amount > allocations[source] - occupied:
+                    raise ValueError("allocation transfer exceeds source availability")
+                allocations[source] -= amount
+                allocations[target] += amount
+                continue
             job = payload["job_id"]
             if kind == "reserved":
                 if job in jobs:
@@ -93,13 +119,15 @@ class PaidBudget:
                 jobs[job]["invoice_usd"] = payload["invoice_usd"]
             else:
                 raise ValueError("unknown budget event")
-        return auth, jobs
+        if sum(allocations.values()) != money(auth["cap_usd"]):
+            raise ValueError("allocation integrity failure")
+        return auth, jobs, allocations
 
     def _snapshot(self):
-        auth, jobs = self._state()
+        auth, jobs, allocations = self._state()
         meter = invoice = effective = reserved = Decimal(0)
         buckets = {key: {"effective_usd": Decimal(0), "reserved_usd": Decimal(0)}
-                   for key in auth["buckets_usd"]}
+                   for key in allocations}
         for job in jobs.values():
             metered = money(job["metered_usd"]) if job["metered_usd"] is not None else Decimal(0)
             uncertain = (money(job["uncertain_upper_usd"])
@@ -114,7 +142,8 @@ class PaidBudget:
             buckets[job["bucket"]]["effective_usd"] += charge
             buckets[job["bucket"]]["reserved_usd"] += hold
         for key, values in buckets.items():
-            values["available_usd"] = money(auth["buckets_usd"][key]) - sum(values.values())
+            values["available_usd"] = allocations[key] - sum(values.values())
+            values["allocation_usd"] = allocations[key]
         return dict(experiment_id=auth["experiment_id"], cap_usd=str(money(auth["cap_usd"])),
                     metered_usd=str(meter), invoiced_usd=str(invoice),
                     effective_cost_usd=str(effective), reserved_usd=str(reserved),
@@ -133,6 +162,22 @@ class PaidBudget:
         with self.journal.locked():
             return self._snapshot()
 
+    def transfer_allocation(self, from_bucket, to_bucket, usd, authority):
+        """Append one explicitly authorized bucket transfer; never change the cap."""
+        amount = money(usd)
+        if (amount <= 0 or not isinstance(authority, str)
+                or not authority.strip() or len(authority) > 1000):
+            raise ValueError("positive transfer and explicit authority required")
+        with self.journal.locked():
+            state = self._snapshot()
+            if (from_bucket == to_bucket or from_bucket not in state["buckets"]
+                    or to_bucket not in state["buckets"]
+                    or amount > money(state["buckets"][from_bucket]["available_usd"])):
+                raise ValueError("transfer exceeds available source allocation")
+            self.journal.append("allocation_transfer", {
+                "from_bucket": from_bucket, "to_bucket": to_bucket,
+                "usd": str(amount), "authority": authority})
+
     def reserve(self, job_id, bucket, upper_usd, provider, input_sha256):
         identifier(job_id)
         upper = money(upper_usd)
@@ -149,14 +194,14 @@ class PaidBudget:
 
     def dispatch(self, job_id):
         with self.journal.locked():
-            _, jobs = self._state()
+            _, jobs, _ = self._state()
             if jobs[job_id]["state"] != "reserved":
                 raise ValueError("not dispatchable; never retry this job ID")
             self.journal.append("dispatched", {"job_id": job_id})
 
     def cancel_before_dispatch(self, job_id):
         with self.journal.locked():
-            _, jobs = self._state()
+            _, jobs, _ = self._state()
             if jobs[job_id]["state"] != "reserved":
                 raise ValueError("a dispatched request must be reconciled, not cancelled as free")
             self.journal.append("cancelled_before_dispatch", {"job_id": job_id})
@@ -166,7 +211,7 @@ class PaidBudget:
         if not terminal_receipt or terminal_receipt.get("terminal") is not True:
             raise ValueError("terminal usage evidence required")
         with self.journal.locked():
-            _, jobs = self._state()
+            _, jobs, _ = self._state()
             job = jobs[job_id]
             if job["state"] != "dispatched" or value > money(job["upper_usd"]):
                 raise ValueError("invalid terminal state or metered cost above bound; audit before continuing")
@@ -196,7 +241,7 @@ class PaidBudget:
                        for c in terminal_local_receipt["evidence_sha256"])):
             raise ValueError("verified local termination and unknown remote usage required")
         with self.journal.locked():
-            _, jobs = self._state()
+            _, jobs, _ = self._state()
             job = jobs[job_id]
             if job["state"] != "dispatched":
                 raise ValueError("only one unresolved dispatched job may be conservatively closed")
@@ -210,7 +255,7 @@ class PaidBudget:
         if len(evidence_sha256) != 64 or any(c not in "0123456789abcdef" for c in evidence_sha256):
             raise ValueError("invoice evidence hash required")
         with self.journal.locked():
-            _, jobs = self._state()
+            _, jobs, _ = self._state()
             job = jobs[job_id]
             if (job["state"] not in {"metered_terminal", "uncertain_terminal"}
                     or job["invoice_usd"] is not None):
