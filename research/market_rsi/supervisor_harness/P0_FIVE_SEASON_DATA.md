@@ -423,3 +423,8 @@ scanning more years simply because a metadata candidate exists. Document the
 48-game 2023 identity gap and the regular-season fill-density gap before
 seeking exact sample/rights/cost terms. Both pilot and five-season primary
 remain closed. Betfair remains a *separate* exchange, not a silent fill.
+The supervisor's outcome-blind sampling and cleaning procedure is fixed in
+`P0_SAMPLING_CLEANING_DECISION_2026-09-17.md`; its 12-game diagnostic receipt
+is **not** a substitute for a full-cohort coverage audit. In the current
+archive classifier, 47 of the 92 scheduled games in Weeks 13–18 are unmatched,
+a strong late-season catalog bias that must remain visible in the denominator.

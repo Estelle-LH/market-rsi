@@ -75,6 +75,14 @@ providers or repeat an unchanged diagnostic experiment.
   run that uses only the 2024 feasibility cohort or labels a three-season
   pilot as a five-season result. Free source inventory and bounded data
   acquisition are on the critical path; a larger dataset is not a model gain.
+- For source sampling and cleaning, use
+  `P0_SAMPLING_CLEANING_DECISION_2026-09-17.md`. The supervisor—not the user—
+  chooses and precommits an outcome-blind diagnostic sample, verifies raw
+  identities/time/units, keeps every scheduled game and missing-label reason
+  in the denominator, and decides whether the data gate can advance. Do not
+  select only active or changing-price games, forward-fill missing trades as
+  zero changes, or treat minute-history points as distinct fills. A new target
+  is a new benchmark version, never a silent cleaning adjustment.
 - The user authorized this supervisor to execute qualifying paid experiments
   under the **existing** $200 Tinker cap on 2026-09-16. Do not create a new
   paid process until P0 data admission, the exact published harness, local
