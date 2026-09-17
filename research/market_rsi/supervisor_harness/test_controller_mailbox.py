@@ -143,6 +143,17 @@ class ControllerMailboxTests(unittest.TestCase):
             mailbox.serve_next(0)
         self.assertEqual(mailbox.next_index, 0)
         self.assertTrue(mailbox.terminal)
+        self.assertTrue((self.root / "mailbox/000-attempt.json").is_file())
+        self.assertTrue((self.root / "mailbox/000-failure.json").is_file())
+        self.assertFalse((self.root / "mailbox/000-claim.json").exists())
+
+    def test_missing_guest_request_is_receipted_without_replay(self):
+        mailbox = self._mailbox()
+        with self.assertRaises(KeyError):
+            mailbox.serve_next(0)
+        self.assertTrue((self.root / "mailbox/000-failure.json").is_file())
+        with self.assertRaises(ValueError):
+            mailbox.serve_next(0)
 
     def test_broker_rejection_is_terminal_and_receipted(self):
         mailbox = self._mailbox()

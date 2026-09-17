@@ -7,10 +7,11 @@ trusted host must claim a cycle in SupervisorGlobalState before serving calls.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 
-from market_rsi import canonical, digest, fresh_json, identifier
+from market_rsi import canonical, digest, file_hash, fresh_json, identifier
 
 
 MAX_REQUEST_BYTES = 64 * 1024
@@ -39,6 +40,7 @@ class ControllerMailbox:
         self.next_index = 0
         self.max_calls = max_calls
         self.terminal = False
+        self.source_sha256 = file_hash(__file__)
 
     def _require_active_cycle(self) -> None:
         # snapshot also rejects an unjournaled RESEARCH_STATE.md edit.
@@ -55,23 +57,33 @@ class ControllerMailbox:
         if self.terminal or type(index) is not int or index != self.next_index \
                 or index >= self.max_calls:
             raise ValueError("mailbox stopped or out-of-order call")
+        if file_hash(__file__) != self.source_sha256:
+            raise ValueError("controller mailbox source changed during cycle")
         self._require_active_cycle()
         self.terminal = True  # failures cannot be retried in this session
         filename = f"{index:03d}.json"
-        raw = self.sandbox.files.read(f"{GUEST_OUTBOX}/{filename}")
-        if not isinstance(raw, str) or len(raw.encode("utf-8")) > MAX_REQUEST_BYTES:
-            raise ValueError("missing or oversized guest tool request")
-        request = json.loads(raw)
-        if not isinstance(request, dict):
-            raise ValueError("guest tool request must be an object")
-        if request.get("input_sha256") != self.adapter.input_sha256:
-            raise ValueError("guest tool request belongs to another frozen input")
-        claim = {"schema": "controller_tool_mailbox_claim_v1", "cycle_id": self.cycle_id,
-                 "controller_sandbox_id": self.sandbox.sandbox_id,
-                 "input_sha256": self.adapter.input_sha256,
-                 "index": index, "request_sha256": digest(request)}
-        fresh_json(self.receipt_root / f"{index:03d}-claim.json", claim)
+        attempt = {"schema": "controller_tool_mailbox_attempt_v1",
+                   "cycle_id": self.cycle_id, "index": index,
+                   "controller_sandbox_id": self.sandbox.sandbox_id,
+                   "input_sha256": self.adapter.input_sha256,
+                   "source_sha256": self.source_sha256,
+                   "guest_path": f"{GUEST_OUTBOX}/{filename}"}
+        fresh_json(self.receipt_root / f"{index:03d}-attempt.json", attempt)
+        claim = None
         try:
+            raw = self.sandbox.files.read(attempt["guest_path"])
+            if not isinstance(raw, str) or len(raw.encode("utf-8")) > MAX_REQUEST_BYTES:
+                raise ValueError("missing or oversized guest tool request")
+            request = json.loads(raw)
+            if not isinstance(request, dict):
+                raise ValueError("guest tool request must be an object")
+            if request.get("input_sha256") != self.adapter.input_sha256:
+                raise ValueError("guest tool request belongs to another frozen input")
+            claim = {"schema": "controller_tool_mailbox_claim_v1",
+                     "attempt_sha256": digest(attempt),
+                     "request_bytes_sha256": hashlib.sha256(raw.encode()).hexdigest(),
+                     "request_sha256": digest(request)}
+            fresh_json(self.receipt_root / f"{index:03d}-claim.json", claim)
             response = self.adapter.call_from_sandbox(self.sandbox, request)
             encoded = canonical(response)
             if len(encoded.encode("utf-8")) > MAX_RESPONSE_BYTES:
@@ -87,7 +99,9 @@ class ControllerMailbox:
         except Exception as exc:
             fresh_json(self.receipt_root / f"{index:03d}-failure.json", {
                 "schema": "controller_tool_mailbox_failure_v1",
-                "claim_sha256": digest(claim), "error_type": type(exc).__name__})
+                "attempt_sha256": digest(attempt),
+                "claim_sha256": digest(claim) if claim is not None else None,
+                "error_type": type(exc).__name__})
             raise
         self.next_index += 1
         self.terminal = False
