@@ -106,6 +106,10 @@ class RoleNetworkComponentTests(unittest.TestCase):
                 public_url=PUBLIC, receipt_root=root / "b-to-a")
             self.assertNotEqual(first["attempt_sha256"], second["attempt_sha256"])
             self.assertTrue(a.handle.killed and b.handle.killed)
+            self.assertEqual([call[1] for call in a.calls if "--public-url" in call[0]],
+                             [component.PROBE_COMMAND_TIMEOUT_SECONDS])
+            self.assertEqual([call[1] for call in b.calls if "--public-url" in call[0]],
+                             [component.PROBE_COMMAND_TIMEOUT_SECONDS])
             self.assertEqual(json.loads((root / "a-to-b/attempt.json").read_text())[
                 "source_sandbox_id"], "controller-A")
             self.assertEqual(json.loads((root / "b-to-a/attempt.json").read_text())[

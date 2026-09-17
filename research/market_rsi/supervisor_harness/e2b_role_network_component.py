@@ -23,6 +23,7 @@ PEER_SOURCE = "/tmp/market-peer-server.py"
 PROBE_SOURCE = "/tmp/market-protocol-network-probe.py"
 PROBE_RESULT = "/tmp/market-protocol-network-report.json"
 MAX_COMMAND_OUTPUT = 8192
+PROBE_COMMAND_TIMEOUT_SECONDS = 60
 
 
 def _script(path: Path) -> tuple[str, str]:
@@ -110,7 +111,10 @@ def observe_direction(*, source, target, state, cycle_id: str,
         source.files.write(PROBE_SOURCE, probe_script)
         command = (f"python3 -I {PROBE_SOURCE} --public-url {shlex.quote(public_url)}"
                    f" --peer-url {shlex.quote(peer_url)} --output {PROBE_RESULT}")
-        probed = source.commands.run(command, timeout=25)
+        # This is an SDK streaming-connection deadline for four sequential
+        # bounded HTTP attempts, not a per-request timeout. The prior 25s
+        # deadline expired before E2B returned any guest report.
+        probed = source.commands.run(command, timeout=PROBE_COMMAND_TIMEOUT_SECONDS)
         probe_command = _command(probed, label="source application probe")
         raw_report = source.files.read(PROBE_RESULT)
         if not isinstance(raw_report, str) or len(raw_report.encode()) > 16 * 1024:
