@@ -106,6 +106,23 @@ documentation](https://docs.polymarket.com/api-reference/core/get-trades-for-a-u
 describes a rolling historical window of about three years; older event-page
 volume is not a substitute for accessible event-level trade history.
 
+On 2026-09-16, a **three-market discovery check** queried the public legacy
+trade API with `limit=1` and fixed event-week timestamp windows. The condition
+IDs came from exact public Gamma event-slug lookups; only row count and the
+first timestamp were inspected, not prices or outcomes:
+
+| Season / exact event | Winner market sampled | Window (UTC epoch seconds) | Returned rows / limit | What this establishes |
+| --- | --- | --- | ---: | --- |
+| 2021 season, `nfl-playoffs-divisional-21-22` | Titans–Bengals, `0xcc4a3885aee3ad32f8232e3777a63b146fbfd9f76e19907c697a73b3d5fdd600` | 1642723200–1643155200 | 0 / 1 | This market's old fills are not available through that bounded market-scoped request now; not proof that no trades occurred. |
+| 2022 season, `nfl-week-5` | Colts–Broncos, `0x99b0e2fa20d738ca822fa89e4f3a083059d99a5f5abc85a08f7ac65c46078ce0` | 1664928000–1665532800 | 0 / 1 | Same narrow negative finding. |
+| 2023 season, `nfl-dailies-2023-10-22` | Giants–Commanders, `0xb3395c017119cdf9b2ddebc3d195d1b10e6020efb8795bda44933db3f0af0df8` | 1697760000–1698192000 | 1 / 1; first timestamp 1697995179 | At least one timestamped fill is retrievable for this specific market. |
+
+The contrast is consistent with the API's documented approximately three-year
+floor for market-scoped requests, **not** a season-wide coverage estimate or
+proof of a hard cutoff date. These exploratory responses were not persisted
+with raw hashes, so they are not admitted source artifacts. A separate lawful
+archive/provider route is still needed for the missing older years.
+
 Kalshi's [January 2025 sports-market announcement](https://news.kalshi.com/p/game-on-kalshi-sports-trading-is-now-100-legal-in-all-50-states-2)
 is evidence against assuming that its API can supply five earlier NFL seasons,
 even though [historical endpoints](https://docs.kalshi.com/getting_started/historical_data)
@@ -181,15 +198,14 @@ silently treating a single 2024 season as five years or by fabricating data.
 
 | Season | Market-data status | PBP status | Formal admission |
 | --- | --- | --- | --- |
-| 2021 | `nfl` metadata fully paged: 199 legacy events, zero matching the modern typed-moneyline schema; an official playoff page shows game-winner markets. Season-wide trade/quote coverage unknown. | Official multi-season PBP source identified; this season not locally verified | No |
-| 2022 | `nfl` metadata fully paged: 35 legacy/grouped events, zero matching the modern typed-moneyline schema; an official Week 5 page shows game-winner markets. Season-wide trade/quote coverage unknown. | Same boundary | No |
-| 2023 | `nfl` series/window returned zero, yet an official daily event page shows game-winner markets. Season-wide trade/quote coverage unknown. | Same boundary | No |
+| 2021 | `nfl` metadata fully paged: 199 legacy events, zero matching the modern typed-moneyline schema; an official playoff page shows game-winner markets. One bounded old-market trade query returned zero; season-wide trade/quote coverage unknown. | Official multi-season PBP source identified; this season not locally verified | No |
+| 2022 | `nfl` metadata fully paged: 35 legacy/grouped events, zero matching the modern typed-moneyline schema; an official Week 5 page shows game-winner markets. One bounded old-market trade query returned zero; season-wide trade/quote coverage unknown. | Same boundary | No |
+| 2023 | `nfl` series/window returned zero, yet an official daily event page shows game-winner markets. One bounded query returned a timestamped fill; season-wide coverage unknown. | Same boundary | No |
 | 2024 | Polymarket 284-game source; 407,225 trades; 60s labels 67.64%, 300s 90.87% in historical event clock | Frozen 2024 PBP used for support audit; not staged in local execution tree | No—support audit only |
 | 2025 | Corrected `nfl-2025` catalog has 285 typed moneylines and 285/285 schedule-identity matches; one earliest-game 2,148-trade source canary, not season coverage; a limited opened-Train 60s baseline exists | Identity schedule verified; full play-by-play alignment not verified here | No |
 
-**Next bounded action:** decide whether to run a source-only 2025 whole-season
-trade-coverage audit while investigating whether any comparable 2023 or legacy
-2021–2022 contracts exist outside the modern catalog. In parallel, request
-coverage/granularity and a price quote for five-season NFL exchange data,
-including Betfair as a *separate* possible scope. No formal model training
-while this P0 remains open.
+**Next bounded action:** seek a lawful archive/provider route and a concrete
+season-by-season coverage/granularity/rights quote for 2021–2022 fills, with
+Betfair only as a *separate* possible exchange. Decide whether a 2025
+whole-season source audit is worth its public-request cost once a five-season
+path is credible. No formal model training while this P0 remains open.

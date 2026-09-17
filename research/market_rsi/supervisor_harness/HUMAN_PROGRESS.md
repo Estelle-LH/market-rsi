@@ -299,3 +299,29 @@ untouched test.
   launched, no cost incurred, and no score claimed.
 - **Next action:** Resolve the exact old-season trade availability or lawful
   five-season supplier path before a formal paid model comparison.
+
+## 2026-09-16, evening supervisor review: older public trades
+
+- **Question:** Do the public trade endpoints actually return fills for the
+  older NFL winner markets whose event pages we found?
+- **What I did:** Read the provider's current history-window documentation,
+  then made three fixed, `limit=1` public queries for one 2021-season playoff
+  market, one 2022-season Week 5 market, and one October 2023 market. Each
+  condition ID came from an exact official event-slug lookup; only row counts
+  and the first timestamp were inspected.
+- **Result:** The 2021 and 2022 queries returned zero rows; the 2023 query
+  returned one timestamped fill. This is consistent with the documented
+  roughly three-year floor for market-scoped history. It does **not** mean the
+  two older games had no trades, nor does one 2023 row establish season-wide
+  training coverage. No model, Dev/Final score or paid provider call changed.
+- **Evidence:** Exact event slugs, condition IDs and UTC query windows are in
+  `P0_FIVE_SEASON_DATA.md`; the linked Polymarket trade API documentation
+  states the market-scoped history limit. These were exploratory response
+  summaries, not frozen raw-page artifacts or admissible training data.
+- **Effort/cost:** Three one-row public history requests and three exact event
+  identity lookups; $0 provider spend.
+- **Decision:** Keep P0 closed. The direct free market-scoped API is not a
+  demonstrated five-year source; focus next on a lawful archive/provider
+  inventory, rights and exact price for 2021–2022 before model spending.
+- **Confidence:** High in the three observed API responses; low in any
+  claim about all older NFL markets or alternative archive availability.
