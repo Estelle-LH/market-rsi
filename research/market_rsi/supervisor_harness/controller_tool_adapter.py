@@ -29,6 +29,7 @@ class ControllerToolAdapter:
         self.controller_sandbox_id = controller_sandbox_id
         self.researcher_sandbox_id = researcher_sandbox_id
         self.input_sha256 = input_sha256
+        self._used_call_ids: set[str] = set()
 
     def call_from_sandbox(self, observed_sandbox, request: dict) -> dict:
         """The trusted host passes its E2B object, never a guest-supplied ID."""
@@ -41,10 +42,15 @@ class ControllerToolAdapter:
                 or request["input_sha256"] != self.input_sha256):
             raise ValueError("tool request is not bound to frozen controller input")
         identifier(request["call_id"])
+        if request["call_id"] in self._used_call_ids:
+            raise ValueError("controller tool call ID was already used")
         if request["tool"] not in LITERATURE_TOOLS:
             raise ValueError("controller tool is outside the literature allowlist")
         if not isinstance(request["arguments"], dict):
             raise ValueError("controller tool arguments must be an object")
+        # A failed broker call is still an attempted call and must not be
+        # silently replayed to seek a more favorable result or spend twice.
+        self._used_call_ids.add(request["call_id"])
         # Broker.call validates exact arguments, applies its public-fetch budget,
         # and archives both success and failure. Do not implement a second,
         # weaker literature fetch path here.
