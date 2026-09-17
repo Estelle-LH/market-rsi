@@ -85,7 +85,9 @@ class FakeSandbox:
                       "task_sha256": hashlib.sha256(payload["task"].encode()).hexdigest()}
         self.content["/tmp/market_output.json"] = json.dumps(output)
         self.content["/tmp/market_report.json"] = json.dumps(
-            {"role": role, "checks": checks})
+            {"role": role, "checks": checks,
+             "public_tcp_reachability": {"1.1.1.1": False,
+                                         "2606:4700:4700::1111": False}})
         if self.raise_on_nonzero and not all(checks.values()):
             raise CommandExitException()
         return SimpleNamespace(exit_code=0 if all(checks.values()) else 17,

@@ -37,13 +37,15 @@ role = sys.argv[1]
 peer = sys.argv[2]
 payload = json.loads(Path("/tmp/market_input.json").read_text())
 network_blocked = True
+network_reachability = {}
 for address in ("1.1.1.1", "2606:4700:4700::1111"):
     try:
         connection = socket.create_connection((address, 443), timeout=2)
         connection.close()
         network_blocked = False
+        network_reachability[address] = True
     except OSError:
-        pass
+        network_reachability[address] = False
 checks = {
     "peer_marker_absent": not Path(peer).exists(),
     "paid_keys_absent": not any(os.environ.get(name) for name in
@@ -61,7 +63,7 @@ else:
               "task_sha256": hashlib.sha256(payload["task"].encode()).hexdigest()}
 Path("/tmp/market_output.json").write_text(json.dumps(output, sort_keys=True))
 Path("/tmp/market_report.json").write_text(json.dumps({"role": role,
-    "checks": checks}, sort_keys=True))
+    "checks": checks, "public_tcp_reachability": network_reachability}, sort_keys=True))
 if not all(checks.values()):
     sys.exit(17)
 '''
@@ -126,6 +128,12 @@ def _run_role(sandbox, role: str, payload: dict) -> tuple[dict, dict, dict]:
                            if report.get("checks", {}).get(name) is not True)
     if set(report.get("checks", {})) != required_checks:
         failed_checks.append("check_schema")
+    reachability = report.get("public_tcp_reachability", {})
+    if (set(reachability) != {"1.1.1.1", "2606:4700:4700::1111"}
+            or any(type(value) is not bool for value in reachability.values())):
+        failed_checks.append("network_probe_schema")
+    elif any(reachability.values()):
+        failed_checks.append("public_tcp_reachable")
     if report.get("role") != role:
         failed_checks.append("role_mismatch")
     if result.exit_code != 0:
