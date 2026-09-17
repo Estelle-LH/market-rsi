@@ -37,6 +37,18 @@ but cannot make a strong improvement claim; acquire more comparable data or
 wait for another completed season. A year count or thousands of correlated
 play rows alone is never evidence of sufficient statistical power.
 
+**2026-09-16 23:56 ET correction:** The pre-existing 2025 split has 163
+opened-Train games and 50 old Route-Dev games already scored; its 40 sealed
+Final games occupy only **11 distinct game dates** (schedule-metadata-only
+inspection recorded in `PREDICTION_BENCHMARK_V0_2026-09-16.md`). Thus the
+provisional year assignment above does **not** yield a qualifying >=20-date
+Final. Do not silently promote 2025 Train/old Dev into an unseen test or open
+the 40 labels to decide a new split. Three nominal seasons alone cannot pass
+the independent-confirmation gate. A distinct future time block or another
+prospectively frozen, genuinely uninspected >=20-date period is needed; its
+availability is not yet proven. The existing 40 can only be separately labelled
+as a small sealed pilot under its original rules.
+
 The local [nflverse schedule](https://github.com/nflverse/nfldata/blob/master/data/games.csv)
 revision `9c00ef3c24ac5fd8979bd8b40da4b2800bf0bc17` lists, respectively,
 285/284/285/285/285 games and 62/61/63/65/64 distinct game dates in the
@@ -272,6 +284,51 @@ season is absent. The catalog cannot by itself certify five seasons. The
 two downloaded metadata files remain in ignored local artifact
 `artifacts/p0-polymarket-archive-catalog-20260917-01/`; no raw file was pushed.
 
+### 2023 source-only identity and fixed price/fill canaries
+
+On 2026-09-16, the strict `nfl-` archive candidate screen above was joined to
+the revision-pinned nflverse 2023 schedule by game date/team identity, without
+reading scores. The first attempt matched 222/285 because archive slugs use
+`LAS` for the Raiders while the schedule uses `LV`; it remains preserved as
+`artifacts/p0-polymarket-2023-archive-catalog-20260917-01/`. After adding and
+testing that explicit alias, **237/285** scheduled games matched unique
+two-token market conditions; **48** did not. The unmatched games cluster in
+Weeks 13 (13), 16 (3), 17 (15), 18 (16), 22 (1). This is identity coverage,
+**not** 237 games with usable trades, event-aligned labels or verified winner
+semantics. The corrected ignored artifact is
+`artifacts/p0-polymarket-2023-archive-catalog-20260917-02/`, mapping SHA-256
+`e6e1c0501ea9831e2bbf97460b86d4db2f31352117a9df70ae16d2b01f40dbea`.
+The large remote `market_data.parquet` was queried by revision-pinned HTTPS
+column/range; its full bytes were **not** downloaded or independently hashed.
+
+A deterministic first/middle/last game sample (sorted game date and ID)
+queried three fixed monthly `order_filled` partitions for kickoff minus 12h
+to plus 5h. The in-game fill counts were **0**, **6**, and **137**; total
+window fills 18, 6, 206, respectively. The middle game had only three
+distinct fill seconds, despite spanning a full game. The partition object
+hashes are publisher LFS claims, not locally verified full-object hashes.
+Sample artifact `artifacts/p0-polymarket-2023-fixed-fill-canary-20260917-01/`
+has results SHA-256
+`acc4c78732396d16bfb42a106d5ec674214715d352f2d563e742aba678ff1e23`.
+The same middle-game official Data API returned three taker trade rows in
+the fixed window. Neither route supports calling the whole 2023 season
+adequately liquid for the current event-horizon target.
+
+The official [Polymarket prices-history endpoint](https://docs.polymarket.com/api-reference/markets/get-prices-history)
+returned **1,020/1,019/1,020 one-minute historical price points** for the
+same three game windows, with **41/34/133** consecutive price changes and
+longest unchanged runs **137/214/661 minutes**. Thus a timestamp at each
+minute is not a distinct new trade. The documentation calls this historical
+price data; it does not establish our required fill-price, bid/ask,
+executability or point-in-time event-label semantics. This may be a *different*
+predeclared target after validation; it must not silently replace the existing
+trade-based objective. Raw fixed responses and manifest remain only in ignored
+`artifacts/p0-polymarket-2023-fixed-price-history-canary-20260917-01/`,
+results SHA-256
+`6da3451760f65415d681bb3e271afe67b40eb11297ad387231a4eaae573f01d0`.
+The source-only scripts and eight offline tests are in `supervisor_harness/`.
+Zero Tinker, zero vendor spend, no Dev/Final opening, no model result.
+
 Kalshi's [January 2025 sports-market announcement](https://news.kalshi.com/p/game-on-kalshi-sports-trading-is-now-100-legal-in-all-50-states-2)
 is evidence against assuming that its API can supply five earlier NFL seasons,
 even though [historical endpoints](https://docs.kalshi.com/getting_started/historical_data)
@@ -354,14 +411,15 @@ multi-year result or fabricate data.
 | --- | --- | --- | --- |
 | 2021 | `nfl` metadata fully paged: 199 legacy events, zero matching the modern typed-moneyline schema; an official playoff page shows game-winner markets. One old Data API query returned zero, but a revision-pinned free AMM archive yielded 251/406 rows for two November 2021 games and 332–870 rows for four January 2022 playoff games. Whole-season coverage/label quality unknown. | Official multi-season PBP source identified; this season not locally verified | No |
 | 2022 | `nfl` metadata fully paged: 35 legacy/grouped events, zero matching the modern typed-moneyline schema; an official Week 5 page shows game-winner markets. One old Data API query returned zero, but the free AMM archive yielded 420 rows for the selected Colts–Broncos market. Whole-season coverage/label quality unknown. | Same boundary | No |
-| 2023 | `nfl` series/window returned zero, yet an official daily event page shows game-winner markets. One bounded query returned a timestamped fill; season-wide coverage unknown. | Same boundary | No |
+| 2023 | `nfl` series/window returned zero, yet the revision-pinned archive has 237/285 strict schedule-matched two-token markets. Fixed first/middle/last samples have 0/6/137 in-game on-chain fills; official minute-price history varies but its trade/quote semantics are unverified. Forty-eight schedule games are unmatched and season-wide usable label coverage remains unknown. | Schedule identity verified only; event-aligned PBP coverage unknown | No |
 | 2024 | Polymarket 284-game source; 407,225 trades; 60s labels 67.64%, 300s 90.87% in historical event clock | Frozen 2024 PBP used for support audit; not staged in local execution tree | No—support audit only |
-| 2025 | Corrected `nfl-2025` catalog has 285 typed moneylines and 285/285 schedule-identity matches; one earliest-game 2,148-trade source canary, not season coverage; a limited opened-Train 60s baseline exists | Identity schedule verified; full play-by-play alignment not verified here | No |
+| 2025 | Corrected `nfl-2025` catalog has 285 typed moneylines and 285/285 schedule-identity matches; one earliest-game 2,148-trade source canary, not season coverage; opened-Train baseline and old scored Dev exist. The 40-game sealed Final spans only 11 dates, below the >=20-date gate. | Identity schedule verified; full play-by-play alignment not verified here | No |
 
-**Next bounded action:** prioritize 2023–2025 same-mechanism CLOB game/trade/
-label coverage and the 2025 exposure audit for the three-season pilot. Do not
-continue a broad 2021–2022 AMM catalog hunt merely to reach five calendar
-years. If recent-year gaps remain, issue the per-season gap/rights/cost table
-for targeted provider samples and quotes. The five-season primary claim stays
-closed until its separate gate passes. Betfair remains a *separate* exchange,
-not a silent fill.
+**Next bounded action:** make a read-only 2025 exposure/date inventory without
+opening sealed prices/labels, then decide where a genuinely independent
+>=20-date Final can come from. Resolve whether 2023 historical prices are
+carried-forward/trade/mid/quotes before changing any objective; do not keep
+scanning more years simply because a metadata candidate exists. Document the
+48-game 2023 identity gap and the regular-season fill-density gap before
+seeking exact sample/rights/cost terms. Both pilot and five-season primary
+remain closed. Betfair remains a *separate* exchange, not a silent fill.
