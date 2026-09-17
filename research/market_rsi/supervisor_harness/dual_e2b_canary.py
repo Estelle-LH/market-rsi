@@ -12,8 +12,14 @@ import hashlib
 import importlib.metadata
 import json
 import secrets
+import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
+
+CODE_ROOT = Path(__file__).resolve().parent.parent
+if str(CODE_ROOT) not in sys.path:
+    sys.path.insert(0, str(CODE_ROOT))
 
 from market_rsi import canonical, digest, file_hash, fresh_json, identifier, load_json
 from paid_budget import PaidBudget, money
@@ -98,11 +104,14 @@ def _require_local_runtime() -> None:
 
 def _require_no_active_market_sandboxes(sandbox_class, key: str) -> None:
     pager = sandbox_class.list(limit=100, api_key=key, request_timeout=15)
+    inspected = 0
     while pager.has_next:
         for item in pager.next_items():
+            inspected += 1
             metadata = item.metadata or {}
             if str(metadata.get("experiment_id", "")).startswith("market-rsi"):
                 raise RuntimeError("existing Market RSI E2B sandbox is still active")
+    return {"inspected_sandboxes": inspected, "active_market_rsi_sandboxes": 0}
 
 
 def _run_role(sandbox, role: str, payload: dict) -> tuple[dict, dict, dict]:
@@ -254,18 +263,9 @@ def run_pair(root: Path, budget: PaidBudget, create_sandbox) -> dict:
                                  "kill_acknowledged": False,
                                  "error_type": type(exc).__name__}
         fresh_json(root / "cleanup.json", cleanup)
-        if (cleanup and len(sandboxes) == len(create_attempts)
-                and all(item["kill_acknowledged"] for item in cleanup.values())):
-            # Known debt, 2026-09-17: this self-process is still running here,
-            # so process_reaped=True is not temporally exact. The live entry is
-            # disabled above. Replace this with a parent-owned post-exit
-            # reconciler before any future live dispatch; do not treat these
-            # historical upper-bound receipts as actual E2B invoices.
-            budget.settle_uncertain_at_upper(root.name, {
-                "terminal_local": True, "process_reaped": True,
-                "remote_usage_unknown": True, "automatic_retry": False,
-                "evidence_sha256": file_hash(root / "cleanup.json"),
-                "note": "Both exact E2B sandboxes killed; invoice unknown; hold charged at upper bound."})
+        # Do not mark this very process as reaped. The parent may reconcile
+        # only after it has waited for the child and verified remote cleanup.
+        # Until then the dispatched budget hold stays outstanding.
     if error is not None:
         raise error
     if set(cleanup) != {"controller", "researcher"} or not all(
@@ -280,9 +280,120 @@ def run_pair(root: Path, budget: PaidBudget, create_sandbox) -> dict:
               "cleanup_sha256": file_hash(root / "cleanup.json"),
               "distinct_sandbox_ids": True, "isolation_checks_passed": True,
               "controller_led_result": False, "empirical_result": False,
-              "cost_status": "upper_bound_only_not_invoice"}
+              "cost_status": "pending_parent_reconciliation"}
     fresh_json(root / "review.json", review)
     return review
+
+
+def _reconcile_reaped_child(root: Path, budget: PaidBudget, sandbox_class,
+                            key: str) -> dict:
+    """Settle conservatively only after a parent has reaped the exact child."""
+    root = _local_root(root, "canary output")
+    def safe_json(name: str) -> dict:
+        path = root / name
+        if path.is_symlink() or not path.is_file() or path.stat().st_size > 65536:
+            raise ValueError("missing, symlinked or oversized canary evidence")
+        value = load_json(path)
+        if not isinstance(value, dict):
+            raise ValueError("canary evidence must be an object")
+        return value
+    process_path = root / "parent-process.json"
+    process = safe_json("parent-process.json")
+    if (set(process) != {"schema", "job_id", "process_reaped", "exit_code",
+                         "timed_out", "stdout_sha256", "stderr_sha256"}
+            or process["schema"] != "dual_e2b_parent_process_v1"
+            or process["job_id"] != root.name
+            or process["process_reaped"] is not True
+            or type(process["timed_out"]) is not bool
+            or (process["exit_code"] is not None
+                and type(process["exit_code"]) is not int)
+            or (process["timed_out"] is True and process["exit_code"] is not None)
+            or (process["timed_out"] is False and process["exit_code"] is None)
+            or any(not isinstance(process[key], str) or len(process[key]) != 64
+                   or any(c not in "0123456789abcdef" for c in process[key])
+                   for key in ("stdout_sha256", "stderr_sha256"))):
+        raise ValueError("parent has not proved exact child termination")
+    claim = safe_json("claim.json")
+    if (claim.get("job_id") != root.name or claim.get("source_sha256") != file_hash(__file__)
+            or claim.get("roles") != ["controller", "researcher"]):
+        raise ValueError("canary claim/source changed before reconciliation")
+    cleanup = safe_json("cleanup.json")
+    if set(cleanup) != {"controller", "researcher"}:
+        raise ValueError("both exact E2B sandbox cleanups required")
+    sandbox_ids = []
+    for role in ("controller", "researcher"):
+        info = safe_json(f"{role}-sandbox.json")
+        item = cleanup[role]
+        if (info.get("role") != role or not isinstance(info.get("sandbox_id"), str)
+                or not info["sandbox_id"] or set(item) != {"sandbox_id", "kill_acknowledged"}
+                or item["sandbox_id"] != info["sandbox_id"]
+                or item["kill_acknowledged"] is not True):
+            raise ValueError("exact role sandbox cleanup not verified")
+        sandbox_ids.append(info["sandbox_id"])
+    if len(set(sandbox_ids)) != 2:
+        raise ValueError("controller and researcher reused a sandbox ID")
+    account = _require_no_active_market_sandboxes(sandbox_class, key)
+    fresh_json(root / "parent-account-check.json", {
+        "schema": "dual_e2b_parent_account_check_v1", "job_id": root.name,
+        "checked_at_utc": datetime.now(timezone.utc).isoformat(), **account})
+    evidence_sha = digest({
+        "claim_sha256": file_hash(root / "claim.json"),
+        "process_sha256": file_hash(process_path),
+        "cleanup_sha256": file_hash(root / "cleanup.json"),
+        "account_check_sha256": file_hash(root / "parent-account-check.json")})
+    budget.settle_uncertain_at_upper(root.name, {
+        "terminal_local": True, "process_reaped": True,
+        "remote_usage_unknown": True, "automatic_retry": False,
+        "evidence_sha256": evidence_sha,
+        "note": "Parent reaped exact child; both role sandboxes killed and no Market RSI sandbox active; invoice unknown."})
+    result = {"schema": "dual_e2b_parent_accounting_v1", "job_id": root.name,
+              "evidence_sha256": evidence_sha,
+              "cost_status": "uncertain_upper_bound_not_invoice",
+              "process_reaped": True, "exact_remote_cleanup_verified": True}
+    fresh_json(root / "parent-accounting.json", result)
+    return result
+
+
+def run_parent(root: Path, budget: PaidBudget, sandbox_class, key: str,
+               command: list[str], invoke=subprocess.run) -> dict:
+    """Launch once, wait for the child, then make an honest terminal receipt."""
+    if LIVE_DISPATCH_BLOCKED_REASON:
+        raise RuntimeError("live E2B canary blocked: " + LIVE_DISPATCH_BLOCKED_REASON)
+    root = _local_root(root, "canary output")
+    if root.exists():
+        raise FileExistsError("fresh canary ID required")
+    try:
+        child = invoke(command, capture_output=True, text=True,
+                       timeout=2 * TIMEOUT_SECONDS + 60, check=False)
+        exit_code, timed_out = child.returncode, False
+        stdout, stderr = child.stdout, child.stderr
+    except subprocess.TimeoutExpired as exc:
+        # subprocess.run kills and waits for its direct child before raising.
+        exit_code, timed_out = None, True
+        stdout, stderr = exc.stdout or b"", exc.stderr or b""
+    if not root.is_dir():
+        raise RuntimeError("child exited before a canary claim; no accounting was written")
+    def output_sha(value):
+        return hashlib.sha256(value if isinstance(value, bytes)
+                              else value.encode()).hexdigest()
+    fresh_json(root / "parent-process.json", {
+        "schema": "dual_e2b_parent_process_v1", "job_id": root.name,
+        "process_reaped": True, "exit_code": exit_code, "timed_out": timed_out,
+        "stdout_sha256": output_sha(stdout), "stderr_sha256": output_sha(stderr)})
+    accounting = _reconcile_reaped_child(root, budget, sandbox_class, key)
+    if timed_out or exit_code != 0:
+        raise RuntimeError("canary child failed after reaping; preserved exact artifacts and upper-bound accounting")
+    review = load_json(root / "review.json")
+    if (review.get("claim_sha256") != file_hash(root / "claim.json")
+            or review.get("cleanup_sha256") != file_hash(root / "cleanup.json")
+            or review.get("isolation_checks_passed") is not True):
+        raise ValueError("child's isolation review missing or changed")
+    result = {"schema": "dual_e2b_parent_review_v1", "job_id": root.name,
+              "child_review_sha256": file_hash(root / "review.json"),
+              "accounting_sha256": file_hash(root / "parent-accounting.json"),
+              "scripted_only": True, "empirical_result": False}
+    fresh_json(root / "parent-review.json", result)
+    return result
 
 
 def main() -> None:
@@ -290,6 +401,7 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--budget", type=Path, required=True)
     parser.add_argument("--env-file", type=Path, required=True)
+    parser.add_argument("--child", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
     if LIVE_DISPATCH_BLOCKED_REASON:
         raise RuntimeError("live E2B canary blocked: " + LIVE_DISPATCH_BLOCKED_REASON)
@@ -309,10 +421,18 @@ def main() -> None:
     budget = PaidBudget(args.budget)
     _local_root(budget.root, "budget")
     _require_local_runtime()
-    with (budget.root / "dual-e2b-canary.lock").open("a+") as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        _require_no_active_market_sandboxes(Sandbox, key)
-        review = run_pair(args.output, budget, create)
+    if args.child:
+        with (budget.root / "dual-e2b-canary.lock").open("a+") as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            _require_no_active_market_sandboxes(Sandbox, key)
+            review = run_pair(args.output, budget, create)
+    else:
+        with (budget.root / "dual-e2b-parent.lock").open("a+") as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            command = [sys.executable, str(Path(__file__).resolve()),
+                       "--output", str(args.output), "--budget", str(args.budget),
+                       "--env-file", str(args.env_file), "--child"]
+            review = run_parent(args.output, budget, Sandbox, key, command)
     print(canonical(review))
 
 

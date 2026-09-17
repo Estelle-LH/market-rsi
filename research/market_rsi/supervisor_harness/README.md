@@ -61,3 +61,15 @@ actual-reading record operations. A real-broker offline integration test
 passes with a fake public transport. The new GLM/E2B tool channel,
 broker-only A→B transfer and effective network isolation have not passed a
 live canary; the adapter alone does not authorize paid execution.
+
+The E2B canary now keeps a dispatched budget hold open inside its child.
+The trusted parent waits for that exact child to exit, checks both role IDs,
+their kill acknowledgements and the account's active Market RSI listing,
+then records an **uncertain upper bound, not an invoice**. If any evidence is
+missing, the hold remains unresolved and a new paid launch is blocked. This
+post-exit sequence passed offline tests, including one real local subprocess;
+it has **not** passed a new live E2B canary. The live entry remains explicitly
+blocked because the old blanket-deny network probe did not establish the
+required role-specific isolation. A local-only `runtime-e2b-py312` now has
+the pinned `e2b==2.38.0` SDK and passed dependency/runtime checks, without
+touching the Tinker runtime or iCloud archive.

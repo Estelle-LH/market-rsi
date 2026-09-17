@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -141,12 +142,114 @@ class DualE2BCanaryTests(unittest.TestCase):
         self.assertTrue(review["isolation_checks_passed"])
         self.assertFalse(review["controller_led_result"])
         self.assertEqual([e[0] for e in self.budget.events],
-                         ["reserve", "dispatch", "settle_upper"])
+                         ["reserve", "dispatch"])
+        self.assertEqual(review["cost_status"], "pending_parent_reconciliation")
         self.assertTrue(all(s.killed for s in created.values()))
         decision = json.loads((self.root / "decision.json").read_text())
         output = json.loads((self.root / "output.json").read_text())
         self.assertEqual(output["decision_sha256"], canary.digest(decision))
         self.assertTrue((self.root / "cleanup.json").is_file())
+
+    def test_parent_reaps_before_conservative_budget_settlement(self):
+        def invoke(command, **kwargs):
+            self.assertFalse((self.root / "parent-process.json").exists())
+            canary.run_pair(self.root, self.budget,
+                            lambda role, job_id: FakeSandbox(f"{role}-id"))
+            self.assertEqual([event[0] for event in self.budget.events],
+                             ["reserve", "dispatch"])
+            return SimpleNamespace(returncode=0, stdout="", stderr="")
+
+        account = SimpleNamespace(list=lambda **kwargs: FakePager([]))
+        with patch.object(canary, "LIVE_DISPATCH_BLOCKED_REASON", ""):
+            result = canary.run_parent(self.root, self.budget, account,
+                                       "fake-key", ["fake-child"], invoke=invoke)
+        self.assertEqual(result["schema"], "dual_e2b_parent_review_v1")
+        self.assertEqual([event[0] for event in self.budget.events],
+                         ["reserve", "dispatch", "settle_upper"])
+        receipt = self.budget.events[-1][1][1]
+        self.assertTrue(receipt["process_reaped"])
+        self.assertTrue((self.root / "parent-account-check.json").is_file())
+        self.assertTrue((self.root / "parent-accounting.json").is_file())
+
+    def test_real_local_child_is_reaped_before_parent_receipt(self):
+        program = """from pathlib import Path
+import sys
+import dual_e2b_canary as canary
+from supervisor_harness.test_dual_e2b_canary import FakeBudget, FakeSandbox
+canary._local_root = lambda path, label: Path(path).resolve()
+canary._require_local_runtime = lambda: None
+canary.run_pair(Path(sys.argv[1]), FakeBudget(Path(sys.argv[2])),
+                lambda role, job_id: FakeSandbox(f'{role}-id'))
+"""
+        command = [sys.executable, "-c", program,
+                   str(self.root), str(self.budget.root)]
+        account = SimpleNamespace(list=lambda **kwargs: FakePager([]))
+        with patch.object(canary, "LIVE_DISPATCH_BLOCKED_REASON", ""):
+            result = canary.run_parent(self.root, self.budget, account,
+                                       "fake-key", command)
+        process = json.loads((self.root / "parent-process.json").read_text())
+        self.assertEqual(process["exit_code"], 0)
+        self.assertTrue(process["process_reaped"])
+        self.assertEqual(result["schema"], "dual_e2b_parent_review_v1")
+        self.assertEqual([event[0] for event in self.budget.events], ["settle_upper"])
+
+    def test_parent_preserves_hold_if_account_still_has_market_sandbox(self):
+        def invoke(command, **kwargs):
+            canary.run_pair(self.root, self.budget,
+                            lambda role, job_id: FakeSandbox(f"{role}-id"))
+            return SimpleNamespace(returncode=0, stdout="", stderr="")
+
+        active = SimpleNamespace(list=lambda **kwargs: FakePager([
+            SimpleNamespace(metadata={"experiment_id": "market-rsi-other"})]))
+        with patch.object(canary, "LIVE_DISPATCH_BLOCKED_REASON", ""):
+            with self.assertRaisesRegex(RuntimeError, "still active"):
+                canary.run_parent(self.root, self.budget, active,
+                                  "fake-key", ["fake-child"], invoke=invoke)
+        self.assertEqual([event[0] for event in self.budget.events],
+                         ["reserve", "dispatch"])
+        self.assertTrue((self.root / "parent-process.json").is_file())
+        self.assertFalse((self.root / "parent-accounting.json").exists())
+
+    def test_failed_child_with_exact_cleanup_is_charged_at_upper_not_called_success(self):
+        def invoke(command, **kwargs):
+            try:
+                canary.run_pair(self.root, self.budget,
+                                lambda role, job_id: FakeSandbox(
+                                    f"{role}-id", failing_check=(
+                                        "direct_public_network_blocked"
+                                        if role == "controller" else None)))
+            except ValueError:
+                pass
+            return SimpleNamespace(returncode=1, stdout="", stderr="failed")
+
+        account = SimpleNamespace(list=lambda **kwargs: FakePager([]))
+        with patch.object(canary, "LIVE_DISPATCH_BLOCKED_REASON", ""):
+            with self.assertRaisesRegex(RuntimeError, "child failed after reaping"):
+                canary.run_parent(self.root, self.budget, account,
+                                  "fake-key", ["fake-child"], invoke=invoke)
+        self.assertEqual([event[0] for event in self.budget.events],
+                         ["reserve", "dispatch", "settle_upper"])
+        self.assertFalse((self.root / "parent-review.json").exists())
+
+    def test_parent_preserves_hold_if_second_sandbox_was_never_created(self):
+        def invoke(command, **kwargs):
+            def factory(role, job_id):
+                if role == "researcher":
+                    raise RuntimeError("remote create unresolved")
+                return FakeSandbox("controller-id")
+            try:
+                canary.run_pair(self.root, self.budget, factory)
+            except RuntimeError:
+                pass
+            return SimpleNamespace(returncode=1, stdout="", stderr="failed")
+
+        account = SimpleNamespace(list=lambda **kwargs: FakePager([]))
+        with patch.object(canary, "LIVE_DISPATCH_BLOCKED_REASON", ""):
+            with self.assertRaisesRegex(ValueError, "both exact E2B sandbox cleanups"):
+                canary.run_parent(self.root, self.budget, account,
+                                  "fake-key", ["fake-child"], invoke=invoke)
+        self.assertEqual([event[0] for event in self.budget.events],
+                         ["reserve", "dispatch"])
 
     def test_same_sandbox_id_fails_and_preserves_failure(self):
         created = []
