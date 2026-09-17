@@ -428,3 +428,19 @@ The supervisor's outcome-blind sampling and cleaning procedure is fixed in
 is **not** a substitute for a full-cohort coverage audit. In the current
 archive classifier, 47 of the 92 scheduled games in Weeks 13–18 are unmatched,
 a strong late-season catalog bias that must remain visible in the denominator.
+The frozen 12-game fill diagnostic is now complete: 5/9 sampled regular-season
+games have zero in-game fills, while three sampled playoff games have 59–79
+each. Result SHA-256
+`82946dfb60edbdb98d18771752452ceaeb27f52dc767645122421419f3e292bd`
+in ignored `artifacts/p0-polymarket-2023-stratified-fill-density-20260917-02/`.
+The `-01` attempt failed before any query because the local interpreter lacked
+DuckDB; it remains preserved. A fixed zero-full-window-fill game
+(`2023_14_CAR_NO`) had 1,020 official minute-price points but only one pregame
+price change and none in-game; its response SHA-256 is
+`25e482261b05a191eae7b6d5e224bf504ffc57f2b1488af8a279a33674dfece3`.
+These selected samples are a warning, **not** a season-wide missingness rate
+or proof that the archive is complete. Separately, source-only reconstruction
+of the old 2025 split gives 42/11/11 distinct Train/Dev/Final dates with no
+same-date overlap, but does not recreate a complete prior access history.
+That date report SHA-256 is
+`8d8a243792d93d5a7c0d740ca524bb622d77ac0c5034e39edfb51faae5609f15`.

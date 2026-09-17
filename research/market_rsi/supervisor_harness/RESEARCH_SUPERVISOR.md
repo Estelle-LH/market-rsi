@@ -5,6 +5,17 @@ does not change an experiment, let the controller see sealed data, or turn
 human harness edits into model self-improvement. Preserve detailed machine
 traces elsewhere. This page is intentionally short enough to use during work.
 
+The user clarified on 2026-09-17 that this layer is a **watcher/gatekeeper**,
+not the scientific controller. Read
+`CONTROLLER_RESEARCHER_SUPERVISOR_CONTRACT_2026-09-17.md`. The controller
+chooses the next literature question, data investigation, algorithm, code or
+candidate harness edit. The inner researcher executes the controller's plan
+in an isolated, logged workspace; E2B/Harbor may host that execution after
+their exact runtime and isolation canaries pass. The supervisor checks the
+result, frozen test/rights/cost boundaries and next-cycle readiness. Earlier
+supervisor-authored data diagnostics remain useful P0 evidence but are not
+controller decisions or self-improvement results.
+
 ## Before each work block
 
 Read `RESEARCH_STATE.md`. Pick the cheapest next action that tests the current
@@ -22,6 +33,31 @@ hashes, protected-data boundaries and the sole budget ledger. Do not run
 competing paid experiments, mutate the same frozen artifact concurrently, or
 use parallelism to skip a dependency or admission gate. Record what ran in
 parallel and whether it actually shortened the critical path.
+
+## Recursive work loop (user direction, 2026-09-17)
+
+The research objective persists across turns and scheduled wakes. After each
+bounded action, the supervisor inspects evidence and gives the controller a
+factual, allowed-information summary; the **controller**, not the supervisor,
+chooses the next scientific action. The researcher executes that action,
+and the supervisor accepts/rejects its provenance and gate compliance. A
+failed candidate, missing source, or closed P0 gate stops only the **affected
+action**, not the whole research programme: preserve the artifact and feed
+the failure back for a new controller decision. Do not stop after writing a
+plan, making a commit, or answering a status question. If the controller
+execution path is not ready, the supervisor may perform bounded source and
+infrastructure diagnostics, explicitly labelled as outer/human work, but
+must not impersonate a controller decision. Escalate only a genuinely new
+scope, data-rights, purchase or budget decision. If no safe useful action
+exists, record the precise blocker and keep the recurring supervisor active
+for later state changes rather than inventing a paid retry or weakening the
+benchmark.
+
+This is **research-loop persistence**, not permission to change a frozen
+evaluation after seeing Dev/Final, sample repeatedly for a good score, or
+attribute human-written harness revisions to the model's self-improvement.
+Each harness revision and experiment must have distinct version/hash, data
+scope, cost and result records before a cross-version comparison.
 
 ## Review triggers and decision
 
@@ -53,11 +89,11 @@ information, and a general rule. Extract a reusable rule only when supported
 by the record; do not invent the human's intent.
 
 The `market-rsi` scheduled task was explicitly resumed by the user on
-2026-09-16 and is **active**. It performs a supervisor check about every two hours.
-Give the human one short result-first digest on that cadence, even if the
-honest status is "no meaningful result"; report a material failure or needed
-decision sooner. This periodic digest is not permission to poll expensive
-providers or repeat an unchanged diagnostic experiment.
+2026-09-16 and is **active**. It wakes about hourly to continue the recursive
+loop. Give the human one short result-first digest about every two hours, even
+if the honest status is "no meaningful result"; report a material failure or
+needed decision sooner. This periodic digest is not permission to poll
+expensive providers or repeat an unchanged diagnostic experiment.
 
 ## Hard boundaries for the current research
 
@@ -76,10 +112,12 @@ providers or repeat an unchanged diagnostic experiment.
   pilot as a five-season result. Free source inventory and bounded data
   acquisition are on the critical path; a larger dataset is not a model gain.
 - For source sampling and cleaning, use
-  `P0_SAMPLING_CLEANING_DECISION_2026-09-17.md`. The supervisor—not the user—
-  chooses and precommits an outcome-blind diagnostic sample, verifies raw
-  identities/time/units, keeps every scheduled game and missing-label reason
-  in the denominator, and decides whether the data gate can advance. Do not
+  `P0_SAMPLING_CLEANING_DECISION_2026-09-17.md`. It defines safety/admission
+  constraints; the controller selects a scientific sample and cleaning
+  proposal within them, the researcher executes it, and the supervisor
+  verifies provenance. The supervisor's earlier fixed 12-game sample is an
+  outer diagnostic, not a controller proposal. Keep every scheduled game and
+  missing-label reason in the denominator. Do not
   select only active or changing-price games, forward-fill missing trades as
   zero changes, or treat minute-history points as distinct fills. A new target
   is a new benchmark version, never a silent cleaning adjustment.

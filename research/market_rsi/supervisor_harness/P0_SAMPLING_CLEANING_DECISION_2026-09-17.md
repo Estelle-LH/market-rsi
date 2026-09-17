@@ -1,9 +1,13 @@
-# Supervisor decision: sample and clean without selecting an easy benchmark
+# Outer data-audit rule: sample and clean without selecting an easy benchmark
 
 Status: **P0 diagnostic rule, not a released model experiment or an admitted
-dataset.** Owner: research supervisor. The user does not need to choose the
-sample or each cleaning rule. Material scope changes, a data purchase, or
-waiving the protected-test gate still require their own authorization.
+dataset.** The supervisor authored this bounded source diagnostic and its
+safety constraints; it was **not** a controller decision or a self-improvement
+round. For future scientific sampling/cleaning choices the controller makes
+the proposal, the inner researcher executes it, and the supervisor checks
+these constraints. The user does not choose each routine step. Material scope
+changes, a data purchase, or waiving the protected-test gate still require
+their own authorization.
 
 ## Observed problem and source research
 
@@ -44,8 +48,10 @@ audit, not an empirical result or a new literature claim.
    `artifacts/p0-polymarket-2023-stratified-density-plan-20260917-01/`,
    selection SHA-256
    `69bbc3f4579e08e744eff31d042386185058c648890910f5b5d68f8e9116487e`.
-   The 12 selected games have **not** yet been queried for fills. A 12-game
-   diagnostic can rule out an implausible source; it cannot admit a season.
+   The 12 selected games were later queried once for fill counts; results and
+   the first pre-query dependency failure are recorded in
+   `DAILY_LOG_2026-09-17.md`. A 12-game diagnostic can rule out an implausible
+   source; it cannot admit a season.
 3. **All official plays for an admitted game.** Never choose a play because
    its *future* price moved, a label exists, or the model did well. If Train
    computation later needs fewer games, use a frozen date/week-stratified,
@@ -89,16 +95,16 @@ audit, not an empirical result or a new literature claim.
    target selection. Flat, quiet and zero-move segments stay in coverage
    accounting; filters/weights may be compared *only* as Train-only changes.
 
-## Supervisor's autonomous stop/continue rule
+## Gatekeeper's stop/continue rule
 
-First audit the independent 2025 exposure/date inventory *without opening
-protected prices or labels*. Then verify source/target semantics and assess
-the 12 frozen games only if that is still the cheapest discriminator; a full
-season-wide event-aligned support report would be required for admission.
+The schedule-only 2025 role/date audit and frozen 12-game 2023 fill diagnostic
+are now complete. Next audit the *actual* prior access receipts, to the extent
+they exist locally, without opening protected prices or labels. A full
+season-wide event-aligned support report would still be required for admission.
 Compute coverage and paired precision by date/week, not by minute point or
 play as if independent. The old 2025 Final cannot be promoted as a >=20-date
 confirmation. If no independent >=20-date block or comparable target is
 available, the supervisor records the exact gap, does not burn the $200
-Tinker model cap, and proposes a changed time period/target as a *new*
-experiment. It asks the user only for a genuine scope, rights or spending
-decision—not for routine sampling or cleaning choices.
+Tinker model cap, and returns the gap to the controller for a proposed new
+time period/target version. It asks the user only for a genuine scope, rights
+or spending decision—not for routine sampling or cleaning choices.

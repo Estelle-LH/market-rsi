@@ -40,11 +40,43 @@ authorized actions remain subject to their existing budgets and gates.
 Current starting references and pending tests:
 `LITERATURE_TO_HARNESS_2026-09-10.md`.
 
-# Human harness changes versus agent self-evolution
+# Versioned harness changes versus agent self-evolution
 
-The user defines harness development here as human-directed engineering, not
-agent self-evolution. Study the controller's experiments and use of feedback
-under a fixed harness separately; progress still requires independent evidence.
+Earlier harness revisions were human-directed engineering, not evidence that
+the agent self-evolved. On 2026-09-17 the user specified a **new intended
+research architecture**: the outer supervisor monitors and enforces gates;
+the controller chooses each scientific step, including literature search,
+algorithms, code and candidate harness changes; an inner researcher executes
+those tasks in isolation (E2B/Harbor are permitted execution options). Do not
+claim this architecture is running until the controller decision and researcher
+execution adapters have passed real end-to-end tests. A supervisor-authored
+source audit or harness change must never be attributed to the controller.
+
+Candidate harness self-modification is allowed only as a separately versioned,
+reviewable proposal in a sandbox. It cannot overwrite the frozen runner,
+protected evaluator, source data, budget ledger or prior experiment artifacts.
+The supervisor validates provenance, tests, cost and leakage, but does not
+choose the scientific proposal for the controller or rewrite its response.
+Study controller learning under an unchanged baseline harness separately from
+gain due to changed candidate harness; progress still requires independent
+evidence. See `supervisor_harness/CONTROLLER_RESEARCHER_SUPERVISOR_CONTRACT_2026-09-17.md`.
+
+**Operational gate for all new Market RSI self-evolution claims:** follow that
+contract's input → model decision → bounded researcher order → independent
+measurement → supervisor review → next input sequence. The earlier
+`data_scientist_harness/broker.py` session is a legacy controller/research
+workbench; its `request_capability` and `propose_algorithm_design` tools only
+archive proposals. Do not call a legacy `submit_research_decision`, a
+supervisor-authored source audit, or a scripted canary a complete new recursive
+round. `supervisor_harness/research_cycle_gate.py` currently admits only
+zero-cost synthetic provenance fixtures; its `controller_led_result=false`
+and `empirical_improvement_claim_allowed=false` are hard claim boundaries.
+Live controller/model authorship and E2B/Harbor isolation need separate exact
+adapters and receipts before promotion. When P0 is closed, continue lawful
+public/Train-only research; block only paid formal scoring and protected data.
+After about an hour with no decision-relevant result, review and replan instead
+of expanding data plumbing indefinitely.
+
 Before a new paid or empirical experiment through the Data Scientist Harness,
 commit its exact source, publish an annotated version tag to the user's own
 origin, and bind the verified release receipt to the workspace. Never move a
