@@ -8,6 +8,66 @@ This contract replaces the mistaken assumption that the outer supervisor
 should choose each scientific step. Historical
 supervisor-authored 2023/2025 data audits retain their original attribution.
 
+## Current system map and connection-debug boundary (2026-09-17)
+
+This is the **designed** live route, not a claim that a GLM research round has
+run. The local read-only dashboard displays existing supervisor/receipt logs;
+it does not make unlogged agent tool calls observable retroactively.
+
+```text
+LOCAL MAC (trusted)                              REMOTE E2B (last canary only)
+Codex Supervisor -- global state, rights, budget
+          |
+          v
+Broker / runner -- E2B SDK commands -----------> A: Controller role sandbox
+          |                                        (no GLM invoked in -03)
+          +-- admitted task, via broker --------> B: Researcher role sandbox
+          |                                        (marker service only in -03)
+          +<-- artifacts / observed receipts -----+
+          v
+Independent evaluator --> append-only Archive --> allowed next input
+
+Direct A <--> B is forbidden in the real workflow. The synthetic network
+canary deliberately tries both directions to check that prohibition; it is
+not the task-delivery channel. Hosted GLM inference is brokered and was not
+invoked by the last canary. Protected data and provider keys stay local.
+```
+
+The last immutable run `market-rsi-protocol-canary-20260917-03` reached these
+boundaries, in order:
+
+| Boundary | Observation | What it does **not** show |
+| --- | --- | --- |
+| Local parent -> E2B A/B creation | Two distinct sandbox IDs; both guest boundary checks passed. | No GLM decision or researcher execution. |
+| E2B network-policy `get_info()` | Both returned `allow_internet_access=false`, `deny_out=["0.0.0.0/0"]`, `allow_public_traffic=false`; both omitted optional `allow_out`. | Missing echo is not proof that the request was ignored or the policy enforced. The strict policy gate remains unconfirmed. |
+| B-local marker service | Responded on B's own loopback after two checks. | No A-to-B connectivity conclusion. |
+| Local E2B SDK -> A probe command | `commands.run(timeout=25)` raised `TimeoutException` during the first A-to-B-direction diagnostic. That timeout applied to one command containing four sequential public/peer × proxy/direct HTTP attempts. | There is no complete guest HTTP/TLS report, so neither an E2B network outage nor successful isolation is proven. The exact slow sub-attempt is unknown. |
+| Reverse B-to-A probe | Not started. | No reverse-path conclusion. |
+| Cleanup and accounting | Both exact sandboxes and the peer process were killed, parent reaped, last account check had zero active Market RSI sandboxes; $0.20 is an unknown-usage upper bound, not an invoice. | This is not a research result or an actual billed cost. |
+
+Debug each boundary separately, with source, timestamps, per-attempt progress,
+failure type, exact sandbox/process ID, and cleanup visible in the local
+dashboard. First use offline tests and the prior immutable receipts. A future
+fresh-ID remote diagnostic, if separately admitted under the existing budget
+and published-source gates, must establish: (1) which network fields E2B
+actually echoes; (2) a trivial A-local command and its SDK receipt;
+(3) each A-to-B public/peer proxy/direct probe independently, preserving
+partial results on timeout; (4) the symmetrical B-to-A probes; and (5) exact
+cleanup and account state. A missing report is **unknown**, not blocked.
+One expired command must not prevent recording that the reverse direction was
+not attempted. Do not rerun `-03` or turn a diagnostic-only observation into
+an isolation pass.
+
+The conditional E2B decision is evidence-based: if independently repeated,
+fresh-ID diagnostics show an E2B-specific defect or a documented policy
+capability mismatch that prevents this design from working, stop using E2B in
+a **new versioned protocol** and validate a local isolated execution backend
+before any model-authored code runs. A timeout in our bundled probe alone is
+insufficient to delete E2B. Until a new backend passes its own isolation,
+provenance, cleanup and budget canaries, keep arbitrary model-written code
+off the unsandboxed Mac. Formal scoring has an independent P0 blocker: only
+11 untouched 2025 Final dates versus the predeclared minimum of 20.
+
 ## What stays, what is added
 
 The original research architecture stays, but the levels must be named

@@ -120,7 +120,52 @@ def _check_guest(sandbox, role: str, root: Path) -> None:
     fresh_json(root / f"{role}-boundary.json", report)
 
 
-def _review_observations(root: Path, ids: dict[str, str]) -> None:
+def _review_complete_diagnostic_report(direction: Path, attempt: dict,
+                                       review: dict) -> None:
+    """An omitted echo may yield a diagnostic only with four raw probe results."""
+    raw = _json(direction, "raw-report.json")
+    report = _json(direction, "report.json")
+    if set(raw) != {"raw_utf8"} or not isinstance(raw["raw_utf8"], str):
+        raise ValueError("raw diagnostic report missing")
+    try:
+        parsed = json.loads(raw["raw_utf8"])
+    except json.JSONDecodeError as exc:
+        raise ValueError("raw diagnostic report invalid") from exc
+    hashes = report.get("url_sha256")
+    observations = report.get("observations")
+    marker_sha = attempt.get("marker_sha256")
+    if (parsed != report or set(report) != {"schema", "url_sha256", "observations"}
+            or report["schema"] != protocol_network_probe.SCHEMA
+            or not isinstance(hashes, dict) or set(hashes) != {"public", "peer"}
+            or hashes["public"] != attempt.get("public_url_sha256")
+            or not all(isinstance(value, str) and len(value) == 64
+                       and all(char in "0123456789abcdef" for char in value)
+                       for value in hashes.values())
+            or not isinstance(marker_sha, str) or len(marker_sha) != 64
+            or any(char not in "0123456789abcdef" for char in marker_sha)
+            or not isinstance(observations, dict)
+            or set(observations) != {"public", "peer"}):
+        raise ValueError("incomplete diagnostic report")
+    for label in ("public", "peer"):
+        modes = observations[label]
+        if not isinstance(modes, dict) or set(modes) != set(protocol_network_probe.MODES):
+            raise ValueError("missing diagnostic probe mode")
+        for mode in protocol_network_probe.MODES:
+            protocol_network_probe._validate_observation(modes[mode])
+    public_response = any(item["http_response"] for item in observations["public"].values())
+    peer_response = any(item["http_response"] for item in observations["peer"].values())
+    peer_marker = any(item["http_response"] and not item["body_truncated"]
+                      and item["body_sha256"] == marker_sha
+                      for item in observations["peer"].values())
+    if review != {"schema": "market_rsi_protocol_network_review_v1",
+                  "public_http_response_observed": public_response,
+                  "peer_http_response_observed": peer_response,
+                  "peer_marker_observed": peer_marker,
+                  "isolation_proven": False}:
+        raise ValueError("diagnostic review differs from raw report")
+
+
+def _review_observations(root: Path, ids: dict[str, str]) -> bool:
     """Parent rechecks the child evidence before marking an observation complete."""
     child = _json(root, "child-observations.json")
     if (set(child) != {"schema", "a_to_b_sha256", "b_to_a_sha256",
@@ -141,6 +186,36 @@ def _review_observations(root: Path, ids: dict[str, str]) -> None:
                         "peer_file_absent": True, "paid_keys_absent": True,
                         "host_home_absent": True}:
             raise ValueError("guest role boundary changed")
+    missing_allow_out_roles = []
+    for role in ROLE_MARKERS:
+        observed = _json(root, f"{role}-policy-observed.json")
+        verdict = _json(root, f"{role}-policy-verdict.json")
+        keys = observed.get("network_keys")
+        if (observed.get("role") != role
+                or observed.get("sandbox_id") != ids[role]
+                or observed.get("allow_internet_access") is not False
+                or observed.get("network_response_type") != "dict"
+                or not isinstance(keys, list)
+                or not all(isinstance(key, str) for key in keys)
+                or "deny_out" not in keys
+                or observed.get("deny_out") != NETWORK["deny_out"]
+                or "allow_public_traffic" not in keys
+                or observed.get("allow_public_traffic") is not False):
+            raise ValueError("role network policy observation changed")
+        missing_allow_out = "allow_out" not in keys
+        if ((missing_allow_out and observed.get("allow_out") is not None)
+                or (not missing_allow_out
+                    and observed.get("allow_out") != NETWORK["allow_out"])):
+            raise ValueError("role allow_out observation changed")
+        expected_missing = ["allow_out"] if missing_allow_out else []
+        if verdict != {"role": role,
+                       "observed_sha256": file_hash(root / f"{role}-policy-observed.json"),
+                       "contradiction_fields": [], "missing_fields": expected_missing,
+                       "policy_echo_accepted": not missing_allow_out,
+                       "synthetic_diagnostic_only": missing_allow_out}:
+            raise ValueError("role network policy verdict changed")
+        if missing_allow_out:
+            missing_allow_out_roles.append(role)
     for label, source, target in (("a-to-b", "controller", "researcher"),
                                   ("b-to-a", "researcher", "controller")):
         direction = root / label
@@ -166,6 +241,18 @@ def _review_observations(root: Path, ids: dict[str, str]) -> None:
                 or review.get("isolation_proven") is not False
                 or (direction / "failure.json").exists()):
             raise ValueError("directional application/isolation evidence changed")
+        if missing_allow_out_roles:
+            _review_complete_diagnostic_report(direction, attempt, review)
+    diagnostic = root / "policy-diagnostic-summary.json"
+    if missing_allow_out_roles:
+        if _json(root, diagnostic.name) != {
+                "roles": missing_allow_out_roles,
+                "child_observations_sha256": file_hash(root / "child-observations.json"),
+                "policy_echo_accepted": False, "isolation_proven": False}:
+            raise ValueError("incomplete policy diagnostic changed")
+    elif diagnostic.exists():
+        raise ValueError("unexpected policy diagnostic")
+    return not missing_allow_out_roles
 
 
 def run_child(*, root: Path, budget: PaidBudget, state: SupervisorGlobalState,
@@ -315,7 +402,9 @@ def run_child(*, root: Path, budget: PaidBudget, state: SupervisorGlobalState,
                 "roles": unconfirmed_policy_roles,
                 "child_observations_sha256": file_hash(root / "child-observations.json"),
                 "policy_echo_accepted": False, "isolation_proven": False})
-            raise ValueError("E2B network policy echo unconfirmed after synthetic probes")
+            if any(_json(root, f"{role}-policy-verdict.json")["missing_fields"]
+                   != ["allow_out"] for role in unconfirmed_policy_roles):
+                raise ValueError("E2B network policy echo unconfirmed after synthetic probes")
     except Exception as exc:
         error = exc
         fresh_json(root / "child-failure.json", {
@@ -405,22 +494,25 @@ def reconcile_reaped(*, root: Path, budget: PaidBudget, state: SupervisorGlobalS
               and set(cleanup) == set(ROLE_MARKERS)
               and (root / "child-observations.json").is_file()
               and not (root / "child-failure.json").exists())
+    policy_complete = False
     if passed:
         try:
-            _review_observations(root, {role: item["sandbox_id"]
-                                        for role, item in cleanup.items()})
-        except (ValueError, KeyError, OSError):
+            policy_complete = _review_observations(
+                root, {role: item["sandbox_id"] for role, item in cleanup.items()})
+        except (ValueError, KeyError, OSError, TypeError):
             passed = False
+    outcome = ("protocol_observed" if policy_complete else
+               "diagnostic_completed_policy_unconfirmed") if passed else "failed"
     result = {"schema": "market_rsi_protocol_terminal_v1", "job_id": root.name,
-              "outcome": "protocol_observed" if passed else "failed",
+              "outcome": outcome,
               "cost_status": "uncertain_upper_bound_not_invoice",
               "evidence_sha256": evidence_sha, "model_authorship_proven": False,
               "prediction_result": False,
               "isolation_proven": False}
     fresh_json(root / "parent-terminal.json", result)
-    # `protocol_observed` is intentionally not an isolation pass. The next
-    # manual/supervisor admission needs a separate full evidence review.
-    state.close(root.name, outcome="passed" if passed else "failed",
+    # A completed diagnostic with an omitted optional policy echo is not a
+    # passed global cycle. Neither terminal outcome is an isolation pass.
+    state.close(root.name, outcome="passed" if passed and policy_complete else "failed",
                 review_sha256=file_hash(root / "parent-terminal.json"))
     return result
 

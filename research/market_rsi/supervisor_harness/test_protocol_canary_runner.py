@@ -1,6 +1,7 @@
 """Offline A/B canary tests. No E2B, GLM, public fetch or paid call."""
 from __future__ import annotations
 
+import hashlib
 import json
 import tempfile
 import unittest
@@ -114,15 +115,31 @@ class ProtocolCanaryRunnerTests(unittest.TestCase):
     def observed_direction(*, source, target, state, cycle_id, public_url,
                            receipt_root):
         receipt_root.mkdir()
+        peer_url = f"https://{target.sandbox_id}.example/marker"
+        marker_sha = "a" * 64
         attempt = {"source_sandbox_id": source.sandbox_id,
-                   "target_sandbox_id": target.sandbox_id}
+                   "target_sandbox_id": target.sandbox_id,
+                   "public_url_sha256": hashlib.sha256(public_url.encode()).hexdigest(),
+                   "marker_sha256": marker_sha}
         fresh_json(receipt_root / "attempt.json", attempt)
         fresh_json(receipt_root / "peer-local-positive.json",
                    {"local_service_responded": True})
-        fresh_json(receipt_root / "report.json", {"synthetic": True})
-        fresh_json(receipt_root / "review.json", {
-            "public_http_response_observed": False,
-            "peer_marker_observed": False, "isolation_proven": False})
+        no_response = {"http_response": False, "status": None,
+                       "body_sha256": None, "body_truncated": False,
+                       "error_type": "URLError"}
+        report = {"schema": runner.protocol_network_probe.SCHEMA,
+                  "url_sha256": {
+                      "public": hashlib.sha256(public_url.encode()).hexdigest(),
+                      "peer": hashlib.sha256(peer_url.encode()).hexdigest()},
+                  "observations": {label: {mode: no_response.copy()
+                                            for mode in runner.protocol_network_probe.MODES}
+                                   for label in ("public", "peer")}}
+        fresh_json(receipt_root / "raw-report.json", {"raw_utf8": json.dumps(report)})
+        fresh_json(receipt_root / "report.json", report)
+        fresh_json(receipt_root / "review.json",
+                   runner.protocol_network_probe.review(
+                       report, public_url=public_url, peer_url=peer_url,
+                       peer_marker_sha256=marker_sha))
         fresh_json(receipt_root / "peer-process-cleanup.json",
                    {"kill_acknowledged": True})
         result = {"attempt_sha256": file_hash(receipt_root / "attempt.json"),
@@ -266,6 +283,103 @@ class ProtocolCanaryRunnerTests(unittest.TestCase):
         terminal = runner.reconcile_reaped(root=self.output, budget=self.budget,
             state=self.state, sandbox_class=FakeE2B, key="fake-key",
             exit_code=1, timed_out=False, stdout="", stderr="")
+        self.assertEqual(terminal["outcome"], "failed")
+        self.assertFalse(terminal["isolation_proven"])
+
+    def test_optional_allow_out_omission_completes_only_a_diagnostic(self):
+        self.admit()
+        echoed_without_allow_out = {"deny_out": ["0.0.0.0/0"],
+                                    "allow_public_traffic": False}
+        with (patch.object(runner.literature, "read", return_value={
+                "receipt": {"body_sha256": "f" * 64},
+                "text_sha256": "e" * 64,
+                "read_level": "delivered_text_range_not_proof_of_understanding"}),
+              patch.object(FakeSandbox, "get_info", return_value=SimpleNamespace(
+                  allow_internet_access=False, network=echoed_without_allow_out,
+                  template_id="base", envd_version="test")),
+              patch.object(runner.network_component, "observe_direction",
+                           side_effect=self.observed_direction) as directions):
+            result = runner.run_child(root=self.output, budget=self.budget,
+                state=self.state, sandbox_class=FakeE2B, key="fake-key", public_url=PUBLIC)
+        self.assertEqual(directions.call_count, 2)
+        self.assertFalse(result["isolation_proven"])
+        self.assertTrue(all(item.killed for item in FakeE2B.created))
+        for role in ("controller", "researcher"):
+            verdict = json.loads((self.output / f"{role}-policy-verdict.json").read_text())
+            self.assertEqual(verdict["missing_fields"], ["allow_out"])
+            self.assertFalse(verdict["policy_echo_accepted"])
+            self.assertTrue(verdict["synthetic_diagnostic_only"])
+        terminal = runner.reconcile_reaped(root=self.output, budget=self.budget,
+            state=self.state, sandbox_class=FakeE2B, key="fake-key",
+            exit_code=0, timed_out=False, stdout="", stderr="")
+        self.assertEqual(terminal["outcome"], "diagnostic_completed_policy_unconfirmed")
+        self.assertFalse(terminal["isolation_proven"])
+        self.assertEqual(self.state.snapshot()["active_cycle"], None)
+        journal = self.state.journal.read()
+        self.assertEqual(journal[-1]["payload"]["outcome"], "failed")
+
+    def test_tampered_optional_policy_receipt_cannot_complete_diagnostic(self):
+        self.admit()
+        with (patch.object(runner.literature, "read", return_value={
+                "receipt": {"body_sha256": "f" * 64},
+                "text_sha256": "e" * 64,
+                "read_level": "delivered_text_range_not_proof_of_understanding"}),
+              patch.object(FakeSandbox, "get_info", return_value=SimpleNamespace(
+                  allow_internet_access=False,
+                  network={"deny_out": ["0.0.0.0/0"], "allow_public_traffic": False},
+                  template_id="base", envd_version="test")),
+              patch.object(runner.network_component, "observe_direction",
+                           side_effect=self.observed_direction)):
+            runner.run_child(root=self.output, budget=self.budget,
+                state=self.state, sandbox_class=FakeE2B, key="fake-key", public_url=PUBLIC)
+        verdict_path = self.output / "researcher-policy-verdict.json"
+        verdict = json.loads(verdict_path.read_text())
+        verdict["policy_echo_accepted"] = True
+        verdict_path.write_text(json.dumps(verdict))
+        terminal = runner.reconcile_reaped(root=self.output, budget=self.budget,
+            state=self.state, sandbox_class=FakeE2B, key="fake-key",
+            exit_code=0, timed_out=False, stdout="", stderr="")
+        self.assertEqual(terminal["outcome"], "failed")
+        self.assertFalse(terminal["isolation_proven"])
+
+    def test_missing_raw_report_cannot_complete_optional_diagnostic(self):
+        self.admit()
+        with (patch.object(runner.literature, "read", return_value={
+                "receipt": {"body_sha256": "f" * 64},
+                "text_sha256": "e" * 64,
+                "read_level": "delivered_text_range_not_proof_of_understanding"}),
+              patch.object(FakeSandbox, "get_info", return_value=SimpleNamespace(
+                  allow_internet_access=False,
+                  network={"deny_out": ["0.0.0.0/0"], "allow_public_traffic": False},
+                  template_id="base", envd_version="test")),
+              patch.object(runner.network_component, "observe_direction",
+                           side_effect=self.observed_direction)):
+            runner.run_child(root=self.output, budget=self.budget,
+                state=self.state, sandbox_class=FakeE2B, key="fake-key", public_url=PUBLIC)
+        (self.output / "b-to-a" / "raw-report.json").unlink()
+        terminal = runner.reconcile_reaped(root=self.output, budget=self.budget,
+            state=self.state, sandbox_class=FakeE2B, key="fake-key",
+            exit_code=0, timed_out=False, stdout="", stderr="")
+        self.assertEqual(terminal["outcome"], "failed")
+        self.assertFalse(terminal["isolation_proven"])
+
+    def test_parent_timeout_cannot_complete_optional_diagnostic(self):
+        self.admit()
+        with (patch.object(runner.literature, "read", return_value={
+                "receipt": {"body_sha256": "f" * 64},
+                "text_sha256": "e" * 64,
+                "read_level": "delivered_text_range_not_proof_of_understanding"}),
+              patch.object(FakeSandbox, "get_info", return_value=SimpleNamespace(
+                  allow_internet_access=False,
+                  network={"deny_out": ["0.0.0.0/0"], "allow_public_traffic": False},
+                  template_id="base", envd_version="test")),
+              patch.object(runner.network_component, "observe_direction",
+                           side_effect=self.observed_direction)):
+            runner.run_child(root=self.output, budget=self.budget,
+                state=self.state, sandbox_class=FakeE2B, key="fake-key", public_url=PUBLIC)
+        terminal = runner.reconcile_reaped(root=self.output, budget=self.budget,
+            state=self.state, sandbox_class=FakeE2B, key="fake-key",
+            exit_code=None, timed_out=True, stdout="", stderr="")
         self.assertEqual(terminal["outcome"], "failed")
         self.assertFalse(terminal["isolation_proven"])
 

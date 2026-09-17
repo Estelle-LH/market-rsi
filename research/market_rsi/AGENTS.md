@@ -142,6 +142,16 @@ See `LOCAL_STORAGE_RECOVERY_2026-09-16.md` for exact evidence and gates.
 
 # Research trajectory supervision
 
+**Visible subagent work (2026-09-17):** Before assigning a Market RSI
+subagent, register its unique task, status, next check and dedicated curated
+log in `supervisor_harness/AGENT_LOG_INDEX_2026-09-17.json`. Ask the agent to
+append timestamped material checks, changed files, tests, results, errors and
+remaining questions to its own `AGENT_LOG_*.md` as work progresses. The outer
+supervisor updates status/next when it finishes or blocks and verifies the
+log appears in the local read-only dashboard. Do not imply a model/tool stream
+exists if no event was recorded; do not put secrets or protected data there.
+See `supervisor_harness/local_dashboard/README.md`.
+
 Read `supervisor_harness/RESEARCH_STATE.md` before choosing the next work block,
 and apply `supervisor_harness/RESEARCH_SUPERVISOR.md` during it. The compact state is a decision aid, not a
 transcript or a substitute for experiment artifacts. After material work,

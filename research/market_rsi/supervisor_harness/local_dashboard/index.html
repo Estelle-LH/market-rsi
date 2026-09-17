@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Market RSI · 本机状态</title>
+  <style>
+    :root { color-scheme: light dark; font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { margin: 0; background: light-dark(#f7f8fa, #101216); color: light-dark(#161b22, #edf0f4); }
+    main { max-width: 1000px; margin: 0 auto; padding: 24px; }
+    h1, h2 { line-height: 1.25; }
+    h1 { margin: 0; font-size: 1.7rem; }
+    h2 { font-size: 1.1rem; margin: 0 0 12px; }
+    .sub { color: light-dark(#526171, #a5b1bf); }
+    .header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px 20px; margin-bottom: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .box { background: light-dark(#fff, #1c2128); border: 1px solid light-dark(#d8dee5, #39424d); border-radius: 12px; padding: 16px; }
+    .box .value { font-size: 1.35rem; font-weight: 600; margin: 6px 0; }
+    .section { margin-top: 20px; }
+    .rows { display: grid; gap: 8px; }
+    .row { display: grid; grid-template-columns: 140px 1fr; gap: 8px 16px; border-bottom: 1px solid light-dark(#d8dee5, #39424d); padding: 9px 0; }
+    .label { font-weight: 600; }
+    .bad { color: light-dark(#b3261e, #ff8a80); }
+    .good { color: light-dark(#176c3a, #7adba1); }
+    .events { list-style: none; padding: 0; margin: 0; }
+    .events li { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 12px; padding: 6px 0; border-bottom: 1px solid light-dark(#d8dee5, #39424d); }
+    .zones { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+    .zone { border-left: 4px solid light-dark(#2d668d, #79b9e6); padding-left: 12px; }
+    .zone.remote { border-left-color: light-dark(#8050a8, #c39be8); }
+    .trace { list-style: none; padding: 0; margin: 0; }
+    .trace li { display: grid; grid-template-columns: 130px 72px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px solid light-dark(#d8dee5, #39424d); }
+    .trace .pass { color: light-dark(#176c3a, #7adba1); }
+    .trace .fail { color: light-dark(#b3261e, #ff8a80); }
+    .trace .unknown { color: light-dark(#8a5900, #e3bd68); }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
+    .small { font-size: .88rem; }
+    .log { white-space: pre-wrap; overflow-wrap: anywhere; font: .84rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    a { color: light-dark(#145e90, #91c9ee); }
+    @media (max-width: 540px) { .row, .trace li { grid-template-columns: 1fr; gap: 2px; } main { padding: 16px; } }
+  </style>
+</head>
+<body>
+<main>
+  <header class="header"><div><h1>Market RSI · 本机状态</h1><div class="sub small">只读 · 每 5 秒重新读取本机记录 · 不启动实验</div></div><div id="checked" class="sub small">读取中…</div></header>
+  <div class="grid">
+    <section class="box"><div class="sub">Supervisor</div><div id="supervisor" class="value">读取中…</div><div id="workers" class="small sub"></div></section>
+    <section class="box"><div class="sub">Controller / Researcher</div><div id="agents" class="value">读取中…</div><div class="small sub">当前没有逐工具事件流；不能显示未记录的内部动作。</div></section>
+    <section class="box"><div class="sub">$200 总账</div><div id="budget" class="value">读取中…</div><div class="small sub">账本占额含保守上限，不等于已付账单。</div></section>
+  </div>
+  <section class="section box"><h2>哪部分在本机，哪部分在 E2B</h2>
+    <div class="zones">
+      <div class="zone"><div class="label">本机 Mac</div><div>Supervisor、可信 broker、预算账本、这个 dashboard、独立评估器（本次未运行）。本机程序通过 E2B SDK 发命令。</div></div>
+      <div class="zone remote"><div class="label">远端 E2B</div><div id="e2b-roles">A：Controller 角色沙箱；B：Researcher 角色沙箱。读取中…</div></div>
+    </div>
+    <p class="small sub">这是上次合成连接测试的架构；两个 E2B 沙箱已销毁。GLM 模型没有在这次测试里启动。本地执行版尚未接入。</p>
+  </section>
+  <section class="section box"><h2>上一次真实测试卡在第几段</h2><ol id="trace" class="trace"></ol>
+    <p class="small sub">这个区域自动跟随最新的 protocol canary。超时和缺失报告都不能证明网络被阻断；出现完整报告也要看独立核对结果。</p>
+  </section>
+  <section class="section box"><h2>流程走到哪里</h2><div class="rows">
+    <div class="row"><div class="label">离线连接</div><div>合成任务、broker 交接和审计测试已做；不是模型改进结果。</div></div>
+    <div class="row"><div class="label bad">真实连接检查</div><div id="canary">读取中…</div></div>
+    <div class="row"><div class="label">GLM 研究轮次</div><div id="research">读取中…</div></div>
+    <div class="row"><div class="label">封存评估</div><div>未运行本版 Final；现有未触碰日期 11 个，低于预定的 20 个门槛。</div></div>
+    <div class="row"><div class="label">本地透明版</div><div>这个页面先接上已有状态和监督日志；逐角色、逐工具事件还未接入。</div></div>
+  </div></section>
+  <section class="section box"><h2>Supervisor 当前决定</h2><div id="decision">读取中…</div><h2 style="margin-top:18px">下一步</h2><div id="next">读取中…</div></section>
+  <section class="section box"><h2>最近的追加记录</h2><ul id="events" class="events small"></ul></section>
+  <section class="section box"><h2>正在排查什么</h2><div id="activity-meta" class="small sub"></div><pre id="activity-log" class="log">读取中…</pre><a href="/log/activity" target="_blank" rel="noopener">打开完整本机排查记录</a></section>
+  <section class="section box"><h2>各 subagent 的工作记录</h2>
+    <p class="small sub">每个任务单独保存：查了什么、改了什么、测试结果、下一步或未解决的点。这里显示的是他们写下的工作记录，不是未捕获的内部思考或远端模型工具流。</p>
+    <div id="agent-logs" class="rows">读取中…</div>
+  </section>
+  <section class="section box"><h2>连接排查日志</h2><div id="protocol-meta" class="small sub"></div><pre id="protocol-log" class="log">读取中…</pre><a href="/log/protocol" target="_blank" rel="noopener">打开完整连接日志</a></section>
+  <section class="section box"><h2>Supervisor 工作记录</h2><div id="progress-meta" class="small sub"></div><pre id="progress-log" class="log">读取中…</pre><a href="/log/progress" target="_blank" rel="noopener">打开完整工作记录</a></section>
+  <p id="limit" class="small sub"></p>
+</main>
+<script>
+  const $ = id => document.getElementById(id);
+  const names = {decision_revision:'监督决策更新', cycle_claim:'领取轮次', cycle_close:'轮次关闭'};
+  function localTime(s) { return s ? new Date(s).toLocaleString('zh-CN', {timeZone:'America/New_York'}) : '未知'; }
+  async function refresh() {
+    try {
+      const response = await fetch('/api/status', {cache:'no-store'});
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      const s = await response.json();
+      $('checked').textContent = '最近读取：' + localTime(s.checked_at_utc) + '（纽约）';
+      const stopped = s.decision.includes('STOP NEW PAID DISPATCH');
+      $('supervisor').textContent = stopped ? '付费调度暂停' : '查看监督决定';
+      const p = s.known_worker_candidates;
+      $('workers').textContent = p === null ? '本机进程状态未能核对' : p.length ? `发现 ${p.length} 个已知 worker 候选进程；请核对` : '未发现已知 Market RSI worker 进程';
+      $('agents').textContent = s.journal.active_cycles.length ? '有未关闭轮次记录' : '本版未在运行';
+      $('budget').textContent = s.budget_occupied_usd ? '$' + Number(s.budget_occupied_usd).toFixed(2) + ' / $200 已占额' : '账本数字未读取';
+      $('canary').textContent = `${s.canary.id || '测试 ID 未知'}：${s.canary.outcome || (s.canary.active ? '运行中，尚无终局回执' : '尚无终局回执')}；A→B ${s.last_probe_trace.a_to_b_report_exists ? '有完整报告' : s.last_probe_trace.a_to_b_error_type || '未确认'}，B→A ${s.last_probe_trace.b_to_a_report_exists ? '有完整报告' : s.last_probe_trace.b_to_a_error_type || (s.last_probe_trace.b_to_a_attempt_exists ? '已开始' : '未开始')}。账户核对 ${localTime(s.last_account_check.time)}：${s.last_account_check.active_market_rsi_sandboxes ?? '未知'} 个活跃 Market RSI 沙箱。`;
+      const p2 = s.last_probe_trace;
+      $('e2b-roles').textContent = `A：Controller 角色沙箱 ${p2.a_id || 'ID 未记录'}；B：Researcher 角色沙箱 ${p2.b_id || 'ID 未记录'}。两者只是合成测试，未运行 GLM 研究。`;
+      const steps = [
+        ['本机 → E2B', p2.a_id && p2.b_id ? '通过' : '未知', '创建 A、B 两个不同沙箱。', p2.a_id && p2.b_id ? 'pass' : 'unknown'],
+        ['E2B A + B', p2.a_boundary_passed && p2.b_boundary_passed ? '通过' : '未知', '两边都通过密钥、本机目录和对方文件的边界检查。', p2.a_boundary_passed && p2.b_boundary_passed ? 'pass' : 'unknown'],
+        ['E2B 回显', !p2.a_policy_echo_accepted || !p2.b_policy_echo_accepted ? '未确认' : '回显完整', `A 缺少 ${p2.a_missing_policy_fields.join(', ') || '无'}；B 缺少 ${p2.b_missing_policy_fields.join(', ') || '无'}。回显本身不能证明网络隔离。`, !p2.a_policy_echo_accepted || !p2.b_policy_echo_accepted ? 'unknown' : 'pass'],
+        ['E2B B 内部', p2.b_local_service_responded ? '通过' : '未知', 'B 的本地标记服务响应。', p2.b_local_service_responded ? 'pass' : 'unknown'],
+        ['本机 SDK → A', p2.a_to_b_error_type ? '失败' : p2.a_to_b_report_exists ? '命令已返回' : '未确认', `A 方向 ${p2.a_to_b_error_type || '无错误回执'}；阶段 ${p2.a_to_b_failure_stage || p2.failed_stage || '未记录'}。`, p2.a_to_b_error_type ? 'fail' : p2.a_to_b_report_exists ? 'pass' : 'unknown'],
+        ['A → B 网络', p2.a_to_b_report_exists ? '有报告' : p2.a_to_b_attempt_exists ? '探针已开始' : '未开始', p2.a_to_b_report_exists ? '已有完整报告，需独立核对内容；不能仅凭存在判定隔离。' : '没有完整 HTTP/TLS 报告，不能判断这条网络路径。', 'unknown'],
+        ['B → A 网络', p2.b_to_a_report_exists ? '有报告' : p2.b_to_a_attempt_exists ? '探针已开始' : '未开始', p2.b_to_a_report_exists ? '已有完整报告，需独立核对内容；不能仅凭存在判定隔离。' : '没有完整 HTTP/TLS 报告，不能判断这条网络路径。', 'unknown'],
+        ['本机清理', p2.a_kill_acknowledged && p2.b_kill_acknowledged ? '通过' : '未确认', 'A、B 的销毁回执；账户活跃数是上次核对值，不是实时查询。', p2.a_kill_acknowledged && p2.b_kill_acknowledged ? 'pass' : 'unknown'],
+      ];
+      const trace = $('trace'); trace.replaceChildren();
+      for (const [where, status, detail, cls] of steps) {
+        const li = document.createElement('li');
+        const w = document.createElement('strong'); w.textContent = where;
+        const st = document.createElement('span'); st.className = cls; st.textContent = status;
+        const d = document.createElement('span'); d.textContent = detail;
+        li.append(w, st, d); trace.append(li);
+      }
+      $('research').textContent = s.canary.model_authorship_proven || s.canary.prediction_result ? '需人工核对新证据' : '本版没有 GLM 作者身份确认、研究轮次或新预测分数。';
+      $('decision').textContent = s.decision;
+      $('next').textContent = s.next_progress;
+      $('limit').textContent = '可见度边界：当前页面读取状态文件和追加式监督日志。没有逐工具日志时，不会猜测 Controller 或 Researcher 在做什么。';
+      const ul = $('events'); ul.replaceChildren();
+      for (const e of s.journal.events) {
+        const li = document.createElement('li');
+        const t = document.createElement('time'); t.textContent = localTime(e.time);
+        const d = document.createElement('span');
+        d.textContent = `${names[e.event] || e.event} · ${e.cycle_id || '监督'}${e.outcome ? ' · ' + e.outcome : ''}`;
+        li.append(t, d); ul.append(li);
+      }
+      for (const name of ['activity', 'protocol', 'progress']) {
+        const item = s.logs[name];
+        $(name + '-meta').textContent = item.source + ' · 文件更新：' + localTime(item.modified_at_utc);
+        $(name + '-log').textContent = item.text || '暂无记录';
+      }
+      const agentPanel = $('agent-logs'); agentPanel.replaceChildren();
+      for (const agent of s.agent_logs || []) {
+        const article = document.createElement('article');
+        const title = document.createElement('h3'); title.textContent = agent.title;
+        const task = document.createElement('div'); task.className = 'small sub'; task.textContent = agent.task;
+        const status = document.createElement('div'); status.className = 'small';
+        status.textContent = '状态：' + agent.status + ' · 接下来：' + agent.next;
+        const meta = document.createElement('div'); meta.className = 'small sub';
+        meta.textContent = agent.source + ' · 文件更新：' + localTime(agent.modified_at_utc);
+        const log = document.createElement('pre'); log.className = 'log';
+        log.textContent = agent.text || '等待该 agent 的第一条记录';
+        const link = document.createElement('a');
+        link.href = '/log/agent/' + encodeURIComponent(agent.id);
+        link.target = '_blank'; link.rel = 'noopener'; link.textContent = '打开完整记录';
+        article.append(title, task, status, meta, log, link); agentPanel.append(article);
+      }
+      if (!agentPanel.childElementCount) agentPanel.textContent = '当前没有登记的 subagent。';
+    } catch (e) {
+      $('checked').textContent = '无法读取本机状态：' + e.message;
+    }
+  }
+  refresh(); setInterval(refresh, 5000);
+</script>
+</body>
+</html>

@@ -3,7 +3,11 @@ from __future__ import annotations
 
 import hashlib
 import io
+import json
+import tempfile
 import unittest
+from contextlib import redirect_stdout
+from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 from urllib.error import HTTPError, URLError
@@ -45,6 +49,81 @@ class ProbeTests(unittest.TestCase):
         self.assertEqual({(call.args[0], call.kwargs["direct"]) for call in get.call_args_list},
                          {(PUBLIC, False), (PUBLIC, True), (PEER, False), (PEER, True)})
         self.assertEqual(value["url_sha256"]["peer"], probe._sha(PEER))
+
+    def test_each_attempt_has_atomic_start_and_complete_receipt(self):
+        with tempfile.TemporaryDirectory() as temp:
+            prefix = Path(temp) / "progress"
+            output = io.StringIO()
+            with patch.object(probe, "_one_get", side_effect=[
+                    failure(), response(b"public"), failure(),
+                    response(b"peer-canary-marker")]) as get, redirect_stdout(output):
+                final = probe.observe(PUBLIC, PEER, progress_prefix=prefix)
+            self.assertEqual(get.call_count, 4)
+            receipts = []
+            for index in range(4):
+                for phase in ("start", "complete"):
+                    path = probe.progress_path(prefix, index, phase)
+                    self.assertTrue(path.is_file())
+                    receipts.append(json.loads(path.read_text()))
+            self.assertEqual([json.loads(line) for line in output.getvalue().splitlines()],
+                             receipts)
+            self.assertNotIn(PUBLIC, output.getvalue())
+            self.assertNotIn(PEER, output.getvalue())
+            self.assertNotIn("peer-canary-marker", output.getvalue())
+            self.assertEqual(final["observations"]["peer"]["direct_no_proxy"],
+                             response(b"peer-canary-marker"))
+            partial = probe.review_progress(
+                receipts, public_url=PUBLIC, peer_url=PEER,
+                peer_marker_sha256=MARKER)
+            self.assertTrue(partial["all_four_completed"])
+            self.assertTrue(partial["public_http_response_observed"])
+            self.assertTrue(partial["peer_marker_observed"])
+            self.assertFalse(partial["isolation_proven"])
+
+    def test_interrupted_attempt_preserves_prior_receipts_without_negative_verdict(self):
+        with tempfile.TemporaryDirectory() as temp:
+            prefix = Path(temp) / "progress"
+            output = io.StringIO()
+            with patch.object(probe, "_one_get", side_effect=[
+                    failure(), TimeoutError("interrupted")]), redirect_stdout(output):
+                with self.assertRaises(TimeoutError):
+                    probe.observe(PUBLIC, PEER, progress_prefix=prefix)
+            receipts = [json.loads(line) for line in output.getvalue().splitlines()]
+            self.assertEqual([(item["index"], item["phase"]) for item in receipts],
+                             [(0, "start"), (0, "complete"), (1, "start")])
+            self.assertFalse(probe.progress_path(prefix, 1, "complete").exists())
+            partial = probe.review_progress(
+                receipts, public_url=PUBLIC, peer_url=PEER,
+                peer_marker_sha256=MARKER)
+            self.assertEqual(partial["attempts_started"], [0, 1])
+            self.assertEqual(partial["attempts_completed"], [0])
+            self.assertFalse(partial["all_four_completed"])
+            self.assertFalse(partial["public_http_response_observed"])
+            self.assertFalse(partial["isolation_proven"])
+
+    def test_progress_review_rejects_forged_or_missing_start(self):
+        start = {"schema": probe.PROGRESS_SCHEMA, "phase": "start", "index": 0,
+                 "label": "public", "mode": "environment_proxy",
+                 "url_sha256": {"public": probe._sha(PUBLIC),
+                                "peer": probe._sha(PEER)}}
+        complete = {**start, "phase": "complete", "observation": response(b"ok")}
+        kwargs = {"public_url": PUBLIC, "peer_url": PEER,
+                  "peer_marker_sha256": MARKER}
+        for receipts in ([complete], [start, start],
+                         [start, {**complete, "url_sha256": {**start["url_sha256"],
+                                                              "peer": "0" * 64}}],
+                         [start, {**complete, "observation": {
+                             **response(b"ok"), "body_sha256": "z" * 64}}]):
+            with self.subTest(receipts=receipts), self.assertRaises(ValueError):
+                probe.review_progress(receipts, **kwargs)
+
+    def test_existing_progress_receipt_stops_before_network(self):
+        with tempfile.TemporaryDirectory() as temp:
+            prefix = Path(temp) / "progress"
+            probe.progress_path(prefix, 2, "complete").write_text("old")
+            with patch.object(probe, "_one_get") as get, self.assertRaises(FileExistsError):
+                probe.observe(PUBLIC, PEER, progress_prefix=prefix)
+            get.assert_not_called()
 
     def test_http_error_is_a_response_not_a_block(self):
         error = HTTPError(PUBLIC, 403, "Forbidden", {}, io.BytesIO(b"gateway"))

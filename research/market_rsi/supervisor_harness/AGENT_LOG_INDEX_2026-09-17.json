@@ -1,0 +1,53 @@
+{
+  "purpose": "Human-readable, non-secret subagent work logs; these are not GLM research trajectories or live E2B tool streams.",
+  "agents": [
+    {
+      "id": "policy_echo",
+      "title": "E2B 回显 / 安全判断",
+      "task": "核对请求与返回的隔离字段；不把缺失回显误判为通过。",
+      "status": "离线修改完成；等待总体验收",
+      "next": "总体验收后仍需新的真实双向证据；缺回显不能算隔离通过。",
+      "log": "AGENT_LOG_POLICY_ECHO_2026-09-17.md"
+    },
+    {
+      "id": "sdk_timeout",
+      "title": "本机 SDK → A 超时",
+      "task": "找出命令哪一步耗时或卡住，并留下分段回执。",
+      "status": "离线修改完成；等待总体验收",
+      "next": "总体验收回执与超时分类；真实 SDK 回调尚未验证。",
+      "log": "AGENT_LOG_SDK_TIMEOUT_2026-09-17.md"
+    },
+    {
+      "id": "directional_probes",
+      "title": "A → B / B → A 探针",
+      "task": "分别保留每个方向、每个请求的证据，未完成时不猜测结果。",
+      "status": "离线修改完成；等待总体验收",
+      "next": "总体验收逐请求回执；真实双向连通或阻断仍未知。",
+      "log": "AGENT_LOG_DIRECTIONAL_PROBES_2026-09-17.md"
+    },
+    {
+      "id": "release_audit",
+      "title": "新版本发布核对",
+      "task": "检查将要发布到用户 fork 的源码、测试和日志；避免数据、密钥或 artifacts 混入。",
+      "status": "只读核对完成",
+      "next": "待代码修复与离线复测完成后，只发布审过的文件到用户 fork。",
+      "log": "AGENT_LOG_RELEASE_AUDIT_2026-09-17.md"
+    },
+    {
+      "id": "budget_preflight",
+      "title": "预算与重复运行检查",
+      "task": "核对权威账本、全局状态、确切进程与 E2B 账户；不得启动沙箱。",
+      "status": "只读核对完成；14:50 EDT 账户零活跃沙箱",
+      "next": "真实测试发出前由主程序再次核对进程、账户与预算；旧 23 个未结算条目不修改。",
+      "log": "AGENT_LOG_BUDGET_PREFLIGHT_2026-09-17.md"
+    },
+    {
+      "id": "canary_review",
+      "title": "真实测试入口审查",
+      "task": "用固定运行环境审查双向探针、超时回执、失败与清理路径。",
+      "status": "回显误判漏洞已修；46 项离线测试通过",
+      "next": "主程序审核发布源码；真实沙箱结果仍待新编号测试。",
+      "log": "AGENT_LOG_CANARY_REVIEW_2026-09-17.md"
+    }
+  ]
+}

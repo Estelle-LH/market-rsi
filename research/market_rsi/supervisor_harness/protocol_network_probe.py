@@ -13,7 +13,9 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
+import tempfile
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from urllib.request import ProxyHandler, Request, build_opener
@@ -23,6 +25,12 @@ SCHEMA = "market_rsi_protocol_network_probe_v1"
 MAX_RESPONSE_BYTES = 2048
 TIMEOUT_SECONDS = 3
 MODES = ("environment_proxy", "direct_no_proxy")
+PROGRESS_SCHEMA = "market_rsi_protocol_probe_progress_v1"
+PROGRESS_REVIEW_SCHEMA = "market_rsi_protocol_probe_progress_review_v1"
+ATTEMPTS = (("public", "environment_proxy", False),
+            ("public", "direct_no_proxy", True),
+            ("peer", "environment_proxy", False),
+            ("peer", "direct_no_proxy", True))
 
 
 def _sha(value: str) -> str:
@@ -65,14 +73,146 @@ def _one_get(url: str, *, direct: bool) -> dict:
                 "error_type": type(error).__name__}
 
 
-def observe(public_url: str, peer_url: str) -> dict:
+def progress_path(prefix: Path, index: int, phase: str) -> Path:
+    """Predictable immutable receipt name for a host reading after SDK timeout."""
+    if type(index) is not int or not 0 <= index < len(ATTEMPTS):
+        raise ValueError("invalid protocol attempt index")
+    if phase not in {"start", "complete"}:
+        raise ValueError("invalid protocol attempt phase")
+    prefix = Path(prefix)
+    return prefix.with_name(f"{prefix.name}-{index:02d}-{phase}.json")
+
+
+def _emit_progress(prefix: Path, record: dict) -> None:
+    """Commit a complete receipt before exposing its bounded stdout milestone."""
+    path = progress_path(prefix, record["index"], record["phase"])
+    if path.exists() or path.is_symlink():
+        raise FileExistsError("fresh protocol progress receipt required")
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8",
+                                         dir=path.parent, prefix=f".{path.name}.",
+                                         delete=False) as stream:
+            temporary = Path(stream.name)
+            json.dump(record, stream, sort_keys=True, separators=(",", ":"))
+            stream.flush()
+            os.fsync(stream.fileno())
+        # A hard link publishes complete bytes without replacing an earlier
+        # receipt. Readers never treat an in-progress temporary file as evidence.
+        os.link(temporary, path)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+    print(json.dumps(record, sort_keys=True, separators=(",", ":")), flush=True)
+
+
+def observe(public_url: str, peer_url: str, *, progress_prefix: Path | None = None) -> dict:
     public_url, peer_url = _url(public_url), _url(peer_url)
-    return {"schema": SCHEMA,
-            "url_sha256": {"public": _sha(public_url), "peer": _sha(peer_url)},
-            "observations": {
-                label: {"environment_proxy": _one_get(url, direct=False),
-                        "direct_no_proxy": _one_get(url, direct=True)}
-                for label, url in (("public", public_url), ("peer", peer_url))}}
+    urls = {"public": public_url, "peer": peer_url}
+    hashes = {label: _sha(url) for label, url in urls.items()}
+    observations = {label: {} for label in urls}
+    if progress_prefix is not None:
+        progress_prefix = Path(progress_prefix)
+        if (not progress_prefix.is_absolute() or not progress_prefix.parent.is_dir()
+                or progress_prefix.parent.is_symlink()):
+            raise ValueError("absolute progress prefix in a real directory required")
+        if any(progress_path(progress_prefix, index, phase).exists()
+               or progress_path(progress_prefix, index, phase).is_symlink()
+               for index in range(len(ATTEMPTS)) for phase in ("start", "complete")):
+            raise FileExistsError("fresh protocol progress receipts required")
+    for index, (label, mode, direct) in enumerate(ATTEMPTS):
+        receipt = {"schema": PROGRESS_SCHEMA, "phase": "start", "index": index,
+                   "label": label, "mode": mode, "url_sha256": hashes}
+        if progress_prefix is not None:
+            _emit_progress(progress_prefix, receipt)
+        item = _one_get(urls[label], direct=direct)
+        observations[label][mode] = item
+        if progress_prefix is not None:
+            _emit_progress(progress_prefix, {**receipt, "phase": "complete",
+                                             "observation": item})
+    return {"schema": SCHEMA, "url_sha256": hashes,
+            "observations": observations}
+
+
+def _validate_observation(item: object) -> dict:
+    if (not isinstance(item, dict)
+            or set(item) != {"http_response", "status", "body_sha256",
+                             "body_truncated", "error_type"}
+            or type(item["http_response"]) is not bool
+            or type(item["body_truncated"]) is not bool):
+        raise ValueError("invalid protocol observation")
+    if item["http_response"]:
+        if (type(item["status"]) is not int or not 100 <= item["status"] <= 599
+                or not isinstance(item["body_sha256"], str)
+                or len(item["body_sha256"]) != 64
+                or any(c not in "0123456789abcdef" for c in item["body_sha256"])
+                or item["error_type"] is not None):
+            raise ValueError("invalid HTTP response receipt")
+    elif (item["status"] is not None or item["body_sha256"] is not None
+          or item["body_truncated"] is not False
+          or not isinstance(item["error_type"], str)
+          or not 1 <= len(item["error_type"]) <= 64
+          or not item["error_type"].isascii()
+          or not item["error_type"].isidentifier()):
+        raise ValueError("invalid blocked/failed response receipt")
+    return item
+
+
+def review_progress(receipts: list[dict], *, public_url: str, peer_url: str,
+                    peer_marker_sha256: str) -> dict:
+    """Validate partial receipts without turning absent attempts into negatives."""
+    urls = {"public": _url(public_url), "peer": _url(peer_url)}
+    hashes = {label: _sha(url) for label, url in urls.items()}
+    if (not isinstance(peer_marker_sha256, str) or len(peer_marker_sha256) != 64
+            or any(c not in "0123456789abcdef" for c in peer_marker_sha256)):
+        raise ValueError("peer marker SHA256 required")
+    if not isinstance(receipts, list) or len(receipts) > 2 * len(ATTEMPTS):
+        raise ValueError("progress receipts must be a bounded list")
+    seen = set()
+    started = set()
+    completed = {}
+    base_keys = {"schema", "phase", "index", "label", "mode", "url_sha256"}
+    for receipt in receipts:
+        if (not isinstance(receipt, dict)
+                or set(receipt) not in (base_keys, base_keys | {"observation"})
+                or receipt["schema"] != PROGRESS_SCHEMA
+                or type(receipt["index"]) is not int
+                or not 0 <= receipt["index"] < len(ATTEMPTS)
+                or receipt["phase"] not in {"start", "complete"}
+                or receipt["url_sha256"] != hashes):
+            raise ValueError("invalid or unbound protocol progress receipt")
+        index, phase = receipt["index"], receipt["phase"]
+        label, mode, _ = ATTEMPTS[index]
+        if (receipt["label"] != label or receipt["mode"] != mode
+                or (index, phase) in seen):
+            raise ValueError("duplicate or mismatched protocol progress receipt")
+        seen.add((index, phase))
+        if phase == "start":
+            if "observation" in receipt:
+                raise ValueError("start receipt cannot contain an observation")
+            started.add(index)
+        else:
+            if "observation" not in receipt:
+                raise ValueError("complete receipt requires an observation")
+            completed[index] = _validate_observation(receipt["observation"])
+    if not set(completed) <= started:
+        raise ValueError("completion has no start receipt")
+    return {"schema": PROGRESS_REVIEW_SCHEMA,
+            "attempts_started": sorted(started),
+            "attempts_completed": sorted(completed),
+            "all_four_completed": len(completed) == len(ATTEMPTS),
+            "public_http_response_observed": any(
+                ATTEMPTS[index][0] == "public" and item["http_response"]
+                for index, item in completed.items()),
+            "peer_http_response_observed": any(
+                ATTEMPTS[index][0] == "peer" and item["http_response"]
+                for index, item in completed.items()),
+            "peer_marker_observed": any(
+                ATTEMPTS[index][0] == "peer" and item["http_response"]
+                and item["body_sha256"] == peer_marker_sha256
+                and not item["body_truncated"]
+                for index, item in completed.items()),
+            "isolation_proven": False}
 
 
 def review(report: dict, *, public_url: str, peer_url: str,
@@ -95,26 +235,7 @@ def review(report: dict, *, public_url: str, peer_url: str,
             raise ValueError("missing protocol probe mode")
         observed[label] = []
         for mode in MODES:
-            item = modes[mode]
-            if (not isinstance(item, dict)
-                    or set(item) != {"http_response", "status", "body_sha256",
-                                     "body_truncated", "error_type"}
-                    or type(item["http_response"]) is not bool
-                    or type(item["body_truncated"]) is not bool):
-                raise ValueError("invalid protocol observation")
-            if item["http_response"]:
-                if (type(item["status"]) is not int or not 100 <= item["status"] <= 599
-                        or not isinstance(item["body_sha256"], str)
-                        or len(item["body_sha256"]) != 64
-                        or any(c not in "0123456789abcdef" for c in item["body_sha256"])
-                        or item["error_type"] is not None):
-                    raise ValueError("invalid HTTP response receipt")
-            elif (item["status"] is not None or item["body_sha256"] is not None
-                  or item["body_truncated"] is not False
-                  or not isinstance(item["error_type"], str)
-                  or not item["error_type"]):
-                raise ValueError("invalid blocked/failed response receipt")
-            observed[label].append(item)
+            observed[label].append(_validate_observation(modes[mode]))
     return {"schema": "market_rsi_protocol_network_review_v1",
             "public_http_response_observed": any(
                 item["http_response"] for item in observed["public"]),
@@ -131,10 +252,12 @@ def main() -> None:
     parser.add_argument("--public-url", required=True)
     parser.add_argument("--peer-url", required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--progress-prefix", type=Path)
     args = parser.parse_args()
-    report = observe(args.public_url, args.peer_url)
     if args.output.exists() or args.output.is_symlink():
         raise FileExistsError("fresh protocol probe output required")
+    report = observe(args.public_url, args.peer_url,
+                     progress_prefix=args.progress_prefix)
     with args.output.open("x", encoding="utf-8") as stream:
         json.dump(report, stream, sort_keys=True, separators=(",", ":"))
 
