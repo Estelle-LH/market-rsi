@@ -14,6 +14,7 @@ from supervisor_harness.research_cycle_gate import (
     verify_fixture_canary,
 )
 from supervisor_harness.run_research_cycle_fixture import run as run_fixture
+from supervisor_harness.global_state_gate import SupervisorGlobalState
 
 
 class ResearchCycleGateTests(unittest.TestCase):
@@ -147,14 +148,22 @@ class ResearchCycleGateTests(unittest.TestCase):
             require_new_recursive_round(self.root / "missing", evidence_mode="controller_led")
 
     def test_runner_rechecks_prior_canary_before_new_cycle(self):
+        decision_doc = Path(self.tmp.name) / "decision.md"
+        decision_doc.write_text("P0 closed; synthetic fixture only.\n")
+        state_root = Path(self.tmp.name) / "global-state"
+        SupervisorGlobalState(state_root, decision_doc).initialize()
         next_root = Path(self.tmp.name) / "next-cycle"
         with self.assertRaises(ValueError):
-            run_fixture(next_root)
+            run_fixture(next_root, global_state_root=state_root, decision_doc=decision_doc)
         self.assertFalse(next_root.exists())
         prior_root = Path(self.tmp.name) / "bootstrap"
-        run_fixture(prior_root, bootstrap_canary=True)
-        later = run_fixture(next_root, prior_canary=prior_root)
+        run_fixture(prior_root, global_state_root=state_root,
+                    decision_doc=decision_doc, bootstrap_canary=True)
+        later = run_fixture(next_root, global_state_root=state_root,
+                            decision_doc=decision_doc, prior_canary=prior_root)
         self.assertFalse(later["controller_led_result"])
+        self.assertEqual(SupervisorGlobalState(state_root, decision_doc).snapshot()
+                         ["completed_cycles"], ["bootstrap", "next-cycle"])
 
     def test_execution_must_match_decision_and_artifacts(self):
         decision = self.decision()

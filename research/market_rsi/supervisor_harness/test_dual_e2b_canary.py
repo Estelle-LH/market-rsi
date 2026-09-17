@@ -44,12 +44,13 @@ class FakeBudget:
 class FakeSandbox:
     def __init__(self, sandbox_id: str, *, failing_check: str | None = None,
                  kill_ack: bool = True, public_network: bool = False,
-                 raise_on_nonzero: bool = False):
+                 raise_on_nonzero: bool = False, network_override: dict | None = None):
         self.sandbox_id = sandbox_id
         self.failing_check = failing_check
         self.kill_ack = kill_ack
         self.public_network = public_network
         self.raise_on_nonzero = raise_on_nonzero
+        self.network_override = network_override
         self.files = self
         self.commands = self
         self.content = {}
@@ -59,7 +60,9 @@ class FakeSandbox:
         return SimpleNamespace(template_id="fake-base",
                                allow_internet_access=self.public_network,
                                cpu_count=2, memory_mb=4096,
-                               envd_version="fake-envd")
+                               envd_version="fake-envd",
+                               network=self.network_override if self.network_override is not None
+                               else dict(canary.NETWORK))
 
     def write(self, path, data):
         self.content[path] = data
@@ -210,6 +213,21 @@ class DualE2BCanaryTests(unittest.TestCase):
         self.assertTrue(created[0].killed)
         self.assertFalse((self.root / "review.json").exists())
 
+    def test_server_dropped_network_rule_fails_before_guest_code(self):
+        created = []
+
+        def factory(role, job_id):
+            item = FakeSandbox(role, network_override={"allow_out": [],
+                               "deny_out": [], "allow_public_traffic": False})
+            created.append(item)
+            return item
+
+        with self.assertRaisesRegex(ValueError, "network or compute bounds"):
+            canary.run_pair(self.root, self.budget, factory)
+        self.assertEqual(len(created), 1)
+        self.assertTrue(created[0].killed)
+        self.assertFalse((self.root / "controller-report.json").exists())
+
     def test_incomplete_cleanup_never_creates_passing_review(self):
         def factory(role, job_id):
             return FakeSandbox(role, kill_ack=(role == "controller"))
@@ -245,10 +263,12 @@ class DualE2BCanaryTests(unittest.TestCase):
         self.assertEqual(self.budget.events, [])
 
     def test_local_venv_symlink_is_accepted_but_system_prefix_is_not(self):
-        REAL_REQUIRE_LOCAL_RUNTIME()
-        with patch.object(canary.sys, "prefix", canary.sys.base_prefix):
-            with self.assertRaisesRegex(ValueError, "iCloud Python runtime"):
-                REAL_REQUIRE_LOCAL_RUNTIME()
+        with patch.object(canary.importlib.metadata, "version",
+                          return_value=canary.E2B_SDK_VERSION):
+            REAL_REQUIRE_LOCAL_RUNTIME()
+            with patch.object(canary.sys, "prefix", canary.sys.base_prefix):
+                with self.assertRaisesRegex(ValueError, "iCloud Python runtime"):
+                    REAL_REQUIRE_LOCAL_RUNTIME()
 
     def test_active_market_sandbox_blocks_before_paid_action(self):
         listing = SimpleNamespace(list=lambda **kwargs: FakePager([
@@ -262,6 +282,15 @@ class DualE2BCanaryTests(unittest.TestCase):
         self.assertEqual(canary.NETWORK["deny_out"], ["0.0.0.0/0"])
         self.assertIs(canary.NETWORK["allow_public_traffic"], False)
         self.assertIn("2606:4700:4700::1111", canary.PROBE)
+
+    def test_observed_ipv4_egress_blocks_live_entry_before_key_or_budget(self):
+        with patch.object(canary.sys, "argv", ["dual_e2b_canary.py",
+                 "--output", str(self.root), "--budget", str(self.budget.root),
+                 "--env-file", str(self.base / "missing.env")]):
+            with self.assertRaisesRegex(RuntimeError, "IPv4 TCP connect"):
+                canary.main()
+        self.assertFalse(self.root.exists())
+        self.assertEqual(self.budget.events, [])
 
 
 if __name__ == "__main__":

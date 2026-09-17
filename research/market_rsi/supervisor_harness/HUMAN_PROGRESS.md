@@ -10,6 +10,20 @@ regression. **MSE** is mean squared error; lower is better on the *same* rows.
 "Opened Train" means the data was already available for development, not an
 untouched test.
 
+## 2026-09-17：双 E2B 沙箱实测发现出网闸门未生效
+
+- **目标：** 让 controller 的工具和 researcher 分住两个 E2B 沙箱，并在正式使用前检查隔离。
+- **做了什么：** 固定一个小额、只用合成字符串的检查程序；先查活跃沙箱和预算，再用全新 ID 逐次测试。修正了 macOS 虚拟环境识别、E2B 不接受的网络参数，以及失败检查项没有保存的问题。两个沙箱确实拿到了不同 ID；退出后逐一关闭，账户现在是 0 个活跃沙箱。
+- **学到什么：** 实测中，沙箱没有拿到密钥或另一只沙箱的测试文件，但向公网 IPv4 地址的 TCP 建连成功。我们还没做 TLS/HTTP 往返，所以不能断言应用数据真的出网；同样也不能凭 E2B 回报“禁止互联网”就认定隔离通过。原因尚未查明；这是安全闸门的失败，不是模型或预测能力的结果。
+- **决定：** 已让 live 双沙箱入口在读密钥和记预算前直接拒绝。不会重复同一种配置来赌一次通过；先找到不同的、创建时就起效的隔离方法并另作验证。正式 GLM/researcher 轮次和封存评分仍不启动，安全的公开资料/Train-only 工作继续。
+- **费用与证据：** 四个已派发失败 ID 合计按 **$0.80 最大可能额** 记账，实际 E2B 发票未知；最初的预检查失败 ID 没有派发。Tinker metered 数字未变。详见 `DAILY_LOG_2026-09-17.md` 和 ignored `artifacts/dual-e2b-role-canary-20260917-02/` 至 `-05/`；最终 13 项离线测试通过。这一步没有新预测分数。
+
+### 同日调整：让 controller 自己搜、自己读
+
+- **为什么改：** 用户指出全面禁网不是目的；controller 必须能自主查文献。真正要阻止的是绕过 broker 的私下传递，不是有记录的公开研究。
+- **核对到的现有能力：** 旧 Harness 已经有实时 Crossref 搜索、公开网页/文本阅读、原文哈希和实际阅读引用检查；22 项离线测试通过。新 E2B controller 尚未接入这条链，不能说它现在已经能自主搜索。
+- **下一步：** 复用这些可信 broker 工具，把 GLM 的检索词、选文、已读范围、失败和后续决定串进同一轮记录，再验证两个沙箱的边界。没有新模型分数或新付费调用。
+
 ## 2026-09-16, work block: stop the iCloud loop
 
 - **Current goal:** Get back to a trustworthy NFL prediction experiment.
@@ -394,3 +408,10 @@ untouched test.
 - **分工：** 最外层 GPT-5.6-Sol + Codex 是 supervisor，负责观察、边界、版本和验收；内层 GLM controller 用独立的 Research Harness 决定科学步骤。controller 是否弱还没有证据，不能用数据或执行失败直接下结论。
 - **隔离要求：** controller 的工具会话和 researcher 的执行必须使用两个不同 E2B sandbox/microVM；可信 broker 传有 hash 的许可输入输出，独立评分器和保护数据留在外面。现有代码只有本地 GLM 接入与单 sandbox coder probe，尚未达到这个目标。E2B sandbox 隔离不等于已证明不同物理机器。
 - **状态：** 架构合同、AGENTS 和生效的定时任务已纠正；未运行双 sandbox canary，未开新模型实验，0 新 Tinker、0 数据购买、0 Dev/Final 开封。下一步先做接口和正/反隔离测试，再判断是否应把 controller 换成 GPT-5.6-Sol。
+
+### 2026-09-17：全局状态硬闸门与文献工具连接（仍是离线验收）
+
+- **问题：** 规则让 supervisor 读写全局状态，但实际合成 runner 没检查，下一轮可能拿旧决定开跑，或与另一轮同时占用同一状态。
+- **做了什么：** 加入 supervisor 独占的追加式全局状态日志；每轮先核对当前 `RESEARCH_STATE.md`、最新日志 head、未占用状态、新 ID、源码和 canary，完成后写通过或失败。变更状态文档必须在空闲时明确登记理由。旧付费入口没有接入，所以仍关闭。另将 controller 文献调用按 host 观察到的沙箱身份限权，复用现有搜索、公开网页阅读和研究记录 broker。
+- **验证：** 36 项相关单测通过；真实旧 broker 的假网络数据链走通“搜索元数据→阅读正文范围→引用实际阅读”。本地全局日志记录了 `-08/-09` 和源码修订后的 `-10/-11` 两对零费用合成运行；`-09` 在代码变更后被拒绝作为新 canary，拒绝时 `-10` 目录尚未创建。日志目前无活跃轮。`-10/-11` 均是脚本决定加本地子进程，非 GLM、自进化或市场预测结果。
+- **下一步：** 把这套状态闸门与文献适配器接到真实 GLM/E2B 控制通路，再验收受控 A→B 交接、文献访问、禁止未授权直连和两边清理。先修旧 E2B 费用回执写早了的问题；在有效隔离 canary 前不重启付费路径。P0 数据和最终测试仍未通过。

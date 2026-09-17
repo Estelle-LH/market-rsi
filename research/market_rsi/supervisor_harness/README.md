@@ -36,10 +36,28 @@ provenance canary is `run_research_cycle_fixture.py`; its gate is
 an E2B/Harbor isolation test.
 
 The runner now requires `--prior-canary PATH` for every non-bootstrap fixture
-cycle. Only `--bootstrap-canary` may create the first zero-paid proof. The
-gate checks the prior complete record against current gate/runner/worker
-source and Python runtime before creating a new cycle. Current valid example:
-`research-cycle-fixture-20260917-06` bootstrapped, then `-07` used it as
-preflight. An older `-05` canary was rejected before a new directory existed.
+cycle and `--global-state-root PATH` for every fixture cycle. Only
+`--bootstrap-canary` may create the first zero-paid proof. The gate checks the
+prior complete record against current gate/runner/worker/global-state source
+and Python runtime before creating a new cycle. The supervisor-owned journal
+pins the exact current `RESEARCH_STATE.md`, serializes one active cycle and
+forbids ID reuse. Its current local path is
+`artifacts/supervisor-global-state-20260917-01/`. A deliberate change to
+`RESEARCH_STATE.md` needs `global_state_gate.py --revise-decision REASON`
+while no cycle is active; otherwise the runner fails closed. Crash recovery
+requires verifying the exact process has ended before closing the active
+claim as failed.
+
+Current-source zero-paid example: `research-cycle-fixture-20260917-10`
+bootstrapped, then `-11` used it as preflight and advanced the same global
+journal. After a source change, older `-09` was rejected before creating
+`-10`; its earlier result remains preserved but is stale as a new canary.
 All live/paid evidence modes still fail closed until their own adapters and
 canaries are implemented; this fixture never opens Dev/Final.
+
+`controller_tool_adapter.py` provides a host-side, role-bound route to the
+existing Data Scientist Broker's live search, bounded public read and
+actual-reading record operations. A real-broker offline integration test
+passes with a fake public transport. The new GLM/E2B tool channel,
+broker-only A→B transfer and effective network isolation have not passed a
+live canary; the adapter alone does not authorize paid execution.

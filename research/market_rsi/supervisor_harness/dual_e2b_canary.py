@@ -22,6 +22,12 @@ from paid_budget import PaidBudget, money
 TIMEOUT_SECONDS = 180
 E2B_SDK_VERSION = "2.38.0"
 UPPER_USD = "0.20"  # Two short sandboxes, each covered by the old $0.10 setup hold.
+# Live -04 and -05 observed a completed IPv4 TCP connect despite the requested
+# deny policy. That does not establish whether an application payload reached
+# the public endpoint; either way the current probe cannot certify isolation.
+# Keep this runner fail-closed until a causal, protocol-level network test and
+# effective enforcement are versioned; never repeat a run for a passing score.
+LIVE_DISPATCH_BLOCKED_REASON = "E2B public IPv4 TCP connect succeeded; full egress and isolation remain unverified"
 # E2B 2.38.0 rejected ::/0 at create time on 2026-09-17. Keep its
 # allow_internet_access=False gate and probe both IPv4 and IPv6 from the guest.
 NETWORK = {"allow_out": [], "deny_out": ["0.0.0.0/0"],
@@ -147,6 +153,8 @@ def _run_role(sandbox, role: str, payload: dict) -> tuple[dict, dict, dict]:
 
 def run_pair(root: Path, budget: PaidBudget, create_sandbox) -> dict:
     """Run one permanent, scripted A/B canary; factory is injected for offline tests."""
+    if isinstance(budget, PaidBudget) and LIVE_DISPATCH_BLOCKED_REASON:
+        raise RuntimeError("live E2B canary blocked: " + LIVE_DISPATCH_BLOCKED_REASON)
     root = _local_root(root, "canary output")
     identifier(root.name)
     _local_root(budget.root, "budget")
@@ -162,7 +170,9 @@ def run_pair(root: Path, budget: PaidBudget, create_sandbox) -> dict:
     claim = {"schema": "dual_e2b_canary_claim_v1", "job_id": root.name,
              "source_sha256": file_hash(__file__), "probe_sha256": digest(PROBE),
              "e2b_sdk_version": E2B_SDK_VERSION,
-             "python_executable": str(Path(sys.executable).resolve()),
+             "python_executable": str(Path(sys.executable).absolute()),
+             "python_executable_target": str(Path(sys.executable).resolve()),
+             "python_prefix": str(Path(sys.prefix).resolve()),
              "python_version": sys.version,
              "input_sha256": digest(input_packet), "roles": ["controller", "researcher"],
              "network": NETWORK, "timeout_seconds": TIMEOUT_SECONDS,
@@ -188,15 +198,21 @@ def run_pair(root: Path, budget: PaidBudget, create_sandbox) -> dict:
                     if name != role):
                 raise ValueError("roles reused one E2B sandbox ID")
             info = sandbox.get_info()
+            network_info = getattr(info, "network", None)
             if (info.allow_internet_access is not False
-                    or info.cpu_count > 8 or info.memory_mb > 8192):
+                    or info.cpu_count > 8 or info.memory_mb > 8192
+                    or not isinstance(network_info, dict)
+                    or network_info.get("allow_out") != NETWORK["allow_out"]
+                    or network_info.get("deny_out") != NETWORK["deny_out"]
+                    or network_info.get("allow_public_traffic") is not False):
                 raise ValueError("sandbox network or compute bounds differ from claim")
             fresh_json(root / f"{role}-sandbox.json", {
                 "role": role, "sandbox_id": sandbox_id,
                 "template_id": info.template_id,
                 "cpu_count": info.cpu_count, "memory_mb": info.memory_mb,
                 "envd_version": info.envd_version,
-                "allow_internet_access": info.allow_internet_access})
+                "allow_internet_access": info.allow_internet_access,
+                "network": network_info})
         controller_report, decision, controller_command = _run_role(
             sandboxes["controller"], "controller", {"input_sha256": digest(input_packet)})
         fresh_json(root / "controller-report.json", controller_report)
@@ -240,6 +256,11 @@ def run_pair(root: Path, budget: PaidBudget, create_sandbox) -> dict:
         fresh_json(root / "cleanup.json", cleanup)
         if (cleanup and len(sandboxes) == len(create_attempts)
                 and all(item["kill_acknowledged"] for item in cleanup.values())):
+            # Known debt, 2026-09-17: this self-process is still running here,
+            # so process_reaped=True is not temporally exact. The live entry is
+            # disabled above. Replace this with a parent-owned post-exit
+            # reconciler before any future live dispatch; do not treat these
+            # historical upper-bound receipts as actual E2B invoices.
             budget.settle_uncertain_at_upper(root.name, {
                 "terminal_local": True, "process_reaped": True,
                 "remote_usage_unknown": True, "automatic_retry": False,
@@ -270,6 +291,8 @@ def main() -> None:
     parser.add_argument("--budget", type=Path, required=True)
     parser.add_argument("--env-file", type=Path, required=True)
     args = parser.parse_args()
+    if LIVE_DISPATCH_BLOCKED_REASON:
+        raise RuntimeError("live E2B canary blocked: " + LIVE_DISPATCH_BLOCKED_REASON)
     from dotenv import dotenv_values
     from e2b import Sandbox
     key = dotenv_values(args.env_file).get("E2B_API_KEY")

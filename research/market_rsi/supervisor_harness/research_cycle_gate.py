@@ -15,7 +15,7 @@ from market_rsi import digest, file_hash, fresh_json, identifier, load_json
 ZERO = "0" * 64
 HERE = Path(__file__).resolve().parent
 FIXTURE_SOURCES = ("research_cycle_gate.py", "run_research_cycle_fixture.py",
-                   "fixture_researcher_worker.py")
+                   "fixture_researcher_worker.py", "global_state_gate.py")
 ROLES = {"public_metadata", "opened_train", "synthetic_fixture"}
 TASK_ROLES = {
     "public_source_research": "public_metadata",

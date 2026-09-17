@@ -61,6 +61,13 @@ changes, repeat the relevant canary under a fresh ID. Until a real live
 adapter and isolation canary are checked, keep those operations blocked while
 continuing safe public/Train-only work.
 
+Also require the supervisor-owned append-only global-state journal before the
+cycle claim. Its head must bind the current `RESEARCH_STATE.md`, the previous
+canary/source, and show no active cycle or reused ID. Close each exact claim
+after review or verified failure; never silently clear a crash. Only the
+synthetic fixture runner currently enforces this in code. A future live
+controller/E2B entry must wire the same gate before it can be called ready.
+
 A failed candidate, missing source, or closed P0 gate stops only the **affected
 action**, not the whole research programme: preserve the artifact and feed
 the failure back for a new controller decision. Do not stop after writing a

@@ -151,6 +151,20 @@ when the decision state changed. Record human redirects in
 turn is not a research result by itself. When a review says REPLAN or DEFER,
 do not continue the old local debugging loop merely because it is easy to do.
 
+**Machine-enforced global state for new recursive rounds:** the supervisor owns
+one append-only state journal pinning the exact `RESEARCH_STATE.md` bytes.
+The actual cycle entry must require an initialized journal, the current
+decision-document hash, a fresh expected journal head, no other active cycle,
+a never-used cycle ID and an exact prior-canary/source commitment before
+claiming work. A completed or failed cycle is closed with its review hash or
+failure status; a crash leaves an active claim and blocks another launch until
+the supervisor verifies the process is gone and closes that exact claim.
+A material change to `RESEARCH_STATE.md` needs an explicit journal revision
+with a reason while idle. The current enforcement is in the zero-paid fixture
+entry (`global_state_gate.py` + `run_research_cycle_fixture.py`). The live
+GLM/E2B adapter remains blocked and must reuse this gate at its entry; the
+existence of the fixture must never be presented as live enforcement.
+
 The current P0 gate is `supervisor_harness/P0_FIVE_SEASON_DATA.md`: inventory
 and admit enough comparable time-resolved market and game data for the stated
 claim. The 2026-09-16 supervisor decision in that document permits a distinctly

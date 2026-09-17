@@ -13,6 +13,7 @@ import subprocess
 import sys
 
 from market_rsi import digest, file_hash, fresh_json
+from supervisor_harness.global_state_gate import SupervisorGlobalState
 from supervisor_harness.research_cycle_gate import (
     ZERO, bind_fixture_decision, fixture_source_manifest, open_fixture_cycle,
     record_fixture_execution, require_new_recursive_round, review_fixture_cycle,
@@ -24,16 +25,35 @@ HERE = Path(__file__).resolve().parent
 CODE_ROOT = HERE.parent
 
 
-def run(root: Path, *, prior_canary: Path | None = None,
-        bootstrap_canary: bool = False) -> dict:
+def run(root: Path, *, global_state_root: Path, decision_doc: Path,
+        prior_canary: Path | None = None, bootstrap_canary: bool = False) -> dict:
     root = Path(root).resolve()
+    if root.exists():
+        raise FileExistsError("fresh cycle directory required")
     if bootstrap_canary:
         if prior_canary is not None:
             raise ValueError("bootstrap cannot also cite an earlier canary")
+        prior_canary_sha256 = ZERO
     elif prior_canary is None:
         raise ValueError("every non-bootstrap cycle requires a current exact-code canary")
     else:
-        require_new_recursive_round(prior_canary, evidence_mode="synthetic_fixture")
+        prior_receipt = require_new_recursive_round(prior_canary, evidence_mode="synthetic_fixture")
+        prior_canary_sha256 = prior_receipt["review_sha256"]
+    state = SupervisorGlobalState(global_state_root, decision_doc)
+    snapshot = state.snapshot()
+    source_hash = digest(fixture_source_manifest())
+    state.claim(root.name, expected_head_sha256=snapshot["head_sha256"],
+                source_sha256=source_hash, prior_canary_sha256=prior_canary_sha256)
+    try:
+        review = _run_claimed_fixture(root)
+        state.close(root.name, outcome="passed", review_sha256=file_hash(root / "review.json"))
+        return review
+    except BaseException:
+        state.close(root.name, outcome="failed")
+        raise
+
+
+def _run_claimed_fixture(root: Path) -> dict:
     facts = {"scope": "synthetic_fixture", "message": "public canary"}
     sources = fixture_source_manifest()
     packet = open_fixture_cycle(root, {
@@ -98,9 +118,12 @@ def run(root: Path, *, prior_canary: Path | None = None,
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--global-state-root", type=Path, required=True)
+    parser.add_argument("--decision-doc", type=Path, default=HERE / "RESEARCH_STATE.md")
     parser.add_argument("--prior-canary", type=Path)
     parser.add_argument("--bootstrap-canary", action="store_true")
     args = parser.parse_args()
-    result = run(args.output, prior_canary=args.prior_canary,
+    result = run(args.output, global_state_root=args.global_state_root,
+                 decision_doc=args.decision_doc, prior_canary=args.prior_canary,
                  bootstrap_canary=args.bootstrap_canary)
     print(json.dumps(result, sort_keys=True))

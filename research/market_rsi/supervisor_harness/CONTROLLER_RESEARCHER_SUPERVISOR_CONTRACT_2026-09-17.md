@@ -48,13 +48,30 @@ It must be capable of suggesting that a research workflow is inadequate, but
 must not quietly become the scientific controller or alter its proposal.
 
 The **Controller Research Harness** is the inner GLM workbench: allowed Archive,
-live source search and full-text reading, Train-only data and feature probes,
+live source search and bounded public-source reading, Train-only data and feature probes,
 algorithm design, cost estimates, and bounded task submission. It must give the
 controller enough context and tools to choose a useful next step; a large model
 with a narrow workbench is not a strong controller system. The researcher has
 an execution harness in a separate sandbox. The independent runner/evaluator
 and protected data are not tools owned by either model. Model strength and
 harness strength are separate variables and must be recorded separately.
+
+**Self-directed literature research is required, not a preselected paper list.**
+The controller chooses its own search terms, examines returned metadata, chooses
+which public sources to open, reads bounded text, follows discovered links when
+useful, and records what was actually read before citing it or proposing a new
+method. The trusted broker fetches and receipts the public source; the E2B
+guest need not have unrestricted internet access. Reuse the existing
+`data_scientist_harness/literature.py` and `broker.py` operations
+`search_literature_live`, `read_public_source`, and `record_research` rather
+than substituting the older frozen synopsis-only `search_public_literature`.
+Those legacy operations already distinguish metadata search from actual page
+reading; they are **not yet wired into the new A/B E2B controller cycle**.
+The current reader admits bounded public HTML/text, not PDF full texts, so a
+failed or paywalled read must be recorded as a limitation, not called a read
+paper. No fixed paper-count quota or permanently closed algorithm catalog is
+implied; each cycle still has explicit time/bytes/cost limits and archives all
+queries, URLs, content hashes, read ranges, failures and subsequent decisions.
 
 GLM weakness is **not established** by weak prediction scores or failed data
 collection. Before replacing it, compare GLM with a GPT-5.6-Sol controller on
@@ -132,7 +149,8 @@ Outer co-evolution after evidence:
 | --- | --- | --- |
 | Existing Codex/GLM Data Scientist Harness | Has logged literature, Train diagnostics and CPU fitting tools; its broker still says Harness releases are human-directed, and a capability/algorithm proposal does not activate code. | Legacy research path, **not** proof of this new recursive architecture. Do not silently use its old output as a new controller/researcher round. |
 | Controller/worker/Harbor components elsewhere in the repo | Existing bounded candidate execution and isolation code. | Not yet bound to this contract's controller decision, inner researcher task and supervisor return path. |
-| New provenance gate | `research_cycle_gate.py` binds synthetic facts → scripted decision → real local subprocess trace/output → review; 13 unit tests pass. The current-source bootstrap canary is `-06`; `-07` started only after rechecking `-06`. Using stale `-05` was rejected before a new directory was created. All older canaries remain preserved. | **Fixture only**: no model authored the choice, local subprocess is not E2B/Harbor isolation, and no predictive evidence was produced. |
+| New provenance and supervisor-state gate | `research_cycle_gate.py` binds synthetic facts → scripted decision → real local subprocess trace/output → review. `global_state_gate.py` adds a supervisor-owned append-only decision state, one active cycle and never-reused IDs. The current-source bootstrap canary is `-10`; `-11` passed only after rechecking `-10` and the global journal. Stale `-09` was rejected before its proposed successor was claimed. | **Fixture only**: no model authored the choice, local subprocess is not E2B/Harbor isolation, and no predictive evidence was produced. The new live entry must reuse this gate; it is not implemented yet. |
+| Controller literature tool adapter | `controller_tool_adapter.py` routes a host-observed controller sandbox identity to the existing Broker's live-search, bounded-read and research-record calls. A real-Broker integration test using a fake public transport passed. | Offline connection only: no GLM/E2B tool call, public fetch or live A→B handoff yet. Metadata search is not paper reading. |
 | Formal controller-led round | No passing end-to-end receipt yet. | Must be reported as **not started**. |
 
 | Role | Decides / does | Cannot do |
@@ -196,6 +214,13 @@ Only the independent evaluator may open its one-shot held-out comparison.
   cannot authorize a live model, paid provider or sealed evaluation. The live
   adapter must add equivalent provider, dependency, sandbox-image, tool and
   cleanup identity checks before its first use and after each such change.
+- The outer supervisor maintains one current global decision state. The cycle
+  entry must check the append-only journal head against the exact
+  `RESEARCH_STATE.md` hash, require no other active cycle and a fresh ID, and
+  bind the claim to the current canary/source. Review or verified failure
+  closes the exact claim. A decision-document revision is explicit and only
+  allowed while idle. This is enforced in the synthetic runner now, but the
+  live GLM/E2B entry is still blocked until wired and canaried.
 - A model-authored claim needs a real controller adapter receipt. The current
   synthetic fixture always emits `controller_led_result=false` and
   `empirical_improvement_claim_allowed=false`; no prose may override this.
