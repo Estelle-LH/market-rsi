@@ -1,8 +1,9 @@
 """Whole host-mediated connection with fakes; not GLM or E2B evidence."""
 from __future__ import annotations
 
-import hashlib
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -14,6 +15,7 @@ from supervisor_harness.broker_handoff import A_DECISION, A_FEEDBACK, B_ORDER, B
 from supervisor_harness.controller_mailbox import ControllerMailbox, GUEST_OUTBOX
 from supervisor_harness.controller_tool_adapter import ControllerToolAdapter
 from supervisor_harness.global_state_gate import SupervisorGlobalState
+from supervisor_harness import researcher_guest_worker
 
 
 class Files:
@@ -91,12 +93,16 @@ class OfflineConnectionCycleTests(unittest.TestCase):
             a.files.write(A_DECISION, json.dumps(decision))
             order = handoff.freeze_and_deliver()
             self.assertEqual(json.loads(b.files.read(B_ORDER)), order)
-            b.files.write(B_RESULT, json.dumps({
-                "schema": "market_broker_researcher_result_v1",
-                "cycle_id": "cycle-01", "order_sha256": digest(order),
-                "decision_sha256": order["decision_sha256"],
-                "task_id": order["task_id"],
-                "text_sha256": hashlib.sha256(order["public_text"].encode()).hexdigest()}))
+            guest_dir = root / "synthetic-researcher-guest"
+            guest_dir.mkdir()
+            guest_order, guest_result = guest_dir / "order.json", guest_dir / "result.json"
+            guest_order.write_text(b.files.read(B_ORDER))
+            worker = subprocess.run([
+                sys.executable, "-I", str(Path(researcher_guest_worker.__file__).resolve()),
+                "--order", str(guest_order), "--result", str(guest_result)],
+                capture_output=True, text=True, timeout=5, check=False)
+            self.assertEqual(worker.returncode, 0, worker.stderr)
+            b.files.write(B_RESULT, guest_result.read_text())
             result = handoff.receive_result()
             review = {"schema": "market_broker_independent_review_v1",
                       "cycle_id": "cycle-01", "result_sha256": digest(result),
