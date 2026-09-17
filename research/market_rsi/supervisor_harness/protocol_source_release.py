@@ -32,6 +32,7 @@ PROTOCOL_FILES = (
     "supervisor_harness/peer_marker_server.py",
     "supervisor_harness/e2b_role_network_component.py",
     "supervisor_harness/protocol_source_release.py",
+    "supervisor_harness/protocol_canary_entry.py",
 )
 DATA_HARNESS_FILES = tuple(str(path.relative_to(REPO / PREFIX))
                            for path in data_harness_release.source_files(REPO / PREFIX))
