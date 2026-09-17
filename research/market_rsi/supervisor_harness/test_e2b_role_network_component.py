@@ -53,7 +53,8 @@ class TimeoutException(Exception):
 class Sandbox:
     def __init__(self, sandbox_id, *, public_response=False, wrong_marker=False,
                  source_timeout=False, source_timeout_at=(0, "start"),
-                 progress_read_fail=False, progress_public_response=None):
+                 progress_read_fail=False, progress_public_response=None,
+                 deadline_in_report=False):
         self.sandbox_id = sandbox_id
         self.files = Files(progress_read_fail=progress_read_fail)
         self.commands = self
@@ -64,6 +65,7 @@ class Sandbox:
         self.wrong_marker = wrong_marker
         self.source_timeout = source_timeout
         self.source_timeout_at = source_timeout_at
+        self.deadline_in_report = deadline_in_report
         self.calls = []
 
     def get_host(self, port):
@@ -100,6 +102,8 @@ class Sandbox:
                                        "peer": probe._sha(peer_url)}}
                 if phase == "complete":
                     item["observation"] = (
+                        {**unavailable(), "error_type": "AttemptDeadlineExpired"}
+                        if self.deadline_in_report and index == 2 else
                         {"http_response": True, "status": 403,
                          "body_sha256": hashlib.sha256(b"gateway").hexdigest(),
                          "body_truncated": False, "error_type": None}
@@ -126,6 +130,9 @@ class Sandbox:
                 "http_response": True, "status": 403,
                 "body_sha256": hashlib.sha256(b"gateway").hexdigest(),
                 "body_truncated": False, "error_type": None}
+        if self.deadline_in_report:
+            report["observations"]["peer"]["environment_proxy"] = {
+                **unavailable(), "error_type": "AttemptDeadlineExpired"}
         self.files.write(output, json.dumps(report))
         return SimpleNamespace(exit_code=0, stderr="", stdout="".join(progress_lines))
 
@@ -136,6 +143,23 @@ class State:
 
 
 class RoleNetworkComponentTests(unittest.TestCase):
+    def test_inconclusive_deadline_preserves_raw_report_but_not_observation(self):
+        with tempfile.TemporaryDirectory() as temp:
+            a = Sandbox("controller-A", deadline_in_report=True)
+            b = Sandbox("researcher-B")
+            root = Path(temp) / "a-to-b"
+            with self.assertRaisesRegex(ValueError, "wall-deadline"):
+                component.observe_direction(
+                    source=a, target=b, state=State(), cycle_id="cycle-01",
+                    public_url=PUBLIC, receipt_root=root)
+            self.assertTrue((root / "raw-report.json").is_file())
+            self.assertTrue((root / "report.json").is_file())
+            self.assertFalse((root / "review.json").exists())
+            self.assertFalse((root / "observation.json").exists())
+            self.assertEqual(json.loads((root / "failure.json").read_text())["stage"],
+                             "source_guest_report_review")
+            self.assertTrue(b.handle.killed)
+
     def test_both_directions_keep_separate_observations(self):
         with tempfile.TemporaryDirectory() as temp:
             a, b = Sandbox("controller-A"), Sandbox("researcher-B")

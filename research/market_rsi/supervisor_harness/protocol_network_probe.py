@@ -15,6 +15,8 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
@@ -24,6 +26,8 @@ from urllib.request import ProxyHandler, Request, build_opener
 SCHEMA = "market_rsi_protocol_network_probe_v1"
 MAX_RESPONSE_BYTES = 2048
 TIMEOUT_SECONDS = 3
+ATTEMPT_WALL_TIMEOUT_SECONDS = 6
+MAX_CHILD_OUTPUT_BYTES = 1024
 MODES = ("environment_proxy", "direct_no_proxy")
 PROGRESS_SCHEMA = "market_rsi_protocol_probe_progress_v1"
 PROGRESS_REVIEW_SCHEMA = "market_rsi_protocol_probe_progress_review_v1"
@@ -71,6 +75,30 @@ def _one_get(url: str, *, direct: bool) -> dict:
         return {"http_response": False, "status": None,
                 "body_sha256": None, "body_truncated": False,
                 "error_type": type(error).__name__}
+
+
+def _bounded_get(url: str, *, direct: bool) -> dict:
+    """Run one GET in a reapable child; socket timeouts are not wall deadlines."""
+    command = [sys.executable, "-I", str(Path(__file__).resolve()),
+               "--single-get", _url(url), "direct" if direct else "environment_proxy"]
+    try:
+        child = subprocess.run(command, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE,
+                               timeout=ATTEMPT_WALL_TIMEOUT_SECONDS, check=False)
+    except subprocess.TimeoutExpired:
+        # The child was killed and reaped by run(). It may have received HTTP
+        # headers before stalling, so this is UNKNOWN, not a blocked route.
+        return {"http_response": False, "status": None,
+                "body_sha256": None, "body_truncated": False,
+                "error_type": "AttemptDeadlineExpired"}
+    if (child.returncode != 0 or child.stderr
+            or not isinstance(child.stdout, bytes)
+            or len(child.stdout) > MAX_CHILD_OUTPUT_BYTES):
+        raise RuntimeError("bounded protocol child failed")
+    try:
+        return _validate_observation(json.loads(child.stdout))
+    except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
+        raise RuntimeError("bounded protocol child returned invalid observation") from exc
 
 
 def progress_path(prefix: Path, index: int, phase: str) -> Path:
@@ -125,7 +153,7 @@ def observe(public_url: str, peer_url: str, *, progress_prefix: Path | None = No
                    "label": label, "mode": mode, "url_sha256": hashes}
         if progress_prefix is not None:
             _emit_progress(progress_prefix, receipt)
-        item = _one_get(urls[label], direct=direct)
+        item = _bounded_get(urls[label], direct=direct)
         observations[label][mode] = item
         if progress_prefix is not None:
             _emit_progress(progress_prefix, {**receipt, "phase": "complete",
@@ -200,6 +228,8 @@ def review_progress(receipts: list[dict], *, public_url: str, peer_url: str,
     return {"schema": PROGRESS_REVIEW_SCHEMA,
             "attempts_started": sorted(started),
             "attempts_completed": sorted(completed),
+            "attempts_timed_out": sorted(index for index, item in completed.items()
+                                         if item["error_type"] == "AttemptDeadlineExpired"),
             "all_four_completed": len(completed) == len(ATTEMPTS),
             "public_http_response_observed": any(
                 ATTEMPTS[index][0] == "public" and item["http_response"]
@@ -236,6 +266,9 @@ def review(report: dict, *, public_url: str, peer_url: str,
         observed[label] = []
         for mode in MODES:
             observed[label].append(_validate_observation(modes[mode]))
+    if any(item["error_type"] == "AttemptDeadlineExpired"
+           for items in observed.values() for item in items):
+        raise ValueError("a wall-deadline attempt cannot establish a blocked route")
     return {"schema": "market_rsi_protocol_network_review_v1",
             "public_http_response_observed": any(
                 item["http_response"] for item in observed["public"]),
@@ -248,6 +281,12 @@ def review(report: dict, *, public_url: str, peer_url: str,
 
 
 def main() -> None:
+    if len(sys.argv) > 1 and sys.argv[1] == "--single-get":
+        if len(sys.argv) != 4 or sys.argv[3] not in MODES:
+            raise ValueError("invalid bounded protocol child arguments")
+        item = _one_get(_url(sys.argv[2]), direct=sys.argv[3] == "direct_no_proxy")
+        print(json.dumps(item, sort_keys=True, separators=(",", ":")))
+        return
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--public-url", required=True)
     parser.add_argument("--peer-url", required=True)

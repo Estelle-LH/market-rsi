@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -79,6 +80,18 @@ class FakeE2B:
 
 
 class ProtocolCanaryRunnerTests(unittest.TestCase):
+    def test_retired_dual_e2b_cli_fails_before_credentials_or_reservation(self):
+        with patch.object(sys, "argv", ["protocol_canary_runner.py",
+                                        "--output", "unused", "--budget", "unused",
+                                        "--state-root", "unused", "--decision-doc", "unused",
+                                        "--prior-fixture", "unused", "--release-tag", "unused",
+                                        "--source-sha256", "unused",
+                                        "--expected-head-sha256", "unused",
+                                        "--public-url", "https://example.org/",
+                                        "--env-file", "unused"]):
+            with self.assertRaisesRegex(RuntimeError, "retired two-E2B canary"):
+                runner.main()
+
     def setUp(self):
         tmp = tempfile.TemporaryDirectory()
         self.addCleanup(tmp.cleanup)
@@ -110,6 +123,28 @@ class ProtocolCanaryRunnerTests(unittest.TestCase):
             prior_fixture_root=self.root / "fixture",
             release_tag="market-rsi-protocol-v0.1.0",
             expected_source_sha256=self.source_sha, public_url=PUBLIC)
+
+    def test_parent_rejects_guest_request_deadline_as_inconclusive(self):
+        direction = self.root / "deadline-direction"
+        direction.mkdir()
+        no_response = {"http_response": False, "status": None,
+                       "body_sha256": None, "body_truncated": False,
+                       "error_type": "URLError"}
+        report = {"schema": runner.protocol_network_probe.SCHEMA,
+                  "url_sha256": {"public": "a" * 64, "peer": "b" * 64},
+                  "observations": {label: {mode: no_response.copy()
+                                            for mode in runner.protocol_network_probe.MODES}
+                                   for label in ("public", "peer")}}
+        report["observations"]["peer"]["environment_proxy"]["error_type"] = "AttemptDeadlineExpired"
+        fresh_json(direction / "report.json", report)
+        fresh_json(direction / "raw-report.json", {"raw_utf8": json.dumps(report)})
+        attempt = {"public_url_sha256": "a" * 64, "marker_sha256": "c" * 64}
+        review = {"schema": "market_rsi_protocol_network_review_v1",
+                  "public_http_response_observed": False,
+                  "peer_http_response_observed": False,
+                  "peer_marker_observed": False, "isolation_proven": False}
+        with self.assertRaisesRegex(ValueError, "timed-out guest request"):
+            runner._review_complete_diagnostic_report(direction, attempt, review)
 
     @staticmethod
     def observed_direction(*, source, target, state, cycle_id, public_url,

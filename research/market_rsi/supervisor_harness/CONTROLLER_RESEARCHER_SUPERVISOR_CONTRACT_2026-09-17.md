@@ -1,5 +1,13 @@
 # Recursive research execution contract — 2026-09-17
 
+> **Superseded execution topology (later 2026-09-17 user correction):** the
+> two-E2B symmetric A↔B denial design below is historical. A Controller must
+> be able to see/direct B Researcher; B must not directly access A. The new
+> one-E2B, brokered directional design and its P0 handoff-latency gate are in
+> `DIRECTIONAL_RESEARCH_ARCHITECTURE_2026-09-17.md`. Preserve this document
+> for provenance, but do not dispatch another paid run through its old A/B
+> canary or use old isolation findings as new admission evidence.
+
 Status: **user-directed architecture correction; not yet an operating paid
 pipeline or a model result.** The intended outer supervisor is
 **GPT-5.6-Sol operating through the Codex harness**. The GLM controller is
@@ -15,14 +23,14 @@ run. The local read-only dashboard displays existing supervisor/receipt logs;
 it does not make unlogged agent tool calls observable retroactively.
 
 ```text
-LOCAL MAC (trusted)                              REMOTE E2B (last canary only)
+LOCAL MAC (trusted)                              REMOTE E2B (canaries only)
 Codex Supervisor -- global state, rights, budget
           |
           v
 Broker / runner -- E2B SDK commands -----------> A: Controller role sandbox
-          |                                        (no GLM invoked in -03)
+          |                                        (no GLM invoked in -03/-04)
           +-- admitted task, via broker --------> B: Researcher role sandbox
-          |                                        (marker service only in -03)
+          |                                        (marker service only in -03/-04)
           +<-- artifacts / observed receipts -----+
           v
 Independent evaluator --> append-only Archive --> allowed next input
@@ -30,10 +38,20 @@ Independent evaluator --> append-only Archive --> allowed next input
 Direct A <--> B is forbidden in the real workflow. The synthetic network
 canary deliberately tries both directions to check that prohibition; it is
 not the task-delivery channel. Hosted GLM inference is brokered and was not
-invoked by the last canary. Protected data and provider keys stay local.
+invoked by either canary. Protected data and provider keys stay local.
 ```
 
-The last immutable run `market-rsi-protocol-canary-20260917-03` reached these
+**Communication cadence:** A and B do not chat across remote sandboxes on
+every tool action. A sends a bounded, hash-bound research order through the
+local broker; B does its own internal tool loop and returns one result bundle
+through the broker. A can then make another decision. Reuse each role sandbox
+within an admitted round rather than creating a sandbox per message; record
+the actual broker handoff count and latency. Direct A↔B HTTP is a deliberately
+forbidden-path diagnostic, **not** the production communication path. If the
+normal broker-mediated handoff itself proves too slow, re-evaluate the
+two-remote-sandbox design instead of hiding that cost.
+
+The earlier immutable run `market-rsi-protocol-canary-20260917-03` reached these
 boundaries, in order:
 
 | Boundary | Observation | What it does **not** show |
@@ -57,6 +75,17 @@ cleanup and account state. A missing report is **unknown**, not blocked.
 One expired command must not prevent recording that the reverse direction was
 not attempted. Do not rerun `-03` or turn a diagnostic-only observation into
 an isolation pass.
+
+The newer `market-rsi-protocol-canary-20260917-04` used the published 60-second
+outer deadline. Two sandbox IDs and their guest boundary checks passed, as did
+the B-local marker service. A emitted complete progress for public/proxy and
+public/direct, then only a start receipt for peer/proxy; the outer command
+expired at 60 seconds without a complete HTTP/TLS report. B→A did not start.
+The direction-level peer-service kill was **not** acknowledged, while both
+entire sandboxes were killed and the account subsequently listed zero active
+Market RSI sandboxes. Its $0.20 is an uncertain upper bound, not an invoice.
+The P0 fix adds a hard deadline to each guest request; until a fresh versioned
+canary validates that change, this is a diagnosis, not an isolation result.
 
 The conditional E2B decision is evidence-based: if independently repeated,
 fresh-ID diagnostics show an E2B-specific defect or a documented policy

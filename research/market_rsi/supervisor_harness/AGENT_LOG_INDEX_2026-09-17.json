@@ -6,6 +6,7 @@
       "title": "E2B 回显 / 安全判断",
       "task": "核对请求与返回的隔离字段；不把缺失回显误判为通过。",
       "status": "离线修改完成；等待总体验收",
+      "active": false,
       "next": "总体验收后仍需新的真实双向证据；缺回显不能算隔离通过。",
       "log": "AGENT_LOG_POLICY_ECHO_2026-09-17.md"
     },
@@ -14,6 +15,7 @@
       "title": "本机 SDK → A 超时",
       "task": "找出命令哪一步耗时或卡住，并留下分段回执。",
       "status": "离线修改完成；等待总体验收",
+      "active": false,
       "next": "总体验收回执与超时分类；真实 SDK 回调尚未验证。",
       "log": "AGENT_LOG_SDK_TIMEOUT_2026-09-17.md"
     },
@@ -22,6 +24,7 @@
       "title": "A → B / B → A 探针",
       "task": "分别保留每个方向、每个请求的证据，未完成时不猜测结果。",
       "status": "离线修改完成；等待总体验收",
+      "active": false,
       "next": "总体验收逐请求回执；真实双向连通或阻断仍未知。",
       "log": "AGENT_LOG_DIRECTIONAL_PROBES_2026-09-17.md"
     },
@@ -30,6 +33,7 @@
       "title": "新版本发布核对",
       "task": "检查将要发布到用户 fork 的源码、测试和日志；避免数据、密钥或 artifacts 混入。",
       "status": "只读核对完成",
+      "active": false,
       "next": "待代码修复与离线复测完成后，只发布审过的文件到用户 fork。",
       "log": "AGENT_LOG_RELEASE_AUDIT_2026-09-17.md"
     },
@@ -38,6 +42,7 @@
       "title": "预算与重复运行检查",
       "task": "核对权威账本、全局状态、确切进程与 E2B 账户；不得启动沙箱。",
       "status": "只读核对完成；14:50 EDT 账户零活跃沙箱",
+      "active": false,
       "next": "真实测试发出前由主程序再次核对进程、账户与预算；旧 23 个未结算条目不修改。",
       "log": "AGENT_LOG_BUDGET_PREFLIGHT_2026-09-17.md"
     },
@@ -46,8 +51,90 @@
       "title": "真实测试入口审查",
       "task": "用固定运行环境审查双向探针、超时回执、失败与清理路径。",
       "status": "回显误判漏洞已修；46 项离线测试通过",
+      "active": false,
       "next": "主程序审核发布源码；真实沙箱结果仍待新编号测试。",
       "log": "AGENT_LOG_CANARY_REVIEW_2026-09-17.md"
+    },
+    {
+      "id": "sdk_to_a_timeout_fix",
+      "title": "P0：本机 SDK → A 超时专项修复",
+      "task": "针对旧 -03 运行的 a_to_b_application_probe TimeoutException，定位阻塞点并提出或实现最小的安全修复；只做离线检查，不启动付费沙箱。",
+      "status": "P0 单请求硬截止修复完成；50 项合并离线测试通过",
+      "active": false,
+      "next": "主程序审核并发布新版本、做新零费用前置检查；之后才可用新编号验证真实 A/B 路径。",
+      "log": "AGENT_LOG_SDK_TO_A_TIMEOUT_FIX_2026-09-17.md"
+    },
+    {
+      "id": "directional_design",
+      "title": "单向权限的代码证据核对",
+      "task": "只读核对现有 broker、controller 和 researcher 代码能否支持 A 看 B、B 不能直接碰 A；列出缺口，不决定架构。",
+      "status": "代码证据核对完成；现有组件尚未构成单 E2B 实验",
+      "active": false,
+      "next": "Supervisor 负责把接口缺口纳入新设计；本任务归档。",
+      "log": "AGENT_LOG_DIRECTIONAL_DESIGN_2026-09-17.md"
+    },
+    {
+      "id": "handoff_latency_design",
+      "title": "P0：交接计时可实现性核对",
+      "task": "只读核对现有 SDK/broker 在单 B 沙箱持续会话中能记录哪些时间戳与原始回执；不定验收标准或架构。",
+      "status": "交接计时代码证据核对完成；现有接口只支持单次任务",
+      "active": false,
+      "next": "Supervisor 负责实现持续会话与计时验收；本任务归档。",
+      "log": "AGENT_LOG_HANDOFF_LATENCY_DESIGN_2026-09-17.md"
+    },
+    {
+      "id": "persistent_handoff",
+      "title": "P0：单 B 沙箱持续交接",
+      "task": "实现新 A→本机 broker→持续 B 的 20 次离线交接与回读测试；记录原始回执和主机计时，不启动付费沙箱。",
+      "status": "20 次交接离线实现完成；38 项相关测试通过",
+      "active": false,
+      "next": "Supervisor 审核后才可准备新版本和真实单 B 沙箱测试；真实 E2B 延迟尚未验证。",
+      "log": "AGENT_LOG_PERSISTENT_HANDOFF_2026-09-17.md"
+    },
+    {
+      "id": "one_b_guest_loop",
+      "title": "P0：B 沙箱持续接收与回显",
+      "task": "实现一个 B 沙箱内持续处理编号任务、写回 ACK 和工具事件的最小真实 guest；只做离线测试，不启动付费沙箱。",
+      "status": "单 B guest 离线实现完成；相关 31 项测试通过",
+      "active": false,
+      "next": "等待 host adapter 合并验证和真实 E2B 单沙箱测试。",
+      "log": "AGENT_LOG_ONE_B_GUEST_LOOP_2026-09-17.md"
+    },
+    {
+      "id": "one_b_live_adapter",
+      "title": "P0：本机到单 B 沙箱真实接线",
+      "task": "把离线 DirectionalHandoff 连接到一个持久 B 的 E2B SDK 生命周期；先写离线 fake 测试与清理/计时回执，不启动付费沙箱。",
+      "status": "单 B 接线完成；47 项相关离线测试通过",
+      "active": false,
+      "next": "真实 E2B 延迟、隔离、费用和清理仍需全新 canary 验证。",
+      "log": "AGENT_LOG_ONE_B_LIVE_ADAPTER_2026-09-17.md"
+    },
+    {
+      "id": "one_b_gate_audit",
+      "title": "P0：单 B 测试的发布与费用闸门",
+      "task": "独立只读核对源码发布、唯一运行 ID、全局状态、预算、进程和 E2B 清理；列出真实测试前的精确阻塞项，不修改账本或启动服务。",
+      "status": "独立闸门核对完成；真实测试仍被发布/状态/额度闸门阻止",
+      "active": false,
+      "next": "Supervisor 完成离线入口与父级清理，再处理受保护状态和预算审批。",
+      "log": "AGENT_LOG_ONE_B_GATE_AUDIT_2026-09-17.md"
+    },
+    {
+      "id": "one_b_parent_runner",
+      "title": "P0：单 B 运行父级与清理结算",
+      "task": "实现新单 B canary 的父子进程监督、确切清理、账户核对和失败结算离线测试；不得启动真实 E2B。",
+      "status": "单 B 父级运行器完成；9 项专属离线测试通过，相关合并检查 107 项通过",
+      "active": false,
+      "next": "真实运行仍受发布、全局决策和 setup 额度闸门限制；不能把模拟传输当作隔离或预测结果。",
+      "log": "AGENT_LOG_ONE_B_PARENT_RUNNER_2026-09-17.md"
+    },
+    {
+      "id": "one_b_live_readiness",
+      "title": "P0：单 B 真实测试入口独立审查",
+      "task": "只读审查新单 B 入口、父子进程、密钥、预算、全局状态、沙箱清理和失败路径；指出任何真实测试前必须修复的漏洞，不启动付费服务。",
+      "status": "未启动：subagent 线程存储错误；由 Supervisor 自行审查",
+      "active": false,
+      "next": "待协作工具恢复后可再做独立复核；当前不能伪称已有审查结论。",
+      "log": "AGENT_LOG_ONE_B_LIVE_READINESS_2026-09-17.md"
     }
   ]
 }

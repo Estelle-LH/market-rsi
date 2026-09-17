@@ -23,6 +23,7 @@ LOG_SOURCES = {
     "activity": MARKET / "supervisor_harness/LOCAL_DEBUG_ACTIVITY_2026-09-17.md",
     "protocol": MARKET / "supervisor_harness/LIVE_PROTOCOL_DEBUG_LOG_2026-09-17.md",
     "progress": MARKET / "supervisor_harness/HUMAN_PROGRESS.md",
+    "architecture": MARKET / "supervisor_harness/DIRECTIONAL_RESEARCH_ARCHITECTURE_2026-09-17.md",
 }
 AGENT_LOG_INDEX = MARKET / "supervisor_harness/AGENT_LOG_INDEX_2026-09-17.json"
 WORKER_NAMES = (
@@ -65,11 +66,11 @@ def curated_path(path: Path, *, tail: int | None = 18) -> dict:
                 "modified_at_utc": None, "text": "Log unavailable"}
 
 
-def curated_log(name: str, *, tail: int | None = 18) -> dict:
+def curated_log(name: str, *, tail: int | None = 7) -> dict:
     return curated_path(LOG_SOURCES[name], tail=tail)
 
 
-def agent_logs(*, tail: int | None = 18) -> list[dict]:
+def agent_logs(*, tail: int | None = 7) -> list[dict]:
     index = read_json(AGENT_LOG_INDEX)
     agents = index.get("agents", [])
     if not isinstance(agents, list):
@@ -85,14 +86,18 @@ def agent_logs(*, tail: int | None = 18) -> list[dict]:
         if not isinstance(filename, str) or not re.fullmatch(r"AGENT_LOG_[A-Z0-9_-]+\.md", filename):
             continue
         path = log_dir / filename
-        entry = curated_path(path, tail=tail)
+        active = agent.get("active") is True
+        entry = (curated_path(path, tail=tail) if active or tail is None
+                 else {"source": str(path.relative_to(MARKET)),
+                       "modified_at_utc": None, "text": ""})
         entry.update({"id": agent_id,
+                      "active": active,
                       "title": str(agent.get("title", agent_id))[:100],
                       "task": str(agent.get("task", ""))[:240],
                       "status": str(agent.get("status", "未标注"))[:100],
                       "next": str(agent.get("next", "待指定"))[:240]})
         result.append(entry)
-    return result
+    return sorted(result, key=lambda item: not item["active"])
 
 
 def read_state() -> dict[str, str]:
@@ -161,6 +166,77 @@ def known_workers() -> list[dict] | None:
     return matches
 
 
+def direction_log(canary: Path, direction: str) -> dict:
+    """Expose only whitelisted, non-secret A/B milestones from immutable receipts."""
+    if direction not in {"a-to-b", "b-to-a"}:
+        raise ValueError("unknown direction")
+    root = canary / direction
+    events = []
+
+    def add(filename: str, label: str, detail) -> None:
+        path = root / filename
+        if not path.is_file() or path.is_symlink():
+            return
+        item = read_json(path)
+        try:
+            observed = datetime.fromtimestamp(path.stat().st_mtime, timezone.utc).isoformat()
+        except OSError:
+            observed = None
+        events.append({"time": observed, "stage": label, "detail": detail(item)})
+
+    add("attempt.json", "方向已开始", lambda _: "已建立本方向的不可复用尝试回执")
+    add("peer-local-positive.json", "目标沙箱本地服务", lambda x:
+        "本地阳性检查通过" if x.get("local_service_responded") is True else "未证实通过")
+    add("source-command-dispatch.json", "本机 SDK → 源沙箱", lambda x:
+        f"命令已派发；整条流截止 {x.get('sdk_stream_timeout_seconds', '未知')} 秒；尚未取得应用结论")
+    add("source-command-progress.json", "源沙箱命令回显", lambda x:
+        f"收到 {x.get('stdout_callback_bytes', 0)} 字节；"
+        f"里程碑 {len(x.get('guest_claimed_milestones', []))} 条；"
+        f"截断 {x.get('stdout_callback_truncated', '未知')}；"
+        "访客声明不是独立网络结论")
+    progress_path = root / "source-command-progress.json"
+    if progress_path.is_file() and not progress_path.is_symlink():
+        progress = read_json(progress_path)
+        try:
+            progress_time = datetime.fromtimestamp(progress_path.stat().st_mtime,
+                                                   timezone.utc).isoformat()
+        except OSError:
+            progress_time = None
+        milestones = progress.get("guest_claimed_milestones", [])
+        if isinstance(milestones, list):
+            for item in milestones[:8]:
+                if not isinstance(item, dict):
+                    continue
+                index, label, mode, phase = (item.get(key) for key in
+                                             ("index", "label", "mode", "phase"))
+                if (type(index) is int and 0 <= index <= 3
+                        and label in {"public", "peer"}
+                        and mode in {"environment_proxy", "direct_no_proxy"}
+                        and phase in {"start", "complete"}):
+                    events.append({"time": progress_time,
+                                   "stage": f"访客进度 #{index} {phase}",
+                                   "detail": f"{label} / {mode}；这是回收后读取的访客声明，单步时间未知"})
+    add("guest-progress-recovery.json", "逐请求回执恢复", lambda x:
+        f"读取 {x.get('read_receipts', 0)} 条；"
+        f"首个缺失/错误 {((x.get('first_unavailable') or {}).get('reason') or '无')}；"
+        "不等于完整报告")
+    add("report.json", "源沙箱完整报告", lambda _: "完整报告已保存，仍须独立核对")
+    add("review.json", "本机独立核对", lambda x:
+        f"公开来源 HTTP 响应 {x.get('public_http_response_observed', '未知')}；"
+        f"对端标记响应 {x.get('peer_marker_observed', '未知')}")
+    add("failure.json", "本方向失败", lambda x:
+        f"{str(x.get('error_type', '未知'))[:80]}；"
+        f"阶段 {str(x.get('stage', '旧版未记录'))[:80]}")
+    add("peer-process-cleanup.json", "目标服务清理", lambda x:
+        f"kill 确认 {x.get('kill_acknowledged', '未知')}")
+    if not events:
+        return {"direction": direction, "status": "未开始", "events": []}
+    events.sort(key=lambda x: x["time"] or "")
+    status = ("失败" if (root / "failure.json").is_file() else
+              "完整报告已保存" if (root / "review.json").is_file() else "进行中或证据未齐")
+    return {"direction": direction, "status": status, "events": events}
+
+
 def snapshot() -> dict:
     state = read_state()
     events, active = journal_status()
@@ -226,6 +302,10 @@ def snapshot() -> dict:
             "b_to_a_report_exists": (canary / "b-to-a/report.json").is_file(),
             "a_kill_acknowledged": cleanup.get("controller", {}).get("kill_acknowledged"),
             "b_kill_acknowledged": cleanup.get("researcher", {}).get("kill_acknowledged"),
+        },
+        "direction_logs": {
+            "a_to_b": direction_log(canary, "a-to-b"),
+            "b_to_a": direction_log(canary, "b-to-a"),
         },
         "journal": {"events": events, "active_cycles": active},
         "logs": {name: curated_log(name) for name in LOG_SOURCES},

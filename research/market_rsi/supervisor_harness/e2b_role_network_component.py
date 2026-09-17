@@ -256,14 +256,17 @@ def observe_direction(*, source, target, state, cycle_id: str,
         if not isinstance(raw_report, str) or len(raw_report.encode()) > 16 * 1024:
             raise ValueError("missing or oversized guest network report")
         report = json.loads(raw_report)
+        # Preserve the bounded raw observation even when independent review
+        # rejects a timed-out or otherwise inconclusive request. A saved report
+        # is diagnostic evidence, not an accepted network verdict.
+        fresh_json(root / "raw-report.json", {"raw_utf8": raw_report})
+        fresh_json(root / "report.json", report)
         stage = "source_guest_report_review"
         review = protocol_network_probe.review(
             report, public_url=public_url, peer_url=peer_url,
             peer_marker_sha256=marker_sha)
         if state.snapshot()["active_cycle"] != cycle_id:
             raise ValueError("supervisor cycle changed during directional probe")
-        fresh_json(root / "raw-report.json", {"raw_utf8": raw_report})
-        fresh_json(root / "report.json", report)
         fresh_json(root / "probe-command.json", probe_command)
         fresh_json(root / "review.json", review)
     except Exception as exc:

@@ -47,32 +47,44 @@
     <section class="box"><div class="sub">Controller / Researcher</div><div id="agents" class="value">读取中…</div><div class="small sub">当前没有逐工具事件流；不能显示未记录的内部动作。</div></section>
     <section class="box"><div class="sub">$200 总账</div><div id="budget" class="value">读取中…</div><div class="small sub">账本占额含保守上限，不等于已付账单。</div></section>
   </div>
-  <section class="section box"><h2>哪部分在本机，哪部分在 E2B</h2>
-    <div class="zones">
-      <div class="zone"><div class="label">本机 Mac</div><div>Supervisor、可信 broker、预算账本、这个 dashboard、独立评估器（本次未运行）。本机程序通过 E2B SDK 发命令。</div></div>
-      <div class="zone remote"><div class="label">远端 E2B</div><div id="e2b-roles">A：Controller 角色沙箱；B：Researcher 角色沙箱。读取中…</div></div>
-    </div>
-    <p class="small sub">这是上次合成连接测试的架构；两个 E2B 沙箱已销毁。GLM 模型没有在这次测试里启动。本地执行版尚未接入。</p>
+  <section class="section box"><h2>现在正在做什么</h2>
+    <div id="current-work">正在读取工作状态…</div>
+    <div id="agent-logs" class="rows" style="margin-top:12px">读取中…</div>
   </section>
-  <section class="section box"><h2>上一次真实测试卡在第几段</h2><ol id="trace" class="trace"></ol>
-    <p class="small sub">这个区域自动跟随最新的 protocol canary。超时和缺失报告都不能证明网络被阻断；出现完整报告也要看独立核对结果。</p>
+  <section class="section box"><h2>新设计：谁能看到谁</h2>
+    <div class="zones">
+      <div class="zone"><div class="label">本机可信层</div><div>Supervisor、broker、预算账本、dashboard、独立评估器。A 是由 broker 调用的 GLM Controller：能给 B 下任务、看 B 的允许日志，但不能任意执行本机代码。</div></div>
+      <div class="zone remote"><div class="label">远端一个 E2B 工作沙箱</div><div>B Researcher 在里面做多步工具工作。B 不能直接访问或改动 A，也看不到本机密钥、账本和封存评估。Supervisor 不进沙箱。</div></div>
+    </div>
+    <p class="small sub">A → broker → B 下任务；broker 把 B 的允许轨迹和结果给 A 看。B 不能直接连接 A。旧“双 E2B、两边都禁止直连”的测试方向已废弃；新单沙箱方案还没跑通。</p>
+  </section>
+  <section class="section box"><h2>P0：正常 A→B 交接要足够快</h2>
+    <p>Supervisor 负责定标准：一个持续运行的 B 沙箱，做 20 次小任务交接和 20 次日志回读。要求零丢失、零超时；任务交接与日志可见的 p95 各不超过 2 秒，单次不超过 5 秒。先实测，失败就重新设计，不靠加长超时。</p>
+    <div id="architecture-meta" class="small sub"></div><a href="/log/architecture" target="_blank" rel="noopener">打开完整新架构与验收规则</a>
   </section>
   <section class="section box"><h2>流程走到哪里</h2><div class="rows">
     <div class="row"><div class="label">离线连接</div><div>合成任务、broker 交接和审计测试已做；不是模型改进结果。</div></div>
-    <div class="row"><div class="label bad">真实连接检查</div><div id="canary">读取中…</div></div>
+    <div class="row"><div class="label">新方向测试</div><div>待实现和验收：A 能看 B，B 不能直接访问 A；一个 B 沙箱，20 次正常交接计时。未启动付费测试。</div></div>
     <div class="row"><div class="label">GLM 研究轮次</div><div id="research">读取中…</div></div>
     <div class="row"><div class="label">封存评估</div><div>未运行本版 Final；现有未触碰日期 11 个，低于预定的 20 个门槛。</div></div>
     <div class="row"><div class="label">本地透明版</div><div>这个页面先接上已有状态和监督日志；逐角色、逐工具事件还未接入。</div></div>
   </div></section>
-  <section class="section box"><h2>Supervisor 当前决定</h2><div id="decision">读取中…</div><h2 style="margin-top:18px">下一步</h2><div id="next">读取中…</div></section>
-  <section class="section box"><h2>最近的追加记录</h2><ul id="events" class="events small"></ul></section>
+  <details class="section box"><summary class="label">历史状态账本（方向性设计更新待登记）</summary><div id="decision">读取中…</div><h2 style="margin-top:18px">账本里记录的下一步</h2><div id="next">读取中…</div></details>
   <section class="section box"><h2>正在排查什么</h2><div id="activity-meta" class="small sub"></div><pre id="activity-log" class="log">读取中…</pre><a href="/log/activity" target="_blank" rel="noopener">打开完整本机排查记录</a></section>
-  <section class="section box"><h2>各 subagent 的工作记录</h2>
-    <p class="small sub">每个任务单独保存：查了什么、改了什么、测试结果、下一步或未解决的点。这里显示的是他们写下的工作记录，不是未捕获的内部思考或远端模型工具流。</p>
-    <div id="agent-logs" class="rows">读取中…</div>
-  </section>
-  <section class="section box"><h2>连接排查日志</h2><div id="protocol-meta" class="small sub"></div><pre id="protocol-log" class="log">读取中…</pre><a href="/log/protocol" target="_blank" rel="noopener">打开完整连接日志</a></section>
   <section class="section box"><h2>Supervisor 工作记录</h2><div id="progress-meta" class="small sub"></div><pre id="progress-log" class="log">读取中…</pre><a href="/log/progress" target="_blank" rel="noopener">打开完整工作记录</a></section>
+  <details class="section box"><summary class="label">归档：已完成 agent 与旧双沙箱测试</summary>
+    <p class="small sub">旧测试用的是已废弃设计；保留事实，但不作为新方案验收依据。</p>
+    <h3>已完成的 agent</h3><ul id="archived-agent-titles" class="small"></ul>
+    <h3>旧真实连接检查</h3><div id="canary" class="small">读取中…</div>
+    <ol id="trace" class="trace"></ol>
+    <h3>旧 A→B / B→A 分段日志</h3>
+    <div class="zones">
+      <div><h4>A → B</h4><div id="a-to-b-status" class="small sub">读取中…</div><ol id="a-to-b-log" class="events small"></ol></div>
+      <div><h4>B → A</h4><div id="b-to-a-status" class="small sub">读取中…</div><ol id="b-to-a-log" class="events small"></ol></div>
+    </div>
+    <h3>旧连接排查日志</h3><div id="protocol-meta" class="small sub"></div><pre id="protocol-log" class="log">读取中…</pre><a href="/log/protocol" target="_blank" rel="noopener">打开完整旧连接日志</a>
+    <h3>追加记录</h3><ul id="events" class="events small"></ul>
+  </details>
   <p id="limit" class="small sub"></p>
 </main>
 <script>
@@ -91,9 +103,8 @@
       $('workers').textContent = p === null ? '本机进程状态未能核对' : p.length ? `发现 ${p.length} 个已知 worker 候选进程；请核对` : '未发现已知 Market RSI worker 进程';
       $('agents').textContent = s.journal.active_cycles.length ? '有未关闭轮次记录' : '本版未在运行';
       $('budget').textContent = s.budget_occupied_usd ? '$' + Number(s.budget_occupied_usd).toFixed(2) + ' / $200 已占额' : '账本数字未读取';
-      $('canary').textContent = `${s.canary.id || '测试 ID 未知'}：${s.canary.outcome || (s.canary.active ? '运行中，尚无终局回执' : '尚无终局回执')}；A→B ${s.last_probe_trace.a_to_b_report_exists ? '有完整报告' : s.last_probe_trace.a_to_b_error_type || '未确认'}，B→A ${s.last_probe_trace.b_to_a_report_exists ? '有完整报告' : s.last_probe_trace.b_to_a_error_type || (s.last_probe_trace.b_to_a_attempt_exists ? '已开始' : '未开始')}。账户核对 ${localTime(s.last_account_check.time)}：${s.last_account_check.active_market_rsi_sandboxes ?? '未知'} 个活跃 Market RSI 沙箱。`;
+      $('canary').textContent = `已废弃的双 E2B 方案 · ${s.canary.id || '测试 ID 未知'}：${s.canary.outcome || (s.canary.active ? '运行中，尚无终局回执' : '尚无终局回执')}；旧 A→B ${s.last_probe_trace.a_to_b_report_exists ? '有完整报告' : s.last_probe_trace.a_to_b_error_type || '未确认'}，旧 B→A ${s.last_probe_trace.b_to_a_report_exists ? '有完整报告' : s.last_probe_trace.b_to_a_error_type || (s.last_probe_trace.b_to_a_attempt_exists ? '已开始' : '未开始')}。账户核对 ${localTime(s.last_account_check.time)}：${s.last_account_check.active_market_rsi_sandboxes ?? '未知'} 个活跃 Market RSI 沙箱。`;
       const p2 = s.last_probe_trace;
-      $('e2b-roles').textContent = `A：Controller 角色沙箱 ${p2.a_id || 'ID 未记录'}；B：Researcher 角色沙箱 ${p2.b_id || 'ID 未记录'}。两者只是合成测试，未运行 GLM 研究。`;
       const steps = [
         ['本机 → E2B', p2.a_id && p2.b_id ? '通过' : '未知', '创建 A、B 两个不同沙箱。', p2.a_id && p2.b_id ? 'pass' : 'unknown'],
         ['E2B A + B', p2.a_boundary_passed && p2.b_boundary_passed ? '通过' : '未知', '两边都通过密钥、本机目录和对方文件的边界检查。', p2.a_boundary_passed && p2.b_boundary_passed ? 'pass' : 'unknown'],
@@ -112,6 +123,21 @@
         const d = document.createElement('span'); d.textContent = detail;
         li.append(w, st, d); trace.append(li);
       }
+      for (const [key, prefix] of [['a_to_b', 'a-to-b'], ['b_to_a', 'b-to-a']]) {
+        const direction = (s.direction_logs || {})[key] || {status:'日志尚未读取', events:[]};
+        $(prefix + '-status').textContent = direction.status;
+        const list = $(prefix + '-log'); list.replaceChildren();
+        for (const event of direction.events || []) {
+          const li = document.createElement('li');
+          const time = document.createElement('time'); time.textContent = localTime(event.time);
+          const detail = document.createElement('span');
+          detail.textContent = event.stage + ' · ' + event.detail;
+          li.append(time, detail); list.append(li);
+        }
+        if (!list.childElementCount) {
+          const li = document.createElement('li'); li.textContent = '本方向未开始，暂无回执。'; list.append(li);
+        }
+      }
       $('research').textContent = s.canary.model_authorship_proven || s.canary.prediction_result ? '需人工核对新证据' : '本版没有 GLM 作者身份确认、研究轮次或新预测分数。';
       $('decision').textContent = s.decision;
       $('next').textContent = s.next_progress;
@@ -124,13 +150,25 @@
         d.textContent = `${names[e.event] || e.event} · ${e.cycle_id || '监督'}${e.outcome ? ' · ' + e.outcome : ''}`;
         li.append(t, d); ul.append(li);
       }
+      const architecture = s.logs.architecture;
+      $('architecture-meta').textContent = architecture.source + ' · 文件更新：' + localTime(architecture.modified_at_utc);
       for (const name of ['activity', 'protocol', 'progress']) {
         const item = s.logs[name];
         $(name + '-meta').textContent = item.source + ' · 文件更新：' + localTime(item.modified_at_utc);
         $(name + '-log').textContent = item.text || '暂无记录';
       }
       const agentPanel = $('agent-logs'); agentPanel.replaceChildren();
+      const archivedPanel = $('archived-agent-titles'); archivedPanel.replaceChildren();
+      const activeAgents = (s.agent_logs || []).filter(agent => agent.active);
+      $('current-work').textContent = activeAgents.length
+        ? `正在做：${activeAgents.map(agent => agent.title).join('、')}。Supervisor 核对新单沙箱交接架构与验收；没有训练、GLM 研究轮次或付费沙箱在跑。`
+        : '单 B 连续交接的 20 次离线测试已通过；Supervisor 正在核对真实测试的发布与预算闸门。目前没有正在运行的 subagent、训练、GLM 研究轮次或付费沙箱。';
       for (const agent of s.agent_logs || []) {
+        if (!agent.active) {
+          const li = document.createElement('li'); li.textContent = agent.title;
+          archivedPanel.append(li);
+          continue;
+        }
         const article = document.createElement('article');
         const title = document.createElement('h3'); title.textContent = agent.title;
         const task = document.createElement('div'); task.className = 'small sub'; task.textContent = agent.task;
@@ -139,13 +177,14 @@
         const meta = document.createElement('div'); meta.className = 'small sub';
         meta.textContent = agent.source + ' · 文件更新：' + localTime(agent.modified_at_utc);
         const log = document.createElement('pre'); log.className = 'log';
-        log.textContent = agent.text || '等待该 agent 的第一条记录';
+        log.textContent = agent.text || '暂无最近记录';
         const link = document.createElement('a');
         link.href = '/log/agent/' + encodeURIComponent(agent.id);
         link.target = '_blank'; link.rel = 'noopener'; link.textContent = '打开完整记录';
         article.append(title, task, status, meta, log, link); agentPanel.append(article);
       }
-      if (!agentPanel.childElementCount) agentPanel.textContent = '当前没有登记的 subagent。';
+      if (!agentPanel.childElementCount) agentPanel.textContent = '当前没有正在运行的 subagent；Supervisor 正在更新新架构和交接测试。';
+      if (!archivedPanel.childElementCount) archivedPanel.textContent = '暂无已归档任务。';
     } catch (e) {
       $('checked').textContent = '无法读取本机状态：' + e.message;
     }

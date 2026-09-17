@@ -4,6 +4,8 @@ from __future__ import annotations
 import hashlib
 import io
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from contextlib import redirect_stdout
@@ -43,7 +45,7 @@ def report(public=None, peer=None):
 
 class ProbeTests(unittest.TestCase):
     def test_both_roles_urls_get_proxy_and_direct_attempts(self):
-        with patch.object(probe, "_one_get", return_value=failure()) as get:
+        with patch.object(probe, "_bounded_get", return_value=failure()) as get:
             value = probe.observe(PUBLIC, PEER)
         self.assertEqual(get.call_count, 4)
         self.assertEqual({(call.args[0], call.kwargs["direct"]) for call in get.call_args_list},
@@ -54,7 +56,7 @@ class ProbeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             prefix = Path(temp) / "progress"
             output = io.StringIO()
-            with patch.object(probe, "_one_get", side_effect=[
+            with patch.object(probe, "_bounded_get", side_effect=[
                     failure(), response(b"public"), failure(),
                     response(b"peer-canary-marker")]) as get, redirect_stdout(output):
                 final = probe.observe(PUBLIC, PEER, progress_prefix=prefix)
@@ -84,7 +86,7 @@ class ProbeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             prefix = Path(temp) / "progress"
             output = io.StringIO()
-            with patch.object(probe, "_one_get", side_effect=[
+            with patch.object(probe, "_bounded_get", side_effect=[
                     failure(), TimeoutError("interrupted")]), redirect_stdout(output):
                 with self.assertRaises(TimeoutError):
                     probe.observe(PUBLIC, PEER, progress_prefix=prefix)
@@ -121,9 +123,64 @@ class ProbeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             prefix = Path(temp) / "progress"
             probe.progress_path(prefix, 2, "complete").write_text("old")
-            with patch.object(probe, "_one_get") as get, self.assertRaises(FileExistsError):
+            with patch.object(probe, "_bounded_get") as get, self.assertRaises(FileExistsError):
                 probe.observe(PUBLIC, PEER, progress_prefix=prefix)
             get.assert_not_called()
+
+    def test_bounded_get_uses_child_deadline_and_validates_result(self):
+        completed = subprocess.CompletedProcess(
+            args=[], returncode=0, stdout=json.dumps(failure()).encode(), stderr=b"")
+        with patch.object(probe.subprocess, "run", return_value=completed) as run:
+            item = probe._bounded_get(PEER, direct=False)
+        self.assertEqual(item, failure())
+        args, kwargs = run.call_args
+        self.assertEqual(args[0][:3], [sys.executable, "-I", str(Path(probe.__file__).resolve())])
+        self.assertEqual(args[0][3:], ["--single-get", PEER, "environment_proxy"])
+        self.assertEqual(kwargs["timeout"], probe.ATTEMPT_WALL_TIMEOUT_SECONDS)
+        self.assertIs(kwargs["stdout"], subprocess.PIPE)
+        self.assertIs(kwargs["stderr"], subprocess.PIPE)
+
+    def test_deadline_is_inconclusive_in_progress_and_final_review(self):
+        timeout = {"http_response": False, "status": None, "body_sha256": None,
+                   "body_truncated": False, "error_type": "AttemptDeadlineExpired"}
+        with patch.object(probe.subprocess, "run", side_effect=subprocess.TimeoutExpired(
+                cmd=["python3"], timeout=probe.ATTEMPT_WALL_TIMEOUT_SECONDS)):
+            self.assertEqual(probe._bounded_get(PEER, direct=False), timeout)
+        with tempfile.TemporaryDirectory() as temp:
+            output = io.StringIO()
+            with patch.object(probe, "_bounded_get", side_effect=[
+                    failure(), failure(), timeout, failure()]), redirect_stdout(output):
+                value = probe.observe(PUBLIC, PEER, progress_prefix=Path(temp) / "progress")
+            receipts = [json.loads(line) for line in output.getvalue().splitlines()]
+            self.assertEqual(len(receipts), 8)
+            partial = probe.review_progress(receipts, public_url=PUBLIC, peer_url=PEER,
+                                            peer_marker_sha256=MARKER)
+            self.assertEqual(partial["attempts_timed_out"], [2])
+            self.assertTrue(partial["all_four_completed"])
+            with self.assertRaisesRegex(ValueError, "wall-deadline"):
+                probe.review(value, public_url=PUBLIC, peer_url=PEER,
+                             peer_marker_sha256=MARKER)
+
+    def test_bounded_child_failure_or_invalid_output_fails_closed(self):
+        for child in (subprocess.CompletedProcess([], 1, b"", b""),
+                      subprocess.CompletedProcess([], 0, b"not-json", b""),
+                      subprocess.CompletedProcess([], 0, b"x" * 1025, b""),
+                      subprocess.CompletedProcess([], 0, json.dumps(failure()).encode(),
+                                                  b"unexpected stderr")):
+            with self.subTest(child=child), patch.object(probe.subprocess, "run",
+                                                        return_value=child):
+                with self.assertRaises(RuntimeError):
+                    probe._bounded_get(PUBLIC, direct=True)
+
+    def test_single_get_child_mode_emits_one_bounded_observation(self):
+        output = io.StringIO()
+        with (patch.object(sys, "argv", ["probe.py", "--single-get", PEER,
+                                        "direct_no_proxy"]),
+              patch.object(probe, "_one_get", return_value=failure()) as get,
+              redirect_stdout(output)):
+            probe.main()
+        get.assert_called_once_with(PEER, direct=True)
+        self.assertEqual(json.loads(output.getvalue()), failure())
 
     def test_http_error_is_a_response_not_a_block(self):
         error = HTTPError(PUBLIC, 403, "Forbidden", {}, io.BytesIO(b"gateway"))

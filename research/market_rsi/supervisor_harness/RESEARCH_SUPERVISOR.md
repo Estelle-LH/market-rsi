@@ -1,5 +1,14 @@
 # Market RSI research supervisor
 
+> **Current execution topology (later 2026-09-17 user correction):** A is a
+> brokered GLM Controller session on the trusted local side; one persistent
+> E2B sandbox hosts B Researcher. A can assign tasks to B and see B's
+> allowlisted trajectory through the trusted broker. B cannot directly access
+> A, credentials, the supervisor or the independent evaluator. The older
+> two-E2B symmetric A/B language in historical logs and contracts is retired
+> as an admission route. See `DIRECTIONAL_RESEARCH_ARCHITECTURE_2026-09-17.md`.
+> The 20-task offline directional fixture is not a live E2B or GLM pass.
+
 This is the intended outer GPT-5.6-Sol + Codex Supervisor Harness around the
 separately versioned GLM Controller Research Harness. A live run must record
 the actual supervisor model/session identity; this document does not prove
@@ -9,15 +18,15 @@ human harness edits into model self-improvement. Preserve detailed machine
 traces elsewhere. This page is intentionally short enough to use during work.
 
 The user clarified on 2026-09-17 that this layer is a **watcher/gatekeeper**,
-not the scientific controller. Read
-`CONTROLLER_RESEARCHER_SUPERVISOR_CONTRACT_2026-09-17.md`. The controller
-chooses the next literature question, data investigation, algorithm, code or
-candidate harness edit. The inner researcher executes the controller's plan
-in an isolated, logged workspace. For a live cycle, controller tool execution
-and researcher execution must be on different E2B sandbox IDs/microVMs, with
-broker-only communication; the supervisor/runner and protected evaluator stay
-outside both. Harbor is not a substitute for this role boundary. The exact
-runtime, access-denial and cleanup canaries must pass first. The supervisor checks the
+not the scientific controller. Read the current directional design and the
+historical `CONTROLLER_RESEARCHER_SUPERVISOR_CONTRACT_2026-09-17.md` with its
+supersession warning. The controller chooses the next literature question,
+data investigation, algorithm, code or candidate harness edit. The inner
+researcher executes the controller's plan in an isolated, logged B workspace.
+For a live cycle, the trusted broker must mediate A→B tasks and B→A observations
+without giving B direct A access or granting model responses arbitrary local
+code execution. The exact one-B runtime, directional access, persistence,
+latency and cleanup canaries must pass first. The supervisor checks the
 result, frozen test/rights/cost boundaries and next-cycle readiness. Earlier
 supervisor-authored data diagnostics remain useful P0 evidence but are not
 controller decisions or self-improvement results.

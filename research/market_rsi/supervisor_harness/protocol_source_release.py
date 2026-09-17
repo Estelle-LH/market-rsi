@@ -23,6 +23,8 @@ ORIGIN = "https://github.com/Estelle-LH/RSIBench-Data.git"
 PROTOCOL_FILES = (
     "market_rsi.py", "paid_budget.py",
     "supervisor_harness/global_state_gate.py",
+    "supervisor_harness/research_cycle_gate.py",
+    "supervisor_harness/run_research_cycle_fixture.py",
     "supervisor_harness/controller_tool_adapter.py",
     "supervisor_harness/controller_mailbox.py",
     "supervisor_harness/broker_handoff.py",
@@ -34,6 +36,13 @@ PROTOCOL_FILES = (
     "supervisor_harness/protocol_source_release.py",
     "supervisor_harness/protocol_canary_entry.py",
     "supervisor_harness/protocol_canary_runner.py",
+    # The old two-E2B CLI is retired. A new protocol release must attest the
+    # executable one-B transport and its parent-owned admission/accounting.
+    "supervisor_harness/directional_handoff.py",
+    "supervisor_harness/directional_guest_worker.py",
+    "supervisor_harness/one_b_live_adapter.py",
+    "supervisor_harness/one_b_canary_entry.py",
+    "supervisor_harness/one_b_canary_runner.py",
 )
 DATA_HARNESS_FILES = tuple(str(path.relative_to(REPO / PREFIX))
                            for path in data_harness_release.source_files(REPO / PREFIX))

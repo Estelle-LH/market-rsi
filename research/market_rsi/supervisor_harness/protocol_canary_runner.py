@@ -151,7 +151,9 @@ def _review_complete_diagnostic_report(direction: Path, attempt: dict,
         if not isinstance(modes, dict) or set(modes) != set(protocol_network_probe.MODES):
             raise ValueError("missing diagnostic probe mode")
         for mode in protocol_network_probe.MODES:
-            protocol_network_probe._validate_observation(modes[mode])
+            item = protocol_network_probe._validate_observation(modes[mode])
+            if item["error_type"] == "AttemptDeadlineExpired":
+                raise ValueError("a timed-out guest request is inconclusive")
     public_response = any(item["http_response"] for item in observations["public"].values())
     peer_response = any(item["http_response"] for item in observations["peer"].values())
     peer_marker = any(item["http_response"] and not item["body_truncated"]
@@ -241,8 +243,9 @@ def _review_observations(root: Path, ids: dict[str, str]) -> bool:
                 or review.get("isolation_proven") is not False
                 or (direction / "failure.json").exists()):
             raise ValueError("directional application/isolation evidence changed")
-        if missing_allow_out_roles:
-            _review_complete_diagnostic_report(direction, attempt, review)
+        # Reparse the four raw guest results in the parent in both policy
+        # branches. A child-produced review alone cannot certify completion.
+        _review_complete_diagnostic_report(direction, attempt, review)
     diagnostic = root / "policy-diagnostic-summary.json"
     if missing_allow_out_roles:
         if _json(root, diagnostic.name) != {
@@ -580,6 +583,10 @@ def main() -> None:
     parser.add_argument("--env-file", type=Path, required=True)
     parser.add_argument("--child", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
+    # The user's directional correction retired this two-E2B, symmetric
+    # A↔B-denial topology. Preserve past receipts and offline tests, but do
+    # not admit a new paid run through this obsolete executable entry.
+    raise RuntimeError("retired two-E2B canary; use the directional one-sandbox protocol")
     _require_live_runtime()
     for label, path in (("output", args.output), ("budget", args.budget),
                         ("global state", args.state_root),

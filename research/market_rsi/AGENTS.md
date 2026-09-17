@@ -50,16 +50,20 @@ the inner controller currently uses GLM and chooses each scientific step,
 including literature search,
 algorithms, code and candidate harness changes; an inner researcher executes
 those tasks in isolation. The Supervisor Harness and Controller Research
-Harness are separate, versioned layers. Controller and researcher tool sessions
-must use **different E2B sandbox IDs/microVMs**; the trusted supervisor/runner
-and protected evaluator remain outside both. No shared writable mounts,
-direct cross-sandbox channel or keys in either guest. Harbor can support
-eligible execution/evaluation, but does not replace E2B role isolation. Do not
-claim this architecture is running until the controller decision and researcher
-execution adapters plus two-sandbox access/cleanup canaries have passed real
-end-to-end tests. E2B sandbox separation alone does not prove different
-physical machines. A supervisor-authored
-source audit or harness change must never be attributed to the controller.
+Harness are separate, versioned layers. The user's later 2026-09-17
+directional correction supersedes the earlier two-E2B symmetric-isolation
+requirement: **A (Controller) must see B (Researcher) and assign work; B must
+not directly access or modify A.** The trusted supervisor, broker, paid keys
+and protected evaluator remain outside B. The current target is a brokered
+GLM controller session plus one persistent E2B researcher sandbox, with
+recorded A→broker→B tasks and B→broker→A observations; B receives no direct
+A or trusted-host access. A model response is not granted arbitrary execution
+on the Mac. This target is not operational until fresh one-sandbox access,
+broker-handoff, latency and cleanup canaries pass. Old two-E2B A↔B denial
+canaries remain historical diagnostics, not admission evidence. See
+`supervisor_harness/DIRECTIONAL_RESEARCH_ARCHITECTURE_2026-09-17.md`.
+A supervisor-authored source audit or harness change must never be attributed
+to the controller.
 
 Candidate harness self-modification is allowed only as a separately versioned,
 reviewable proposal in a sandbox. It cannot overwrite the frozen runner,
