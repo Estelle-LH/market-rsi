@@ -31,6 +31,7 @@ from supervisor_harness.global_state_gate import SupervisorGlobalState
 
 TIMEOUT_SECONDS = 180
 E2B_SDK_VERSION = "2.38.0"
+PYTHON_DOTENV_VERSION = "1.2.2"
 NETWORK = {"allow_out": [], "deny_out": ["0.0.0.0/0"],
            "allow_public_traffic": False}
 ROLE_MARKERS = {"controller": "/tmp/market-controller-private",
@@ -65,7 +66,8 @@ def _require_live_runtime() -> None:
     if (sys.prefix == sys.base_prefix
             or not Path(sys.prefix).resolve().is_relative_to(allowed)
             or not Path(sys.executable).absolute().is_relative_to(allowed)
-            or importlib.metadata.version("e2b") != E2B_SDK_VERSION):
+            or importlib.metadata.version("e2b") != E2B_SDK_VERSION
+            or importlib.metadata.version("python-dotenv") != PYTHON_DOTENV_VERSION):
         raise ValueError("local-only pinned E2B runtime required")
 
 
@@ -73,6 +75,13 @@ def _require_local_path(path: Path, label: str) -> None:
     allowed = Path("/Users/estelle/Library/Application Support/MarketRSI").resolve()
     if not Path(path).resolve().is_relative_to(allowed):
         raise ValueError(f"{label} must stay on the local MarketRSI volume")
+
+
+def _bounded_policy_list(value):
+    if (isinstance(value, list) and len(value) <= 32
+            and all(isinstance(item, str) and len(item) <= 256 for item in value)):
+        return value
+    return None
 
 
 def _account_clear(sandbox_class, key: str) -> dict:
@@ -228,16 +237,39 @@ def run_child(*, root: Path, budget: PaidBudget, state: SupervisorGlobalState,
                        {"role": role, "sandbox_id": sandbox_id})
             stage = f"policy_{role}"
             info = sandbox.get_info()
-            if (info.allow_internet_access is not False
-                    or not isinstance(info.network, dict)
-                    or info.network.get("allow_out") != NETWORK["allow_out"]
-                    or info.network.get("deny_out") != NETWORK["deny_out"]
-                    or info.network.get("allow_public_traffic") is not False):
+            network = info.network if isinstance(info.network, dict) else None
+            # Persist only bounded nonsecret policy fields *before* enforcing
+            # them. The v0.1.0 canary failed at this gate without recording
+            # which optional E2B response field differed; do not guess or
+            # weaken the gate from that incomplete evidence.
+            observed_policy = {"role": role, "sandbox_id": sandbox_id,
+                "allow_internet_access": info.allow_internet_access
+                    if type(info.allow_internet_access) is bool else None,
+                "network_response_type": type(info.network).__name__,
+                "network_keys": sorted(str(key)[:64] for key in network)[:32]
+                    if network is not None else [],
+                "allow_out": _bounded_policy_list(network.get("allow_out"))
+                    if network is not None else None,
+                "deny_out": _bounded_policy_list(network.get("deny_out"))
+                    if network is not None else None,
+                "allow_public_traffic": network.get("allow_public_traffic")
+                    if network is not None else None,
+                "template_id": info.template_id, "envd_version": info.envd_version}
+            fresh_json(root / f"{role}-policy-observed.json", observed_policy)
+            mismatches = []
+            if info.allow_internet_access is not False:
+                mismatches.append("allow_internet_access")
+            if network is None:
+                mismatches.append("network_response_type")
+            else:
+                for name in ("allow_out", "deny_out", "allow_public_traffic"):
+                    if network.get(name) != NETWORK[name]:
+                        mismatches.append(name)
+            fresh_json(root / f"{role}-policy-verdict.json", {
+                "role": role, "observed_sha256": file_hash(root / f"{role}-policy-observed.json"),
+                "mismatch_fields": mismatches, "policy_echo_accepted": not mismatches})
+            if mismatches:
                 raise ValueError("E2B did not echo requested role network policy")
-            fresh_json(root / f"{role}-policy.json", {"role": role,
-                "sandbox_id": sandbox_id, "network": info.network,
-                "allow_internet_access": info.allow_internet_access,
-                "template_id": info.template_id, "envd_version": info.envd_version})
         for role, sandbox in sandboxes.items():
             sandbox.files.write(ROLE_MARKERS[role], role)
         for role, sandbox in sandboxes.items():

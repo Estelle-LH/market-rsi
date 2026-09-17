@@ -218,6 +218,31 @@ class ProtocolCanaryRunnerTests(unittest.TestCase):
         self.assertEqual(self.state.snapshot()["active_cycle"], None)
         self.assertEqual(self.budget.snapshot()["effective_cost_usd"], "0.20")
 
+    def test_policy_mismatch_is_recorded_before_first_sandbox_cleanup(self):
+        self.admit()
+        with (patch.object(runner.literature, "read", return_value={
+                "receipt": {"body_sha256": "f" * 64},
+                "text_sha256": "e" * 64,
+                "read_level": "delivered_text_range_not_proof_of_understanding"}),
+              patch.object(FakeSandbox, "get_info", return_value=SimpleNamespace(
+                  allow_internet_access=False, network=None,
+                  template_id="base", envd_version="test"))):
+            with self.assertRaisesRegex(ValueError, "did not echo"):
+                runner.run_child(root=self.output, budget=self.budget,
+                    state=self.state, sandbox_class=FakeE2B, key="fake-key", public_url=PUBLIC)
+        observed = json.loads((self.output / "controller-policy-observed.json").read_text())
+        verdict = json.loads((self.output / "controller-policy-verdict.json").read_text())
+        self.assertEqual(observed["network_response_type"], "NoneType")
+        self.assertIn("network_response_type", verdict["mismatch_fields"])
+        self.assertFalse(verdict["policy_echo_accepted"])
+        self.assertTrue(FakeE2B.created[0].killed)
+
+    def test_runtime_rejects_unpinned_dotenv_dependency(self):
+        with patch.object(runner.importlib.metadata, "version",
+                          side_effect=lambda name: "2.38.0" if name == "e2b" else "0.0.0"):
+            with self.assertRaisesRegex(ValueError, "pinned E2B runtime"):
+                runner._require_live_runtime()
+
     def test_parent_rejects_changed_direction_receipt_after_child(self):
         self.admit()
         with (patch.object(runner.literature, "read", return_value={
