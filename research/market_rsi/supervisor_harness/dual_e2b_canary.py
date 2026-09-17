@@ -75,7 +75,12 @@ def _local_root(path: Path, label: str) -> Path:
 
 def _require_local_runtime() -> None:
     allowed = Path("/Users/estelle/Library/Application Support/MarketRSI").resolve()
-    if not Path(sys.executable).resolve().is_relative_to(allowed):
+    # macOS venv bin/python3 normally symlinks to the system interpreter;
+    # the isolated prefix and invoked path, not the symlink target, identify
+    # where this task's packages and executable entry point are kept.
+    if (sys.prefix == sys.base_prefix
+            or not Path(sys.prefix).resolve().is_relative_to(allowed)
+            or not Path(sys.executable).absolute().is_relative_to(allowed)):
         raise ValueError("iCloud Python runtime forbidden")
     if importlib.metadata.version("e2b") != E2B_SDK_VERSION:
         raise ValueError("E2B SDK version differs from pinned runtime")

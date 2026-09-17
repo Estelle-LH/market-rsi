@@ -216,6 +216,12 @@ class DualE2BCanaryTests(unittest.TestCase):
         self.assertFalse(self.root.exists())
         self.assertEqual(self.budget.events, [])
 
+    def test_local_venv_symlink_is_accepted_but_system_prefix_is_not(self):
+        REAL_REQUIRE_LOCAL_RUNTIME()
+        with patch.object(canary.sys, "prefix", canary.sys.base_prefix):
+            with self.assertRaisesRegex(ValueError, "iCloud Python runtime"):
+                REAL_REQUIRE_LOCAL_RUNTIME()
+
     def test_active_market_sandbox_blocks_before_paid_action(self):
         listing = SimpleNamespace(list=lambda **kwargs: FakePager([
             SimpleNamespace(metadata={"experiment_id": "market-rsi-other-run"})]))
