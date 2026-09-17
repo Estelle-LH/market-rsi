@@ -173,6 +173,57 @@ to AMM/CLOB addresses, query the relevant archive partitions, and measure
 per-game timestamp and candidate-label coverage. Seek a paid quote only for
 the remaining documented gaps; do not buy a broad package first.
 
+### Bounded discovery rule after the 2026-09-16 review
+
+The user requires both a finite search and a dataset large enough for the
+five-season claim. **The time limit applies to speculative source discovery,
+not to the data-admission standard.** The working target remains five completed
+NFL seasons, with a schedule denominator and market/trade/label coverage
+reported separately for every season. A seven-game canary cannot pass P0.
+Before any model comparison, require source/version/hash and rights receipts,
+an auditable game-to-market join, event-time quality and missingness reports,
+one predeclared comparable target and row mask, a zero-change and strong
+ordinary baseline on the same rows, and at least 20 untouched out-of-sample
+dates. Do not invent a percentage cutoff from the seven selected games;
+establish a label-support and power criterion on Train-only data before opening
+Dev/Final.
+
+Limit the **next free-source decision pass** to at most two hours of active
+work, ending no later than the next two-hour supervisor review. Try one
+reproducible old-market-address to schedule mapping, reporting matched and
+unmatched counts against *every scheduled game* in 2021–2023; check trade
+density only on the first, middle and last scheduled regular-season games of
+each year that the rule can map, with unmapped selections still counted as
+failures. Do not choose the sample after seeing its trade activity. If this
+cannot demonstrate a plausible season-wide path, stop broad public-source
+searching. Produce a
+per-season missing-data table and seek itemized sample, coverage, permitted-use,
+delivery and price terms for only those gaps. If no lawful affordable source
+passes, mark P0 blocked and ask the user to choose a changed scope; do not
+launch a smaller formal experiment under the five-season claim. Diagnostic
+work on already opened Train can be labelled as such, never substituted for
+the held-out benchmark. The $200 Tinker ceiling is not a data-purchase budget.
+
+The first bounded archive-catalog check used revision
+`7eeb860dea5b79d5c74f3182b70bd08c85c8f833` of the
+[publisher's dataset](https://huggingface.co/datasets/moose-code/polymarket-onchain-v1).
+Two small metadata objects, `market.parquet` (251,627 bytes; SHA-256
+`63b8a630c768c8171ae45f6d504c6fedd2aab6e3f0da4859d8b7a15144e51b57`)
+and `fixed_product_market_maker.parquet` (4,454,044 bytes; SHA-256
+`daa8d2746d8e044f805a58436afe2dbf8dd3ddc7f74b44d918a543dd7ae89c8e`),
+matched the revision's LFS object IDs. The former has game IDs but not public
+questions; the latter has AMM addresses but not the NFL game labels. A
+read-only column-range query of `market_data.parquet` (not a full-file
+download) found, using the **strict `nfl-` slug prefix** and `endDate` season
+windows, 0 candidate conditions in Sep 2021–Mar 2022, 32 in Sep 2022–Mar
+2023, and 237 in Sep 2023–Mar 2024. These are *unmatched metadata candidates*,
+not scheduled-game coverage. The zero conflicts with known 2021 AMM trade
+samples because this newer metadata join/classifier is incomplete for that
+era; it does **not** disprove those trades or establish that the whole early
+season is absent. The catalog cannot by itself certify five seasons. The
+two downloaded metadata files remain in ignored local artifact
+`artifacts/p0-polymarket-archive-catalog-20260917-01/`; no raw file was pushed.
+
 Kalshi's [January 2025 sports-market announcement](https://news.kalshi.com/p/game-on-kalshi-sports-trading-is-now-100-legal-in-all-50-states-2)
 is evidence against assuming that its API can supply five earlier NFL seasons,
 even though [historical endpoints](https://docs.kalshi.com/getting_started/historical_data)
@@ -254,10 +305,9 @@ silently treating a single 2024 season as five years or by fabricating data.
 | 2024 | Polymarket 284-game source; 407,225 trades; 60s labels 67.64%, 300s 90.87% in historical event clock | Frozen 2024 PBP used for support audit; not staged in local execution tree | No—support audit only |
 | 2025 | Corrected `nfl-2025` catalog has 285 typed moneylines and 285/285 schedule-identity matches; one earliest-game 2,148-trade source canary, not season coverage; a limited opened-Train 60s baseline exists | Identity schedule verified; full play-by-play alignment not verified here | No |
 
-**Next bounded action:** audit the now-identified free AMM/CLOB archive on a
-schedule-matched 2021–2023 game catalog, including timestamp density, price
-reconstruction, duplicates, source rights and comparison to the modern trade
-cohort. Seek an itemized provider quote only for documented remaining gaps;
-Betfair remains a *separate* possible exchange. Decide whether a 2025
-whole-season source audit is worthwhile once the five-season path is credible.
-No formal model training while this P0 remains open.
+**Next bounded action:** make one focused 2021–2023 old-market-address to NFL
+schedule mapping and fixed trade-density screen. If it does not show a credible
+whole-season route, stop speculative source discovery and issue the per-season
+gap/rights/cost table for targeted provider samples and quotes. Do not lower
+the five-season admission requirement or launch formal model training while
+this P0 remains open. Betfair remains a *separate* exchange, not a silent fill.
