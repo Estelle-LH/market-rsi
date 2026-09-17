@@ -1,10 +1,55 @@
-# P0 — five completed NFL seasons of usable market history
+# P0 — three-season pilot floor, five-season primary target
 
 **Supervisor decision, 2026-09-16:** INTERRUPT the proposed formal model
 comparison; REPLAN to data acquisition and admission. The user asked for about
 five years, but the completed 2024 Polymarket 284-game audit is only one year.
 The 2025 opened-Train HGB result does not fill the missing multi-year source
 inventory. No model claim may describe the small cohort as a five-year test.
+
+**Updated supervisor judgment, 2026-09-16 late evening:** Three *completed,
+comparable* seasons are the minimum for a separately labelled first controlled
+prediction experiment; five seasons remain the stronger primary benchmark
+target, not a reason to search indefinitely or to mix incompatible trading
+mechanisms. This is our design judgment, **not** a literature-proven magic
+sample size or a declaration that three years have already been acquired.
+The natural first candidate is 2023–2025 Polymarket CLOB, subject to actual
+schedule-matched trade and label audits. The old 2021–2022 AMM observations
+may be useful as a distinct historical cohort but cannot silently enlarge the
+same-mechanism pilot. The old five-season gate still applies to any claim of a
+five-season result; the three-season pilot has its own distinct gate below.
+
+For the pilot, use chronological development (provisionally 2023 Train, 2024
+Route-Dev, 2025 one-time Final). This split is conditional: prior 2025
+opened-Train and canary exposure must be inventoried, and all dates or games
+already inspected for model development excluded from Final. If the exposed
+aggregate 2025 results or other leakage make independent confirmation
+unverifiable, do **not** relabel 2025 as untouched; defer a final claim until
+a genuinely independent period exists. At admission, record full schedule
+denominators and every mapped/unmapped game, per-game and per-date trade and
+candidate-label coverage, missingness by week/team, source rights/hashes,
+point-in-time observation rules, and a predeclared target/row mask. Require
+at least 20 genuinely untouched Final dates and the same eligible rows for
+zero-change, strong ordinary baselines and the iterating researcher. Before
+opening Final, estimate the precision of a *paired, week-blocked* loss
+difference using only opened Train/Dev. If that estimate cannot resolve the
+predeclared meaningful improvement, the pilot can report a directional result
+but cannot make a strong improvement claim; acquire more comparable data or
+wait for another completed season. A year count or thousands of correlated
+play rows alone is never evidence of sufficient statistical power.
+
+The local [nflverse schedule](https://github.com/nflverse/nfldata/blob/master/data/games.csv)
+revision `9c00ef3c24ac5fd8979bd8b40da4b2800bf0bc17` lists, respectively,
+285/284/285/285/285 games and 62/61/63/65/64 distinct game dates in the
+2021–2025 seasons. Thus one untouched season can in principle exceed the
+minimum 20-date check, but it has only 22 game weeks and market/label gaps
+reduce effective evidence. A three-season design leaves roughly one season
+to learn, one to choose, one to test; five seasons allow more training and
+cross-season replication. These are design inferences from the schedule,
+not observed forecast gains. Rolling-origin evaluation uses only prior data
+for each forecast as described by [Hyndman](https://robjhyndman.com/hyndsight/tscv/);
+repeated strategy selection on the same history creates overfitting risk as
+analyzed by [Bailey et al.](https://www.davidhbailey.com/dhbpapers/backtest-prob.pdf).
+Neither source asserts that exactly three or five NFL seasons are sufficient.
 
 ## What must be obtained and checked
 
@@ -168,18 +213,20 @@ for the sampled Titans–Bengals market and none for Colts–Broncos, whereas th
 revision-pinned archive returned 556 and 420 rows. Thus a zero or tiny count
 from those convenience endpoints is **not** a reliable absence test here.
 The exact archive rows still need independent sampled event/receipt checks.
-The cheapest next step is now to map a schedule-matched 2021–2023 NFL catalog
-to AMM/CLOB addresses, query the relevant archive partitions, and measure
-per-game timestamp and candidate-label coverage. Seek a paid quote only for
-the remaining documented gaps; do not buy a broad package first.
+At the time of this free-archive canary, mapping a schedule-matched
+2021–2023 catalog to AMM/CLOB addresses was the cheapest proposed check.
+That proposed old-season work was later deferred by the explicit three-season
+pilot decision above; the seven-game canary remains evidence, not an executed
+whole-season audit. Seek a paid quote only for documented gaps; do not buy
+a broad package first.
 
 ### Bounded discovery rule after the 2026-09-16 review
 
 The user requires both a finite search and a dataset large enough for the
-five-season claim. **The time limit applies to speculative source discovery,
-not to the data-admission standard.** The working target remains five completed
-NFL seasons, with a schedule denominator and market/trade/label coverage
-reported separately for every season. A seven-game canary cannot pass P0.
+stated claim. **The time limit applies to speculative source discovery,
+not to the data-admission standard.** The stronger five-season target remains,
+with a schedule denominator and market/trade/label coverage reported separately
+for every season. A seven-game canary cannot pass either admission gate.
 Before any model comparison, require source/version/hash and rights receipts,
 an auditable game-to-market join, event-time quality and missingness reports,
 one predeclared comparable target and row mask, a zero-change and strong
@@ -188,19 +235,20 @@ dates. Do not invent a percentage cutoff from the seven selected games;
 establish a label-support and power criterion on Train-only data before opening
 Dev/Final.
 
-Limit the **next free-source decision pass** to at most two hours of active
-work, ending no later than the next two-hour supervisor review. Try one
-reproducible old-market-address to schedule mapping, reporting matched and
-unmatched counts against *every scheduled game* in 2021–2023; check trade
-density only on the first, middle and last scheduled regular-season games of
-each year that the rule can map, with unmapped selections still counted as
-failures. Do not choose the sample after seeing its trade activity. If this
-cannot demonstrate a plausible season-wide path, stop broad public-source
-searching. Produce a
+The **old-season free-source pass** was originally limited to two hours: one
+reproducible 2021–2023 address-to-schedule mapping with every scheduled game
+in the denominator, followed by a fixed first/middle/last-game density sample
+that counts unmapped games as failures. **That pass was not executed before
+the later supervisor decision to prioritize a three-season pilot; it is now
+deferred rather than treated as completed evidence.** Apply the same bounded
+approach to the 2023–2025 same-mechanism candidate first: decide whether
+season-wide market identities, timestamped fills and untouched Final dates
+can plausibly be admitted. If not, stop broad public-source searching. Produce a
 per-season missing-data table and seek itemized sample, coverage, permitted-use,
 delivery and price terms for only those gaps. If no lawful affordable source
-passes, mark P0 blocked and ask the user to choose a changed scope; do not
-launch a smaller formal experiment under the five-season claim. Diagnostic
+passes even the three-season pilot gate, mark that gate blocked and ask the
+user to choose a changed scope. Do not label a three-season pilot a five-season
+primary result. Diagnostic
 work on already opened Train can be labelled as such, never substituted for
 the held-out benchmark. The $200 Tinker ceiling is not a data-purchase budget.
 
@@ -280,7 +328,7 @@ that five comparable seasons exist from this probe.
 
 ## Admission / exit rule
 
-P0 passes only with a frozen per-season source matrix, rights/cost ledger,
+The **five-season primary P0** passes only with a frozen per-season source matrix, rights/cost ledger,
 local verified manifests and hashes, end-to-end event/market mapping and
 timestamp-quality report, and enough nontrivial labels to predeclare the
 objective and date split. The exact seasons and exchange used for the formal
@@ -291,9 +339,14 @@ features and search budget, then rerun zero-change, HGB and other strong
 ordinary baselines on the same rows before testing self-iteration. A new
 held-out confirmation still needs at least 20 untouched dates.
 
-If five comparable seasons are unavailable, mark P0 **blocked with evidence**
-and ask the user whether to change market, target or scope. Never pass P0 by
-silently treating a single 2024 season as five years or by fabricating data.
+The separately labelled **three-season pilot** can proceed only after its
+three comparable completed seasons and the earlier pilot-specific source,
+leakage, target, precision and untouched-date checks pass. If five comparable
+seasons are unavailable, mark the *five-season primary claim* blocked with
+evidence; do not block a properly labelled pilot merely to keep searching.
+If even the pilot cannot be admitted, report the gaps and ask the user whether
+to change market, target or scope. Never relabel a single 2024 season as a
+multi-year result or fabricate data.
 
 ## Current verified status
 
@@ -305,9 +358,10 @@ silently treating a single 2024 season as five years or by fabricating data.
 | 2024 | Polymarket 284-game source; 407,225 trades; 60s labels 67.64%, 300s 90.87% in historical event clock | Frozen 2024 PBP used for support audit; not staged in local execution tree | No—support audit only |
 | 2025 | Corrected `nfl-2025` catalog has 285 typed moneylines and 285/285 schedule-identity matches; one earliest-game 2,148-trade source canary, not season coverage; a limited opened-Train 60s baseline exists | Identity schedule verified; full play-by-play alignment not verified here | No |
 
-**Next bounded action:** make one focused 2021–2023 old-market-address to NFL
-schedule mapping and fixed trade-density screen. If it does not show a credible
-whole-season route, stop speculative source discovery and issue the per-season
-gap/rights/cost table for targeted provider samples and quotes. Do not lower
-the five-season admission requirement or launch formal model training while
-this P0 remains open. Betfair remains a *separate* exchange, not a silent fill.
+**Next bounded action:** prioritize 2023–2025 same-mechanism CLOB game/trade/
+label coverage and the 2025 exposure audit for the three-season pilot. Do not
+continue a broad 2021–2022 AMM catalog hunt merely to reach five calendar
+years. If recent-year gaps remain, issue the per-season gap/rights/cost table
+for targeted provider samples and quotes. The five-season primary claim stays
+closed until its separate gate passes. Betfair remains a *separate* exchange,
+not a silent fill.

@@ -68,14 +68,19 @@ providers or repeat an unchanged diagnostic experiment.
   baseline; preserve all attempts, not only the winner.
 - The old iCloud copy is an archive. The local-only migration removed the
   execution blocker; do not spend another work block perfecting iCloud sync.
-- P0 is five-season historical-data admission as defined in
-  `P0_FIVE_SEASON_DATA.md`. Interrupt a proposed formal model run that uses
-  only the 2024 feasibility cohort. Free source inventory and bounded data
+- P0 has two explicitly different claims as defined in
+  `P0_FIVE_SEASON_DATA.md`: a minimum three-completed-season controlled pilot
+  if comparable data, a frozen target, untouched test and precision checks
+  pass, and a five-season primary benchmark target. Interrupt any proposed
+  run that uses only the 2024 feasibility cohort or labels a three-season
+  pilot as a five-season result. Free source inventory and bounded data
   acquisition are on the critical path; a larger dataset is not a model gain.
 - The user authorized this supervisor to execute qualifying paid experiments
   under the **existing** $200 Tinker cap on 2026-09-16. Do not create a new
   paid process until P0 data admission, the exact published harness, local
   ledger, unique run-ID claim, frozen split/objective and budget gates pass.
   Check for an active process before dispatch and never launch a duplicate.
-  This does not authorize a data purchase, a larger cap or a change of
-  exchange/benchmark; those need their own recorded decision.
+  This does not authorize a data purchase, a larger cap or silently changing
+  the exchange/benchmark; those need their own recorded decision. The separate
+  three-season pilot is an explicit supervisor decision, not a waiver of its
+  admission gates.
