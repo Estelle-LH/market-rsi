@@ -8,11 +8,13 @@ later stages and exact terminal cleanup/accounting.
 from __future__ import annotations
 
 from pathlib import Path
+import hashlib
 import sys
 
 from market_rsi import digest, file_hash, fresh_json, identifier
 from paid_budget import money
-from supervisor_harness import protocol_source_release, research_cycle_gate
+from supervisor_harness import (protocol_network_probe, protocol_source_release,
+                                research_cycle_gate)
 
 
 UPPER_USD = "0.20"
@@ -20,9 +22,11 @@ UPPER_USD = "0.20"
 
 def begin_protocol_canary(*, root: Path, cycle_id: str, state, budget,
                           expected_head_sha256: str, prior_fixture_root: Path,
-                          release_tag: str, expected_source_sha256: str) -> dict:
+                          release_tag: str, expected_source_sha256: str,
+                          public_url: str) -> dict:
     """Reject stale/unpublished/over-budget work before claiming or reserving."""
     identifier(cycle_id)
+    protocol_network_probe._url(public_url)
     root = Path(root)
     if root.name != cycle_id or root.exists() or root.is_symlink():
         raise ValueError("fresh exact cycle output directory required")
@@ -52,6 +56,7 @@ def begin_protocol_canary(*, root: Path, cycle_id: str, state, budget,
              "prior_fixture_source_sha256": prior["source_manifest_sha256"],
              "expected_global_head_sha256": expected_head_sha256,
              "python_executable": str(Path(sys.executable).absolute()),
+             "public_url_sha256": hashlib.sha256(public_url.encode()).hexdigest(),
              "setup_upper_usd_not_invoice": UPPER_USD,
              "scripted_operational_canary_only": True,
              "model_authorship_proven": False,

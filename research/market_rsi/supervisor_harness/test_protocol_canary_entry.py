@@ -34,7 +34,8 @@ class ProtocolCanaryEntryTests(unittest.TestCase):
         self.arguments = dict(root=self.output, cycle_id=self.output.name,
             state=self.state, budget=self.budget, expected_head_sha256=self.head,
             prior_fixture_root=self.root / "unused-prior", release_tag="market-rsi-protocol-v0.1.0",
-            expected_source_sha256=PUBLICATION["source_sha256"])
+            expected_source_sha256=PUBLICATION["source_sha256"],
+            public_url="https://example.org/public-canary")
         self.fixture = patch.object(entry.research_cycle_gate, "verify_fixture_canary",
                                     return_value=PRIOR)
         self.release = patch.object(entry.protocol_source_release, "verify_published",
