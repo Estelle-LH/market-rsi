@@ -103,7 +103,16 @@ def _run_role(sandbox, role: str, payload: dict) -> tuple[dict, dict, dict]:
     sandbox.files.write("/tmp/market_probe.py", PROBE)
     sandbox.files.write("/tmp/market_input.json", canonical(payload))
     command = f"python3 -I /tmp/market_probe.py {role} {peer}"
-    result = sandbox.commands.run(command, timeout=25)
+    command_exit_exception = False
+    try:
+        result = sandbox.commands.run(command, timeout=25)
+    except Exception as exc:
+        if type(exc).__name__ != "CommandExitException":
+            raise
+        # E2B raises on a normal nonzero exit. Read the guest's check report
+        # before cleanup so a failed isolation check is diagnosable.
+        result = exc
+        command_exit_exception = True
     if len(result.stdout) > 4096 or len(result.stderr) > 4096:
         raise ValueError("oversized sandbox command output")
     report_text = sandbox.files.read("/tmp/market_report.json")
@@ -113,11 +122,17 @@ def _run_role(sandbox, role: str, payload: dict) -> tuple[dict, dict, dict]:
     report, output = json.loads(report_text), json.loads(output_text)
     required_checks = {"peer_marker_absent", "paid_keys_absent",
                        "host_home_absent", "direct_public_network_blocked"}
-    if (result.exit_code != 0 or report.get("role") != role
-            or set(report.get("checks", {})) != required_checks
-            or any(report["checks"][name] is not True for name in required_checks)):
-        raise ValueError(f"{role} isolation probe failed")
+    failed_checks = sorted(name for name in required_checks
+                           if report.get("checks", {}).get(name) is not True)
+    if set(report.get("checks", {})) != required_checks:
+        failed_checks.append("check_schema")
+    if report.get("role") != role:
+        failed_checks.append("role_mismatch")
+    if result.exit_code != 0:
+        failed_checks.append("nonzero_exit")
     return report, output, {"exit_code": result.exit_code,
+                            "isolation_check_failures": failed_checks,
+                            "sdk_command_exit_exception": command_exit_exception,
                             "stdout_sha256": digest(result.stdout),
                             "stderr_sha256": digest(result.stderr)}
 
@@ -176,21 +191,29 @@ def run_pair(root: Path, budget: PaidBudget, create_sandbox) -> dict:
                 "allow_internet_access": info.allow_internet_access})
         controller_report, decision, controller_command = _run_role(
             sandboxes["controller"], "controller", {"input_sha256": digest(input_packet)})
+        fresh_json(root / "controller-report.json", controller_report)
+        fresh_json(root / "controller-command.json", controller_command)
+        if controller_command["isolation_check_failures"]:
+            raise ValueError("controller isolation probe failed: "
+                             + ",".join(controller_command["isolation_check_failures"]))
         if decision != {"schema": "scripted_controller_decision_v1",
                         "input_sha256": digest(input_packet),
                         "task": "hash the admitted synthetic task"}:
             raise ValueError("controller output differs from admitted synthetic task")
-        fresh_json(root / "controller-report.json", controller_report)
         fresh_json(root / "decision.json", decision)
         researcher_report, output, researcher_command = _run_role(
             sandboxes["researcher"], "researcher", {
                 "decision_sha256": digest(decision), "task": decision["task"]})
+        fresh_json(root / "researcher-report.json", researcher_report)
+        fresh_json(root / "researcher-command.json", researcher_command)
+        if researcher_command["isolation_check_failures"]:
+            raise ValueError("researcher isolation probe failed: "
+                             + ",".join(researcher_command["isolation_check_failures"]))
         if output != {"schema": "scripted_researcher_output_v1",
                       "decision_sha256": digest(decision),
                       "task_sha256": hashlib.sha256(
                           decision["task"].encode()).hexdigest()}:
             raise ValueError("researcher output differs from bound controller decision")
-        fresh_json(root / "researcher-report.json", researcher_report)
         fresh_json(root / "output.json", output)
         fresh_json(root / "commands.json", {"controller": controller_command,
                                             "researcher": researcher_command})

@@ -14,6 +14,13 @@ import dual_e2b_canary as canary
 REAL_REQUIRE_LOCAL_RUNTIME = canary._require_local_runtime
 
 
+class CommandExitException(Exception):
+    def __init__(self):
+        self.exit_code = 17
+        self.stdout = ""
+        self.stderr = ""
+
+
 class FakeBudget:
     def __init__(self, root: Path, available: str = "1"):
         self.root = root
@@ -36,11 +43,13 @@ class FakeBudget:
 
 class FakeSandbox:
     def __init__(self, sandbox_id: str, *, failing_check: str | None = None,
-                 kill_ack: bool = True, public_network: bool = False):
+                 kill_ack: bool = True, public_network: bool = False,
+                 raise_on_nonzero: bool = False):
         self.sandbox_id = sandbox_id
         self.failing_check = failing_check
         self.kill_ack = kill_ack
         self.public_network = public_network
+        self.raise_on_nonzero = raise_on_nonzero
         self.files = self
         self.commands = self
         self.content = {}
@@ -77,6 +86,8 @@ class FakeSandbox:
         self.content["/tmp/market_output.json"] = json.dumps(output)
         self.content["/tmp/market_report.json"] = json.dumps(
             {"role": role, "checks": checks})
+        if self.raise_on_nonzero and not all(checks.values()):
+            raise CommandExitException()
         return SimpleNamespace(exit_code=0 if all(checks.values()) else 17,
                                stdout="", stderr="")
 
@@ -158,6 +169,21 @@ class DualE2BCanaryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "researcher isolation probe failed"):
             canary.run_pair(self.root, self.budget, factory)
         self.assertTrue(all(s.killed for s in created.values()))
+        self.assertTrue((self.root / "researcher-report.json").is_file())
+        self.assertFalse((self.root / "review.json").exists())
+
+    def test_sdk_nonzero_exception_keeps_safe_failed_check_report(self):
+        def factory(role, job_id):
+            return FakeSandbox(role, failing_check=(
+                "direct_public_network_blocked" if role == "controller" else None),
+                raise_on_nonzero=True)
+
+        with self.assertRaisesRegex(ValueError, "direct_public_network_blocked"):
+            canary.run_pair(self.root, self.budget, factory)
+        report = json.loads((self.root / "controller-report.json").read_text())
+        command = json.loads((self.root / "controller-command.json").read_text())
+        self.assertIs(report["checks"]["direct_public_network_blocked"], False)
+        self.assertTrue(command["sdk_command_exit_exception"])
         self.assertFalse((self.root / "review.json").exists())
 
     def test_budget_stops_before_claim_or_creation(self):
