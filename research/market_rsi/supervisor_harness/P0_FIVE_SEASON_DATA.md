@@ -154,6 +154,13 @@ responses. They **do not** prove whole-season coverage, adequate in-game
 frequency, correct price reconstruction, legal downstream use beyond the
 publisher's licence statement, or comparability with 2024–2025 CLOB labels.
 The raw row counts include post-game timestamps and are not label counts.
+Using a separately hashed [nflverse game schedule](https://github.com/nflverse/nfldata/blob/master/data/games.csv)
+for only those seven games, the fixed one-hour-before to five-hours-after
+kickoff window contained 231–856 rows per market. Median gaps between unique
+trade timestamps were 10–39 seconds, but each game's largest observed gap
+was 398–6,027 seconds. These broad game-window counts are encouraging for
+source discovery yet **not** a play-aligned 60s/300s label-support estimate;
+the schedule revision and all seven diagnostics are in the same manifest.
 
 A public Polygon RPC returned `History has been pruned` for the 2022 block
 range. The Blockscout address-logs endpoint returned only one historical log
