@@ -121,7 +121,50 @@ The contrast is consistent with the API's documented approximately three-year
 floor for market-scoped requests, **not** a season-wide coverage estimate or
 proof of a hard cutoff date. These exploratory responses were not persisted
 with raw hashes, so they are not admitted source artifacts. A separate lawful
-archive/provider route is still needed for the missing older years.
+archive/provider route was needed for the missing older years; the next
+section records a newly found free candidate, not its formal admission.
+
+### Free on-chain AMM archive canary, 2026-09-17 UTC
+
+A new **candidate** route is the public
+[Polymarket On-Chain v1 archive](https://huggingface.co/datasets/moose-code/polymarket-onchain-v1)
+at immutable dataset revision `7eeb860dea5b79d5c74f3182b70bd08c85c8f833`.
+Its publisher labels it CC-BY-4.0 with attribution to Envio, and says its
+`fpmm_transaction` table contains AMM buys/sells from the early era while
+`order_filled` contains later CLOB fills. This is a publisher claim, not yet
+our own completeness or rights audit. Polymarket's
+[FPMM subgraph schema](https://github.com/Polymarket/polymarket-subgraph/blob/main/fpmm-subgraph/schema.graphql)
+independently specifies an FPMM transaction with timestamp, market address,
+trade amount, fee, outcome index and token amount. It is a different execution
+mechanism from modern CLOB; equal-looking prices are not automatically equal
+labels or executable quotes.
+
+We downloaded only three small monthly AMM shards (November 2021, January
+2022, October 2022; 8,873,616 bytes combined). Their local SHA-256 values
+match the publisher's revision-pinned LFS object IDs. Using the already saved
+Gamma `marketMakerAddress` mapping, an exact case-insensitive market-ID query
+found 251 and 406 rows for two November 2021 regular-season games; 556, 332,
+661 and 870 rows for the four January 2022 divisional-playoff winner markets;
+and 420 rows for the October 2022 Colts–Broncos game. The full source URLs,
+hashes, addresses and query rule are in ignored local artifact
+`artifacts/p0-polymarket-amm-archive-canary-20260917-01/manifest.json`.
+These seven selected markets prove some old timestamped trade records are
+available for free, correcting the tempting inference from empty Data API
+responses. They **do not** prove whole-season coverage, adequate in-game
+frequency, correct price reconstruction, legal downstream use beyond the
+publisher's licence statement, or comparability with 2024–2025 CLOB labels.
+The raw row counts include post-game timestamps and are not label counts.
+
+A public Polygon RPC returned `History has been pruned` for the 2022 block
+range. The Blockscout address-logs endpoint returned only one historical log
+for the sampled Titans–Bengals market and none for Colts–Broncos, whereas the
+revision-pinned archive returned 556 and 420 rows. Thus a zero or tiny count
+from those convenience endpoints is **not** a reliable absence test here.
+The exact archive rows still need independent sampled event/receipt checks.
+The cheapest next step is now to map a schedule-matched 2021–2023 NFL catalog
+to AMM/CLOB addresses, query the relevant archive partitions, and measure
+per-game timestamp and candidate-label coverage. Seek a paid quote only for
+the remaining documented gaps; do not buy a broad package first.
 
 Kalshi's [January 2025 sports-market announcement](https://news.kalshi.com/p/game-on-kalshi-sports-trading-is-now-100-legal-in-all-50-states-2)
 is evidence against assuming that its API can supply five earlier NFL seasons,
@@ -198,14 +241,16 @@ silently treating a single 2024 season as five years or by fabricating data.
 
 | Season | Market-data status | PBP status | Formal admission |
 | --- | --- | --- | --- |
-| 2021 | `nfl` metadata fully paged: 199 legacy events, zero matching the modern typed-moneyline schema; an official playoff page shows game-winner markets. One bounded old-market trade query returned zero; season-wide trade/quote coverage unknown. | Official multi-season PBP source identified; this season not locally verified | No |
-| 2022 | `nfl` metadata fully paged: 35 legacy/grouped events, zero matching the modern typed-moneyline schema; an official Week 5 page shows game-winner markets. One bounded old-market trade query returned zero; season-wide trade/quote coverage unknown. | Same boundary | No |
+| 2021 | `nfl` metadata fully paged: 199 legacy events, zero matching the modern typed-moneyline schema; an official playoff page shows game-winner markets. One old Data API query returned zero, but a revision-pinned free AMM archive yielded 251/406 rows for two November 2021 games and 332–870 rows for four January 2022 playoff games. Whole-season coverage/label quality unknown. | Official multi-season PBP source identified; this season not locally verified | No |
+| 2022 | `nfl` metadata fully paged: 35 legacy/grouped events, zero matching the modern typed-moneyline schema; an official Week 5 page shows game-winner markets. One old Data API query returned zero, but the free AMM archive yielded 420 rows for the selected Colts–Broncos market. Whole-season coverage/label quality unknown. | Same boundary | No |
 | 2023 | `nfl` series/window returned zero, yet an official daily event page shows game-winner markets. One bounded query returned a timestamped fill; season-wide coverage unknown. | Same boundary | No |
 | 2024 | Polymarket 284-game source; 407,225 trades; 60s labels 67.64%, 300s 90.87% in historical event clock | Frozen 2024 PBP used for support audit; not staged in local execution tree | No—support audit only |
 | 2025 | Corrected `nfl-2025` catalog has 285 typed moneylines and 285/285 schedule-identity matches; one earliest-game 2,148-trade source canary, not season coverage; a limited opened-Train 60s baseline exists | Identity schedule verified; full play-by-play alignment not verified here | No |
 
-**Next bounded action:** seek a lawful archive/provider route and a concrete
-season-by-season coverage/granularity/rights quote for 2021–2022 fills, with
-Betfair only as a *separate* possible exchange. Decide whether a 2025
-whole-season source audit is worth its public-request cost once a five-season
-path is credible. No formal model training while this P0 remains open.
+**Next bounded action:** audit the now-identified free AMM/CLOB archive on a
+schedule-matched 2021–2023 game catalog, including timestamp density, price
+reconstruction, duplicates, source rights and comparison to the modern trade
+cohort. Seek an itemized provider quote only for documented remaining gaps;
+Betfair remains a *separate* possible exchange. Decide whether a 2025
+whole-season source audit is worthwhile once the five-season path is credible.
+No formal model training while this P0 remains open.
