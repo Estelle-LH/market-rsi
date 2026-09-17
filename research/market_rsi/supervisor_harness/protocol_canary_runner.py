@@ -215,6 +215,7 @@ def run_child(*, root: Path, budget: PaidBudget, state: SupervisorGlobalState,
         "admission_sha256": file_hash(root / "admission.json"),
         "public_url_sha256": hashlib.sha256(public_url.encode()).hexdigest()})
     sandboxes = {}
+    unconfirmed_policy_roles = []
     error = None
     stage = "create_controller"
     try:
@@ -256,20 +257,38 @@ def run_child(*, root: Path, budget: PaidBudget, state: SupervisorGlobalState,
                     if network is not None else None,
                 "template_id": info.template_id, "envd_version": info.envd_version}
             fresh_json(root / f"{role}-policy-observed.json", observed_policy)
-            mismatches = []
-            if info.allow_internet_access is not False:
-                mismatches.append("allow_internet_access")
+            contradictions, missing = [], []
+            if info.allow_internet_access is True:
+                contradictions.append("allow_internet_access")
+            elif info.allow_internet_access is None:
+                missing.append("allow_internet_access")
+            elif info.allow_internet_access is not False:
+                contradictions.append("allow_internet_access_type")
             if network is None:
-                mismatches.append("network_response_type")
+                if info.network is None:
+                    missing.append("network_response")
+                else:
+                    contradictions.append("network_response_type")
             else:
                 for name in ("allow_out", "deny_out", "allow_public_traffic"):
-                    if network.get(name) != NETWORK[name]:
-                        mismatches.append(name)
+                    if name not in network:
+                        missing.append(name)
+                    elif network[name] != NETWORK[name]:
+                        contradictions.append(name)
             fresh_json(root / f"{role}-policy-verdict.json", {
                 "role": role, "observed_sha256": file_hash(root / f"{role}-policy-observed.json"),
-                "mismatch_fields": mismatches, "policy_echo_accepted": not mismatches})
-            if mismatches:
-                raise ValueError("E2B did not echo requested role network policy")
+                "contradiction_fields": contradictions, "missing_fields": missing,
+                "policy_echo_accepted": not contradictions and not missing,
+                "synthetic_diagnostic_only": bool(missing)})
+            if contradictions:
+                raise ValueError("E2B explicitly contradicted requested role network policy")
+            if missing:
+                # get_info() may omit optional network fields. Gather only the
+                # predeclared synthetic application probes, with no provider
+                # keys or protected data in either guest. Missing echo still
+                # fails this canary after the probes; never promote it to a
+                # live-controller or isolation pass.
+                unconfirmed_policy_roles.append(role)
         for role, sandbox in sandboxes.items():
             sandbox.files.write(ROLE_MARKERS[role], role)
         for role, sandbox in sandboxes.items():
@@ -290,6 +309,13 @@ def run_child(*, root: Path, budget: PaidBudget, state: SupervisorGlobalState,
             "a_to_b_sha256": digest(first), "b_to_a_sha256": digest(second),
             "model_authorship_proven": False, "prediction_result": False,
             "isolation_proven": False})
+        if unconfirmed_policy_roles:
+            stage = "policy_unconfirmed_after_synthetic_probes"
+            fresh_json(root / "policy-diagnostic-summary.json", {
+                "roles": unconfirmed_policy_roles,
+                "child_observations_sha256": file_hash(root / "child-observations.json"),
+                "policy_echo_accepted": False, "isolation_proven": False})
+            raise ValueError("E2B network policy echo unconfirmed after synthetic probes")
     except Exception as exc:
         error = exc
         fresh_json(root / "child-failure.json", {

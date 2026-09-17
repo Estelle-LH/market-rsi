@@ -218,7 +218,28 @@ class ProtocolCanaryRunnerTests(unittest.TestCase):
         self.assertEqual(self.state.snapshot()["active_cycle"], None)
         self.assertEqual(self.budget.snapshot()["effective_cost_usd"], "0.20")
 
-    def test_policy_mismatch_is_recorded_before_first_sandbox_cleanup(self):
+    def test_explicit_policy_contradiction_stops_before_second_sandbox(self):
+        self.admit()
+        with (patch.object(runner.literature, "read", return_value={
+                "receipt": {"body_sha256": "f" * 64},
+                "text_sha256": "e" * 64,
+                "read_level": "delivered_text_range_not_proof_of_understanding"}),
+              patch.object(FakeSandbox, "get_info", return_value=SimpleNamespace(
+                  allow_internet_access=False,
+                  network={**runner.NETWORK, "allow_public_traffic": True},
+                  template_id="base", envd_version="test"))):
+            with self.assertRaisesRegex(ValueError, "explicitly contradicted"):
+                runner.run_child(root=self.output, budget=self.budget,
+                    state=self.state, sandbox_class=FakeE2B, key="fake-key", public_url=PUBLIC)
+        observed = json.loads((self.output / "controller-policy-observed.json").read_text())
+        verdict = json.loads((self.output / "controller-policy-verdict.json").read_text())
+        self.assertEqual(observed["network_response_type"], "dict")
+        self.assertEqual(verdict["contradiction_fields"], ["allow_public_traffic"])
+        self.assertFalse(verdict["policy_echo_accepted"])
+        self.assertEqual(len(FakeE2B.created), 1)
+        self.assertTrue(FakeE2B.created[0].killed)
+
+    def test_missing_policy_echo_collects_synthetic_probes_but_still_fails(self):
         self.admit()
         with (patch.object(runner.literature, "read", return_value={
                 "receipt": {"body_sha256": "f" * 64},
@@ -226,16 +247,27 @@ class ProtocolCanaryRunnerTests(unittest.TestCase):
                 "read_level": "delivered_text_range_not_proof_of_understanding"}),
               patch.object(FakeSandbox, "get_info", return_value=SimpleNamespace(
                   allow_internet_access=False, network=None,
-                  template_id="base", envd_version="test"))):
-            with self.assertRaisesRegex(ValueError, "did not echo"):
+                  template_id="base", envd_version="test")),
+              patch.object(runner.network_component, "observe_direction",
+                           side_effect=self.observed_direction) as directions):
+            with self.assertRaisesRegex(ValueError, "policy echo unconfirmed"):
                 runner.run_child(root=self.output, budget=self.budget,
                     state=self.state, sandbox_class=FakeE2B, key="fake-key", public_url=PUBLIC)
-        observed = json.loads((self.output / "controller-policy-observed.json").read_text())
+        self.assertEqual(directions.call_count, 2)
+        self.assertEqual(len(FakeE2B.created), 2)
+        self.assertTrue(all(item.killed for item in FakeE2B.created))
         verdict = json.loads((self.output / "controller-policy-verdict.json").read_text())
-        self.assertEqual(observed["network_response_type"], "NoneType")
-        self.assertIn("network_response_type", verdict["mismatch_fields"])
+        self.assertEqual(verdict["missing_fields"], ["network_response"])
+        self.assertTrue(verdict["synthetic_diagnostic_only"])
         self.assertFalse(verdict["policy_echo_accepted"])
-        self.assertTrue(FakeE2B.created[0].killed)
+        summary = json.loads((self.output / "policy-diagnostic-summary.json").read_text())
+        self.assertEqual(summary["roles"], ["controller", "researcher"])
+        self.assertFalse(summary["isolation_proven"])
+        terminal = runner.reconcile_reaped(root=self.output, budget=self.budget,
+            state=self.state, sandbox_class=FakeE2B, key="fake-key",
+            exit_code=1, timed_out=False, stdout="", stderr="")
+        self.assertEqual(terminal["outcome"], "failed")
+        self.assertFalse(terminal["isolation_proven"])
 
     def test_runtime_rejects_unpinned_dotenv_dependency(self):
         with patch.object(runner.importlib.metadata, "version",
