@@ -1,6 +1,12 @@
 # Data Scientist Harness
 
-这是加在现有Codex底座上的数据科学工具和检查规则，不是另一个LLM，也不替代Codex。
+这是给内层 controller 用的数据科学工具和检查规则，不是另一个 LLM。
+下面的 Codex/GLM 图只描述旧的 controller 接入方式，**不是整个项目的
+最高层架构**。新的分层设计见
+[`CONTROLLER_RESEARCHER_SUPERVISOR_CONTRACT_2026-09-17.md`](../supervisor_harness/CONTROLLER_RESEARCHER_SUPERVISOR_CONTRACT_2026-09-17.md)：
+最外层是 GPT-5.6-Sol + Codex Supervisor Harness；内层 controller 自有
+Research Harness；controller 工具会话与 researcher 执行必须分属两个
+不同的 E2B sandbox。旧接入目前没有证明这种双 sandbox 隔离。
 
 ```text
 Codex：执行、调用工具、维护会话

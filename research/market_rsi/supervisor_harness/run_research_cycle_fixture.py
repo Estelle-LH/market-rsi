@@ -14,8 +14,9 @@ import sys
 
 from market_rsi import digest, file_hash, fresh_json
 from supervisor_harness.research_cycle_gate import (
-    ZERO, bind_fixture_decision, open_fixture_cycle, record_fixture_execution,
-    review_fixture_cycle,
+    ZERO, bind_fixture_decision, fixture_source_manifest, open_fixture_cycle,
+    record_fixture_execution, require_new_recursive_round, review_fixture_cycle,
+    verify_fixture_canary,
 )
 
 
@@ -23,16 +24,26 @@ HERE = Path(__file__).resolve().parent
 CODE_ROOT = HERE.parent
 
 
-def run(root: Path) -> dict:
+def run(root: Path, *, prior_canary: Path | None = None,
+        bootstrap_canary: bool = False) -> dict:
     root = Path(root).resolve()
+    if bootstrap_canary:
+        if prior_canary is not None:
+            raise ValueError("bootstrap cannot also cite an earlier canary")
+    elif prior_canary is None:
+        raise ValueError("every non-bootstrap cycle requires a current exact-code canary")
+    else:
+        require_new_recursive_round(prior_canary, evidence_mode="synthetic_fixture")
     facts = {"scope": "synthetic_fixture", "message": "public canary"}
+    sources = fixture_source_manifest()
     packet = open_fixture_cycle(root, {
         "cycle_id": root.name, "parent_feedback_sha256": ZERO,
-        "harness_sha256": file_hash(HERE / "research_cycle_gate.py"),
+        "harness_sha256": digest(sources),
         "facts_sha256": digest(facts),
         "allowed_data_roles": ["synthetic_fixture"], "p0_passed": False,
         "cost_cap_usd": "0", "evidence_mode": "synthetic_fixture",
     })
+    fresh_json(root / "source-manifest.json", sources)
     fresh_json(root / "facts.json", facts)
     raw = {
         "schema": "market_research_decision_v1", "cycle_id": root.name,
@@ -54,6 +65,7 @@ def run(root: Path) -> dict:
                              text=True, timeout=30, check=False)
     fresh_json(root / "worker-process.json", {"schema": "research_fixture_process_v1",
                                                "command": command, "exit_code": process.returncode,
+                                               "worker_source_sha256": sources["sources"]["fixture_researcher_worker.py"],
                                                "stdout": process.stdout[-4096:],
                                                "stderr": process.stderr[-4096:],
                                                "automatic_retry": False})
@@ -65,12 +77,13 @@ def run(root: Path) -> dict:
         "backend": "local_fixture", "status": "completed", "exit_code": process.returncode,
         "trace_path": "trace.json", "trace_sha256": file_hash(root / "trace.json"),
         "output_path": "output.json", "output_sha256": file_hash(root / "output.json"),
+        "worker_process_sha256": file_hash(root / "worker-process.json"),
         "cost_usd": "0", "cleanup_passed": True,
     })
     output = json.loads((root / "output.json").read_text())
     if output["observed_sha256"] != file_hash(root / "facts.json"):
         raise ValueError("fixture worker output does not match independent file hash")
-    return review_fixture_cycle(root, {
+    review = review_fixture_cycle(root, {
         "schema": "market_supervisor_review_v1", "cycle_id": root.name,
         "decision_sha256": decision["record_sha256"],
         "execution_sha256": execution["record_sha256"], "verdict": "accept",
@@ -78,10 +91,16 @@ def run(root: Path) -> dict:
         "feedback_summary": "Provenance fixture passed; no model decision or market score.",
         "protected_data_opened": False, "budget_ok": True,
     })
+    verify_fixture_canary(root)
+    return review
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    result = run(parser.parse_args().output)
+    parser.add_argument("--prior-canary", type=Path)
+    parser.add_argument("--bootstrap-canary", action="store_true")
+    args = parser.parse_args()
+    result = run(args.output, prior_canary=args.prior_canary,
+                 bootstrap_canary=args.bootstrap_canary)
     print(json.dumps(result, sort_keys=True))

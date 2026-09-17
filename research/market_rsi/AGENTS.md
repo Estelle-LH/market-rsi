@@ -44,12 +44,21 @@ Current starting references and pending tests:
 
 Earlier harness revisions were human-directed engineering, not evidence that
 the agent self-evolved. On 2026-09-17 the user specified a **new intended
-research architecture**: the outer supervisor monitors and enforces gates;
-the controller chooses each scientific step, including literature search,
+research architecture**: the **outermost supervisor is GPT-5.6-Sol operating
+through the Codex harness** (capture exact runtime identity in a live receipt);
+the inner controller currently uses GLM and chooses each scientific step,
+including literature search,
 algorithms, code and candidate harness changes; an inner researcher executes
-those tasks in isolation (E2B/Harbor are permitted execution options). Do not
+those tasks in isolation. The Supervisor Harness and Controller Research
+Harness are separate, versioned layers. Controller and researcher tool sessions
+must use **different E2B sandbox IDs/microVMs**; the trusted supervisor/runner
+and protected evaluator remain outside both. No shared writable mounts,
+direct cross-sandbox channel or keys in either guest. Harbor can support
+eligible execution/evaluation, but does not replace E2B role isolation. Do not
 claim this architecture is running until the controller decision and researcher
-execution adapters have passed real end-to-end tests. A supervisor-authored
+execution adapters plus two-sandbox access/cleanup canaries have passed real
+end-to-end tests. E2B sandbox separation alone does not prove different
+physical machines. A supervisor-authored
 source audit or harness change must never be attributed to the controller.
 
 Candidate harness self-modification is allowed only as a separately versioned,
@@ -76,6 +85,22 @@ adapters and receipts before promotion. When P0 is closed, continue lawful
 public/Train-only research; block only paid formal scoring and protected data.
 After about an hour with no decision-relevant result, review and replan instead
 of expanding data plumbing indefinitely.
+
+**Mandatory canary-before-every-new-round rule (2026-09-17):** use
+`supervisor_harness/research_cycle_gate.py`'s
+`require_new_recursive_round(...)` at the actual runner entry point, before
+claiming a new run ID, reading paid credentials or launching a worker. A prior
+canary is accepted only after rechecking its complete input/decision/process/
+output/review chain against the **current** executable source manifest and
+Python runtime. A code, tool, dependency/runtime or isolation-backend change
+invalidates the relevant canary; create a fresh ID and rerun it. Missing,
+stale, failed, mutated or mismatched canaries fail closed. The explicit
+`--bootstrap-canary` exception exists only for making a new zero-paid
+synthetic canary, never for a live controller-led or empirical run. Current
+fixture proof cannot admit live work: `require_new_recursive_round` rejects
+every non-fixture evidence mode until independently checked model-authorship
+and E2B/Harbor isolation adapters are implemented and canaried. Do not bypass
+this by calling a legacy runner and relabelling its output as the new loop.
 
 Before a new paid or empirical experiment through the Data Scientist Harness,
 commit its exact source, publish an annotated version tag to the user's own

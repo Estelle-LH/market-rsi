@@ -4,12 +4,16 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+import sys
+from unittest.mock import patch
 
 from market_rsi import digest, file_hash, fresh_json
 from supervisor_harness.research_cycle_gate import (
-    ZERO, bind_fixture_decision, open_fixture_cycle, record_fixture_execution,
-    review_fixture_cycle,
+    ZERO, bind_fixture_decision, fixture_source_manifest, open_fixture_cycle,
+    record_fixture_execution, require_new_recursive_round, review_fixture_cycle,
+    verify_fixture_canary,
 )
+from supervisor_harness.run_research_cycle_fixture import run as run_fixture
 
 
 class ResearchCycleGateTests(unittest.TestCase):
@@ -18,12 +22,14 @@ class ResearchCycleGateTests(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name) / "cycle-01"
         self.facts = {"scope": "synthetic_fixture", "message": "public canary"}
+        self.sources = fixture_source_manifest()
         self.packet = open_fixture_cycle(self.root, {
             "cycle_id": "cycle-01", "parent_feedback_sha256": ZERO,
-            "harness_sha256": "a" * 64, "facts_sha256": digest(self.facts),
+            "harness_sha256": digest(self.sources), "facts_sha256": digest(self.facts),
             "allowed_data_roles": ["synthetic_fixture"], "p0_passed": False,
             "cost_cap_usd": "0", "evidence_mode": "synthetic_fixture",
         })
+        fresh_json(self.root / "source-manifest.json", self.sources)
         fresh_json(self.root / "facts.json", self.facts)
 
     def decision(self, **changes):
@@ -45,13 +51,25 @@ class ResearchCycleGateTests(unittest.TestCase):
     def execution(self, decision, **changes):
         if not (self.root / "trace.json").exists():
             fresh_json(self.root / "trace.json", {"calls": ["read_public_fixture"]})
-            fresh_json(self.root / "output.json", {"result": "bounded fixture"})
+            fresh_json(self.root / "output.json", {
+                "schema": "research_fixture_output_v1",
+                "observed_sha256": file_hash(self.root / "facts.json"),
+            })
+            fresh_json(self.root / "worker-process.json", {
+                "schema": "research_fixture_process_v1", "exit_code": 0,
+                "automatic_retry": False,
+                "command": [sys.executable,
+                            str(Path(__file__).resolve().parent / "fixture_researcher_worker.py"),
+                            "--root", str(self.root.resolve())],
+                "worker_source_sha256": self.sources["sources"]["fixture_researcher_worker.py"],
+            })
         receipt = {
             "schema": "market_researcher_receipt_v1", "cycle_id": "cycle-01",
             "decision_sha256": decision["record_sha256"], "task_id": "task-01",
             "backend": "local_fixture", "status": "completed", "exit_code": 0,
             "trace_path": "trace.json", "trace_sha256": file_hash(self.root / "trace.json"),
             "output_path": "output.json", "output_sha256": file_hash(self.root / "output.json"),
+            "worker_process_sha256": file_hash(self.root / "worker-process.json"),
             "cost_usd": "0", "cleanup_passed": True,
         }
         receipt.update(changes)
@@ -69,6 +87,12 @@ class ResearchCycleGateTests(unittest.TestCase):
         })
         self.assertFalse(review["controller_led_result"])
         self.assertFalse(review["empirical_improvement_claim_allowed"])
+        verified = verify_fixture_canary(self.root)
+        self.assertFalse(verified["formal_admission"])
+        self.assertEqual(require_new_recursive_round(self.root, evidence_mode="synthetic_fixture"),
+                         verified)
+        with self.assertRaises(ValueError):
+            require_new_recursive_round(self.root, evidence_mode="controller_led")
 
     def test_paid_or_protected_fixture_is_rejected(self):
         with self.assertRaises(ValueError):
@@ -95,6 +119,42 @@ class ResearchCycleGateTests(unittest.TestCase):
         self.root.joinpath("facts.json").write_text('{"scope":"synthetic_fixture","message":"changed"}\n')
         with self.assertRaises(ValueError):
             self.decision()
+
+    def test_source_manifest_mismatch_blocks_decision(self):
+        self.root.joinpath("source-manifest.json").write_text('{"changed":true}\n')
+        with self.assertRaises(ValueError):
+            self.decision()
+
+    def test_runtime_change_invalidates_existing_canary(self):
+        decision = self.decision()
+        execution = self.execution(decision)
+        review_fixture_cycle(self.root, {
+            "schema": "market_supervisor_review_v1", "cycle_id": "cycle-01",
+            "decision_sha256": decision["record_sha256"],
+            "execution_sha256": execution["record_sha256"], "verdict": "accept",
+            "reason": "Exact fixture artifacts match.", "feedback_summary": "No empirical result.",
+            "protected_data_opened": False, "budget_ok": True,
+        })
+        changed = {**self.sources, "runtime": {**self.sources["runtime"],
+                                                 "python_version": "different"}}
+        with patch("supervisor_harness.research_cycle_gate.fixture_source_manifest",
+                   return_value=changed):
+            with self.assertRaises(ValueError):
+                require_new_recursive_round(self.root, evidence_mode="synthetic_fixture")
+
+    def test_missing_canary_cannot_admit_new_round(self):
+        with self.assertRaises((ValueError, FileNotFoundError)):
+            require_new_recursive_round(self.root / "missing", evidence_mode="controller_led")
+
+    def test_runner_rechecks_prior_canary_before_new_cycle(self):
+        next_root = Path(self.tmp.name) / "next-cycle"
+        with self.assertRaises(ValueError):
+            run_fixture(next_root)
+        self.assertFalse(next_root.exists())
+        prior_root = Path(self.tmp.name) / "bootstrap"
+        run_fixture(prior_root, bootstrap_canary=True)
+        later = run_fixture(next_root, prior_canary=prior_root)
+        self.assertFalse(later["controller_led_result"])
 
     def test_execution_must_match_decision_and_artifacts(self):
         decision = self.decision()

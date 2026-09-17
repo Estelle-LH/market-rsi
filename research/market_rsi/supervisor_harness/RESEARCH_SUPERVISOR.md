@@ -1,6 +1,9 @@
 # Market RSI research supervisor
 
-This is an operational layer around the versioned Data Scientist Harness. It
+This is the intended outer GPT-5.6-Sol + Codex Supervisor Harness around the
+separately versioned GLM Controller Research Harness. A live run must record
+the actual supervisor model/session identity; this document does not prove
+which model executed a prior task. It
 does not change an experiment, let the controller see sealed data, or turn
 human harness edits into model self-improvement. Preserve detailed machine
 traces elsewhere. This page is intentionally short enough to use during work.
@@ -10,20 +13,25 @@ not the scientific controller. Read
 `CONTROLLER_RESEARCHER_SUPERVISOR_CONTRACT_2026-09-17.md`. The controller
 chooses the next literature question, data investigation, algorithm, code or
 candidate harness edit. The inner researcher executes the controller's plan
-in an isolated, logged workspace; E2B/Harbor may host that execution after
-their exact runtime and isolation canaries pass. The supervisor checks the
+in an isolated, logged workspace. For a live cycle, controller tool execution
+and researcher execution must be on different E2B sandbox IDs/microVMs, with
+broker-only communication; the supervisor/runner and protected evaluator stay
+outside both. Harbor is not a substitute for this role boundary. The exact
+runtime, access-denial and cleanup canaries must pass first. The supervisor checks the
 result, frozen test/rights/cost boundaries and next-cycle readiness. Earlier
 supervisor-authored data diagnostics remain useful P0 evidence but are not
 controller decisions or self-improvement results.
 
 ## Before each work block
 
-Read `RESEARCH_STATE.md`. Pick the cheapest next action that tests the current
-question or removes its direct blocker. State the hypothesis, expected evidence,
-time/cost bound, and stop condition before acting. Order choices by: direct
-test; removal of a direct blocker; result quality; important uncertainty;
-cleanup. Do not make cleanup the main branch without evidence that it blocks
-the first four. Keep experiment definitions, data and evaluation gates from
+Read `RESEARCH_STATE.md`. Identify the most important gate or bottleneck and
+prepare a factual, allowed-information packet. The controller, not the
+supervisor, picks the next scientific action and states its hypothesis,
+expected evidence, time/cost bound and stop condition before execution. The
+supervisor admits the action or returns a concrete boundary failure; it may
+perform narrow operational diagnostics without calling them controller rounds.
+Do not make cleanup the main branch without evidence that it blocks a direct
+test. Keep experiment definitions, data and evaluation gates from
 `AGENTS.md` and the published release; this supervisor cannot waive them.
 
 When the user asks for faster code work, split independent source checks,
@@ -40,8 +48,20 @@ The research objective persists across turns and scheduled wakes. After each
 bounded action, the supervisor inspects evidence and gives the controller a
 factual, allowed-information summary; the **controller**, not the supervisor,
 chooses the next scientific action. The researcher executes that action,
-and the supervisor accepts/rejects its provenance and gate compliance. A
-failed candidate, missing source, or closed P0 gate stops only the **affected
+and the supervisor accepts/rejects its provenance and gate compliance.
+
+Before **each new recursive round**, call the actual runner's
+`require_new_recursive_round` preflight against the prior passing canary and
+current exact source/runtime; never rely on a note saying a canary passed
+earlier. A missing/stale/failed canary stops that launch before a run ID,
+provider credentials or worker process. The local `--bootstrap-canary` path
+may only create a synthetic, zero-paid proof; it cannot approve model-authored,
+E2B/Harbor or empirical work. If the harness, tools, runtime or sandbox image
+changes, repeat the relevant canary under a fresh ID. Until a real live
+adapter and isolation canary are checked, keep those operations blocked while
+continuing safe public/Train-only work.
+
+A failed candidate, missing source, or closed P0 gate stops only the **affected
 action**, not the whole research programme: preserve the artifact and feed
 the failure back for a new controller decision. Do not stop after writing a
 plan, making a commit, or answering a status question. If the controller

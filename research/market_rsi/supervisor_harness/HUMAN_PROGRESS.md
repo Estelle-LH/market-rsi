@@ -381,3 +381,16 @@ untouched test.
 - **做了什么：** 写清每轮的事实输入、controller 原始决定、researcher 执行、独立验收和反馈顺序；加了只允许零费用、合成数据的代码闸门。九项拒绝篡改/越界的测试通过，`research-cycle-fixture-20260917-03` 跑完一个真实本地子进程，并留下完整 hash 记录。先前 `-01` 的事实绑定有错，`-02` 缺少交接时重核，都保留而不冒充最终验收。
 - **结果与限制：** 这是 provenance/流程检查通过，不是模型自己决定，也不是 E2B/Harbor 隔离，更不是预测成绩。0 Tinker、0 购买、0 Dev/Final 开封。真正的 controller→隔离 researcher→反馈→第二次 controller 选择还没跑通。
 - **下一步：** 接真实 controller 决定与回执，再跑零费用隔离 researcher canary；正式评分继续等 P0、预算和未见测试闸门。具体文件及结果见 `CONTROLLER_RESEARCHER_SUPERVISOR_CONTRACT_2026-09-17.md` 和当天 log。
+
+### 2026-09-17：把 canary 变成每次运行前的硬门槛
+
+- **原因：** 一次通过不能保证后来换了代码或环境还能安全运行；只把规则写在文档里，下一轮容易忘。
+- **改变：** 新的合成 runner 除了显式 bootstrap 外，每轮都必须给出前一个通过的 canary，并在创建新目录前重核完整源码、Python 环境、原始决定、执行和验收记录。真实 controller-led/付费入口仍拒绝使用合成证明；只有未来做完各自的模型和隔离 canary 才能接通。
+- **验收：** 13 项 gate 测试通过；`-06` bootstrap 和使用它做准入的 `-07` 都完成。旧 `-05` 在启动前被拒绝，新目录没有创建。0 模型费用、0 封存数据使用；这不是预测分数。
+- **下一步：** 保持此规则不退让，接真实 controller 和 E2B/Harbor 的回执；有任一源码/运行环境改动，就换新 ID 重新跑对应 canary。
+
+### 2026-09-17：先定清两层 Harness 和 E2B 隔离
+
+- **分工：** 最外层 GPT-5.6-Sol + Codex 是 supervisor，负责观察、边界、版本和验收；内层 GLM controller 用独立的 Research Harness 决定科学步骤。controller 是否弱还没有证据，不能用数据或执行失败直接下结论。
+- **隔离要求：** controller 的工具会话和 researcher 的执行必须使用两个不同 E2B sandbox/microVM；可信 broker 传有 hash 的许可输入输出，独立评分器和保护数据留在外面。现有代码只有本地 GLM 接入与单 sandbox coder probe，尚未达到这个目标。E2B sandbox 隔离不等于已证明不同物理机器。
+- **状态：** 架构合同、AGENTS 和生效的定时任务已纠正；未运行双 sandbox canary，未开新模型实验，0 新 Tinker、0 数据购买、0 Dev/Final 开封。下一步先做接口和正/反隔离测试，再判断是否应把 controller 换成 GPT-5.6-Sol。

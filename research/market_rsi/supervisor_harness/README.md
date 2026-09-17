@@ -15,10 +15,11 @@ are verified. This is a decision gate, not a claim that five seasons were found.
 
 The user-corrected role split is
 `CONTROLLER_RESEARCHER_SUPERVISOR_CONTRACT_2026-09-17.md`: supervisor watches
-and gates, controller chooses each scientific step, inner researcher executes
-in an isolated environment, and an independent runner measures. This is a
-written operating contract with a synthetic provenance canary, not yet a
-verified model-led end-to-end implementation.
+and gates as the outer GPT-5.6-Sol + Codex Harness; the inner GLM controller
+has its own research Harness and chooses each scientific step; the researcher
+executes in a **different E2B sandbox**, and an independent trusted runner
+measures. This is a written operating contract with a synthetic provenance
+canary, not yet a verified model-led, two-sandbox end-to-end implementation.
 
 This is the *outer* Codex research supervisor, not the GLM experiment's
 `data_scientist_harness`. It does not change frozen scientific code, its
@@ -33,3 +34,12 @@ implementation status are in
 provenance canary is `run_research_cycle_fixture.py`; its gate is
 `research_cycle_gate.py`. A passing fixture is not a model-authored round or
 an E2B/Harbor isolation test.
+
+The runner now requires `--prior-canary PATH` for every non-bootstrap fixture
+cycle. Only `--bootstrap-canary` may create the first zero-paid proof. The
+gate checks the prior complete record against current gate/runner/worker
+source and Python runtime before creating a new cycle. Current valid example:
+`research-cycle-fixture-20260917-06` bootstrapped, then `-07` used it as
+preflight. An older `-05` canary was rejected before a new directory existed.
+All live/paid evidence modes still fail closed until their own adapters and
+canaries are implemented; this fixture never opens Dev/Final.
