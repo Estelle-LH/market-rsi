@@ -230,6 +230,11 @@ class DualE2BCanaryTests(unittest.TestCase):
         self.assertFalse(self.root.exists())
         self.assertEqual(self.budget.events, [])
 
+    def test_e2b_supported_network_rule_and_dual_stack_probe(self):
+        self.assertEqual(canary.NETWORK["deny_out"], ["0.0.0.0/0"])
+        self.assertIs(canary.NETWORK["allow_public_traffic"], False)
+        self.assertIn("2606:4700:4700::1111", canary.PROBE)
+
 
 if __name__ == "__main__":
     unittest.main()

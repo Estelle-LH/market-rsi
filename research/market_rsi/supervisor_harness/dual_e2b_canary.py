@@ -22,7 +22,9 @@ from paid_budget import PaidBudget, money
 TIMEOUT_SECONDS = 180
 E2B_SDK_VERSION = "2.38.0"
 UPPER_USD = "0.20"  # Two short sandboxes, each covered by the old $0.10 setup hold.
-NETWORK = {"allow_out": [], "deny_out": ["0.0.0.0/0", "::/0"],
+# E2B 2.38.0 rejected ::/0 at create time on 2026-09-17. Keep its
+# allow_internet_access=False gate and probe both IPv4 and IPv6 from the guest.
+NETWORK = {"allow_out": [], "deny_out": ["0.0.0.0/0"],
            "allow_public_traffic": False}
 MARKERS = {"controller": "/tmp/market_controller_marker",
            "researcher": "/tmp/market_researcher_marker"}
