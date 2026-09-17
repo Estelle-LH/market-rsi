@@ -1,6 +1,10 @@
 # Directional Controller–Researcher architecture — 2026-09-17
 
-Status: **user-confirmed design direction, not yet implemented or validated.**
+Status: **local Docker B synthetic transport validated; GLM-led research not
+yet admitted.** The user's later 2026-09-17 correction retires new E2B
+connection tests. Fresh local canary `local-b-canary-deaa4549f9a34effb009`
+passed 20/20 synthetic tasks and exact cleanup. Selected isolation probes
+passed; none of this is a model result.
 This supersedes the two-E2B, symmetric A↔B denial assumption in
 `CONTROLLER_RESEARCHER_SUPERVISOR_CONTRACT_2026-09-17.md`. Preserve that
 contract and canary `-02` through `-04` as historical diagnostics; do not
@@ -19,7 +23,7 @@ TRUSTED LOCAL MAC
                   │    A sees permitted B tool/events/artifacts and decides next task
                   │    A has no direct filesystem, paid key or sealed evaluator access
                   │
-                  └─ SDK controls one E2B work sandbox: B Researcher
+                  └─ Docker controls one local work container: B Researcher
                        B executes bounded research tasks and writes event receipts
                        B cannot read/write A's state or call A directly
 
@@ -38,16 +42,17 @@ events remain untrusted data; A's decisions remain separate from what B did.
 The GLM model is invoked by the local broker; model output is not granted
 arbitrary execution on the trusted Mac. The Controller Research Harness is a
 broker-enforced tool interface and versioned prompt/context, not a process
-with unrestricted local filesystem access. Only B's untrusted code runs in
-E2B. Supervisor is never placed in B's sandbox. If a future implementation
+with unrestricted local filesystem access. Only B's untrusted code may run in
+the local container after its own admission. Supervisor is never placed in B's
+container. If a future implementation
 runs A-authored code, that code also needs isolation; this document does not
 authorize executing it on the trusted host.
 
 ## Cadence and visibility
 
-Start one B sandbox for an admitted round and reuse it for bounded research
+Start one B container for an admitted round and reuse it for bounded research
 tasks. A may observe B's append-only event stream as work proceeds and issue
-new instructions at explicit decision points. Do not recreate E2B on every
+new instructions at explicit decision points. Do not recreate Docker on every
 message or route every internal B tool call through A. Measure (a) sandbox
 startup, (b) broker task handoff, (c) event publication and A read latency,
 and (d) task execution separately. Display those timings and A/B event logs
@@ -64,23 +69,24 @@ timestamps and the exact run version, not only the average. This is an
 engineering responsiveness gate, not a market-prediction result. If it fails,
 do not just raise the deadline: diagnose once, then redesign the placement or
 communication path before a research round. Do not claim a guarantee before
-this real one-sandbox measurement passes.
+this real one-sandbox measurement passes. The fresh local synthetic run passed:
+20/20, no lost/duplicate/timed-out messages, handoff p95 28.78 ms and event
+visibility p95 7.07 ms, with maximum legs 188.82 ms and 7.29 ms. This proves
+only the synthetic local transport, not GLM choice or arbitrary B code.
 
 ## Replacement canary and admission gates
 
-The next **zero-paid** fixture must prove the local broker preserves exact
-task/event hashes and one-way access policy. The next **real** E2B canary,
-only after fresh source release, budget, unique ID, state and account checks,
-uses **one** B sandbox. It must prove:
+The zero-paid local fixture proved exact task/event hashes in one B container.
+Before a GLM-led or arbitrary-researcher cycle, a fresh source release,
+unique ID, protected state and model-authorship checks must additionally prove:
 
 1. B has no paid keys, supervisor files, A context or sealed evaluator data;
    B cannot directly invoke or modify A.
 2. A can issue a bounded task through the broker, observe B's real tool-event
    stream and read a completed result with matching hashes.
-3. The broker logs both directions of the approved handoff, timing, errors and
-   exact provider cost without exposing protected contents.
-4. Exact B sandbox cleanup and a fresh account-clear check pass. Unknown
-   cleanup or metering fails closed.
+3. The broker logs both directions of the approved handoff, timing and errors
+   without exposing protected contents. Paid model calls have a separate ledger.
+4. Exact B container cleanup and a fresh container-list readback pass.
 
 The old direct A→B and B→A HTTP probes are **not** the acceptance test for
 this architecture. In particular, A→B access is an intended capability, not
@@ -90,7 +96,7 @@ use old diagnostic outcomes to choose a reward, training data or model.
 ## Research claim boundary
 
 This redesign changes execution plumbing, not the forecast benchmark. No
-new prediction result, GLM-led round, isolation proof or empirical gain is
+new prediction result, GLM-led round, full arbitrary-code isolation proof or empirical gain is
 claimed. The three/five-season data gate, frozen objective before Dev,
 independent evaluation and original $200 total budget remain unchanged.
 The user's up-to-$5 connection-test permission is not a new global budget.

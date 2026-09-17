@@ -1,5 +1,13 @@
 # Research before changing the Market RSI harness
 
+**Later 2026-09-17 execution correction:** The user retired new E2B
+connection tests. B Researcher now targets one local Docker container; A/GLM,
+the Supervisor, broker, keys, budget and evaluator remain outside it. A live
+zero-paid local synthetic canary passed 20/20 handoffs under a pinned image,
+but this is not GLM authorship, arbitrary-code containment or forecast gain.
+The later local-B decision supersedes historical E2B target text below. Do not
+dispatch another E2B canary or use an E2B receipt as local admission evidence.
+
 The user requires literature-informed development, not only a list of papers in
 an archive. Apply this to data quality, feature engineering, trainer engineering,
 objectives and evaluation. This file governs coding assistants working here; it
@@ -55,11 +63,12 @@ directional correction supersedes the earlier two-E2B symmetric-isolation
 requirement: **A (Controller) must see B (Researcher) and assign work; B must
 not directly access or modify A.** The trusted supervisor, broker, paid keys
 and protected evaluator remain outside B. The current target is a brokered
-GLM controller session plus one persistent E2B researcher sandbox, with
+GLM controller session plus one persistent local Docker researcher sandbox, with
 recorded A→broker→B tasks and B→broker→A observations; B receives no direct
 A or trusted-host access. A model response is not granted arbitrary execution
-on the Mac. This target is not operational until fresh one-sandbox access,
-broker-handoff, latency and cleanup canaries pass. Old two-E2B A↔B denial
+on the Mac. The synthetic local transport is operational; the GLM-authored
+research path remains blocked on version, global-state, model-authorship and
+arbitrary-code isolation gates. Old two-E2B A↔B denial
 canaries remain historical diagnostics, not admission evidence. See
 `supervisor_harness/DIRECTIONAL_RESEARCH_ARCHITECTURE_2026-09-17.md`.
 A supervisor-authored source audit or harness change must never be attributed
@@ -84,7 +93,7 @@ supervisor-authored source audit, or a scripted canary a complete new recursive
 round. `supervisor_harness/research_cycle_gate.py` currently admits only
 zero-cost synthetic provenance fixtures; its `controller_led_result=false`
 and `empirical_improvement_claim_allowed=false` are hard claim boundaries.
-Live controller/model authorship and E2B/Harbor isolation need separate exact
+Live controller/model authorship and local-container isolation need separate exact
 adapters and receipts before promotion. When P0 is closed, continue lawful
 public/Train-only research; block only paid formal scoring and protected data.
 After about an hour with no decision-relevant result, review and replan instead
@@ -103,7 +112,7 @@ stale, failed, mutated or mismatched canaries fail closed. The explicit
 synthetic canary, never for a live controller-led or empirical run. Current
 fixture proof cannot admit live work: `require_new_recursive_round` rejects
 every non-fixture evidence mode until independently checked model-authorship
-and E2B/Harbor isolation adapters are implemented and canaried. Do not bypass
+and local-container isolation adapters are implemented and canaried. Do not bypass
 this by calling a legacy runner and relabelling its output as the new loop.
 
 Before a new paid or empirical experiment through the Data Scientist Harness,
@@ -176,7 +185,7 @@ the supervisor verifies the process is gone and closes that exact claim.
 A material change to `RESEARCH_STATE.md` needs an explicit journal revision
 with a reason while idle. The current enforcement is in the zero-paid fixture
 entry (`global_state_gate.py` + `run_research_cycle_fixture.py`). The live
-GLM/E2B adapter remains blocked and must reuse this gate at its entry; the
+GLM/local-B adapter remains blocked and must reuse this gate at its entry; the
 existence of the fixture must never be presented as live enforcement.
 
 The current P0 gate is `supervisor_harness/P0_FIVE_SEASON_DATA.md`: inventory

@@ -2,12 +2,13 @@
 
 > **Current execution topology (later 2026-09-17 user correction):** A is a
 > brokered GLM Controller session on the trusted local side; one persistent
-> E2B sandbox hosts B Researcher. A can assign tasks to B and see B's
+> local Docker container hosts B Researcher. A can assign tasks to B and see B's
 > allowlisted trajectory through the trusted broker. B cannot directly access
 > A, credentials, the supervisor or the independent evaluator. The older
 > two-E2B symmetric A/B language in historical logs and contracts is retired
 > as an admission route. See `DIRECTIONAL_RESEARCH_ARCHITECTURE_2026-09-17.md`.
-> The 20-task offline directional fixture is not a live E2B or GLM pass.
+> A real local container passed 20 zero-paid synthetic handoffs and selected
+> isolation checks; this is not a GLM-authored or empirical pass.
 
 This is the intended outer GPT-5.6-Sol + Codex Supervisor Harness around the
 separately versioned GLM Controller Research Harness. A live run must record
@@ -65,9 +66,9 @@ current exact source/runtime; never rely on a note saying a canary passed
 earlier. A missing/stale/failed canary stops that launch before a run ID,
 provider credentials or worker process. The local `--bootstrap-canary` path
 may only create a synthetic, zero-paid proof; it cannot approve model-authored,
-E2B/Harbor or empirical work. If the harness, tools, runtime or sandbox image
-changes, repeat the relevant canary under a fresh ID. Until a real live
-adapter and isolation canary are checked, keep those operations blocked while
+local-container or empirical work. If the harness, tools, runtime or sandbox image
+changes, repeat the relevant canary under a fresh ID. Until a live GLM/local-B
+adapter and arbitrary-code containment canary are checked, keep those operations blocked while
 continuing safe public/Train-only work.
 
 Also require the supervisor-owned append-only global-state journal before the
@@ -75,7 +76,7 @@ cycle claim. Its head must bind the current `RESEARCH_STATE.md`, the previous
 canary/source, and show no active cycle or reused ID. Close each exact claim
 after review or verified failure; never silently clear a crash. Only the
 synthetic fixture runner currently enforces this in code. A future live
-controller/E2B entry must wire the same gate before it can be called ready.
+controller/local-B entry must wire the same gate before it can be called ready.
 
 A failed candidate, missing source, or closed P0 gate stops only the **affected
 action**, not the whole research programme: preserve the artifact and feed

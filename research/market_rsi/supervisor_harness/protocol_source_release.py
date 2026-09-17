@@ -1,8 +1,8 @@
-"""Read-only publication gate for a future Market RSI A/B protocol canary.
+"""Read-only publication gate for the Market RSI A/B protocol source.
 
 This module never creates a tag, pushes code, reads credentials or dispatches
-E2B. A current source snapshot and an annotated tag on the user's origin are
-both required. It is not a substitute for a passing live isolation canary.
+a sandbox. A current source snapshot and an annotated tag on the user's origin
+are both required. It is not a substitute for a passing live isolation canary.
 """
 from __future__ import annotations
 
@@ -43,6 +43,9 @@ PROTOCOL_FILES = (
     "supervisor_harness/one_b_live_adapter.py",
     "supervisor_harness/one_b_canary_entry.py",
     "supervisor_harness/one_b_canary_runner.py",
+    # The later user-directed local B backend supersedes new E2B dispatch.
+    "supervisor_harness/local_b_container.py",
+    "supervisor_harness/local_b_canary.py",
 )
 DATA_HARNESS_FILES = tuple(str(path.relative_to(REPO / PREFIX))
                            for path in data_harness_release.source_files(REPO / PREFIX))
