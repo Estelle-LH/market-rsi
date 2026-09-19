@@ -93,6 +93,60 @@ class DirectionalGuestWorkerTests(unittest.TestCase):
                 "input_sha256": text_sha, "output_sha256": text_sha,
                 "status": "ok"})
 
+    def test_one_expected_order_exits_with_unchanged_ack_event_schema(self):
+        self._write(0)
+        lines = self._run(expected_orders=1)
+        expected_order = order(0)
+        text_sha = hashlib.sha256(
+            expected_order["public_text"].encode("utf-8")).hexdigest()
+        self.assertEqual(lines, [
+            {"schema": "market_directional_guest_milestone_v1",
+             "sequence": 0, "kind": "ack"},
+            {"schema": "market_directional_guest_milestone_v1",
+             "sequence": 0, "kind": "event"}])
+        self.assertEqual(json.loads((self.root / "acks/000.json").read_text()), {
+            "schema": "market_directional_ack_v1", "cycle_id": CYCLE,
+            "sequence": 0, "order_sha256": digest(expected_order)})
+        self.assertEqual(json.loads((self.root / "events/000.json").read_text()), {
+            "schema": "market_directional_tool_event_v1", "cycle_id": CYCLE,
+            "sequence": 0, "task_id": expected_order["task_id"],
+            "order_sha256": digest(expected_order),
+            "tool_name": "hash_public_text", "input_sha256": text_sha,
+            "output_sha256": text_sha, "status": "ok"})
+
+    def test_one_order_mode_rejects_any_second_order_before_receipts(self):
+        self._write(0)
+        self._write(1)
+        with self.assertRaisesRegex(ValueError, "unexpected"):
+            self._run(expected_orders=1)
+        self.assertEqual(list((self.root / "acks").iterdir()), [])
+        self.assertEqual(list((self.root / "events").iterdir()), [])
+
+    def test_one_order_mode_rejects_late_second_duplicate_task_id(self):
+        self._write(0)
+        output = io.StringIO()
+        original_milestone = worker._milestone
+
+        def add_duplicate_after_event(sequence, kind):
+            original_milestone(sequence, kind)
+            if kind == "event":
+                self._write(1, order(1, task_id=order(0)["task_id"]))
+
+        with patch.object(worker, "_milestone", side_effect=add_duplicate_after_event):
+            with redirect_stdout(output), self.assertRaisesRegex(ValueError, "unexpected"):
+                worker.run(self.root, expected_orders=1)
+        self.assertEqual([json.loads(line)["kind"]
+                          for line in output.getvalue().splitlines()],
+                         ["ack", "event"])
+        self.assertFalse((self.root / "acks/001.json").exists())
+        self.assertFalse((self.root / "events/001.json").exists())
+
+    def test_expected_order_count_is_only_one_or_historical_twenty(self):
+        for value in (0, 2, 21, True, "1"):
+            with self.subTest(value=value), self.assertRaisesRegex(
+                    ValueError, "expected-order bound"):
+                self._run(expected_orders=value)
+
     def test_cli_isolated_python_emits_all_milestones(self):
         for sequence in range(20):
             self._write(sequence)
@@ -103,6 +157,17 @@ class DirectionalGuestWorkerTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(len(result.stdout.splitlines()), 40)
         self.assertEqual(json.loads(result.stdout.splitlines()[-1])["kind"], "event")
+
+    def test_cli_one_order_count_is_explicit_and_exits_after_one(self):
+        self._write(0)
+        command = [sys.executable, "-I", str(Path(worker.__file__).resolve()),
+                   "--root", str(self.root), "--total-timeout", "5",
+                   "--expected-orders", "1"]
+        result = subprocess.run(command, text=True, capture_output=True,
+                                timeout=7, check=False)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual([json.loads(line)["kind"]
+                          for line in result.stdout.splitlines()], ["ack", "event"])
 
     def test_duplicate_task_id_fails_before_second_ack(self):
         self._write(0)
@@ -183,7 +248,7 @@ class DirectionalGuestWorkerTests(unittest.TestCase):
 
         with patch.object(worker, "_milestone", side_effect=mutate_after_ack):
             with redirect_stdout(output), self.assertRaisesRegex(ValueError, "mutated"):
-                worker.run(self.root)
+                worker.run(self.root, expected_orders=1)
         self.assertEqual([json.loads(line)["kind"] for line in output.getvalue().splitlines()],
                          ["ack"])
         self.assertFalse((self.root / "events/000.json").exists())
@@ -210,7 +275,8 @@ class DirectionalGuestWorkerTests(unittest.TestCase):
         clock = FakeClock()
         with self.assertRaisesRegex(TimeoutError, "000 timed out"):
             self._run(clock=clock, sleep=clock.sleep,
-                      poll_interval=0.01, per_order_timeout=0.03)
+                      poll_interval=0.01, per_order_timeout=0.03,
+                      expected_orders=1)
         self.assertEqual(list((self.root / "acks").iterdir()), [])
         self.assertEqual(list((self.root / "events").iterdir()), [])
 

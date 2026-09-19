@@ -20,6 +20,17 @@ def git(root, *args):
 
 
 class ProtocolPublicationTests(unittest.TestCase):
+    def test_new_controller_to_b_admission_modules_are_released(self):
+        required = {
+            "supervisor_harness/frozen_glm_first_response.py",
+            "supervisor_harness/offline_a_to_b_driver.py",
+            "supervisor_harness/local_b_containment_canary.py",
+            "supervisor_harness/local_b_containment_guest.py",
+            "supervisor_harness/bottleneck_gate.py",
+            "supervisor_harness/bounded_live_adapter_v2.py",
+        }
+        self.assertTrue(required.issubset(release.PROTOCOL_FILES))
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)

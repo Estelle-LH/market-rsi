@@ -55,7 +55,8 @@ def run() -> dict:
     work = root / "work"
     work.mkdir(mode=0o700)
     name = "market-rsi-b-" + cycle_id
-    command = docker_command(container_name=name, source=SOURCE, work=work)
+    command = docker_command(container_name=name, source=SOURCE, work=work,
+                             expected_orders=20)
     (root / "decision.md").write_text("zero-paid local synthetic canary; no formal admission\n")
     state = SupervisorGlobalState(root / "local-state", root / "decision.md")
     snapshot = state.initialize()
@@ -66,6 +67,7 @@ def run() -> dict:
         "schema": "market_local_b_canary_manifest_v1", "cycle_id": cycle_id,
         "container_name": name, "guest_source_sha256": file_hash(SOURCE),
         "image": command[command.index("--workdir") + 2],
+        "expected_orders": 20, "guest_command": command,
         "synthetic_only": True, "formal_admission": False}) + "\n")
     process = None
     b = None

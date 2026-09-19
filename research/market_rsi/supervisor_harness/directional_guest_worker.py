@@ -1,4 +1,4 @@
-"""One-process, zero-paid guest half of the 20-order directional canary.
+"""One-process, zero-paid guest for a pinned directional order count.
 
 The host owns the broker, cycle gate, sandbox, timing and cleanup. This worker
 only reads synthetic public-text orders inside B and writes hash-bound receipts.
@@ -21,6 +21,7 @@ from typing import Callable
 
 DEFAULT_ROOT = Path("/tmp/market-researcher/directional")
 EXPECTED_ORDERS = 20
+ALLOWED_EXPECTED_ORDERS = frozenset({1, EXPECTED_ORDERS})
 MAX_ORDER_BYTES = 64 * 1024
 MAX_PUBLIC_TEXT_BYTES = 4096
 _IDENTIFIER = re.compile(r"[a-zA-Z0-9][a-zA-Z0-9_-]{0,99}\Z")
@@ -138,11 +139,12 @@ def _ensure_dirs(root: Path) -> tuple[Path, Path, Path]:
     return dirs
 
 
-def _check_entries(orders: Path, acks: Path, events: Path, sequence: int) -> None:
+def _check_entries(orders: Path, acks: Path, events: Path, sequence: int,
+                   expected_orders: int) -> None:
     if any(directory.is_symlink() or not directory.is_dir()
            for directory in (orders.parent, orders, acks, events)):
         raise ValueError("directional directory changed or is unsafe")
-    allowed_orders = {f"{n:03d}.json" for n in range(EXPECTED_ORDERS)}
+    allowed_orders = {f"{n:03d}.json" for n in range(expected_orders)}
     for entry in orders.iterdir():
         if entry.name not in allowed_orders or entry.is_symlink() or not entry.is_file():
             raise ValueError("unexpected or unsafe guest order entry")
@@ -188,23 +190,26 @@ def _milestone(sequence: int, kind: str) -> None:
 
 def run(root: Path = DEFAULT_ROOT, *, poll_interval: float = 0.01,
         per_order_timeout: float = 10.0, total_timeout: float = 360.0,
+        expected_orders: int = EXPECTED_ORDERS,
         clock: Callable[[], float] = time.monotonic,
         sleep: Callable[[float], None] = time.sleep) -> None:
-    """Process exactly 20 sequential orders in one guest process/session."""
+    """Process exactly one or the historical 20 orders, fixed at launch."""
     if (not 0 < poll_interval <= 1 or not 0 < per_order_timeout <= 60
-            or not 0 < total_timeout <= 3600):
-        raise ValueError("invalid polling or timeout bound")
+            or not 0 < total_timeout <= 3600
+            or type(expected_orders) is not int
+            or expected_orders not in ALLOWED_EXPECTED_ORDERS):
+        raise ValueError("invalid polling, timeout, or expected-order bound")
     orders, acks, events = _ensure_dirs(Path(root))
     start = clock()
     cycle_id = input_sha256 = None
     task_ids: set[str] = set()
     snapshots: list[tuple[Path, tuple[bytes, tuple[int, int, int, int, int]]]] = []
     published: list[tuple[Path, tuple[bytes, tuple[int, int, int, int, int]]]] = []
-    for sequence in range(EXPECTED_ORDERS):
+    for sequence in range(expected_orders):
         deadline = min(start + total_timeout, clock() + per_order_timeout)
         path = orders / f"{sequence:03d}.json"
         while True:
-            _check_entries(orders, acks, events, sequence)
+            _check_entries(orders, acks, events, sequence, expected_orders)
             for old_path, snapshot in snapshots:
                 _verify_unchanged(old_path, snapshot)
             for old_path, snapshot in published:
@@ -236,7 +241,7 @@ def run(root: Path = DEFAULT_ROOT, *, poll_interval: float = 0.01,
         _milestone(sequence, "event")
         snapshots.append((path, snapshot))
         task_ids.add(order["task_id"])
-    _check_entries(orders, acks, events, EXPECTED_ORDERS)
+    _check_entries(orders, acks, events, expected_orders, expected_orders)
     for path, snapshot in snapshots:
         _verify_unchanged(path, snapshot)
     for path, snapshot in published:
@@ -249,10 +254,13 @@ def main() -> None:
     parser.add_argument("--poll-interval", type=float, default=0.01)
     parser.add_argument("--per-order-timeout", type=float, default=10.0)
     parser.add_argument("--total-timeout", type=float, default=360.0)
+    parser.add_argument("--expected-orders", type=int,
+                        choices=sorted(ALLOWED_EXPECTED_ORDERS),
+                        default=EXPECTED_ORDERS)
     args = parser.parse_args()
     run(args.root, poll_interval=args.poll_interval,
         per_order_timeout=args.per_order_timeout,
-        total_timeout=args.total_timeout)
+        total_timeout=args.total_timeout, expected_orders=args.expected_orders)
 
 
 if __name__ == "__main__":

@@ -46,6 +46,15 @@ PROTOCOL_FILES = (
     # The later user-directed local B backend supersedes new E2B dispatch.
     "supervisor_harness/local_b_container.py",
     "supervisor_harness/local_b_canary.py",
+    # The offline controller-to-B admission path must be bound to the same
+    # immutable release before a live adapter can be reviewed. These modules
+    # currently accept fake backends only; inclusion is not live admission.
+    "supervisor_harness/frozen_glm_first_response.py",
+    "supervisor_harness/offline_a_to_b_driver.py",
+    "supervisor_harness/local_b_containment_canary.py",
+    "supervisor_harness/local_b_containment_guest.py",
+    "supervisor_harness/bottleneck_gate.py",
+    "supervisor_harness/bounded_live_adapter_v2.py",
 )
 DATA_HARNESS_FILES = tuple(str(path.relative_to(REPO / PREFIX))
                            for path in data_harness_release.source_files(REPO / PREFIX))

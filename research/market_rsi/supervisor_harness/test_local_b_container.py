@@ -23,7 +23,7 @@ class LocalBContainerTests(unittest.TestCase):
     def test_command_has_bounded_isolation_and_only_two_mounts(self):
         command = docker_command(container_name="market-rsi-b-test01",
                                  source=self.source, work=self.work,
-                                 uid=501, gid=20)
+                                 uid=501, gid=20, expected_orders=1)
         self.assertEqual(command[:5], ["docker", "run", "--rm", "--pull", "never"])
         for flag, value in (("--network", "none"), ("--cap-drop", "ALL"),
                             ("--security-opt", "no-new-privileges"),
@@ -37,6 +37,15 @@ class LocalBContainerTests(unittest.TestCase):
         self.assertNotIn("--privileged", command)
         self.assertNotIn("--env-file", command)
         self.assertNotIn("--publish", command)
+        self.assertEqual(command[command.index("--expected-orders") + 1], "1")
+
+    def test_command_allows_only_pinned_one_or_historical_twenty_orders(self):
+        for expected in (0, 2, 21, True, "1"):
+            with self.subTest(expected=expected), self.assertRaisesRegex(
+                    ValueError, "pinned to 1 or 20"):
+                docker_command(container_name="market-rsi-b-test01",
+                               source=self.source, work=self.work,
+                               uid=501, gid=20, expected_orders=expected)
 
     def test_rejects_reused_work_and_symlink_mounts(self):
         (self.work / "old").write_text("previous run")

@@ -109,7 +109,8 @@ class LocalBFiles:
 
 
 def docker_command(*, container_name: str, source: Path, work: Path,
-                   uid: int | None = None, gid: int | None = None) -> list[str]:
+                   uid: int | None = None, gid: int | None = None,
+                   expected_orders: int | None = None) -> list[str]:
     """Build a least-privilege, no-network command for one persistent B worker."""
     if not container_name.startswith("market-rsi-b-") or not all(
         c.isascii() and (c.isalnum() or c in "-_") for c in container_name
@@ -131,7 +132,11 @@ def docker_command(*, container_name: str, source: Path, work: Path,
     gid = os.getgid() if gid is None else gid
     if uid <= 0 or gid <= 0:
         raise ValueError("B must not run as root")
-    return [
+    if (expected_orders is not None
+            and (type(expected_orders) is not int
+                 or expected_orders not in {1, 20})):
+        raise ValueError("B expected-order count must be pinned to 1 or 20")
+    command = [
         "docker", "run", "--rm", "--pull", "never", "--name", container_name,
         "--label", f"market-rsi-canary={container_name}",
         "--network", "none", "--read-only", "--cap-drop", "ALL",
@@ -144,6 +149,9 @@ def docker_command(*, container_name: str, source: Path, work: Path,
         "--root", WORK_PATH, "--per-order-timeout", "10",
         "--total-timeout", "120",
     ]
+    if expected_orders is not None:
+        command.extend(["--expected-orders", str(expected_orders)])
+    return command
 
 
 def docker_ready(*, run=subprocess.run) -> bool:
