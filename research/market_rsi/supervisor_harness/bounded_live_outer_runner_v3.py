@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from decimal import Decimal
 import hashlib
+from importlib import metadata
 import json
 from pathlib import Path
 import sys
@@ -37,6 +38,7 @@ REQUIRED_SOURCE_FILES = (
     "paid_budget.py",
     "supervisor_harness/bounded_live_adapter_v2.py",
     "supervisor_harness/bounded_live_entry_v1.py",
+    "supervisor_harness/live_runtime_requirements_v1.txt",
     "supervisor_harness/bounded_live_outer_runner_v3.py",
     "supervisor_harness/directional_guest_worker.py",
     "supervisor_harness/frozen_glm_first_response.py",
@@ -44,6 +46,12 @@ REQUIRED_SOURCE_FILES = (
     "supervisor_harness/local_b_container.py",
     "supervisor_harness/protocol_source_release.py",
 )
+RUNTIME_DEPENDENCIES = {
+    "tinker": "0.25.0",
+    "transformers": "5.5.4",
+    "Jinja2": "3.1.6",
+    "MarkupSafe": "3.0.3",
+}
 
 
 def _sha(value, label: str) -> str:
@@ -71,6 +79,10 @@ def _current_required_hashes() -> dict[str, str]:
 
 def runtime_receipt() -> dict:
     """Current values that the caller must pin before admission."""
+    observed_dependencies = {
+        name: metadata.version(name) for name in RUNTIME_DEPENDENCIES}
+    if observed_dependencies != RUNTIME_DEPENDENCIES:
+        raise ValueError("pinned live runtime dependency changed or is missing")
     return {
         "schema": "market_bounded_live_outer_runtime_v3",
         "python_executable": str(Path(sys.executable).resolve()),
@@ -79,6 +91,7 @@ def runtime_receipt() -> dict:
         "runner_sha256": file_hash(HERE),
         "adapter_sha256": file_hash(adapter.__file__),
         "guest_sha256": file_hash(adapter.GUEST_SOURCE),
+        "dependency_versions": observed_dependencies,
     }
 
 

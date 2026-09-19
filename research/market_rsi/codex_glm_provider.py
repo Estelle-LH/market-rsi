@@ -121,8 +121,11 @@ class TinkerGLMBackend:
             add_generation_prompt=True,
             reasoning_effort="high",
         )
-        if "Reasoning Effort: High" not in rendered or "<tools>" not in rendered:
-            raise ValueError("GLM high-effort tool template was not applied")
+        tools = turn.get("tools")
+        if ("Reasoning Effort: High" not in rendered
+                or (tools and "<tools>" not in rendered)
+                or (not tools and "<tools>" in rendered)):
+            raise ValueError("GLM high-effort template/tool contract was not applied")
         ids = list(map(int, self.tokenizer.encode(rendered, add_special_tokens=False)))
         return {
             "rendered_prompt": rendered,

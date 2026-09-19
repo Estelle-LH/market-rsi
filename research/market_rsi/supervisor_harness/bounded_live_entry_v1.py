@@ -15,7 +15,7 @@ import subprocess
 from dotenv import dotenv_values
 
 from codex_glm_provider import TinkerGLMBackend
-from market_rsi import digest, identifier, load_json
+from market_rsi import canonical, digest, identifier, load_json
 from paid_budget import PaidBudget
 from supervisor_harness import bounded_live_adapter_v2 as adapter
 from supervisor_harness import bounded_live_outer_runner_v3 as outer
@@ -78,6 +78,22 @@ def _regular_json(path: Path) -> dict:
     return value
 
 
+def _preflight_encoding(backend: TinkerGLMBackend, packet: dict) -> dict:
+    """Exercise the complete local tokenizer path before budget dispatch."""
+    request = {
+        "messages": [
+            {"role": "system", "content": adapter.SYSTEM_PROMPT},
+            {"role": "user", "content": canonical(packet)},
+        ],
+        "tools": [],
+    }
+    encoded = backend.encode(request)
+    input_tokens = adapter._validate_encoding(encoded)
+    if adapter.cost(input_tokens, adapter.MAX_OUTPUT_TOKENS) > adapter.MAX_COST_UPPER_USD:
+        raise ValueError("provider cost upper bound exceeds adapter cap")
+    return encoded
+
+
 def run(args) -> dict:
     """Run exactly one published canary; no credential is read before dry gates."""
     identifier(args.cycle_id)
@@ -109,6 +125,7 @@ def run(args) -> dict:
     outer._clear(exact_clear, args.cycle_id)
     key = dotenv_values(args.env_file).get("TINKER_API_KEY")
     backend = TinkerGLMBackend(key, args.tokenizer_cache)
+    _preflight_encoding(backend, packet)
     return outer.run_outer(
         root=args.root,
         adapter_claim_root=args.adapter_claim_root,

@@ -136,6 +136,19 @@ class LiveEntryClearTests(unittest.TestCase):
                     entry.run(args)
             credential.assert_not_called()
 
+    def test_local_encoding_failure_happens_without_provider_or_outer_dispatch(self):
+        class Backend:
+            def encode(self, request):
+                raise ImportError("missing local template dependency")
+
+            def sample(self, *args, **kwargs):
+                raise AssertionError("provider must not be called")
+
+        with patch.object(entry.outer, "run_outer") as dispatch:
+            with self.assertRaises(ImportError):
+                entry._preflight_encoding(Backend(), {"fixture": True})
+        dispatch.assert_not_called()
+
 
 if __name__ == "__main__":
     unittest.main()
