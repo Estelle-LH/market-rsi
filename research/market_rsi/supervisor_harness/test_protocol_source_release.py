@@ -28,6 +28,7 @@ class ProtocolPublicationTests(unittest.TestCase):
             "supervisor_harness/local_b_containment_guest.py",
             "supervisor_harness/bottleneck_gate.py",
             "supervisor_harness/bounded_live_adapter_v2.py",
+            "supervisor_harness/bounded_live_outer_runner_v3.py",
         }
         self.assertTrue(required.issubset(release.PROTOCOL_FILES))
 

@@ -55,6 +55,7 @@ PROTOCOL_FILES = (
     "supervisor_harness/local_b_containment_guest.py",
     "supervisor_harness/bottleneck_gate.py",
     "supervisor_harness/bounded_live_adapter_v2.py",
+    "supervisor_harness/bounded_live_outer_runner_v3.py",
 )
 DATA_HARNESS_FILES = tuple(str(path.relative_to(REPO / PREFIX))
                            for path in data_harness_release.source_files(REPO / PREFIX))
