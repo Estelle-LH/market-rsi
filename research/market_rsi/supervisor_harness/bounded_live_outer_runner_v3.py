@@ -36,6 +36,7 @@ SOURCE_ROOT = HERE.parents[1]
 REQUIRED_SOURCE_FILES = (
     "paid_budget.py",
     "supervisor_harness/bounded_live_adapter_v2.py",
+    "supervisor_harness/bounded_live_entry_v1.py",
     "supervisor_harness/bounded_live_outer_runner_v3.py",
     "supervisor_harness/directional_guest_worker.py",
     "supervisor_harness/frozen_glm_first_response.py",
