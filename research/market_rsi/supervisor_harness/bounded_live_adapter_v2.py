@@ -83,9 +83,16 @@ def _final_decision_text(raw: str) -> str:
     if raw.count("</think>") > 1:
         raise ValueError("ambiguous multiple reasoning terminators")
     final = raw.rsplit("</think>", 1)[-1].strip()
-    for marker in ("<|assistant|>", "<|endoftext|>"):
-        if final.endswith(marker):
-            final = final.removesuffix(marker).strip()
+    terminal_markers = ("<|assistant|>", "<|endoftext|>", "<|user|>")
+    removed = True
+    while removed:
+        removed = False
+        for marker in terminal_markers:
+            if final.endswith(marker):
+                final = final.removesuffix(marker).strip()
+                removed = True
+    if final.startswith("```json\n") and final.endswith("\n```"):
+        final = final[len("```json\n"):-len("\n```")].strip()
     if not final or len(final.encode("utf-8")) > first.MAX_PACKET_BYTES:
         raise ValueError("missing or oversized final choice")
     return final

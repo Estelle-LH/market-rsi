@@ -122,6 +122,23 @@ class BoundedLiveAdapterV2Tests(unittest.TestCase):
         self.assertEqual((root / "raw-response.txt").read_text(), raw)
         self.assertEqual(process.publish_calls, 1)
 
+    def test_exact_json_fence_and_terminal_role_marker_are_normalized(self):
+        raw = "```json\n" + canonical(self._decision()) + "\n```<|user|>"
+        result, _backend, process, _control, root = self._case(
+            "json-fence", sampled=self._sampled(text=raw))
+        self.assertTrue(result["passed_offline_boundary_test"])
+        self.assertEqual((root / "raw-response.txt").read_text(), raw)
+        self.assertEqual(process.publish_calls, 1)
+
+    def test_json_fence_with_extra_prose_is_not_normalized(self):
+        raw = "Here is the answer:\n```json\n" + canonical(self._decision()) + "\n```"
+        result, backend, process, _control, root = self._case(
+            "json-fence-prose", sampled=self._sampled(text=raw))
+        self.assertFalse(result["passed_offline_boundary_test"])
+        self.assertEqual(backend.sample_calls, 1)
+        self.assertEqual(process.launch_calls, 0)
+        self.assertEqual(load_json(root / "failure.json")["stage"], "choice")
+
     def test_protected_packet_rejected_before_claim_or_sample(self):
         cycle_id = "bounded-live-protected"
         backend = adapter.OfflinePinnedProviderFake(self._sampled())
