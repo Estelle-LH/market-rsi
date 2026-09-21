@@ -79,6 +79,9 @@ PROTOCOL_FILES = (
     "supervisor_harness/p0_gate1_controller_supervisor_parent.py",
     "supervisor_harness/run_p0_gate1_controller_adapter_canary.py",
     "supervisor_harness/run_p0_gate1_controller_outer_canary.py",
+    "supervisor_harness/run_p0_gate1_packet_preflight_canary.py",
+    "supervisor_harness/p0_gate1_controller_cli_canary_child.py",
+    "supervisor_harness/run_p0_gate1_controller_production_cli_canary.py",
     "supervisor_harness/p0_gate1_public_fetch.py",
     "supervisor_harness/p0_gate1_watched_fetch.py",
 )

@@ -1,8 +1,12 @@
 import copy
+import json
+from pathlib import Path
+import tempfile
 import unittest
 
+from market_rsi import digest, file_hash
 from supervisor_harness.build_p0_gate1_controller_packet import (
-    ALLOWED_QUESTIONS, SOURCE_REGISTRY, build,
+    ALLOWED_QUESTIONS, SOURCE_REGISTRY, build, run,
 )
 
 
@@ -52,6 +56,29 @@ class Gate1ControllerPacketTests(unittest.TestCase):
         changed["claim_boundaries"]["formal_admission"] = True
         with self.assertRaises(ValueError):
             build(self.gate0, changed)
+
+    def test_receipt_distinguishes_file_and_canonical_hashes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory)
+            gate0 = (repo / "artifacts/p0-data-admission-gate0-20260918-01"
+                     / "gate0-verdict.json")
+            acceptance = (repo / "research/market_rsi/supervisor_harness"
+                          / "P0_CONTROLLER_B_LIVE_ACCEPTANCE_2026-09-19.json")
+            gate0.parent.mkdir(parents=True)
+            acceptance.parent.mkdir(parents=True)
+            gate0.write_text(json.dumps(self.gate0, sort_keys=True) + "\n")
+            acceptance.write_text(json.dumps(self.live, sort_keys=True) + "\n")
+            output = repo / "artifacts/fresh-packet"
+            receipt = run(repo, output)
+            packet_path = output / "controller-input.json"
+            packet = json.loads(packet_path.read_text())
+            self.assertEqual(receipt["packet_sha256"], file_hash(packet_path))
+            self.assertEqual(receipt["packet_file_sha256"],
+                             file_hash(packet_path))
+            self.assertEqual(receipt["packet_canonical_sha256"],
+                             digest(packet))
+            self.assertNotEqual(receipt["packet_file_sha256"],
+                                receipt["packet_canonical_sha256"])
 
 
 if __name__ == "__main__":

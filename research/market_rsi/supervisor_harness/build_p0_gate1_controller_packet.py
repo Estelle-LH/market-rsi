@@ -11,6 +11,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from market_rsi import digest
+
 
 SCHEMA = "market_p0_gate1_controller_packet_v1"
 ALLOWED_QUESTIONS = (
@@ -151,7 +153,11 @@ def run(repo: Path, output: Path) -> dict:
     receipt = {
         "schema": "market_p0_gate1_packet_receipt_v1",
         "source_sha256": before,
+        # Keep the historical field as the exact on-disk byte commitment.
+        # New consumers must use the explicitly named commitments below.
         "packet_sha256": _sha(packet_path),
+        "packet_file_sha256": _sha(packet_path),
+        "packet_canonical_sha256": digest(packet),
         "model_called": False,
         "data_fetched": False,
         "sealed_data_read": False,

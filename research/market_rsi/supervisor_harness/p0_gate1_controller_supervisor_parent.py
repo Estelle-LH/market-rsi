@@ -7,13 +7,33 @@ from pathlib import Path
 import subprocess
 import sys
 
-from market_rsi import identifier
+from market_rsi import digest, file_hash, identifier
 from supervisor_harness import bounded_live_supervisor_parent_v1 as supervisor
 from supervisor_harness import p0_gate1_controller_live_entry as entry
 
 
-def _child_command(args, claim: Path) -> list[str]:
-    command = [sys.executable, str(Path(entry.__file__).resolve())]
+CANARY_CHILD_ENTRY = Path(__file__).with_name(
+    "p0_gate1_controller_cli_canary_child.py").resolve()
+CANARY_RELEASE_TAG = "market-rsi-protocol-v-synthetic-cli-canary"
+
+
+def _child_command(args, claim: Path, *, child_entry: Path | None = None) -> list[str]:
+    """Build the exact child CLI; canaries may supply one immutable fake.
+
+    The production parser exposes no child-entry override. The optional
+    argument exists only so a zero-provider acceptance can exercise this
+    parent's real subprocess and Supervisor-claim boundary.
+    """
+    child_path = (Path(entry.__file__).resolve() if child_entry is None
+                  else Path(child_entry))
+    if (child_path.is_symlink() or not child_path.is_file()
+            or child_path.resolve() != child_path):
+        raise ValueError("Gate 1 child entry must be a regular canonical file")
+    if child_entry is not None and (
+            child_path != CANARY_CHILD_ENTRY
+            or args.release_tag != CANARY_RELEASE_TAG):
+        raise ValueError("only the exact synthetic Gate 1 canary child is allowed")
+    command = [sys.executable, str(child_path)]
     paths = (
         "root", "claim_root", "global_state_root", "decision_doc",
         "budget_root", "packet", "runtime_receipt", "env_file",
@@ -21,7 +41,8 @@ def _child_command(args, claim: Path) -> list[str]:
     )
     strings = (
         "experiment_id", "budget_cap_usd", "cycle_id",
-        "expected_packet_sha256", "expected_head_sha256",
+        "expected_packet_file_sha256", "expected_packet_canonical_sha256",
+        "expected_head_sha256",
         "expected_decision_sha256", "prior_canary_sha256",
         "release_tag", "expected_source_sha256",
     )
@@ -35,14 +56,36 @@ def _child_command(args, claim: Path) -> list[str]:
     return command
 
 
-def run(args) -> dict:
+def _preflight_packet(args) -> dict:
+    """Verify exact production packet bytes and content before child launch."""
+    packet_path = Path(args.packet)
+    packet = entry.shared_entry._regular_json(packet_path)
+    packet = entry.adapter._packet(packet)
+    expected_file = entry.shared_outer._sha(
+        args.expected_packet_file_sha256, "Gate 1 packet file")
+    expected_canonical = entry.shared_outer._sha(
+        args.expected_packet_canonical_sha256, "Gate 1 canonical packet")
+    observed_file = file_hash(packet_path)
+    observed_canonical = digest(packet)
+    if observed_file != expected_file:
+        raise ValueError("Gate 1 packet file differs from frozen hash")
+    if observed_canonical != expected_canonical:
+        raise ValueError("Gate 1 canonical packet differs from frozen hash")
+    return {
+        "packet_file_sha256": observed_file,
+        "packet_canonical_sha256": observed_canonical,
+    }
+
+
+def run(args, *, child_entry: Path | None = None) -> dict:
     identifier(args.cycle_id)
+    _preflight_packet(args)
     supervisor_root = Path(args.supervisor_root)
     if supervisor_root.exists() or supervisor_root.is_symlink():
         raise FileExistsError("fresh Gate 1 Supervisor root required")
     supervisor_root.mkdir(parents=True, mode=0o700)
     claim = supervisor_root / "supervisor-claim.json"
-    command = _child_command(args, claim)
+    command = _child_command(args, claim, child_entry=child_entry)
     log_handle = (supervisor_root / "child.log").open("xb")
     child = subprocess.Popen(command, stdout=log_handle,
                              stderr=subprocess.STDOUT)

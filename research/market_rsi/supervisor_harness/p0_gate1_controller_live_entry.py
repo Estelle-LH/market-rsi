@@ -13,7 +13,7 @@ from pathlib import Path
 from dotenv import dotenv_values
 
 from codex_glm_provider import TinkerGLMBackend
-from market_rsi import digest, identifier
+from market_rsi import digest, file_hash, identifier
 from paid_budget import PaidBudget
 from supervisor_harness import bounded_live_entry_v1 as shared_entry
 from supervisor_harness import bounded_live_outer_runner_v3 as shared_outer
@@ -39,9 +39,13 @@ def run(args) -> dict:
     outer._publication(args.release_tag, args.expected_source_sha256)
     shared_outer._runtime(runtime)
     packet = adapter._packet(packet)
+    if file_hash(args.packet) != shared_outer._sha(
+            args.expected_packet_file_sha256, "Gate 1 packet file"):
+        raise ValueError("Gate 1 packet file differs from frozen hash")
     if digest(packet) != shared_outer._sha(
-            args.expected_packet_sha256, "Gate 1 packet"):
-        raise ValueError("Gate 1 packet differs from frozen hash")
+            args.expected_packet_canonical_sha256,
+            "Gate 1 canonical packet"):
+        raise ValueError("Gate 1 canonical packet differs from frozen hash")
     shared_outer._state_snapshot(
         state, args.cycle_id, args.expected_head_sha256,
         args.expected_decision_sha256)
@@ -64,7 +68,7 @@ def run(args) -> dict:
         budget_cap_usd=args.budget_cap_usd,
         cycle_id=args.cycle_id,
         packet=packet,
-        expected_packet_sha256=args.expected_packet_sha256,
+        expected_packet_sha256=args.expected_packet_canonical_sha256,
         expected_head_sha256=args.expected_head_sha256,
         expected_decision_sha256=args.expected_decision_sha256,
         prior_canary_sha256=args.prior_canary_sha256,
@@ -89,7 +93,8 @@ def parser(*, require_supervisor_claim: bool = True) -> argparse.ArgumentParser:
         value.add_argument("--supervisor-claim", required=True, type=Path)
     for name in (
         "experiment-id", "budget-cap-usd", "cycle-id",
-        "expected-packet-sha256", "expected-head-sha256",
+        "expected-packet-file-sha256", "expected-packet-canonical-sha256",
+        "expected-head-sha256",
         "expected-decision-sha256", "prior-canary-sha256",
         "release-tag", "expected-source-sha256",
     ):
