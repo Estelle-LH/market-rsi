@@ -1,0 +1,149 @@
+{
+  "baseline_plan": {
+    "library": [
+      "zero_change",
+      "persistence",
+      "ridge",
+      "hgb",
+      "catboost_or_lightgbm_if_runtime_verified"
+    ],
+    "same_rows": true,
+    "selection_budget": "fixed_before_fit",
+    "selection_data": "opened_train_only",
+    "strong_baseline_status": "pending"
+  },
+  "budget": {
+    "existing_global_cap_usd": "200",
+    "formal_run_budget_usd": null,
+    "new_authorization_usd": "0",
+    "paid_execution_authorized": false,
+    "read_authoritative_ledger_at_dispatch": true
+  },
+  "candidate_plan": {
+    "archive_every_trial": true,
+    "compute_match": "same_total_dollars_and_record_tokens_wall_time",
+    "controller": "Tinker GLM-5.3",
+    "dev_policy": "aggregate_feedback_only_no_row_or_label_access",
+    "one_changed_prediction_component_per_trial": true,
+    "research_scope": [
+      "literature_search",
+      "feature_and_representation_design",
+      "trainer_and_loss_design",
+      "new_algorithm_proposals_with_ablation",
+      "failure_diagnosis_and_harness_change_proposals"
+    ],
+    "same_data_target_rows": true,
+    "supervisor": "Codex GPT-5.6 Sol"
+  },
+  "changed_stage": "prediction_search_policy",
+  "claim_limits": {
+    "data_admitted": false,
+    "formal_experiment_started": false,
+    "prediction_improvement_proven": false,
+    "strong_baseline_frozen": false,
+    "target_frozen": false
+  },
+  "data_plan": {
+    "event_order": "immutable_composite_row_key",
+    "exclusion_policy": "evidence_backed_only_no_imputation",
+    "minimum_completed_seasons": 3,
+    "required_admission_checks": [
+      "source_identity_and_hash",
+      "research_use_rights",
+      "game_and_market_identity_coverage",
+      "trade_or_quote_semantics",
+      "event_timestamp_alignment",
+      "label_availability_by_game_and_date",
+      "duplicate_and_missing_row_audit"
+    ],
+    "required_price_semantics": "verified_trade_or_executable_quote",
+    "target_completed_seasons": 5
+  },
+  "design_status": "draft_blocked_on_data_admission",
+  "experiment_id": "market-rsi-prediction-v1-pending-data-admission",
+  "frozen_now": {
+    "causal_stage": "prediction",
+    "data_gate": "formal_gate1_admission_required",
+    "execution_authorized": false,
+    "final_access": "one_shot_after_full_lock",
+    "inference": "paired_date_block_95pct_interval",
+    "minimum_final_dates": 20,
+    "no_imputation": true,
+    "pnl_policy": "not_measured",
+    "primary_comparison": "rsi_candidate_vs_train_selected_strong_baseline",
+    "primary_metric": "equal_game_mean_squared_error",
+    "same_rows_for_all_arms": true,
+    "seed": 23
+  },
+  "metrics": [
+    "equal_game_mse",
+    "rmse_probability_points",
+    "pearson_ic",
+    "rank_ic",
+    "calibration_slope",
+    "calibration_intercept",
+    "positive_game_fraction",
+    "positive_date_fraction",
+    "paired_date_block_95pct_interval",
+    "label_coverage"
+  ],
+  "pending_before_execution": {
+    "candidate_budget_manifest_sha256": null,
+    "data_admission_receipt_sha256": null,
+    "data_manifest_sha256": null,
+    "split_manifest_sha256": null,
+    "strong_baseline_manifest_sha256": null,
+    "target_contract_sha256": null
+  },
+  "promotion_gates": {
+    "calibration_not_worse": true,
+    "candidate_minus_strong_mse_below_zero": true,
+    "coverage_gate_passed": true,
+    "minimum_final_dates": 20,
+    "no_final_tuning": true,
+    "paired_interval_upper_below_zero": true
+  },
+  "question": "Under identical admitted data, target, rows, evaluation and total dollar budget, can a recursively improving LLM researcher produce a prediction model that beats a Train-selected strong deterministic baseline on untouched NFL prediction-market dates?",
+  "schema": "market_rsi_prediction_experiment_v1",
+  "split_plan": {
+    "audit_dev": {
+      "access": "one_shot_after_candidate_lock",
+      "manifest_sha256": null,
+      "purpose": "final_candidate_audit"
+    },
+    "final": {
+      "access": "sealed_until_one_shot_final",
+      "manifest_sha256": null,
+      "minimum_distinct_dates": 20
+    },
+    "ordering": "strict_chronological_nonoverlap",
+    "previously_opened_periods": "diagnostic_only_excluded_from_promotion",
+    "route_dev": {
+      "access": "aggregate_scores_only",
+      "manifest_sha256": null,
+      "purpose": "round_selection"
+    },
+    "train": {
+      "access": "opened",
+      "manifest_sha256": null,
+      "purpose": "fit_and_target_selection"
+    }
+  },
+  "target_selection": {
+    "candidate_targets": [
+      "future_trade_price_change_60s",
+      "future_trade_price_change_300s",
+      "future_executable_quote_change_if_quote_semantics_are_verified"
+    ],
+    "dev_visible": false,
+    "required_checks": [
+      "coverage_by_game_and_date",
+      "zero_change_fraction",
+      "perfect_foresight_opportunity_after_costs",
+      "horizon_decay",
+      "latency_and_max_mark_lateness"
+    ],
+    "selected": null,
+    "selection_data": "opened_train_only"
+  }
+}
