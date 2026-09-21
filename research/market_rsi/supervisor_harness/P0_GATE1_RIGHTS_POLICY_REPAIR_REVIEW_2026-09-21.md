@@ -53,7 +53,7 @@ The unpublished vNext source now separates those roles:
 
 ## Boundary
 
-This is a local, human-assisted operational repair. It has not been committed,
-tagged, published, independently release-reviewed, or used for a provider
-sample. It does not authorize a new Controller request, public fetch, formal
-data admission, training, or evaluation.
+This is a local, human-assisted operational repair committed as `bfef4d0`. It
+has not been tagged, published, independently release-reviewed, or used for a
+new provider sample. It does not authorize a new Controller request, public
+fetch, formal data admission, training, or evaluation.
