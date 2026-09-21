@@ -15,7 +15,7 @@ from market_rsi import digest
 from supervisor_harness import p0_gate1_controller_live_entry as live_entry
 from supervisor_harness import protocol_source_release
 from supervisor_harness.p0_gate1_controller_adapter import (
-    OfflineGate1ProviderFake,
+    OfflineGate1ProviderFake, SUBMIT_TOOL,
 )
 from supervisor_harness.p0_gate1_research_contract import DECISION_SCHEMA
 
@@ -48,6 +48,18 @@ def _decision() -> dict:
     }
 
 
+def _submission(value: dict) -> str:
+    arguments = []
+    for key, item in value.items():
+        encoded = item if isinstance(item, str) else json.dumps(
+            item, separators=(",", ":"))
+        arguments.append(
+            f"<arg_key>{key}</arg_key><arg_value>{encoded}</arg_value>")
+    return ("offline reasoning</think>\n"
+            f"<tool_call>{SUBMIT_TOOL}" + "".join(arguments)
+            + "</tool_call>")
+
+
 def run(args) -> dict:
     sources = protocol_source_release.source_hashes()
     source_sha = digest(sources)
@@ -64,8 +76,7 @@ def run(args) -> dict:
         "isolation_proven": False,
         "model_authorship_proven": False,
     }
-    raw = "offline reasoning</think>\n" + json.dumps(
-        _decision(), sort_keys=True)
+    raw = _submission(_decision())
     backend = OfflineGate1ProviderFake({
         "text": raw,
         "output_tokens": [601, 602, 603],

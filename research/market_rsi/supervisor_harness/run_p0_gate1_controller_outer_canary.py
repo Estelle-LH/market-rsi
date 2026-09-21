@@ -19,7 +19,7 @@ from supervisor_harness import bounded_live_outer_runner_v3 as shared
 from supervisor_harness import protocol_source_release
 from supervisor_harness.global_state_gate import SupervisorGlobalState
 from supervisor_harness.p0_gate1_controller_adapter import (
-    OfflineGate1ProviderFake, expected_packet,
+    OfflineGate1ProviderFake, SUBMIT_TOOL, expected_packet,
 )
 from supervisor_harness.p0_gate1_controller_outer import run_outer
 from supervisor_harness.p0_gate1_research_contract import DECISION_SCHEMA
@@ -45,6 +45,18 @@ def _decision() -> dict:
         "max_provider_cost_usd": "0",
         "stop_rule": "Stop after one response or any redirect, error, timeout, or rights uncertainty.",
     }
+
+
+def _submission(value: dict) -> str:
+    arguments = []
+    for key, item in value.items():
+        encoded = item if isinstance(item, str) else json.dumps(
+            item, separators=(",", ":"))
+        arguments.append(
+            f"<arg_key>{key}</arg_key><arg_value>{encoded}</arg_value>")
+    return ("offline reasoning</think>\n"
+            f"<tool_call>{SUBMIT_TOOL}" + "".join(arguments)
+            + "</tool_call>")
 
 
 def execute(output: Path) -> dict:
@@ -81,8 +93,7 @@ def execute(output: Path) -> dict:
         "model_authorship_proven": False,
     }
     runtime = shared.runtime_receipt()
-    raw = "offline reasoning</think>\n" + json.dumps(
-        _decision(), sort_keys=True)
+    raw = _submission(_decision())
     backend = OfflineGate1ProviderFake({
         "text": raw,
         "output_tokens": [501, 502, 503],

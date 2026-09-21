@@ -114,18 +114,22 @@ class TinkerGLMBackend:
             raise ValueError("frozen GLM chat template changed")
 
     def encode(self, turn: dict) -> dict:
+        reasoning_effort = turn.get("reasoning_effort", "high")
+        if reasoning_effort not in {"low", "high"}:
+            raise ValueError("GLM reasoning effort must be low or high")
         rendered = self.tokenizer.apply_chat_template(
             turn["messages"],
             tools=turn["tools"],
             tokenize=False,
             add_generation_prompt=True,
-            reasoning_effort="high",
+            reasoning_effort=reasoning_effort,
         )
         tools = turn.get("tools")
-        if ("Reasoning Effort: High" not in rendered
+        expected_effort = f"Reasoning Effort: {reasoning_effort.title()}"
+        if (expected_effort not in rendered
                 or (tools and "<tools>" not in rendered)
                 or (not tools and "<tools>" in rendered)):
-            raise ValueError("GLM high-effort template/tool contract was not applied")
+            raise ValueError("GLM reasoning-effort/tool contract was not applied")
         ids = list(map(int, self.tokenizer.encode(rendered, add_special_tokens=False)))
         return {
             "rendered_prompt": rendered,

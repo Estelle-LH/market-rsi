@@ -8,7 +8,7 @@ from pathlib import Path
 from glm_canary import HF_MODEL
 from market_rsi import file_hash, fresh_json, load_json
 from supervisor_harness.p0_gate1_controller_adapter import (
-    OfflineGate1ProviderFake, expected_packet, run,
+    OfflineGate1ProviderFake, SUBMIT_TOOL, expected_packet, run,
 )
 from supervisor_harness.p0_gate1_research_contract import DECISION_SCHEMA
 
@@ -35,6 +35,18 @@ def _decision() -> dict:
     }
 
 
+def _submission(value: dict) -> str:
+    arguments = []
+    for key, item in value.items():
+        encoded = item if isinstance(item, str) else json.dumps(
+            item, separators=(",", ":"))
+        arguments.append(
+            f"<arg_key>{key}</arg_key><arg_value>{encoded}</arg_value>")
+    return ("offline reasoning</think>\n"
+            f"<tool_call>{SUBMIT_TOOL}" + "".join(arguments)
+            + "</tool_call>")
+
+
 def execute(output: Path) -> dict:
     output = Path(output)
     if output.exists() or output.is_symlink():
@@ -43,7 +55,7 @@ def execute(output: Path) -> dict:
     claims = output / "claims"
     claims.mkdir(mode=0o700)
     cycle_id = output.name
-    raw = "offline reasoning</think>\n" + json.dumps(_decision(), sort_keys=True)
+    raw = _submission(_decision())
     backend = OfflineGate1ProviderFake({
         "text": raw,
         "output_tokens": [301, 302, 303],

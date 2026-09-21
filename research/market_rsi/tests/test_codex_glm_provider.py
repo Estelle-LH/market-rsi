@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from codex_glm_provider import ControllerSession
+from codex_glm_provider import ControllerSession, TinkerGLMBackend
 from controller_harness_contract import (
     MAX_CUMULATIVE_OUTPUT_TOKENS,
     TERMINAL_SUBMISSION_MAX_OUTPUT,
@@ -57,6 +57,42 @@ class FakeBackend:
         return {"text": text, "output_tokens": [4, 5], "cached_input_tokens": 1,
                 "finish_reason": "stop", "provider": {"reported_model": MODEL,
                 "session_id": "fixture", "sampling_session_id": "fixture"}}
+
+
+class FakeTokenizer:
+    def __init__(self):
+        self.reasoning_effort = None
+
+    def apply_chat_template(self, messages, *, tools, tokenize,
+                            add_generation_prompt, reasoning_effort):
+        self.reasoning_effort = reasoning_effort
+        return (f"Reasoning Effort: {reasoning_effort.title()}\n"
+                + ("<tools>fixture</tools>" if tools else ""))
+
+    def encode(self, rendered, *, add_special_tokens):
+        return [1, 2, 3]
+
+
+class TinkerGLMBackendEncodingTests(unittest.TestCase):
+    def test_low_reasoning_effort_is_applied_to_pinned_template(self):
+        backend = object.__new__(TinkerGLMBackend)
+        backend.tokenizer = FakeTokenizer()
+        encoded = backend.encode({
+            "messages": [{"role": "user", "content": "bounded"}],
+            "tools": [{"type": "function", "function": {
+                "name": "fixture", "parameters": {"type": "object"}}}],
+            "reasoning_effort": "low",
+        })
+        self.assertEqual(backend.tokenizer.reasoning_effort, "low")
+        self.assertEqual(encoded["token_ids"], [1, 2, 3])
+
+    def test_unknown_reasoning_effort_fails_before_rendering(self):
+        backend = object.__new__(TinkerGLMBackend)
+        backend.tokenizer = FakeTokenizer()
+        with self.assertRaisesRegex(ValueError, "low or high"):
+            backend.encode({"messages": [], "tools": [],
+                            "reasoning_effort": "medium"})
+        self.assertIsNone(backend.tokenizer.reasoning_effort)
 
 
 class ControllerSessionTests(unittest.TestCase):

@@ -1,10 +1,11 @@
 """One-sample Controller adapter for the P0 Gate 1 source decision.
 
-The adapter receives only the frozen aggregate Gate 1 packet, gives the model
-no tools, preserves the first response before review, and either compiles that
-same response into one plan-only trusted task or terminates the permanent
-claim.  Budget, publication and outer-process supervision belong to a separate
-parent; this module never retries, fetches a source, or admits prediction data.
+The adapter receives only the frozen aggregate Gate 1 packet and exposes one
+terminal, non-executing submission tool.  It preserves the first response
+before review and either compiles that same tool submission into one plan-only
+trusted task or terminates the permanent claim.  Budget, publication and
+outer-process supervision belong to a separate parent; this module never
+retries, fetches a source, or admits prediction data.
 """
 from __future__ import annotations
 
@@ -17,34 +18,37 @@ import sys
 from codex_glm_provider import (
     CHAT_TEMPLATE_SHA256, TOKENIZER_REVISION, TinkerGLMBackend,
 )
+from codex_glm_responses_adapter import MCP_NAMESPACE, parse_glm_completion
 from glm_canary import HF_MODEL, MODEL, RATES, cost
 from market_rsi import (
     canonical, digest, file_hash, fresh_json, identifier, load_json,
 )
-from supervisor_harness import frozen_glm_first_response as first
 from supervisor_harness.build_p0_gate1_controller_packet import (
     ALLOWED_QUESTIONS, SCHEMA as PACKET_SCHEMA, SOURCE_REGISTRY, build,
 )
 from supervisor_harness.p0_gate1_research_contract import (
-    parse_unique_json, validate_and_compile,
+    DECISION_SCHEMA, OPERATIONS, validate_and_compile,
 )
 
 
-ADAPTER_SCHEMA = "market_p0_gate1_controller_adapter_v1"
-REQUEST_SCHEMA = "market_p0_gate1_controller_request_v1"
+ADAPTER_SCHEMA = "market_p0_gate1_controller_adapter_v2"
+REQUEST_SCHEMA = "market_p0_gate1_controller_request_v2"
 PROVIDER_RECEIPT_SCHEMA = "market_p0_gate1_controller_provider_receipt_v1"
-RESULT_SCHEMA = "market_p0_gate1_controller_result_v1"
-MAX_OUTPUT_TOKENS = 2048
-SAMPLE_TIMEOUT_SECONDS = 60
+RESULT_SCHEMA = "market_p0_gate1_controller_adapter_result_v2"
+MAX_OUTPUT_TOKENS = 3072
+SAMPLE_TIMEOUT_SECONDS = 90
 MAX_COST_UPPER_USD = Decimal("0.05")
+SUBMIT_TOOL = "submit_gate1_decision"
+SUBMIT_WIRE_TOOL = f"{MCP_NAMESPACE}__{SUBMIT_TOOL}"
 SYSTEM_PROMPT = (
     "You are the research Controller. Choose exactly one bounded investigation "
-    "from the supplied frozen questions and sources. You have no tools, files, "
-    "network, credentials, benchmark rows, Dev labels, or Final labels. Return "
-    "one concise JSON object with exactly the required_decision_fields and "
-    "nothing else in the final answer. Do not add URLs, paths, commands, code, "
-    "credentials, evaluation rows, or claims that an investigation already ran. "
-    "The decision is plan-only and cannot admit data."
+    "from the supplied frozen questions and sources. You have no operational "
+    "tools, files, network, credentials, benchmark rows, Dev labels, or Final "
+    "labels. Use the only available submit_gate1_decision tool exactly once as "
+    "your complete answer. Narrative-only answers and multiple submissions are "
+    "invalid. Do not add URLs, paths, commands, code, credentials, evaluation "
+    "rows, or claims that an investigation already ran. The submission tool only "
+    "records a plan; it cannot fetch, execute, purchase, or admit data."
 )
 
 
@@ -76,15 +80,81 @@ def _packet(value: dict) -> dict:
     return value
 
 
+def _submission_parameters(packet: dict) -> dict:
+    limits = packet["hard_limits"]
+    return {
+        "type": "object",
+        "additionalProperties": False,
+        "required": list(packet["required_decision_fields"]),
+        "properties": {
+            "schema": {"type": "string", "enum": [DECISION_SCHEMA]},
+            "investigation_id": {
+                "type": "string", "minLength": 1, "maxLength": 100,
+                "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{0,99}$",
+            },
+            "question_id": {
+                "type": "string", "enum": list(packet["allowed_questions"]),
+            },
+            "source_id": {
+                "type": "string",
+                "enum": [item["source_id"] for item in packet["allowed_sources"]],
+            },
+            "hypothesis": {"type": "string", "minLength": 1, "maxLength": 1000},
+            "fixed_sample_rule": {
+                "type": "string", "minLength": 1, "maxLength": 1000,
+            },
+            "requested_operations": {
+                "type": "array", "minItems": 1, "uniqueItems": True,
+                "items": {"type": "string", "enum": sorted(OPERATIONS)},
+            },
+            "expected_evidence": {
+                "type": "string", "minLength": 1, "maxLength": 1000,
+            },
+            "rights_check": {"type": "string", "minLength": 1, "maxLength": 1000},
+            "max_requests": {
+                "type": "integer", "minimum": 1,
+                "maximum": limits["max_requests_ceiling"],
+            },
+            "max_bytes": {
+                "type": "integer", "minimum": 1,
+                "maximum": limits["max_bytes_ceiling"],
+            },
+            "max_minutes": {
+                "type": "integer", "minimum": 1,
+                "maximum": limits["max_minutes_ceiling"],
+            },
+            "max_provider_cost_usd": {
+                "type": "string", "minLength": 1, "maxLength": 16,
+            },
+            "stop_rule": {"type": "string", "minLength": 1, "maxLength": 1000},
+        },
+    }
+
+
+def _submission_tools(packet: dict) -> list[dict]:
+    return [{
+        "type": "function",
+        "function": {
+            "name": SUBMIT_WIRE_TOOL,
+            "description": (
+                "Submit the one final bounded Gate 1 plan. This is terminal and "
+                "records data only; it performs no operation."
+            ),
+            "parameters": _submission_parameters(packet),
+        },
+    }]
+
+
 def request_turn(packet: dict) -> dict:
-    """Return the exact no-tools turn used by preflight and execution."""
+    """Return the exact terminal-submission turn used by preflight and execution."""
     packet = _packet(packet)
     return {
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": canonical(packet)},
         ],
-        "tools": [],
+        "tools": _submission_tools(packet),
+        "reasoning_effort": "low",
     }
 
 
@@ -97,32 +167,10 @@ def _sources() -> dict[str, str]:
         "decision_contract": file_hash(
             here.with_name("p0_gate1_research_contract.py")),
         "provider": file_hash(here.parents[1] / "codex_glm_provider.py"),
+        "completion_parser": file_hash(
+            here.parents[1] / "codex_glm_responses_adapter.py"),
         "cost": file_hash(here.parents[1] / "glm_canary.py"),
     }
-
-
-def _final_text(raw: str) -> str:
-    """Extract only a single final answer; never repair scientific content."""
-    if not isinstance(raw, str) or not raw:
-        raise ValueError("missing first Controller response")
-    if raw.lower().count("<tool_call"):
-        raise ValueError("Controller tool calls are forbidden")
-    if raw.count("</think>") > 1:
-        raise ValueError("ambiguous Controller reasoning terminators")
-    final = raw.rsplit("</think>", 1)[-1].strip()
-    markers = ("<|assistant|>", "<|endoftext|>", "<|user|>")
-    removed = True
-    while removed:
-        removed = False
-        for marker in markers:
-            if final.endswith(marker):
-                final = final.removesuffix(marker).strip()
-                removed = True
-    if final.startswith("```json\n") and final.endswith("\n```"):
-        final = final[len("```json\n"):-len("\n```")].strip()
-    if not final or len(final.encode("utf-8")) > 16 * 1024:
-        raise ValueError("missing or oversized final Controller decision")
-    return final
 
 
 def _encoding(value: dict) -> int:
@@ -145,10 +193,30 @@ def _encoding(value: dict) -> int:
 
 def _provider_receipt(sampled: dict, input_tokens: int,
                       *, provider_called: bool) -> dict:
-    valid, reason = first._review_sample(sampled, input_tokens)
-    if not valid:
-        raise ValueError(reason)
-    output_tokens = len(sampled["output_tokens"])
+    if (not isinstance(sampled, dict) or set(sampled) != {
+            "text", "output_tokens", "cached_input_tokens", "finish_reason",
+            "provider"}):
+        raise ValueError("malformed or multiple Controller response")
+    output_tokens = sampled["output_tokens"]
+    provider = sampled["provider"]
+    if (not isinstance(sampled["text"], str)
+            or not sampled["text"]
+            or len(sampled["text"].encode("utf-8")) > 32 * 1024
+            or not isinstance(output_tokens, list)
+            or not 1 <= len(output_tokens) <= MAX_OUTPUT_TOKENS
+            or any(type(token) is not int or token < 0 for token in output_tokens)
+            or type(sampled["cached_input_tokens"]) is not int
+            or not 0 <= sampled["cached_input_tokens"] <= input_tokens
+            or sampled["finish_reason"] != "stop"
+            or not isinstance(provider, dict)
+            or set(provider) != {
+                "reported_model", "session_id", "sampling_session_id"}
+            or provider.get("reported_model") not in {MODEL, HF_MODEL}
+            or not all(isinstance(provider.get(key), str) and provider[key]
+                       and len(provider[key]) <= 128
+                       for key in ("session_id", "sampling_session_id"))):
+        raise ValueError("invalid Controller response or provenance")
+    output_tokens = len(output_tokens)
     cached = sampled["cached_input_tokens"]
     metered = cost(input_tokens, output_tokens, cached)
     return {
@@ -172,6 +240,28 @@ def _provider_receipt(sampled: dict, input_tokens: int,
     }
 
 
+def _submitted_decision(raw: str, packet: dict) -> dict:
+    if (not isinstance(raw, str)
+            or raw.count("<tool_call>") != 1
+            or raw.count("</tool_call>") != 1):
+        raise ValueError("exactly one complete terminal tool call is required")
+    trailing = raw.rsplit("</tool_call>", 1)[1]
+    for marker in ("<|im_end|>", "<|endoftext|>", "<|end|>"):
+        trailing = trailing.replace(marker, "")
+    if trailing.strip():
+        raise ValueError("terminal submission must be the final Controller output")
+    parsed = parse_glm_completion(
+        raw,
+        (SUBMIT_TOOL,),
+        tool_schemas={SUBMIT_WIRE_TOOL: _submission_parameters(packet)},
+    )
+    if (parsed.get("kind") != "function_call"
+            or parsed.get("name") != SUBMIT_WIRE_TOOL):
+        raise ValueError(
+            "Controller must make exactly one terminal Gate 1 submission")
+    return parsed["arguments"]
+
+
 class OfflineGate1ProviderFake:
     """Exact no-network fake accepted only for offline tests and canaries."""
 
@@ -187,9 +277,12 @@ class OfflineGate1ProviderFake:
 
     def encode(self, request: dict) -> dict:
         self.encode_calls += 1
-        if (self.encode_calls != 1 or set(request) != {"messages", "tools"}
-                or request["tools"] != []):
-            raise ValueError("offline Controller accepts one no-tools encoding")
+        if (self.encode_calls != 1
+                or set(request) != {"messages", "tools", "reasoning_effort"}
+                or request["tools"] != _submission_tools(expected_packet())
+                or request["reasoning_effort"] != "low"):
+            raise ValueError(
+                "offline Controller accepts one low-effort terminal-tool encoding")
         return {
             "rendered_prompt": "offline-gate1:" + canonical(request),
             "token_ids": list(self.token_ids),
@@ -250,7 +343,8 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
         "runtime": {"python_executable": str(Path(sys.executable).resolve()),
                     "python_version": sys.version},
         "requested_model": MODEL,
-        "tools": [],
+        "tools": [SUBMIT_TOOL],
+        "reasoning_effort": "low",
         "num_samples": 1,
         "temperature": 1.0,
         "seed": 23,
@@ -280,7 +374,8 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
             "schema": REQUEST_SCHEMA,
             "model": MODEL,
             "messages": turn["messages"],
-            "tools": [],
+            "tools": turn["tools"],
+            "reasoning_effort": turn["reasoning_effort"],
             "num_samples": 1,
             "temperature": 1.0,
             "seed": 23,
@@ -332,7 +427,7 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
         if _sources() != source_hashes:
             raise ValueError("Gate 1 source changed after first response")
         stage = "decision"
-        decision = parse_unique_json(_final_text(sampled["text"]))
+        decision = _submitted_decision(sampled["text"], packet)
         fresh_json(root / "decision.json", decision)
         expected_records["decision.json"] = decision
         stage = "compile"
@@ -381,7 +476,7 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
         "dispatch_gate_called": dispatch_gate_called,
         "automatic_retry": False,
         "sample_count_max": 1,
-        "tools": [],
+        "tools": [SUBMIT_TOOL],
         "public_fetch_performed": False,
         "sealed_data_read": False,
         "formal_data_admitted": False,

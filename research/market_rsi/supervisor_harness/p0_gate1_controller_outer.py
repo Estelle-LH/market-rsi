@@ -31,6 +31,8 @@ UPPER_USD = Decimal("0.05")
 ZERO = "0" * 64
 SOURCE_ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_SOURCE_FILES = (
+    "codex_glm_provider.py",
+    "codex_glm_responses_adapter.py",
     "paid_budget.py",
     "supervisor_harness/global_state_gate.py",
     "supervisor_harness/protocol_source_release.py",
@@ -123,7 +125,7 @@ def _adapter_success(root: Path, claims: Path, cycle_id: str,
             and result.get("dispatch_gate_called") is True
             and result.get("automatic_retry") is False
             and result.get("sample_count_max") == 1
-            and result.get("tools") == []
+            and result.get("tools") == [adapter.SUBMIT_TOOL]
             and result.get("public_fetch_performed") is False
             and result.get("sealed_data_read") is False
             and result.get("formal_data_admitted") is False

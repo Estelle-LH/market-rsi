@@ -8,7 +8,7 @@ from market_rsi import digest, file_hash
 from paid_budget import PaidBudget
 from supervisor_harness.global_state_gate import SupervisorGlobalState
 from supervisor_harness.p0_gate1_controller_adapter import (
-    OfflineGate1ProviderFake, expected_packet,
+    OfflineGate1ProviderFake, SUBMIT_TOOL, expected_packet,
 )
 from supervisor_harness.p0_gate1_controller_outer import run_outer
 from supervisor_harness.p0_gate1_research_contract import DECISION_SCHEMA
@@ -45,6 +45,17 @@ def sampled(text, finish="stop"):
             "sampling_session_id": "offline-outer-sampling",
         },
     }
+
+
+def submitted(value: dict) -> str:
+    arguments = []
+    for key, item in value.items():
+        encoded = item if isinstance(item, str) else json.dumps(
+            item, separators=(",", ":"))
+        arguments.append(
+            f"<arg_key>{key}</arg_key><arg_value>{encoded}</arg_value>")
+    return (f"<tool_call>{SUBMIT_TOOL}" + "".join(arguments)
+            + "</tool_call>")
 
 
 class Gate1ControllerOuterTests(unittest.TestCase):
@@ -117,7 +128,7 @@ class Gate1ControllerOuterTests(unittest.TestCase):
 
     def test_valid_response_settles_metered_and_closes_passed(self):
         result = self.call(OfflineGate1ProviderFake(
-            sampled(json.dumps(decision()))))
+            sampled(submitted(decision()))))
         self.assertTrue(result["passed"])
         job = self.budget.snapshot()["jobs"]["gate1-outer-test-001"]
         self.assertEqual(job["state"], "metered_terminal")
@@ -129,7 +140,7 @@ class Gate1ControllerOuterTests(unittest.TestCase):
         (self.claims / "gate1-outer-test-001.json").write_text("{}\n")
         with self.assertRaisesRegex(ValueError, "permanently claimed"):
             self.call(OfflineGate1ProviderFake(
-                sampled(json.dumps(decision()))))
+                sampled(submitted(decision()))))
         self.assertEqual(self.budget.snapshot()["jobs"], {})
         self.assertIsNone(self.state.snapshot()["active_cycle"])
 
@@ -147,7 +158,7 @@ class Gate1ControllerOuterTests(unittest.TestCase):
 
     def test_unmetered_sample_failure_keeps_full_upper(self):
         backend = OfflineGate1ProviderFake(
-            sampled(json.dumps(decision())),
+            sampled(submitted(decision())),
             sample_error=TimeoutError("uncertain provider timeout"))
         with self.assertRaisesRegex(RuntimeError, "failed review"):
             self.call(backend)
@@ -157,7 +168,7 @@ class Gate1ControllerOuterTests(unittest.TestCase):
         self.assertEqual(backend.sample_calls, 1)
 
     def test_crash_before_dispatch_cancels_and_closes_failed(self):
-        backend = OfflineGate1ProviderFake(sampled(json.dumps(decision())))
+        backend = OfflineGate1ProviderFake(sampled(submitted(decision())))
         with patch(
                 "supervisor_harness.p0_gate1_controller_outer.adapter.run",
                 side_effect=RuntimeError("crash after dispatch")) as mocked:
@@ -174,7 +185,7 @@ class Gate1ControllerOuterTests(unittest.TestCase):
         self.assertIsNone(self.state.snapshot()["active_cycle"])
 
     def test_unreconciled_dispatch_stays_globally_active_for_repair(self):
-        backend = OfflineGate1ProviderFake(sampled(json.dumps(decision())))
+        backend = OfflineGate1ProviderFake(sampled(submitted(decision())))
 
         def crash_after_dispatch(**kwargs):
             from glm_canary import cost
