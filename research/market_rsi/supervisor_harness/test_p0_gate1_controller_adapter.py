@@ -14,7 +14,6 @@ from supervisor_harness.p0_gate1_research_contract import DECISION_SCHEMA
 
 def decision():
     return {
-        "schema": DECISION_SCHEMA,
         "investigation_id": "gate1-controller-001",
         "question_id": "2025_whole_season_trade_access",
         "source_id": "polymarket_official_trades",
@@ -77,6 +76,8 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
         self.assertFalse(result["provider_called"])
         self.assertEqual(backend.sample_calls, 1)
         task = json.loads((root / "task.json").read_text())
+        recorded = json.loads((root / "decision.json").read_text())
+        self.assertEqual(recorded["schema"], DECISION_SCHEMA)
         self.assertTrue(task["execution_boundary"]["plan_only"])
         self.assertFalse(task["execution_boundary"]["network_fetch_authorized"])
         self.assertEqual((root / "raw-response.txt").read_text(), raw)
@@ -170,8 +171,8 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
 
     def test_incomplete_submission_is_not_repaired(self):
         raw = ("</think><tool_call>submit_gate1_decision"
-               "<arg_key>schema</arg_key><arg_value>"
-               f"{DECISION_SCHEMA}</arg_value>")
+               "<arg_key>investigation_id</arg_key><arg_value>"
+               "unfinished</arg_value>")
         result, root, _claims, backend = self.call(sampled(raw))
         self.assertFalse(result["valid_plan_only_decision"])
         self.assertEqual(backend.sample_calls, 1)
@@ -221,7 +222,18 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
         parameters = _submission_parameters(expected_packet())
         self.assertNotIn("rights_check", parameters["properties"])
         self.assertNotIn("rights_check", parameters["required"])
+        self.assertNotIn("schema", parameters["properties"])
+        self.assertNotIn("schema", parameters["required"])
         self.assertIn("trusted_rights_policy", expected_packet())
+
+    def test_model_cannot_supply_trusted_schema(self):
+        value = decision()
+        value["schema"] = DECISION_SCHEMA
+        result, root, _claims, backend = self.call(sampled(submitted(value)))
+        self.assertFalse(result["valid_plan_only_decision"])
+        self.assertEqual(backend.sample_calls, 1)
+        self.assertFalse((root / "decision.json").exists())
+        self.assertFalse((root / "task.json").exists())
 
     def test_v016_duplicate_rights_shape_remains_fail_closed(self):
         duplicate = (

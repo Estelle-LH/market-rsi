@@ -32,10 +32,10 @@ from supervisor_harness.p0_gate1_research_contract import (
 )
 
 
-ADAPTER_SCHEMA = "market_p0_gate1_controller_adapter_v3"
-REQUEST_SCHEMA = "market_p0_gate1_controller_request_v3"
+ADAPTER_SCHEMA = "market_p0_gate1_controller_adapter_v4"
+REQUEST_SCHEMA = "market_p0_gate1_controller_request_v4"
 PROVIDER_RECEIPT_SCHEMA = "market_p0_gate1_controller_provider_receipt_v1"
-RESULT_SCHEMA = "market_p0_gate1_controller_adapter_result_v3"
+RESULT_SCHEMA = "market_p0_gate1_controller_adapter_result_v4"
 MAX_OUTPUT_TOKENS = 3072
 SAMPLE_TIMEOUT_SECONDS = 90
 MAX_COST_UPPER_USD = Decimal("0.05")
@@ -52,7 +52,8 @@ SYSTEM_PROMPT = (
     "rows, or claims that an investigation already ran. The submission tool only "
     "records a plan; it cannot fetch, execute, purchase, or admit data. Data-use "
     "and access policy is already fixed by the trusted Supervisor; do not submit "
-    "or rewrite a rights-policy field."
+    "or rewrite a rights-policy field. The fixed protocol schema is added by "
+    "trusted code; do not submit a schema field."
 )
 
 
@@ -91,7 +92,6 @@ def _submission_parameters(packet: dict) -> dict:
         "additionalProperties": False,
         "required": list(packet["required_decision_fields"]),
         "properties": {
-            "schema": {"type": "string", "enum": [DECISION_SCHEMA]},
             "investigation_id": {
                 "type": "string", "minLength": 1, "maxLength": 100,
                 "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{0,99}$",
@@ -271,7 +271,7 @@ def _submitted_decision(raw: str, packet: dict) -> dict:
     arguments = parsed["arguments"]
     if set(arguments) != set(packet["required_decision_fields"]):
         raise ValueError("submitted fields differ from frozen contract")
-    return arguments
+    return {"schema": DECISION_SCHEMA, **arguments}
 
 
 class OfflineGate1ProviderFake:

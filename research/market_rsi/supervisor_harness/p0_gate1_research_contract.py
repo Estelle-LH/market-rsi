@@ -65,7 +65,10 @@ def validate_and_compile(decision: dict, packet: dict) -> dict:
     if packet.get("trusted_rights_policy") != RIGHTS_POLICY:
         raise ValueError("trusted rights policy changed or is missing")
     required = set(packet.get("required_decision_fields", []))
-    if not isinstance(decision, dict) or set(decision) != required:
+    if "schema" in required:
+        raise ValueError("decision schema must be trusted protocol metadata")
+    if (not isinstance(decision, dict)
+            or set(decision) != required | {"schema"}):
         raise ValueError("decision fields differ from frozen contract")
     if decision.get("schema") != DECISION_SCHEMA:
         raise ValueError("wrong decision schema")

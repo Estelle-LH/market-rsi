@@ -10,7 +10,6 @@ from market_rsi import file_hash, fresh_json, load_json
 from supervisor_harness.p0_gate1_controller_adapter import (
     OfflineGate1ProviderFake, SUBMIT_TOOL, expected_packet, run,
 )
-from supervisor_harness.p0_gate1_research_contract import DECISION_SCHEMA
 
 
 SCHEMA = "market_p0_gate1_controller_adapter_canary_v1"
@@ -18,7 +17,6 @@ SCHEMA = "market_p0_gate1_controller_adapter_canary_v1"
 
 def _decision() -> dict:
     return {
-        "schema": DECISION_SCHEMA,
         "investigation_id": "gate1-offline-source-plan",
         "question_id": "2025_whole_season_trade_access",
         "source_id": "polymarket_official_trades",

@@ -14,7 +14,7 @@ from pathlib import Path
 from market_rsi import digest
 
 
-SCHEMA = "market_p0_gate1_controller_packet_v2"
+SCHEMA = "market_p0_gate1_controller_packet_v3"
 RIGHTS_POLICY = {
     "policy_id": "official_public_research_only_v1",
     "requirements": [
@@ -118,7 +118,7 @@ def build(gate0: dict, live_acceptance: dict) -> dict:
         "allowed_sources": list(SOURCE_REGISTRY),
         "trusted_rights_policy": RIGHTS_POLICY,
         "required_decision_fields": [
-            "schema", "investigation_id", "question_id", "source_id",
+            "investigation_id", "question_id", "source_id",
             "hypothesis", "fixed_sample_rule", "requested_operations",
             "expected_evidence", "max_requests", "max_bytes",
             "max_minutes", "max_provider_cost_usd", "stop_rule",

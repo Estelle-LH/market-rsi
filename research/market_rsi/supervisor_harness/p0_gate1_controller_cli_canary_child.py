@@ -17,12 +17,10 @@ from supervisor_harness import protocol_source_release
 from supervisor_harness.p0_gate1_controller_adapter import (
     OfflineGate1ProviderFake, SUBMIT_TOOL,
 )
-from supervisor_harness.p0_gate1_research_contract import DECISION_SCHEMA
 
 
 def _decision() -> dict:
     return {
-        "schema": DECISION_SCHEMA,
         "investigation_id": "gate1-production-cli-canary-plan",
         "question_id": "2025_whole_season_trade_access",
         "source_id": "polymarket_official_trades",
