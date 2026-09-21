@@ -11,11 +11,13 @@ from decimal import Decimal, InvalidOperation
 import json
 import re
 
-from supervisor_harness.build_p0_gate1_controller_packet import SCHEMA as PACKET_SCHEMA
+from supervisor_harness.build_p0_gate1_controller_packet import (
+    RIGHTS_POLICY, SCHEMA as PACKET_SCHEMA,
+)
 
 
-DECISION_SCHEMA = "market_p0_gate1_controller_decision_v1"
-TASK_SCHEMA = "market_p0_gate1_broker_task_v1"
+DECISION_SCHEMA = "market_p0_gate1_controller_decision_v2"
+TASK_SCHEMA = "market_p0_gate1_broker_task_v2"
 OPERATIONS = frozenset({
     "inspect_official_documentation",
     "query_public_metadata",
@@ -25,7 +27,7 @@ OPERATIONS = frozenset({
 _IDENTIFIER = re.compile(r"[a-zA-Z0-9][a-zA-Z0-9_-]{0,99}\Z")
 _TEXT_FIELDS = (
     "hypothesis", "fixed_sample_rule", "expected_evidence",
-    "rights_check", "stop_rule",
+    "stop_rule",
 )
 _FORBIDDEN_TEXT = (
     "api_key", "authorization", "bearer ", "password", "secret",
@@ -60,6 +62,8 @@ def _exact_decimal(value: object) -> Decimal:
 def validate_and_compile(decision: dict, packet: dict) -> dict:
     if not isinstance(packet, dict) or packet.get("schema") != PACKET_SCHEMA:
         raise ValueError("wrong Gate 1 packet")
+    if packet.get("trusted_rights_policy") != RIGHTS_POLICY:
+        raise ValueError("trusted rights policy changed or is missing")
     required = set(packet.get("required_decision_fields", []))
     if not isinstance(decision, dict) or set(decision) != required:
         raise ValueError("decision fields differ from frozen contract")
@@ -96,6 +100,7 @@ def validate_and_compile(decision: dict, packet: dict) -> dict:
         "question_id": decision["question_id"],
         "source": source,
         **text,
+        "rights_policy": RIGHTS_POLICY,
         "requested_operations": operations,
         "bounds": {
             "max_requests": decision["max_requests"],

@@ -57,7 +57,6 @@ class WatchedGate1FetchTests(unittest.TestCase):
             "fixed_sample_rule": "Inspect the one frozen official documentation page.",
             "requested_operations": ["inspect_official_documentation"],
             "expected_evidence": "Raw bytes, response metadata, and a snapshot hash.",
-            "rights_check": "Do not infer rights from endpoint availability.",
             "max_requests": 1, "max_bytes": 10000, "max_minutes": 10,
             "max_provider_cost_usd": "0",
             "stop_rule": "Stop after one response or any redirect, error, or timeout.",

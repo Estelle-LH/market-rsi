@@ -26,7 +26,6 @@ def _decision() -> dict:
         "fixed_sample_rule": "Inspect the one frozen official documentation page.",
         "requested_operations": ["inspect_official_documentation"],
         "expected_evidence": "A bounded page hash and documented interface fields.",
-        "rights_check": "Record only rights stated by the official source.",
         "max_requests": 1,
         "max_bytes": 100000,
         "max_minutes": 10,

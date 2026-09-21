@@ -24,17 +24,18 @@ from market_rsi import (
     canonical, digest, file_hash, fresh_json, identifier, load_json,
 )
 from supervisor_harness.build_p0_gate1_controller_packet import (
-    ALLOWED_QUESTIONS, SCHEMA as PACKET_SCHEMA, SOURCE_REGISTRY, build,
+    ALLOWED_QUESTIONS, RIGHTS_POLICY, SCHEMA as PACKET_SCHEMA,
+    SOURCE_REGISTRY, build,
 )
 from supervisor_harness.p0_gate1_research_contract import (
     DECISION_SCHEMA, OPERATIONS, validate_and_compile,
 )
 
 
-ADAPTER_SCHEMA = "market_p0_gate1_controller_adapter_v2"
-REQUEST_SCHEMA = "market_p0_gate1_controller_request_v2"
+ADAPTER_SCHEMA = "market_p0_gate1_controller_adapter_v3"
+REQUEST_SCHEMA = "market_p0_gate1_controller_request_v3"
 PROVIDER_RECEIPT_SCHEMA = "market_p0_gate1_controller_provider_receipt_v1"
-RESULT_SCHEMA = "market_p0_gate1_controller_adapter_result_v2"
+RESULT_SCHEMA = "market_p0_gate1_controller_adapter_result_v3"
 MAX_OUTPUT_TOKENS = 3072
 SAMPLE_TIMEOUT_SECONDS = 90
 MAX_COST_UPPER_USD = Decimal("0.05")
@@ -49,7 +50,9 @@ SYSTEM_PROMPT = (
     "or placeholder fields. Narrative-only answers and multiple submissions are "
     "invalid. Do not add URLs, paths, commands, code, credentials, evaluation "
     "rows, or claims that an investigation already ran. The submission tool only "
-    "records a plan; it cannot fetch, execute, purchase, or admit data."
+    "records a plan; it cannot fetch, execute, purchase, or admit data. Data-use "
+    "and access policy is already fixed by the trusted Supervisor; do not submit "
+    "or rewrite a rights-policy field."
 )
 
 
@@ -111,7 +114,6 @@ def _submission_parameters(packet: dict) -> dict:
             "expected_evidence": {
                 "type": "string", "minLength": 1, "maxLength": 1000,
             },
-            "rights_check": {"type": "string", "minLength": 1, "maxLength": 1000},
             "max_requests": {
                 "type": "integer", "minimum": 1,
                 "maximum": limits["max_requests_ceiling"],
@@ -354,6 +356,7 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
                     "python_version": sys.version},
         "requested_model": MODEL,
         "tools": [SUBMIT_TOOL],
+        "trusted_rights_policy": RIGHTS_POLICY,
         "reasoning_effort": "low",
         "num_samples": 1,
         "temperature": 1.0,

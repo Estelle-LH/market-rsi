@@ -2,7 +2,7 @@ import copy
 import json
 import unittest
 
-from supervisor_harness.build_p0_gate1_controller_packet import build
+from supervisor_harness.build_p0_gate1_controller_packet import RIGHTS_POLICY, build
 from supervisor_harness.p0_gate1_research_contract import (
     DECISION_SCHEMA, TASK_SCHEMA, parse_unique_json, validate_and_compile,
 )
@@ -28,7 +28,6 @@ class Gate1ResearchContractTests(unittest.TestCase):
             "fixed_sample_rule": "Use the first, middle, and last scheduled weeks without outcome-based replacement.",
             "requested_operations": ["inspect_official_documentation", "query_public_metadata"],
             "expected_evidence": "Request metadata, response hashes, row counts, and explicit misses.",
-            "rights_check": "Record official terms and mark research use unknown unless directly supported.",
             "max_requests": 12,
             "max_bytes": 1000000,
             "max_minutes": 20,
@@ -43,6 +42,20 @@ class Gate1ResearchContractTests(unittest.TestCase):
                          "https://docs.polymarket.com/api-reference/core/get-trades-for-a-user-or-markets")
         self.assertTrue(task["execution_boundary"]["plan_only"])
         self.assertFalse(task["execution_boundary"]["network_fetch_authorized"])
+        self.assertEqual(task["rights_policy"], RIGHTS_POLICY)
+
+    def test_model_cannot_supply_or_rewrite_rights_policy(self):
+        changed = copy.deepcopy(self.decision)
+        changed["rights_check"] = "Model-authored rights text"
+        with self.assertRaises(ValueError):
+            validate_and_compile(changed, self.packet)
+        changed = copy.deepcopy(self.packet)
+        changed["trusted_rights_policy"] = {
+            "policy_id": "weaker",
+            "requirements": [],
+        }
+        with self.assertRaises(ValueError):
+            validate_and_compile(self.decision, changed)
 
     def test_model_cannot_supply_authority_fields(self):
         changed = copy.deepcopy(self.decision)
@@ -66,7 +79,7 @@ class Gate1ResearchContractTests(unittest.TestCase):
 
     def test_duplicate_json_member_fails(self):
         raw = json.dumps(self.decision)
-        raw = raw[:-1] + ',"schema":"market_p0_gate1_controller_decision_v1"}'
+        raw = raw[:-1] + ',"schema":"market_p0_gate1_controller_decision_v2"}'
         with self.assertRaises(ValueError):
             parse_unique_json(raw)
 

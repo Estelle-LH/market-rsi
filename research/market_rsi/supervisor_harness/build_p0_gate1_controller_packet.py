@@ -14,7 +14,17 @@ from pathlib import Path
 from market_rsi import digest
 
 
-SCHEMA = "market_p0_gate1_controller_packet_v1"
+SCHEMA = "market_p0_gate1_controller_packet_v2"
+RIGHTS_POLICY = {
+    "policy_id": "official_public_research_only_v1",
+    "requirements": [
+        "use only the selected allowlisted official public source",
+        "do not use credentials, purchases, or source writes",
+        "do not infer research-use rights from technical accessibility",
+        "record rights as unknown unless the official source states them",
+        "do not admit fetched material into formal prediction data",
+    ],
+}
 ALLOWED_QUESTIONS = (
     "2023_missing_market_identities",
     "2023_real_fill_sparsity",
@@ -106,10 +116,11 @@ def build(gate0: dict, live_acceptance: dict) -> dict:
         },
         "allowed_questions": list(ALLOWED_QUESTIONS),
         "allowed_sources": list(SOURCE_REGISTRY),
+        "trusted_rights_policy": RIGHTS_POLICY,
         "required_decision_fields": [
             "schema", "investigation_id", "question_id", "source_id",
             "hypothesis", "fixed_sample_rule", "requested_operations",
-            "expected_evidence", "rights_check", "max_requests", "max_bytes",
+            "expected_evidence", "max_requests", "max_bytes",
             "max_minutes", "max_provider_cost_usd", "stop_rule",
         ],
         "hard_limits": {

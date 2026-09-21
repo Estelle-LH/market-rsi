@@ -6,7 +6,8 @@ import unittest
 
 from glm_canary import HF_MODEL
 from supervisor_harness.p0_gate1_controller_adapter import (
-    OfflineGate1ProviderFake, SUBMIT_TOOL, expected_packet, request_turn, run,
+    OfflineGate1ProviderFake, SUBMIT_TOOL, _submission_parameters,
+    expected_packet, request_turn, run,
 )
 from supervisor_harness.p0_gate1_research_contract import DECISION_SCHEMA
 
@@ -21,7 +22,6 @@ def decision():
         "fixed_sample_rule": "Inspect the one frozen official documentation page.",
         "requested_operations": ["inspect_official_documentation"],
         "expected_evidence": "A bounded page hash and documented interface fields.",
-        "rights_check": "Record only rights stated by the official source.",
         "max_requests": 1,
         "max_bytes": 100000,
         "max_minutes": 10,
@@ -211,6 +211,24 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
         value = decision()
         value["rights_check_placeholder"] = ""
         raw = submitted(value) + "<|observation|>"
+        result, root, _claims, backend = self.call(sampled(raw))
+        self.assertFalse(result["valid_plan_only_decision"])
+        self.assertEqual(backend.sample_calls, 1)
+        self.assertFalse((root / "decision.json").exists())
+        self.assertFalse((root / "task.json").exists())
+
+    def test_tool_schema_excludes_model_authored_rights_policy(self):
+        parameters = _submission_parameters(expected_packet())
+        self.assertNotIn("rights_check", parameters["properties"])
+        self.assertNotIn("rights_check", parameters["required"])
+        self.assertIn("trusted_rights_policy", expected_packet())
+
+    def test_v016_duplicate_rights_shape_remains_fail_closed(self):
+        duplicate = (
+            "<arg_key>rights_check</arg_key><arg_value>first</arg_value>"
+            "<arg_key>rights_check</arg_key><arg_value>second</arg_value>"
+        )
+        raw = submitted(decision()).replace("</tool_call>", duplicate + "</tool_call>")
         result, root, _claims, backend = self.call(sampled(raw))
         self.assertFalse(result["valid_plan_only_decision"])
         self.assertEqual(backend.sample_calls, 1)
