@@ -3,14 +3,15 @@ from types import SimpleNamespace
 import json
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from market_rsi import digest, file_hash
 from supervisor_harness import p0_gate1_controller_live_entry as entry
+from supervisor_harness import p0_gate1_controller_supervisor_parent as parent_module
 from supervisor_harness.p0_gate1_controller_adapter import expected_packet
 from supervisor_harness.p0_gate1_controller_supervisor_parent import (
-    CANARY_CHILD_ENTRY, CANARY_RELEASE_TAG, _child_command,
-    _preflight_packet, run,
+    CANARY_CHILD_ENTRY, CANARY_RELEASE_TAG, PROGRESS_TIMEOUT_SECONDS,
+    _child_command, _preflight_packet, run,
 )
 
 
@@ -130,6 +131,55 @@ class Gate1ControllerSupervisorParentTests(unittest.TestCase):
                     run(args)
             popen.assert_not_called()
             self.assertFalse(supervisor_root.exists())
+
+    def test_parent_progress_window_covers_full_provider_deadline(self):
+        self.assertGreater(
+            PROGRESS_TIMEOUT_SECONDS, entry.adapter.SAMPLE_TIMEOUT_SECONDS)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            packet = root / "controller-input.json"
+            packet.write_text(
+                json.dumps(expected_packet(), sort_keys=True, indent=2) + "\n")
+            args = SimpleNamespace(
+                root=root / "gate1-progress-window",
+                claim_root=root / "claims",
+                global_state_root=root / "state",
+                decision_doc=root / "decision.md",
+                budget_root=root / "budget",
+                packet=packet,
+                runtime_receipt=root / "runtime.json",
+                env_file=root / "offline.env",
+                tokenizer_cache=root / "tokenizer-cache",
+                experiment_id="experiment", budget_cap_usd="200",
+                cycle_id="gate1-progress-window",
+                expected_packet_file_sha256=file_hash(packet),
+                expected_packet_canonical_sha256=digest(expected_packet()),
+                expected_head_sha256="2" * 64,
+                expected_decision_sha256="3" * 64,
+                prior_canary_sha256="4" * 64,
+                release_tag="market-rsi-protocol-v0.1.13",
+                expected_source_sha256="5" * 64,
+                supervisor_root=root / "supervisor",
+            )
+            args.claim_root.mkdir()
+            child = Mock(pid=321)
+            child.poll.return_value = 0
+            with (
+                patch(
+                    "supervisor_harness."
+                    "p0_gate1_controller_supervisor_parent.subprocess.Popen",
+                    return_value=child),
+                patch.object(
+                    parent_module.supervisor,
+                    "stable_process_command_sha256", return_value="6" * 64),
+                patch.object(
+                    parent_module.supervisor, "supervise_started",
+                    return_value={"passed": True}) as supervised,
+            ):
+                self.assertEqual(run(args), {"passed": True})
+            self.assertEqual(
+                supervised.call_args.kwargs["progress_timeout_seconds"],
+                PROGRESS_TIMEOUT_SECONDS)
 
 
 if __name__ == "__main__":

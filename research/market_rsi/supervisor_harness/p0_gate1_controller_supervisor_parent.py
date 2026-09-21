@@ -15,6 +15,9 @@ from supervisor_harness import p0_gate1_controller_live_entry as entry
 CANARY_CHILD_ENTRY = Path(__file__).with_name(
     "p0_gate1_controller_cli_canary_child.py").resolve()
 CANARY_RELEASE_TAG = "market-rsi-protocol-v-synthetic-cli-canary"
+# A valid provider sample may use the adapter's complete 60-second deadline.
+# Progress supervision must not classify that allowed interval as a stall.
+PROGRESS_TIMEOUT_SECONDS = entry.adapter.SAMPLE_TIMEOUT_SECONDS + 30
 
 
 def _child_command(args, claim: Path, *, child_entry: Path | None = None) -> list[str]:
@@ -106,6 +109,7 @@ def run(args, *, child_entry: Path | None = None) -> dict:
                 "gate_status": "not_applicable",
                 "evidence_sha256": None,
             },
+            progress_timeout_seconds=PROGRESS_TIMEOUT_SECONDS,
             terminal_budget_states=frozenset({"settled"}),
         )
     finally:
