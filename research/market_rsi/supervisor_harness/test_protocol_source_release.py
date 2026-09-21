@@ -96,6 +96,29 @@ class ProtocolPublicationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "current protocol source"):
             release.verify_published(tag=self.tag, expected_source_sha256=expected)
 
+    def test_documentation_only_head_commit_does_not_invalidate_release(self):
+        expected = self.manifest()
+        release_commit = git(self.repo, "rev-parse", f"{self.tag}^{{commit}}")
+        git(self.repo, "push", "-q", "origin", self.tag)
+        notes = self.repo / "notes.md"
+        notes.write_text("documentation after protocol release\n")
+        git(self.repo, "add", "--", "notes.md")
+        git(self.repo, "commit", "-qm", "document published protocol")
+        self.assertNotEqual(git(self.repo, "rev-parse", "HEAD"), release_commit)
+        value = release.verify_published(
+            tag=self.tag, expected_source_sha256=expected)
+        self.assertEqual(value["commit"], release_commit)
+
+    def test_committed_protocol_change_after_tag_is_rejected(self):
+        git(self.repo, "push", "-q", "origin", self.tag)
+        self.file.write_text("value = 2\n")
+        git(self.repo, "add", "--", str(self.file.relative_to(self.repo)))
+        git(self.repo, "commit", "-qm", "change controlled protocol")
+        with self.assertRaisesRegex(
+                ValueError, "release tag differs from current protocol source"):
+            release.verify_published(
+                tag=self.tag, expected_source_sha256=self.manifest())
+
     def test_lightweight_tag_is_rejected(self):
         git(self.repo, "tag", "market-rsi-protocol-v0.1.1")
         git(self.repo, "push", "-q", "origin", "market-rsi-protocol-v0.1.1")

@@ -115,7 +115,12 @@ def source_hashes() -> dict[str, str]:
 
 
 def verify_published(*, tag: str, expected_source_sha256: str) -> dict:
-    """Verify exact current bytes against one published annotated Git tag."""
+    """Verify exact current protocol bytes against one published annotated tag.
+
+    Repository HEAD may contain later documentation-only commits.  Admission is
+    bound to the tagged protocol bytes, not to unrelated repository history.
+    Any change to a controlled protocol file still fails closed.
+    """
     if (not isinstance(tag, str) or not tag.startswith("market-rsi-protocol-v")
             or len(tag) > 96 or any(c not in "abcdefghijklmnopqrstuvwxyz0123456789.-"
                                      for c in tag)):
@@ -128,32 +133,37 @@ def verify_published(*, tag: str, expected_source_sha256: str) -> dict:
     paths = [f"{PREFIX}/{name}" for name in FILES]
     if _git("status", "--porcelain", "--untracked-files=all", "--", *paths).strip():
         raise ValueError("uncommitted protocol source")
-    commit = _git("rev-parse", "HEAD").decode().strip()
-    if len(commit) != 40 or any(c not in "0123456789abcdef" for c in commit):
+    head = _git("rev-parse", "HEAD").decode().strip()
+    if len(head) != 40 or any(c not in "0123456789abcdef" for c in head):
+        raise ValueError("full current commit required")
+    ref = "refs/tags/" + tag
+    if _git("cat-file", "-t", ref).decode().strip() != "tag":
+        raise ValueError("annotated release tag required")
+    release_commit = _git("rev-parse", ref + "^{commit}").decode().strip()
+    if (len(release_commit) != 40
+            or any(c not in "0123456789abcdef" for c in release_commit)):
         raise ValueError("full release commit required")
-    committed = {}
+    tagged = {}
     for start in range(0, len(paths), 16):
-        archive = _git("archive", "--format=tar", commit, "--", *paths[start:start + 16])
+        archive = _git(
+            "archive", "--format=tar", release_commit,
+            "--", *paths[start:start + 16])
         with tarfile.open(fileobj=io.BytesIO(archive)) as stream:
             for member in stream:
                 if member.isfile():
                     name = member.name.removeprefix(PREFIX + "/")
-                    if name in committed:
+                    if name in tagged:
                         raise ValueError("duplicate Git source")
-                    committed[name] = hashlib.sha256(stream.extractfile(member).read()).hexdigest()
-    if committed != hashes:
-        raise ValueError("release commit differs from current protocol source")
-    ref = "refs/tags/" + tag
-    if _git("cat-file", "-t", ref).decode().strip() != "tag":
-        raise ValueError("annotated release tag required")
-    if _git("rev-parse", ref + "^{commit}").decode().strip() != commit:
-        raise ValueError("release tag points to another commit")
+                    tagged[name] = hashlib.sha256(
+                        stream.extractfile(member).read()).hexdigest()
+    if tagged != hashes:
+        raise ValueError("release tag differs from current protocol source")
     tag_object = _git("rev-parse", ref).decode().strip()
     remote = _git("ls-remote", "--exit-code", "origin", ref, ref + "^{}").decode().splitlines()
     observed = {parts[1]: parts[0] for line in remote if len(parts := line.split()) == 2}
-    if observed != {ref: tag_object, ref + "^{}": commit}:
+    if observed != {ref: tag_object, ref + "^{}": release_commit}:
         raise ValueError("release tag is not published on the authorized origin")
     return {"schema": "market_rsi_protocol_publication_v1", "origin": ORIGIN,
-            "tag": tag, "commit": commit, "tag_object": tag_object,
+            "tag": tag, "commit": release_commit, "tag_object": tag_object,
             "source_sha256": digest(hashes), "source_hashes": hashes,
             "isolation_proven": False, "model_authorship_proven": False}

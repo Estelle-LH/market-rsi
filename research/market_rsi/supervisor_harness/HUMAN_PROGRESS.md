@@ -665,3 +665,11 @@ untouched test.
 - **边界：** 没有生成 decision/task，没有公开抓取、数据入场、训练、Dev/Final 读取或自动重试。全局状态已失败关闭；精确进程/容器清理通过。
 - **本地修复：** 下一版只允许一个完全空的模板终止标记；叙述、第二个调用、多余字段仍失败。提示也明确要求只填声明字段。43 项相邻 Gate 1 检查和 12 项 packet/fetch 检查通过；全仓 516 项中 515 项通过，唯一错误仍是无关的旧 memory artifact 哈希漂移。真实失败回答回放仍被多余字段挡住。三个新零 provider canary 全部通过，费用 `$0`。新提示为 1,406 input tokens，最坏费用 `$0.04415796`。
 - **下一步：** 先独立审查这份两文件代码改动和失败报告。任何新付费样本都必须使用新发布版本、新永久 ID 和单独授权；当前不重跑。
+- **发布完成：** commit `d099b1b` 和 annotated tag `market-rsi-protocol-v0.1.15` 已只推到用户 fork；远端 318 文件与 manifest `056e3f5f…27ff5` 匹配。发布后完整生产路径 canary `p0-gate1-production-cli-canary-20260921-11` 通过，provider 调用 0、费用 `$0`、没有抓数据或放行数据，进程和容器均无残留。新的付费 Controller 仍未授权。
+
+### 2026-09-21：去掉“只改文档也必须切回 tag”的发布摩擦
+
+- **问题：** 旧发布检查要求整个仓库 HEAD 正好等于协议 tag。即使受控源码完全没变，只在 tag 后补一份报告，也会被拒绝，迫使正式 runner 另建 detached worktree。
+- **修复：** 现在直接比较当前 318 个受控源码字节与 annotated tag 内的同一组文件。文档-only commit 可以存在；任何受控源码变化，无论已提交还是未提交，仍然失败。
+- **验证：** 33 项相邻测试通过；全仓 516 项中 515 项通过，唯一错误仍是无关的旧 memory artifact 哈希漂移。零 provider 完整路径 canary `p0-gate1-production-cli-canary-20260921-12` 通过，费用 `$0`，没有抓取或放行数据。
+- **边界：** 这是本地未发布的 human-assisted operational repair。没有 tag、push 或新的付费 Controller 授权。

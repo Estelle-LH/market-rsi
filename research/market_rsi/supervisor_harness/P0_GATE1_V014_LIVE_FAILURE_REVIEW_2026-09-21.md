@@ -65,3 +65,17 @@ The repair is local and unpublished. A future live decision needs independent
 diff review, a fresh commit and annotated release on the user's fork, a
 post-publication zero-provider canary, a fresh permanent ID, and separate paid
 authorization. The failed v0.1.14 ID is terminal and must never be retried.
+
+## v0.1.15 publication follow-up
+
+- Commit `d099b1bcf4d9c171ed9b76c58034d5cb130ecd8d` and annotated tag
+  `market-rsi-protocol-v0.1.15` were pushed only to the user's fork.
+- Remote verification matched all 318 controlled files and source manifest
+  `056e3f5fff0ef1206e3f835a86f610a73bca7b0181698b2a59ae1e7f0ac27ff5`.
+- Tag object: `68d72d607d482947052eda146ab1d0a68d846912`.
+- Post-publication production-path canary
+  `p0-gate1-production-cli-canary-20260921-11` passed with zero provider calls,
+  `$0`, no public fetch, no formal admission and no residual process/container.
+- Canary-result SHA-256:
+  `db740aeac74a6f010ac7b27ae8e040c89c4b0c540859ef4f5ea73de5ea07f5ef`.
+- This publication does not authorize another paid Controller sample.
