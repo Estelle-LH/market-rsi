@@ -37,6 +37,10 @@ class LocalBContainerTests(unittest.TestCase):
         self.assertNotIn("--privileged", command)
         self.assertNotIn("--env-file", command)
         self.assertNotIn("--publish", command)
+        labels = [command[index + 1] for index, value in enumerate(command)
+                  if value == "--label"]
+        self.assertEqual(labels, ["market-rsi-canary=market-rsi-b-test01",
+                                  "market-rsi-task-id=market-rsi-b-test01"])
         self.assertEqual(command[command.index("--expected-orders") + 1], "1")
 
     def test_command_allows_only_pinned_one_or_historical_twenty_orders(self):

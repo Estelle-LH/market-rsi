@@ -11,6 +11,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import time
 
 from dotenv import dotenv_values
 
@@ -20,6 +21,12 @@ from paid_budget import PaidBudget
 from supervisor_harness import bounded_live_adapter_v2 as adapter
 from supervisor_harness import bounded_live_outer_runner_v3 as outer
 from supervisor_harness.global_state_gate import SupervisorGlobalState
+from supervisor_harness.supervisor_watchdog_local_control import (
+    process_command_sha256,
+)
+
+
+SUPERVISOR_CLAIM_SCHEMA = "market_bounded_live_supervisor_claim_v1"
 
 
 def _run(command: list[str]) -> str:
@@ -78,6 +85,40 @@ def _regular_json(path: Path) -> dict:
     return value
 
 
+def _supervisor_claim(path: Path, cycle_id: str, *, timeout_seconds: float = 10.0,
+                      monotonic=time.monotonic, sleep=time.sleep) -> dict:
+    """Require the outer monitor to bind this exact process before secrets."""
+    path = Path(path)
+    deadline = monotonic() + timeout_seconds
+    while not path.exists() and not path.is_symlink() and monotonic() < deadline:
+        sleep(0.02)
+    if not path.exists() or path.is_symlink():
+        raise ValueError("exact outer Supervisor claim is missing or changed")
+    claim = _regular_json(path)
+    required = {"schema", "cycle_id", "task_id", "pid", "supervisor_pid",
+                "process_command_sha256", "watchdog_head_sha256",
+                "supervisor_command_sha256", "automatic_retry"}
+    observed, present = process_command_sha256(os.getpid())
+    supervisor_observed, supervisor_present = process_command_sha256(os.getppid())
+    if (set(claim) != required
+            or claim.get("schema") != SUPERVISOR_CLAIM_SCHEMA
+            or claim.get("cycle_id") != cycle_id
+            or claim.get("task_id") != cycle_id
+            or claim.get("pid") != os.getpid()
+            or claim.get("supervisor_pid") != os.getppid()
+            or not present
+            or claim.get("process_command_sha256") != observed
+            or not supervisor_present
+            or claim.get("supervisor_command_sha256") != supervisor_observed
+            or not isinstance(claim.get("watchdog_head_sha256"), str)
+            or len(claim["watchdog_head_sha256"]) != 64
+            or any(c not in "0123456789abcdef"
+                   for c in claim["watchdog_head_sha256"])
+            or claim.get("automatic_retry") is not False):
+        raise ValueError("exact outer Supervisor claim is missing or changed")
+    return claim
+
+
 def _preflight_encoding(backend: TinkerGLMBackend, packet: dict) -> dict:
     """Exercise the complete local tokenizer path before budget dispatch."""
     request = {
@@ -123,6 +164,9 @@ def run(args) -> dict:
         budget, args.budget_root, args.experiment_id, args.budget_cap_usd,
         args.cycle_id)
     outer._clear(exact_clear, args.cycle_id)
+    # The claim is intentionally the last dry gate before credential access.
+    # It binds the exact live PID/command to a durable watchdog head.
+    _supervisor_claim(args.supervisor_claim, args.cycle_id)
     key = dotenv_values(args.env_file).get("TINKER_API_KEY")
     backend = TinkerGLMBackend(key, args.tokenizer_cache)
     _preflight_encoding(backend, packet)
@@ -150,7 +194,7 @@ def run(args) -> dict:
     )
 
 
-def parser() -> argparse.ArgumentParser:
+def parser(*, require_supervisor_claim: bool = True) -> argparse.ArgumentParser:
     value = argparse.ArgumentParser(description="Run one bounded live Controller-to-B canary")
     for name in (
         "root", "adapter-claim-root", "global-state-root", "decision-doc",
@@ -158,6 +202,8 @@ def parser() -> argparse.ArgumentParser:
         "tokenizer-cache",
     ):
         value.add_argument("--" + name, required=True, type=Path)
+    if require_supervisor_claim:
+        value.add_argument("--supervisor-claim", required=True, type=Path)
     for name in (
         "experiment-id", "budget-cap-usd", "cycle-id",
         "expected-packet-sha256", "expected-head-sha256",

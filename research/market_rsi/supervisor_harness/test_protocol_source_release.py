@@ -31,6 +31,9 @@ class ProtocolPublicationTests(unittest.TestCase):
             "supervisor_harness/bounded_live_entry_v1.py",
             "supervisor_harness/live_runtime_requirements_v1.txt",
             "supervisor_harness/bounded_live_outer_runner_v3.py",
+            "supervisor_harness/bounded_live_supervisor_parent_v1.py",
+            "supervisor_harness/run_bounded_live_supervisor_parent_canary.py",
+            "supervisor_harness/run_bounded_live_supervisor_parent_success_canary.py",
         }
         self.assertTrue(required.issubset(release.PROTOCOL_FILES))
 

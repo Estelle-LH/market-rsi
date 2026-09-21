@@ -139,6 +139,7 @@ def docker_command(*, container_name: str, source: Path, work: Path,
     command = [
         "docker", "run", "--rm", "--pull", "never", "--name", container_name,
         "--label", f"market-rsi-canary={container_name}",
+        "--label", f"market-rsi-task-id={container_name}",
         "--network", "none", "--read-only", "--cap-drop", "ALL",
         "--security-opt", "no-new-privileges", "--pids-limit", "64",
         "--memory", "512m", "--cpus", "1", "--user", f"{uid}:{gid}",

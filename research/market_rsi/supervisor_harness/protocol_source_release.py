@@ -58,6 +58,16 @@ PROTOCOL_FILES = (
     "supervisor_harness/bounded_live_entry_v1.py",
     "supervisor_harness/live_runtime_requirements_v1.txt",
     "supervisor_harness/bounded_live_outer_runner_v3.py",
+    # Outer liveness and exact-cleanup enforcement is part of the executable
+    # paid boundary, not an optional dashboard concern.
+    "supervisor_harness/supervisor_watchdog.py",
+    "supervisor_harness/supervisor_watchdog_monitor.py",
+    "supervisor_harness/supervisor_watchdog_local_control.py",
+    "supervisor_harness/bounded_live_supervisor_parent_v1.py",
+    # Both terminal outcomes need immutable acceptance executables.  Otherwise
+    # published production bytes could be admitted by an unversioned canary.
+    "supervisor_harness/run_bounded_live_supervisor_parent_canary.py",
+    "supervisor_harness/run_bounded_live_supervisor_parent_success_canary.py",
 )
 DATA_HARNESS_FILES = tuple(str(path.relative_to(REPO / PREFIX))
                            for path in data_harness_release.source_files(REPO / PREFIX))

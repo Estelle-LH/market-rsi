@@ -149,6 +149,56 @@ class LiveEntryClearTests(unittest.TestCase):
                 entry._preflight_encoding(Backend(), {"fixture": True})
         dispatch.assert_not_called()
 
+    def test_supervisor_claim_binds_exact_current_process(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "claim.json"
+            value = {
+                "schema": entry.SUPERVISOR_CLAIM_SCHEMA,
+                "cycle_id": "fresh-id", "task_id": "fresh-id",
+                "pid": os.getpid(), "process_command_sha256": "a" * 64,
+                "supervisor_pid": os.getppid(),
+                "supervisor_command_sha256": "a" * 64,
+                "watchdog_head_sha256": "b" * 64,
+                "automatic_retry": False,
+            }
+            path.write_text(canonical(value))
+            with patch.object(entry, "process_command_sha256",
+                              return_value=("a" * 64, True)):
+                self.assertEqual(entry._supervisor_claim(path, "fresh-id"), value)
+
+    def test_supervisor_claim_rejects_wrong_pid_or_command(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "claim.json"
+            value = {
+                "schema": entry.SUPERVISOR_CLAIM_SCHEMA,
+                "cycle_id": "fresh-id", "task_id": "fresh-id",
+                "pid": os.getpid() + 1, "process_command_sha256": "a" * 64,
+                "supervisor_pid": os.getppid(),
+                "supervisor_command_sha256": "a" * 64,
+                "watchdog_head_sha256": "b" * 64,
+                "automatic_retry": False,
+            }
+            path.write_text(canonical(value))
+            with patch.object(entry, "process_command_sha256",
+                              return_value=("a" * 64, True)):
+                with self.assertRaisesRegex(ValueError, "Supervisor claim"):
+                    entry._supervisor_claim(path, "fresh-id")
+
+            value["pid"] = os.getpid()
+            path.write_text(canonical(value))
+            with patch.object(entry, "process_command_sha256",
+                              return_value=("c" * 64, True)):
+                with self.assertRaisesRegex(ValueError, "Supervisor claim"):
+                    entry._supervisor_claim(path, "fresh-id")
+
+    def test_supervisor_claim_waits_boundedly_and_fails_before_secret(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "missing.json"
+            ticks = iter([0.0, 0.0, 0.1, 0.2])
+            with self.assertRaisesRegex(ValueError, "Supervisor claim"):
+                entry._supervisor_claim(
+                    path, "fresh-id", timeout_seconds=0.15,
+                    monotonic=lambda: next(ticks), sleep=lambda _: None)
 
 if __name__ == "__main__":
     unittest.main()
