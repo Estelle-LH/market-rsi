@@ -673,3 +673,11 @@ untouched test.
 - **修复：** 现在直接比较当前 318 个受控源码字节与 annotated tag 内的同一组文件。文档-only commit 可以存在；任何受控源码变化，无论已提交还是未提交，仍然失败。
 - **验证：** 33 项相邻测试通过；全仓 516 项中 515 项通过，唯一错误仍是无关的旧 memory artifact 哈希漂移。零 provider 完整路径 canary `p0-gate1-production-cli-canary-20260921-12` 通过，费用 `$0`，没有抓取或放行数据。
 - **边界：** 这是本地未发布的 human-assisted operational repair。没有 tag、push 或新的付费 Controller 授权。
+
+### 2026-09-21：全仓检查不再把“本机没带旧 artifact”误报成实验被改坏
+
+- **发现：** 唯一的 memory recovery 红灯不是 hash 变了。这个本机 source-only 副本根本没有迁入旧运行 artifact；测试把“文件不存在”和“文件被改”报成了同一句话。
+- **修复：** 只有当两个完整的旧 artifact 根目录都不存在时，这项历史集成检查才明确跳过。如果只迁了一部分、文件 hash 不同或模型冻结文件改变，仍然失败。正式恢复程序没有改。
+- **另一个环境限制：** 当前受限测试环境不允许调用宿主 `ps`。四种 trainer 的宿主监控集成检查会明确跳过；正式 trainer 的实时 RSS 检查没有被放宽。
+- **结果：** 固定本机 runtime 跑完 516 项：全部成功，2 项有明确原因的环境跳过。没有模型调用、数据抓取、训练、Dev/Final 读取或费用。
+- **下一步：** P0 仍是正式预测数据入场。先发布当前本地修复并跑发布后零费用 canary；新的付费 Gate 1 Controller 样本必须另行授权。

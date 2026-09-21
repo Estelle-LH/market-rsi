@@ -58,6 +58,11 @@ class FinalRecoveryTests(unittest.TestCase):
         self.assertNotIn("TinkerGLMBackend", body)
 
     def test_preserved_source_run_has_no_final_score_and_frozen_models(self):
+        source_run = ROOT / "artifacts/memory-policy-20260914-01"
+        source_preflight = ROOT / "artifacts/source-preflight-memory-policy-20260914-01"
+        if not source_run.exists() and not source_preflight.exists():
+            self.skipTest(
+                "preserved runtime artifacts are not installed in this source-only checkout")
         source = verify_source_run(validate_recovery_spec(json.loads(SPEC.read_text())))
         self.assertEqual(len(source["original_spec"]["final"]), 20)
         self.assertEqual(set(source["models"]), {"fresh", "archive", "compact", "baseline"})

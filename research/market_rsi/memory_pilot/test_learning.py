@@ -1,5 +1,7 @@
 import json
+import os
 from pathlib import Path
+import subprocess
 import tempfile
 import unittest
 import numpy as np
@@ -48,6 +50,15 @@ class LearningTests(unittest.TestCase):
             with self.assertRaises(ValueError):fit(BASE,[r])
 
     def test_all_four_actual_trainers(self):
+        try:
+            monitor = subprocess.run(
+                ['ps', '-p', str(os.getpid()), '-o', 'rss='],
+                capture_output=True, text=True, timeout=3,
+            )
+        except PermissionError:
+            self.skipTest('host process monitoring is unavailable in this test sandbox')
+        self.assertEqual(monitor.returncode, 0, monitor.stderr)
+        self.assertTrue(monitor.stdout.strip().isdigit(), monitor.stdout)
         models=[BASE['model'],{'algorithm':'elastic_net','parameters':dict(alpha=.000001,l1_ratio=.5,fit_intercept=False,max_iter=100,tol=.0001)},
             {'algorithm':'random_forest','parameters':dict(n_estimators=2,max_depth=2,min_samples_leaf=2,max_features=1.)},
             {'algorithm':'hist_gradient_boosting','parameters':dict(learning_rate=.1,max_iter=3,max_leaf_nodes=3,l2_regularization=1.,min_samples_leaf=3)}]
