@@ -192,6 +192,31 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
         self.assertEqual(backend.sample_calls, 1)
         self.assertFalse((root / "decision.json").exists())
 
+    def test_one_empty_glm_observation_terminator_is_accepted(self):
+        raw = submitted(decision()) + "<|observation|>"
+        result, root, _claims, backend = self.call(sampled(raw))
+        self.assertTrue(result["valid_plan_only_decision"])
+        self.assertEqual(backend.sample_calls, 1)
+        self.assertTrue((root / "decision.json").is_file())
+        self.assertTrue((root / "task.json").is_file())
+
+    def test_observation_terminator_plus_narrative_fails(self):
+        raw = submitted(decision()) + "<|observation|>extra answer"
+        result, root, _claims, backend = self.call(sampled(raw))
+        self.assertFalse(result["valid_plan_only_decision"])
+        self.assertEqual(backend.sample_calls, 1)
+        self.assertFalse((root / "decision.json").exists())
+
+    def test_observation_terminator_does_not_excuse_extra_field(self):
+        value = decision()
+        value["rights_check_placeholder"] = ""
+        raw = submitted(value) + "<|observation|>"
+        result, root, _claims, backend = self.call(sampled(raw))
+        self.assertFalse(result["valid_plan_only_decision"])
+        self.assertEqual(backend.sample_calls, 1)
+        self.assertFalse((root / "decision.json").exists())
+        self.assertFalse((root / "task.json").exists())
+
     def test_captured_2048_token_analysis_only_failure_is_terminal(self):
         response = sampled(
             "analysis without a terminal submission",

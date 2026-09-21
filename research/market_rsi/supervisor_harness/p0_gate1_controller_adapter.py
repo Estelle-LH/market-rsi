@@ -45,7 +45,8 @@ SYSTEM_PROMPT = (
     "from the supplied frozen questions and sources. You have no operational "
     "tools, files, network, credentials, benchmark rows, Dev labels, or Final "
     "labels. Use the only available submit_gate1_decision tool exactly once as "
-    "your complete answer. Narrative-only answers and multiple submissions are "
+    "your complete answer. Supply exactly the declared tool fields and no other "
+    "or placeholder fields. Narrative-only answers and multiple submissions are "
     "invalid. Do not add URLs, paths, commands, code, credentials, evaluation "
     "rows, or claims that an investigation already ran. The submission tool only "
     "records a plan; it cannot fetch, execute, purchase, or admit data."
@@ -248,6 +249,12 @@ def _submitted_decision(raw: str, packet: dict) -> dict:
     trailing = raw.rsplit("</tool_call>", 1)[1]
     for marker in ("<|im_end|>", "<|endoftext|>", "<|end|>"):
         trailing = trailing.replace(marker, "")
+    # The pinned GLM chat template can close a completed assistant tool call by
+    # emitting one empty tool-observation turn marker.  It carries no model
+    # content and authorizes no operation.  Accept exactly that terminal marker;
+    # narrative, a second marker/call, or any other trailing bytes still fail.
+    if trailing.strip() == "<|observation|>":
+        trailing = ""
     if trailing.strip():
         raise ValueError("terminal submission must be the final Controller output")
     parsed = parse_glm_completion(
@@ -259,7 +266,10 @@ def _submitted_decision(raw: str, packet: dict) -> dict:
             or parsed.get("name") != SUBMIT_WIRE_TOOL):
         raise ValueError(
             "Controller must make exactly one terminal Gate 1 submission")
-    return parsed["arguments"]
+    arguments = parsed["arguments"]
+    if set(arguments) != set(packet["required_decision_fields"]):
+        raise ValueError("submitted fields differ from frozen contract")
+    return arguments
 
 
 class OfflineGate1ProviderFake:
