@@ -1,6 +1,6 @@
 # Supervisor parent binding — source review packet
 
-Status: **reviewed locally; not committed, tagged, pushed, or admitted for paid work**.
+Status: **published and accepted for Supervisor-parent control only; not admitted for paid prediction work**.
 
 Current unpublished protocol manifest: 305 files, SHA-256
 `75eb4b7b989fb3a84baaf2748176f9fff6c26a2e2b20cc33c5ef0a468fd4be62`.
@@ -94,3 +94,18 @@ Immutable parent acceptance executables are now also in the protocol manifest:
   changes either acceptance executable.
 - Publication requires an explicit commit/tag/push authorization. Only the
   user's `origin` may be used; never push to upstream.
+
+## Publication and post-publication acceptance
+
+- Authorized commit: `a3a33fe9ba29ee03375dcd5ac3c4311fa583981b`.
+- Annotated tag: `market-rsi-protocol-v0.1.10`; tag object
+  `c0ea00014a80965718f7716304412583739a2cc1`.
+- Remote verification: 305 files; aggregate SHA-256
+  `75eb4b7b989fb3a84baaf2748176f9fff6c26a2e2b20cc33c5ef0a468fd4be62`.
+- Published blocked proof: `supervisor-live-parent-blocked-20260921-04`, one
+  incident, one cleanup, exact targets absent, zero provider calls, `$0`.
+- Published healthy proof: `supervisor-live-parent-success-20260921-03`, no
+  incident, no cleanup, exact targets absent, zero provider calls, `$0`.
+- The Supervisor parent control gate is closed under the published bytes. Gate
+  1 data-source selection remains separately blocked until its source is
+  reviewed and immutably released.

@@ -34,6 +34,16 @@ class ProtocolPublicationTests(unittest.TestCase):
             "supervisor_harness/bounded_live_supervisor_parent_v1.py",
             "supervisor_harness/run_bounded_live_supervisor_parent_canary.py",
             "supervisor_harness/run_bounded_live_supervisor_parent_success_canary.py",
+            "supervisor_harness/build_p0_gate1_controller_packet.py",
+            "supervisor_harness/p0_gate1_research_contract.py",
+            "supervisor_harness/p0_gate1_controller_adapter.py",
+            "supervisor_harness/p0_gate1_controller_outer.py",
+            "supervisor_harness/p0_gate1_controller_live_entry.py",
+            "supervisor_harness/p0_gate1_controller_supervisor_parent.py",
+            "supervisor_harness/run_p0_gate1_controller_adapter_canary.py",
+            "supervisor_harness/run_p0_gate1_controller_outer_canary.py",
+            "supervisor_harness/p0_gate1_public_fetch.py",
+            "supervisor_harness/p0_gate1_watched_fetch.py",
         }
         self.assertTrue(required.issubset(release.PROTOCOL_FILES))
 
