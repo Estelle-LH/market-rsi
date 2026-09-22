@@ -26,6 +26,27 @@ def example() -> dict:
     }
 
 
+def parallel_example() -> dict:
+    plan = example()
+    base = plan["steps"][0]
+    plan["steps"] = [
+        dict(base, id="worker-a", owner="worker a", depends_on=[],
+             write_paths=["research/a.py"]),
+        dict(base, id="worker-b", owner="worker b", depends_on=[],
+             write_paths=["research/b.py"]),
+        dict(base, id="integrate", owner="outer supervisor",
+             depends_on=["worker-a", "worker-b"]),
+        dict(base, id="review", owner="independent reviewer",
+             depends_on=["integrate"], write_paths=[]),
+    ]
+    plan["parallel_work"] = {
+        "base_source_sha256": "a" * 64,
+        "worker_step_ids": ["worker-a", "worker-b"],
+        "integration_step_id": "integrate", "review_step_id": "review",
+    }
+    return plan
+
+
 class BottleneckGateTest(unittest.TestCase):
     def test_dispatch_requires_verifiable_plan(self):
         with TemporaryDirectory() as directory:
@@ -115,6 +136,44 @@ class BottleneckGateTest(unittest.TestCase):
                 reviewer="outer supervisor")
             path.write_text(json.dumps(plan))
             self.assertTrue(check_step_ready(path, step_id="second")["ready"])
+
+    def test_parallel_work_requires_disjoint_files_and_serial_merge_review(self):
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "plan.json"
+            plan = parallel_example()
+            path.write_text(json.dumps(plan))
+            self.assertEqual(check_plan(path, phase="dispatch")["parallel_workers"], 2)
+            with self.assertRaisesRegex(ValueError, "dependency integrate not passed"):
+                check_step_ready(path, step_id="review")
+
+            plan["steps"][1]["write_paths"] = ["research/a.py"]
+            path.write_text(json.dumps(plan))
+            with self.assertRaisesRegex(ValueError, "write path collision"):
+                check_plan(path, phase="dispatch")
+
+            plan = parallel_example()
+            plan["steps"][2]["depends_on"] = ["worker-a"]
+            path.write_text(json.dumps(plan))
+            with self.assertRaisesRegex(ValueError, "merge before independent review"):
+                check_plan(path, phase="dispatch")
+
+            plan = parallel_example()
+            plan["steps"][3]["owner"] = "worker a"
+            path.write_text(json.dumps(plan))
+            with self.assertRaisesRegex(ValueError, "merge before independent review"):
+                check_plan(path, phase="dispatch")
+
+            plan = parallel_example()
+            plan["steps"][1]["owner"] = "worker a"
+            path.write_text(json.dumps(plan))
+            with self.assertRaisesRegex(ValueError, "merge before independent review"):
+                check_plan(path, phase="dispatch")
+
+            plan = parallel_example()
+            plan["steps"][0]["write_paths"] = ["../shared.py"]
+            path.write_text(json.dumps(plan))
+            with self.assertRaisesRegex(ValueError, "repo-relative"):
+                check_plan(path, phase="dispatch")
 
 
 if __name__ == "__main__":

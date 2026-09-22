@@ -11,6 +11,8 @@ from paid_budget import PaidBudget
 from supervisor_harness import bounded_live_outer_runner_v3 as shared_outer
 from supervisor_harness import p0_gate1_controller_supervisor_parent as parent
 from supervisor_harness import protocol_source_release
+from supervisor_harness.p0_gate1_executable_plan_canary_fixtures import frozen_catalog_bytes
+from supervisor_harness.p0_gate1_trade_query import SYNTHETIC_CATALOG_COMMITMENT_ID
 from supervisor_harness.global_state_gate import SupervisorGlobalState
 from supervisor_harness.p0_gate1_controller_adapter import expected_packet
 
@@ -19,7 +21,7 @@ SCHEMA = "market_p0_gate1_controller_production_cli_canary_v1"
 CHILD = parent.CANARY_CHILD_ENTRY
 
 
-def execute(output: Path) -> dict:
+def execute(output: Path, *, no_catalog: bool = False) -> dict:
     output = Path(output)
     if output.exists() or output.is_symlink():
         raise FileExistsError("fresh production-CLI canary output required")
@@ -48,6 +50,10 @@ def execute(output: Path) -> dict:
     env_file.write_text("TINKER_API_KEY=offline-canary-not-a-secret\n")
     tokenizer_cache = output / "tokenizer-cache"
     tokenizer_cache.mkdir(mode=0o700)
+    catalog = None
+    if not no_catalog:
+        catalog = output / "synthetic-train-catalog.json"
+        catalog.write_bytes(frozen_catalog_bytes())
     source_sha = digest(protocol_source_release.source_hashes())
     args = SimpleNamespace(
         root=output / cycle_id,
@@ -59,6 +65,11 @@ def execute(output: Path) -> dict:
         runtime_receipt=runtime,
         env_file=env_file,
         tokenizer_cache=tokenizer_cache,
+        catalog=catalog,
+        expected_catalog_file_sha256=(file_hash(catalog)
+                                      if catalog is not None else None),
+        catalog_commitment_id=(SYNTHETIC_CATALOG_COMMITMENT_ID
+                               if catalog is not None else None),
         experiment_id="gate1-production-cli-canary-budget",
         budget_cap_usd="1",
         cycle_id=cycle_id,
@@ -100,6 +111,7 @@ def execute(output: Path) -> dict:
         "synthetic_ledger_metered_usd": job["metered_usd"],
         "public_fetch_performed": False,
         "formal_data_admitted": False,
+        "review_only_without_catalog": no_catalog,
         "automatic_retry": False,
         "packet_file_sha256": file_hash(packet),
         "packet_canonical_sha256": digest(expected_packet()),
@@ -117,4 +129,7 @@ def execute(output: Path) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
-    print(json.dumps(execute(parser.parse_args().output), sort_keys=True))
+    parser.add_argument("--no-catalog", action="store_true")
+    parsed = parser.parse_args()
+    print(json.dumps(execute(parsed.output, no_catalog=parsed.no_catalog),
+                     sort_keys=True))

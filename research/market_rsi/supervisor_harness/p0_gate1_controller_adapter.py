@@ -1,10 +1,10 @@
 """One-sample Controller adapter for the P0 Gate 1 source decision.
 
-The adapter receives only the frozen aggregate Gate 1 packet and exposes one
-terminal, non-executing submission tool.  It preserves the first response
-before review and either compiles that same tool submission into one plan-only
-trusted task or terminates the permanent claim.  Budget, publication and
-outer-process supervision belong to a separate parent; this module never
+The adapter receives only the frozen aggregate Gate 1 packet and exposes two
+mutually exclusive terminal, non-executing submission tools. It preserves the
+first response before review and either compiles that submission into one
+plan-only trusted task or archives a novel proposal without execution. Budget,
+publication and outer-process supervision belong to a separate parent; this module never
 retries, fetches a source, or admits prediction data.
 """
 from __future__ import annotations
@@ -28,8 +28,9 @@ from supervisor_harness.build_p0_gate1_controller_packet import (
     SOURCE_REGISTRY, build,
 )
 from supervisor_harness.p0_gate1_research_contract import (
-    DECISION_SCHEMA, OPERATIONS, validate_and_compile,
+    CAPABILITY_REGISTRY, DECISION_SCHEMA, OPERATIONS, validate_and_compile,
 )
+from supervisor_harness import p0_data_gap_proposal as gap_proposal
 
 
 ADAPTER_SCHEMA = "market_p0_gate1_controller_adapter_v4"
@@ -41,20 +42,44 @@ SAMPLE_TIMEOUT_SECONDS = 90
 MAX_COST_UPPER_USD = Decimal("0.05")
 SUBMIT_TOOL = "submit_gate1_decision"
 SUBMIT_WIRE_TOOL = f"{MCP_NAMESPACE}__{SUBMIT_TOOL}"
+PROPOSE_TOOL = "propose_data_gap_resolution"
+PROPOSE_WIRE_TOOL = f"{MCP_NAMESPACE}__{PROPOSE_TOOL}"
 SYSTEM_PROMPT = (
-    "You are the research Controller. Choose exactly one bounded investigation "
-    "from the supplied frozen questions and sources. You have no operational "
+    "You are the research Controller. Choose one bounded investigation from "
+    "the frozen executable questions and sources, OR propose a novel data-gap "
+    "source/method for review. You have no operational "
     "tools, files, network, credentials, benchmark rows, Dev labels, or Final "
-    "labels. Use the only available submit_gate1_decision tool exactly once as "
-    "your complete answer. Supply exactly the declared tool fields and no other "
+    "labels. Use exactly one terminal submission tool as your complete answer. "
+    "A novel proposal is archived only: it cannot fetch, execute, purchase, "
+    "or admit data. Supply exactly the declared tool fields and no other "
     "or placeholder fields. Narrative-only answers and multiple submissions are "
-    "invalid. Do not add URLs, paths, commands, code, credentials, evaluation "
-    "rows, or claims that an investigation already ran. The submission tool only "
-    "records a plan; it cannot fetch, execute, purchase, or admit data. Data-use "
+    "invalid. Do not add local paths, commands, code, credentials, evaluation "
+    "rows, or claims that an investigation already ran. A candidate public URL "
+    "is untrusted text for review, never an instruction to fetch it. Neither "
+    "submission tool can fetch, execute, purchase, or admit data. Data-use "
     "and access policy is already fixed by the trusted Supervisor; do not submit "
     "or rewrite a rights-policy field. The fixed protocol schema is added by "
-    "trusted code; do not submit a schema field."
+    "trusted code; do not submit a schema field. Follow the packet's current "
+    "execution boundary and the listed exact available capabilities. The "
+    "previous Controller answer is preserved as feedback, not a mandatory "
+    "choice. You may revise it or propose another lawful approach."
 )
+
+
+def _gap(packet: dict) -> dict:
+    """Bind a public aggregate gap to the exact frozen Controller packet."""
+    evidence = packet["known_aggregate_evidence"]
+    return {
+        "schema": gap_proposal.GAP_SCHEMA,
+        "gap_id": "p0-prediction-data-admission",
+        "evidence_sha256": digest(evidence),
+        "summary": (
+            "The 2023 market/fill coverage and 2025 whole-season trade/label "
+            "coverage remain unverified; the old Final has only 11 dates. "
+            "The Controller may propose a new bounded way to investigate."),
+        "scope": "public_or_opened_train",
+        "sealed_values_exposed": False,
+    }
 
 
 def expected_packet() -> dict:
@@ -87,6 +112,12 @@ def _packet(value: dict) -> dict:
 
 def _submission_parameters(packet: dict) -> dict:
     limits = packet["hard_limits"]
+    operations = set(OPERATIONS)
+    if packet["current_execution_boundary"].get(
+            "reviewed_real_train_catalog_available") is False:
+        # The exact frozen packet has no real catalog. Hide the trade operation
+        # from the one-shot tool schema rather than solicit a paid dead end.
+        operations.discard("fetch_fixed_public_sample")
     return {
         "type": "object",
         "additionalProperties": False,
@@ -109,7 +140,7 @@ def _submission_parameters(packet: dict) -> dict:
             },
             "requested_operations": {
                 "type": "array", "minItems": 1, "uniqueItems": True,
-                "items": {"type": "string", "enum": sorted(OPERATIONS)},
+                "items": {"type": "string", "enum": sorted(operations)},
             },
             "expected_evidence": {
                 "type": "string", "minLength": 1, "maxLength": 1000,
@@ -145,7 +176,81 @@ def _submission_tools(packet: dict) -> list[dict]:
             ),
             "parameters": _submission_parameters(packet),
         },
+    }, {
+        "type": "function",
+        "function": {
+            "name": PROPOSE_WIRE_TOOL,
+            "description": (
+                "Archive one new data source or method for trusted review. "
+                "Never executes or authorizes the proposal."
+            ),
+            "parameters": _proposal_parameters(packet),
+        },
     }]
+
+
+def _available_capabilities(packet: dict) -> list[dict]:
+    """Describe the exact bounded handlers the current packet can select."""
+    available = set(_submission_parameters(packet)["properties"]
+                    ["requested_operations"]["items"]["enum"])
+    result = []
+    for source in packet["allowed_sources"]:
+        source_id = source["source_id"]
+        for operation, capability in sorted(
+                CAPABILITY_REGISTRY.get(source_id, {}).items()):
+            if operation not in available:
+                continue
+            result.append({
+                "source_id": source_id,
+                "operation": operation,
+                "exact_sample_rules": sorted(capability["sample_contracts"]),
+                "required_bounds": dict(capability["constraints"]),
+                "plan_only": True,
+            })
+    return result
+
+
+def _proposal_parameters(packet: dict) -> dict:
+    limits = packet["hard_limits"]
+    text = lambda: {"type": "string", "minLength": 1, "maxLength": 1000}
+    return {
+        "type": "object",
+        "additionalProperties": False,
+        "required": [
+            "proposal_id", "kind", "hypothesis", "candidate_source",
+            "method", "fixed_sample_rule", "expected_evidence", "stop_rule",
+            "max_requests", "max_bytes", "max_minutes",
+            "max_provider_cost_usd",
+        ],
+        "properties": {
+            "proposal_id": {
+                "type": "string", "minLength": 1, "maxLength": 100,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,99}$",
+            },
+            "kind": {"type": "string", "enum": sorted(gap_proposal.PROPOSAL_KINDS)},
+            "hypothesis": text(),
+            "candidate_source": {"type": "string", "maxLength": 1000},
+            "method": text(),
+            "fixed_sample_rule": text(),
+            "expected_evidence": text(),
+            "stop_rule": text(),
+            "max_requests": {
+                "type": "integer", "minimum": 1,
+                "maximum": limits["max_requests_ceiling"],
+            },
+            "max_bytes": {
+                "type": "integer", "minimum": 1,
+                "maximum": limits["max_bytes_ceiling"],
+            },
+            "max_minutes": {
+                "type": "integer", "minimum": 1,
+                "maximum": limits["max_minutes_ceiling"],
+            },
+            "max_provider_cost_usd": {
+                "type": "string", "minLength": 1, "maxLength": 16,
+            },
+        },
+    }
 
 
 def request_turn(packet: dict) -> dict:
@@ -154,7 +259,12 @@ def request_turn(packet: dict) -> dict:
     return {
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": canonical(packet)},
+            {"role": "user", "content": canonical({
+                "packet": packet,
+                "currently_available_bounded_capabilities": (
+                    _available_capabilities(packet)),
+                "open_ended_proposals_enter_review_only": True,
+            })},
         ],
         "tools": _submission_tools(packet),
         "reasoning_effort": "low",
@@ -169,6 +279,8 @@ def _sources() -> dict[str, str]:
             here.with_name("build_p0_gate1_controller_packet.py")),
         "decision_contract": file_hash(
             here.with_name("p0_gate1_research_contract.py")),
+        "data_gap_proposal_contract": file_hash(
+            here.with_name("p0_data_gap_proposal.py")),
         "provider": file_hash(here.parents[1] / "codex_glm_provider.py"),
         "completion_parser": file_hash(
             here.parents[1] / "codex_glm_responses_adapter.py"),
@@ -243,7 +355,7 @@ def _provider_receipt(sampled: dict, input_tokens: int,
     }
 
 
-def _submitted_decision(raw: str, packet: dict) -> dict:
+def _submitted_action(raw: str, packet: dict) -> tuple[str, dict]:
     if (not isinstance(raw, str)
             or raw.count("<tool_call>") != 1
             or raw.count("</tool_call>") != 1):
@@ -261,17 +373,47 @@ def _submitted_decision(raw: str, packet: dict) -> dict:
         raise ValueError("terminal submission must be the final Controller output")
     parsed = parse_glm_completion(
         raw,
-        (SUBMIT_TOOL,),
-        tool_schemas={SUBMIT_WIRE_TOOL: _submission_parameters(packet)},
+        (SUBMIT_TOOL, PROPOSE_TOOL),
+        tool_schemas={
+            SUBMIT_WIRE_TOOL: _submission_parameters(packet),
+            PROPOSE_WIRE_TOOL: _proposal_parameters(packet),
+        },
     )
-    if (parsed.get("kind") != "function_call"
-            or parsed.get("name") != SUBMIT_WIRE_TOOL):
+    if parsed.get("kind") != "function_call":
         raise ValueError(
             "Controller must make exactly one terminal Gate 1 submission")
     arguments = parsed["arguments"]
-    if set(arguments) != set(packet["required_decision_fields"]):
-        raise ValueError("submitted fields differ from frozen contract")
-    return {"schema": DECISION_SCHEMA, **arguments}
+    if parsed.get("name") == SUBMIT_WIRE_TOOL:
+        if set(arguments) != set(packet["required_decision_fields"]):
+            raise ValueError("submitted fields differ from frozen contract")
+        # The GLM parser coerces tool arguments but does not validate the
+        # request's JSON Schema. Enforce the operation enum here so a model
+        # cannot submit a currently hidden, known-unexecutable capability.
+        offered_operations = _submission_parameters(packet)["properties"][
+            "requested_operations"]["items"]["enum"]
+        requested = arguments["requested_operations"]
+        if (not isinstance(requested, list)
+                or any(operation not in offered_operations
+                       for operation in requested)):
+            raise ValueError("operation was not offered in this Controller turn")
+        return "bounded_plan", {"schema": DECISION_SCHEMA, **arguments}
+    if parsed.get("name") == PROPOSE_WIRE_TOOL:
+        if set(arguments) != set(_proposal_parameters(packet)["required"]):
+            raise ValueError("proposal fields differ from frozen contract")
+        return "non_executable_proposal", {
+            "schema": gap_proposal.PROPOSAL_SCHEMA,
+            "gap_sha256": digest(_gap(packet)),
+            **arguments,
+        }
+    raise ValueError("unknown terminal Gate 1 submission tool")
+
+
+def _submitted_decision(raw: str, packet: dict) -> dict:
+    """Compatibility helper for callers requiring the executable-plan lane."""
+    kind, value = _submitted_action(raw, packet)
+    if kind != "bounded_plan":
+        raise ValueError("Controller submitted a proposal, not a bounded plan")
+    return value
 
 
 class OfflineGate1ProviderFake:
@@ -355,7 +497,7 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
         "runtime": {"python_executable": str(Path(sys.executable).resolve()),
                     "python_version": sys.version},
         "requested_model": MODEL,
-        "tools": [SUBMIT_TOOL],
+        "tools": [SUBMIT_TOOL, PROPOSE_TOOL],
         "trusted_rights_policy": RIGHTS_POLICY,
         "reasoning_effort": "low",
         "num_samples": 1,
@@ -377,6 +519,8 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
     provider_receipt = None
     decision = None
     task = None
+    proposal_archive = None
+    submission_kind = None
     sample_attempted = False
     dispatch_gate_called = False
     expected_records = {"claim.json": claim, "input.json": packet}
@@ -440,13 +584,19 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
         if _sources() != source_hashes:
             raise ValueError("Gate 1 source changed after first response")
         stage = "decision"
-        decision = _submitted_decision(sampled["text"], packet)
+        submission_kind, decision = _submitted_action(sampled["text"], packet)
         fresh_json(root / "decision.json", decision)
         expected_records["decision.json"] = decision
         stage = "compile"
-        task = validate_and_compile(decision, packet)
-        fresh_json(root / "task.json", task)
-        expected_records["task.json"] = task
+        if submission_kind == "bounded_plan":
+            task = validate_and_compile(decision, packet)
+            fresh_json(root / "task.json", task)
+            expected_records["task.json"] = task
+        else:
+            proposal_archive = gap_proposal.archive_proposal(
+                _gap(packet), decision)
+            fresh_json(root / "proposal.json", proposal_archive)
+            expected_records["proposal.json"] = proposal_archive
         stage = "final_integrity"
         if (load_json(registry) != claim
                 or _sources() != source_hashes
@@ -464,13 +614,17 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
     names = (
         "claim.json", "input.json", "request.json", "encoded.json",
         "cost-preview.json", "raw-response.json", "raw-response.txt",
-        "provider-receipt.json", "decision.json", "task.json", "failure.json",
+        "provider-receipt.json", "decision.json", "task.json",
+        "proposal.json", "failure.json",
     )
     result = {
         "schema": RESULT_SCHEMA,
         "cycle_id": cycle_id,
         "execution_mode": mode,
-        "valid_plan_only_decision": passed,
+        "submission_kind": submission_kind if passed else None,
+        "valid_plan_only_decision": passed and submission_kind == "bounded_plan",
+        "valid_non_executable_proposal": (
+            passed and submission_kind == "non_executable_proposal"),
         "completed_live_decision_pending_review": passed and mode == "live_pinned",
         "failure_type": None if error is None else type(error).__name__,
         "artifact_sha256": {
@@ -489,7 +643,7 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
         "dispatch_gate_called": dispatch_gate_called,
         "automatic_retry": False,
         "sample_count_max": 1,
-        "tools": [SUBMIT_TOOL],
+        "tools": [SUBMIT_TOOL, PROPOSE_TOOL],
         "public_fetch_performed": False,
         "sealed_data_read": False,
         "formal_data_admitted": False,

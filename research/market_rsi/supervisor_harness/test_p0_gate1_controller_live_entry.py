@@ -10,9 +10,36 @@ from supervisor_harness.bounded_live_outer_runner_v3 import runtime_receipt
 from supervisor_harness.global_state_gate import SupervisorGlobalState
 from supervisor_harness.p0_gate1_controller_adapter import expected_packet
 from supervisor_harness.p0_gate1_controller_live_entry import run
+from supervisor_harness.p0_gate1_controller_live_entry import _reviewed_catalog
+from supervisor_harness.p0_gate1_executable_plan_canary_fixtures import frozen_catalog_bytes
+from supervisor_harness.p0_gate1_trade_query import SYNTHETIC_CATALOG_COMMITMENT_ID
 
 
 class Gate1ControllerLiveEntryTests(unittest.TestCase):
+    def test_no_catalog_keeps_review_only_lane_available(self):
+        args = SimpleNamespace(catalog=None,
+                               expected_catalog_file_sha256=None,
+                               catalog_commitment_id=None)
+        self.assertEqual(_reviewed_catalog(args), (None, None))
+        args.catalog_commitment_id = "one-sided"
+        with self.assertRaisesRegex(ValueError, "required together"):
+            _reviewed_catalog(args)
+
+    def test_synthetic_catalog_cannot_enter_paid_live_path(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "synthetic-catalog.json"
+            path.write_bytes(frozen_catalog_bytes())
+            args = SimpleNamespace(
+                catalog=path,
+                expected_catalog_file_sha256=file_hash(path),
+                catalog_commitment_id=SYNTHETIC_CATALOG_COMMITMENT_ID,
+            )
+            with self.assertRaisesRegex(ValueError, "reviewed real Train"):
+                _reviewed_catalog(args)
+            args.expected_catalog_file_sha256 = "0" * 64
+            with self.assertRaisesRegex(ValueError, "differs from frozen hash"):
+                _reviewed_catalog(args)
+
     def test_publication_failure_occurs_before_credential_read(self):
         with tempfile.TemporaryDirectory() as directory:
             parent = Path(directory)

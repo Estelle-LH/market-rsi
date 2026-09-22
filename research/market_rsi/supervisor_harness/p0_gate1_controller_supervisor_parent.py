@@ -52,10 +52,16 @@ def _child_command(args, claim: Path, *, child_entry: Path | None = None) -> lis
     for name in paths:
         command.extend(["--" + name.replace("_", "-"),
                         str(getattr(args, name))])
+    if getattr(args, "catalog", None) is not None:
+        command.extend(["--catalog", str(args.catalog)])
     command.extend(["--supervisor-claim", str(claim)])
     for name in strings:
         command.extend(["--" + name.replace("_", "-"),
                         str(getattr(args, name))])
+    for name in ("expected_catalog_file_sha256", "catalog_commitment_id"):
+        if getattr(args, name, None) is not None:
+            command.extend(["--" + name.replace("_", "-"),
+                            str(getattr(args, name))])
     return command
 
 
@@ -83,6 +89,12 @@ def _preflight_packet(args) -> dict:
 def run(args, *, child_entry: Path | None = None) -> dict:
     identifier(args.cycle_id)
     _preflight_packet(args)
+    if child_entry is None:
+        # A supplied catalog must be reviewed and exact before creating a
+        # child. No catalog is permitted only for review-only Controller
+        # outcomes; the outer review rejects fixed-trade plans without one.
+        # The synthetic canary child is never exposed by this production CLI.
+        entry._reviewed_catalog(args)
     supervisor_root = Path(args.supervisor_root)
     if supervisor_root.exists() or supervisor_root.is_symlink():
         raise FileExistsError("fresh Gate 1 Supervisor root required")

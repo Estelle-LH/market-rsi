@@ -69,10 +69,12 @@ PROTOCOL_FILES = (
     "supervisor_harness/run_bounded_live_supervisor_parent_canary.py",
     "supervisor_harness/run_bounded_live_supervisor_parent_success_canary.py",
     # Gate 1 data-source selection is a separate immutable decision boundary.
-    # The model sees aggregate evidence only, returns one plan-only choice, and
-    # trusted code owns URL resolution and the single bounded public snapshot.
+    # The model sees aggregate evidence only and returns one terminal choice:
+    # a bounded existing plan or a non-executable novel proposal. Trusted code
+    # alone resolves URLs and controls any later public snapshot.
     "supervisor_harness/build_p0_gate1_controller_packet.py",
     "supervisor_harness/p0_gate1_research_contract.py",
+    "supervisor_harness/p0_data_gap_proposal.py",
     "supervisor_harness/p0_gate1_controller_adapter.py",
     "supervisor_harness/p0_gate1_controller_outer.py",
     "supervisor_harness/p0_gate1_controller_live_entry.py",
@@ -84,6 +86,14 @@ PROTOCOL_FILES = (
     "supervisor_harness/run_p0_gate1_controller_production_cli_canary.py",
     "supervisor_harness/p0_gate1_public_fetch.py",
     "supervisor_harness/p0_gate1_watched_fetch.py",
+    # The bounded existing-plan lane is executable only when its compiler,
+    # Train-only materializer and request builder share the published bytes.
+    # Include the corresponding zero-network canary and fixtures as well.
+    "supervisor_harness/p0_gate1_sample_materializer.py",
+    "supervisor_harness/p0_gate1_trade_query.py",
+    "supervisor_harness/p0_gate1_plan_compiler.py",
+    "supervisor_harness/p0_gate1_executable_plan_canary_fixtures.py",
+    "supervisor_harness/run_p0_gate1_executable_plan_canary.py",
 )
 DATA_HARNESS_FILES = tuple(str(path.relative_to(REPO / PREFIX))
                            for path in data_harness_release.source_files(REPO / PREFIX))

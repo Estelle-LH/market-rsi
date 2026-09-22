@@ -19,9 +19,12 @@ from supervisor_harness import bounded_live_outer_runner_v3 as shared
 from supervisor_harness import protocol_source_release
 from supervisor_harness.global_state_gate import SupervisorGlobalState
 from supervisor_harness.p0_gate1_controller_adapter import (
-    OfflineGate1ProviderFake, SUBMIT_TOOL, expected_packet,
+    OfflineGate1ProviderFake, PROPOSE_TOOL, SUBMIT_TOOL, expected_packet,
 )
 from supervisor_harness.p0_gate1_controller_outer import run_outer
+from supervisor_harness.p0_data_gap_proposal import (
+    FEEDBACK_SCHEMA, next_controller_input,
+)
 
 
 SCHEMA = "market_p0_gate1_controller_outer_canary_v1"
@@ -44,7 +47,24 @@ def _decision() -> dict:
     }
 
 
-def _submission(value: dict) -> str:
+def _proposal() -> dict:
+    return {
+        "proposal_id": "gate1-outer-canary-novel-source",
+        "kind": "new_source",
+        "hypothesis": "A new public archive may contain missing fills.",
+        "candidate_source": "One unregistered public archive",
+        "method": "Check rights and one fixed game sample.",
+        "fixed_sample_rule": "First game by public schedule order.",
+        "expected_evidence": "Source revision, rights and raw fill receipt.",
+        "stop_rule": "Stop on rights uncertainty or after one sample.",
+        "max_requests": 3,
+        "max_bytes": 1000000,
+        "max_minutes": 10,
+        "max_provider_cost_usd": "0",
+    }
+
+
+def _submission(value: dict, *, tool: str = SUBMIT_TOOL) -> str:
     arguments = []
     for key, item in value.items():
         encoded = item if isinstance(item, str) else json.dumps(
@@ -52,11 +72,11 @@ def _submission(value: dict) -> str:
         arguments.append(
             f"<arg_key>{key}</arg_key><arg_value>{encoded}</arg_value>")
     return ("offline reasoning</think>\n"
-            f"<tool_call>{SUBMIT_TOOL}" + "".join(arguments)
+            f"<tool_call>{tool}" + "".join(arguments)
             + "</tool_call>")
 
 
-def execute(output: Path) -> dict:
+def execute(output: Path, *, proposal: bool = False) -> dict:
     output = Path(output)
     if output.exists() or output.is_symlink():
         raise FileExistsError("fresh Gate 1 outer canary output required")
@@ -90,7 +110,8 @@ def execute(output: Path) -> dict:
         "model_authorship_proven": False,
     }
     runtime = shared.runtime_receipt()
-    raw = _submission(_decision())
+    raw = (_submission(_proposal(), tool=PROPOSE_TOOL) if proposal
+           else _submission(_decision()))
     backend = OfflineGate1ProviderFake({
         "text": raw,
         "output_tokens": [501, 502, 503],
@@ -137,8 +158,27 @@ def execute(output: Path) -> dict:
     budget_after = budget.snapshot()
     state_after = state.snapshot()
     job = budget_after["jobs"][cycle_id]
+    next_input_sha256 = None
+    if proposal:
+        archived = json.loads((output / cycle_id / "adapter" / cycle_id
+                               / "proposal.json").read_text())
+        feedback = {
+            "schema": FEEDBACK_SCHEMA,
+            "proposal_sha256": archived["proposal_sha256"],
+            "auditor_receipt_sha256": file_hash(Path(__file__)),
+            "outcome": "inconclusive",
+            "summary": "Synthetic audit only; no real source or data admitted.",
+            "actual_cost_usd": "0",
+            "sealed_values_exposed": False,
+        }
+        fresh_json(output / "synthetic-auditor-feedback.json", feedback)
+        fresh_json(output / "next-controller-input.json",
+                   next_controller_input(archived, feedback))
+        next_input_sha256 = file_hash(output / "next-controller-input.json")
     passed = (
         outer_result.get("passed") is True
+        and outer_result.get("submission_kind") == (
+            "non_executable_proposal" if proposal else "bounded_plan")
         and outer_result.get("execution_mode") == "offline_fake"
         and job.get("state") == "metered_terminal"
         and state_after.get("active_cycle") is None
@@ -152,8 +192,13 @@ def execute(output: Path) -> dict:
         "passed": passed,
         "outer_result_sha256": file_hash(output / cycle_id / "result.json"),
         "review_sha256": file_hash(output / cycle_id / "review.json"),
-        "task_sha256": file_hash(
-            output / cycle_id / "adapter" / cycle_id / "task.json"),
+        "task_sha256": (None if proposal else file_hash(
+            output / cycle_id / "adapter" / cycle_id / "task.json")),
+        "proposal_sha256": (file_hash(
+            output / cycle_id / "adapter" / cycle_id / "proposal.json")
+            if proposal else None),
+        "next_controller_input_sha256": next_input_sha256,
+        "submission_kind": outer_result.get("submission_kind"),
         "synthetic_ledger_metered_usd": job["metered_usd"],
         "provider_calls": 0,
         "actual_provider_cost_usd": "0",
@@ -170,4 +215,6 @@ def execute(output: Path) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
-    print(json.dumps(execute(parser.parse_args().output), sort_keys=True))
+    parser.add_argument("--proposal", action="store_true")
+    args = parser.parse_args()
+    print(json.dumps(execute(args.output, proposal=args.proposal), sort_keys=True))

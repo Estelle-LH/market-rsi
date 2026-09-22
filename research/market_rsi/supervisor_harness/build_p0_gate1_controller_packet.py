@@ -7,6 +7,7 @@ information a Controller may use to choose one bounded source investigation.
 from __future__ import annotations
 
 import argparse
+from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
@@ -58,6 +59,31 @@ SOURCE_REGISTRY = (
         "url": "https://github.com/nflverse/nflverse-pbp/releases",
     },
 )
+PRIOR_CONTROLLER_FEEDBACK = {
+    "attempt_id": "market-rsi-gate1-controller-20260921-05",
+    "raw_response_sha256": (
+        "e0ada90eec518767cee11da568496917dd1326758fe62ec0a565314e0ad4938a"
+    ),
+    "reported_model": "zai-org/GLM-5.3:peft:262144",
+    "selected_question_id": "2025_whole_season_trade_access",
+    "selected_source_id": "polymarket_official_trades",
+    "requested_operations": [
+        "inspect_official_documentation", "fetch_fixed_public_sample",
+    ],
+    "requested_max_requests": 20,
+    "outcome": "invalid_submission_no_task_or_fetch",
+    "observed_failure": "The old adapter required a model-authored schema field.",
+    "additional_contract_mismatch": (
+        "The requested document-plus-trade operation had no combined handler; "
+        "the trade handler also requires a reviewed Train catalog and six "
+        "fixed requests, which are not currently available."
+    ),
+    "metered_cost_usd_not_invoice": "0.01137483",
+    "next_decision": (
+        "The previous response stays immutable. You may revise this idea "
+        "or propose a different source or method; no option is preselected."
+    ),
+}
 
 
 def _sha(path: Path) -> str:
@@ -86,7 +112,11 @@ def build(gate0: dict, live_acceptance: dict) -> dict:
         raise ValueError("bounded live transport acceptance is missing or overstated")
     return {
         "schema": SCHEMA,
-        "purpose": "choose exactly one bounded public-source investigation",
+        "purpose": (
+            "choose one bounded available investigation or propose a new "
+            "data-gap source or method for review"
+        ),
+        "prior_controller_feedback": deepcopy(PRIOR_CONTROLLER_FEEDBACK),
         "known_aggregate_evidence": {
             "season_2023": {
                 "scheduled_games": 285,
@@ -115,8 +145,8 @@ def build(gate0: dict, live_acceptance: dict) -> dict:
             },
         },
         "allowed_questions": list(ALLOWED_QUESTIONS),
-        "allowed_sources": list(SOURCE_REGISTRY),
-        "trusted_rights_policy": RIGHTS_POLICY,
+        "allowed_sources": deepcopy(list(SOURCE_REGISTRY)),
+        "trusted_rights_policy": deepcopy(RIGHTS_POLICY),
         "required_decision_fields": [
             "investigation_id", "question_id", "source_id",
             "hypothesis", "fixed_sample_rule", "requested_operations",
@@ -140,7 +170,13 @@ def build(gate0: dict, live_acceptance: dict) -> dict:
         "current_execution_boundary": {
             "controller_transport_accepted": True,
             "arbitrary_research_task_execution_accepted": False,
-            "instruction": "Return a plan only; execution requires a separately reviewed task contract.",
+            "reviewed_real_train_catalog_available": False,
+            "instruction": (
+                "Return a plan only. A fixed-trade plan cannot pass review "
+                "until a real Train catalog is separately admitted; choose "
+                "a documentation investigation or non-executable new-source "
+                "proposal while that catalog is unavailable."
+            ),
         },
     }
 

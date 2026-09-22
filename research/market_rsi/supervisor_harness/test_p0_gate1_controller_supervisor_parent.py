@@ -13,6 +13,8 @@ from supervisor_harness.p0_gate1_controller_supervisor_parent import (
     CANARY_CHILD_ENTRY, CANARY_RELEASE_TAG, PROGRESS_TIMEOUT_SECONDS,
     _child_command, _preflight_packet, run,
 )
+from supervisor_harness.p0_gate1_executable_plan_canary_fixtures import frozen_catalog_bytes
+from supervisor_harness.p0_gate1_trade_query import SYNTHETIC_CATALOG_COMMITMENT_ID
 
 
 class Gate1ControllerSupervisorParentTests(unittest.TestCase):
@@ -23,6 +25,9 @@ class Gate1ControllerSupervisorParentTests(unittest.TestCase):
             decision_doc=Path("/tmp/decision"), budget_root=Path("/tmp/budget"),
             packet=Path("/tmp/packet"), runtime_receipt=Path("/tmp/runtime"),
             env_file=Path("/tmp/env"), tokenizer_cache=Path("/tmp/cache"),
+            catalog=Path("/tmp/catalog"),
+            expected_catalog_file_sha256="6" * 64,
+            catalog_commitment_id="reviewed-catalog",
             experiment_id="experiment", budget_cap_usd="200",
             cycle_id="gate1-parent-test",
             expected_packet_file_sha256="1" * 64,
@@ -37,8 +42,17 @@ class Gate1ControllerSupervisorParentTests(unittest.TestCase):
         command = _child_command(args, claim)
         self.assertEqual(command[1], str(Path(entry.__file__).resolve()))
         self.assertEqual(command.count("--supervisor-claim"), 1)
+        self.assertEqual(command.count("--release-tag"), 1)
+        self.assertEqual(command.count("--expected-source-sha256"), 1)
         self.assertIn(str(claim), command)
         self.assertNotIn("TINKER_API_KEY", " ".join(command))
+        self.assertIn("--catalog-commitment-id", command)
+        args.catalog = None
+        args.expected_catalog_file_sha256 = None
+        args.catalog_commitment_id = None
+        review_only_command = _child_command(args, claim)
+        self.assertNotIn("--catalog", review_only_command)
+        self.assertNotIn("--catalog-commitment-id", review_only_command)
 
     def test_canary_child_override_is_programmatic_and_exact(self):
         args = SimpleNamespace(
@@ -47,6 +61,9 @@ class Gate1ControllerSupervisorParentTests(unittest.TestCase):
             decision_doc=Path("/tmp/decision"), budget_root=Path("/tmp/budget"),
             packet=Path("/tmp/packet"), runtime_receipt=Path("/tmp/runtime"),
             env_file=Path("/tmp/env"), tokenizer_cache=Path("/tmp/cache"),
+            catalog=Path("/tmp/catalog"),
+            expected_catalog_file_sha256="6" * 64,
+            catalog_commitment_id="synthetic-canary",
             experiment_id="experiment", budget_cap_usd="200",
             cycle_id="gate1-parent-test",
             expected_packet_file_sha256="1" * 64,
@@ -132,6 +149,29 @@ class Gate1ControllerSupervisorParentTests(unittest.TestCase):
             popen.assert_not_called()
             self.assertFalse(supervisor_root.exists())
 
+    def test_synthetic_catalog_stops_before_parent_root_or_child_process(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            packet = base / "controller-input.json"
+            packet.write_text(json.dumps(expected_packet()))
+            catalog = base / "synthetic-catalog.json"
+            catalog.write_bytes(frozen_catalog_bytes())
+            args = SimpleNamespace(
+                cycle_id="gate1-synthetic-rejected",
+                packet=packet,
+                expected_packet_file_sha256=file_hash(packet),
+                expected_packet_canonical_sha256=digest(expected_packet()),
+                catalog=catalog,
+                expected_catalog_file_sha256=file_hash(catalog),
+                catalog_commitment_id=SYNTHETIC_CATALOG_COMMITMENT_ID,
+                supervisor_root=base / "supervisor",
+            )
+            with patch.object(parent_module.subprocess, "Popen") as popen:
+                with self.assertRaisesRegex(ValueError, "reviewed real Train"):
+                    run(args)
+            popen.assert_not_called()
+            self.assertFalse(args.supervisor_root.exists())
+
     def test_parent_progress_window_covers_full_provider_deadline(self):
         self.assertGreater(
             PROGRESS_TIMEOUT_SECONDS, entry.adapter.SAMPLE_TIMEOUT_SECONDS)
@@ -150,6 +190,9 @@ class Gate1ControllerSupervisorParentTests(unittest.TestCase):
                 runtime_receipt=root / "runtime.json",
                 env_file=root / "offline.env",
                 tokenizer_cache=root / "tokenizer-cache",
+                catalog=root / "catalog.json",
+                expected_catalog_file_sha256="6" * 64,
+                catalog_commitment_id="reviewed-catalog",
                 experiment_id="experiment", budget_cap_usd="200",
                 cycle_id="gate1-progress-window",
                 expected_packet_file_sha256=file_hash(packet),
@@ -175,6 +218,8 @@ class Gate1ControllerSupervisorParentTests(unittest.TestCase):
                 patch.object(
                     parent_module.supervisor, "supervise_started",
                     return_value={"passed": True}) as supervised,
+                patch.object(entry, "_reviewed_catalog",
+                             return_value=(b"{}", "test")),
             ):
                 self.assertEqual(run(args), {"passed": True})
             self.assertEqual(

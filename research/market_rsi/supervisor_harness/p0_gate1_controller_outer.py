@@ -13,13 +13,16 @@ import hashlib
 from pathlib import Path
 
 from glm_canary import MODEL, RATES, cost
-from market_rsi import digest, file_hash, fresh_json, identifier, load_json
+from market_rsi import canonical, digest, file_hash, fresh_json, identifier, load_json
 from paid_budget import PaidBudget, money
 from supervisor_harness import bounded_live_outer_runner_v3 as shared
 from supervisor_harness import global_state_gate
 from supervisor_harness import p0_gate1_controller_adapter as adapter
+from supervisor_harness import p0_data_gap_proposal as gap_proposal
 from supervisor_harness import protocol_source_release
+from supervisor_harness.p0_gate1_plan_compiler import compile_exact_request_plan
 from supervisor_harness.p0_gate1_research_contract import validate_and_compile
+from supervisor_harness.p0_gate1_trade_query import trusted_catalog
 
 
 OUTER_SCHEMA = "market_p0_gate1_controller_outer_v1"
@@ -38,8 +41,12 @@ REQUIRED_SOURCE_FILES = (
     "supervisor_harness/protocol_source_release.py",
     "supervisor_harness/build_p0_gate1_controller_packet.py",
     "supervisor_harness/p0_gate1_research_contract.py",
+    "supervisor_harness/p0_data_gap_proposal.py",
     "supervisor_harness/p0_gate1_controller_adapter.py",
     "supervisor_harness/p0_gate1_controller_outer.py",
+    "supervisor_harness/p0_gate1_plan_compiler.py",
+    "supervisor_harness/p0_gate1_sample_materializer.py",
+    "supervisor_harness/p0_gate1_trade_query.py",
 )
 
 
@@ -79,19 +86,51 @@ def _provider_receipt(root: Path, mode: str) -> dict | None:
     return observed
 
 
-def _adapter_success(root: Path, claims: Path, cycle_id: str,
+def _adapter_success(root: Path, outer_root: Path, claims: Path, cycle_id: str,
                      mode: str, packet: dict, result: dict,
-                     provider: dict) -> bool:
+                     provider: dict, catalog_json: bytes | None,
+                     catalog_commitment_id: str | None) -> bool:
     try:
-        task = load_json(root / "task.json")
         decision = load_json(root / "decision.json")
-        if task != validate_and_compile(decision, packet):
+        submission_kind = result.get("submission_kind")
+        if submission_kind == "bounded_plan":
+            task = load_json(root / "task.json")
+            if ((root / "proposal.json").exists()
+                    or task != validate_and_compile(decision, packet)):
+                return False
+            if task["requested_operations"] == ["fetch_fixed_public_sample"]:
+                if not isinstance(catalog_json, bytes) or not isinstance(
+                        catalog_commitment_id, str):
+                    return False
+                compiled = compile_exact_request_plan(
+                    decision, packet, catalog_json, catalog_commitment_id)
+                if (mode == "live_pinned"
+                        and compiled["claim_boundaries"]["synthetic_canary_only"]):
+                    return False
+                expected_bytes = (canonical(compiled) + "\n").encode("utf-8")
+                if ((outer_root / "compiled-plan.json").read_bytes()
+                        != expected_bytes):
+                    return False
+            elif (outer_root / "compiled-plan.json").exists():
+                return False
+        elif submission_kind == "non_executable_proposal":
+            proposal = load_json(root / "proposal.json")
+            if ((root / "task.json").exists()
+                    or (outer_root / "compiled-plan.json").exists()
+                    or proposal != gap_proposal.archive_proposal(
+                        adapter._gap(packet), decision)):
+                return False
+        else:
+            return False
+        if adapter._submitted_action(
+                (root / "raw-response.txt").read_text(encoding="utf-8"),
+                packet) != (submission_kind, decision):
             return False
         expected_names = {
             "claim.json", "input.json", "request.json", "encoded.json",
             "cost-preview.json", "raw-response.json", "raw-response.txt",
             "provider-receipt.json", "decision.json", "task.json",
-            "failure.json",
+            "proposal.json", "failure.json",
         }
         artifacts = result.get("artifact_sha256")
         if not isinstance(artifacts, dict) or set(artifacts) != expected_names:
@@ -108,7 +147,10 @@ def _adapter_success(root: Path, claims: Path, cycle_id: str,
             result.get("schema") == adapter.RESULT_SCHEMA
             and result.get("cycle_id") == cycle_id
             and result.get("execution_mode") == mode
-            and result.get("valid_plan_only_decision") is True
+            and result.get("valid_plan_only_decision")
+            is (submission_kind == "bounded_plan")
+            and result.get("valid_non_executable_proposal")
+            is (submission_kind == "non_executable_proposal")
             and result.get("completed_live_decision_pending_review")
             is (mode == "live_pinned")
             and result.get("failure_type") is None
@@ -125,7 +167,8 @@ def _adapter_success(root: Path, claims: Path, cycle_id: str,
             and result.get("dispatch_gate_called") is True
             and result.get("automatic_retry") is False
             and result.get("sample_count_max") == 1
-            and result.get("tools") == [adapter.SUBMIT_TOOL]
+            and result.get("tools") == [adapter.SUBMIT_TOOL,
+                                        adapter.PROPOSE_TOOL]
             and result.get("public_fetch_performed") is False
             and result.get("sealed_data_read") is False
             and result.get("formal_data_admitted") is False
@@ -157,7 +200,8 @@ def run_outer(*, root: Path, claim_root: Path,
               expected_head_sha256: str, expected_decision_sha256: str,
               prior_canary_sha256: str, release_tag: str,
               expected_source_sha256: str, expected_runtime: dict,
-              check_clear, backend) -> dict:
+              check_clear, backend, catalog_json: bytes | None = None,
+              catalog_commitment_id: str | None = None) -> dict:
     """Run one transaction; any failure consumes the permanent cycle ID."""
     identifier(cycle_id)
     shared._sha(prior_canary_sha256, "prior canary")
@@ -176,6 +220,14 @@ def run_outer(*, root: Path, claim_root: Path,
     if packet_sha != shared._sha(expected_packet_sha256, "Gate 1 packet"):
         raise ValueError("Gate 1 packet differs from frozen hash")
     mode = adapter._mode(backend)
+    if mode == "live_pinned":
+        if (catalog_json is None) != (catalog_commitment_id is None):
+            raise ValueError("Gate 1 catalog bytes and commitment must travel together")
+        if catalog_json is not None:
+            _, catalog_commitment = trusted_catalog(
+                catalog_json, catalog_commitment_id)
+            if catalog_commitment.get("evidence_scope") != "reviewed_real_train_catalog":
+                raise ValueError("reviewed real Train catalog required for live trade plan")
     shared._state_snapshot(
         state, cycle_id, expected_head_sha256, expected_decision_sha256)
     shared._budget_snapshot(
@@ -304,6 +356,28 @@ def run_outer(*, root: Path, claim_root: Path,
                 budget.cancel_before_dispatch(cycle_id)
             ledger_outcome = "cancelled_before_dispatch"
 
+        # Compile only after the provider is terminal in the authoritative
+        # ledger. This is plan construction, never a fetch. A future live
+        # caller needs reviewed real Train bytes and a published code-owned
+        # commitment; the current synthetic entry cannot pass live review.
+        stage = "exact_plan_compilation"
+        if (result.get("submission_kind") == "bounded_plan"
+                and (adapter_root / "task.json").is_file()
+                and isinstance(catalog_json, bytes)
+                and isinstance(catalog_commitment_id, str)):
+            try:
+                decision = load_json(adapter_root / "decision.json")
+                task = load_json(adapter_root / "task.json")
+                if task["requested_operations"] == ["fetch_fixed_public_sample"]:
+                    compiled = compile_exact_request_plan(
+                        decision, packet, catalog_json, catalog_commitment_id)
+                    if (mode != "live_pinned" or not compiled["claim_boundaries"]
+                            ["synthetic_canary_only"]):
+                        fresh_json(root / "compiled-plan.json", compiled)
+            except (KeyError, TypeError, ValueError):
+                # The independent review below rejects absent compilation.
+                pass
+
         boundary_unchanged = False
         try:
             boundary_unchanged = (
@@ -321,8 +395,8 @@ def run_outer(*, root: Path, claim_root: Path,
         adapter_passed = (
             dispatched and provider is not None and boundary_unchanged
             and _adapter_success(
-                adapter_root, claim_root, cycle_id, mode, packet,
-                result, provider)
+                adapter_root, root, claim_root, cycle_id, mode, packet,
+                result, provider, catalog_json, catalog_commitment_id)
         )
         review = {
             "schema": REVIEW_SCHEMA,
@@ -334,6 +408,12 @@ def run_outer(*, root: Path, claim_root: Path,
             "adapter_result_sha256": file_hash(adapter_root / "result.json"),
             "task_sha256": (file_hash(adapter_root / "task.json")
                             if (adapter_root / "task.json").is_file() else None),
+            "proposal_sha256": (file_hash(adapter_root / "proposal.json")
+                                if (adapter_root / "proposal.json").is_file()
+                                else None),
+            "compiled_plan_sha256": (
+                file_hash(root / "compiled-plan.json")
+                if (root / "compiled-plan.json").is_file() else None),
             "public_fetch_performed": False,
             "formal_data_admitted": False,
             "automatic_retry": False,
@@ -343,6 +423,8 @@ def run_outer(*, root: Path, claim_root: Path,
             "schema": RESULT_SCHEMA,
             "cycle_id": cycle_id,
             "passed": adapter_passed,
+            "submission_kind": (result.get("submission_kind")
+                                if adapter_passed else None),
             "execution_mode": mode,
             "publication_sha256": file_hash(root / "publication.json"),
             "runtime_sha256": file_hash(root / "runtime.json"),
@@ -351,6 +433,7 @@ def run_outer(*, root: Path, claim_root: Path,
             "preflight_sha256": file_hash(root / "preflight.json"),
             "review_sha256": file_hash(root / "review.json"),
             "adapter_result_sha256": file_hash(adapter_root / "result.json"),
+            "compiled_plan_sha256": review["compiled_plan_sha256"],
             "ledger_outcome": ledger_outcome,
             "supervisor_outcome": "passed" if adapter_passed else "failed",
             "provider_sample_max": 1,

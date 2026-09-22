@@ -1,16 +1,21 @@
+import copy
 import json
 from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
 
-from market_rsi import digest, file_hash
+from market_rsi import digest, file_hash, fresh_json
 from paid_budget import PaidBudget
 from supervisor_harness.global_state_gate import SupervisorGlobalState
 from supervisor_harness.p0_gate1_controller_adapter import (
-    OfflineGate1ProviderFake, SUBMIT_TOOL, expected_packet,
+    OfflineGate1ProviderFake, PROPOSE_TOOL, SUBMIT_TOOL, expected_packet,
 )
+from supervisor_harness import p0_gate1_controller_adapter as adapter
 from supervisor_harness.p0_gate1_controller_outer import run_outer
+from supervisor_harness.p0_gate1_plan_compiler import SYNTHETIC_CATALOG_COMMITMENT_ID
+from supervisor_harness.p0_gate1_research_contract import EXACT_TRADE_SAMPLE_RULE
+from supervisor_harness.test_p0_gate1_plan_compiler import synthetic_catalog
 
 
 def decision():
@@ -30,6 +35,18 @@ def decision():
     }
 
 
+def trade_decision():
+    value = decision()
+    value.update({
+        "fixed_sample_rule": EXACT_TRADE_SAMPLE_RULE,
+        "requested_operations": ["fetch_fixed_public_sample"],
+        "max_requests": 6,
+        "max_bytes": 2_000_000,
+        "max_minutes": 15,
+    })
+    return value
+
+
 def sampled(text, finish="stop"):
     return {
         "text": text,
@@ -44,15 +61,32 @@ def sampled(text, finish="stop"):
     }
 
 
-def submitted(value: dict) -> str:
+def submitted(value: dict, *, tool: str = SUBMIT_TOOL) -> str:
     arguments = []
     for key, item in value.items():
         encoded = item if isinstance(item, str) else json.dumps(
             item, separators=(",", ":"))
         arguments.append(
             f"<arg_key>{key}</arg_key><arg_value>{encoded}</arg_value>")
-    return (f"<tool_call>{SUBMIT_TOOL}" + "".join(arguments)
+    return (f"<tool_call>{tool}" + "".join(arguments)
             + "</tool_call>")
+
+
+def proposal():
+    return {
+        "proposal_id": "outer-novel-source-001",
+        "kind": "new_source",
+        "hypothesis": "A new public archive may contain missing real fills.",
+        "candidate_source": "An unregistered public archive",
+        "method": "Check rights and a fixed public sample.",
+        "fixed_sample_rule": "First game by public schedule order.",
+        "expected_evidence": "Version, rights, raw fill receipts or an exact miss.",
+        "stop_rule": "Stop after one sample or a rights failure.",
+        "max_requests": 3,
+        "max_bytes": 1000000,
+        "max_minutes": 10,
+        "max_provider_cost_usd": "0",
+    }
 
 
 class Gate1ControllerOuterTests(unittest.TestCase):
@@ -91,7 +125,7 @@ class Gate1ControllerOuterTests(unittest.TestCase):
             "model_authorship_proven": False,
         }
 
-    def call(self, backend, cycle="gate1-outer-test-001"):
+    def call(self, backend, cycle="gate1-outer-test-001", **catalog_binding):
         with (patch("supervisor_harness.p0_gate1_controller_outer._publication",
                     return_value=self.publication),
               patch("supervisor_harness.p0_gate1_controller_outer.shared._runtime",
@@ -121,7 +155,18 @@ class Gate1ControllerOuterTests(unittest.TestCase):
                     "matching_container_ids": [],
                 },
                 backend=backend,
+                **catalog_binding,
             )
+
+    def call_with_offline_catalog_ready_packet(
+            self, backend, cycle="gate1-outer-test-001", **catalog_binding):
+        # Exercise the future catalog-ready branch only with a test-scoped
+        # packet. The production frozen packet continues to hide trade.
+        self.packet = copy.deepcopy(expected_packet())
+        self.packet["current_execution_boundary"][
+            "reviewed_real_train_catalog_available"] = True
+        with patch.object(adapter, "expected_packet", return_value=self.packet):
+            return self.call(backend, cycle=cycle, **catalog_binding)
 
     def test_valid_response_settles_metered_and_closes_passed(self):
         result = self.call(OfflineGate1ProviderFake(
@@ -132,6 +177,161 @@ class Gate1ControllerOuterTests(unittest.TestCase):
         state = self.state.snapshot()
         self.assertIsNone(state["active_cycle"])
         self.assertNotEqual(state["last_review_sha256"], "0" * 64)
+
+    def test_hidden_trade_plan_fails_at_adapter_without_catalog(self):
+        with self.assertRaisesRegex(RuntimeError, "failed review"):
+            self.call(OfflineGate1ProviderFake(
+                sampled(submitted(trade_decision()))))
+        adapter_root = self.parent / "gate1-outer-test-001/adapter/gate1-outer-test-001"
+        self.assertFalse((adapter_root / "task.json").exists())
+        self.assertFalse((adapter_root / "exact-request-manifest.json").exists())
+        self.assertEqual(self.budget.snapshot()["jobs"]["gate1-outer-test-001"]
+                         ["state"], "metered_terminal")
+        self.assertIsNone(self.state.snapshot()["active_cycle"])
+
+    def test_offline_catalog_ready_trade_plan_compiles_exact_manifest(self):
+        result = self.call_with_offline_catalog_ready_packet(OfflineGate1ProviderFake(
+            sampled(submitted(trade_decision()))),
+            catalog_json=synthetic_catalog(),
+            catalog_commitment_id=SYNTHETIC_CATALOG_COMMITMENT_ID)
+        self.assertTrue(result["passed"])
+        path = self.parent / "gate1-outer-test-001/compiled-plan.json"
+        self.assertEqual(result["compiled_plan_sha256"], file_hash(path))
+        bundle = json.loads(path.read_text())
+        self.assertEqual(bundle["exact_request_manifest"]["request_count"], 6)
+        self.assertTrue(bundle["claim_boundaries"]["synthetic_canary_only"])
+        self.assertFalse(bundle["exact_request_manifest"]["execution_policy"]
+                         ["network_execution_authorized"])
+        self.assertEqual(self.budget.snapshot()["jobs"]["gate1-outer-test-001"]
+                         ["state"], "metered_terminal")
+        self.assertIsNone(self.state.snapshot()["active_cycle"])
+
+    def test_trade_plan_rejects_changed_or_unknown_catalog(self):
+        for cycle, catalog, commitment in (
+                ("gate1-bad-catalog-001", synthetic_catalog() + b" ",
+                 SYNTHETIC_CATALOG_COMMITMENT_ID),
+                ("gate1-bad-catalog-002", synthetic_catalog(),
+                 "unreviewed-real-catalog")):
+            with self.subTest(cycle=cycle):
+                self.head = self.state.snapshot()["head_sha256"]
+                with self.assertRaisesRegex(RuntimeError, "failed review"):
+                    self.call_with_offline_catalog_ready_packet(OfflineGate1ProviderFake(
+                        sampled(submitted(trade_decision()))), cycle=cycle,
+                        catalog_json=catalog,
+                        catalog_commitment_id=commitment)
+                self.assertFalse((self.parent / cycle / "compiled-plan.json").exists())
+                self.assertEqual(self.budget.snapshot()["jobs"][cycle]["state"],
+                                 "metered_terminal")
+
+    def test_synthetic_catalog_cannot_pass_live_review(self):
+        # This patch simulates the live mode for the review rule only; it does
+        # not contact a provider and cannot be used as live admission proof.
+        with patch.object(adapter, "_mode", return_value="live_pinned"):
+            with self.assertRaisesRegex(ValueError, "reviewed real Train catalog"):
+                self.call_with_offline_catalog_ready_packet(OfflineGate1ProviderFake(
+                    sampled(submitted(trade_decision()))),
+                    catalog_json=synthetic_catalog(),
+                    catalog_commitment_id=SYNTHETIC_CATALOG_COMMITMENT_ID)
+        self.assertFalse((self.parent / "gate1-outer-test-001"
+                          / "compiled-plan.json").exists())
+        self.assertEqual(self.budget.snapshot()["jobs"], {})
+        self.assertIsNone(self.state.snapshot()["active_cycle"])
+
+    def test_simulated_live_document_or_proposal_can_finish_without_catalog(self):
+        # A missing trade catalog cannot block the data-investigation lane.
+        # The fake is patched to exercise live-mode review only: no provider.
+        for cycle, answer, tool in (
+                ("gate1-no-catalog-doc-001", decision(), SUBMIT_TOOL),
+                ("gate1-no-catalog-proposal-001", proposal(), PROPOSE_TOOL)):
+            with self.subTest(cycle=cycle), patch.object(
+                    adapter, "_mode", return_value="live_pinned"):
+                self.head = self.state.snapshot()["head_sha256"]
+                result = self.call(OfflineGate1ProviderFake(
+                    sampled(submitted(answer, tool=tool))), cycle=cycle)
+                self.assertTrue(result["passed"])
+                self.assertFalse((self.parent / cycle / "compiled-plan.json").exists())
+                self.assertEqual(self.budget.snapshot()["jobs"][cycle]["state"],
+                                 "metered_terminal")
+
+    def test_simulated_live_trade_without_catalog_fails_terminal_review(self):
+        with patch.object(adapter, "_mode", return_value="live_pinned"):
+            with self.assertRaisesRegex(RuntimeError, "failed review"):
+                self.call(OfflineGate1ProviderFake(
+                    sampled(submitted(trade_decision()))))
+        self.assertEqual(self.budget.snapshot()["jobs"]["gate1-outer-test-001"]
+                         ["state"], "metered_terminal")
+        self.assertFalse((self.parent / "gate1-outer-test-001"
+                          / "compiled-plan.json").exists())
+
+    def test_compiled_plan_byte_tamper_fails_outer_review(self):
+        tampered = []
+
+        def write_then_tamper(path, value):
+            fresh_json(path, value)
+            if Path(path).name == "compiled-plan.json":
+                Path(path).write_text(Path(path).read_text() + " ")
+                tampered.append(Path(path))
+
+        with patch("supervisor_harness.p0_gate1_controller_outer.fresh_json",
+                   side_effect=write_then_tamper):
+            with self.assertRaisesRegex(RuntimeError, "failed review"):
+                self.call_with_offline_catalog_ready_packet(OfflineGate1ProviderFake(
+                    sampled(submitted(trade_decision()))),
+                    catalog_json=synthetic_catalog(),
+                    catalog_commitment_id=SYNTHETIC_CATALOG_COMMITMENT_ID)
+        self.assertEqual(len(tampered), 1)
+        self.assertEqual(self.budget.snapshot()["jobs"]["gate1-outer-test-001"]
+                         ["state"], "metered_terminal")
+
+    def test_novel_proposal_settles_without_granting_a_task(self):
+        result = self.call(OfflineGate1ProviderFake(
+            sampled(submitted(proposal(), tool=PROPOSE_TOOL))))
+        self.assertTrue(result["passed"])
+        self.assertEqual(result["submission_kind"], "non_executable_proposal")
+        root = self.parent / "gate1-outer-test-001"
+        adapter_root = root / "adapter/gate1-outer-test-001"
+        self.assertTrue((adapter_root / "proposal.json").is_file())
+        self.assertFalse((adapter_root / "task.json").exists())
+        self.assertEqual(self.budget.snapshot()["jobs"]["gate1-outer-test-001"]
+                         ["state"], "metered_terminal")
+        self.assertIsNone(self.state.snapshot()["active_cycle"])
+
+    def test_proposal_cannot_gain_a_task_after_adapter_returns(self):
+        original = adapter.run
+
+        def inject_task(**kwargs):
+            result = original(**kwargs)
+            (kwargs["root"] / "task.json").write_text('{"executable":true}\n')
+            return result
+
+        with patch("supervisor_harness.p0_gate1_controller_outer.adapter.run",
+                   side_effect=inject_task):
+            with self.assertRaisesRegex(RuntimeError, "failed review"):
+                self.call(OfflineGate1ProviderFake(
+                    sampled(submitted(proposal(), tool=PROPOSE_TOOL))))
+        self.assertEqual(self.budget.snapshot()["jobs"]["gate1-outer-test-001"]
+                         ["state"], "metered_terminal")
+        self.assertIsNone(self.state.snapshot()["active_cycle"])
+
+    def test_modified_proposal_archive_fails_outer_review(self):
+        original = adapter.run
+
+        def alter_proposal(**kwargs):
+            result = original(**kwargs)
+            path = kwargs["root"] / "proposal.json"
+            value = json.loads(path.read_text())
+            value["network_authorized"] = True
+            path.write_text(json.dumps(value))
+            return result
+
+        with patch("supervisor_harness.p0_gate1_controller_outer.adapter.run",
+                   side_effect=alter_proposal):
+            with self.assertRaisesRegex(RuntimeError, "failed review"):
+                self.call(OfflineGate1ProviderFake(
+                    sampled(submitted(proposal(), tool=PROPOSE_TOOL))))
+        self.assertEqual(self.budget.snapshot()["jobs"]["gate1-outer-test-001"]
+                         ["state"], "metered_terminal")
+        self.assertIsNone(self.state.snapshot()["active_cycle"])
 
     def test_reused_adapter_claim_fails_before_global_or_budget_claim(self):
         (self.claims / "gate1-outer-test-001.json").write_text("{}\n")

@@ -8,7 +8,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-from pathlib import Path
+import re
+from pathlib import Path, PurePosixPath
 
 
 REQUIRED_STEP = ("id", "owner", "action", "depends_on", "expected_artifact",
@@ -18,6 +19,62 @@ REQUIRED_STEP = ("id", "owner", "action", "depends_on", "expected_artifact",
 def _require_text(value: object, label: str) -> None:
     if not isinstance(value, str) or not value.strip():
         raise ValueError(f"missing {label}")
+
+
+def _check_parallel_work(plan: dict, by_id: dict[str, dict]) -> int:
+    """Fail before dispatch if a proposed parallel wave cannot merge cleanly."""
+    wave = plan.get("parallel_work")
+    if wave is None:
+        return 0
+    if not isinstance(wave, dict) or set(wave) != {
+            "base_source_sha256", "worker_step_ids", "integration_step_id",
+            "review_step_id"}:
+        raise ValueError("parallel work contract is incomplete")
+    if not isinstance(wave["base_source_sha256"], str) or not re.fullmatch(
+            r"[0-9a-f]{64}", wave["base_source_sha256"]):
+        raise ValueError("parallel work needs a pinned source hash")
+    workers = wave["worker_step_ids"]
+    if (not isinstance(workers, list) or not 2 <= len(workers) <= 3
+            or any(not isinstance(item, str) for item in workers)
+            or len(set(workers)) != len(workers)):
+        raise ValueError("parallel work needs two or three distinct workers")
+    integration_id = wave["integration_step_id"]
+    review_id = wave["review_step_id"]
+    if (not isinstance(integration_id, str) or not isinstance(review_id, str)
+            or len(set(workers + [integration_id, review_id])) != len(workers) + 2
+            or any(item not in by_id for item in workers + [integration_id, review_id])):
+        raise ValueError("parallel work references invalid step IDs")
+    integration, review = by_id[integration_id], by_id[review_id]
+    worker_owners = {by_id[item]["owner"] for item in workers}
+    if (integration["owner"] != plan["supervisor_owner"]
+            or review["owner"] == integration["owner"]
+            or len(worker_owners) != len(workers)
+            or review["owner"] in worker_owners
+            or not set(workers).issubset(integration["depends_on"])
+            or integration_id not in review["depends_on"]):
+        raise ValueError("parallel work must merge before independent review")
+    seen_paths: set[str] = set()
+    for worker_id in workers:
+        step = by_id[worker_id]
+        if any(other in step["depends_on"] for other in workers):
+            raise ValueError("parallel workers cannot depend on each other")
+        paths = step.get("write_paths")
+        if not isinstance(paths, list) or not paths:
+            raise ValueError(f"{worker_id}: exact write paths required")
+        for raw in paths:
+            if not isinstance(raw, str) or not raw or any(
+                    char in raw for char in "*?[]\\\0"):
+                raise ValueError(f"{worker_id}: invalid write path")
+            path = PurePosixPath(raw)
+            if (path.is_absolute() or str(path) != raw or raw == "."
+                    or ".." in path.parts):
+                raise ValueError(f"{worker_id}: write path must be repo-relative")
+            if raw in seen_paths:
+                raise ValueError(f"parallel write path collision: {raw}")
+            seen_paths.add(raw)
+    if review.get("write_paths", []) != []:
+        raise ValueError("parallel review must be read-only")
+    return len(workers)
 
 
 def check_plan(plan_path: Path, *, phase: str) -> dict:
@@ -70,6 +127,7 @@ def check_plan(plan_path: Path, *, phase: str) -> dict:
 
     for step_id in ids:
         visit(step_id)
+    parallel_workers = _check_parallel_work(plan, by_id)
     if phase == "resolve":
         for step in steps:
             result = step.get("result")
@@ -90,7 +148,8 @@ def check_plan(plan_path: Path, *, phase: str) -> dict:
             raise ValueError("independent whole-bottleneck resolution check required")
         _require_text(resolution.get("observed"), "resolution.observed")
         _require_text(resolution.get("reviewer"), "resolution.reviewer")
-    return {"id": plan["id"], "phase": phase, "steps": len(steps), "passed": True}
+    return {"id": plan["id"], "phase": phase, "steps": len(steps),
+            "parallel_workers": parallel_workers, "passed": True}
 
 
 def check_state(state_path: Path, *, repo_root: Path) -> dict:

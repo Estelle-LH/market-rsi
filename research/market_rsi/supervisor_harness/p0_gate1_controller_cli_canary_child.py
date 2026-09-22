@@ -8,6 +8,7 @@ production CLI and never reads a real provider credential.
 from __future__ import annotations
 
 import json
+from contextlib import nullcontext
 from unittest.mock import patch
 
 from glm_canary import HF_MODEL
@@ -88,6 +89,16 @@ def run(args) -> dict:
         },
     })
     runtime = live_entry.shared_entry._regular_json(args.runtime_receipt)
+    # Synthetic fixture is accepted only inside this offline child. The
+    # production entry continues to require a reviewed real commitment.
+    catalog_override = nullcontext()
+    if args.catalog is not None:
+        catalog_json = args.catalog.read_bytes()
+        if live_entry.file_hash(args.catalog) != args.expected_catalog_file_sha256:
+            raise ValueError("synthetic canary catalog differs from frozen hash")
+        catalog_override = patch.object(
+            live_entry, "_reviewed_catalog", return_value=(
+                catalog_json, args.catalog_commitment_id))
     with (
         patch.object(live_entry.outer, "_publication",
                      return_value=publication),
@@ -95,6 +106,7 @@ def run(args) -> dict:
                      return_value=runtime),
         patch.object(live_entry, "TinkerGLMBackend",
                      return_value=backend),
+        catalog_override,
     ):
         result = live_entry.run(args)
     if (backend.encode_calls != 1 or backend.sample_calls != 1

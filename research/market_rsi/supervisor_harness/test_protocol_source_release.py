@@ -47,6 +47,11 @@ class ProtocolPublicationTests(unittest.TestCase):
             "supervisor_harness/run_p0_gate1_controller_outer_canary.py",
             "supervisor_harness/p0_gate1_public_fetch.py",
             "supervisor_harness/p0_gate1_watched_fetch.py",
+            "supervisor_harness/p0_gate1_sample_materializer.py",
+            "supervisor_harness/p0_gate1_trade_query.py",
+            "supervisor_harness/p0_gate1_plan_compiler.py",
+            "supervisor_harness/p0_gate1_executable_plan_canary_fixtures.py",
+            "supervisor_harness/run_p0_gate1_executable_plan_canary.py",
         }
         self.assertTrue(required.issubset(release.PROTOCOL_FILES))
 
