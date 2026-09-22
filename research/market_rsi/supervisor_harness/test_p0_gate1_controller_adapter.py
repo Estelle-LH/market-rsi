@@ -17,17 +17,10 @@ from supervisor_harness.p0_gate1_research_contract import DECISION_SCHEMA
 
 def decision():
     return {
-        "investigation_id": "gate1-controller-001",
+        "choice_id": "pm_trades_docs_one",
         "question_id": "2025_whole_season_trade_access",
-        "source_id": "polymarket_official_trades",
         "hypothesis": "The official interface documents historical market trade access.",
-        "fixed_sample_rule": "Inspect the one frozen official documentation page.",
-        "requested_operations": ["inspect_official_documentation"],
         "expected_evidence": "A bounded page hash and documented interface fields.",
-        "max_requests": 1,
-        "max_bytes": 100000,
-        "max_minutes": 10,
-        "max_provider_cost_usd": "0",
         "stop_rule": "Stop after one response or any redirect, error, timeout, or rights uncertainty.",
     }
 
@@ -77,37 +70,31 @@ def proposal():
 
 class Gate1ControllerAdapterTests(unittest.TestCase):
     def test_output_cap_fits_frozen_packet_under_single_sample_gate(self):
-        self.assertEqual(MAX_OUTPUT_TOKENS, 2944)
-        self.assertLessEqual(cost(2819, MAX_OUTPUT_TOKENS),
+        self.assertEqual(MAX_OUTPUT_TOKENS, 2750)
+        self.assertLessEqual(cost(3310, MAX_OUTPUT_TOKENS),
                              Decimal("0.05"))
 
     def test_next_input_preserves_prior_choice_and_exact_available_handlers(self):
         packet = expected_packet()
         feedback = packet["prior_controller_feedback"]
         self.assertEqual(feedback["attempt_id"],
-                         "market-rsi-gate1-controller-20260922-01")
+                         "market-rsi-gate1-controller-20260922-02")
         self.assertEqual(feedback["selected_source_id"],
                          "polymarket_official_trades")
         self.assertEqual(feedback["outcome"],
                          "invalid_submission_no_task_or_fetch")
         self.assertEqual(feedback["metered_cost_usd_not_invoice"],
-                         "0.01666737")
+                         "0.01790424")
         self.assertEqual(feedback["raw_response_sha256"],
-                         "a6155faf4d19940415efac470e75f9c7823c9cafd5cc0f5883e45da9f3d7f27c")
+                         "b34b169ba79b1ecebb55c127c350ef568a982c518f0c4454459bc1c357bcb4bb")
         from supervisor_harness.p0_gate1_controller_adapter import _submission_parameters
-        choices = _submission_parameters(packet)["properties"]["fixed_sample_rule"]["enum"]
-        self.assertIn("Inspect the one frozen official documentation page.", choices)
-        advertised = {
-            rule
-            for source in packet["current_execution_boundary"][
-                "executable_documentation_choices"]
-            for rule in source["fixed_sample_rule_options"]
-        }
-        self.assertEqual(set(choices), advertised)
-        self.assertNotIn(
-            "Inspect the single frozen official documentation page only: extra words.",
-            choices,
-        )
+        choices = _submission_parameters(packet)["properties"]["choice_id"]["enum"]
+        self.assertEqual(set(choices), {
+            "pm_market_docs_one", "pm_market_docs_single",
+            "pm_trades_docs_one", "pm_trades_docs_single",
+            "kalshi_history_docs_one", "kalshi_history_docs_single",
+            "nflverse_pbp_release_one", "nflverse_pbp_release_single"})
+        self.assertNotIn("fetch_fixed_public_sample", choices)
         capabilities = _available_capabilities(packet)
         self.assertTrue(capabilities)
         self.assertTrue(all(item["operation"] ==
@@ -115,8 +102,9 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
                             for item in capabilities))
         trade_docs = [item for item in capabilities if item["source_id"] ==
                       "polymarket_official_trades"]
-        self.assertEqual(trade_docs[0]["required_bounds"], {
-            "max_requests": 1, "max_provider_cost_usd": "0"})
+        self.assertEqual(trade_docs[0]["derived_bounds"], {
+            "max_requests": 1, "max_bytes": 1000000,
+            "max_minutes": 5, "max_provider_cost_usd": "0"})
         turn = request_turn(packet)
         payload = json.loads(turn["messages"][1]["content"])
         self.assertEqual(payload["packet"]["prior_controller_feedback"],
@@ -147,7 +135,19 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
         self.assertEqual(backend.sample_calls, 1)
         task = json.loads((root / "task.json").read_text())
         recorded = json.loads((root / "decision.json").read_text())
+        choice = json.loads((root / "submission.json").read_text())
+        provenance = json.loads((root / "field-provenance.json").read_text())
         self.assertEqual(recorded["schema"], DECISION_SCHEMA)
+        self.assertEqual(recorded["investigation_id"], "gate1-controller-test-001")
+        self.assertEqual(recorded["source_id"], "polymarket_official_trades")
+        self.assertEqual(recorded["max_requests"], 1)
+        self.assertEqual(recorded["max_bytes"], 1000000)
+        self.assertEqual(recorded["max_minutes"], 5)
+        self.assertEqual(choice, decision())
+        self.assertEqual(provenance["bounded_choice_id"], "pm_trades_docs_one")
+        self.assertEqual(task["field_provenance"], provenance)
+        self.assertEqual(task["field_authority"]["trusted_derived_from_claim"],
+                         ["investigation_id"])
         self.assertTrue(task["execution_boundary"]["plan_only"])
         self.assertFalse(task["execution_boundary"]["network_fetch_authorized"])
         self.assertEqual((root / "raw-response.txt").read_text(), raw)
@@ -197,6 +197,53 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
         self.assertFalse(result["valid_plan_only_decision"])
         self.assertEqual(backend.sample_calls, 1)
         self.assertFalse((root / "task.json").exists())
+
+    def test_unknown_choice_and_choice_source_mismatch_fail_closed(self):
+        for change in ({"choice_id": "unknown_choice"},
+                       {"source_id": "kalshi_official_historical_data"},
+                       {"requested_operations": ["query_public_metadata"]},
+                       {"max_bytes": 5000000},
+                       {"investigation_id": "model-selected-id"}):
+            with self.subTest(change=change):
+                value = decision()
+                value.update(change)
+                result, root, _claims, backend = self.call(
+                    sampled(submitted(value)))
+                self.assertFalse(result["valid_plan_only_decision"])
+                self.assertEqual(backend.sample_calls, 1)
+                self.assertFalse((root / "task.json").exists())
+
+    def test_packet_choice_mapping_mutation_fails_before_claim(self):
+        changed = copy.deepcopy(expected_packet())
+        changed["trusted_bounded_choices"][1]["source_id"] = (
+            "kalshi_official_historical_data")
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        parent = Path(temporary.name)
+        claims = parent / "claims"
+        claims.mkdir()
+        backend = OfflineGate1ProviderFake(sampled(submitted(decision())))
+        with self.assertRaisesRegex(ValueError, "exact frozen packet"):
+            run(root=parent / "gate1-choice-mismatch", claim_root=claims,
+                cycle_id="gate1-choice-mismatch", packet=changed,
+                backend=backend)
+        self.assertEqual(backend.sample_calls, 0)
+        self.assertEqual(list(claims.iterdir()), [])
+
+    def test_legacy_verbose_submission_is_not_relabelled(self):
+        legacy = decision()
+        legacy.update({
+            "investigation_id": "historical-01",
+            "source_id": "polymarket_official_trades",
+            "fixed_sample_rule": "Inspect the one frozen official documentation page.",
+            "requested_operations": ["inspect_official_documentation"],
+            "max_requests": 1, "max_bytes": 100000,
+            "max_minutes": 10, "max_provider_cost_usd": "0",
+        })
+        result, root, _claims, backend = self.call(sampled(submitted(legacy)))
+        self.assertFalse(result["valid_plan_only_decision"])
+        self.assertEqual(backend.sample_calls, 1)
+        self.assertFalse((root / "decision.json").exists())
 
     def test_truncated_response_is_terminal_failure(self):
         result, root, _claims, backend = self.call(
@@ -318,18 +365,17 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
         self.assertNotIn("rights_check", parameters["required"])
         self.assertNotIn("schema", parameters["properties"])
         self.assertNotIn("schema", parameters["required"])
-        self.assertNotIn(
-            "fetch_fixed_public_sample",
-            parameters["properties"]["requested_operations"]["items"]["enum"])
+        self.assertNotIn("source_id", parameters["properties"])
+        self.assertNotIn("requested_operations", parameters["properties"])
+        self.assertNotIn("max_bytes", parameters["properties"])
+        self.assertNotIn("investigation_id", parameters["properties"])
         self.assertIn("trusted_rights_policy", expected_packet())
 
     def test_hidden_trade_operation_fails_at_adapter_boundary(self):
         value = copy.deepcopy(VALID_DECISION)
         value.pop("schema")
-        self.assertNotIn(
-            "fetch_fixed_public_sample",
-            _submission_parameters(expected_packet())["properties"]
-            ["requested_operations"]["items"]["enum"])
+        self.assertNotIn("fetch_fixed_public_sample", [
+            item["operation"] for item in expected_packet()["trusted_bounded_choices"]])
         result, root, _claims, backend = self.call(sampled(submitted(value)))
         self.assertEqual(backend.sample_calls, 1)
         self.assertFalse(result["valid_plan_only_decision"])

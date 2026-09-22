@@ -20,17 +20,10 @@ from supervisor_harness.test_p0_gate1_plan_compiler import synthetic_catalog
 
 def decision():
     return {
-        "investigation_id": "gate1-outer-001",
+        "choice_id": "pm_trades_docs_one",
         "question_id": "2025_whole_season_trade_access",
-        "source_id": "polymarket_official_trades",
         "hypothesis": "The official interface documents historical market trade access.",
-        "fixed_sample_rule": "Inspect the one frozen official documentation page.",
-        "requested_operations": ["inspect_official_documentation"],
         "expected_evidence": "A bounded page hash and documented interface fields.",
-        "max_requests": 1,
-        "max_bytes": 100000,
-        "max_minutes": 10,
-        "max_provider_cost_usd": "0",
         "stop_rule": "Stop after one response or any redirect, error, timeout, or rights uncertainty.",
     }
 
@@ -38,6 +31,7 @@ def decision():
 def trade_decision():
     value = decision()
     value.update({
+        "source_id": "polymarket_official_trades",
         "fixed_sample_rule": EXACT_TRADE_SAMPLE_RULE,
         "requested_operations": ["fetch_fixed_public_sample"],
         "max_requests": 6,
@@ -189,19 +183,14 @@ class Gate1ControllerOuterTests(unittest.TestCase):
                          ["state"], "metered_terminal")
         self.assertIsNone(self.state.snapshot()["active_cycle"])
 
-    def test_offline_catalog_ready_trade_plan_compiles_exact_manifest(self):
-        result = self.call_with_offline_catalog_ready_packet(OfflineGate1ProviderFake(
-            sampled(submitted(trade_decision()))),
-            catalog_json=synthetic_catalog(),
-            catalog_commitment_id=SYNTHETIC_CATALOG_COMMITMENT_ID)
-        self.assertTrue(result["passed"])
-        path = self.parent / "gate1-outer-test-001/compiled-plan.json"
-        self.assertEqual(result["compiled_plan_sha256"], file_hash(path))
-        bundle = json.loads(path.read_text())
-        self.assertEqual(bundle["exact_request_manifest"]["request_count"], 6)
-        self.assertTrue(bundle["claim_boundaries"]["synthetic_canary_only"])
-        self.assertFalse(bundle["exact_request_manifest"]["execution_policy"]
-                         ["network_execution_authorized"])
+    def test_catalog_flag_cannot_expose_unoffered_trade_choice(self):
+        with self.assertRaisesRegex(RuntimeError, "failed review"):
+            self.call_with_offline_catalog_ready_packet(OfflineGate1ProviderFake(
+                sampled(submitted(trade_decision()))),
+                catalog_json=synthetic_catalog(),
+                catalog_commitment_id=SYNTHETIC_CATALOG_COMMITMENT_ID)
+        self.assertFalse((self.parent / "gate1-outer-test-001"
+                          / "compiled-plan.json").exists())
         self.assertEqual(self.budget.snapshot()["jobs"]["gate1-outer-test-001"]
                          ["state"], "metered_terminal")
         self.assertIsNone(self.state.snapshot()["active_cycle"])
@@ -263,25 +252,46 @@ class Gate1ControllerOuterTests(unittest.TestCase):
         self.assertFalse((self.parent / "gate1-outer-test-001"
                           / "compiled-plan.json").exists())
 
-    def test_compiled_plan_byte_tamper_fails_outer_review(self):
-        tampered = []
+    def test_expanded_decision_byte_tamper_fails_outer_review(self):
+        original = adapter.run
 
-        def write_then_tamper(path, value):
-            fresh_json(path, value)
-            if Path(path).name == "compiled-plan.json":
-                Path(path).write_text(Path(path).read_text() + " ")
-                tampered.append(Path(path))
+        def alter(**kwargs):
+            result = original(**kwargs)
+            path = kwargs["root"] / "decision.json"
+            path.write_text(path.read_text() + " ")
+            return result
 
-        with patch("supervisor_harness.p0_gate1_controller_outer.fresh_json",
-                   side_effect=write_then_tamper):
+        with patch("supervisor_harness.p0_gate1_controller_outer.adapter.run",
+                   side_effect=alter):
             with self.assertRaisesRegex(RuntimeError, "failed review"):
-                self.call_with_offline_catalog_ready_packet(OfflineGate1ProviderFake(
-                    sampled(submitted(trade_decision()))),
-                    catalog_json=synthetic_catalog(),
-                    catalog_commitment_id=SYNTHETIC_CATALOG_COMMITMENT_ID)
-        self.assertEqual(len(tampered), 1)
+                self.call(OfflineGate1ProviderFake(
+                    sampled(submitted(decision()))))
         self.assertEqual(self.budget.snapshot()["jobs"]["gate1-outer-test-001"]
                          ["state"], "metered_terminal")
+
+    def test_changed_submission_or_provenance_fails_outer_replay(self):
+        original = adapter.run
+        for cycle, name, field, replacement in (
+                ("gate1-tampered-submission-001", "submission.json",
+                 "choice_id", "pm_market_docs_one"),
+                ("gate1-tampered-provenance-001", "field-provenance.json",
+                 "run_claim_id", "gate1-other-claim-001")):
+            def alter(**kwargs):
+                result = original(**kwargs)
+                path = kwargs["root"] / name
+                value = json.loads(path.read_text())
+                value[field] = replacement
+                path.write_text(json.dumps(value))
+                return result
+            with self.subTest(cycle=cycle), patch(
+                    "supervisor_harness.p0_gate1_controller_outer.adapter.run",
+                    side_effect=alter):
+                self.head = self.state.snapshot()["head_sha256"]
+                with self.assertRaisesRegex(RuntimeError, "failed review"):
+                    self.call(OfflineGate1ProviderFake(
+                        sampled(submitted(decision()))), cycle=cycle)
+                self.assertEqual(self.budget.snapshot()["jobs"][cycle]["state"],
+                                 "metered_terminal")
 
     def test_novel_proposal_settles_without_granting_a_task(self):
         result = self.call(OfflineGate1ProviderFake(

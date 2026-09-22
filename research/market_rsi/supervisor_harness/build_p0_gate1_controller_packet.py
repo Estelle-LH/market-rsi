@@ -15,7 +15,7 @@ from pathlib import Path
 from market_rsi import digest
 
 
-SCHEMA = "market_p0_gate1_controller_packet_v3"
+SCHEMA = "market_p0_gate1_controller_packet_v4"
 RIGHTS_POLICY = {
     "policy_id": "official_public_research_only_v1",
     "requirements": [
@@ -80,10 +80,34 @@ EXECUTABLE_DOCUMENTATION_CHOICES = [
     }
     for source in SOURCE_REGISTRY
 ]
+SHORT_BOUNDED_CHOICES = [
+    {
+        "choice_id": choice_id,
+        "source_id": source_id,
+        "operation": "inspect_official_documentation",
+        "fixed_sample_rule": rule,
+        "derived_bounds": {
+            "max_requests": 1,
+            "max_bytes": 1_000_000,
+            "max_minutes": 5,
+            "max_provider_cost_usd": "0",
+        },
+    }
+    for choice_id, source_id, rule in (
+        ("pm_market_docs_one", "polymarket_official_market_data", DOCUMENT_SAMPLE_RULES[0]),
+        ("pm_market_docs_single", "polymarket_official_market_data", DOCUMENT_SAMPLE_RULES[1]),
+        ("pm_trades_docs_one", "polymarket_official_trades", DOCUMENT_SAMPLE_RULES[0]),
+        ("pm_trades_docs_single", "polymarket_official_trades", DOCUMENT_SAMPLE_RULES[1]),
+        ("kalshi_history_docs_one", "kalshi_official_historical_data", DOCUMENT_SAMPLE_RULES[0]),
+        ("kalshi_history_docs_single", "kalshi_official_historical_data", DOCUMENT_SAMPLE_RULES[1]),
+        ("nflverse_pbp_release_one", "nflverse_official_pbp_releases", RELEASE_SAMPLE_RULES[0]),
+        ("nflverse_pbp_release_single", "nflverse_official_pbp_releases", RELEASE_SAMPLE_RULES[1]),
+    )
+]
 PRIOR_CONTROLLER_FEEDBACK = {
-    "attempt_id": "market-rsi-gate1-controller-20260922-01",
+    "attempt_id": "market-rsi-gate1-controller-20260922-02",
     "raw_response_sha256": (
-        "a6155faf4d19940415efac470e75f9c7823c9cafd5cc0f5883e45da9f3d7f27c"
+        "b34b169ba79b1ecebb55c127c350ef568a982c518f0c4454459bc1c357bcb4bb"
     ),
     "reported_model": "zai-org/GLM-5.3:peft:262144",
     "selected_question_id": "2025_whole_season_trade_access",
@@ -92,22 +116,20 @@ PRIOR_CONTROLLER_FEEDBACK = {
     "requested_max_requests": 1,
     "outcome": "invalid_submission_no_task_or_fetch",
     "observed_failure": (
-        "The model paraphrased fixed_sample_rule even though the same request "
-        "showed the exact executable strings. The trusted compiler rejected "
-        "the paraphrase; no task or fetch occurred."
+        "The model emitted malformed <arg_key>/<arg_value> tool tags. The "
+        "then-current adapter rejected the parsed field set before any task or "
+        "fetch. A later strict parser now rejects those raw tags."
     ),
     "additional_contract_mismatch": (
-        "The previous structured submission tool allowed unconstrained "
-        "free text for fixed_sample_rule while the compiler required one "
-        "exact registered string. The next tool constrains this field to "
-        "registered strings; the compiler remains fail-closed."
+        "The older -01 attempt paraphrased an exact rule. Both historical "
+        "responses remain terminal. The new bounded tool accepts only a short "
+        "choice ID and scientific text; trusted code derives the exact rule."
     ),
-    "metered_cost_usd_not_invoice": "0.01666737",
+    "metered_cost_usd_not_invoice": "0.01790424",
     "next_decision": (
-        "The previous response stays immutable. You may revise this idea "
-        "or propose a different source or method; no option is preselected. "
-        "For a bounded executable submission, select one exact enum value "
-        "for fixed_sample_rule rather than writing a new sentence."
+        "The previous responses stay immutable. You may revise the idea or "
+        "propose a different source or method; no option is preselected. "
+        "For a bounded executable submission, select one trusted choice ID."
     ),
 }
 
@@ -179,6 +201,11 @@ def build(gate0: dict, live_acceptance: dict) -> dict:
             "expected_evidence", "max_requests", "max_bytes",
             "max_minutes", "max_provider_cost_usd", "stop_rule",
         ],
+        "required_bounded_submission_fields": [
+            "choice_id", "question_id", "hypothesis",
+            "expected_evidence", "stop_rule",
+        ],
+        "trusted_bounded_choices": deepcopy(SHORT_BOUNDED_CHOICES),
         "hard_limits": {
             "choose_exactly_one_question": True,
             "choose_exactly_one_source": True,
@@ -197,15 +224,13 @@ def build(gate0: dict, live_acceptance: dict) -> dict:
             "controller_transport_accepted": True,
             "arbitrary_research_task_execution_accepted": False,
             "reviewed_real_train_catalog_available": False,
-            "executable_documentation_choices": deepcopy(
-                EXECUTABLE_DOCUMENTATION_CHOICES),
             "instruction": (
                 "Return a plan only. A fixed-trade plan cannot pass review "
-                "until a real Train catalog is separately admitted; choose "
-                "a documentation investigation or non-executable new-source "
-                "proposal while that catalog is unavailable. For a documentation "
-                "investigation, copy one fixed_sample_rule_options string exactly "
-                "from the selected source; other wording cannot compile."
+                "until a real Train catalog is separately admitted. Choose one "
+                "short trusted bounded choice ID or submit a novel proposal "
+                "for non-executable review. The broker derives source, operation, "
+                "exact sample rule, bounds and investigation ID from the choice "
+                "and fresh run claim. Do not submit those derived fields."
             ),
         },
     }

@@ -205,6 +205,26 @@ class CompletionTests(unittest.TestCase):
             with self.subTest(response=response), self.assertRaises(AdapterProtocolError):
                 parse_glm_completion(response)
 
+    def test_rejects_malformed_or_unconsumed_tool_argument_markup(self):
+        prefix = "<tool_call>exec_command<arg_key>cmd</arg_key><arg_value>pwd</arg_value>"
+        malformed = (
+            prefix + "<arg_key>max_minutes_placeholder</arg_value>"
+            "<arg_value>-</arg_value><arg_key>question_id</arg_key>"
+            "<arg_value>x</arg_value></tool_call>"
+        )
+        unmatched_tail = prefix + "<arg_key>unclosed_fragment</tool_call>"
+        nested_tag = (
+            "<tool_call>exec_command<arg_key>cmd</arg_key>"
+            "<arg_value>pwd<arg_key>hidden</arg_key></arg_value></tool_call>"
+        )
+        for response in (malformed, unmatched_tail, nested_tag):
+            with self.subTest(response=response), self.assertRaises(AdapterProtocolError):
+                parse_glm_completion(response)
+
+        self.assertEqual(parse_glm_completion(prefix + "  </tool_call>"), {
+            "kind": "function_call", "name": "exec_command", "arguments": {"cmd": "pwd"},
+        })
+
     def test_recovers_restarted_call_but_still_checks_complete_body(self):
         restarted = (
             "<think>draft</think><tool_call>exec_command"

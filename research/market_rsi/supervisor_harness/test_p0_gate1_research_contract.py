@@ -8,7 +8,8 @@ from supervisor_harness.build_p0_gate1_controller_packet import (
 from supervisor_harness.p0_gate1_research_contract import (
     CAPABILITY_REGISTRY, CONTROLLER_SCIENTIFIC_FIELDS, DECISION_SCHEMA,
     EXACT_TRADE_SAMPLE_RULE, IMPLEMENTED_OPERATIONS, KNOWN_OPERATIONS, TASK_SCHEMA,
-    TRUSTED_TASK_FIELDS, parse_unique_json, validate_and_compile,
+    TRUSTED_TASK_FIELDS, parse_unique_json, short_choice_provenance,
+    validate_and_compile,
 )
 
 
@@ -54,22 +55,18 @@ class Gate1ResearchContractTests(unittest.TestCase):
                          1)
 
     def test_every_advertised_document_rule_compiles_and_other_wording_fails(self):
-        choices = self.packet["current_execution_boundary"][
-            "executable_documentation_choices"]
+        choices = self.packet["trusted_bounded_choices"]
         for choice in choices:
-            for rule in choice["fixed_sample_rule_options"]:
-                with self.subTest(source=choice["source_id"], rule=rule):
-                    decision = copy.deepcopy(self.decision)
-                    decision["source_id"] = choice["source_id"]
-                    decision["fixed_sample_rule"] = rule
-                    decision["requested_operations"] = choice["requested_operations"]
-                    decision["max_requests"] = choice["max_requests"]
-                    decision["max_provider_cost_usd"] = choice[
-                        "max_provider_cost_usd"]
-                    self.assertEqual(
-                        validate_and_compile(decision, self.packet)["source"]["source_id"],
-                        choice["source_id"],
-                    )
+            with self.subTest(choice=choice["choice_id"]):
+                decision = copy.deepcopy(self.decision)
+                decision["source_id"] = choice["source_id"]
+                decision["fixed_sample_rule"] = choice["fixed_sample_rule"]
+                decision["requested_operations"] = [choice["operation"]]
+                decision.update(choice["derived_bounds"])
+                self.assertEqual(
+                    validate_and_compile(decision, self.packet)["source"]["source_id"],
+                    choice["source_id"],
+                )
         changed = copy.deepcopy(self.decision)
         changed["fixed_sample_rule"] += " One request, read-only."
         with self.assertRaisesRegex(ValueError, "sample rule is not executable"):
@@ -77,10 +74,33 @@ class Gate1ResearchContractTests(unittest.TestCase):
 
     def test_advertised_options_are_not_controller_mutable(self):
         changed = copy.deepcopy(self.packet)
-        changed["current_execution_boundary"]["executable_documentation_choices"][0][
-            "fixed_sample_rule_options"].append("Inspect any URL.")
+        changed["trusted_bounded_choices"][0]["fixed_sample_rule"] = "Inspect any URL."
         with self.assertRaisesRegex(ValueError, "choices changed"):
             validate_and_compile(self.decision, changed)
+
+    def test_short_choice_provenance_binds_source_rule_bounds_and_claim(self):
+        choice = self.packet["trusted_bounded_choices"][2]
+        decision = copy.deepcopy(self.decision)
+        decision["investigation_id"] = "gate1-fresh-claim-001"
+        decision["source_id"] = choice["source_id"]
+        decision["fixed_sample_rule"] = choice["fixed_sample_rule"]
+        decision["requested_operations"] = [choice["operation"]]
+        decision.update(choice["derived_bounds"])
+        provenance = short_choice_provenance(choice["choice_id"], decision["investigation_id"])
+        task = validate_and_compile(decision, self.packet, field_provenance=provenance)
+        self.assertEqual(task["field_provenance"], provenance)
+        self.assertEqual(task["field_authority"]["trusted_derived_from_claim"],
+                         ["investigation_id"])
+        for field, value in (("source_id", "nflverse_official_pbp_releases"),
+                             ("max_bytes", 999999)):
+            changed = copy.deepcopy(decision)
+            changed[field] = value
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                validate_and_compile(changed, self.packet, field_provenance=provenance)
+        altered = copy.deepcopy(provenance)
+        altered["run_claim_id"] = "gate1-other-claim-001"
+        with self.assertRaises(ValueError):
+            validate_and_compile(decision, self.packet, field_provenance=altered)
 
     def test_controller_sees_only_implemented_operations(self):
         self.assertEqual(IMPLEMENTED_OPERATIONS,

@@ -92,11 +92,18 @@ def _adapter_success(root: Path, outer_root: Path, claims: Path, cycle_id: str,
                      catalog_commitment_id: str | None) -> bool:
     try:
         decision = load_json(root / "decision.json")
+        submission = load_json(root / "submission.json")
         submission_kind = result.get("submission_kind")
         if submission_kind == "bounded_plan":
             task = load_json(root / "task.json")
+            provenance = load_json(root / "field-provenance.json")
+            if (provenance != adapter.short_choice_provenance(
+                    submission.get("choice_id"), cycle_id)
+                    or provenance.get("run_claim_id") != cycle_id):
+                return False
             if ((root / "proposal.json").exists()
-                    or task != validate_and_compile(decision, packet)):
+                    or task != validate_and_compile(
+                        decision, packet, field_provenance=provenance)):
                 return False
             if task["requested_operations"] == ["fetch_fixed_public_sample"]:
                 if not isinstance(catalog_json, bytes) or not isinstance(
@@ -116,6 +123,7 @@ def _adapter_success(root: Path, outer_root: Path, claims: Path, cycle_id: str,
         elif submission_kind == "non_executable_proposal":
             proposal = load_json(root / "proposal.json")
             if ((root / "task.json").exists()
+                    or (root / "field-provenance.json").exists()
                     or (outer_root / "compiled-plan.json").exists()
                     or proposal != gap_proposal.archive_proposal(
                         adapter._gap(packet), decision)):
@@ -124,12 +132,13 @@ def _adapter_success(root: Path, outer_root: Path, claims: Path, cycle_id: str,
             return False
         if adapter._submitted_action(
                 (root / "raw-response.txt").read_text(encoding="utf-8"),
-                packet) != (submission_kind, decision):
+                packet, cycle_id) != (submission_kind, decision, submission):
             return False
         expected_names = {
             "claim.json", "input.json", "request.json", "encoded.json",
             "cost-preview.json", "raw-response.json", "raw-response.txt",
-            "provider-receipt.json", "decision.json", "task.json",
+            "provider-receipt.json", "submission.json", "decision.json",
+            "field-provenance.json", "task.json",
             "proposal.json", "failure.json",
         }
         artifacts = result.get("artifact_sha256")

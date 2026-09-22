@@ -36,6 +36,7 @@ ARGUMENT_RE = re.compile(
     r"<arg_key>\s*(.*?)\s*</arg_key>\s*<arg_value>\s*(.*?)\s*</arg_value>",
     re.DOTALL,
 )
+ARGUMENT_KEY_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]*\Z")
 SPECIAL_TOKENS = ("<|im_end|>", "<|endoftext|>", "<|end|>")
 
 
@@ -292,11 +293,19 @@ def parse_glm_completion(text: str, allowed_tools=ALLOWED_TOOLS, *, tool_schemas
         if name not in _wire_functions(allowed_tools):
             raise AdapterProtocolError("GLM requested a forbidden wire tool")
         arguments: dict[str, str] = {}
+        cursor = len(body) if first_argument < 0 else first_argument
         for argument in ARGUMENT_RE.finditer(body):
+            if argument.start() != cursor and body[cursor:argument.start()].strip():
+                raise AdapterProtocolError("unparsed GLM tool argument text")
             key, value = argument.group(1).strip(), argument.group(2).strip()
-            if not key or key in arguments:
-                raise AdapterProtocolError("empty or duplicate GLM tool argument")
+            if not ARGUMENT_KEY_RE.fullmatch(key) or key in arguments:
+                raise AdapterProtocolError("invalid or duplicate GLM tool argument key")
+            if "<arg_" in value or "</arg_" in value:
+                raise AdapterProtocolError("nested GLM tool argument tag")
             arguments[key] = value
+            cursor = argument.end()
+        if body[cursor:].strip():
+            raise AdapterProtocolError("unparsed GLM tool argument text")
         if tool_schemas is not None and name not in tool_schemas:
             raise AdapterProtocolError("GLM requested a tool absent from this request")
         schema = tool_schemas[name] if tool_schemas is not None else None

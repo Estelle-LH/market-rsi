@@ -32,17 +32,10 @@ SCHEMA = "market_p0_gate1_controller_outer_canary_v1"
 
 def _decision() -> dict:
     return {
-        "investigation_id": "gate1-outer-canary-plan",
+        "choice_id": "pm_trades_docs_one",
         "question_id": "2025_whole_season_trade_access",
-        "source_id": "polymarket_official_trades",
         "hypothesis": "The official interface documents historical market trade access.",
-        "fixed_sample_rule": "Inspect the one frozen official documentation page.",
-        "requested_operations": ["inspect_official_documentation"],
         "expected_evidence": "A bounded page hash and documented interface fields.",
-        "max_requests": 1,
-        "max_bytes": 100000,
-        "max_minutes": 10,
-        "max_provider_cost_usd": "0",
         "stop_rule": "Stop after one response or any redirect, error, timeout, or rights uncertainty.",
     }
 

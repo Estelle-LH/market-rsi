@@ -19,6 +19,7 @@ from supervisor_harness.build_p0_gate1_controller_packet import (
     RELEASE_SAMPLE_RULES,
     RIGHTS_POLICY,
     SCHEMA as PACKET_SCHEMA,
+    SHORT_BOUNDED_CHOICES,
     SOURCE_REGISTRY,
 )
 from supervisor_harness.p0_gate1_sample_materializer import (
@@ -37,6 +38,7 @@ from supervisor_harness.p0_gate1_trade_query import (
 
 DECISION_SCHEMA = "market_p0_gate1_controller_decision_v2"
 TASK_SCHEMA = "market_p0_gate1_broker_task_v3"
+FIELD_PROVENANCE_SCHEMA = "market_p0_gate1_short_choice_provenance_v1"
 EXACT_TRADE_SAMPLE_RULE = (
     "Select the first, middle, and last games by game_date and game_id "
     "from the frozen public Train catalog."
@@ -46,6 +48,7 @@ EXACT_TRADE_SAMPLE_RULE = (
 # its builder from mutating the authority against which it is checked.
 _TRUSTED_SOURCE_REGISTRY = tuple(deepcopy(SOURCE_REGISTRY))
 _TRUSTED_RIGHTS_POLICY = deepcopy(RIGHTS_POLICY)
+_TRUSTED_SHORT_CHOICES = deepcopy(SHORT_BOUNDED_CHOICES)
 _TRUSTED_HARD_LIMITS = {
     "choose_exactly_one_question": True,
     "choose_exactly_one_source": True,
@@ -239,7 +242,32 @@ def _exact_decimal(value: object) -> Decimal:
     return parsed
 
 
-def validate_and_compile(decision: dict, packet: dict) -> dict:
+def short_choice_provenance(choice_id: str, claim_id: str) -> dict:
+    if (not isinstance(claim_id, str) or not _IDENTIFIER.fullmatch(claim_id)
+            or not isinstance(choice_id, str)
+            or choice_id not in {item["choice_id"] for item in _TRUSTED_SHORT_CHOICES}):
+        raise ValueError("unknown short choice or invalid run claim")
+    return {
+        "schema": FIELD_PROVENANCE_SCHEMA,
+        "bounded_choice_id": choice_id,
+        "run_claim_id": claim_id,
+        "controller_authored": [
+            "choice_id", "question_id", "hypothesis",
+            "expected_evidence", "stop_rule",
+        ],
+        "trusted_derived_from_choice": [
+            "source_id", "requested_operations", "fixed_sample_rule",
+            "max_requests", "max_bytes", "max_minutes",
+            "max_provider_cost_usd",
+        ],
+        "trusted_derived_from_claim": ["investigation_id"],
+        "trusted_protocol": ["schema", "source", "capability", "rights_policy",
+                             "execution_boundary"],
+    }
+
+
+def validate_and_compile(decision: dict, packet: dict, *,
+                         field_provenance: dict | None = None) -> dict:
     if not isinstance(packet, dict) or packet.get("schema") != PACKET_SCHEMA:
         raise ValueError("wrong Gate 1 packet")
     if packet.get("trusted_rights_policy") != _TRUSTED_RIGHTS_POLICY:
@@ -251,9 +279,11 @@ def validate_and_compile(decision: dict, packet: dict) -> dict:
         raise ValueError("trusted hard limits changed or are missing")
     boundary = packet.get("current_execution_boundary")
     if (not isinstance(boundary, dict)
-            or boundary.get("executable_documentation_choices")
-            != EXECUTABLE_DOCUMENTATION_CHOICES):
-        raise ValueError("executable documentation choices changed or are missing")
+            or packet.get("trusted_bounded_choices") != _TRUSTED_SHORT_CHOICES
+            or packet.get("required_bounded_submission_fields") != [
+                "choice_id", "question_id", "hypothesis",
+                "expected_evidence", "stop_rule"]):
+        raise ValueError("trusted bounded choices changed or are missing")
     required_fields = packet.get("required_decision_fields")
     if (not isinstance(required_fields, list)
             or len(required_fields) != len(CONTROLLER_DECISION_FIELDS)
@@ -309,6 +339,23 @@ def validate_and_compile(decision: dict, packet: dict) -> dict:
             raise ValueError("requested bounds are not executable by capability")
     if proposed_cost != _exact_decimal(constraints["max_provider_cost_usd"]):
         raise ValueError("requested bounds are not executable by capability")
+    if field_provenance is not None:
+        if (not isinstance(field_provenance, dict)
+                or field_provenance != short_choice_provenance(
+                    field_provenance.get("bounded_choice_id"),
+                    field_provenance.get("run_claim_id"))):
+            raise ValueError("short-choice field provenance changed")
+        choice = next(item for item in _TRUSTED_SHORT_CHOICES
+                      if item["choice_id"] == field_provenance["bounded_choice_id"])
+        if (decision["investigation_id"] != field_provenance["run_claim_id"]
+                or decision["source_id"] != choice["source_id"]
+                or operations != [choice["operation"]]
+                or text["fixed_sample_rule"] != choice["fixed_sample_rule"]
+                or any(decision[name] != choice["derived_bounds"][name]
+                       for name in ("max_requests", "max_bytes", "max_minutes"))
+                or proposed_cost != _exact_decimal(
+                    choice["derived_bounds"]["max_provider_cost_usd"])):
+            raise ValueError("expanded decision differs from trusted choice or claim")
     capability = {
         "capability_id": registered["capability_id"],
         "handler_id": registered["handler_id"],
@@ -320,7 +367,7 @@ def validate_and_compile(decision: dict, packet: dict) -> dict:
     if "execution_contract" in registered:
         capability["execution_contract"] = deepcopy(
             registered["execution_contract"])
-    return {
+    task = {
         "schema": TASK_SCHEMA,
         "investigation_id": investigation_id,
         "question_id": decision["question_id"],
@@ -350,6 +397,18 @@ def validate_and_compile(decision: dict, packet: dict) -> dict:
             "formal_admission_authorized": False,
         },
     }
+    if field_provenance is not None:
+        task["field_authority"] = {
+            "controller_scientific": ["question_id", "hypothesis",
+                                      "expected_evidence", "stop_rule"],
+            "controller_bounded_choice": ["choice_id"],
+            "trusted_derived_from_choice": field_provenance[
+                "trusted_derived_from_choice"],
+            "trusted_derived_from_claim": ["investigation_id"],
+            "trusted": sorted(TRUSTED_TASK_FIELDS),
+        }
+        task["field_provenance"] = deepcopy(field_provenance)
+    return task
 
 
 def parse_unique_json(raw: str) -> dict:
