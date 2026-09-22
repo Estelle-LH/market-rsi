@@ -681,3 +681,46 @@ untouched test.
 - **另一个环境限制：** 当前受限测试环境不允许调用宿主 `ps`。四种 trainer 的宿主监控集成检查会明确跳过；正式 trainer 的实时 RSS 检查没有被放宽。
 - **结果：** 固定本机 runtime 跑完 516 项：全部成功，2 项有明确原因的环境跳过。没有模型调用、数据抓取、训练、Dev/Final 读取或费用。
 - **下一步：** P0 仍是正式预测数据入场。先发布当前本地修复并跑发布后零费用 canary；新的付费 Gate 1 Controller 样本必须另行授权。
+
+### 2026-09-21：v0.1.16 单次 Gate 1 回答因重复字段失败关闭
+
+- **运行结果：** 永久 ID `market-rsi-gate1-controller-20260921-04` 只调用 GLM 一次，正常结束。输入 1,406 tokens，输出 465 tokens，计量成本 `$0.01248291`，没有重试。
+- **模型想做什么：** 它选择检查 2025 全季 Polymarket 官方交易接口能否覆盖 285 场比赛。这是一个有用且符合当前数据瓶颈的方向。
+- **为什么没通过：** 同一个必填字段 `rights_check` 写了两次，而且两段文字并不完全相同。协议不能擅自挑第一段、最后一段或合并，因此整份计划按重复字段失败。
+- **安全边界：** 没有生成正式 decision/task，没有下载公开数据，没有放行训练，没有读取 Dev/Final。账本按真实 token 记录，不是按 `$0.05` 上限计费；进程和容器都已确认清理。
+- **下一步：** 只做离线因果修复。先判断“数据使用权规则”是否应该由 Supervisor 固定执行，而不是让 Controller 自由写；通过测试和独立 canary、发布新版本并获得新的明确授权前，不再调用 provider。
+
+### 2026-09-21：权限规则已从 Controller 自由输出中移除
+
+- **怎么改：** Controller 以后只选研究问题、公开来源、假设、固定样本、操作和预算。数据能不能访问、能不能买、能不能写、能不能进入正式训练，由 Supervisor 的固定版本规则决定。
+- **为什么这样改：** 权限规则不是研究想法，让模型自由写没有好处，反而连续制造格式错误。重复字段仍然会失败，系统不会替模型挑答案。
+- **验证：** 41 项相关检查和全仓 516 项检查通过；两个新零费用 canary 通过。没有调用模型、没有下载数据、没有开始训练。
+- **新 packet：** 输入文件和内容 hash 都已经固定；真实 tokenizer 测得 1,468 input tokens，单次最坏费用 `$0.04445928`，仍低于 `$0.05`。
+- **现在边界：** 这是本地未发布版本。下一步是独立审查、再申请发布；没有授权新的付费请求。
+
+### 2026-09-21：第一版预测实验设计已经开始并通过机器检查
+
+- **要回答的问题：** 在数据、target、样本、评估规则和总美元相同的条件下，自迭代研究代理能不能打败 Train 上选出的强普通模型。
+- **已经固定：** 所有路线用相同行；按时间切 Train、Route-Dev、Audit-Dev、Final；Final 至少 20 个从未看过的日期；主要比较 candidate 和 strong baseline 的逐场等权 MSE，并看按日期分块的区间。
+- **还没有乱定：** 数据还没正式入场，所以 target、具体日期、强 baseline 和正式实验预算都保持空白。它们必须在看 Dev 前固定并写 hash。
+- **baseline：** 至少包含 zero change、persistence、Ridge、HGB；如果运行环境验证通过，再加 CatBoost 或 LightGBM。在 opened Train 上按固定预算选一个强 baseline。
+- **RSI 路线：** GLM Controller 可以查文献、设计 feature/representation/trainer/loss 或提出新算法；一次试验只改 prediction 里的一个组件，所有失败也归档。Supervisor 不替它选科学方向，只守数据、预算和评估边界。
+- **验证：** 设计 JSON 通过验证器；八个反例确认它不能提前打开执行、选择 target、缩短 Final、删掉 HGB 或给自己加预算。旧 memory replication 和 benchmark scorer 的十四项测试也继续通过。
+- **版本：** 修复 commit `bfef4d0`；实验设计 commit `7bea4fc`；审查边界文字修正 `191e03e`。三个都只在本地，尚未推送。
+
+### 2026-09-21：v0.1.17 已发布，单次 Controller 漏了机械 schema
+
+- **发布与 canary：** 三个提交已只推到用户 fork，annotated tag 是 `market-rsi-protocol-v0.1.17`。远端 commit、tag object、318 个受控文件和 manifest `9200f93f…cd15d` 全部匹配。发布后 canary `p0-gate1-production-cli-canary-20260921-15` 通过，provider 调用 0、真实费用 `$0`、没有抓数据或放行数据。
+- **真实请求：** 永久 ID `market-rsi-gate1-controller-20260921-05` 只调用 GLM 一次，没有重试。输入 1,468 tokens，输出 349 tokens，正常 `stop`，计量成本 `$0.01137483`。
+- **模型做了什么：** 它仍然选了当前有用的问题：检查 2025 全季 Polymarket 官方交易接口；固定最多 3 个市场、20 个请求、2 MB、20 分钟。所有真正的研究字段都填了。
+- **为什么失败：** 它只漏了固定版本标签 `schema`。系统没有偷偷补字段，所以没有生成 decision/task，也没有开始抓数据。
+- **终态：** 权威账本为 `metered_terminal`；总计量费用 `$85.087982132`，可用 `$106.253436988`。进程和容器都已清理；没有 public fetch、数据入场、训练或 Dev/Final 读取。
+- **下一步：** `schema` 不该由模型决定。离线改为 trusted adapter 固定注入；真实研究字段仍必须完整、唯一、严格验证。当前不再调用 provider。
+
+### 2026-09-21：机械 schema 已完成离线修复
+
+- **怎么改：** Controller 现在只填写 12 个真实研究字段。固定协议版本由 trusted adapter 注入；如果模型自己加 `schema`，它反而会因为额外字段失败。
+- **没有放宽：** 缺少、重复或多写任何真实研究字段仍然失败。rights policy、数据边界、预算和 Dev/Final 隔离都没变。
+- **验证：** 55 项 Gate 1 检查和全仓 516 项通过，2 项按原原因跳过。新的 adapter、外层账本和完整生产路径 canary 都通过；provider 调用和真实费用是 0，没有抓数据或放行数据。
+- **新 packet：** file hash `5f261e00…eff85`，canonical hash `28d5265c…08c6`；1,456 input tokens，单次最坏费用 `$0.04440096`。
+- **当前边界：** 修复已本地提交为 `4fa02dd`，失败和修复审查提交为 `b9095a7`；两者都未发布，没有新的付费请求授权。

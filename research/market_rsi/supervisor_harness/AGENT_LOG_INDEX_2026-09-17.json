@@ -2,6 +2,195 @@
   "purpose": "Human-readable, non-secret subagent work logs; these are not GLM research trajectories or live E2B tool streams.",
   "agents": [
     {
+      "id": "gate1_plan_integration_20260921",
+      "title": "P0：Gate 1 可执行计划接线",
+      "task": "把能力契约、固定样本和 trade request builder 接成唯一、hash-bound 的 executable-plan compiler。",
+      "status": "运行中：Wave 2 离线集成，不联网、不调用 provider",
+      "active": true,
+      "next": "完成集成测试后由 Supervisor 与独立审查者共同验收。",
+      "log": "AGENT_LOG_GATE1_PLAN_INTEGRATION_2026-09-21.md"
+    },
+    {
+      "id": "gate1_firstwave_audit_20260921",
+      "title": "P0：Wave 1 独立安全与可执行性审查",
+      "task": "只读检查权限、hash、source/operation、split、分页、限额和 executor 声明边界。",
+      "status": "运行中：独立只读审查",
+      "active": true,
+      "next": "提交 P0/P1/P2 findings 和 PASS/REPLAN。",
+      "log": "AGENT_LOG_GATE1_FIRSTWAVE_AUDIT_2026-09-21.md"
+    },
+    {
+      "id": "gate1_canary_design_20260921",
+      "title": "P0：Gate 1 零费用与攻击性 canary",
+      "task": "设计 decision→task→materialization→request manifest 的零 provider/零网络 canary 和反例覆盖。",
+      "status": "运行中：只做离线设计和独立 fixtures",
+      "active": true,
+      "next": "集成接口稳定后运行完整 canary/adversarial suite。",
+      "log": "AGENT_LOG_GATE1_CANARY_DESIGN_2026-09-21.md"
+    },
+    {
+      "id": "gate1_capability_contract_20260921",
+      "title": "P0：Gate 1 可执行能力契约",
+      "task": "离线实现 source x operation 能力表；Controller 请求 broker 尚未实现的组合时必须 fail closed。",
+      "status": "已完成：trusted capability registry 已实现，55/55 相邻测试通过",
+      "active": false,
+      "next": "由 Wave 2 integrator 显式注册验收后的 sample/trade handler；新能力在此之前仍 fail closed。",
+      "log": "AGENT_LOG_GATE1_CAPABILITY_CONTRACT_2026-09-21.md"
+    },
+    {
+      "id": "gate1_sample_materializer_20260921",
+      "title": "P0：Gate 1 固定样本生成器",
+      "task": "把冻结 Train-only 抽样规则确定性转换成 exact IDs、canonical JSON 和 hash。",
+      "status": "已完成：确定性 Train-only materializer 实现，10/10 专测和 13/13 相邻测试通过",
+      "active": false,
+      "next": "Wave 2 验证 materialization/request-plan hashes 后接入 trusted compiler。",
+      "log": "AGENT_LOG_GATE1_SAMPLE_MATERIALIZER_2026-09-21.md"
+    },
+    {
+      "id": "gate1_trade_query_runner_20260921",
+      "title": "P0：Gate 1 公开成交查询 runner",
+      "task": "离线构建严格 allowlist 的 Polymarket trades exact request manifest；本波不执行网络请求。",
+      "status": "已完成：离线 exact request manifest builder 实现，44/44 相关回归通过",
+      "active": false,
+      "next": "Wave 2 接入 trusted compiler；真实 network executor 仍不存在且未授权。",
+      "log": "AGENT_LOG_GATE1_TRADE_QUERY_RUNNER_2026-09-21.md"
+    },
+    {
+      "id": "p0_outer_runner_rereview_20260919",
+      "title": "P0：外层 runner 修复后二次审查",
+      "task": "只读复查 post-clear 状态重验和失败回执终态修复，并重跑独立复现测试。",
+      "status": "二次独立审查通过：52/52 测试通过，两处复现缺口已关闭",
+      "active": false,
+      "next": "把 runner 加入发布清单，重新测试并按明确白名单发布新版本；真实 canary 仍关闭。",
+      "log": "AGENT_LOG_P0_OUTER_RUNNER_REREVIEW_2026-09-19.md"
+    },
+    {
+      "id": "p0_outer_runner_review_20260919",
+      "title": "P0：外层 runner 独立审查",
+      "task": "只读审查 outer runner 的发布、state、预算、唯一 ID、进程/镜像/公开输入及终态对账；不改代码、不调用服务、不推送。",
+      "status": "独立审查完成并阻止发布：发现 clear callback 后未重查 state，以及失败回执先于取消/关闭写入",
+      "active": false,
+      "next": "修复两处并加回归测试；再次独立复查前不能发布。",
+      "log": "AGENT_LOG_P0_OUTER_RUNNER_REVIEW_2026-09-19.md"
+    },
+    {
+      "id": "p0_outer_runner_20260918",
+      "title": "P0：真实接线外层 runner（仅离线实现）",
+      "task": "把发布、protected state、唯一预算账本、ID/进程/镜像/公开输入闸门与单次 adapter 调用和终态对账接起来；只用严格 fake 和临时账本测试。",
+      "status": "两处缺口已修；Supervisor 复跑 106 项相邻测试和 15 项预算测试通过",
+      "active": false,
+      "next": "等待第二次独立审查；通过前不能发布。",
+      "log": "AGENT_LOG_P0_OUTER_RUNNER_2026-09-18.md"
+    },
+    {
+      "id": "p0_live_release_review_v2_20260918",
+      "title": "P0：单任务 guest 与真实适配器独立发布审查",
+      "task": "只读审查单任务 guest、真实适配器、发布清单和测试，确认代码发布边界；不改代码、不调用服务、不推送。",
+      "status": "独立只读审查完成：69/69 测试通过；代码可按明确 staging 白名单发布，真实验收仍关闭",
+      "active": false,
+      "next": "只 stage 审过的源码和测试，排除 protected state、计划、日志和 artifacts；检查后再提交和打新 tag。",
+      "log": "AGENT_LOG_P0_LIVE_RELEASE_REVIEW_V2_2026-09-18.md"
+    },
+    {
+      "id": "p0_live_adapter_v2_20260918",
+      "title": "P0：真实 GLM 到单任务 B 接线 v2（仅离线测试）",
+      "task": "把固定 Tinker GLM 第一答复、trusted broker 和单任务本地 B 接成可发布适配器；只用严格假后端测试。",
+      "status": "实现完成；Supervisor 独立复跑 84 项兼容测试、纳入源码清单后复跑 88 项，全部通过",
+      "active": false,
+      "next": "独立审查 guest、适配器和发布范围；审查通过前不发布、不调用真实服务。",
+      "log": "AGENT_LOG_P0_LIVE_ADAPTER_V2_2026-09-18.md"
+    },
+    {
+      "id": "p0_one_task_guest_20260918",
+      "title": "P0：单任务本地 B guest",
+      "task": "在不扩大 B 权限的前提下，把现有 hash-public-text guest 做成严格一个任务后退出；只写源码和离线测试。",
+      "status": "单任务接口完成；Supervisor 独立复跑 64 项兼容测试通过",
+      "active": false,
+      "next": "继续实现真实 GLM→broker→单任务 B 适配器，但仍只做离线假后端测试。",
+      "log": "AGENT_LOG_P0_ONE_TASK_GUEST_2026-09-18.md"
+    },
+    {
+      "id": "p0_live_adapter_20260918",
+      "title": "P0：真实 GLM 到本地 B 接线（仅离线测试）",
+      "task": "实现可连接固定 Tinker GLM 与单一本地 Docker B 的受控适配器；本任务只用假 provider/process 做离线测试，不调用外部服务。",
+      "status": "已按规则停止：现有 guest 固定 20 个任务，无法完成单任务退出与清理",
+      "active": false,
+      "next": "v2 计划先实现一个保留原 ACK/event 协议的单任务 guest；禁止塞 19 个填充任务。",
+      "log": "AGENT_LOG_P0_LIVE_ADAPTER_2026-09-18.md"
+    },
+    {
+      "id": "p0_release_review_20260918",
+      "title": "P0：新源码独立只读审查",
+      "task": "只读审查六个变动的协议源码和相邻测试，核对是否能安全发布；不改代码、不推送、不调用模型或沙箱。",
+      "status": "只读审查完成；代码发布范围无阻塞，两个上线前缺口已修并复测",
+      "active": false,
+      "next": "仍需实现真实 GLM→B 接线并审查新版源码；不能把代码版发布当成模型验收。",
+      "log": "AGENT_LOG_P0_RELEASE_REVIEW_2026-09-18.md"
+    },
+    {
+      "id": "p0_source_rights_review",
+      "title": "P0：数据来源与使用权只读核对",
+      "task": "核对现有公开来源和权利记录，区分文档声称与已经验证的数据；不取数、不付费、不碰封存数据。",
+      "status": "只读证据报告完成；没有来源可正式入场",
+      "active": false,
+      "next": "真实 GLM 路径通过后由 Controller 选择一个有界来源问题；不把公开文档当作入场许可。",
+      "log": "AGENT_LOG_P0_SOURCE_RIGHTS_2026-09-18.md"
+    },
+    {
+      "id": "p0_controller_b_gate_review",
+      "title": "P0：真实 Controller→B 闸门只读核对",
+      "task": "核对模型作者身份与 B 任意代码隔离的已通过和缺失证据；不启动模型或沙箱。",
+      "status": "只读闸门核对完成；真实 Controller→B 尚未验收",
+      "active": false,
+      "next": "先做全新零付费 B 任意代码隔离 canary，再单独证明 GLM 作者身份。",
+      "log": "AGENT_LOG_P0_CONTROLLER_B_GATE_2026-09-18.md"
+    },
+    {
+      "id": "p0_b_containment_canary",
+      "title": "P0：本机 B 任意代码隔离 canary",
+      "task": "全新编号、零付费，用事先审过的合成诱饵验证 B 越界访问被拒，同时允许正常工作；必须有原始回执和精确清理。",
+      "status": "零付费选择性隔离 canary 通过；模型作者身份仍未证明",
+      "active": false,
+      "next": "独立证明 GLM 作者身份并接上有界任务驱动；此测试不能放行正式实验。",
+      "log": "AGENT_LOG_P0_B_CONTAINMENT_2026-09-18.md"
+    },
+    {
+      "id": "p0_final_metadata_screen",
+      "title": "P0：未触碰测试期元数据筛查",
+      "task": "只看本机旧回执，寻找同机制、至少 20 个日期且能证明未打开的候选；不读价格、标签或封存答案。",
+      "status": "只读筛查完成；旧 Final 不合格，未来 20 日期候选已固定但未入场",
+      "active": false,
+      "next": "候选日期前验证市场机制、权利与完整访问日志；不能叫正式 Final。",
+      "log": "AGENT_LOG_P0_FINAL_METADATA_2026-09-18.md"
+    },
+    {
+      "id": "p0_glm_adapter_offline",
+      "title": "P0：GLM 第一答复离线适配",
+      "task": "只用假后端实现公开/合成输入、第一份原始答复、模型和费用来源、唯一任务标识；不调用付费模型或 B。",
+      "status": "假后端适配完成；12 项定向测试通过，真实模型未调用",
+      "active": false,
+      "next": "接有界 A→B 驱动，发布新版本后单独证明真实模型作者身份。",
+      "log": "AGENT_LOG_P0_GLM_ADAPTER_2026-09-18.md"
+    },
+    {
+      "id": "p0_a_to_b_driver_offline",
+      "title": "P0：Controller 答复到 B 任务的离线交接",
+      "task": "只用假答复和受控 B 通道，绑定唯一 ID、输入和事件 hash，测试超时、坏答复、越界与清理。",
+      "status": "离线交接完成；11 项定向测试与 35 项合并测试通过，真实模型未调用",
+      "active": false,
+      "next": "仍须新版本发布、真实模型作者身份与独立数据入场。",
+      "log": "AGENT_LOG_P0_A_TO_B_DRIVER_2026-09-18.md"
+    },
+    {
+      "id": "data_admission_20260918",
+      "title": "P0：预测数据入场核对",
+      "task": "第一步核对 2023–2025 来源和标签，第二步从现有本机日志重建 2025 访问史；不得打开封存答案或花钱。",
+      "status": "两轮只读核对完成；旧访问原始回执缺失，正式入场仍关闭",
+      "active": false,
+      "next": "Supervisor 决定数据来源与新的未触碰测试期；不把未知数据改称未使用。",
+      "log": "AGENT_LOG_DATA_ADMISSION_2026-09-18.md"
+    },
+    {
       "id": "policy_echo",
       "title": "E2B 回显 / 安全判断",
       "task": "核对请求与返回的隔离字段；不把缺失回显误判为通过。",
