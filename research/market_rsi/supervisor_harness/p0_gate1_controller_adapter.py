@@ -118,6 +118,13 @@ def _submission_parameters(packet: dict) -> dict:
         # The exact frozen packet has no real catalog. Hide the trade operation
         # from the one-shot tool schema rather than solicit a paid dead end.
         operations.discard("fetch_fixed_public_sample")
+    sample_rules = sorted({
+        rule
+        for source in packet["allowed_sources"]
+        for operation in CAPABILITY_REGISTRY[source["source_id"]].values()
+        if operation["operation"] in operations
+        for rule in operation["sample_contracts"]
+    })
     return {
         "type": "object",
         "additionalProperties": False,
@@ -136,7 +143,7 @@ def _submission_parameters(packet: dict) -> dict:
             },
             "hypothesis": {"type": "string", "minLength": 1, "maxLength": 1000},
             "fixed_sample_rule": {
-                "type": "string", "minLength": 1, "maxLength": 1000,
+                "type": "string", "enum": sample_rules,
             },
             "requested_operations": {
                 "type": "array", "minItems": 1, "uniqueItems": True,

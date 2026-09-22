@@ -14,6 +14,9 @@ import re
 
 from supervisor_harness.build_p0_gate1_controller_packet import (
     ALLOWED_QUESTIONS,
+    DOCUMENT_SAMPLE_RULES,
+    EXECUTABLE_DOCUMENTATION_CHOICES,
+    RELEASE_SAMPLE_RULES,
     RIGHTS_POLICY,
     SCHEMA as PACKET_SCHEMA,
     SOURCE_REGISTRY,
@@ -101,17 +104,11 @@ def _single_document_sample_contract() -> dict:
 
 _DOCUMENT_SAMPLE_CONTRACTS = {
     rule: _single_document_sample_contract()
-    for rule in (
-        "Inspect the one frozen official documentation page.",
-        "Inspect the single frozen official documentation page.",
-    )
+    for rule in DOCUMENT_SAMPLE_RULES
 }
 _RELEASE_SAMPLE_CONTRACTS = {
     rule: _single_document_sample_contract()
-    for rule in (
-        "Inspect the one frozen official project release page.",
-        "Inspect the single frozen official project release page.",
-    )
+    for rule in RELEASE_SAMPLE_RULES
 }
 
 
@@ -252,6 +249,11 @@ def validate_and_compile(decision: dict, packet: dict) -> dict:
         raise ValueError("trusted question or source registry changed")
     if packet.get("hard_limits") != _TRUSTED_HARD_LIMITS:
         raise ValueError("trusted hard limits changed or are missing")
+    boundary = packet.get("current_execution_boundary")
+    if (not isinstance(boundary, dict)
+            or boundary.get("executable_documentation_choices")
+            != EXECUTABLE_DOCUMENTATION_CHOICES):
+        raise ValueError("executable documentation choices changed or are missing")
     required_fields = packet.get("required_decision_fields")
     if (not isinstance(required_fields, list)
             or len(required_fields) != len(CONTROLLER_DECISION_FIELDS)

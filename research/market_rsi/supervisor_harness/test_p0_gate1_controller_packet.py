@@ -6,7 +6,8 @@ import unittest
 
 from market_rsi import digest, file_hash
 from supervisor_harness.build_p0_gate1_controller_packet import (
-    ALLOWED_QUESTIONS, SOURCE_REGISTRY, build, run,
+    ALLOWED_QUESTIONS, EXECUTABLE_DOCUMENTATION_CHOICES,
+    SOURCE_REGISTRY, build, run,
 )
 
 
@@ -35,6 +36,10 @@ class Gate1ControllerPacketTests(unittest.TestCase):
         self.assertFalse(packet["hard_limits"]["sealed_or_scored_rows_allowed"])
         self.assertFalse(packet["current_execution_boundary"]
                          ["arbitrary_research_task_execution_accepted"])
+        self.assertEqual(
+            packet["current_execution_boundary"]["executable_documentation_choices"],
+            EXECUTABLE_DOCUMENTATION_CHOICES,
+        )
         def keys(value):
             if isinstance(value, dict):
                 return set(value).union(*(keys(item) for item in value.values()))

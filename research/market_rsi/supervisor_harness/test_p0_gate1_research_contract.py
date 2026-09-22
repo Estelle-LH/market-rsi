@@ -53,6 +53,35 @@ class Gate1ResearchContractTests(unittest.TestCase):
         self.assertEqual(task["capability"]["sample_contract"]["document_count"],
                          1)
 
+    def test_every_advertised_document_rule_compiles_and_other_wording_fails(self):
+        choices = self.packet["current_execution_boundary"][
+            "executable_documentation_choices"]
+        for choice in choices:
+            for rule in choice["fixed_sample_rule_options"]:
+                with self.subTest(source=choice["source_id"], rule=rule):
+                    decision = copy.deepcopy(self.decision)
+                    decision["source_id"] = choice["source_id"]
+                    decision["fixed_sample_rule"] = rule
+                    decision["requested_operations"] = choice["requested_operations"]
+                    decision["max_requests"] = choice["max_requests"]
+                    decision["max_provider_cost_usd"] = choice[
+                        "max_provider_cost_usd"]
+                    self.assertEqual(
+                        validate_and_compile(decision, self.packet)["source"]["source_id"],
+                        choice["source_id"],
+                    )
+        changed = copy.deepcopy(self.decision)
+        changed["fixed_sample_rule"] += " One request, read-only."
+        with self.assertRaisesRegex(ValueError, "sample rule is not executable"):
+            validate_and_compile(changed, self.packet)
+
+    def test_advertised_options_are_not_controller_mutable(self):
+        changed = copy.deepcopy(self.packet)
+        changed["current_execution_boundary"]["executable_documentation_choices"][0][
+            "fixed_sample_rule_options"].append("Inspect any URL.")
+        with self.assertRaisesRegex(ValueError, "choices changed"):
+            validate_and_compile(self.decision, changed)
+
     def test_controller_sees_only_implemented_operations(self):
         self.assertEqual(IMPLEMENTED_OPERATIONS,
                          frozenset({"inspect_official_documentation",

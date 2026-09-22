@@ -59,29 +59,55 @@ SOURCE_REGISTRY = (
         "url": "https://github.com/nflverse/nflverse-pbp/releases",
     },
 )
+DOCUMENT_SAMPLE_RULES = (
+    "Inspect the one frozen official documentation page.",
+    "Inspect the single frozen official documentation page.",
+)
+RELEASE_SAMPLE_RULES = (
+    "Inspect the one frozen official project release page.",
+    "Inspect the single frozen official project release page.",
+)
+EXECUTABLE_DOCUMENTATION_CHOICES = [
+    {
+        "source_id": source["source_id"],
+        "requested_operations": ["inspect_official_documentation"],
+        "fixed_sample_rule_options": list(
+            RELEASE_SAMPLE_RULES if source["source_id"] == "nflverse_official_pbp_releases"
+            else DOCUMENT_SAMPLE_RULES
+        ),
+        "max_requests": 1,
+        "max_provider_cost_usd": "0",
+    }
+    for source in SOURCE_REGISTRY
+]
 PRIOR_CONTROLLER_FEEDBACK = {
-    "attempt_id": "market-rsi-gate1-controller-20260921-05",
+    "attempt_id": "market-rsi-gate1-controller-20260922-01",
     "raw_response_sha256": (
-        "e0ada90eec518767cee11da568496917dd1326758fe62ec0a565314e0ad4938a"
+        "a6155faf4d19940415efac470e75f9c7823c9cafd5cc0f5883e45da9f3d7f27c"
     ),
     "reported_model": "zai-org/GLM-5.3:peft:262144",
     "selected_question_id": "2025_whole_season_trade_access",
     "selected_source_id": "polymarket_official_trades",
-    "requested_operations": [
-        "inspect_official_documentation", "fetch_fixed_public_sample",
-    ],
-    "requested_max_requests": 20,
+    "requested_operations": ["inspect_official_documentation"],
+    "requested_max_requests": 1,
     "outcome": "invalid_submission_no_task_or_fetch",
-    "observed_failure": "The old adapter required a model-authored schema field.",
-    "additional_contract_mismatch": (
-        "The requested document-plus-trade operation had no combined handler; "
-        "the trade handler also requires a reviewed Train catalog and six "
-        "fixed requests, which are not currently available."
+    "observed_failure": (
+        "The model paraphrased fixed_sample_rule even though the same request "
+        "showed the exact executable strings. The trusted compiler rejected "
+        "the paraphrase; no task or fetch occurred."
     ),
-    "metered_cost_usd_not_invoice": "0.01137483",
+    "additional_contract_mismatch": (
+        "The previous structured submission tool allowed unconstrained "
+        "free text for fixed_sample_rule while the compiler required one "
+        "exact registered string. The next tool constrains this field to "
+        "registered strings; the compiler remains fail-closed."
+    ),
+    "metered_cost_usd_not_invoice": "0.01666737",
     "next_decision": (
         "The previous response stays immutable. You may revise this idea "
-        "or propose a different source or method; no option is preselected."
+        "or propose a different source or method; no option is preselected. "
+        "For a bounded executable submission, select one exact enum value "
+        "for fixed_sample_rule rather than writing a new sentence."
     ),
 }
 
@@ -171,11 +197,15 @@ def build(gate0: dict, live_acceptance: dict) -> dict:
             "controller_transport_accepted": True,
             "arbitrary_research_task_execution_accepted": False,
             "reviewed_real_train_catalog_available": False,
+            "executable_documentation_choices": deepcopy(
+                EXECUTABLE_DOCUMENTATION_CHOICES),
             "instruction": (
                 "Return a plan only. A fixed-trade plan cannot pass review "
                 "until a real Train catalog is separately admitted; choose "
                 "a documentation investigation or non-executable new-source "
-                "proposal while that catalog is unavailable."
+                "proposal while that catalog is unavailable. For a documentation "
+                "investigation, copy one fixed_sample_rule_options string exactly "
+                "from the selected source; other wording cannot compile."
             ),
         },
     }

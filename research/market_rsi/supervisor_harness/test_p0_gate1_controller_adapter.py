@@ -79,11 +79,29 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
         packet = expected_packet()
         feedback = packet["prior_controller_feedback"]
         self.assertEqual(feedback["attempt_id"],
-                         "market-rsi-gate1-controller-20260921-05")
+                         "market-rsi-gate1-controller-20260922-01")
         self.assertEqual(feedback["selected_source_id"],
                          "polymarket_official_trades")
         self.assertEqual(feedback["outcome"],
                          "invalid_submission_no_task_or_fetch")
+        self.assertEqual(feedback["metered_cost_usd_not_invoice"],
+                         "0.01666737")
+        self.assertEqual(feedback["raw_response_sha256"],
+                         "a6155faf4d19940415efac470e75f9c7823c9cafd5cc0f5883e45da9f3d7f27c")
+        from supervisor_harness.p0_gate1_controller_adapter import _submission_parameters
+        choices = _submission_parameters(packet)["properties"]["fixed_sample_rule"]["enum"]
+        self.assertIn("Inspect the one frozen official documentation page.", choices)
+        advertised = {
+            rule
+            for source in packet["current_execution_boundary"][
+                "executable_documentation_choices"]
+            for rule in source["fixed_sample_rule_options"]
+        }
+        self.assertEqual(set(choices), advertised)
+        self.assertNotIn(
+            "Inspect the single frozen official documentation page only: extra words.",
+            choices,
+        )
         capabilities = _available_capabilities(packet)
         self.assertTrue(capabilities)
         self.assertTrue(all(item["operation"] ==
