@@ -7,6 +7,7 @@ information a Controller may use to choose one bounded source investigation.
 from __future__ import annotations
 
 import argparse
+from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
@@ -115,8 +116,8 @@ def build(gate0: dict, live_acceptance: dict) -> dict:
             },
         },
         "allowed_questions": list(ALLOWED_QUESTIONS),
-        "allowed_sources": list(SOURCE_REGISTRY),
-        "trusted_rights_policy": RIGHTS_POLICY,
+        "allowed_sources": deepcopy(list(SOURCE_REGISTRY)),
+        "trusted_rights_policy": deepcopy(RIGHTS_POLICY),
         "required_decision_fields": [
             "investigation_id", "question_id", "source_id",
             "hypothesis", "fixed_sample_rule", "requested_operations",

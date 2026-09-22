@@ -125,6 +125,18 @@ Record harness/commit/runtime, data/labels/objective, context/archive and the
 feature/trainer/evaluation definitions separately. Do not attribute a comparison
 across changed harnesses to the model alone. See `HARNESS_VERSIONS.md`.
 
+**Mandatory bottleneck rule (2026-09-18):** when a blocker prevents the next
+meaningful result, the outer Supervisor creates a detailed, versioned
+orchestration plan before delegating. Each bounded step needs an owner,
+dependency, output, predeclared verification and pass/fail rule, then an actual
+result with evidence. Check the matching JSON manifest with
+`supervisor_harness/bottleneck_gate.py --phase dispatch` before assignment and
+`--phase resolve` before claiming the bottleneck is solved. Assign independent
+ready work in parallel when safe, log active owners/results to the dashboard,
+and replan or explicitly block on failure. See
+`supervisor_harness/RESEARCH_SUPERVISOR.md`. This does not transfer scientific
+choices from GLM Controller to Supervisor or bypass protected-data gates.
+
 # Experiment design and observable research history
 
 Do not start empirical model experiments merely because shared unit tests pass.

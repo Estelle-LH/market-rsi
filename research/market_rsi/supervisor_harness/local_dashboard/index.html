@@ -51,20 +51,28 @@
     <div id="current-work">正在读取工作状态…</div>
     <div id="agent-logs" class="rows" style="margin-top:12px">读取中…</div>
   </section>
+  <section class="section box"><h2>Supervisor Watchdog</h2>
+    <div class="rows">
+      <div class="row"><div class="label">当前任务</div><div id="watchdog-task">尚未读取</div></div>
+      <div class="row"><div class="label">最近进展</div><div id="watchdog-progress">尚未读取</div></div>
+      <div class="row"><div class="label">故障与修复</div><div id="watchdog-incident">尚未读取</div></div>
+    </div>
+  </section>
+  <section class="section box"><h2>当前阻碍与下一步</h2><div id="bottlenecks" class="rows">读取中…</div><a href="/log/bottlenecks" target="_blank" rel="noopener">打开完整 Supervisor 阻碍状态</a></section>
   <section class="section box"><h2>新设计：谁能看到谁</h2>
     <div class="zones">
       <div class="zone"><div class="label">本机可信层</div><div>Supervisor、broker、预算账本、dashboard、独立评估器。A 是由 broker 调用的 GLM Controller：能给 B 下任务、看 B 的允许日志，但不能任意执行本机代码。</div></div>
-      <div class="zone remote"><div class="label">远端一个 E2B 工作沙箱</div><div>B Researcher 在里面做多步工具工作。B 不能直接访问或改动 A，也看不到本机密钥、账本和封存评估。Supervisor 不进沙箱。</div></div>
+      <div class="zone remote"><div class="label">本机一个隔离的 Docker B 沙箱</div><div>B Researcher 在里面做多步工具工作。B 不能直接访问或改动 A，也看不到本机密钥、账本和封存评估。</div></div>
     </div>
-    <p class="small sub">A → broker → B 下任务；broker 把 B 的允许轨迹和结果给 A 看。B 不能直接连接 A。旧“双 E2B、两边都禁止直连”的测试方向已废弃；新单沙箱方案还没跑通。</p>
+    <p class="small sub">A → broker → B 下任务；broker 把 B 的允许轨迹和结果给 A 看。B 不能直接连接 A。旧 E2B 测试已废弃；本机单 B 的合成交接已通过，但真实 GLM 研究路径还未验收。</p>
   </section>
   <section class="section box"><h2>P0：正常 A→B 交接要足够快</h2>
-    <p>Supervisor 负责定标准：一个持续运行的 B 沙箱，做 20 次小任务交接和 20 次日志回读。要求零丢失、零超时；任务交接与日志可见的 p95 各不超过 2 秒，单次不超过 5 秒。先实测，失败就重新设计，不靠加长超时。</p>
+    <p>本机 Docker B 的 20 次合成交接已通过。这只证明传输；真实 GLM 决策、任意代码隔离和预测数据入场仍要分别验收。</p>
     <div id="architecture-meta" class="small sub"></div><a href="/log/architecture" target="_blank" rel="noopener">打开完整新架构与验收规则</a>
   </section>
   <section class="section box"><h2>流程走到哪里</h2><div class="rows">
     <div class="row"><div class="label">离线连接</div><div>合成任务、broker 交接和审计测试已做；不是模型改进结果。</div></div>
-    <div class="row"><div class="label">新方向测试</div><div>待实现和验收：A 能看 B，B 不能直接访问 A；一个 B 沙箱，20 次正常交接计时。未启动付费测试。</div></div>
+    <div class="row"><div class="label">新方向测试</div><div>本机单 B 合成交接通过；真实 Controller 作者身份与 B 任意代码隔离尚未验收。未启动付费测试。</div></div>
     <div class="row"><div class="label">GLM 研究轮次</div><div id="research">读取中…</div></div>
     <div class="row"><div class="label">封存评估</div><div>未运行本版 Final；现有未触碰日期 11 个，低于预定的 20 个门槛。</div></div>
     <div class="row"><div class="label">本地透明版</div><div>这个页面先接上已有状态和监督日志；逐角色、逐工具事件还未接入。</div></div>
@@ -160,9 +168,32 @@
       const agentPanel = $('agent-logs'); agentPanel.replaceChildren();
       const archivedPanel = $('archived-agent-titles'); archivedPanel.replaceChildren();
       const activeAgents = (s.agent_logs || []).filter(agent => agent.active);
+      const blockers = (s.bottlenecks || {}).active || [];
+      const watchdog = s.watchdog || {};
+      const activeTask = watchdog.active_task || null;
+      $('watchdog-task').textContent = activeTask
+        ? `${activeTask.task_id} · ${activeTask.stage} · ${activeTask.status}`
+        : (watchdog.initialized ? '当前没有执行中的 watchdog 任务' : 'Watchdog 尚未初始化');
+      $('watchdog-progress').textContent = activeTask
+        ? `heartbeat ${localTime(activeTask.last_heartbeat_utc)}；有效进展 ${localTime(activeTask.last_progress_utc)}；累计 ${activeTask.progress_seq || 0} 次`
+        : `最近状态事件 ${localTime(watchdog.last_event_utc)}`;
+      const incidents = watchdog.incidents || [];
+      const lastIncident = incidents.length ? incidents[incidents.length - 1] : null;
+      $('watchdog-incident').textContent = lastIncident
+        ? `${lastIncident.incident_id} · ${lastIncident.classification} · 不自动重跑`
+        : '没有已登记的 watchdog 故障';
+      const blockerPanel = $('bottlenecks'); blockerPanel.replaceChildren();
+      for (const item of blockers) {
+        const row = document.createElement('div'); row.className = 'row';
+        const label = document.createElement('div'); label.className = 'label'; label.textContent = item.id;
+        const detail = document.createElement('div');
+        detail.textContent = `${item.status} · ${item.result || ''} 下一步：${item.next || '待定'}`;
+        row.append(label, detail); blockerPanel.append(row);
+      }
+      if (!blockerPanel.childElementCount) blockerPanel.textContent = '没有已登记的未解决阻碍。';
       $('current-work').textContent = activeAgents.length
-        ? `正在做：${activeAgents.map(agent => agent.title).join('、')}。Supervisor 核对新单沙箱交接架构与验收；没有训练、GLM 研究轮次或付费沙箱在跑。`
-        : '单 B 连续交接的 20 次离线测试已通过；Supervisor 正在核对真实测试的发布与预算闸门。目前没有正在运行的 subagent、训练、GLM 研究轮次或付费沙箱。';
+        ? `正在做：${activeAgents.map(agent => agent.title).join('、')}。Supervisor 逐步检查数据入场；没有训练或付费实验在跑。`
+        : 'Supervisor 正在执行 P0 数据入场计划；Gate 0 元数据核对已完成，正式验收仍关闭。目前没有运行中的 subagent、训练或付费实验。';
       for (const agent of s.agent_logs || []) {
         if (!agent.active) {
           const li = document.createElement('li'); li.textContent = agent.title;

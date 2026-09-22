@@ -1,0 +1,46 @@
+{
+  "schema": "market_controller_b_live_acceptance_v1",
+  "accepted_cycle_id": "market-rsi-controller-b-canary-20260919-03",
+  "release_tag": "market-rsi-protocol-v0.1.9",
+  "release_commit": "28a296a98cfaa3cc547f6a84346c38c9740b583d",
+  "source_sha256": "219f240c3290a4635f6b04094780c4708d5dbfb2a5356d1903b5b8343bda4c07",
+  "outer_result_sha256": "4b1ff35032d3c7587b32b46ce84b0109a29a1b54e7df57b7a903a889b3570447",
+  "provider_samples": 1,
+  "adapter_calls": 1,
+  "b_tasks": 1,
+  "metered_cost_usd_not_invoice": "0.00285525",
+  "process_exit_code": 0,
+  "process_reaped": true,
+  "exact_container_cleanup_verified": true,
+  "matching_containers_after_review": [],
+  "global_cycle_closed": true,
+  "independent_checks_passed": 18,
+  "passed": true,
+  "claim_boundaries": {
+    "bounded_live_transport_and_accounting_proven": true,
+    "formal_admission": false,
+    "full_isolation_proven": false,
+    "independent_model_identity_or_authorship_proven": false,
+    "invoice_reconciled": false,
+    "prediction_improvement_proven": false
+  },
+  "failed_precursors": [
+    {
+      "cycle_id": "market-rsi-controller-b-canary-20260919-01",
+      "stage": "encoding",
+      "cause": "missing pinned Jinja2 runtime dependency",
+      "provider_called": false,
+      "ledger_outcome": "uncertain_terminal",
+      "uncertain_upper_usd": "0.05"
+    },
+    {
+      "cycle_id": "market-rsi-controller-b-canary-20260919-02",
+      "stage": "choice",
+      "cause": "strict parser rejected one fenced JSON object plus a terminal tokenizer role marker",
+      "provider_called": true,
+      "metered_cost_usd_not_invoice": "0.00285525",
+      "ledger_outcome": "metered_terminal"
+    }
+  ],
+  "automatic_or_score_targeted_retry": false
+}

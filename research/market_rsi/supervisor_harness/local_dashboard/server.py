@@ -15,6 +15,7 @@ from pathlib import Path
 
 
 MARKET = Path(__file__).resolve().parents[2]
+REPO = MARKET.parents[1]
 STATE = MARKET / "supervisor_harness/RESEARCH_STATE.md"
 JOURNAL = MARKET / "artifacts/supervisor-global-state-20260917-01/journal.jsonl"
 LAST_KNOWN_CANARY_ID = "market-rsi-protocol-canary-20260917-03"
@@ -24,8 +25,11 @@ LOG_SOURCES = {
     "protocol": MARKET / "supervisor_harness/LIVE_PROTOCOL_DEBUG_LOG_2026-09-17.md",
     "progress": MARKET / "supervisor_harness/HUMAN_PROGRESS.md",
     "architecture": MARKET / "supervisor_harness/DIRECTIONAL_RESEARCH_ARCHITECTURE_2026-09-17.md",
+    "bottlenecks": MARKET / "supervisor_harness/BOTTLENECK_STATE_2026-09-18.json",
 }
 AGENT_LOG_INDEX = MARKET / "supervisor_harness/AGENT_LOG_INDEX_2026-09-17.json"
+BOTTLENECK_STATE = MARKET / "supervisor_harness/BOTTLENECK_STATE_2026-09-18.json"
+WATCHDOG_STATE = REPO / "artifacts/supervisor-watchdog-20260919-04/snapshot.json"
 WORKER_NAMES = (
     "protocol_canary_entry.py",
     "protocol_canary_runner.py",
@@ -310,6 +314,8 @@ def snapshot() -> dict:
         "journal": {"events": events, "active_cycles": active},
         "logs": {name: curated_log(name) for name in LOG_SOURCES},
         "agent_logs": agent_logs(),
+        "bottlenecks": read_json(BOTTLENECK_STATE),
+        "watchdog": read_json(WATCHDOG_STATE),
         "known_worker_candidates": known_workers(),
         "visibility_limit": "Role-by-role tool events are not yet connected. This page does not infer hidden work.",
     }

@@ -52,6 +52,101 @@ competing paid experiments, mutate the same frozen artifact concurrently, or
 use parallelism to skip a dependency or admission gate. Record what ran in
 parallel and whether it actually shortened the critical path.
 
+### Gate 1 executable-plan closure: three-worker wave plan (2026-09-21)
+
+The immediate bottleneck is not the Controller's research direction. Three
+independent reviews found that recent GLM decisions repeatedly selected the
+same relevant question, `2025_whole_season_trade_access` using
+`polymarket_official_trades`. The remaining blocker is executability: the
+Controller contract permits multi-market sample/query work, while the current
+trusted public broker can perform only one fixed documentation GET. A plan is
+not valid merely because its JSON passes schema validation; every requested
+operation must compile to a trusted, implemented handler and one exact request
+manifest before another paid Controller sample is allowed.
+
+The configured team has four total concurrency slots, including the outer
+Supervisor. Therefore “ten parallel tasks” means three bounded workers plus
+one integrating Supervisor, executed in dependency-aware waves. Never claim
+that ten agents ran simultaneously. Register each active worker in the agent
+log index and show its curated tail in the local dashboard.
+
+The ten-item queue is:
+
+1. Add a trusted `source x operation` capability registry and fail closed on
+   every unsupported combination.
+2. Deterministically materialize a frozen Train-only sampling rule into exact
+   sample IDs and canonical hashes; reject ambiguity, duplicates, bounds
+   errors and any Dev/Final exposure.
+3. Build an allowlisted Polymarket trades request builder/runner interface
+   with fixed host/path, market identity, time windows, pagination and hard
+   request/byte/time ceilings. Its first wave is offline only.
+4. Integrate those components into the Controller plan compiler without
+   changing the Controller's scientific choice.
+5. Produce one canonical exact-request manifest binding handler IDs, sample
+   IDs, URLs/parameters, limits and hashes.
+6. Run a zero-provider, zero-network canary that proves a valid decision can
+   compile to that manifest; unsupported plans must fail before dispatch.
+7. Run adversarial checks for model-supplied URLs, unknown parameters,
+   purchase/write/login requests, retries, budget expansion and Dev/Final
+   leakage.
+8. Independently review the diff, controlled-file manifest, tests and clean
+   release boundary. Publication needs the user's explicit authorization.
+9. Only after a verified release and fresh zero-cost production canary, request
+   one structured Controller decision under a new permanent ID, at most
+   `$0.05`, with no retry or answer selection. This needs fresh authorization.
+10. Independently review the plan, then perform the fixed public-data
+    investigation only under its separately approved network/fetch gate. A
+    negative or unknown result is terminal for that exact source plan and must
+    not trigger result-seeking resampling.
+
+Wave 1 assigns items 1--3 to separate files/owners while the Supervisor owns
+integration evidence. Wave 2 covers items 4--7 only after all three inputs are
+reviewed. Wave 3 covers items 8--10 in order; release, provider dispatch and
+real public fetch are explicit external gates, not implied by completion of
+offline code. At every wave close, record actual results rather than planned
+results, archive finished worker logs, and leave failed or blocked work visible.
+
+## Mandatory bottleneck orchestration (2026-09-18)
+
+When a bottleneck blocks the next meaningful result, the outer Supervisor owns
+its resolution. Before delegation, create a versioned plan here, using
+`P0_DATA_ADMISSION_ORCHESTRATION_2026-09-18.md` as the detail standard. Record
+the observed symptom and evidence, precise goal, protected boundaries, and
+whole-bottleneck acceptance check. Every bounded step needs an owner,
+dependencies, action, expected artifact, verification procedure, predeclared
+pass condition, failure/replan action, and time bound. After execution, record
+the observed result, verifier, and evidence path/hash. Intention is not result.
+
+Maintain a matching `supervisor_bottleneck_plan_v1` JSON manifest and run
+`bottleneck_gate.py PLAN --phase dispatch` **before** task assignment.
+`bottleneck_gate.py PLAN --ready-step STEP` must also pass immediately before
+each exact step is assigned: failed dependencies or named external gates block
+dispatch until a new versioned plan records their resolution. Assign ready
+independent steps in parallel when safe; never parallelize a dependency,
+shared mutable artifact, or competing paid runs. Add each assignment to
+`AGENT_LOG_INDEX_2026-09-17.json` and a readable start/result to
+`LOCAL_DEBUG_ACTIVITY_2026-09-17.md` so the dashboard shows active owners and
+latest logs. One Supervisor merges evidence and guards the global ledger.
+Independently verify each completed task. If it fails, preserve the artifact,
+diagnose the cause, and version a revised plan or explicitly mark blocked.
+
+Before reporting “resolved”, run `bottleneck_gate.py PLAN --phase resolve`.
+This requires a passing receipt and intact evidence hash for **every** step
+plus a separate whole-bottleneck acceptance result. Inspect evidence content,
+not just the hash. Archive finished tasks below active ones; leave unresolved
+issues visibly active or blocked. The plan does not give the Supervisor the
+Controller's scientific authority or override any canary, data or budget gate.
+This code checks Supervisor plans; no live controller-led experiment runner is
+yet wired to enforce the sequence end-to-end.
+
+Maintain the separate `BOTTLENECK_STATE_2026-09-18.json` board for **every
+currently unresolved** operational/scientific bottleneck: status, plan, actual
+result, next bounded action and evidence. Validate it with
+`bottleneck_gate.py --state BOARD --repo-root REPO` at each work-block close.
+The dashboard reads this board live. Do not use it to silently revise the
+protected `RESEARCH_STATE.md` or its append-only journal; a changed protected
+decision still needs their synchronized revision procedure.
+
 ## Recursive work loop (user direction, 2026-09-17)
 
 The research objective persists across turns and scheduled wakes. After each
