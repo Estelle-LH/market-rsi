@@ -1,13 +1,14 @@
 import copy
+from decimal import Decimal
 import json
 from pathlib import Path
 import tempfile
 import unittest
 
-from glm_canary import HF_MODEL
+from glm_canary import HF_MODEL, cost
 from supervisor_harness.p0_gate1_executable_plan_canary_fixtures import VALID_DECISION
 from supervisor_harness.p0_gate1_controller_adapter import (
-    OfflineGate1ProviderFake, PROPOSE_TOOL, SUBMIT_TOOL,
+    MAX_OUTPUT_TOKENS, OfflineGate1ProviderFake, PROPOSE_TOOL, SUBMIT_TOOL,
     _available_capabilities, _submission_parameters,
     expected_packet, request_turn, run,
 )
@@ -75,6 +76,11 @@ def proposal():
 
 
 class Gate1ControllerAdapterTests(unittest.TestCase):
+    def test_output_cap_fits_frozen_packet_under_single_sample_gate(self):
+        self.assertEqual(MAX_OUTPUT_TOKENS, 2944)
+        self.assertLessEqual(cost(2819, MAX_OUTPUT_TOKENS),
+                             Decimal("0.05"))
+
     def test_next_input_preserves_prior_choice_and_exact_available_handlers(self):
         packet = expected_packet()
         feedback = packet["prior_controller_feedback"]

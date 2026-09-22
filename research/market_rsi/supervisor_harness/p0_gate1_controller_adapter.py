@@ -37,7 +37,12 @@ ADAPTER_SCHEMA = "market_p0_gate1_controller_adapter_v4"
 REQUEST_SCHEMA = "market_p0_gate1_controller_request_v4"
 PROVIDER_RECEIPT_SCHEMA = "market_p0_gate1_controller_provider_receipt_v1"
 RESULT_SCHEMA = "market_p0_gate1_controller_adapter_result_v4"
-MAX_OUTPUT_TOKENS = 3072
+# The frozen no-catalog v0.1.19 packet pre-encodes to 2,819 input tokens.
+# 3,072 output tokens put its hard upper at $0.05102514, above the separately
+# authorized $0.05 single-sample gate. A 2,944-token cap leaves a margin while
+# keeping far more room than the last 379-token decision used. Preflight still
+# recomputes the actual upper from the exact next packet and fails closed.
+MAX_OUTPUT_TOKENS = 2944
 SAMPLE_TIMEOUT_SECONDS = 90
 MAX_COST_UPPER_USD = Decimal("0.05")
 SUBMIT_TOOL = "submit_gate1_decision"
