@@ -1,0 +1,73 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "gate1-tool-format-boundary-20260922-05",
+  "supersedes": "gate1-tool-format-boundary-20260922-04",
+  "symptom": "Two separate terminal GLM decisions failed formatting. The first paraphrased an exact rule. The second raw text included the exact rule but malformed arg_key/arg_value tags around max_minutes_placeholder, so its parsed submission lacked required question_id. The earlier simple-extra-field diagnosis was wrong. Neither made a task or data fetch.",
+  "source_evidence": "GATE1_V018_RULE_VISIBILITY_FAILURE_2026-09-22.md and corrected GATE1_V020_FIRST_RESPONSE_FAILURE_2026-09-22.md; -02 immutable raw-response.txt SHA-256 b34b169ba79b1ecebb55c127c350ef568a982c518f0c4454459bc1c357bcb4bb.",
+  "objective": "Close the malformed-tool-body acceptance gap, then reduce one-shot Controller submission friction without silently repairing old model responses, choosing science for the Controller, or relaxing protected data and budget gates.",
+  "boundary": "Offline diagnosis and tests only. No paid retry, no relabeling failed responses, no data fetch, admission, training, protected evaluation or purchase. Any future Controller call needs a newly reviewed source version, canary, fresh ID and exact budget check.",
+  "resolution_check": "First require full-body tool-call grammar coverage: exact paired tags, unique valid keys, and rejection of any unparsed body fragment. Confirm the published Tinker route cannot be assumed to enforce JSON Schema or grammar. Then compare a smaller trusted interface and stronger-controller option with explicit tradeoffs. A broad drop-extra-field projection is not a repair for the observed malformed tags.",
+  "supervisor_owner": "Supervisor · Market RSI",
+  "steps": [
+    {
+      "id": "offline_format_audit",
+      "owner": "Independent format-boundary researcher",
+      "action": "Read-only inspect both immutable responses, pinned GLM parser, pinned Tinker SDK and official API documentation; report exact cause, parser counterexamples, feasible alternatives and limits.",
+      "depends_on": [],
+      "write_paths": ["research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_FORMAT_OPTIONS_2026-09-22.md"],
+      "expected_artifact": "Source-linked options memo and non-mutating synthetic parser counterexamples",
+      "verification": "Supervisor cross-checks raw hash, code lines, official API fields and absence of paid/data calls.",
+      "pass_condition": "Accurate raw-cause explanation and a defensible recommended first repair with unknowns.",
+      "failure_action": "Keep paid gate closed and continue local parser/runtime diagnosis.",
+      "time_bound_minutes": 35,
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent offline audit corrected the -02 cause, demonstrated the ignored-tail counterexample, and checked the pinned Tinker route against local SDK and official docs; paid Gate 1 remains REPLAN.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "AGENT_LOG_GATE1_FORMAT_OPTIONS_2026-09-22.md",
+        "evidence_sha256": "b5b3936008f77e15e1ec4de046a87691db6987e72cae2de5a687744ba62bd761"
+      }
+    },
+    {
+      "id": "strict_parser_repair",
+      "owner": "Supervisor · Market RSI",
+      "action": "Predeclare accepted and rejected raw-output classes, then make the general parser reject malformed tags and any unconsumed tool-body text; keep restart behavior only where already documented and tested. Test observed -02 replay remains invalid and synthetic ignored-tail counterexample becomes invalid.",
+      "depends_on": ["offline_format_audit"],
+      "expected_artifact": "Versioned interface decision, focused source/test diff, adversarial test output",
+      "verification": "No semantic repair of old responses; exact keys and value types, source/operation pairing, budget, rights, Dev/Final barriers and immutable IDs unchanged. Independent review before release.",
+      "pass_condition": "Parser rejects all malformed/unparsed fragments under focused regression suite and existing valid calls still parse.",
+      "failure_action": "Preserve invalid outcomes and block provider call; investigate smallest separate interface change.",
+      "time_bound_minutes": 40,
+      "result": {
+        "verdict": "pass",
+        "observed": "Strict full-body parser repair is present but uncommitted. Exact historical -02 remains rejected; synthetic ignored-tail and malformed-tag probes reject; valid whitespace and documented restart accept. Independent scoped code review PASS, not paid-release PASS. 127/127 P0 Gate 1 tests and 20/20 parser/schema tests passed locally.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "AGENT_LOG_GATE1_STRICT_PARSER_REVIEW_2026-09-22.md",
+        "evidence_sha256": "bdcacbf73dfeb1d1b13c68457838e783d70aa69b314d39d531bd0376d2a44be7"
+      }
+    },
+    {
+      "id": "controller_interface_decision",
+      "owner": "Supervisor · Market RSI",
+      "action": "Choose whether to reduce the Controller's exact serialization burden while leaving it free to select the research question/source. Compare short trusted IDs, broker-derived bounds and model switch; document what remains Controller-authored versus runner-derived.",
+      "depends_on": ["strict_parser_repair"],
+      "expected_artifact": "Auditable design decision and dry-run tests, with no claim that a future model sample will comply",
+      "verification": "A new first response remains the only Controller decision; no replay, score-driven retry or hidden evaluation exposure.",
+      "pass_condition": "Clear minimal interface and release/canary path, or explicit blocker with cause.",
+      "failure_action": "Keep paid decision closed and report unresolved interface risk.",
+      "time_bound_minutes": 40,
+      "result": {
+        "verdict": "pass",
+        "observed": "The shorter five-field, eight-choice Controller interface passed independent integrated review. Trusted code derives fixed execution details; original choice and derived plan are separately recorded and checked by the outer replay. Strict parser repair and interface were published together as annotated v0.1.21 at f06214b3bb521096078d897fe60ec9ba589c00c6, controlled 324-file digest 872f05ae48fa49deeb811bc6ca4705652168f198b5f1f9d69d3ce172ad0986da. Final 132 P0 and 20 parser/schema tests passed. Fresh postrelease production-CLI no-catalog synthetic canary passed with zero provider calls, zero real cost, no fetch or data admission. This is not a valid paid Controller plan or prediction improvement.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "AGENT_LOG_GATE1_SHORT_CHOICE_REVIEW_2026-09-22.md",
+        "evidence_sha256": "f237bea2a3865e1d24b36c2d52dac9c351297a3264d135a7dced92f488a77518"
+      }
+    }
+  ],
+  "resolution": {
+    "verdict": "pass",
+    "observed": "The integrated strict parser and short-choice boundary passed an independent source review, exact remote annotated-tag verification, and a fresh postrelease production-CLI synthetic no-catalog canary. This resolves the engineering format-boundary work only; the next real GLM response, source investigation, data admission, and prediction experiment remain untested.",
+    "reviewer": "Independent Gate 1 integrated reviewer and Supervisor postrelease verification"
+  }
+}

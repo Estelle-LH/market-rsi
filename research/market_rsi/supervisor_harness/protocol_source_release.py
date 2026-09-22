@@ -94,6 +94,20 @@ PROTOCOL_FILES = (
     "supervisor_harness/p0_gate1_plan_compiler.py",
     "supervisor_harness/p0_gate1_executable_plan_canary_fixtures.py",
     "supervisor_harness/run_p0_gate1_executable_plan_canary.py",
+    # Reviewed P0 candidate-admission components are controlled together.
+    # Their inclusion changes the next source manifest only; it does not move
+    # published v0.1.21, authorize a provider call, or admit Train data.
+    "supervisor_harness/build_2024_train_candidate_ledger.py",
+    "supervisor_harness/test_build_2024_train_candidate_ledger.py",
+    "supervisor_harness/p0_2024_outcome_orientation.py",
+    "supervisor_harness/test_p0_2024_outcome_orientation.py",
+    "supervisor_harness/formal_train_admission.py",
+    "supervisor_harness/test_formal_train_admission.py",
+    "supervisor_harness/test_supervisor_watchdog.py",
+    "supervisor_harness/p0_polymarket_v2_cursor_acquisition.py",
+    "supervisor_harness/test_p0_polymarket_v2_cursor_acquisition.py",
+    "supervisor_harness/p0_candidate_admission_integration.py",
+    "supervisor_harness/test_p0_candidate_admission_integration.py",
 )
 DATA_HARNESS_FILES = tuple(str(path.relative_to(REPO / PREFIX))
                            for path in data_harness_release.source_files(REPO / PREFIX))

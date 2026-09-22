@@ -1,0 +1,72 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "gate1-controller-cost-envelope-20260922-03",
+  "symptom": "After v0.1.19 passed post-release canary, the exact next packet encoded to 2,819 input tokens; the prior 3,072 output-token cap reserved $0.05102514, above the authorized $0.05 one-shot gate. No paid call was made.",
+  "source_evidence": "GATE1_V019_RELEASE_CANARY_2026-09-22.md and offline pinned-tokenizer preflight at 2026-09-22 05:05 UTC",
+  "objective": "Reduce only the Gate 1 output-token hard ceiling enough to fit the exact published packet, then independently review, version and canary before any fresh provider call.",
+  "boundary": "Original $200 total cap and $0.05 single-shot gate stay unchanged. No reuse of failed IDs, no network fetch, training, data admission or hidden-set access. A new protocol tag and canary are mandatory after the source edit.",
+  "resolution_check": "Pinned tokenizer recomputes exact packet input and worst-case output cost; independent reviewer checks unchanged semantics and all Gate 1 tests; Supervisor verifies exact fork release, post-release zero-provider canary, budget/process/state and fresh ID.",
+  "supervisor_owner": "Supervisor · Market RSI",
+  "steps": [
+    {
+      "id": "bounded_token_cap",
+      "owner": "Supervisor · Market RSI",
+      "action": "Change MAX_OUTPUT_TOKENS from 3072 to 2944 without changing the Controller packet or scientific question; calculate exact $0.04946994 worst-case upper and run adjacent tests.",
+      "depends_on": [],
+      "expected_artifact": "Exact tokenizer cost receipt and scoped test result",
+      "verification": "2,819 input-token exact packet, 2,944 maximum output tokens, upper <= $0.05; 127 Gate 1 tests pass and no provider call occurs.",
+      "pass_condition": "Bound fits without weakening the global or single-shot budget gate; no other source behavior changes.",
+      "failure_action": "Keep paid work closed and replan the packet/cost envelope.",
+      "time_bound_minutes": 15,
+      "result": {
+        "verdict": "pass",
+        "observed": "Pinned offline tokenizer measured 2819 input tokens. Hard upper fell from $0.05102514 at 3072 output tokens to $0.04946994 at 2944; 127/127 Gate 1 tests pass with no provider call.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "GATE1_COST_ENVELOPE_EVIDENCE_2026-09-22.md",
+        "evidence_sha256": "731ffc524462403406d83eb46bf8316b84b54c403e4592d49e0d9cc6ec9d9342"
+      }
+    },
+    {
+      "id": "independent_cost_review",
+      "owner": "Independent Gate 1 reviewer",
+      "action": "Read-only review the exact two-file diff, cost calculation, adjacent tests and risk that a shorter output cap truncates valid plans.",
+      "depends_on": ["bounded_token_cap"],
+      "write_paths": ["research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_COST_REVIEW_2026-09-22.md"],
+      "expected_artifact": "Source-hashed PASS/REPLAN report",
+      "verification": "Supervisor checks exact hash, changed paths, cost and test evidence.",
+      "pass_condition": "Narrow bounded cap with honest residual risk and no permission expansion.",
+      "failure_action": "Do not release or call provider; amend with new plan version.",
+      "time_bound_minutes": 20,
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent reviewer re-encoded exact packet with pinned offline tokenizer: 2819 input; upper $0.05102514 before and $0.04946994 after the 128-token cap reduction. 127/127 tests pass, preflight $0.05 gate unchanged; truncation and ~109-token margin caveats recorded.",
+        "reviewer": "Independent Gate 1 reviewer",
+        "evidence_path": "AGENT_LOG_GATE1_COST_REVIEW_2026-09-22.md",
+        "evidence_sha256": "e10b9732172e88fdadfe3ec74e0418df31f1de39914fec540709cad989e6e0af"
+      }
+    },
+    {
+      "id": "new_release_canary",
+      "owner": "Supervisor · Market RSI",
+      "action": "Stage two reviewed files only, commit/tag/push to user's fork, verify exact source and run a fresh zero-provider production CLI canary.",
+      "depends_on": ["independent_cost_review"],
+      "expected_artifact": "New immutable release and passing no-provider canary",
+      "verification": "Exact staged paths, source hash, tag/branch remote, provider_calls=0, fetch=false, real cost=0; ledger/state/process fresh preflight afterward.",
+      "pass_condition": "Published source/canary match and no paid process was launched before the bound was fixed.",
+      "failure_action": "Stop before provider; preserve failure and diagnose.",
+      "time_bound_minutes": 30,
+      "result": {
+        "verdict": "pass",
+        "observed": "Only two reviewed code/test files were committed as e2a3480 and v0.1.20 atomically pushed to user's fork; published source digest 0f5298d1...dcdcdb verified. Fresh no-catalog production-CLI canary passed with zero provider calls, fetch and actual cost.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "GATE1_V020_RELEASE_CANARY_2026-09-22.md",
+        "evidence_sha256": "bdb5b07fe98408484d9195c438f76e91e681f78902d337e43aa272e44201b908"
+      }
+    }
+  ],
+  "resolution": {
+    "verdict": "pass",
+    "observed": "The exact frozen packet's worst-case cost is under the unchanged single-shot cap, and the amended source is independently reviewed, published and zero-provider canaried. This resolves the cost-envelope blocker only, not data admission or prediction performance.",
+    "reviewer": "Independent Gate 1 reviewer for scoped cost change; Supervisor for release and canary"
+  }
+}

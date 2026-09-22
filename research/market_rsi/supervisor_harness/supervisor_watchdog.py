@@ -18,6 +18,10 @@ from pathlib import Path
 import re
 import tempfile
 
+from supervisor_harness.formal_train_admission import (
+    validate_formal_train_admission,
+)
+
 
 SCHEMA = "market_supervisor_watchdog_v1"
 INCIDENT_SCHEMA = "market_supervisor_incident_v1"
@@ -204,6 +208,11 @@ class SupervisorWatchdog:
                    input_sha256: str, process_identity: dict | None = None,
                    container_identity: dict | None = None,
                    data_admission_sha256: str | None = None,
+                   data_admission_receipt_path: Path | None = None,
+                   data_admission_dataset_path: Path | None = None,
+                   data_admission_question_id: str | None = None,
+                   data_admission_season_ids: tuple[str, ...] | None = None,
+                   data_admission_controller_task_sha256: str | None = None,
                    now: datetime | None = None) -> dict:
         with self._locked():
             state = self._replay()
@@ -212,9 +221,30 @@ class SupervisorWatchdog:
             _identifier(task_id, "task ID")
             if task_kind not in TASK_KINDS:
                 raise ValueError("invalid task kind")
+            validated_admission = None
             if task_kind in {"training", "evaluation"}:
-                _sha(data_admission_sha256, "data admission")
-            elif data_admission_sha256 is not None:
+                if (data_admission_sha256 is None
+                        or data_admission_receipt_path is None
+                        or data_admission_dataset_path is None
+                        or data_admission_question_id is None
+                        or data_admission_season_ids is None
+                        or data_admission_controller_task_sha256 is None):
+                    raise ValueError(
+                        "exact validated formal Train admission receipt required")
+                validated_admission = validate_formal_train_admission(
+                    data_admission_receipt_path,
+                    expected_receipt_sha256=data_admission_sha256,
+                    dataset_path=data_admission_dataset_path,
+                    expected_question_id=data_admission_question_id,
+                    expected_season_ids=data_admission_season_ids,
+                    expected_controller_task_sha256=(
+                        data_admission_controller_task_sha256))
+            elif (data_admission_sha256 is not None
+                  or data_admission_receipt_path is not None
+                  or data_admission_dataset_path is not None
+                  or data_admission_question_id is not None
+                  or data_admission_season_ids is not None
+                  or data_admission_controller_task_sha256 is not None):
                 raise ValueError("data admission receipt is only bound to training/evaluation")
             _identifier(stage, "stage")
             _identifier(owner, "owner")
@@ -248,6 +278,19 @@ class SupervisorWatchdog:
                        "process_identity": process_identity,
                        "container_identity": container_identity,
                        "data_gate": None, "incident_id": None}
+            if validated_admission is not None:
+                payload.update({
+                    "data_admission_receipt_id": validated_admission["receipt_id"],
+                    "data_admission_issuer_id": validated_admission["issuer_id"],
+                    "dataset_id": validated_admission["dataset_id"],
+                    "dataset_sha256": validated_admission["dataset_sha256"],
+                    "dataset_bytes": validated_admission["dataset_bytes"],
+                    "dataset_path": str(data_admission_dataset_path),
+                    "data_admission_question_id": validated_admission["question_id"],
+                    "data_admission_season_ids": validated_admission["season_ids"],
+                    "data_admission_controller_task_sha256": (
+                        validated_admission["controller_task_sha256"]),
+                })
             return self._append("task_claim", payload, now)
 
     def close_success(self, task_id: str, *, result_sha256: str,

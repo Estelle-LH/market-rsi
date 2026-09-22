@@ -1,0 +1,94 @@
+{
+  "schema": "market_supervisor_bottleneck_state_v1",
+  "updated_utc": "2026-09-22T20:38:00Z",
+  "owner": "outer Codex Supervisor",
+  "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
+  "active": [
+    {
+      "id": "p0-candidate-admission-integration-20260922-01",
+      "status": "first_integration_replan_two_causal_fixes_active",
+      "plan": "research/market_rsi/supervisor_harness/SUPERVISOR_P0_ADMISSION_INTEGRATION_2026-09-22-v1.json",
+      "result": "The first integration snapshot passed its author and Supervisor suites but independent review reproduced two causal gaps: recommitted generic provider/network/formal-training/improvement authority fields could be true, and a transient ancestor-directory symlink swap to a same-inode hardlink could evade the final pathname check. Verdict is REPLAN, not PASS. The consumer bytes have already changed and are unreviewed. No release, admission, network or paid work occurred.",
+      "next": "Implementation owner is producing a fresh stable snapshot with generalized authority rejection and an end-to-end held/validated ancestor descriptor chain plus adversarial tests. Then version the plan evidence and run a fresh independent rereview before resolve.",
+      "evidence": "research/market_rsi/supervisor_harness/AGENT_LOG_P0_ADMISSION_INTEGRATION_IMPLEMENTATION_2026-09-22.md",
+      "provider_cost_usd": "0"
+    },
+    {
+      "id": "p0-gate1-supervisor-current-20260921-01",
+      "status": "v021_launch_ready_not_authorized_2024_ledger_orientation_scoped_pass_integration_rights_pending",
+      "result": "Two earlier one-shot GLM decisions remain terminal formatting failures, metered $0.01666737 and $0.01790424, with no task, fetch, Train admission, prediction or Dev/Final read. The observed malformed-tag cause is preserved. Strict parsing plus a five-field short-choice interface passed independent integrated review, 132 Gate 1 and 20 parser/schema tests, was published as annotated v0.1.21 at f06214b3bb521096078d897fe60ec9ba589c00c6 only to the user's fork, and passed a fresh postrelease production-CLI zero-provider canary. The 324-file controlled source hash is 872f05ae48fa49deeb811bc6ca4705652168f198b5f1f9d69d3ce172ad0986da. A fresh packet was generated and offline encoded at 3310 input/2750 maximum output tokens with $0.0494991 hard upper. The global-state document/journal mismatch was detected and reconciled by a reasoned decision revision while idle; no new paid call or data fetch has occurred. The $200 ledger remains $85.122553742 metered, $0.071505532 setup available, and $2.30 historically reserved; real Train catalog is absent.",
+      "next": "Formal Train receipt, v2 cursor, exact 285-game ledger and bytes-only orientation verifier now have scoped independent offline PASS. They are not one admitted production path: add all modules to controlled release, build a non-test consumer that owns canonical path/symlink and TOCTOU guarantees, and independently verify rights/provider timing before any admission. Keep event 17330 explicitly unresolved. Any new Controller call still requires fresh authorization and perishable-state checks under unused ID market-rsi-gate1-controller-20260922-03.",
+      "plan": "research/market_rsi/supervisor_harness/SUPERVISOR_GATE1_FORMAT_BOUNDARY_2026-09-22-v5.json",
+      "coordination_plan": "research/market_rsi/supervisor_harness/SUPERVISOR_PARALLEL_READINESS_2026-09-22-v1.json",
+      "active_engineering_plan": "research/market_rsi/supervisor_harness/SUPERVISOR_PARALLEL_ENGINEERING_2026-09-22-v1.json",
+      "evidence": "research/market_rsi/supervisor_harness/GATE1_V020_FIRST_RESPONSE_FAILURE_2026-09-22.md",
+      "provider_cost_usd": "0.03457161"
+    },
+    {
+      "id": "outer-supervisor-watchdog-live-runner-binding",
+      "status": "bounded_parent_published_gate1_live_path_seen_general_research_containment_pending",
+      "plan": "research/market_rsi/supervisor_harness/BOTTLENECK_ORCHESTRATION_CHANGE_2026-09-18.md",
+      "result": "The live bounded entry now refuses to read the provider credential unless an outer Supervisor claim matches its exact child PID/command, Supervisor PID/command, cycle ID and durable watchdog head. The fixed parent owns the child command/log, maps the authoritative PaidBudget state, hashes allowlisted artifacts as material progress, emits heartbeats, and performs exact PID/Docker cleanup on a stall or child failure. A nominal success requires independent child/container absence and terminal budget state. Sixty-eight adjacent tests pass. Fresh zero-paid canary supervisor-live-parent-blocked-20260921-03 exercised the final dual-identity bytes with a real blocked macOS child and Docker container; it created one incident/repair packet, verified both absent, made no provider call, cost zero, and passed a separate fifteen-check review.",
+      "next": "The bounded parent is in the published source and the v0.1.21 postrelease zero-provider Gate 1 production-CLI path passed. Two earlier one-shot live Gate 1 decisions closed and cleaned up. Do not confuse this limited Controller plan path with arbitrary code/researcher containment; before broader recursive research, independently test and review the exact local-B code/tool boundary. Paid prediction remains blocked by real data admission.",
+      "evidence": "artifacts/supervisor-live-parent-blocked-20260921-03/canary-result.json",
+      "provider_cost_usd": "0"
+    },
+    {
+      "id": "p0-data-admission-20260918-01",
+      "status": "v021_controller_interface_ready_2024_candidate_ledger_orientation_scoped_pass_rights_integration_pending",
+      "plan": "artifacts/p0-data-admission-gate0-20260918-01/plan.json",
+      "completed": ["gate0_exposure_inventory"],
+      "result": "v0.1.21 is published with 324 controlled files, strict parser, five-field short-choice interface, independent review and fresh zero-provider canary. Two earlier GLM responses failed formatting and remain terminal; their combined new metered cost is $0.03457161. No valid live Controller data plan, real Train catalog, public fetch, formal admission, training or sealed evaluation read yet. The no-catalog lane allows only bounded documentation investigation or non-executable proposal.",
+      "next": "Integrate the independently reviewed 285-row ledger and 284 candidate orientation receipts into a controlled non-test admission consumer, preserving 2024_22_KC_PHI/event 17330 as explicitly missing. Close canonical-path/symlink and post-claim TOCTOU at the consumer. Exact data rights and provider publish/local receive provenance remain external gates; a Controller proposal does not authorize fetch or admission.",
+      "evidence": "research/market_rsi/supervisor_harness/P0_GATE1_TRUSTED_SCHEMA_REPAIR_REVIEW_2026-09-21.md",
+      "paid_provider_spend_usd": "0.02385774"
+    },
+    {
+      "id": "p0-untouched-final-20260918",
+      "status": "blocked",
+      "plan": "research/market_rsi/supervisor_harness/SUPERVISOR_FINAL_NONEXPOSURE_2026-09-22-v1.json",
+      "result": "Independent metadata audit completed for the precommitted 2026-09-20 to 2026-11-02 window: the immutable candidate remains unchanged, but complete access history, label non-exposure, research-use rights, and same-mechanism market coverage are not independently verified. Zero reserved-window rows in the existing ledger are not proof of no access. No candidate price, label, trade, score or outcome was opened in this audit. Candidate remains unadmitted; this is an evidence gap, not proof of contamination. Old 2025 Final has only 11 dates.",
+      "next": "Do not open outcomes or silently replace dates. Preserve this candidate unadmitted. Seek independently auditable access-history and source/coverage receipts; if non-exposure cannot be proven, precommit a future schedule-only window before its first event under advisor-reviewed scope. Meanwhile advance Train-only Controller/data investigation separately.",
+      "evidence": "research/market_rsi/supervisor_harness/AGENT_LOG_FINAL_NONEXPOSURE_2026-09-22.md"
+    },
+    {
+      "id": "prediction-experiment-v1-data-admission",
+      "status": "draft_valid_blocked_on_data_admission",
+      "plan": "research/market_rsi/PREDICTION_EXPERIMENT_DESIGN_2026-09-21.md",
+      "result": "A machine-checked non-executable experiment draft now freezes the prediction-only A/B boundary, identical rows, chronological Train/Route-Dev/Audit-Dev/Final roles, at least 20 untouched Final dates, strong-baseline comparison, paired date-block inference and zero current execution authority. Data, target, split, baseline and formal budget hashes remain null by design.",
+      "next": "After a valid published Gate 1 Controller plan, execute the bounded public-source audit and formal data admission. Then use opened Train only to select and hash one target and one strong baseline before any Dev result is opened.",
+      "evidence": "research/market_rsi/PREDICTION_EXPERIMENT_DRAFT_2026-09-21.json",
+      "provider_cost_usd": "0"
+    },
+    {
+      "id": "controller-research-task-contract",
+      "status": "bounded_plan_and_fetch_contract_offline_pass_live_binding_missing",
+      "plan": "research/market_rsi/supervisor_harness/P0_CONTROLLER_B_PLAN_2026-09-18-v3.json",
+      "result": "The complete bounded live chain passed for one allowlisted public hash task. That proves one GLM sample, broker handoff, one local Docker-B task, metered settlement and exact cleanup. It does not prove arbitrary research tools, data access, code execution or formal prediction admission.",
+      "next": "The limited live Controller-to-local-B hash task and Gate 1 one-shot plan path have separate evidence. General research tools, model-authored code and end-to-end self-evolution remain unproven; require exact broker permissions, local-B containment, source version, state/budget canaries and independent review before claiming that broader loop.",
+      "evidence": "research/market_rsi/supervisor_harness/P0_CONTROLLER_B_LIVE_ACCEPTANCE_2026-09-19.json"
+    }
+  ],
+  "resolved_this_session": [
+    {
+      "id": "live-controller-to-b-bounded-transport",
+      "result": "Fresh cycle market-rsi-controller-b-canary-20260919-03 passed the complete bounded chain with one provider sample, one adapter call and one local Docker-B task. Independent review passed 18 checks; metered cost was $0.00285525; exact container cleanup passed. Failed precursors remain immutable and were not retried under the same ID.",
+      "evidence": "research/market_rsi/supervisor_harness/P0_CONTROLLER_B_LIVE_ACCEPTANCE_2026-09-19.json"
+    },
+    {
+      "id": "parallel-subagent-dispatch-20260918",
+      "result": "New-agent spawn failed with task-store paginated_threads error. Follow-up dispatch to two existing agents succeeded; both were observed running. No failed spawn was counted as completed work.",
+      "evidence": "AGENT_LOG_P0_SOURCE_RIGHTS_2026-09-18.md and AGENT_LOG_P0_CONTROLLER_B_GATE_2026-09-18.md"
+    },
+    {
+      "id": "local-artifact-write-permission-20260918",
+      "result": "Initial sandbox write was denied; exact-path approved execution wrote only a fresh metadata Gate 0 artifact directory.",
+      "evidence": "artifacts/p0-data-admission-gate0-20260918-01/admission-baseline.json"
+    },
+    {
+      "id": "dashboard-sandbox-visibility-20260918",
+      "result": "A sandboxed curl to localhost failed and a sandboxed server bind was denied. An approved bind returned address-in-use; an approved request to the documented /api/status endpoint returned live state including all three blockers. Dashboard was already running; no duplicate service was launched.",
+      "evidence": "research/market_rsi/supervisor_harness/local_dashboard/server.py"
+    }
+  ]
+}

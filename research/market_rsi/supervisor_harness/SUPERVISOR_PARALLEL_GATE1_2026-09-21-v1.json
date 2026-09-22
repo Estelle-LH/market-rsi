@@ -1,0 +1,72 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "gate1-relaxed-controller-review-wave-20260921-01",
+  "symptom": "The single real Controller answer was blocked by a mismatch between advertised capabilities and executable broker handlers; a locally revised packet and adapter are unreviewed and no real Train catalog is admitted.",
+  "source_evidence": "GATE1_ORIGINAL_CONTROLLER_PROPOSAL_FEASIBILITY_2026-09-22.md, SUPERVISOR_ROADMAP_2026-09-21.md, HUMAN_PROGRESS.md, and canary market-rsi-gate1-relaxed-packet-canary-20260921-02",
+  "objective": "Independently audit the exact revised Controller boundary and the separate data-admission dependency, integrate factual findings once, then obtain a read-only verdict on a single source snapshot before considering release or paid work.",
+  "boundary": "Read-only audits of the canonical local checkout. Workers may write only their own dedicated log; no source edits, publication, paid GLM call, public fetch, data purchase, Train admission, Dev/Final access or budget mutation. The Supervisor owns integration and sole budget ledger.",
+  "resolution_check": "One final reviewer checks the integrated evidence, source hash, capability honesty, data-role boundary, tests and canary; any P0 mismatch is REPLAN. This offline verdict cannot itself authorize release, provider execution or real-data admission.",
+  "supervisor_owner": "Supervisor · Market RSI",
+  "parallel_work": {
+    "base_source_sha256": "48b7b78f2839dc1a215cce28627956f890359ad23bf21a63b4fe5e7fcb614afa",
+    "worker_step_ids": ["controller_boundary_audit", "real_data_dependency_audit"],
+    "integration_step_id": "supervisor_integration",
+    "review_step_id": "final_independent_review"
+  },
+  "steps": [
+    {
+      "id": "controller_boundary_audit",
+      "owner": "Gate 1 boundary audit task 01a0c589-757c-7991-8ed7-164d8eb5eb2c",
+      "action": "Read-only inspect the canonical checkout's revised Gate 1 packet, adapter, exact capability registry, production parent/outer and fresh no-catalog canary. Find executable mismatch, provenance or cost leaks; report precise file/line evidence and PASS or REPLAN. Do not rely on this task's older worktree snapshot.",
+      "depends_on": [],
+      "write_paths": ["research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_RELAXED_BOUNDARY_AUDIT_2026-09-21.md"],
+      "expected_artifact": "Dedicated boundary audit log with source digest, attack cases, observed tests/canary and verdict",
+      "verification": "Supervisor checks cited code, source digest and each reproducible counterexample against canonical checkout; no write outside log and no provider/fetch.",
+      "pass_condition": "All advertised current actions map to implemented trusted handlers or explicitly review-only proposals; no unavailable trade action or budget bypass is represented as executable.",
+      "failure_action": "Preserve REPLAN and exact counterexample; repair only causal layer under a new source snapshot before final review.",
+      "time_bound_minutes": 45
+    },
+    {
+      "id": "real_data_dependency_audit",
+      "owner": "P0 data dependency task 01a0c597-6623-7781-8a24-945b89e91c6e",
+      "action": "Read-only verify whether an already-reviewed real Train catalog/rights/coverage commitment exists in the canonical checkout, and identify the smallest lawful next action for Controller-led data investigation without choosing the scientific source. Report known, unknown and blockers, with paths/hashes.",
+      "depends_on": [],
+      "write_paths": ["research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_REAL_DATA_DEPENDENCY_2026-09-21.md"],
+      "expected_artifact": "Dedicated data-dependency audit log with catalog and rights evidence, exact missing gates, and no fabricated admission",
+      "verification": "Supervisor cross-checks catalog registry and evidence files; confirms no protected benchmark/Dev/Final read and no data fetch.",
+      "pass_condition": "States whether real Train trading is executable now and what exact evidence is missing, without silently admitting synthetic or incomplete data.",
+      "failure_action": "Mark unknown instead of passed; preserve uncertainty and route the next evidence question to Controller after lawful release.",
+      "time_bound_minutes": 45,
+      "result": {
+        "verdict": "pass",
+        "observed": "Read-only audit found only a synthetic catalog registered and real Train trade execution blocked; Supervisor cross-checked key registry/outer claims and preserved detailed unknowns.",
+        "reviewer": "Supervisor · Market RSI, checking independent data-dependency task",
+        "evidence_path": "AGENT_LOG_GATE1_REAL_DATA_DEPENDENCY_2026-09-21.md",
+        "evidence_sha256": "598087c1e1b3ff8ed1d4f7a535ad1e99f178475a9b082295073a867719dee2e1"
+      }
+    },
+    {
+      "id": "supervisor_integration",
+      "owner": "Supervisor · Market RSI",
+      "action": "Reconcile both independent logs with the canonical source hash, current roadmap, budget and canary; repair only confirmed P0 defects, then produce one frozen review packet and focused test receipt.",
+      "depends_on": ["controller_boundary_audit", "real_data_dependency_audit"],
+      "expected_artifact": "Updated roadmap and one source-hashed integrated review packet",
+      "verification": "Check source hashes, focused tests, fresh canary if code changed, worker findings, unresolved risks and exact spend classification.",
+      "pass_condition": "One internally consistent candidate snapshot with no unaddressed worker P0 finding; otherwise explicit REPLAN.",
+      "failure_action": "Keep release/provider closed and version a focused repair plan.",
+      "time_bound_minutes": 45
+    },
+    {
+      "id": "final_independent_review",
+      "owner": "Independent final review task 01a0c58f-a524-7082-ab29-7ce3b67b772b",
+      "action": "After integration, read-only review the single frozen candidate source/packet, both worker findings, test/canary receipts, dirty-file scope and protected-data/budget boundaries. Return PASS or REPLAN with evidence; do not publish or call provider.",
+      "depends_on": ["supervisor_integration"],
+      "write_paths": [],
+      "expected_artifact": "Source-hashed independent final verdict in its dedicated review log",
+      "verification": "Supervisor checks review cites the integrated snapshot, not an old worktree; replays any P0 counterexample.",
+      "pass_condition": "No P0 bypass; verdict explicitly separates offline readiness from release, paid decision and real-data admission.",
+      "failure_action": "Preserve REPLAN, identify causal layer, and do not release or sample.",
+      "time_bound_minutes": 45
+    }
+  ]
+}

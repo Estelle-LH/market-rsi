@@ -1,0 +1,88 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "live-controller-to-b-admission-v3",
+  "symptom": "The one-task adapter and exact source release now pass, but no outer runner atomically binds publication, protected global state, the sole budget ledger, fresh process/image/input checks, one provider call, terminal reconciliation and cleanup.",
+  "source_evidence": "P0_LIVE_RELEASE_RECEIPT_2026-09-18.json and the independent v2 release review",
+  "objective": "Prove one bounded GLM-authored public synthetic decision executes once through the trusted broker and one-task local B, with pre-provider fail-closed admission and terminal state/budget/process/cleanup receipts.",
+  "boundary": "No prediction data, Dev/Final, E2B, duplicate/reused ID, concurrent paid run, unreviewed source, unbounded provider call, broker padding, host/key/path authority in B, score retry or Supervisor scientific choice.",
+  "resolution_check": "Independent review validates one exact published-source chain from state and budget claim through first raw model response, order/ACK/event, provider cost, process exit, cleanup, budget settlement and cycle close; prediction admission remains false.",
+  "supervisor_owner": "outer Codex Supervisor",
+  "steps": [
+    {
+      "id": "reviewed_release",
+      "owner": "outer Supervisor and independent reviewer",
+      "action": "Reuse the exact independently reviewed v0.1.5 code-only release receipt.",
+      "depends_on": [],
+      "expected_artifact": "published-source receipt",
+      "verification": "Recheck origin, annotated tag, commit, source manifest, staged allowlist and explicit negative claims.",
+      "pass_condition": "The exact 296-file source is published only to the user fork and the receipt denies model/isolation/prediction proof.",
+      "failure_action": "Keep live canary closed and publish a new reviewed version; never move the tag.",
+      "time_bound_minutes": 10,
+      "result": {
+        "verdict": "pass",
+        "observed": "Commit a6cee1b and annotated v0.1.5 were published only to the authorized user fork after explicit 18-file staging inspection; exact 296-file source manifest verified remotely. No protected state, plans, logs, data, keys or run artifacts entered the commit.",
+        "reviewer": "outer Supervisor plus independent code-only reviewer",
+        "evidence_path": "P0_LIVE_RELEASE_RECEIPT_2026-09-18.json",
+        "evidence_sha256": "a4cadc73beb6692e60f811507f019c00381db2039855fe884d0afa93404a2bab"
+      }
+    },
+    {
+      "id": "outer_runner_offline",
+      "owner": "runner implementation researcher; Supervisor reviews",
+      "action": "Implement a no-CLI outer runner that composes existing publication, protected-state, sole-ledger, ID/process/image/public-input gates with bounded_live_adapter_v2 and terminal reconciliation; test only with strict fakes and temporary ledgers.",
+      "depends_on": ["reviewed_release"],
+      "expected_artifact": "outer runner source and offline gate/reconciliation tests",
+      "verification": "Tests must reject stale/unpublished source, changed decision state, active/reused ID, inadequate category/global budget, matching live process/container, wrong image/runtime/public packet, second sample, missing provider/process/cleanup/cost receipt and failed settlement/close. Partial launch must remain recoverable and never pass.",
+      "pass_condition": "Offline tests pass, exact source review finds one claim/reservation/dispatch path and every terminal path leaves an explicit state and ledger outcome; no real provider/container call occurs.",
+      "failure_action": "Preserve failure, keep live canary closed and version the plan/source rather than bypassing the runner.",
+      "time_bound_minutes": 180,
+      "result": {
+        "verdict": "pass",
+        "observed": "A no-CLI outer runner now binds exact publication/current source, protected global state, sole PaidBudget authority, unique ID, fresh process/container check, pinned runtime/image, one frozen public packet, one adapter call and terminal reconciliation. Independent review first found and reproduced a post-clear state race and stale failure receipt; both were fixed with regression tests. Supervisor passed 106 adjacent plus 15 budget tests, and second independent review passed 52/52.",
+        "reviewer": "outer Supervisor plus independent second review",
+        "evidence_path": "AGENT_LOG_P0_OUTER_RUNNER_REREVIEW_2026-09-19.md",
+        "evidence_sha256": "d245692f78383c3522bc58bac1b20f0d27ab6c8c36aff2f18aec86c13908f1d2"
+      }
+    },
+    {
+      "id": "publish_runner",
+      "owner": "outer Supervisor and independent reviewer",
+      "action": "Independently review the new outer runner, update the publication manifest, stage an explicit code/test allowlist, publish a fresh immutable tag to the user fork and verify exact remote bytes.",
+      "depends_on": ["outer_runner_offline"],
+      "expected_artifact": "review and new publication receipt",
+      "verification": "Re-run focused and adjacent tests; inspect staged paths and remote annotated tag/source manifest.",
+      "pass_condition": "Reviewed source is immutable and published with no protected state, plans, logs, data, keys or artifacts.",
+      "failure_action": "Do not launch; fix under a new source identity.",
+      "time_bound_minutes": 90,
+      "result": {
+        "verdict": "pass",
+        "observed": "After explicit user authorization, the reviewed four-file code/test allowlist was published as commit 7d2a136 and immutable annotated tag v0.1.6 only to the authorized user fork. Remote verification matched the exact 297-file source manifest; no data, keys, protected state, plans, logs or run artifacts were included.",
+        "reviewer": "outer Supervisor remote annotated-tag and byte verification",
+        "evidence_path": "P0_LIVE_RELEASE_RECEIPT_V016_2026-09-19.json",
+        "evidence_sha256": "350c3b03a6ace68d0343904b07abe8e90e0517002965d1fa36f250eb0e50d37b"
+      }
+    },
+    {
+      "id": "exact_preflight",
+      "owner": "outer Supervisor",
+      "action": "Under the runner lock, snapshot protected state and sole budget ledger, choose a never-used ID, confirm no matching paid process/container, verify pinned runtime/image and freeze one public synthetic input packet plus exact tiny upper bound.",
+      "depends_on": ["publish_runner"],
+      "expected_artifact": "preflight receipt with hashes and no secret values",
+      "verification": "Independently replay state/journal and ledger, check process/container absence, tag/source/runtime/image/input hashes and budget arithmetic immediately before launch.",
+      "pass_condition": "All gates pass atomically and remaining global/category allowance exceeds the fixed canary upper bound.",
+      "failure_action": "Do not claim/reserve/dispatch; record the exact failed gate and replan once.",
+      "time_bound_minutes": 30
+    },
+    {
+      "id": "one_model_authorship_canary",
+      "owner": "released outer runner; independent Supervisor review",
+      "action": "Execute exactly one GLM-authored public synthetic decision through broker and one-task local B under the frozen tiny cap.",
+      "depends_on": ["exact_preflight"],
+      "expected_artifact": "raw input/response, state/budget, order/ACK/event, provider cost, process and cleanup receipts",
+      "verification": "Check exact one-sample lineage, no protected fields, terminal process, bounded metering, explicit ledger/state close and absent exact container.",
+      "pass_condition": "Whole chain matches once and independently verifies model authorship; formal prediction and data admission remain false.",
+      "failure_action": "Stop the exact process/container, preserve receipts, reconcile state/budget once and diagnose without score-targeted retry.",
+      "time_bound_minutes": 60
+    }
+  ]
+}

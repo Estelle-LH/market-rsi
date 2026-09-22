@@ -681,3 +681,275 @@ untouched test.
 - **另一个环境限制：** 当前受限测试环境不允许调用宿主 `ps`。四种 trainer 的宿主监控集成检查会明确跳过；正式 trainer 的实时 RSS 检查没有被放宽。
 - **结果：** 固定本机 runtime 跑完 516 项：全部成功，2 项有明确原因的环境跳过。没有模型调用、数据抓取、训练、Dev/Final 读取或费用。
 - **下一步：** P0 仍是正式预测数据入场。先发布当前本地修复并跑发布后零费用 canary；新的付费 Gate 1 Controller 样本必须另行授权。
+
+### 2026-09-21：v0.1.16 单次 Gate 1 回答因重复字段失败关闭
+
+- **运行结果：** 永久 ID `market-rsi-gate1-controller-20260921-04` 只调用 GLM 一次，正常结束。输入 1,406 tokens，输出 465 tokens，计量成本 `$0.01248291`，没有重试。
+- **模型想做什么：** 它选择检查 2025 全季 Polymarket 官方交易接口能否覆盖 285 场比赛。这是一个有用且符合当前数据瓶颈的方向。
+- **为什么没通过：** 同一个必填字段 `rights_check` 写了两次，而且两段文字并不完全相同。协议不能擅自挑第一段、最后一段或合并，因此整份计划按重复字段失败。
+- **安全边界：** 没有生成正式 decision/task，没有下载公开数据，没有放行训练，没有读取 Dev/Final。账本按真实 token 记录，不是按 `$0.05` 上限计费；进程和容器都已确认清理。
+- **下一步：** 只做离线因果修复。先判断“数据使用权规则”是否应该由 Supervisor 固定执行，而不是让 Controller 自由写；通过测试和独立 canary、发布新版本并获得新的明确授权前，不再调用 provider。
+
+### 2026-09-21：权限规则已从 Controller 自由输出中移除
+
+- **怎么改：** Controller 以后只选研究问题、公开来源、假设、固定样本、操作和预算。数据能不能访问、能不能买、能不能写、能不能进入正式训练，由 Supervisor 的固定版本规则决定。
+- **为什么这样改：** 权限规则不是研究想法，让模型自由写没有好处，反而连续制造格式错误。重复字段仍然会失败，系统不会替模型挑答案。
+- **验证：** 41 项相关检查和全仓 516 项检查通过；两个新零费用 canary 通过。没有调用模型、没有下载数据、没有开始训练。
+- **新 packet：** 输入文件和内容 hash 都已经固定；真实 tokenizer 测得 1,468 input tokens，单次最坏费用 `$0.04445928`，仍低于 `$0.05`。
+- **现在边界：** 这是本地未发布版本。下一步是独立审查、再申请发布；没有授权新的付费请求。
+
+### 2026-09-21：第一版预测实验设计已经开始并通过机器检查
+
+- **要回答的问题：** 在数据、target、样本、评估规则和总美元相同的条件下，自迭代研究代理能不能打败 Train 上选出的强普通模型。
+- **已经固定：** 所有路线用相同行；按时间切 Train、Route-Dev、Audit-Dev、Final；Final 至少 20 个从未看过的日期；主要比较 candidate 和 strong baseline 的逐场等权 MSE，并看按日期分块的区间。
+- **还没有乱定：** 数据还没正式入场，所以 target、具体日期、强 baseline 和正式实验预算都保持空白。它们必须在看 Dev 前固定并写 hash。
+- **baseline：** 至少包含 zero change、persistence、Ridge、HGB；如果运行环境验证通过，再加 CatBoost 或 LightGBM。在 opened Train 上按固定预算选一个强 baseline。
+- **RSI 路线：** GLM Controller 可以查文献、设计 feature/representation/trainer/loss 或提出新算法；一次试验只改 prediction 里的一个组件，所有失败也归档。Supervisor 不替它选科学方向，只守数据、预算和评估边界。
+- **验证：** 设计 JSON 通过验证器；八个反例确认它不能提前打开执行、选择 target、缩短 Final、删掉 HGB 或给自己加预算。旧 memory replication 和 benchmark scorer 的十四项测试也继续通过。
+- **版本：** 修复 commit `bfef4d0`；实验设计 commit `7bea4fc`；审查边界文字修正 `191e03e`。三个都只在本地，尚未推送。
+
+### 2026-09-21：v0.1.17 已发布，单次 Controller 漏了机械 schema
+
+- **发布与 canary：** 三个提交已只推到用户 fork，annotated tag 是 `market-rsi-protocol-v0.1.17`。远端 commit、tag object、318 个受控文件和 manifest `9200f93f…cd15d` 全部匹配。发布后 canary `p0-gate1-production-cli-canary-20260921-15` 通过，provider 调用 0、真实费用 `$0`、没有抓数据或放行数据。
+- **真实请求：** 永久 ID `market-rsi-gate1-controller-20260921-05` 只调用 GLM 一次，没有重试。输入 1,468 tokens，输出 349 tokens，正常 `stop`，计量成本 `$0.01137483`。
+- **模型做了什么：** 它仍然选了当前有用的问题：检查 2025 全季 Polymarket 官方交易接口；固定最多 3 个市场、20 个请求、2 MB、20 分钟。所有真正的研究字段都填了。
+- **为什么失败：** 它只漏了固定版本标签 `schema`。系统没有偷偷补字段，所以没有生成 decision/task，也没有开始抓数据。
+- **终态：** 权威账本为 `metered_terminal`；总计量费用 `$85.087982132`，可用 `$106.253436988`。进程和容器都已清理；没有 public fetch、数据入场、训练或 Dev/Final 读取。
+- **下一步：** `schema` 不该由模型决定。离线改为 trusted adapter 固定注入；真实研究字段仍必须完整、唯一、严格验证。当前不再调用 provider。
+
+### 2026-09-21：机械 schema 已完成离线修复
+
+- **怎么改：** Controller 现在只填写 12 个真实研究字段。固定协议版本由 trusted adapter 注入；如果模型自己加 `schema`，它反而会因为额外字段失败。
+- **没有放宽：** 缺少、重复或多写任何真实研究字段仍然失败。rights policy、数据边界、预算和 Dev/Final 隔离都没变。
+- **验证：** 55 项 Gate 1 检查和全仓 516 项通过，2 项按原原因跳过。新的 adapter、外层账本和完整生产路径 canary 都通过；provider 调用和真实费用是 0，没有抓数据或放行数据。
+- **新 packet：** file hash `5f261e00…eff85`，canonical hash `28d5265c…08c6`；1,456 input tokens，单次最坏费用 `$0.04440096`。
+- **当前边界：** 修复已本地提交为 `4fa02dd`，失败和修复审查提交为 `b9095a7`；两者都未发布，没有新的付费请求授权。
+
+### 2026-09-21：Gate 1 离线计划 canary 合并测试
+
+- 两条独立工作线的代码已合并到当前工作目录：一条把请求上限固定为 6，并要求每个选中样本的完整行和哈希都匹配预先承诺的合成 Train 目录；另一条补了可保存结果的离线 canary。合并时发现 canary 拦截函数仍用旧接口，已改为把目录绑定参数传给真实 builder，不能由 canary 自己替 builder 拒绝假哈希。
+- 合并后 35 项直接相关检查、105 项 Gate 1 核心检查、15 项 Gate 1 runner 检查通过；全套 516 项通过，2 项因本机环境条件明确跳过。
+- 合成 canary 的有效路径重复编译一致；34/34 个攻击输入、26/26 个编译后篡改被拒绝。结果保存在 `/Users/estelle/Library/Application Support/MarketRSI/runs/p0-gate1-executable-plan-canary-20260921-01`；它只生成离线请求计划，网络调用 0、provider 调用 0、费用 `$0`，没有抓取数据或开放 Dev/Final。
+- **边界：** 独立复核仍在进行。当前只有合成目录的承诺，真实 Train 数据目录尚未获得入场资格；本次未提交、未发布、未启动任何付费请求。
+- **独立审查发现并修复：** 审查者用篡改后的请求清单直接调用收据生成函数，发现它只查 schema，会把 `max_requests=999` 写进收据。这不影响上述离线 canary 的真实路径，但不能作为未来执行器的安全边界。现在收据函数必须拿到原 builder 输入和受信目录绑定，重新生成整份请求清单后逐字段比对；改上限、请求数、联网权限或目录字节都会失败。新增两项测试后，相关 37 项和全套 516 项通过（2 项环境跳过）；新合成 canary `p0-gate1-executable-plan-canary-20260921-02` 仍为 34/34 + 26/26，网络/provider/费用均为 0。第二次独立复核待完成；生产接线和发布仍关闭。
+- **第二次审查与最终离线结果：** 审查者又发现 Python 会把 `6.0` 当 `6`、把 `0` 当 `False`，因此普通对象相等不足以保证收据字节准确。现改为比较规范 JSON，并只用重新生成的受信清单制作收据。新反例覆盖上限、联网布尔值和分页 offset 的类型混淆。独立复核给这一个离线收据边界 `PASS`；相关 37 项和全套 516 项继续通过（2 项环境跳过）。最终合成结果 ID `p0-gate1-executable-plan-canary-20260921-03` 为 34/34 + 26/26，费用 `$0`；builder 源文件 SHA-256 为 `60117c1ea76bfec6bca818d31ae05699f01ebe412ffd1babd1363e8da085784e`。这**不是**生产接线、真实 Train 入场、发布或付费请求的验收。
+
+### 2026-09-21：并行工作改为只优化真正的等待时间
+
+- **问题：** 两条代码线虽然同时完成，但接口对不上，随后合并、全套测试和多次审查修复依次等待。没有实际计时证明多开聊天缩短了总用时。
+- **改动：** Supervisor 规则现在要求先固定共同接口和各任务独占的文件，再决定开几个并行任务；一个负责人持续合并，审查只看合并后的同一版本。开发中先跑相关小测试，版本稳定后跑全套；审查发现问题时做针对性修复、复核，并在最终冻结前重跑必要的全套检查。每段开始和结束时间要记入现有活动日志，比较实际关键路径，不让用户在聊天间传话。
+- **结果边界：** 这次是工作方法的人工改进，不是模型预测能力或自动自进化的结果；没有新实验、provider 调用或费用。下一次并行任务才能检验是否真的节省时间。
+- **机器检查：** 现有 `bottleneck_gate.py` 对声明为并行的计划检查起点哈希格式、2–3 个 worker 的独占文件、合并依赖，以及独立只读审查；文件冲突或顺序错误会在派发前失败。新增测试后，该模块 6/6 通过；Supervisor 其余非网络测试 462/462 通过，网络审计事件 0。完整 Supervisor discovery 的另外两项仍因已退役 E2B 子进程和本机端口权限出错，未归因给本次改动；研究目录另一组 516 项通过、2 项环境跳过。旧单任务计划仍能通过派发检查。新规则能挡住错误的**声明**，实际是否加速要在下一波记录时间验证。
+
+### 2026-09-21：聚焦检查现有真实数据能否启动预测自循环
+
+- **结论：** 现在还不能把合成 canary 算作真实数据自循环。2024 有整季交易和 label 支持审计，但未正式入场；2023 只匹配 237/285 场，固定样本里有零成交的常规赛场次；2025 匹配 285/285 场目录，却只有一场交易 canary，尚无整季成交与标签审计。
+- **测试集问题：** 旧 2025 Final 仅 11 个日期，低于预设的 20 个未看过日期；访问记录不完整，不能把未知当作未看过。2026 候选仍只有赛程承诺，未入场。
+- **下一步：** 只推进真实数据的最短路径：生产源码冻结及零费用验收后，由第一份有效 Controller 决策选一个有界的公开来源调查；随后核实交易、PBP、数据权利和缺失率。没有扩大通用 harness、没有网络/模型调用、训练、Dev/Final 读取或新费用。详细证据见 `P0_DATA_READINESS_DECISION_2026-09-21.md`。
+
+### 2026-09-21：把数据缺口纳入自循环定义
+
+- **发现：** 当前 Gate 1 代码只给 Controller 五个固定问题、四个固定来源；只有固定文档读取和一个合成的固定交易请求计划被登记为可执行。这能安全做窄范围调查，却不能证明系统会自主发现并补齐新的数据缺口。
+- **设计修正：** 实验设计和 Supervisor 规则现明确要求：独立审计发现缺口 → Controller 基于完整分母和来源证据提出来源/匹配/目标假设 → Researcher 只运行经过 broker 审查的有界任务 → 独立审计核实可用覆盖、权限与成本 → 结果进入下一轮。新来源可以提出，但不能凭模型一句话获得联网/购买/封存数据权限。
+- **当前边界：** 这是人写的设计修正，不是已经运行的 Controller 自循环；开放式提案及结果反馈的生产接线仍未完成。没有数据抓取、模型调用、训练、Dev/Final 读取或费用。
+
+### 2026-09-21：开放式数据缺口提案的第一道代码边界
+
+- **代码：** 新增 `p0_data_gap_proposal.py`。它接收来源哈希绑定的数据缺口和 Controller 自由提出的来源/匹配/质量/目标方案，留下不可执行的待审提案；审核反馈可以绑定到下一轮输入。新来源不必在旧四项清单里，但提案不产生任务、handler、联网、购买、数据入场或 Dev/Final 权限。
+- **验证：** 十项离线测试通过，覆盖新来源可提案、篡改缺口 hash、封存值暴露、超上限请求、改写提案、超提议费用及错误反馈。没有模型或网络调用，费用 `$0`。
+- **尚未完成：** 这个独立模块尚未接到正式 GLM adapter/outer runner；真实审计回执的签发方仍由未来可信 caller 验证。当前 live Controller 仍受固定清单限制，不应宣称已具备自动找新来源或完成数据修复的能力。下一步需版本化接线和完整生产路径零费用验收。
+
+### 2026-09-21：新来源提案接到 Gate 1，但只通过零费用合成验收
+
+- **改动：** GLM Controller 的同一次回答现在可二选一：提交旧清单内的有界调查计划，或提出清单外的新来源、匹配方法、质量检查、目标假设。后者只归档为 `review_required`，不能生成研究任务，也不给联网、购买、数据入场或 Dev/Final 权限。外层 Supervisor 重新解析原始回答、重算提案并核对文件哈希；它仍只允许一次模型样本和一个永久 ID。
+- **反馈边界：** 合成审计反馈已能和提案哈希一起编成下一轮输入；这还不是来自独立真实审计员的回执，也没有接入下一次 live Controller 请求。真实反馈必须先由可信调用方核验签发和来源，不能把任意 JSON 当成已验证结果。
+- **验证：** 41 项直接相关检查、112 项 Gate 1 检查、11 项发布/入口检查通过。新增反例证实有人在提案后偷加 `task.json` 或改成 `network_authorized=true` 时，外层复核拒绝并保留计量终态。两个新 ID 的合成 canary 分别走通旧计划和新提案；二者 provider 调用、真实费用、抓取和数据入场均为 0。真实固定 tokenizer 给当前双工具请求算出 1,906 输入 token，3,072 输出 token 的单次最坏计量为 `$0.04658796`，低于原 `$0.05` 单次上限。
+- **完整测试：** 加上两项篡改反例后，允许本机进程/端口的环境中一次运行 Supervisor 全套 480/480 通过；受限环境里原先两项本机子进程/端口测试会因权限报错。现有研究文献/来源权利规则沿用 `AGENTS.md` 和已记录的官方来源审查；本次没有提出新的科学方法，也没有进行新的文献搜索。
+- **下一关：** 本地代码尚未提交/发布；真实来源、真实数据目录、独立审计回执、下一轮 live 反馈输入都未打通。未运行新的 GLM 请求，也未开始预测训练或读取 Dev/Final。发布和新的付费请求按现行协议分别授权。
+
+### 2026-09-21 晚：总 Supervisor 收拢路线图和正在做的工作
+
+- 新建 `SUPERVISOR_ROADMAP_2026-09-21.md` 作为单页入口：当前 P0 是真实数据入场，不是继续堆通用 harness；先审查/冻结当前源码，再由 Controller 给一次有效决定，接着只做有界真实来源调查；三赛季 pilot、未触碰 Final、强 baseline 和预测自循环在数据入场之后。
+- 对应四步机器 orchestration plan 已通过 dispatch 与 S1–S3 ready-step 检查。三条只读工作已分别送到现有 Codex task：发布边界、真实数据证据、任务可见性。三个 task 已重命名为 `ACTIVE · ...`；旧 agent 索引里三个实际上已完成却仍标为运行中的条目已归档。消息送达不等于工作完成。
+- 更新了 dashboard 读取的任务索引和 blocker 看板；看板验证通过（6 个未解决项）。这些改动没有改科研 protected state、调用 GLM、抓数据、打开 Dev/Final、提交或发布源码。现在等三份实际审查证据，总 Supervisor 再决定下一项最小修复或是否具备发布审查条件。
+- 三份只读审查现已返回，任务均改为 DONE。S1 判定 **REPLAN**：Wave 2 模块漏入受控源码、正式 Controller 未接 exact-request compiler、无真实 Train catalog、当前受控源码未干净到可发布。S2 判定真实 Train 仍不能入场：2023 237/285 身份匹配、2024 60 秒标签覆盖 32,384/47,875、2025 仅一场成交检查且逐场暴露仍大多 unknown；旧 Final 只有 11 日期。S3 发现 dashboard 只显示前 20/39 条任务；总 Supervisor 修了展示上限并通过本机数据源和实际页面接口核对 39 条。完整证据在三个 `AGENT_LOG_SUPERVISOR_*_2026-09-21.md`；人工日志不是原始工具流。
+- 决策：先做 P0 生产接线因果修复，再独立审查、发布授权、零费用验收，之后才考虑另行授权一次 GLM 决定及有界真实数据调查。本次未发布、未付费、未抓取、未打开 Dev/Final。审查任务完成不等于整个 bottleneck resolved。
+- 用户要求 Supervisor **持续维护**整体路线图与状态，而非一次性汇报。已在 `RESEARCH_SUPERVISOR.md` 加入每个工作块/定时唤醒核对同一 command center 的规则：实际任务和进程、证据、阻塞、版本、数据与 held-out 边界、实花与预留、下一验收；未知不可写成零或通过。复用了原 `market-rsi` heartbeat，移除过时版本快照，恢复 ACTIVE，改为每 15 分钟在本会话检查一次；状态不变时安静，重大进展/失败/需授权时通知。这个定时检查不赋予发布、付费、抓取或打开 Dev/Final 的权限。尚未有新的预测实验结果。
+
+### 2026-09-21 22:28 ET：定时 Supervisor 推进一个 P0 发布缺口
+
+- **目标与依据：** 按独立 S1 审查的 REPLAN，先修受控源码清单遗漏。这是沿用已有发布边界和审查证据的操作修复，不是新科学方法；本次没有新的文献主张。
+- **动作和验证：** 先在发布专测列出漏掉的五个 Wave 2 文件，确认测试失败；随后只修改受控清单，发布专测 6/6 通过，`source_hashes()` 能读取当前 324 个受控文件。没有执行发布检查或声称旧 tag 覆盖这些新字节。
+- **结果边界：** 仅本地修复了清单遗漏，尚未独立审查、提交或发布。正式 Controller 仍未接 exact-request compiler，真实 Train catalog 仍未入场，整个 P0 保持阻塞；没有模型调用、数据抓取、训练或 Dev/Final 读取。权威预算日志最后仍是旧 `market-rsi-gate1-controller-20260921-05` 的计量终态；本次未新增费用。进程检查没有匹配的 Market RSI runner。
+- **下一步：** 对正式 bounded-plan → exact-request compiler 做失败复现和因果修复；保持 proposal 审查队列与真实数据入场边界分开。完整集成后再独立复查发布范围。
+
+### 2026-09-21 22:49 ET：真实运行路径的 trade-plan 漏检已先行关住
+
+- **问题与动作：** 沿用 S1 发布审查和现有离线编译器的操作证据，没有提出新的预测方法。测试先证明：Controller 选固定交易样本时，外层运行器原会在只有 `task.json`、没有 exact request manifest 的情况下判通过。随后在外层复核加入临时拒绝规则；文档页检查和新来源待审提案不受影响。
+- **验证与边界：** 新反例修复前失败、修复后通过；外层、编译器与发布相邻共 24 项测试通过。这里仍是**故意 fail closed**，不是已经把正式 Controller 接到 compiler。下一步需传入经过独立审查的真实 Train catalog，编译并核对 exact manifest 与收据，才能解除拒绝。没有调用模型、抓取数据、开 Dev/Final、发布或增加费用；权威预算仍有历史未结算 hold，不能把预留当实花。
+
+### 2026-09-21 23:17 ET：Gate 1 本地接线推进，正式入口仍关闭
+
+- **版本化计划：** `SUPERVISOR_GATE1_BINDING_2026-09-22-v1.json` 的 dispatch 和首步 ready 检查通过。它只覆盖零 provider、零网络的合成集成验证；独立复核、真实数据入场与发布均另设闸门。
+- **改动：** 固定交易计划通过代码登记的 Train 目录逐字节编译为 `compiled-plan.json`，外层复核从原始决定重新编译并比对字节。缺目录、改目录、未知承诺、篡改计划都不能通过；文档页和新来源待审提案仍在原边界。真实 CLI 和 Supervisor parent 增加目录字节哈希及承诺入参，并在读取 Tinker 密钥或创建子进程前拒绝非真实已审目录。目前登记表只有合成目录，因此付费入口仍不可执行。
+- **验证：** 107 项 Gate 1 相关测试通过；零 provider 的生产参数路径 canary ID `market-rsi-gate1-binding-canary-20260922-0305-02` 通过，provider/网络/抓取都是 0，合成账本 `$0.00005103` 不是真实开销。先前在受限环境试跑同一 canary 的新鲜 ID `...0305-01` 被 `ps` 权限挡住，已保留失败现场，没有在原 ID 上重试。Supervisor 测试 discovery 为 475 项、1 失败/6 错误：缺 scipy、端口权限及旧 E2B 运行条件，不能称全套通过。
+- **边界和下一步：** 没有 GLM 调用、真实数据抓取、预测训练、Dev/Final 访问、提交或发布。当前代码和多项既有改动仍未冻结审查；下一步做合并源码攻击性测试及独立只读审查，再处理真实目录入场。权威预算最后已知计量 `$85.087982132`、有效占用 `$91.446563012`（含 `$2.30` 预留），不能把它们混作实际花费。
+
+### 2026-09-21 23:26 ET：修复目录前置检查造成的 Controller 死结
+
+- **发现：** 上一步把“有已审查真实目录”设成所有 live 回答的前置条件。这虽然保护交易计划，却连文档调查和新来源待审提案也挡住；Controller 因而无法帮助寻找尚缺的数据。
+- **因果修复：** 真实目录变为可选的成组参数：不传目录时，调查或提案可走原本的审批流程；只传路径/哈希/承诺的一部分立即拒绝。若提交固定交易计划，没有受信目录则外层审查失败、保留计量终态，绝不生成可执行请求。若传目录，正式入口仍要求代码登记的真实 Train 承诺；合成目录不能冒充。冻结 packet 现在明确告诉 Controller 目录尚未入场，建议先调查或提案。packet 字节已变化，旧文件和旧发布版本不能直接用于新请求。
+- **验证：** 80 项直接相关测试通过；新的零 provider、无目录生产参数路径 canary `market-rsi-gate1-no-catalog-canary-20260922-0330-01` 通过，provider 调用、联网、数据抓取和真实费用都是 0；其合成账本 `$0.00005103` 只是测试值。合成 live 模式测试分别覆盖文档、提案可结束以及交易计划无目录失败，**不**声称真实 provider 已跑通。
+- **仍需处理：** 在真实付费前，还要独立审查这一整版源码及 packet 能力说明；当前 packet 的工具 schema 仍列有交易操作，虽然外层会拒绝。要决定是否机器屏蔽不可用操作，避免一次无效付费样本。真实目录入场、发布、授权、预测实验均未完成。
+
+### 2026-09-21 23:28 ET：当前无目录 packet 不再向 Controller 提供交易操作
+
+- **改动：** 当冻结 packet 明示真实 Train 目录尚未入场时，Controller 的提交工具枚举去掉 `fetch_fixed_public_sample`。这只收窄当前无法执行的操作，不替 Controller 选择文档问题、来源或新提案。若模型仍构造越界交易决定，无目录的外层审查依旧失败；以后真实目录入场需生成并审查新 packet/发布版本，不能沿用当前字节。
+- **验证：** 80 项直接相关测试通过，工具 schema 测试确认该操作缺席；新 ID `market-rsi-gate1-no-catalog-canary-20260922-0340-01` 的无目录生产参数路径零 provider 验收通过，真实费用、网络调用和抓取均为 0。先前 synthetic trade 的离线编译测试仍在，但不代表当前 packet 可执行交易。
+- **剩余关口：** 独立复核当前整合版源码、控制文件范围和脏工作树；真实目录入场、正式 release、单次 GLM 授权及后续数据调查仍未完成。
+- **整合复查：** 读完整体 diff 时发现 Supervisor parent 会把 release tag 和源码哈希参数重复传给子进程；已删去重复项并加单次出现的测试。最新 Gate 1 相关测试 110/110 通过，`git diff --check` 通过。该修复不改变科研路线，也没有实际 provider 或网络调用。
+
+### 2026-09-21 晚：原始 Controller 回答与 Supervisor 修改分开归档
+
+- **原文没动：** 唯一真实 Gate 1 回答 ID `market-rsi-gate1-controller-20260921-05` 的原文 SHA-256 为 `e0ada90eec518767cee11da568496917dd1326758fe62ec0a565314e0ad4938a`。模型选了 2025 Polymarket 历史交易问题，同时要查文档和取三个市场的固定小样本。账本是 `$0.01137483` 计量终态；没有抓取数据。
+- **新发现：** 旧适配器先因机械 `schema` 缺失拒绝；但即使补上，原答仍同时请求两个操作和最多 20 次查询，而当前受信能力只能执行单页文档或另一个需要真实目录的六请求固定交易计划。这是交给模型的表面上限与实际 handler 不一致，不能仅据此说模型弱。
+- **Supervisor 修改：** 独立、非执行的分阶段可行性建议写在 `GATE1_ORIGINAL_CONTROLLER_PROPOSAL_FEASIBILITY_2026-09-22.md`。它保留原问题/来源，建议先核文档、满足来源与目录条件后才考虑固定交易样本，再把事实反馈模型。该建议不冒充 Controller 的新决定，也不复用旧 ID。下一轮 packet 必须把原回答的拒绝原因和准确可用能力告诉 Controller，不能只让它猜。
+
+### 2026-09-21 晚：Supervisor 重新安排放宽 Controller 的工作
+
+- **决定：** 放宽 Controller 的研究提案空间，不放开来源权利、未来信息、Dev/Final、密钥、预算或独立评估。原回答的拒绝原因和真实可用的 broker 能力已加入本地下一轮 packet；Supervisor 不代模型选下一条科学路线。详细负责人、依赖和验收写入 `SUPERVISOR_ROADMAP_2026-09-21.md`。
+- **零费用预检：** 本地 tokenizer 得到 2,482 输入 token、3,072 输出 token 上限，单次理论费用上限 `$0.04938732`，低于既定 `$0.05`。这是上限估计，不是实际花费。改动后 123 项 Gate 1 相关单元测试通过，`git diff --check` 通过。
+- **未完成：** 当前实现仍主要是文档调查和待审提案，不能声称开放式研究任务已经可执行；改动后的完整生产路径 canary、独立审查、源码发布和新的付费授权仍需分开完成。本段没有 GLM 调用、真实数据抓取或预测实验。
+- **新 canary 结果：** 首个新 ID `market-rsi-gate1-relaxed-packet-canary-20260921-01` 在受限环境的 `ps` 权限检查处失败；确认无遗留同 ID 进程后，用全新 ID `...-02` 在有本机进程核对权限的环境运行，生产参数路径通过。其 provider 调用 0、真实费用 0、公开抓取 0；合成账本 `$0.00005103` 不是实际费用。失败的 `...-01` 保留，不重用。独立源码/账本审查及正式发布仍未完成。
+
+### 2026-09-22：并行审查发现并修复一个付费死路
+
+- **分工结果：** 真实数据审查证实当前只有合成 catalog，真实交易执行仍 BLOCKED。两个旧 Codex 审查 task 没有交付可见的最终报告，均按阻塞记录；新独立 agent 在 324 文件哈希 `48b7b78f…14afa` 上给 REPLAN。
+- **具体缺口：** 当前 packet 不提供固定交易操作，但模型仍可手写这个操作并被 adapter 当成有效计划；外层最终会拦截，所以没有数据泄露或超预算，但会白费一次付费 Controller 调用。回归测试先失败，证明原代码会接受。
+- **因果修复与验证：** adapter 现在检查模型所提交操作必须属于该次工具 schema 真实提供的枚举。未来已审查 catalog 的离线正例通过测试专用 packet 继续覆盖；当前正式 packet 仍隐藏交易。修复后 124 项 Gate 1 相关测试通过，`git diff --check` 通过；新 ID `market-rsi-gate1-offered-operation-fix-canary-20260922-01` 的无目录生产参数路径通过，provider 调用和真实费用均为 0。新的受控源码哈希 `2544e25605a9c9d731784b492dc5c040f0b43aa47fc911b3f8a373db1312eb4e`。
+- **边界：** 这不是预测结果，也不是已发布版本。修复后的独立复审、清理发布范围、正式发布和后续 Controller/数据调查仍未完成；没有新付费调用、抓取、Dev/Final 读取或 push。
+
+### 2026-09-22：修复后独立复审通过，两个空闲 task 并行交付
+
+- **窄范围 PASS：** 独立 reviewer 在新受控源码哈希 `2544e25605a9c9d731784b492dc5c040f0b43aa47fc911b3f8a373db1312eb4e` 上重放原越界交易提交；adapter 在产生任务文件前拒绝。文档调查、待审提案和测试专用合成交易正例仍通过。124/124 Gate 1 测试及新零费用 canary 通过；provider 调用、真实费用和公开抓取均为 0。这不等于发布或预测实验通过。
+- **并行工作：** 两个现有 Codex task 分别查发布范围和真实 Train 目录路径，完成后主动把结果发回总 Supervisor。发布审查给 REPLAN：324 个受控源码文件中有 17 个 dirty，包括共享 `bottleneck_gate.py`；不能挑部分文件就声称发布了同一源码哈希。数据审查确认只有合成目录，真实入场 BLOCKED。
+- **数据下一步：** 若原始数据存在缺口，先由 Controller 选来源，核实权利、费用和访问范围，再考虑对同一原始版本完整重下、验原始对象哈希和逐场分母；不默认拼补旧碎片。尚未实际下载或入场。
+- **Git 责任：** 用户把 Git checkpoint 时机和 fork 推送交给总 Supervisor。规则已写进 `RESEARCH_SUPERVISOR.md`；并行审查 task 不提交或推送。当前没有新 GLM 调用、真实抓取、训练、Dev/Final 访问、commit/tag/push 或新费用。正在做整合快照的最后独立复审。
+
+### 2026-09-22：两个真实 Controller 答案都因工具格式被拒，开始离线修格式
+
+- **第一次：** v0.1.18 的 GLM 选了官方交易文档，但把系统要求逐字填写的取样规则改写成了一段话。独立审查纠正了我们起初的判断：规则原文其实已在同一请求里，不能说是“没告诉模型”。第一次计量 `$0.01666737`，没有取数。
+- **修复和发布：** 把取样规则从自由文本变成工具接口里的固定选项，补上第一次失败反馈；126 项测试与独立复审通过。只把六个代码/测试文件作为 v0.1.19 推到用户 fork。零费用 canary 通过。之后精确算出这份输入按旧输出上限的最坏预留是 `$0.05102514`，超过单次 `$0.05` 闸门，所以没有启动请求。
+- **费用闸门：** 把最大输出从 3072 缩到 2944，最坏预留变为 `$0.04946994`；127 项测试与独立复审通过。只把两个代码/测试文件作为 v0.1.20 推到用户 fork，零费用 canary 通过。输入内容没改，真实数据/Dev/Final 均未打开。
+- **第二次：** 新 ID `market-rsi-gate1-controller-20260922-02` 只采样一次。原始文本里用了正确的固定规则，但在 `max_minutes_placeholder` 附近把工具标签写坏了，解析后缺少必填的 `question_id`；本地审核拒绝，没有生成任务或抓取。之前说它只是“多写一个字段”不准确，已根据原始回答更正。计量 `$0.01790424`，进程/容器清理通过，ID 终态不可重试。两次新失败合计计量 `$0.03457161`，不是预留的 `$0.10`，也不是预测实验结果。
+- **现在：** 付费重抽暂关。Supervisor 已开离线格式边界调查：查工具调用的结构化约束或安全的无权限字段处理，先写明接受/拒绝规则与测试，再考虑新的版本。真实 Train 目录、数据来源权利和正式预测实验仍是另外的阻塞项。
+
+### 2026-09-22：把格式故障缩到真正的因果层
+
+- 独立调查读回第二次原始回答，发现工具标签没有成对；不是普通“多一个字段”。原始回答及 `$0.01790424` 计量保持不变，不补写成成功。调查还用合成输入证明旧解析器可能忽略工具调用尾部的未闭合片段。
+- Supervisor 在写明接受/拒绝规则后，本地收紧解析器：标签错、未解析尾部和重复/异常键都拒绝。原始第二次回答重放仍被拒；127 项 Gate 1 测试和 20 项解析/类型测试通过。另一人只读复核给出**本地窄范围 PASS**，没有把它当成可付费发布。
+- 继续并行做一项离线简化：让 Controller 选短 ID 和研究内容，系统按已登记能力填执行参数，并清楚记下哪些是模型选的、哪些是系统填的。这样减少手写接口的负担，但尚未证明下一次模型会遵守，也没有新的数据或预测结果。专属工作记录见 `AGENT_LOG_GATE1_SHORT_CHOICE_2026-09-22.md`。
+
+### 2026-09-22 02:00 ET：Gate 1 格式修复发布、验收，下一步直指真实 Controller 决定
+
+- **完成：** 严格解析器和五字段短选择接口通过独立整合复核。相关 132 项 Gate 1 测试、20 项解析/类型测试和 staged diff 检查通过；只提交 13 个代码/测试文件为 `f06214b3bb521096078d897fe60ec9ba589c00c6`，annotated tag `market-rsi-protocol-v0.1.21` 已原子推送到用户的 `Estelle-LH/RSIBench-Data` fork。远端 tag、commit 与本地 324 个受控源码文件的哈希 `872f05ae48fa49deeb811bc6ca4705652168f198b5f1f9d69d3ce172ad0986da` 一致；未提交本地日志、数据、密钥、账本或 artifacts。
+- **零费用验收：** 全新 ID `market-rsi-gate1-v021-postrelease-canary-20260922-01` 走生产 CLI 参数和 Supervisor→child 路径，`passed=true`；真实 provider 调用/费用、公开抓取、正式数据入场均为 0。合成账本 `$0.00005103` 只用于测试结算，不是实际花费。格式边界计划 v5 的三个步骤和整体验收经机器 resolve 检查通过。
+- **下一步预检：** 全新 Gate 1 输入 packet `p0-data-admission-gate1-packet-20260922-03` 已从原有 Gate 0 与 live-transport 回执生成；没有模型调用或数据抓取。固定 tokenizer 重新计出 3310 输入 token、2750 最大输出 token，单次最坏上限 `$0.0494991`，旧 3300/$0.0494505 估算作废。权威 `$200` 账本计量 `$85.122553742`、setup 可用 `$0.071505532`，但仍有历史预留 `$2.30` 与未完成发票对账；当前进程检查未见 Gate 1/Tinker worker。获得新请求授权和完整唯一 ID/全局状态复核前不发送付费请求。
+- **结论边界：** 两次历史格式失败继续是失败，不因修代码变成成功；新版仍未证明 GLM 会交出有效计划，也没有真实 Train 数据或预测得分。真正的下一判别步骤是只取一次全新 Controller 回答，先独立审查，再决定能否执行来源调查。
+
+### 2026-09-22 03:33 ET：封存测试候选的第一天已过去，入场证据仍不齐
+
+- **发现：** 9 月 18 日只按赛程预留的 2026 候选测试期从 9 月 20 日开始；现在是 9 月 22 日。原始预留文件 SHA-256 `70be5d64c6e35a680107fed6569e8cfb62e2be917b29f17aec584518f35372cc` 未改，仍标记完整访问历史、同机制市场覆盖和数据使用权均未验证，`formal_final_admitted=false`。本次只看了赛程元数据和这些标记，没有打开价格、标签或比赛结果。
+- **结论：** 这不是一个已合格的封存 Final。第一天已经过去，不能再说“开赛前完成验证”；也不能因为缺证据就静默改选已经发生的日期。独立核对访问历史、市场机制和权利后，才判断原预留期是否还能证明真正未暴露；证明不了就保持未入场，再按事先固定、只用赛程的规则预留未来窗口。旧 2025 Final 只有 11 个日期，也不能顶替正式 >=20 日期要求。
+- **其他状态未变：** v0.1.21、零费用 canary 和 `$200` 预算没有新变化；新 GLM 请求仍待单次确认，未调用 provider 或抓取数据。此问题与 Gate 1 数据调查并行跟踪，不拿封存结果指导 Controller。
+
+### 2026-09-22 03:56 ET：独立核查封存测试候选，保留阻塞但不拖慢 Train-only 调查
+
+- **做了什么：** 独立 auditor 只盘点预留文件、访问记录和来源/权利/机制元数据；Supervisor 重算所引六个文件及专属审计日志的 SHA-256，预留文件仍是 `70be5d64c6e35a680107fed6569e8cfb62e2be917b29f17aec584518f35372cc`。计划的第二步依赖闸门通过。详细 yes/no/unknown 表在 `AGENT_LOG_FINAL_NONEXPOSURE_2026-09-22.md`。
+- **发现：** 已有 ledger 在 2026-09-20 至 11-02 的预留期没有记录，但缺少完整访问历史；零行不能证明无人看过。`labels_read=false` 只是预留文件的声明。2026 市场数据使用权和同机制覆盖也未证实。不能断言发生了污染，也不能认定完全未暴露。
+- **决定：** 候选继续 `formal_final_admitted=false`；不看价格、标签、交易、比分或结果，不依据得分改选日期。封存集补证单独跟踪；Controller 的 Train-only 来源调查是独立路径，可在原有授权/预算闸门下继续。此次没有新 provider 调用、购买、训练或 Dev/Final 读取。
+
+### 2026-09-22 05:04 ET：一小时停滞复盘
+
+- **状态：** 无新 Controller 回答、数据回执或付费进程；预算末笔仍是旧失败请求，global-state 无 active cycle。现有 v0.1.21、零费用 canary 和输入 packet 不变。
+- **判断：** 最短路径仍是单次新的 Controller 数据调查决定；没有可安全替代 Controller 科研选择的离线工作。此刻卡在这次请求的明确授权，而不是模型训练、E2B 或数据下载。最多预留 `$0.0494991`，授权后还要重新检查唯一 ID、进程、版本、账本和全局状态；未授权前不调用模型。没有新实验结果或费用。
+
+### 2026-09-22 15:20 ET：授权等待期间启动三路零费用并行验收
+
+- **启动：** Supervisor 同时派发三项互不重叠的只读工作：v0.1.21 单次 Controller 启动验收、真实 Train 入场关键路径、封存 Final 元数据补证方案。
+- **边界：** 三项工作都只能读当前源码与证据并写各自日志；不能调用 provider、预留预算、抓取或购买数据、读取 Dev/Final 结果、修改受保护状态、提交或推送。
+- **目的：** 新授权到达前先消除启动和后续执行中的可预见摩擦。三个结果返回后由总 Supervisor 逐项复核，再把 task index、blocker board、roadmap 和 dashboard 合并为一个下一步。
+- **计划：** `SUPERVISOR_PARALLEL_READINESS_2026-09-22-v1.json`。当前仍没有运行中的付费 worker、新数据、训练或预测结果。
+
+### 2026-09-22 15:42 ET：第一波验收完成，第二波 P0 工程修复已并行启动
+
+- **启动路径：** v0.1.21 的版本、packet、runtime、预算和唯一 ID 检查都能通过；下一 ID `market-rsi-gate1-controller-20260922-03` 尚未使用。但本次付费请求没有新授权，不能启动；授权后还必须先写 decision revision 并重取 state/document hash。
+- **真实 Train：** 保留的 2024 v2 capture 有 561 页、409,419 条原始记录，但仍是候选，不是正式 Train。现在的受控采集契约还是 v1 两页抽样；request catalog 不是 admission receipt；watchdog 只检查一个 64 位 hash 的格式。112/112 离线测试通过，只证明旧边界按设计运行。
+- **Final：** 如果无法恢复自 9 月 18 日起覆盖所有访问者和存储面的完整防篡改日志，现有候选只能是 `not provable`，不能正式入场。没有读取结果，也没有换日期。
+- **第二波：** 已并行派发 formal Train admission receipt/validator 和 Polymarket v2 cursor contract 两项本地工程修复。两项都不联网、不花钱、不抓真实数据、不改受保护状态。计划：`SUPERVISOR_PARALLEL_ENGINEERING_2026-09-22-v1.json`。
+
+### 2026-09-22 15:50 ET：三个可见 Codex task 已改名并接入 Supervisor pull/push
+
+- `01a0c58f…` 改名为 `ACTIVE · Train admission review`，负责独立对抗验收矩阵。
+- `01a0c589…` 改名为 `ACTIVE · v2 cursor review`，负责独立检查 cursor/终止/硬上限边界。
+- `01a0c597…` 改名为 `ACTIVE · 2024 rights + coverage`，负责核对权利、285 场分母、方向、时钟与来源回执缺口。
+- Supervisor 已先 pull 三个 task 的旧结果，再 push 新任务；三者都已确认进入 active turn。每个 task 必须把最终结果主动发回本 Supervisor，Supervisor 验证后再归档和改名为 DONE。
+
+### 2026-09-22 16:05 ET：两个 P0 实现完成独立复审
+
+- **Train admission gate：** 第一轮 reviewer 找到 dataset bytes、season/question/task、正式调用点和 source commitment 缺口；实现方修复后，fresh rereview 对 scoped validator/Watchdog 给出 PASS。23/23 focused、37/37 adjacent 与零费用 canary 通过。端到端仍 REPLAN：尚未加入 controlled manifest，没有正式 training/eval caller，post-claim TOCTOU 仍需关闭。
+- **v2 cursor contract：** reviewer 先找到超 1000 行、单 token、bool/float 冒充 int 等五类反例；实现方统一修复后，最终 source `6c329f54…e080f` 的独立 55/55 对抗检查与 80/80 合并检查通过。旧 v1 文件保持不变。它仍只是离线契约，不是网络、权利、catalog 或 admission 授权。
+- **2024 evidence chat：** 原 task 连续两次完成但没有可见 final；Supervisor 已发第三次最小取回请求。若仍为空，将标为 BLOCKED 并转派，不会写成成功。
+
+### 2026-09-22 16:14 ET：可见 task 完成换班，下一组两项离线证据开始
+
+- **已拉回的 2024 结果：** replacement task 给出正式入场 REPLAN。离线证据支持完整赛程分母 285、已有映射 284，唯一明确缺失是 nflverse `2024_22_KC_PHI` / Polymarket event `17330`，原因 `moneyline_missing_or_ambiguous`。来源权利、代码拥有的主客队/代币方向以及 provider publish/local receive 时间仍不完整，所以不能正式入场。
+- **任务重命名与归档：** replacement 已改名 `DONE · P0 2024 evidence replacement`。原来三次空回传的 task 保持 `BLOCKED · P0 2024 evidence · empty`，不再复用，也不把空结果写成通过。
+- **新分工：** 两项零费用实现已在内部并行开始：完整 285 场候选账本，以及主客队/代币方向 verifier。两个可见 task 已分别改名 `ACTIVE · P0 285-game ledger review` 和 `ACTIVE · P0 orientation review`，收到只读独立复审任务，并确认进入工作。它们必须把中间和最终证据主动推回总 Supervisor。
+- **边界：** 本段没有联网、重下、付费调用、Dev/Final 读取、数据入场、训练、commit、tag 或 push。权利与真实发布时间仍是外部 gate，不能靠本地代码消除。
+
+### 2026-09-22 16:22 ET：285 场账本第一版独立审查给 REPLAN
+
+- **正确部分：** 独立 reviewer 重新解析真实来源，确认 285 场赛程、284 个唯一映射和唯一缺失 `2024_22_KC_PHI` / event `17330`。canonical ledger 连续两次得到相同 SHA-256 `179d701a…a8c2`；6/6 原测试通过。
+- **四个反例：** 第一版仍会接受一套完全伪造但自行重算 hash 的来源；没有解析 catalog payload，所以错误 event/slug 也能通过；输入多出 `dev_score` 会被静默丢掉；每行没有自己的来源承诺。故 task 已改名 `REPLAN · P0 285-game ledger review`，不能 freeze 或 admission。
+- **修复动作：** 四个可复现反例已推回实现 owner，要求固定 canonical resolved path/hash、解析并验证 event 17330、拒绝额外与 Dev/Final 字段、增加逐行来源绑定，并为修复生成新的候选 ID；旧候选保留为 superseded，不改写成成功。
+- **并行项：** outcome orientation 实现已经产出稳定快照，另一条可见 task 正做独立对抗复审。仍无联网、付费、正式数据入场、训练或 Git 发布。
+
+### 2026-09-22 16:28 ET：账本第二版进入复审，空回传方向 task 被替换
+
+- **账本修复：** 新的 `...-20260922-03` 候选没有覆盖旧候选。它固定 canonical resolved path/hash、解析 285 个 catalog event、严格要求 13 列输入 schema，并给 285 行加入可重算来源承诺。11/11 author tests 通过；Supervisor 把账本和方向两套测试一起运行，28/28 通过。原 reviewer 已重新进入 active turn，正在重放首轮四个反例；仍不能提前写 PASS。
+- **方向实现：** source `fbe3b7e1…db4c`、test `5e6a50dc…78e9`；作者报告 17/17 focused 与 73/73 adjacent 通过，284 个 candidate receipts，event 17330 保持明确未定向。Supervisor 自己的合并测试也通过。
+- **空结果处理：** 可见 orientation reviewer 的正式 review 与最小 final retrieval 连续两次结束但没有正文，已改名 `BLOCKED · P0 orientation review · empty`。没有把空结果当通过。fresh internal reviewer 已收到固定 snapshot 和对抗矩阵，正在独立复审。
+
+### 2026-09-22 16:34 ET：285 场账本第二版独立复审通过
+
+- **结论：** exact -03 ledger checkpoint 获 scoped PASS。独立 reviewer 重放首轮四个反例：完整替代来源树、matching-hash symlink、错误 event/slug、额外 `dev_score`/`Dev`/`Final` 字段全部被拒绝。
+- **可复核结果：** 11/11 focused tests 通过；285/285 row commitments 与 source bindings 独立重算一致且唯一；两次 canonical build 与保存 artifact 逐字节相同。ledger SHA `1c12f539…5819`，receipt SHA `245d70bb…e38f`。
+- **边界：** 这里只证明候选账本完整性。`admission_claim=false`；数据权利、provider publish/local receive 时间、方向校验、controlled release 与正式 Train admission 仍需各自通过。没有网络、付费、Dev/Final、commit 或 push。
+
+### 2026-09-22 16:38 ET：方向校验替补独立复审通过离线范围
+
+- **固定快照：** source `fbe3b7e1…db4c`、test `5e6a50dc…78e9`。替补 reviewer 跑过 17/17 focused、73/73 adjacent、11/11 ledger-adjacent 和 18/18 独立内存反例，全部通过。
+- **结果：** 285 catalog events 生成 284 个 candidate-only orientation receipts；event `17330` 明确保持未定向，没有被推断修复。receipt-set digest 为 `abc24dd4…da70`。catalog/mapping/alias/token/slug/game-ID 的替换、冲突与反转都 fail closed。
+- **边界：** 这是固定 bytes 的离线 PASS，不是发布或正式 admission。模块尚未进入 controlled source manifest，没有 non-test consumer；bytes-only 接口不能自己证明调用方 canonical path/symlink provenance。rights、provider provenance、Train receipt 和 protected split 仍是单独 gate。
+- **任务可见性：** 原可见 task 两次空回传仍保留为 BLOCKED；替补 reviewer 的真实证据单独记录，未覆盖或美化空结果。
+
+### 2026-09-22 16:44 ET：从四个离线 PASS 转入单一路径整合
+
+- **新瓶颈：** Train receipt、v2 cursor、285 场 ledger 和 orientation 各自通过 scoped offline review，但还没有一个 production consumer 把它们连成同一条受控路径。新模块也没有全部进入 controlled source manifest；canonical path/symlink 和 check-to-use 保证分散在不同层。
+- **编排：** 新建 `SUPERVISOR_P0_ADMISSION_INTEGRATION_2026-09-22-v1.json`。dispatch 和第一步 ready-step 机器闸门均通过。实现 owner 只可写一个 integration module、focused test、controlled manifest 和专属 log；稳定后才轮到 fresh reviewer，不能边写边自审。
+- **目标边界：** 产物只能是 candidate-only integration receipt，event `17330` 继续未解决；rights、provider timing、正式 Train admission、release 和付费 Controller 均不由这一步解决。本轮没有联网、付费、fetch、Dev/Final、commit、tag 或 push。
+
+### 2026-09-22 16:53 ET：候选入场 consumer 实现完成，转入独立复审
+
+- **实现快照：** consumer `cf2e4562…21838`、test `46120084…0481`、controlled manifest `5f634549…deb6`；335 文件受控源码 digest `5d650ae3…ac5f`。它只打开 canonical no-symlink 文件一次、保留 bytes、核对 descriptor/path identity，再把相同 bytes 交给 ledger/orientation/receipt validators。
+- **结果边界：** integration receipt `20e884ad…a345` 仍是 candidate-only：285=284+1，event `17330` 未解决；rights、provider、network/v2 execution、formal admission、Dev/Final 和 improvement 全部 false。
+- **验证：** author 13/13 focused、95/95 combined；Supervisor 用同一固定快照重跑，结果同样 13/13 与 95/95。实现 evidence 已写入机器 plan，independent-review ready-step 通过。
+- **现在：** fresh reviewer `capability_contract` 已收到固定三个文件哈希、controlled digest 和完整攻击矩阵。review 未回来前不写整合 PASS，不发布、不 admission、不联网、不付费。
+
+### 2026-09-22 17:01 ET：独立复审找到两条整合绕过，立即 REPLAN
+
+- **不是旧 task 卡住：** dashboard 里的两个 BLOCKED 可见 task 是历史空回传，不是当前执行路径；证据已由 replacement work 找回。两者现已归档，日志保留。
+- **真实新 blocker 1：** 第一版 consumer 会接受重新计算 row commitment 后的 `provider_verified=true`、`network_access_authorized=true`、`formal_training_authorized=true`、`improvement_claim_allowed=true`。原代码只覆盖了 rights 与 Dev/Final 的部分别名，权限字段检查不够通用。
+- **真实新 blocker 2：** 在读取过程中，把祖先目录短暂替换成指向同 inode hardlink 的 symlink、再在最后 pathname 检查前恢复，仍能通过。原因是 consumer 没有从 repo root 到文件一直持有完整 descriptor chain。
+- **处理：** 独立 verdict 明确记为 REPLAN。两个反例已推回 implementation owner，要求新 source/test snapshot、通用权限升级拒绝、全祖先 descriptor chain 持有与 deterministic tests。旧 review 只适用于 `cf2e…21838`；正在变化的新 bytes 没有 verdict。修复前不发布、不 admission、不联网、不付费。

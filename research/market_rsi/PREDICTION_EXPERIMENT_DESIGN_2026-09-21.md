@@ -22,6 +22,47 @@ Both arms must use the same admitted rows, selected target, chronological
 splits, latency assumptions and scorer. A trial may change one prediction
 component at a time. It cannot change data, target or Final to rescue a score.
 
+## Data gaps are part of the research loop
+
+The RSI loop starts **before** model fitting. A failed data-admission check is
+an observation for the Controller, not an instruction for the human Supervisor
+to quietly choose a replacement dataset. Each data-research cycle is:
+
+1. The independent auditor reports the exact gap and denominator (for example,
+   unmatched games, missing real fills, unusable event clocks, rights unknown,
+   or too few untouched dates), with source and access-history hashes. It does
+   not expose sealed outcomes or row-level Dev/Final labels.
+2. The Controller chooses the next hypothesis and a bounded investigation. It
+   may propose a new lawful source, matching method, sampling method, or a
+   separately versioned target/market research question; it is not limited to
+   a permanently fixed menu. A novel source or tool proposal is **not** an
+   executable permission. The trusted broker must review its rights, scope,
+   endpoint, bytes, time, cost, and isolation before any researcher uses it.
+3. The researcher runs only the admitted bounded task and saves raw receipts,
+   code, errors, source versions and hashes. It may not purchase data, access
+   sealed splits, or change protected scoring rules on its own.
+4. An independent auditor recomputes mapping, actual-trade/quote semantics,
+   event ordering, label coverage by game/date, exclusions and rights. The
+   Supervisor records pass/fail and budget, then returns the factual result to
+   the Controller for its next decision.
+
+This loop can improve the *usable evidence* before it improves forecasts.
+Track scheduled games, matched markets, games with verified executable-source
+observations, valid labels, eligible dates, missingness by week, acquisition
+cost, and independent recheck status. Increased row count alone is not a win.
+Never fabricate absent trades, treat carried-forward minute prices as fills,
+move inspected dates into Final, or change the target after seeing Dev. If a
+source cannot close the gap within a predeclared bound, archive the negative
+result and let the Controller choose a different investigation; if no lawful
+and affordable source can support the current claim, report that scope change
+to the user rather than silently weakening the benchmark.
+
+The current live Gate 1 contract still offers only a small fixed source and
+question registry. Its successful synthetic plan canary therefore **does not**
+yet demonstrate this open-ended gap-resolution loop. Extending proposal
+capture, trusted capability review, and result-to-next-input feedback is a
+specific implementation requirement, not an achieved result.
+
 ## Data gate before any model fit
 
 The experiment is blocked until a formal admission receipt proves:

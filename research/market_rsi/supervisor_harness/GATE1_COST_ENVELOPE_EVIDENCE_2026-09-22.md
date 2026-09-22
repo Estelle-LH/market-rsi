@@ -1,0 +1,5 @@
+# Gate 1 cost-envelope preflight
+
+The v0.1.19 packet (canonical hash `57757338474374dee790c74ed6378644ce84a06f91e898b3c13c47496a51de37`) was encoded with the pinned offline GLM tokenizer to 2,819 input tokens. With the published 3,072 maximum output tokens, the deterministic Tinker hard upper was `$0.05102514`, above the separately authorized `$0.05` single-call gate. No call was dispatched. The original `$200` total cap is unchanged.
+
+The only new behavior change sets the Gate 1 maximum output to 2,944 tokens. Re-encoding the **same** packet with the pinned tokenizer yields the same 2,819 input tokens and a worst-case upper of `$0.04946994`. Last failed answer used 379 output tokens; 2,944 is still a bound, not a guarantee against truncation. Preflight remains responsible for recomputing and rejecting any future packet exceeding the cap. The exact current controlled-source digest is `0f5298d107463f04e20be8307665961839c776c5edbb1533ce237ef1abdcdcdb`. All **127/127** `test_p0_gate1*.py` tests pass with the pinned local runtime. No provider, fetch or protected data was used for this check.

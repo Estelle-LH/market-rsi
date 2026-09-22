@@ -1,0 +1,4 @@
+# P0 source and rights review — active task
+
+- 2026-09-18 14:39 EDT — Supervisor assigned `/root/canary_review` a bounded read-only review of existing public-source and rights evidence. No download, paid call, sealed read or GLM-authorship claim. Awaiting actual findings.
+- 2026-09-18 14:40 EDT — Read-only result received. 2024 Polymarket support receipts show 284 mapped games, 407,225 trades and 47,875 timed PBP plays but explicitly do not admit Train; rights and live availability remain unverified. 2025 has 285/285 identity but only one game of direct trades. 2023 strict archive maps 237/285; whole source object/rights/trades/labels are not independently verified. Kalshi historical endpoints exist but research storage requires written authorization under the reviewed developer terms; no authorization receipt. No source meets full rights/coverage/label/Final gates. This is Supervisor evidence compilation, not a GLM Controller decision or an API canary.

@@ -1,13 +1,22 @@
 from datetime import datetime, timedelta, timezone
+import hashlib
 import json
 from pathlib import Path
 import tempfile
+from types import MappingProxyType
 import unittest
+from unittest.mock import patch
 
+from supervisor_harness import formal_train_admission as admission
 from supervisor_harness.supervisor_watchdog import SupervisorWatchdog
 
 
 SHA = "a" * 64
+TRAIN_BYTES = b'{"schema":"watchdog_train_bundle_v1","rows":[1]}\n'
+TRAIN_SHA = hashlib.sha256(TRAIN_BYTES).hexdigest()
+QUESTION_ID = "2025_whole_season_trade_access"
+SEASONS = ("2023", "2024", "2025")
+CONTROLLER_TASK_SHA = "7" * 64
 
 
 class WatchdogTests(unittest.TestCase):
@@ -139,12 +148,77 @@ class WatchdogTests(unittest.TestCase):
                     owner="runner", heartbeat_timeout_seconds=10,
                     progress_timeout_seconds=30, input_sha256=SHA,
                     now=self.clock)
-        state = self.watchdog.claim_task(
-            task_id="training-accepted", task_kind="training", stage="run",
-            owner="runner", heartbeat_timeout_seconds=10,
-            progress_timeout_seconds=30, input_sha256=SHA,
-            data_admission_sha256="8" * 64, now=self.clock)
-        self.assertEqual(state["active_task"]["data_admission_sha256"], "8" * 64)
+        with self.assertRaisesRegex(ValueError, "exact validated"):
+            self.watchdog.claim_task(
+                task_id="training-digest-only", task_kind="training", stage="run",
+                owner="runner", heartbeat_timeout_seconds=10,
+                progress_timeout_seconds=30, input_sha256=SHA,
+                data_admission_sha256="8" * 64, now=self.clock)
+
+        artifact_root = Path(self.tmp.name).resolve()
+        dataset_path = artifact_root / "train-bundle.json"
+        dataset_path.write_bytes(TRAIN_BYTES)
+        receipt = {
+            "schema": admission.SCHEMA,
+            "receipt_id": "watchdog-formal-train-test-v1",
+            "issuer_id": admission.INDEPENDENT_ISSUER_ID,
+            "issued_utc": "2026-09-22T12:00:00Z",
+            "dataset": {
+                "dataset_id": "watchdog-synthetic-train-v1",
+                "dataset_sha256": TRAIN_SHA,
+                "row_manifest_sha256": "2" * 64,
+                "source_version_sha256": "3" * 64,
+                "split_scope": admission.TRAIN_SCOPE,
+                "row_count": 1,
+                "season_ids": list(SEASONS),
+                "question_id": QUESTION_ID,
+                "controller_task_sha256": CONTROLLER_TASK_SHA,
+            },
+            "gates": {
+                name: {"status": "passed", "evidence_sha256": digit * 64}
+                for name, digit in zip(admission.REQUIRED_GATES, ("4", "5", "6"))
+            },
+            "claim_boundaries": {
+                "formal_train_admitted": True,
+                "dev_data_read": False,
+                "final_data_read": False,
+                "unknowns_remaining": False,
+            },
+        }
+        receipt_path = artifact_root / "formal-train-admission.json"
+        receipt_raw = admission._canonical(receipt)
+        receipt_path.write_bytes(receipt_raw)
+        receipt_sha = hashlib.sha256(receipt_raw).hexdigest()
+        registry = MappingProxyType({receipt["receipt_id"]: {
+            "receipt_file_sha256": receipt_sha,
+            "receipt_schema": admission.SCHEMA,
+            "issuer_id": admission.INDEPENDENT_ISSUER_ID,
+            "dataset_id": receipt["dataset"]["dataset_id"],
+            "dataset_sha256": TRAIN_SHA,
+            "season_ids": list(SEASONS),
+            "question_id": QUESTION_ID,
+            "controller_task_sha256": CONTROLLER_TASK_SHA,
+        }})
+        with patch.object(admission, "TRUSTED_RECEIPT_COMMITMENTS", registry):
+            state = self.watchdog.claim_task(
+                task_id="training-accepted", task_kind="training", stage="run",
+                owner="runner", heartbeat_timeout_seconds=10,
+                progress_timeout_seconds=30, input_sha256=SHA,
+                data_admission_sha256=receipt_sha,
+                data_admission_receipt_path=receipt_path,
+                data_admission_dataset_path=dataset_path,
+                data_admission_question_id=QUESTION_ID,
+                data_admission_season_ids=SEASONS,
+                data_admission_controller_task_sha256=CONTROLLER_TASK_SHA,
+                now=self.clock)
+        task = state["active_task"]
+        self.assertEqual(task["data_admission_sha256"], receipt_sha)
+        self.assertEqual(task["dataset_sha256"], TRAIN_SHA)
+        self.assertEqual(task["dataset_path"], str(dataset_path))
+        self.assertEqual(task["data_admission_question_id"], QUESTION_ID)
+        self.assertEqual(task["data_admission_season_ids"], list(SEASONS))
+        self.assertEqual(
+            task["data_admission_controller_task_sha256"], CONTROLLER_TASK_SHA)
 
     def test_data_task_cannot_close_until_gate_passes(self):
         self.claim(kind="data")

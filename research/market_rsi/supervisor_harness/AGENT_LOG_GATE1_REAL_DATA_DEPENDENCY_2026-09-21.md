@@ -1,0 +1,11 @@
+# Gate 1 real-data dependency audit
+
+Assigned read-only task. This curated log is copied by the Supervisor from the completed task response because the reviewer had no write permission to this canonical checkout. It is not a raw tool stream.
+
+## 2026-09-21 23:49 ET — independent result
+
+- Verdict: **PASS on the audit; real Train trade execution remains BLOCKED.** Canonical controlled-source digest matched `48b7b78f2839dc1a215cce28627956f890359ad23bf21a63b4fe5e7fcb614afa` over 324 files before and after review.
+- `p0_gate1_trade_query.py` registry has only `gate1_synthetic_train_catalog_v1` with `synthetic_canary_only`; file SHA-256 `60117c1ea76bfec6bca818d31ae05699f01ebe412ffd1babd1363e8da085784e`. Current packet declares no reviewed real catalog; adapter hides fixed-trade operation; outer requires `reviewed_real_train_catalog` for live fixed trade. Offline manifest generation grants no fetch authority.
+- 2023 mapping SHA-256 `e6e1c0501ea9831e2bbf97460b86d4db2f31352117a9df70ae16d2b01f40dbea`: 237/285 matched, 48 missing; full remote archive object and research rights unverified. 2024 support SHA-256 `f5bd4c5f0da9a234ac7c4f69e8bf9b405d19708d09986c98f0c62bf30df9ae38`: 284 traded games, 407,225 trades, 60-second label support 32,384/47,875 timed plays; explicitly not admitted to Train. 2025 mapping SHA-256 `6927307ccaedc3f576bdf04351b2a0e864fb53806aa46592127c53de4681bafa`: 285/285 identities, only one direct trade check, no catalog token IDs/windows/role. Exposure ledger SHA-256 `371877291df7532b2d5c26da1c34bf4142b47cbc0af0ea8f8c3932f7efa47aa9`: 1 opened, 0 verified unopened, 284 unknown.
+- Next dependency: first obtain a new valid Controller decision. Whichever source it chooses then needs independently checked public-Train catalog with full denominators, exact markets/tokens/windows/roles, provenance, rights and byte hash before enabling fixed-trade execution. Any fetch requires separate exact request and failure/zero-fill receipts. Document investigation or review-only proposal remains a permitted separate lane.
+- Reviewer reported no edits, provider call, fetch, protected-data read, admission, release or push. Supervisor cross-check of the cited registry and digest is pending integration; do not treat this as whole-plan PASS.

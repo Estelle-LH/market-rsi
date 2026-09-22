@@ -1,0 +1,66 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "market-rsi-parallel-readiness-20260922-01",
+  "created_utc": "2026-09-22T19:20:38Z",
+  "objective": "Use the authorization wait to close three independent evidence gaps without spending money or substituting Supervisor science for the GLM Controller.",
+  "current_checkpoint": "Published v0.1.21 and its zero-provider canary pass; no valid Controller plan, real Train catalog, admitted Final, training run or prediction result exists.",
+  "boundary": "Read-only inspection plus one dedicated log per worker. No provider call, budget reservation, network fetch, purchase, protected-state mutation, Dev/Final outcome access, commit, tag or push.",
+  "parallel_steps": [
+    {
+      "id": "gate1_launch_readiness",
+      "owner": "gate1_integrated_release_review",
+      "action": "Pin the exact new-ID rule, packet/version/hash bindings, runner command, budget upper, process checks and terminal receipts for one future authorized Controller request.",
+      "artifact": "AGENT_LOG_GATE1_LAUNCH_READINESS_2026-09-22.md",
+      "pass_condition": "A reproducible PASS/REPLAN checklist that cannot dispatch a provider by itself.",
+      "time_bound_minutes": 30,
+      "result": {
+        "verdict": "replan_hold_mechanically_ready_not_authorized",
+        "observed": "Candidate ID market-rsi-gate1-controller-20260922-03 is unused and immutable bindings, budget capacity and exact parent command were verified. Fresh paid-request authorization and post-authorization state hashes are still required.",
+        "evidence_sha256": "0c92f34027e072edfdf3d0ad202b5bdedb92befd260ae514f23a01b9b6a5911b"
+      }
+    },
+    {
+      "id": "real_train_admission_critical_path",
+      "owner": "gate1_firstwave_audit",
+      "action": "Map valid Controller decision through rights review, exact request manifest, clean source versioning, coverage checks and admitted Train catalog.",
+      "artifact": "AGENT_LOG_REAL_TRAIN_ADMISSION_CRITICAL_PATH_2026-09-22.md",
+      "pass_condition": "Ordered evidence gates clearly separating immediate work from separately authorized fetch or purchase.",
+      "time_bound_minutes": 35,
+      "result": {
+        "verdict": "replan",
+        "observed": "A preserved 2024 v2 candidate capture is substantial but unadmitted. The released Controller path is documentation-only, the controlled acquisition manifest is legacy v1 sampling, request catalogs are not formal admission receipts, and the watchdog accepts a bare digest shape.",
+        "tests": "112/112 focused offline tests passed",
+        "evidence_sha256": "ff20cd1af40dc30d27ab473215300818d15b6801d796eef32ba6e752d2827b25"
+      }
+    },
+    {
+      "id": "final_recovery_plan",
+      "owner": "final_nonexposure_audit",
+      "action": "Define how to admit or reject the existing reserved Final using metadata-only evidence and a deterministic future-window fallback if proof cannot be recovered.",
+      "artifact": "AGENT_LOG_FINAL_RECOVERY_PLAN_2026-09-22.md",
+      "pass_condition": "Numbered gates that never inspect outcomes or silently move reserved dates.",
+      "time_bound_minutes": 30,
+      "result": {
+        "verdict": "pass_for_recovery_plan_only",
+        "observed": "Six metadata-only gates were delivered. Existing candidate remains unadmitted; a complete access-history gap makes non-exposure not provable. Future fallback was specified but not executed.",
+        "evidence_sha256": "1f5014fda38171156f36cdb02f5718d6ffc278612ea58a7b2c64de63dcb0e188"
+      }
+    }
+  ],
+  "integration": {
+    "owner": "Supervisor · Market RSI",
+    "depends_on": [
+      "gate1_launch_readiness",
+      "real_train_admission_critical_path",
+      "final_recovery_plan"
+    ],
+    "action": "Verify each cited file and command, reconcile task index, blocker board, roadmap and dashboard, and select only the next authorized critical-path action.",
+    "pass_condition": "One evidence-backed next checkpoint with no unsupported data, Final, cost or execution claim.",
+    "failure_action": "Record REPLAN/BLOCKED, preserve artifacts and fix the causal layer; do not retry for score or formatting.",
+    "result": {
+      "verdict": "pass_for_orchestration_only",
+      "observed": "All three evidence tasks returned. Controller launch is mechanically ready but awaits authorization; real Train admission requires engineering repair; the current Final remains unadmitted because non-exposure is not provable from incomplete access history.",
+      "next_plan": "SUPERVISOR_PARALLEL_ENGINEERING_2026-09-22-v1.json"
+    }
+  }
+}

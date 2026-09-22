@@ -1,0 +1,45 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "p0-gate1-offline-binding-20260922-01",
+  "symptom": "An independently reviewed offline trade compiler exists, but the formal Controller outer path could accept task.json without an exact request manifest. An interim local guard now rejects fixed-trade tasks, so no valid production trade plan can yet pass.",
+  "source_evidence": "AGENT_LOG_SUPERVISOR_RELEASE_AUDIT_2026-09-21.md, SUPERVISOR_ROADMAP_2026-09-21.md, test_p0_gate1_controller_outer.py and the 2026-09-21 22:49 ET HUMAN_PROGRESS entry",
+  "objective": "Wire one valid fixed-trade Controller answer to the trusted exact-request compiler with explicit catalog provenance while retaining proposal and document lanes, then obtain an independent offline verdict. This is an operational source repair, not a prediction result.",
+  "boundary": "Zero provider and zero network; use only synthetic fixtures for tests. No real Train catalog admission, Dev/Final read, data purchase, release, push, new paid decision or scientific selection by the Supervisor. A synthetic catalog must never admit a live plan.",
+  "resolution_check": "An independent reviewer checks one integrated source snapshot: the formal outer path rejects missing, synthetic-live, changed or uncommitted catalog/manifest bindings; a frozen offline synthetic trade decision produces one byte-bound exact manifest and receipt; document and proposal branches retain their previous restrictions. A passing offline verdict does not authorize release or a provider call.",
+  "supervisor_owner": "outer Codex Supervisor in the rsi task",
+  "steps": [
+    {
+      "id": "bind_compiler_to_outer",
+      "owner": "outer Codex Supervisor in the rsi task",
+      "action": "Define a trusted catalog byte/commitment input at the outer boundary. For a validated fixed-trade task, compile and persist one exact plan before positive review, hash-bind it to the decision/task/catalog, reject missing or synthetic-live catalogs, and keep document/proposal behavior unchanged. Start from the failing no-manifest regression already recorded.",
+      "depends_on": [],
+      "expected_artifact": "Updated p0_gate1_controller_outer.py and focused tests showing frozen offline plan bytes and terminal failure on absent catalog",
+      "verification": "Run focused outer/compiler/adapter tests; inspect fresh artifact bytes and hashes, ledger terminal status, global-state closure, and absence of fetch/provider calls in offline fake mode.",
+      "pass_condition": "Offline synthetic trade plan yields one exact manifest with stable digest; missing catalog, wrong commitment, or synthetic catalog in live mode fail closed without claim of data admission.",
+      "failure_action": "Preserve test failure and local source; do not lift the interim guard or start another provider sample. Narrow the interface and version this plan if needed.",
+      "time_bound_minutes": 90
+    },
+    {
+      "id": "adversarial_integrated_tests",
+      "owner": "outer Codex Supervisor in the rsi task",
+      "action": "Exercise catalog byte mutation, duplicate field, manifest amount/type tamper, unauthorized URLs/rights, proposal-to-task escalation, and missing artifacts against the integrated outer review. Run the full relevant suite only after source stabilizes.",
+      "depends_on": ["bind_compiler_to_outer"],
+      "expected_artifact": "Focused and full-test receipts in HUMAN_PROGRESS.md plus deterministic zero-network canary artifacts under a fresh ID",
+      "verification": "Compare canonical artifact bytes and source hashes against the executed code; confirm provider calls, network requests, fetches and sealed reads are zero.",
+      "pass_condition": "All declared failure cases are rejected, positive offline fixture remains deterministic, and relevant tests pass with only documented environment skips.",
+      "failure_action": "Classify causal failure, preserve run ID and artifacts, fix only the affected layer, rerun under a fresh canary ID after code change.",
+      "time_bound_minutes": 90
+    },
+    {
+      "id": "independent_offline_review",
+      "owner": "independent read-only reviewer, distinct from code author",
+      "action": "Review one frozen integrated source snapshot, controlled-file manifest, test failures and fixes, exact plan receipt, dirty file scope, budget and protected-data boundaries.",
+      "depends_on": ["adversarial_integrated_tests"],
+      "expected_artifact": "A signed PASS or REPLAN review with file hashes and reproducible counterexamples",
+      "verification": "Supervisor rechecks every cited source hash and attack result; bottleneck gate resolves this offline subplan only on a complete passing receipt and separate whole-plan review.",
+      "pass_condition": "No P0 bypass in this offline compiler boundary; the review explicitly says release, paid GLM and real catalog admission remain separate gates.",
+      "failure_action": "Preserve the REPLAN finding and create one scoped causal repair; do not publish or sample while review is open.",
+      "time_bound_minutes": 45
+    }
+  ]
+}

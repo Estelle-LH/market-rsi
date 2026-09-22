@@ -1,0 +1,51 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "market-rsi-p0-admission-integration-20260922-02",
+  "supersedes": "market-rsi-p0-admission-integration-20260922-01",
+  "symptom": "Independent review of consumer cf2e4562...21838 found two fail-closed gaps despite 13/13 focused and 95/95 combined passing: generic provider/network/formal-training/improvement authority aliases could be recommitted true, and a transient ancestor symlink swap to a same-inode hardlink could evade the final pathname check.",
+  "source_evidence": "AGENT_LOG_P0_ADMISSION_INTEGRATION_REVIEW_2026-09-22.md and exact reviewer verdict for cf2e4562...21838; old review is snapshot-bound and does not apply to changed bytes.",
+  "objective": "Independently verify the superseding consumer f03c4f5b...d8e7 closes both reproduced gaps without changing candidate-only semantics, denominator, unresolved event 17330 or authority boundaries.",
+  "boundary": "Local source, preserved opened-Train candidate bytes and zero-cost tests only. No provider, network, fetch, purchase, protected/global-state mutation, Dev/Final read, admission claim, commit, tag or push.",
+  "resolution_check": "Require exact source/test/manifest hashes, replay of both original counterexamples plus adjacent identity/authority tests, independent PASS/REPLAN, intact controlled-source digest and explicit separation from rights/provider/release/admission readiness.",
+  "supervisor_owner": "Supervisor · Market RSI",
+  "steps": [
+    {
+      "id": "integration_remediation_v2",
+      "owner": "final_nonexposure_audit",
+      "action": "Generalize authority escalation rejection and hold/validate the complete canonical ancestor descriptor chain end-to-end; add deterministic tests for the exact reviewer counterexamples.",
+      "depends_on": [],
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/p0_candidate_admission_integration.py",
+        "research/market_rsi/supervisor_harness/test_p0_candidate_admission_integration.py",
+        "research/market_rsi/supervisor_harness/AGENT_LOG_P0_ADMISSION_INTEGRATION_IMPLEMENTATION_2026-09-22.md"
+      ],
+      "expected_artifact": "Fresh source/test snapshot and implementation log with exact hashes and focused/combined results.",
+      "verification": "Supervisor recomputes hashes, reruns focused and combined suites and confirms the old review is not transferred to new bytes.",
+      "pass_condition": "Both reviewer counterexamples reject deterministically; exact candidate receipt and 285=284+1/event 17330 unresolved semantics remain unchanged; all authority flags remain false.",
+      "failure_action": "Keep first integration REPLAN and block release/admission; preserve all snapshots and replan the causal layer.",
+      "time_bound_minutes": 35,
+      "result": {
+        "verdict": "pass",
+        "observed": "Superseding consumer f03c4f5b...d8e7 and test 08d9da79...6783 close both reproduced gaps. Supervisor reran 14/14 focused and 96/96 combined. Controlled digest a6d68ce7...b03f covers 335 files; candidate receipt remains 20e884ad...a345 with 285=284+1/event 17330 unresolved and all authority false.",
+        "reviewer": "Supervisor · Market RSI evidence and regression check; independent rereview is the next step",
+        "evidence_path": "AGENT_LOG_P0_ADMISSION_INTEGRATION_IMPLEMENTATION_2026-09-22.md",
+        "evidence_sha256": "e6365bd88add55bd76a6e3bc87217b1246b24a7b06e26ad5445a83a79c8732f3"
+      }
+    },
+    {
+      "id": "independent_integration_rereview_v2",
+      "owner": "budget_preflight",
+      "action": "Fresh read-only review of the exact superseding source/test/manifest snapshot; replay both prior counterexamples and adjacent path, identity, receipt, event-17330 and authority-escalation attacks.",
+      "depends_on": [
+        "integration_remediation_v2"
+      ],
+      "write_paths": [],
+      "expected_artifact": "Non-empty exact-hash PASS/REPLAN evidence packet with commands, counts and remaining external gates.",
+      "verification": "Supervisor confirms reviewer independence, exact snapshot identity, reproduced tests and no transfer of the old verdict.",
+      "pass_condition": "Fresh evidence-backed scoped PASS or precise REPLAN for f03c4f5b...d8e7; rights/provider/release/admission remain explicitly separate.",
+      "failure_action": "Keep integration unresolved, preserve the snapshot and assign a new causal repair or fresh reviewer; never publish on an empty result.",
+      "time_bound_minutes": 30,
+      "result": null
+    }
+  ]
+}

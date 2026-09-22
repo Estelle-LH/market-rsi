@@ -1,0 +1,48 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "final-2026-nonexposure-20260922-01",
+  "symptom": "The schedule-only 2026 Final reservation begins on 2026-09-20, which has passed, while its immutable candidate receipt still marks complete access history, same-mechanism market coverage and source rights unverified. It is not admitted.",
+  "source_evidence": "artifacts/p0-data-admission-gate0-20260918-01/prospective-2026-final-candidate.json SHA-256 70be5d64c6e35a680107fed6569e8cfb62e2be917b29f17aec584518f35372cc; only schedule metadata and admission flags were inspected.",
+  "objective": "Determine, without opening outcomes, whether existing records can independently establish non-exposure and the remaining prerequisites for this precommitted candidate; keep it unadmitted if evidence is missing.",
+  "boundary": "Read-only local receipt and access-log inventory only. Do not read candidate prices, labels, scores, trades or game outcomes; do not fetch, purchase, call a provider, alter dates, mark formal admission, modify frozen artifacts or choose a replacement window.",
+  "resolution_check": "An independent auditor lists exact access-log coverage, source/rights and market-mechanism evidence with hashes and unknowns. The Supervisor checks the evidence without outcomes. Admission remains false unless all predeclared requirements are independently verified; an unresolved unknown is explicitly blocked, not treated as zero or pass.",
+  "supervisor_owner": "Supervisor · Market RSI",
+  "steps": [
+    {
+      "id": "read_only_receipt_inventory",
+      "owner": "Independent final-candidate auditor",
+      "action": "Inspect only the schedule-only candidate, access-log metadata, relevant source-rights and mechanism receipts, and documented prior exposures. Report exact files/hashes and yes/no/unknown for complete access history, untouched labels, same-mechanism market coverage and research-use rights. Never open price/label/outcome content.",
+      "depends_on": [],
+      "expected_artifact": "AGENT_LOG_FINAL_NONEXPOSURE_2026-09-22.md with bounded evidence table and explicit unknowns",
+      "verification": "Supervisor rechecks each cited receipt hash and confirms no protected result file, network/provider call or source mutation occurred.",
+      "pass_condition": "The log distinguishes verified facts from absent evidence and does not declare the candidate admitted or choose another set.",
+      "failure_action": "Keep formal Final blocked; preserve the candidate and record the exact forbidden or missing evidence. Replan a smaller read-only metadata check if possible.",
+      "time_bound_minutes": 20,
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent read-only metadata audit completed; complete access history, label non-exposure, rights and same-mechanism coverage remain unverified. Candidate was not admitted or changed.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "AGENT_LOG_FINAL_NONEXPOSURE_2026-09-22.md",
+        "evidence_sha256": "82251240e60bfb5fe30aeb840049329b5cb44b34511d1afe69d1452606a2d793"
+      }
+    },
+    {
+      "id": "supervisor_candidate_boundary",
+      "owner": "Supervisor · Market RSI",
+      "action": "Independently review the auditor's receipt list, then classify the existing candidate as still unadmitted, evidence-complete, or inconclusive without opening outcomes. Update only the blocker board, roadmap and human log; do not change the candidate artifact.",
+      "depends_on": ["read_only_receipt_inventory"],
+      "expected_artifact": "One provenance-linked boundary finding in HUMAN_PROGRESS.md and BOTTLENECK_STATE_2026-09-18.json",
+      "verification": "Check all cited hashes, unchanged candidate SHA, held-out access discipline, and board validation.",
+      "pass_condition": "The decision is evidence-bound and preserves formal_final_admitted=false unless every independent requirement has passed.",
+      "failure_action": "Keep Final blocked and request an independent review or future prospective design decision; never substitute a score-based window.",
+      "time_bound_minutes": 15,
+      "result": {
+        "verdict": "pass",
+        "observed": "Supervisor independently rehashed the cited receipts and retained the candidate as unadmitted; Final remains blocked on missing access, rights, and coverage evidence.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "FINAL_NONEXPOSURE_SUPERVISOR_DECISION_2026-09-22.md",
+        "evidence_sha256": "6744c4d1b30d3aa392c3f1a702bd4ffa60728d8522b3c9eb7a6781da67fe9f22"
+      }
+    }
+  ]
+}

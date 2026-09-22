@@ -1,0 +1,78 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "gate1-controller-rule-visibility-20260922-01",
+  "symptom": "The first v0.1.18 GLM response was metered terminal but rejected at compile: it wrote a bounded documentation sample rule in its own words, while the compiler accepts only exact strings never shown in the packet.",
+  "source_evidence": "artifacts/market-rsi-gate1-controller-20260922-01/adapter/market-rsi-gate1-controller-20260922-01/failure.json and decision.json; metering is terminal at $0.01666737, not invoice.",
+  "objective": "Expose the exact implemented documentation choices to the Controller without relaxing source, rights, cost, or execution checks; independently review and release the causal fix before any fresh paid decision.",
+  "boundary": "Preserve the failed ID and first response. No score-targeted retry, real-data fetch, purchase, catalog admission, hidden-set access, or second paid process. Version source, test, inspect budget and exact process state, publish only code/tests to the user's fork, and run zero-provider canary before any new request.",
+  "resolution_check": "Independent reviewer verifies advertised choices equal trusted executable contracts and checks the no-catalog boundary. Supervisor verifies focused tests, exact publication, zero-provider canary, ledger integrity, and fresh-ID preflight; a new response is a separate research decision, not a repair of the old response.",
+  "supervisor_owner": "Supervisor · Market RSI",
+  "steps": [
+    {
+      "id": "diagnose",
+      "owner": "Supervisor · Market RSI",
+      "action": "Read failure/decision/receipt and reproduce the exact compiler error offline; verify metered terminal accounting and that the exact runner process has exited.",
+      "depends_on": [],
+      "expected_artifact": "Failure note with hashes, cost, stage and process evidence",
+      "verification": "Re-run compiler on the immutable decision with no provider call; compare failure stage and ledger receipt.",
+      "pass_condition": "The causal layer is named and no duplicate live process or unaccounted reservation remains.",
+      "failure_action": "Keep paid work closed and investigate the unmatched process or ledger state.",
+      "time_bound_minutes": 20,
+      "result": {
+        "verdict": "pass",
+        "observed": "Offline replay reproduces exact sample-rule compiler rejection; terminal metering $0.01666737, failed global-state close, no matching runner process or data fetch.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "GATE1_V018_RULE_VISIBILITY_FAILURE_2026-09-22.md",
+        "evidence_sha256": "a696d1e269af40a68bf64fdd061d10c906d305cd1e7690db18faacb87aa23c8e"
+      }
+    },
+    {
+      "id": "packet_contract_fix",
+      "owner": "Supervisor · Market RSI",
+      "action": "Publish exact executable documentation rule options in the public packet from shared constants; keep trusted compiler exact-match and reject tampered options. Add regression tests for every advertised option and invalid paraphrases.",
+      "depends_on": ["diagnose"],
+      "expected_artifact": "Scoped code/test diff and passing focused tests",
+      "verification": "Focused tests include valid advertised rules, unadvertised wording rejection, packet tamper rejection, and adjacent adapter/outer review tests.",
+      "pass_condition": "Every advertised rule compiles for its source; unauthorized wording still fails and no execution permission expands.",
+      "failure_action": "Replan the input/contract discrepancy; do not launch another paid sample.",
+      "time_bound_minutes": 30,
+      "result": {
+        "verdict": "replan",
+        "observed": "62/62 tests pass, but independent review found exact strings already present in original request. Duplicating them in the packet is not a demonstrated causal fix; the free-text submission schema remains.",
+        "reviewer": "Independent Gate 1 reviewer",
+        "evidence_path": "AGENT_LOG_GATE1_RULE_VISIBILITY_REVIEW_2026-09-22.md",
+        "evidence_sha256": "106ebc889d0f8cbfc3d92d51c6bb569b868bb9e67e45fe272c889c47abb8aeee"
+      }
+    },
+    {
+      "id": "independent_review",
+      "owner": "Independent Gate 1 reviewer",
+      "action": "Read-only review of exact scoped diff, source hash, tests and failure classification; look for prompt leakage, new authority, circular dependency, and false positive acceptance.",
+      "depends_on": ["packet_contract_fix"],
+      "write_paths": ["research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_RULE_VISIBILITY_REVIEW_2026-09-22.md"],
+      "expected_artifact": "Timestamped PASS/REPLAN report bound to source hash",
+      "verification": "Supervisor checks cited lines, diff, test output and reviewer hash; an empty or unsupported report is not PASS.",
+      "pass_condition": "No unreviewed authority expansion or missing contract guard.",
+      "failure_action": "Keep release and paid request closed; amend source with a new reviewed version.",
+      "time_bound_minutes": 25,
+      "result": {
+        "verdict": "replan",
+        "observed": "Original provider request already showed exact sample strings, and the latest failure is missing from next-decision feedback. Release and paid work stay closed; recommend a structured choice interface.",
+        "reviewer": "Independent Gate 1 reviewer",
+        "evidence_path": "AGENT_LOG_GATE1_RULE_VISIBILITY_REVIEW_2026-09-22.md",
+        "evidence_sha256": "106ebc889d0f8cbfc3d92d51c6bb569b868bb9e67e45fe272c889c47abb8aeee"
+      }
+    },
+    {
+      "id": "release_canary",
+      "owner": "Supervisor · Market RSI",
+      "action": "Stage only scoped code/tests; verify no data/secrets/artifacts, commit and tag a new immutable version to origin, verify exact source release and run a fresh zero-provider no-catalog canary.",
+      "depends_on": ["independent_review"],
+      "expected_artifact": "Published source receipt and zero-provider canary receipt",
+      "verification": "Check exact staged list, branch/tag remote, release source hash, canary provider/fetch counters and budget unchanged.",
+      "pass_condition": "Exact tag on user's fork and post-release canary pass without provider/fetch.",
+      "failure_action": "Do not use the new code for a paid decision; preserve artifacts and diagnose.",
+      "time_bound_minutes": 30
+    }
+  ]
+}

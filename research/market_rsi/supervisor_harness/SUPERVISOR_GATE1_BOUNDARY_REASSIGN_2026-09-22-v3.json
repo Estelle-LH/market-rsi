@@ -1,0 +1,41 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "gate1-boundary-audit-fresh-agent-20260922-03",
+  "symptom": "Two older Codex review tasks ended without a visible verdict, despite a matching early source hash from the second task. The data audit completed, but Controller boundary review is still unverified.",
+  "source_evidence": "SUPERVISOR_PARALLEL_GATE1_2026-09-21-v1.json, SUPERVISOR_GATE1_BOUNDARY_REASSIGN_2026-09-21-v2.json, and AGENT_LOG_GATE1_REAL_DATA_DEPENDENCY_2026-09-21.md",
+  "objective": "Use one fresh bounded independent agent to obtain a visible current-source Gate 1 security/executability verdict, then let the Supervisor integrate facts without changing scientific choices.",
+  "boundary": "Read-only current-source review only. No code edits, provider/network/fetch, release/push, budget mutation, Dev/Final read or data admission. Do not infer PASS from either empty older task.",
+  "resolution_check": "The Supervisor verifies the new agent's exact source hash, key citations, tests and verdict; P0 findings produce REPLAN. A review result cannot authorize a paid call or publication by itself.",
+  "supervisor_owner": "Supervisor · Market RSI",
+  "steps": [
+    {
+      "id": "fresh_independent_boundary_review",
+      "owner": "fresh bounded independent agent distinct from code author and old task chats",
+      "action": "Read current canonical Gate1 packet, adapter, capability registry, outer/parent and canary. Compare advertised choices with actual handlers, cost bound, hashes and data roles. Return PASS or REPLAN with exact file/line evidence.",
+      "depends_on": [],
+      "expected_artifact": "Visible verdict copied to AGENT_LOG_GATE1_FRESH_BOUNDARY_REVIEW_2026-09-22.md",
+      "verification": "Supervisor recomputes controlled-source digest and reproduces each decisive guard or counterexample; confirms agent made no edits or paid/network call.",
+      "pass_condition": "A visible evidence-backed verdict on exact digest 48b7b78f2839dc1a215cce28627956f890359ad23bf21a63b4fe5e7fcb614afa, with no unaddressed P0 mismatch.",
+      "failure_action": "Mark review blocked; preserve evidence and stop delegating to empty-output tasks, then perform scoped in-process audit without falsely claiming independence.",
+      "time_bound_minutes": 20,
+      "result": {
+        "verdict": "replan",
+        "observed": "Independent reviewer reproduced hidden fixed-trade operation acceptance despite its omission from the current tool schema; outer rejected later but a paid decision could be wasted.",
+        "reviewer": "fresh independent Gate 1 boundary agent",
+        "evidence_path": "AGENT_LOG_GATE1_FRESH_BOUNDARY_REVIEW_2026-09-22.md",
+        "evidence_sha256": "da8d4d8b3a554874961cdd36a633914ae4cd756328ab255ed84c9dc0be1f3078"
+      }
+    },
+    {
+      "id": "supervisor_integrate_and_route",
+      "owner": "Supervisor · Market RSI",
+      "action": "Combine the completed data audit and new boundary verdict, update the roadmap/board, and route only verified P0 defects to repair. If no P0 remains, prepare source freeze and separate release gate.",
+      "depends_on": ["fresh_independent_boundary_review"],
+      "expected_artifact": "One source-hashed integrated review packet and current status",
+      "verification": "Check evidence receipts, 123 relevant tests, zero-provider canary, authoritative $200 budget snapshot and dirty source scope.",
+      "pass_condition": "Status names release readiness separately from real catalog and prediction readiness; no duplicated paid work.",
+      "failure_action": "Preserve REPLAN and keep release/provider closed until causal fix.",
+      "time_bound_minutes": 30
+    }
+  ]
+}

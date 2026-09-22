@@ -2,6 +2,492 @@
   "purpose": "Human-readable, non-secret subagent work logs; these are not GLM research trajectories or live E2B tool streams.",
   "agents": [
     {
+      "id": "p0_admission_integration_implementation_20260922",
+      "title": "ACTIVE：P0 candidate-admission integration remediation",
+      "task": "Compose the reviewed ledger, orientation and Train receipt boundaries into one controlled candidate-only non-test consumer.",
+      "status": "First snapshot passed 13/13 focused and 95/95 combined, but independent reviewer reproduced generic authority-key escalation and an ancestor-directory symlink/hardlink race. A superseding source is already being written and remains unreviewed.",
+      "active": true,
+      "next": "Generalize authority escalation rejection, hold and validate the full ancestor descriptor chain end-to-end, add deterministic adversarial tests, and return fresh hashes for rereview.",
+      "log": "AGENT_LOG_P0_ADMISSION_INTEGRATION_IMPLEMENTATION_2026-09-22.md"
+    },
+    {
+      "id": "p0_admission_integration_review_20260922",
+      "title": "REPLAN：P0 candidate-admission integration review",
+      "task": "Fresh independent reviewer attacks the stable integration snapshot and controlled-source manifest.",
+      "status": "Independent reviewer gave REPLAN on exact cf2e…21838：four generic authority fields can be recommitted as true, and a transient ancestor symlink swap to a same-inode hardlink can evade the final pathname check. Current repair bytes are a moving target and have no verdict.",
+      "active": false,
+      "next": "Finish the exact evidence log, then rereview only a new stable remediated source/test/manifest snapshot; do not transfer this verdict to changed bytes.",
+      "log": "AGENT_LOG_P0_ADMISSION_INTEGRATION_REVIEW_2026-09-22.md"
+    },
+    {
+      "id": "chat_2024_full_denominator_review_20260922",
+      "title": "DONE · P0 285-game ledger rereview",
+      "task": "Visible Codex task independently reviews the offline 2024 full-denominator candidate ledger and pushes findings to the Supervisor.",
+      "status": "Independent rereview PASS for exact -03 ledger checkpoint：11/11 focused tests and separate adversarial probes passed; 285/285 row commitments and source bindings recomputed; exact denominator is 285=284 mapped+1 explicit missing.",
+      "active": false,
+      "next": "Freeze this exact ledger checkpoint only. It remains a candidate evidence artifact with admission_claim=false; rights, timing, orientation and controlled-release integration remain separate gates.",
+      "log": "AGENT_LOG_CHAT_2024_FULL_DENOMINATOR_REVIEW_2026-09-22.md"
+    },
+    {
+      "id": "chat_2024_orientation_review_20260922",
+      "title": "ARCHIVED · P0 orientation review · empty",
+      "task": "Visible Codex task independently reviews the offline home/away outcome-token orientation verifier and pushes findings to the Supervisor.",
+      "status": "Task 01a0c58f-a524-7082-ab29-7ce3b67b772b completed its review turn and a dedicated final-retrieval turn without any visible report. No verdict exists.",
+      "active": false,
+      "next": "Archived after preserving the empty outcome. Replacement internal review completed with scoped offline PASS; do not revive this task.",
+      "log": "AGENT_LOG_CHAT_2024_ORIENTATION_REVIEW_2026-09-22.md"
+    },
+    {
+      "id": "orientation_independent_replacement_20260922",
+      "title": "DONE：P0 orientation replacement review",
+      "task": "Fresh internal reviewer independently attacks the exact offline orientation source/test snapshot after the visible task returned empty.",
+      "status": "Scoped offline PASS：17/17 focused、73/73 adjacent、11/11 ledger-adjacent and 18/18 independent adversarial checks passed; 284 candidate receipts plus event 17330 explicitly unoriented.",
+      "active": false,
+      "next": "Integration remains REPLAN：add controlled release coverage and a non-test consumer that owns canonical path/symlink provenance; separately resolve rights/provider provenance and formal Train admission.",
+      "log": "AGENT_LOG_CHAT_2024_ORIENTATION_REVIEW_2026-09-22.md"
+    },
+    {
+      "id": "chat_2024_evidence_replacement_20260922",
+      "title": "DONE · P0 2024 evidence replacement",
+      "task": "Replacement visible Codex task audits local rights, denominator, orientation, clock and provenance evidence after the original task returned empty.",
+      "status": "REPLAN for formal admission：offline replay found 285 unique games, 284 mapped and one explicit missing 2024_22_KC_PHI/event 17330 row; rights, code-owned home/away orientation and provider publish/local receive provenance remain unresolved.",
+      "active": false,
+      "next": "Build and independently review the full-denominator ledger and orientation verifier. Do not redownload first or claim admission; rights/timing remain external gates.",
+      "log": "AGENT_LOG_CHAT_2024_EVIDENCE_REPLACEMENT_2026-09-22.md"
+    },
+    {
+      "id": "chat_train_admission_review_20260922",
+      "title": "DONE · P0 Train gate rereview",
+      "task": "Visible Codex task independently reviews the formal Train receipt gate and pushes its final result back to the Supervisor.",
+      "status": "Fresh independent PASS for scoped validator/Watchdog binding：23/23 focused、37/37 adjacent and zero-paid canary passed. Dataset bytes/path, seasons, Controller question/task and fail-closed evidence were verified.",
+      "active": false,
+      "next": "Integration remains REPLAN：add module to controlled manifest, create a real training/eval caller, and close post-claim TOCTOU before any admission or training.",
+      "log": "AGENT_LOG_CHAT_TRAIN_ADMISSION_REVIEW_2026-09-22.md"
+    },
+    {
+      "id": "chat_v2_cursor_review_20260922",
+      "title": "DONE · P0 v2 cursor review",
+      "task": "Visible Codex task independently reviews the v2 cursor contract and pushes its final result back to the Supervisor.",
+      "status": "Independent bounded offline PASS on final source SHA 6c329f54…e080f：55/55 adversarial and 80/80 focused+adjacent tests passed; legacy v1 unchanged; no network authority or data admission granted.",
+      "active": false,
+      "next": "Supervisor integrates both new files into controlled-source review; live executor, rights, catalog and formal admission remain separate gates.",
+      "log": "AGENT_LOG_CHAT_V2_CURSOR_REVIEW_2026-09-22.md"
+    },
+    {
+      "id": "chat_2024_rights_coverage_20260922",
+      "title": "ARCHIVED · P0 2024 evidence · empty",
+      "task": "Visible Codex task audits exact rights and complete-denominator evidence for the preserved 2024 candidate and pushes findings to Supervisor.",
+      "status": "Task completed three turns without any visible final or delegated result, including two explicit retrieval requests. No audit conclusion exists.",
+      "active": false,
+      "next": "Archived after preserving the empty outcome; replacement work completed separately. Do not revive this task.",
+      "log": "AGENT_LOG_CHAT_2024_RIGHTS_COVERAGE_2026-09-22.md"
+    },
+    {
+      "id": "formal_train_admission_gate_20260922",
+      "title": "DONE：正式 Train admission receipt 闸门实现",
+      "task": "实现 code-owned receipt/validator，并让训练与评估入口验证准确 receipt，而不是任意 64 位 hash。",
+      "status": "Scoped code PASS：receipt 绑定真实 dataset bytes、season、Controller question/task；rights/coverage/exposure 与未知项 fail-closed；23/23 focused、37/37 adjacent 和零费用 canary 通过。",
+      "active": false,
+      "next": "等待可见 task 独立复审；之后加入受控 manifest，并设计正式 runner 与 post-claim TOCTOU 关闭方案。",
+      "log": "AGENT_LOG_FORMAL_TRAIN_ADMISSION_GATE_2026-09-22.md"
+    },
+    {
+      "id": "v2_cursor_acquisition_contract_20260922",
+      "title": "DONE：Polymarket v2 cursor 采集契约实现",
+      "task": "离线实现 v2 cursor manifest/receipt validator，固定 query、cursor 转移、终止和请求/页/字节/时间上限。",
+      "status": "Bounded offline PASS：最终 source 6c329f54…e080f；25/25 focused、68/68 adjacent、137/137 wider Gate 1 通过；独立 55/55 对抗复审通过，旧 v1 hash 未变。",
+      "active": false,
+      "next": "加入受控 manifest 后做整合复审；live executor、network、rights/catalog/admission 仍未授权。",
+      "log": "AGENT_LOG_V2_CURSOR_ACQUISITION_CONTRACT_2026-09-22.md"
+    },
+    {
+      "id": "gate1_launch_readiness_20260922",
+      "title": "DONE：v0.1.21 单次 Controller 启动验收",
+      "task": "只读固定新 ID、packet/版本/hash、runner、预算、进程和终态回执；不得调用 provider 或预留预算。",
+      "status": "REPLAN/HOLD：机械启动条件通过，候选 ID -03 未使用，packet、版本、预算和 runner 边界已固定；但缺少本次付费请求的新授权。",
+      "active": false,
+      "next": "获得授权后先写 global decision revision，重取 state/document hash 并重跑易变检查，再只执行一次；不得用当前旧 hash 启动。",
+      "log": "AGENT_LOG_GATE1_LAUNCH_READINESS_2026-09-22.md"
+    },
+    {
+      "id": "real_train_admission_critical_path_20260922",
+      "title": "DONE：真实 Train 入场关键路径",
+      "task": "只读串起 Controller 方案、权利、精确请求、完整重下、覆盖验收和 catalog 入场；不抓数据、不购买。",
+      "status": "REPLAN：2024 v2 候选捕获完整但未入场；v0.1.21 是 docs-only，现有受控 manifest 是旧 v1 抽样，request catalog 不是 formal Train receipt，watchdog 只检查 hash 形状。112/112 离线测试通过。",
+      "active": false,
+      "next": "先实现 formal admission receipt validator 与 v2 cursor contract；权利、完整 285 场分母和方向仍需独立证据。",
+      "log": "AGENT_LOG_REAL_TRAIN_ADMISSION_CRITICAL_PATH_2026-09-22.md"
+    },
+    {
+      "id": "final_recovery_plan_20260922",
+      "title": "DONE：封存 Final 元数据补证方案",
+      "task": "只读设计现有 2026 候选的访问历史、权利和同机制覆盖补证；不得读取结果或改日期。",
+      "status": "只读方案已完成并由 Supervisor 核对关键哈希：现有候选若无法恢复自 9 月 18 日起覆盖所有访问者和存储面的完整防篡改日志，就只能判为 not provable，不能正式入场。",
+      "active": false,
+      "next": "保留现有候选不变；补访问历史、权利和同机制覆盖证据。未来窗口 fallback 需单独批准、修复硬编码规则并先部署访问监控。",
+      "log": "AGENT_LOG_FINAL_RECOVERY_PLAN_2026-09-22.md"
+    },
+    {
+      "id": "final_nonexposure_audit_20260922",
+      "title": "DONE：2026 Final 预留期未暴露证据核查",
+      "task": "只读盘点预留候选的访问历史、同机制市场覆盖和权利元数据；不看价格、标签、比分或结果，不取数、不付费、不换日期。",
+      "status": "独立只读审计完成；Supervisor 复核所引文件哈希。完整访问历史、标签未暴露、数据权利、同机制覆盖均不能独立证实；候选保持未入场。",
+      "active": false,
+      "next": "保留原候选及审计记录；先补独立证据，不能根据结果改选日期。",
+      "log": "AGENT_LOG_FINAL_NONEXPOSURE_2026-09-22.md"
+    },
+    {
+      "id": "gate1_short_choice_review_20260922",
+      "title": "DONE：Gate 1 精简接口独立发布复核",
+      "task": "只读复核 8 个选项、原始选择与可信派生、外层逐字节回放、权限和预算闸门；检查测试与源码清单，不触 provider。",
+      "status": "独立整合复核 PASS；132 项 P0 和 20 项解析器测试通过。受控源码已发布为 v0.1.21，发布后生产 CLI 零费用 canary PASS；未调用付费模型或抓数据。",
+      "active": false,
+      "next": "由 Supervisor 核对新轮预算、唯一 ID、全局状态和授权后，才考虑一次新 Controller 决策。",
+      "log": "AGENT_LOG_GATE1_SHORT_CHOICE_REVIEW_2026-09-22.md"
+    },
+    {
+      "id": "gate1_short_choice_20260922",
+      "title": "DONE：Gate 1 精简 Controller 提交接口",
+      "task": "离线实现短 choice ID 加少量科研字段；可信代码映射执行细节，保留新来源提案通道和独立 compiler，增加对抗测试。",
+      "status": "离线实现完成；72/72 focused tests 通过。最终 packet 为 3310 输入、2750 输出，硬上界 $0.0494991；发布后 CLI 零费用 canary PASS。旧 3300/$0.0494505 估算已作废。",
+      "active": false,
+      "next": "等待新轮前置检查；不得把离线通过当成正式数据结果。",
+      "log": "AGENT_LOG_GATE1_SHORT_CHOICE_2026-09-22.md"
+    },
+    {
+      "id": "gate1_strict_parser_review_20260922",
+      "title": "DONE：Gate 1 严格解析器独立复核",
+      "task": "只读检查当前解析器修复和对抗测试，核对历史 -02 原始回答仍失败、合成尾部不能被忽略；不得调用 provider 或抓数据。",
+      "status": "独立窄范围 PASS：-02 原始回答和未闭合尾部都被拒；15/15 专项、47/47 相邻测试通过；不是付费发布验收",
+      "active": false,
+      "next": "等待短接口完成和整合复审；两份旧失败不改写。",
+      "log": "AGENT_LOG_GATE1_STRICT_PARSER_REVIEW_2026-09-22.md"
+    },
+    {
+      "id": "gate1_format_options_20260922",
+      "title": "DONE：Gate 1 工具调用格式离线调查",
+      "task": "只读分析两个独立格式失败、实际解析器和 Tinker/GLM 能力；不得再调用 provider。",
+      "status": "独立调查 PASS、付费 Gate 1 REPLAN：-02 是标签写坏而非普通额外字段；发现解析器忽略尾部，建议先严格解析再试短 ID。",
+      "active": false,
+      "next": "由 Supervisor 完成严格解析器修复并交独立复核；两次旧回复继续失败。",
+      "log": "AGENT_LOG_GATE1_FORMAT_OPTIONS_2026-09-22.md"
+    },
+    {
+      "id": "gate1_cost_review_20260922",
+      "title": "DONE：Gate 1 单次费用上限复审",
+      "task": "独立只读核对 3072→2944 输出上限、精确 packet 的 $0.04946994 hard upper、127 项测试和截断风险。",
+      "status": "独立窄范围 PASS：精确输入 2819 token，新 hard upper $0.04946994；127/127 测试通过，仍有截断与输入漂移风险",
+      "active": false,
+      "next": "Supervisor 发布新版本并跑零费用 canary；请求前再次精确检查 upper。",
+      "log": "AGENT_LOG_GATE1_COST_REVIEW_2026-09-22.md"
+    },
+    {
+      "id": "gate1_enum_review_20260922",
+      "title": "DONE：Gate 1 结构化规则选择复审",
+      "task": "只读核对最新失败反馈、固定规则 enum 与受信编译器的一致性，以及无新权限的独立回归；不调用 provider 或发布。",
+      "status": "独立窄范围 PASS：4 个 enum 规则与受信来源绑定，最新失败反馈准确，126/126 测试通过；不保证 GLM 遵从",
+      "active": false,
+      "next": "Supervisor 核对 staged 文件、发布到用户 fork 并跑零费用 canary；付费/抓取另设闸门。",
+      "log": "AGENT_LOG_GATE1_ENUM_REVIEW_2026-09-22.md"
+    },
+    {
+      "id": "gate1_rule_visibility_review_20260922",
+      "title": "DONE：Gate 1 可执行规则可见性独立审查",
+      "task": "只读审查首个 v0.1.18 失败的因果修复：输入包展示精确文档规则，编译器仍拒绝任意规则；核对源码、测试与来源哈希，不调用 provider 或发布。",
+      "status": "独立复审 REPLAN：旧请求已经展示精确规则，单纯复制到 packet 不构成因果修复",
+      "active": false,
+      "next": "已按复审意见进入结构化 enum 修复，不把 v1 记为通过。",
+      "log": "AGENT_LOG_GATE1_RULE_VISIBILITY_REVIEW_2026-09-22.md"
+    },
+    {
+      "id": "gate1_integrated_review_20260922",
+      "title": "DONE：Gate 1 单一快照独立复审",
+      "task": "独立只读复核 17 个受控脏文件、共享 bottleneck gate、发布白名单和真实数据边界；不改源码、不发布。",
+      "status": "独立复审通过准备 17 源码 + 14 测试的惰性 checkpoint；发布仍 REPLAN，真实数据仍 BLOCKED",
+      "active": false,
+      "next": "Supervisor 核对确切 staged 文件及差异；发布、付费、抓取另行验收。",
+      "log": "AGENT_LOG_GATE1_INTEGRATED_REVIEW_2026-09-22.md"
+    },
+    {
+      "id": "gate1_release_scope_20260922",
+      "title": "DONE：Gate 1 发布范围审查",
+      "task": "现有空闲 Codex task 只读核对当前受控源码、dirty 文件和最小发布白名单；不得提交、打 tag 或 push。",
+      "status": "只读报告完成：发布 REPLAN，17 个受控源码文件仍 dirty；Supervisor 已复核计数",
+      "active": false,
+      "next": "由 Supervisor 决定是否把共享 bottleneck gate 纳入单一受审 checkpoint；发布仍关闭。",
+      "log": "AGENT_LOG_GATE1_RELEASE_SCOPE_2026-09-22.md"
+    },
+    {
+      "id": "gate1_real_catalog_route_20260922",
+      "title": "DONE：真实 Train 目录入场路径审查",
+      "task": "另一现有空闲 Codex task 只读列出 Controller 选来源后真实 Train catalog 所需的权利、身份、覆盖、时间和 split 证据，不代选科学来源。",
+      "status": "只读报告完成：仅合成 catalog 登记；真实 Train 入场仍阻塞，已列重下与独立验收步骤",
+      "active": false,
+      "next": "待 Controller 选择来源、来源权利与新版本通过后才考虑原始来源完整重下；不能拼补冒充真实目录。",
+      "log": "AGENT_LOG_GATE1_REAL_CATALOG_ROUTE_2026-09-22.md"
+    },
+    {
+      "id": "gate1_offered_operation_rereview_20260922",
+      "title": "DONE：Gate 1 隐藏操作修复后复审",
+      "task": "独立只读复查新源码哈希、隐藏交易操作拒绝、未来 catalog-ready 离线正例、124 项测试与新 canary。",
+      "status": "独立复审 PASS：旧越界操作在任务生成前被拒；124/124 测试和新零费用 canary 通过",
+      "active": false,
+      "next": "仅本地边界通过；后续发布审查、真实目录及付费决定各有独立闸门。",
+      "log": "AGENT_LOG_GATE1_OFFERED_OPERATION_REREVIEW_2026-09-22.md"
+    },
+    {
+      "id": "gate1_relaxed_boundary_audit_20260921",
+      "title": "BLOCKED：原 Gate 1 Controller 边界审查",
+      "task": "只读审查当前主 checkout 的新 packet、adapter、capability、成本和零费用 canary；输出来源哈希、反例和 PASS/REPLAN，不调用 provider。",
+      "status": "两次任务结束但无可见报告；没有审查结论，已转派",
+      "active": false,
+      "next": "保留空结果，不将其解释为 PASS；由 replacement task 审查。",
+      "log": "AGENT_LOG_GATE1_RELAXED_BOUNDARY_AUDIT_2026-09-21.md"
+    },
+    {
+      "id": "gate1_real_data_dependency_20260921",
+      "title": "DONE：真实 Train 数据入场缺口",
+      "task": "只读核对当前主 checkout 的真实 Train catalog、权利、覆盖及合成目录隔离；指出最短的合法下一步，不替 Controller 选来源。",
+      "status": "23:49 ET 独立只读审查完成：audit PASS，真实交易执行仍 BLOCKED",
+      "active": false,
+      "next": "Supervisor 核对引文并整合；必须先有有效 Controller 决定及独立真实 Train catalog 审查。",
+      "log": "AGENT_LOG_GATE1_REAL_DATA_DEPENDENCY_2026-09-21.md"
+    },
+    {
+      "id": "gate1_relaxed_final_review_20260921",
+      "title": "BLOCKED：Gate 1 边界替补审查",
+      "task": "只读审查一个当前源码快照的 Controller packet、adapter、能力、费用与 canary；给出真实报告。",
+      "status": "仅有早期源码哈希核对；完成时无可见最终报告，不能给 PASS",
+      "active": false,
+      "next": "保留空终态；交给 fresh independent agent。",
+      "log": "AGENT_LOG_GATE1_BOUNDARY_REPLACEMENT_2026-09-21.md"
+    },
+    {
+      "id": "gate1_fresh_boundary_review_20260922",
+      "title": "DONE：新独立 Gate 1 边界审查",
+      "task": "只读核对当前源码的 Controller 能力、费用、provenance 和 canary，输出 PASS/REPLAN。",
+      "status": "独立审查完成：REPLAN，发现隐藏交易操作可在 adapter 被接受；已做本地因果修复，待复审",
+      "active": false,
+      "next": "在新源码哈希上复核修复、测试和 fresh zero-provider canary；旧 verdict 不自动转 PASS。",
+      "log": "AGENT_LOG_GATE1_FRESH_BOUNDARY_REVIEW_2026-09-22.md"
+    },
+    {
+      "id": "supervisor_release_audit_20260921",
+      "title": "S1：Gate 1 发布前边界审查",
+      "task": "只读审查当前主 checkout 的受控源码、两种 Controller 终态、生产入口和发布阻塞项。",
+      "status": "已完成：独立审查给出 REPLAN，发布仍被 P0 缺口阻止",
+      "active": false,
+      "next": "总 Supervisor 按四个 P0 缺口制定因果修复；不得把审查完成误认作发布通过。",
+      "log": "AGENT_LOG_SUPERVISOR_RELEASE_AUDIT_2026-09-21.md"
+    },
+    {
+      "id": "supervisor_data_audit_20260921",
+      "title": "S2：P0 真实数据入场证据",
+      "task": "只读核对 2023–2025 来源、真实成交、PBP、权利与访问记录，列已知/未知。",
+      "status": "已完成：真实 Train 入场证据审查，结论为仍阻塞",
+      "active": false,
+      "next": "待有效 Controller 决定及授权后执行限界来源调查；先不选科学路线。",
+      "log": "AGENT_LOG_SUPERVISOR_DATA_AUDIT_2026-09-21.md"
+    },
+    {
+      "id": "supervisor_visibility_audit_20260921",
+      "title": "S3：Supervisor 任务可见性",
+      "task": "只读核对真实 task 状态与 dashboard、agent index、人工日志是否一致。",
+      "status": "已完成：21:29 ET 独立只读可见性审查",
+      "active": false,
+      "next": "dashboard 已核对能返回全部 39 条索引；人工 log 不伪装成原始工具流。",
+      "log": "AGENT_LOG_SUPERVISOR_VISIBILITY_AUDIT_2026-09-21.md"
+    },
+    {
+      "id": "gate1_plan_integration_20260921",
+      "title": "P0：Gate 1 可执行计划接线",
+      "task": "把能力契约、固定样本和 trade request builder 接成唯一、hash-bound 的 executable-plan compiler。",
+      "status": "已完成：Wave 2 离线集成；当前无运行中 agent",
+      "active": false,
+      "next": "Supervisor 已整合结果；真实 Train 入场和发布仍另行审查。",
+      "log": "AGENT_LOG_GATE1_PLAN_INTEGRATION_2026-09-21.md"
+    },
+    {
+      "id": "gate1_firstwave_audit_20260921",
+      "title": "P0：Wave 1 独立安全与可执行性审查",
+      "task": "只读检查权限、hash、source/operation、split、分页、限额和 executor 声明边界。",
+      "status": "已完成：原 Wave 1 审查发现 REPLAN，后续独立复核关闭窄范围收据缺口",
+      "active": false,
+      "next": "新源码及生产接线必须再审；旧结论不自动放行发布。",
+      "log": "AGENT_LOG_GATE1_FIRSTWAVE_AUDIT_2026-09-21.md"
+    },
+    {
+      "id": "gate1_canary_design_20260921",
+      "title": "P0：Gate 1 零费用与攻击性 canary",
+      "task": "设计 decision→task→materialization→request manifest 的零 provider/零网络 canary 和反例覆盖。",
+      "status": "已完成：离线 fixtures 和 canary；当前无运行中 agent",
+      "active": false,
+      "next": "合成结果已整合；发布后的生产路径仍需独立零费用验收。",
+      "log": "AGENT_LOG_GATE1_CANARY_DESIGN_2026-09-21.md"
+    },
+    {
+      "id": "gate1_capability_contract_20260921",
+      "title": "P0：Gate 1 可执行能力契约",
+      "task": "离线实现 source x operation 能力表；Controller 请求 broker 尚未实现的组合时必须 fail closed。",
+      "status": "已完成：trusted capability registry 已实现，55/55 相邻测试通过",
+      "active": false,
+      "next": "由 Wave 2 integrator 显式注册验收后的 sample/trade handler；新能力在此之前仍 fail closed。",
+      "log": "AGENT_LOG_GATE1_CAPABILITY_CONTRACT_2026-09-21.md"
+    },
+    {
+      "id": "gate1_sample_materializer_20260921",
+      "title": "P0：Gate 1 固定样本生成器",
+      "task": "把冻结 Train-only 抽样规则确定性转换成 exact IDs、canonical JSON 和 hash。",
+      "status": "已完成：确定性 Train-only materializer 实现，10/10 专测和 13/13 相邻测试通过",
+      "active": false,
+      "next": "Wave 2 验证 materialization/request-plan hashes 后接入 trusted compiler。",
+      "log": "AGENT_LOG_GATE1_SAMPLE_MATERIALIZER_2026-09-21.md"
+    },
+    {
+      "id": "gate1_trade_query_runner_20260921",
+      "title": "P0：Gate 1 公开成交查询 runner",
+      "task": "离线构建严格 allowlist 的 Polymarket trades exact request manifest；本波不执行网络请求。",
+      "status": "已完成：离线 exact request manifest builder 实现，44/44 相关回归通过",
+      "active": false,
+      "next": "Wave 2 接入 trusted compiler；真实 network executor 仍不存在且未授权。",
+      "log": "AGENT_LOG_GATE1_TRADE_QUERY_RUNNER_2026-09-21.md"
+    },
+    {
+      "id": "p0_outer_runner_rereview_20260919",
+      "title": "P0：外层 runner 修复后二次审查",
+      "task": "只读复查 post-clear 状态重验和失败回执终态修复，并重跑独立复现测试。",
+      "status": "二次独立审查通过：52/52 测试通过，两处复现缺口已关闭",
+      "active": false,
+      "next": "把 runner 加入发布清单，重新测试并按明确白名单发布新版本；真实 canary 仍关闭。",
+      "log": "AGENT_LOG_P0_OUTER_RUNNER_REREVIEW_2026-09-19.md"
+    },
+    {
+      "id": "p0_outer_runner_review_20260919",
+      "title": "P0：外层 runner 独立审查",
+      "task": "只读审查 outer runner 的发布、state、预算、唯一 ID、进程/镜像/公开输入及终态对账；不改代码、不调用服务、不推送。",
+      "status": "独立审查完成并阻止发布：发现 clear callback 后未重查 state，以及失败回执先于取消/关闭写入",
+      "active": false,
+      "next": "修复两处并加回归测试；再次独立复查前不能发布。",
+      "log": "AGENT_LOG_P0_OUTER_RUNNER_REVIEW_2026-09-19.md"
+    },
+    {
+      "id": "p0_outer_runner_20260918",
+      "title": "P0：真实接线外层 runner（仅离线实现）",
+      "task": "把发布、protected state、唯一预算账本、ID/进程/镜像/公开输入闸门与单次 adapter 调用和终态对账接起来；只用严格 fake 和临时账本测试。",
+      "status": "两处缺口已修；Supervisor 复跑 106 项相邻测试和 15 项预算测试通过",
+      "active": false,
+      "next": "等待第二次独立审查；通过前不能发布。",
+      "log": "AGENT_LOG_P0_OUTER_RUNNER_2026-09-18.md"
+    },
+    {
+      "id": "p0_live_release_review_v2_20260918",
+      "title": "P0：单任务 guest 与真实适配器独立发布审查",
+      "task": "只读审查单任务 guest、真实适配器、发布清单和测试，确认代码发布边界；不改代码、不调用服务、不推送。",
+      "status": "独立只读审查完成：69/69 测试通过；代码可按明确 staging 白名单发布，真实验收仍关闭",
+      "active": false,
+      "next": "只 stage 审过的源码和测试，排除 protected state、计划、日志和 artifacts；检查后再提交和打新 tag。",
+      "log": "AGENT_LOG_P0_LIVE_RELEASE_REVIEW_V2_2026-09-18.md"
+    },
+    {
+      "id": "p0_live_adapter_v2_20260918",
+      "title": "P0：真实 GLM 到单任务 B 接线 v2（仅离线测试）",
+      "task": "把固定 Tinker GLM 第一答复、trusted broker 和单任务本地 B 接成可发布适配器；只用严格假后端测试。",
+      "status": "实现完成；Supervisor 独立复跑 84 项兼容测试、纳入源码清单后复跑 88 项，全部通过",
+      "active": false,
+      "next": "独立审查 guest、适配器和发布范围；审查通过前不发布、不调用真实服务。",
+      "log": "AGENT_LOG_P0_LIVE_ADAPTER_V2_2026-09-18.md"
+    },
+    {
+      "id": "p0_one_task_guest_20260918",
+      "title": "P0：单任务本地 B guest",
+      "task": "在不扩大 B 权限的前提下，把现有 hash-public-text guest 做成严格一个任务后退出；只写源码和离线测试。",
+      "status": "单任务接口完成；Supervisor 独立复跑 64 项兼容测试通过",
+      "active": false,
+      "next": "继续实现真实 GLM→broker→单任务 B 适配器，但仍只做离线假后端测试。",
+      "log": "AGENT_LOG_P0_ONE_TASK_GUEST_2026-09-18.md"
+    },
+    {
+      "id": "p0_live_adapter_20260918",
+      "title": "P0：真实 GLM 到本地 B 接线（仅离线测试）",
+      "task": "实现可连接固定 Tinker GLM 与单一本地 Docker B 的受控适配器；本任务只用假 provider/process 做离线测试，不调用外部服务。",
+      "status": "已按规则停止：现有 guest 固定 20 个任务，无法完成单任务退出与清理",
+      "active": false,
+      "next": "v2 计划先实现一个保留原 ACK/event 协议的单任务 guest；禁止塞 19 个填充任务。",
+      "log": "AGENT_LOG_P0_LIVE_ADAPTER_2026-09-18.md"
+    },
+    {
+      "id": "p0_release_review_20260918",
+      "title": "P0：新源码独立只读审查",
+      "task": "只读审查六个变动的协议源码和相邻测试，核对是否能安全发布；不改代码、不推送、不调用模型或沙箱。",
+      "status": "只读审查完成；代码发布范围无阻塞，两个上线前缺口已修并复测",
+      "active": false,
+      "next": "仍需实现真实 GLM→B 接线并审查新版源码；不能把代码版发布当成模型验收。",
+      "log": "AGENT_LOG_P0_RELEASE_REVIEW_2026-09-18.md"
+    },
+    {
+      "id": "p0_source_rights_review",
+      "title": "P0：数据来源与使用权只读核对",
+      "task": "核对现有公开来源和权利记录，区分文档声称与已经验证的数据；不取数、不付费、不碰封存数据。",
+      "status": "只读证据报告完成；没有来源可正式入场",
+      "active": false,
+      "next": "真实 GLM 路径通过后由 Controller 选择一个有界来源问题；不把公开文档当作入场许可。",
+      "log": "AGENT_LOG_P0_SOURCE_RIGHTS_2026-09-18.md"
+    },
+    {
+      "id": "p0_controller_b_gate_review",
+      "title": "P0：真实 Controller→B 闸门只读核对",
+      "task": "核对模型作者身份与 B 任意代码隔离的已通过和缺失证据；不启动模型或沙箱。",
+      "status": "只读闸门核对完成；真实 Controller→B 尚未验收",
+      "active": false,
+      "next": "先做全新零付费 B 任意代码隔离 canary，再单独证明 GLM 作者身份。",
+      "log": "AGENT_LOG_P0_CONTROLLER_B_GATE_2026-09-18.md"
+    },
+    {
+      "id": "p0_b_containment_canary",
+      "title": "P0：本机 B 任意代码隔离 canary",
+      "task": "全新编号、零付费，用事先审过的合成诱饵验证 B 越界访问被拒，同时允许正常工作；必须有原始回执和精确清理。",
+      "status": "零付费选择性隔离 canary 通过；模型作者身份仍未证明",
+      "active": false,
+      "next": "独立证明 GLM 作者身份并接上有界任务驱动；此测试不能放行正式实验。",
+      "log": "AGENT_LOG_P0_B_CONTAINMENT_2026-09-18.md"
+    },
+    {
+      "id": "p0_final_metadata_screen",
+      "title": "P0：未触碰测试期元数据筛查",
+      "task": "只看本机旧回执，寻找同机制、至少 20 个日期且能证明未打开的候选；不读价格、标签或封存答案。",
+      "status": "只读筛查完成；旧 Final 不合格，未来 20 日期候选已固定但未入场",
+      "active": false,
+      "next": "候选日期前验证市场机制、权利与完整访问日志；不能叫正式 Final。",
+      "log": "AGENT_LOG_P0_FINAL_METADATA_2026-09-18.md"
+    },
+    {
+      "id": "p0_glm_adapter_offline",
+      "title": "P0：GLM 第一答复离线适配",
+      "task": "只用假后端实现公开/合成输入、第一份原始答复、模型和费用来源、唯一任务标识；不调用付费模型或 B。",
+      "status": "假后端适配完成；12 项定向测试通过，真实模型未调用",
+      "active": false,
+      "next": "接有界 A→B 驱动，发布新版本后单独证明真实模型作者身份。",
+      "log": "AGENT_LOG_P0_GLM_ADAPTER_2026-09-18.md"
+    },
+    {
+      "id": "p0_a_to_b_driver_offline",
+      "title": "P0：Controller 答复到 B 任务的离线交接",
+      "task": "只用假答复和受控 B 通道，绑定唯一 ID、输入和事件 hash，测试超时、坏答复、越界与清理。",
+      "status": "离线交接完成；11 项定向测试与 35 项合并测试通过，真实模型未调用",
+      "active": false,
+      "next": "仍须新版本发布、真实模型作者身份与独立数据入场。",
+      "log": "AGENT_LOG_P0_A_TO_B_DRIVER_2026-09-18.md"
+    },
+    {
+      "id": "data_admission_20260918",
+      "title": "P0：预测数据入场核对",
+      "task": "第一步核对 2023–2025 来源和标签，第二步从现有本机日志重建 2025 访问史；不得打开封存答案或花钱。",
+      "status": "两轮只读核对完成；旧访问原始回执缺失，正式入场仍关闭",
+      "active": false,
+      "next": "Supervisor 决定数据来源与新的未触碰测试期；不把未知数据改称未使用。",
+      "log": "AGENT_LOG_DATA_ADMISSION_2026-09-18.md"
+    },
+    {
       "id": "policy_echo",
       "title": "E2B 回显 / 安全判断",
       "task": "核对请求与返回的隔离字段；不把缺失回显误判为通过。",

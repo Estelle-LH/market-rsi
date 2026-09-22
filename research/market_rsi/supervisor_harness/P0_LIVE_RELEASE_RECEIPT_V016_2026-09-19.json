@@ -1,0 +1,29 @@
+{
+  "schema": "market_rsi_p0_live_release_receipt_v1",
+  "verdict": "pass_code_only",
+  "branch": "codex/market-rsi-round1-v2",
+  "origin": "https://github.com/Estelle-LH/RSIBench-Data.git",
+  "commit": "7d2a136c7e0fa1716b2abd444c00d10950dd83c0",
+  "tag": "market-rsi-protocol-v0.1.6",
+  "tag_object": "4ae20110cc09231a9d5791c313c84f425f6991aa",
+  "source_sha256": "d195d728c06b326daceb918323cf42e6f963bf10d1f2aa32e39c97ed80cc0f91",
+  "source_file_count": 297,
+  "staged_allowlist_file_count": 4,
+  "staged_diff_sha256": "6648cadde58536dc143c769fbc414ae6b07aa5b8317731efdd955b6f43b99ad1",
+  "tests": {
+    "release_and_adjacent": 110,
+    "paid_budget": 15,
+    "second_independent_review": 52
+  },
+  "excluded": [
+    "protected state",
+    "plans",
+    "logs",
+    "data",
+    "keys",
+    "run artifacts"
+  ],
+  "model_authorship_proven": false,
+  "isolation_proven": false,
+  "prediction_admitted": false
+}
