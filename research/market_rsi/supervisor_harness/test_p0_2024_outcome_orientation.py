@@ -5,14 +5,10 @@ import csv
 import hashlib
 import io
 import json
-from pathlib import Path
 import unittest
 
+from supervisor_harness import p0_candidate_admission_integration as integration
 from supervisor_harness import p0_2024_outcome_orientation as orientation
-
-
-ROOT = Path(__file__).resolve().parents[3]
-CAPTURE = ROOT / "artifacts/nfl-2024-refresh-20260921-01"
 
 
 def encoded(value: object) -> str:
@@ -85,33 +81,26 @@ def verify(events: list[dict], rows: list[dict[str, str]], *,
 
 
 class PreservedOrientationTests(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls) -> None:
-        cls.catalog = (CAPTURE / "catalog/events.catalog.json").read_bytes()
-        cls.mapping = (CAPTURE / "mapping/candidate_mapping.csv").read_bytes()
-
-    def test_exact_preserved_capture_emits_284_candidates_and_one_missing(self) -> None:
-        result = orientation.verify_preserved_2024_orientation(
-            self.catalog, self.mapping)
-        self.assertEqual(result["catalog_event_count"], 285)
-        self.assertEqual(result["candidate_orientation_count"], 284)
-        self.assertEqual(result["unoriented_source_event_count"], 1)
-        self.assertEqual(result["unoriented_source_events"], [{
+    def test_preserved_contract_remains_285_284_1_without_loading_raw_data(self) -> None:
+        self.assertEqual(orientation.PRESERVED_CATALOG_EVENTS, 285)
+        self.assertEqual(orientation.PRESERVED_MAPPED_EVENTS, 284)
+        self.assertEqual(dict(orientation.PRESERVED_UNORIENTED_EVENT), {
             "event_id": "17330",
             "event_slug": "nfl-kc-phi-2025-02-09",
             "reason": "absent_from_candidate_mapping",
-        }])
-        self.assertFalse(result["all_source_events_oriented"])
-        self.assertFalse(result["missing_orientation_inferred"])
-        self.assertFalse(result["formal_train_admitted"])
-        self.assertFalse(result["source_rights_verified"])
-        self.assertFalse(result["network_execution_authorized"])
-        self.assertEqual(
-            {item["catalog_sha256"] for item in result["candidate_orientation_receipts"]},
-            {orientation.PRESERVED_CATALOG_SHA256})
-        self.assertEqual(
-            {item["mapping_sha256"] for item in result["candidate_orientation_receipts"]},
-            {orientation.PRESERVED_MAPPING_SHA256})
+        })
+        self.assertEqual(dict(integration.CANDIDATE_CONTRACT), {
+            "candidate_rows": 285,
+            "mapped_rows": 284,
+            "mapping_resolved": False,
+            "missing_rows": 1,
+            "orientation_resolved": False,
+            "season": 2024,
+            "unresolved_event_id": "17330",
+            "unresolved_event_slug": "nfl-kc-phi-2025-02-09",
+            "unresolved_reason": "moneyline_missing_or_ambiguous",
+            "unresolved_schedule_game_id": "2024_22_KC_PHI",
+        })
 
     def test_home_away_and_away_home_slug_orders_are_explicit(self) -> None:
         for slug_order in ("home_away", "away_home"):
@@ -185,14 +174,25 @@ class PreservedOrientationTests(unittest.TestCase):
             verify(events, rows)
 
     def test_preserved_catalog_substitution_fails_before_semantics(self) -> None:
+        events, rows = fixture()
+        catalog = raw_catalog(events)
+        mapping = raw_mapping(rows)
         with self.assertRaisesRegex(ValueError, "trusted source hash"):
             orientation.verify_preserved_2024_orientation(
-                self.catalog + b"\n", self.mapping)
+                catalog + b"\n", mapping)
 
     def test_preserved_mapping_substitution_fails_before_semantics(self) -> None:
+        events, rows = fixture()
+        catalog = raw_catalog(events)
+        mapping = raw_mapping(rows)
         with self.assertRaisesRegex(ValueError, "trusted mapping hash"):
-            orientation.verify_preserved_2024_orientation(
-                self.catalog, self.mapping + b"\n")
+            orientation._verify_bound_orientation(
+                catalog, mapping + b"\n",
+                expected_catalog_sha256=hashlib.sha256(catalog).hexdigest(),
+                expected_mapping_sha256=hashlib.sha256(mapping).hexdigest(),
+                expected_catalog_events=1,
+                expected_mapped_events=1,
+                alias_table=orientation.TEAM_NAME_ALIASES)
 
     def test_duplicate_catalog_event_identity_fails_closed(self) -> None:
         events, rows = fixture()

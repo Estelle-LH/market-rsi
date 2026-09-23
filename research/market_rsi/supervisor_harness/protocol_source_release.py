@@ -10,8 +10,10 @@ import hashlib
 import io
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import tarfile
+from urllib.parse import urlsplit
 
 from market_rsi import digest, file_hash
 from data_scientist_harness import release as data_harness_release
@@ -19,7 +21,7 @@ from data_scientist_harness import release as data_harness_release
 
 REPO = Path(__file__).resolve().parents[3]
 PREFIX = "research/market_rsi"
-ORIGIN = "https://github.com/Estelle-LH/RSIBench-Data.git"
+ORIGIN = "https://github.com/Estelle-LH/market-rsi.git"
 PROTOCOL_FILES = (
     "market_rsi.py", "paid_budget.py",
     "supervisor_harness/global_state_gate.py",
@@ -115,14 +117,80 @@ FILES = tuple(sorted(set(PROTOCOL_FILES) | set(DATA_HARNESS_FILES)))
 
 
 def _git(*args: str) -> bytes:
+    env = {
+        **os.environ,
+        "GIT_NO_REPLACE_OBJECTS": "1",
+        "GIT_OPTIONAL_LOCKS": "0",
+        "GIT_TERMINAL_PROMPT": "0",
+    }
     try:
         completed = subprocess.run(
-            ["git", "-C", str(REPO), *args], capture_output=True, timeout=20,
-            env={**os.environ, "GIT_TERMINAL_PROMPT": "0"}, check=False)
+            ["git", "-c", "core.fsmonitor=false", "-C", str(REPO), *args],
+            capture_output=True, timeout=20, env=env, check=False)
     except subprocess.TimeoutExpired as exc:
         raise ValueError("publication check timed out") from exc
     if completed.returncode:
         # Remote errors may contain sensitive URL material; do not echo them.
+        raise ValueError("Git publication check failed")
+    return completed.stdout
+
+
+def _remote_transport(origin: str) -> str:
+    """Return the one transport that a literal publication origin needs."""
+    if (not isinstance(origin, str) or not origin
+            or "\0" in origin or "\n" in origin):
+        raise ValueError("invalid publication origin")
+    parsed = urlsplit(origin)
+    if (parsed.scheme == "https" and parsed.netloc and not parsed.username
+            and not parsed.password and not parsed.query and not parsed.fragment):
+        return "https"
+    if not parsed.scheme and Path(origin).is_absolute():
+        return "file"
+    raise ValueError("unsupported publication origin transport")
+
+
+def _git_remote(*refs: str) -> bytes:
+    """Read literal remote refs without repository or ambient Git config.
+
+    Private-origin authentication belongs to the outer Supervisor release
+    operation.  This verifier intentionally inherits neither credential
+    helpers nor repository/global/system/environment URL rewrites.
+    """
+    transport = _remote_transport(ORIGIN)
+    git_binary = shutil.which("git", path=os.defpath)
+    if not git_binary:
+        raise ValueError("Git publication check failed")
+    outside_repo = Path(os.devnull).resolve().parent
+    env = {
+        "PATH": os.defpath,
+        "LANG": "C",
+        "LC_ALL": "C",
+        "GIT_CONFIG_NOSYSTEM": "1",
+        "GIT_CONFIG_SYSTEM": os.devnull,
+        "GIT_CONFIG_GLOBAL": os.devnull,
+        "GIT_CEILING_DIRECTORIES": str(outside_repo),
+        "GIT_TERMINAL_PROMPT": "0",
+        "GCM_INTERACTIVE": "never",
+        "GIT_OPTIONAL_LOCKS": "0",
+        "GIT_NO_REPLACE_OBJECTS": "1",
+    }
+    command = [
+        git_binary,
+        "-c", "credential.helper=",
+        "-c", "credential.interactive=never",
+        "-c", "core.askPass=",
+        "-c", "http.followRedirects=false",
+        "-c", "protocol.allow=never",
+        "-c", f"protocol.{transport}.allow=always",
+        "ls-remote", "--exit-code", "--", ORIGIN, *refs,
+    ]
+    try:
+        completed = subprocess.run(
+            command, cwd=outside_repo, capture_output=True, timeout=20,
+            env=env, check=False)
+    except subprocess.TimeoutExpired as exc:
+        raise ValueError("publication check timed out") from exc
+    if completed.returncode:
         raise ValueError("Git publication check failed")
     return completed.stdout
 
@@ -152,8 +220,11 @@ def verify_published(*, tag: str, expected_source_sha256: str) -> dict:
     hashes = source_hashes()
     if digest(hashes) != expected_source_sha256:
         raise ValueError("current protocol source differs from expected manifest")
-    if _git("remote", "get-url", "origin").decode().strip() != ORIGIN:
-        raise ValueError("origin is not the authorized user fork")
+    raw_origins = _git(
+        "config", "--local", "--no-includes", "--get-all",
+        "remote.origin.url").decode().splitlines()
+    if raw_origins != [ORIGIN]:
+        raise ValueError("origin is not the authorized standalone repository")
     paths = [f"{PREFIX}/{name}" for name in FILES]
     if _git("status", "--porcelain", "--untracked-files=all", "--", *paths).strip():
         raise ValueError("uncommitted protocol source")
@@ -183,7 +254,7 @@ def verify_published(*, tag: str, expected_source_sha256: str) -> dict:
     if tagged != hashes:
         raise ValueError("release tag differs from current protocol source")
     tag_object = _git("rev-parse", ref).decode().strip()
-    remote = _git("ls-remote", "--exit-code", "origin", ref, ref + "^{}").decode().splitlines()
+    remote = _git_remote(ref, ref + "^{}").decode().splitlines()
     observed = {parts[1]: parts[0] for line in remote if len(parts := line.split()) == 2}
     if observed != {ref: tag_object, ref + "^{}": release_commit}:
         raise ValueError("release tag is not published on the authorized origin")
