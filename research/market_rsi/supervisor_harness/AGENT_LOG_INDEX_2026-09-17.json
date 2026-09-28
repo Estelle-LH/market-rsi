@@ -630,6 +630,15 @@
       "active": false,
       "next": "Supervisor may commit the reviewed local snapshot. Publishing v0.1.25, running a new zero-provider canary and any paid/fetch work remain separately unauthorized.",
       "log": "AGENT_LOG_GATE1_V0125_SCHEMA_VISIBILITY_REVIEW_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_integrated_release_review_20260928",
+      "title": "DONE：v0.1.25 integrated release independent review",
+      "task": "Independently audit the combined architecture-documentation and schema-visibility release candidate against main: exact diff, controlled-source digest, validator invariance, focused/full test evidence, secret/data scope and release gates. Read-only; do not edit, tag, push, canary, fetch or call a provider.",
+      "status": "Independent PASS: exact integrated candidate has one production schema-description change, unchanged validator/parser/provider/outer/fetch layers, 48/48 focused and 516/516 full tests with 2 skips, clean secret/data scope and controlled digest c61f48e...a2d4.",
+      "active": false,
+      "next": "Supervisor may perform mechanical bookkeeping commit, clean-tree/digest recheck, main integration, annotated v0.1.25 publication and remote verification. Canary/provider/fetch/data/training remain unauthorized.",
+      "log": "AGENT_LOG_GATE1_V0125_INTEGRATED_RELEASE_REVIEW_2026-09-28.md"
     }
   ]
 }

@@ -2,7 +2,7 @@
 
 本文是当前架构的入口文档。它说明系统现在实际运行什么、各层由谁负责、一次研究周期怎样流转，以及哪些能力仍然只是未来目标。
 
-状态快照：2026-09-28，公开协议版本 `market-rsi-protocol-v0.1.24`。
+状态快照：2026-09-28，当前公开协议版本是 `market-rsi-protocol-v0.1.24`，本地发布候选是 v0.1.25；最近一次已通过的 zero-provider production-CLI canary 仍绑定 v0.1.24。
 
 ## 一句话概括
 
@@ -200,10 +200,10 @@ Supervisor 负责安全、版本和证据；Controller 负责研究选择；Rese
 重要运行证据不放 iCloud 或临时目录：
 
 ```text
-/Users/estelle/Developer/market-rsi
+<persistent-code-root>/market-rsi
   公开代码、Git history、release tag
 
-/Users/estelle/Library/Application Support/MarketRSI
+<local-application-support>/MarketRSI
   control/                 当前受保护 decision document
   runs/                    每个 canary/paid run 的不可复用根目录
   runtimes/                固定 Python runtime
@@ -218,13 +218,14 @@ Supervisor 负责安全、版本和证据；Controller 负责研究选择；Rese
 截至 2026-09-28：
 
 - v0.1.24 已发布并通过完整测试、独立发布验证和零 provider production-CLI canary。
+- v0.1.25 发布候选只把既有 mode-dependent 限制暴露到模型可见 tool schema；本地 validator 保持不变。针对性测试 48/48、完整测试 516/516（2 个环境跳过）和独立代码审查通过。
 - D0 `market-rsi-v0124-gate1-controller-d0-20260928-01` 调用一次 GLM/Tinker 后终态失败。
 - 失败发生在本地语义校验：模型选择 `bounded_response_canary_proposal`，同时提交 `max_documents_proposed=1`；validator 要求 canary proposal 为 `0`。
-- 根因是 mode-dependent 规则没有暴露在模型可见 tool schema，而不是网络、provider、预算或 watchdog 故障。
+- 已定位的接口缺口是 mode-dependent 规则没有暴露在模型可见 tool schema；v0.1.25 修复该可见性缺口，但尚未证明下一次模型会遵守。该次失败不是网络、provider、预算或 watchdog 故障。
 - 计量费用为 `$0.02746872`，无自动重试、无 public fetch、无 sealed-data read、无数据入场、无训练。
 - 当前没有有效 Gate 1 数据调查计划，也没有预测改进结果。
 
-下一项最小修复应只提高 tool schema 的规则可见性，保持本地 validator 和其他生产层不变。修复后需要新版本、完整测试、独立 review、新 zero-provider canary；任何新付费运行还需要全新 ID 和授权。
+下一步是为 v0.1.25 做独立发布验证；新 zero-provider canary 仍需单独授权。只有新 canary 通过后，才可以为任何新付费运行申请全新 ID 和独立授权。
 
 ## 变更规则
 
