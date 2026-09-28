@@ -20,6 +20,7 @@ from supervisor_harness import bounded_live_entry_v1 as shared_entry
 from supervisor_harness import bounded_live_outer_runner_v3 as shared_outer
 from supervisor_harness import p0_gate1_controller_adapter as adapter
 from supervisor_harness import p0_gate1_controller_outer as outer
+from supervisor_harness import gate1_canary_receipt
 from supervisor_harness.p0_gate1_trade_query import trusted_catalog
 from supervisor_harness.global_state_gate import SupervisorGlobalState
 
@@ -60,11 +61,23 @@ def run(args) -> dict:
         raise ValueError("fresh exact Gate 1 root and separate claims required")
     packet = shared_entry._regular_json(args.packet)
     runtime = shared_entry._regular_json(args.runtime_receipt)
+    canary_verification = gate1_canary_receipt.verify_gate1_canary_receipt(
+        args.prior_canary_receipt,
+        expected_receipt_sha256=args.prior_canary_sha256,
+        expected_source_sha256=args.expected_source_sha256,
+        expected_runtime_sha256=digest(runtime),
+        expected_release_tag=args.release_tag,
+        expected_release_commit=args.expected_release_commit,
+        expected_release_tag_object=args.expected_release_tag_object,
+    )
     state = SupervisorGlobalState(args.global_state_root, args.decision_doc)
     budget = PaidBudget(args.budget_root)
 
     # Every operation above and below this line is credential-free.
-    outer._publication(args.release_tag, args.expected_source_sha256)
+    publication = outer._publication(args.release_tag, args.expected_source_sha256)
+    if (publication.get("commit") != args.expected_release_commit
+            or publication.get("tag_object") != args.expected_release_tag_object):
+        raise ValueError("release identity differs from verified canary")
     shared_outer._runtime(runtime)
     packet = adapter._packet(packet)
     if file_hash(args.packet) != shared_outer._sha(
@@ -100,8 +113,11 @@ def run(args) -> dict:
         expected_packet_sha256=args.expected_packet_canonical_sha256,
         expected_head_sha256=args.expected_head_sha256,
         expected_decision_sha256=args.expected_decision_sha256,
+        prior_canary_receipt=args.prior_canary_receipt,
         prior_canary_sha256=args.prior_canary_sha256,
         release_tag=args.release_tag,
+        expected_release_commit=args.expected_release_commit,
+        expected_release_tag_object=args.expected_release_tag_object,
         expected_source_sha256=args.expected_source_sha256,
         expected_runtime=runtime,
         check_clear=shared_entry.exact_clear,
@@ -117,7 +133,7 @@ def parser(*, require_supervisor_claim: bool = True) -> argparse.ArgumentParser:
     for name in (
         "root", "claim-root", "global-state-root", "decision-doc",
         "budget-root", "packet", "runtime-receipt", "env-file",
-        "tokenizer-cache",
+        "tokenizer-cache", "prior-canary-receipt",
     ):
         value.add_argument("--" + name, required=True, type=Path)
     value.add_argument("--catalog", type=Path)
@@ -128,7 +144,8 @@ def parser(*, require_supervisor_claim: bool = True) -> argparse.ArgumentParser:
         "expected-packet-file-sha256", "expected-packet-canonical-sha256",
         "expected-head-sha256",
         "expected-decision-sha256", "prior-canary-sha256",
-        "release-tag", "expected-source-sha256",
+        "release-tag", "expected-release-commit",
+        "expected-release-tag-object", "expected-source-sha256",
     ):
         value.add_argument("--" + name, required=True)
     value.add_argument("--expected-catalog-file-sha256")

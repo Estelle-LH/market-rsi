@@ -31,12 +31,37 @@ SCHEMA = "market_p0_gate1_controller_outer_canary_v1"
 
 
 def _decision() -> dict:
+    options = expected_packet()["prospective_source_scope_decision"]
+    pair = options["source_response_options"][1]
+    split = options["split_policy"]
+    cutoff = options["cutoff_contract"]
     return {
-        "choice_id": "pm_trades_docs_one",
-        "question_id": "2025_whole_season_trade_access",
-        "hypothesis": "The official interface documents historical market trade access.",
-        "expected_evidence": "A bounded page hash and documented interface fields.",
-        "stop_rule": "Stop after one response or any redirect, error, timeout, or rights uncertainty.",
+        "scientific_source_response": {
+            "source_registry_entry_id": pair["source_registry_entry_id"],
+            "response_class_id": pair["response_class_id"],
+        },
+        "intended_uses": {"requested_use_ids": ["model_training", "private_research"]},
+        "future_role_split": {
+            "requested_future_role": "train_candidate",
+            "split_policy_id": split["split_policy_id"],
+            "split_policy_sha256": split["split_policy_sha256"],
+            "exposure_ledger_id": "not_yet_created",
+        },
+        "horizon_cutoff": {
+            "claim_semantics": "prospective_point_in_time",
+            "prediction_horizon_us": 60_000_000,
+            "cutoff_semantics_id": cutoff["cutoff_semantics_id"],
+            "cutoff_contract_sha256": cutoff["cutoff_contract_sha256"],
+            "label_window_start_relation": "strictly_after_cutoff",
+            "label_window_end_relation": "at_or_before_cutoff_plus_horizon",
+        },
+        "bounded_investigation": {
+            "mode": "first_party_document_review_only",
+            "max_documents_proposed": 1,
+            "max_provider_requests_proposed": 0,
+            "max_raw_bytes_proposed": 0,
+            "max_elapsed_seconds_proposed": 300,
+        },
     }
 
 
@@ -69,7 +94,13 @@ def _submission(value: dict, *, tool: str = SUBMIT_TOOL) -> str:
             + "</tool_call>")
 
 
-def execute(output: Path, *, proposal: bool = False) -> dict:
+def execute(output: Path, *, proposal: bool = False,
+            prior_canary_receipt: Path | None = None,
+            prior_canary_sha256: str | None = None) -> dict:
+    if proposal:
+        raise ValueError("legacy proposal lane is not a D0 canary")
+    if prior_canary_receipt is None or prior_canary_sha256 is None:
+        raise ValueError("exact prior current-source canary receipt required")
     output = Path(output)
     if output.exists() or output.is_symlink():
         raise FileExistsError("fresh Gate 1 outer canary output required")
@@ -103,8 +134,7 @@ def execute(output: Path, *, proposal: bool = False) -> dict:
         "model_authorship_proven": False,
     }
     runtime = shared.runtime_receipt()
-    raw = (_submission(_proposal(), tool=PROPOSE_TOOL) if proposal
-           else _submission(_decision()))
+    raw = _submission(_decision())
     backend = OfflineGate1ProviderFake({
         "text": raw,
         "output_tokens": [501, 502, 503],
@@ -135,8 +165,11 @@ def execute(output: Path, *, proposal: bool = False) -> dict:
             expected_packet_sha256=digest(packet),
             expected_head_sha256=state_before["head_sha256"],
             expected_decision_sha256=file_hash(decision_doc),
-            prior_canary_sha256=file_hash(Path(__file__)),
+            prior_canary_receipt=prior_canary_receipt,
+            prior_canary_sha256=prior_canary_sha256,
             release_tag="market-rsi-protocol-v-synthetic",
+            expected_release_commit="1" * 40,
+            expected_release_tag_object="2" * 40,
             expected_source_sha256=digest(source_hashes),
             expected_runtime=runtime,
             check_clear=lambda task_id: {
@@ -152,26 +185,9 @@ def execute(output: Path, *, proposal: bool = False) -> dict:
     state_after = state.snapshot()
     job = budget_after["jobs"][cycle_id]
     next_input_sha256 = None
-    if proposal:
-        archived = json.loads((output / cycle_id / "adapter" / cycle_id
-                               / "proposal.json").read_text())
-        feedback = {
-            "schema": FEEDBACK_SCHEMA,
-            "proposal_sha256": archived["proposal_sha256"],
-            "auditor_receipt_sha256": file_hash(Path(__file__)),
-            "outcome": "inconclusive",
-            "summary": "Synthetic audit only; no real source or data admitted.",
-            "actual_cost_usd": "0",
-            "sealed_values_exposed": False,
-        }
-        fresh_json(output / "synthetic-auditor-feedback.json", feedback)
-        fresh_json(output / "next-controller-input.json",
-                   next_controller_input(archived, feedback))
-        next_input_sha256 = file_hash(output / "next-controller-input.json")
     passed = (
         outer_result.get("passed") is True
-        and outer_result.get("submission_kind") == (
-            "non_executable_proposal" if proposal else "bounded_plan")
+        and outer_result.get("submission_kind") == "source_scope_decision"
         and outer_result.get("execution_mode") == "offline_fake"
         and job.get("state") == "metered_terminal"
         and state_after.get("active_cycle") is None
@@ -185,11 +201,10 @@ def execute(output: Path, *, proposal: bool = False) -> dict:
         "passed": passed,
         "outer_result_sha256": file_hash(output / cycle_id / "result.json"),
         "review_sha256": file_hash(output / cycle_id / "review.json"),
-        "task_sha256": (None if proposal else file_hash(
-            output / cycle_id / "adapter" / cycle_id / "task.json")),
-        "proposal_sha256": (file_hash(
-            output / cycle_id / "adapter" / cycle_id / "proposal.json")
-            if proposal else None),
+        "task_sha256": None,
+        "proposal_sha256": None,
+        "decision_sha256": file_hash(
+            output / cycle_id / "adapter" / cycle_id / "decision.json"),
         "next_controller_input_sha256": next_input_sha256,
         "submission_kind": outer_result.get("submission_kind"),
         "synthetic_ledger_metered_usd": job["metered_usd"],
@@ -208,6 +223,12 @@ def execute(output: Path, *, proposal: bool = False) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
-    parser.add_argument("--proposal", action="store_true")
+    parser.add_argument("--proposal", action="store_true",
+                        help="retired; retained only to fail closed")
+    parser.add_argument("--prior-canary-receipt", type=Path)
+    parser.add_argument("--prior-canary-sha256")
     args = parser.parse_args()
-    print(json.dumps(execute(args.output, proposal=args.proposal), sort_keys=True))
+    print(json.dumps(execute(
+        args.output, proposal=args.proposal,
+        prior_canary_receipt=args.prior_canary_receipt,
+        prior_canary_sha256=args.prior_canary_sha256), sort_keys=True))

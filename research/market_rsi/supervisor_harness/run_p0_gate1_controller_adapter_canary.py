@@ -16,12 +16,37 @@ SCHEMA = "market_p0_gate1_controller_adapter_canary_v1"
 
 
 def _decision() -> dict:
+    options = expected_packet()["prospective_source_scope_decision"]
+    pair = options["source_response_options"][1]
+    split = options["split_policy"]
+    cutoff = options["cutoff_contract"]
     return {
-        "choice_id": "pm_trades_docs_one",
-        "question_id": "2025_whole_season_trade_access",
-        "hypothesis": "The official interface documents historical market trade access.",
-        "expected_evidence": "A bounded page hash and documented interface fields.",
-        "stop_rule": "Stop after one response or any redirect, error, timeout, or rights uncertainty.",
+        "scientific_source_response": {
+            "source_registry_entry_id": pair["source_registry_entry_id"],
+            "response_class_id": pair["response_class_id"],
+        },
+        "intended_uses": {"requested_use_ids": ["model_training", "private_research"]},
+        "future_role_split": {
+            "requested_future_role": "train_candidate",
+            "split_policy_id": split["split_policy_id"],
+            "split_policy_sha256": split["split_policy_sha256"],
+            "exposure_ledger_id": "not_yet_created",
+        },
+        "horizon_cutoff": {
+            "claim_semantics": "prospective_point_in_time",
+            "prediction_horizon_us": 60_000_000,
+            "cutoff_semantics_id": cutoff["cutoff_semantics_id"],
+            "cutoff_contract_sha256": cutoff["cutoff_contract_sha256"],
+            "label_window_start_relation": "strictly_after_cutoff",
+            "label_window_end_relation": "at_or_before_cutoff_plus_horizon",
+        },
+        "bounded_investigation": {
+            "mode": "first_party_document_review_only",
+            "max_documents_proposed": 1,
+            "max_provider_requests_proposed": 0,
+            "max_raw_bytes_proposed": 0,
+            "max_elapsed_seconds_proposed": 300,
+        },
     }
 
 
@@ -65,22 +90,20 @@ def execute(output: Path) -> dict:
         packet=expected_packet(),
         backend=backend,
     )
-    task = load_json(adapter_root / "task.json")
+    decision = load_json(adapter_root / "decision.json")
+    provenance = load_json(adapter_root / "decision-provenance.json")
     passed = (
-        adapter_result.get("valid_plan_only_decision") is True
+        adapter_result.get("valid_source_scope_decision") is True
         and adapter_result.get("execution_mode") == "offline_fake"
         and adapter_result.get("provider_called") is False
         and adapter_result.get("public_fetch_performed") is False
         and adapter_result.get("formal_data_admitted") is False
         and backend.encode_calls == 1
         and backend.sample_calls == 1
-        and task.get("execution_boundary") == {
-            "plan_only": True,
-            "network_fetch_authorized": False,
-            "purchase_authorized": False,
-            "sealed_or_scored_data_authorized": False,
-            "formal_admission_authorized": False,
-        }
+        and decision.get("decision_status") == "scope_only_non_executable"
+        and all(value is False for value in decision["non_authority"].values())
+        and provenance.get("all_external_authority_false") is True
+        and not (adapter_root / "task.json").exists()
     )
     result = {
         "schema": SCHEMA,
@@ -89,7 +112,9 @@ def execute(output: Path) -> dict:
         "adapter_result_sha256": file_hash(adapter_root / "result.json"),
         "claim_sha256": file_hash(claims / f"{cycle_id}.json"),
         "decision_sha256": file_hash(adapter_root / "decision.json"),
-        "task_sha256": file_hash(adapter_root / "task.json"),
+        "decision_provenance_sha256": file_hash(
+            adapter_root / "decision-provenance.json"),
+        "task_sha256": None,
         "provider_calls": 0,
         "provider_cost_usd": "0",
         "synthetic_only": True,

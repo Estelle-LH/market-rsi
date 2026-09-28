@@ -10,14 +10,62 @@ import sys
 from market_rsi import digest, file_hash, identifier
 from supervisor_harness import bounded_live_supervisor_parent_v1 as supervisor
 from supervisor_harness import p0_gate1_controller_live_entry as entry
+from supervisor_harness import protocol_source_release
 
 
 CANARY_CHILD_ENTRY = Path(__file__).with_name(
     "p0_gate1_controller_cli_canary_child.py").resolve()
-CANARY_RELEASE_TAG = "market-rsi-protocol-v-synthetic-cli-canary"
+CANARY_RELEASE_TAG = entry.gate1_canary_receipt.LEGACY_SYNTHETIC_RELEASE_TAG
+_FIRST_CANARY_BOOTSTRAP_CAPABILITY = object()
+_VERIFIED_PUBLICATION_CONSTRUCTOR = object()
 # A valid provider sample may use the adapter's complete 60-second deadline.
 # Progress supervision must not classify that allowed interval as a stall.
 PROGRESS_TIMEOUT_SECONDS = entry.adapter.SAMPLE_TIMEOUT_SECONDS + 30
+
+
+class _VerifiedFirstCanaryPublication:
+    """Process-local evidence returned only after ``verify_published`` passes."""
+
+    __slots__ = ("_raw",)
+
+    def __init__(self, publication: dict, constructor: object):
+        if constructor is not _VERIFIED_PUBLICATION_CONSTRUCTOR:
+            raise TypeError("verified first-canary publication is factory-only")
+        self._raw = json.dumps(
+            publication, sort_keys=True, separators=(",", ":"),
+            ensure_ascii=True, allow_nan=False)
+
+    def value(self) -> dict:
+        return json.loads(self._raw)
+
+
+def verified_first_canary_publication(
+        *, release_tag: str,
+        expected_source_sha256: str) -> _VerifiedFirstCanaryPublication:
+    """Perform the credential-free publication check before any run mutation."""
+    publication = protocol_source_release.verify_published(
+        tag=release_tag, expected_source_sha256=expected_source_sha256)
+    publication = entry.gate1_canary_receipt.validate_first_canary_publication(
+        publication, expected_tag=release_tag,
+        expected_source_sha256=expected_source_sha256,
+        child_entry=CANARY_CHILD_ENTRY)
+    current = protocol_source_release.source_hashes()
+    if (publication["source_hashes"] != current
+            or digest(current) != expected_source_sha256):
+        raise ValueError("verified publication is stale or forged")
+    return _VerifiedFirstCanaryPublication(
+        publication, _VERIFIED_PUBLICATION_CONSTRUCTOR)
+
+
+def _publication_from_token(
+        token: object | None) -> dict:
+    if type(token) is not _VerifiedFirstCanaryPublication:
+        raise ValueError("exact verified first-canary publication required")
+    publication = token.value()
+    return entry.gate1_canary_receipt.validate_first_canary_publication(
+        publication, expected_tag=publication.get("tag"),
+        expected_source_sha256=publication.get("source_sha256"),
+        child_entry=CANARY_CHILD_ENTRY)
 
 
 def _child_command(args, claim: Path, *, child_entry: Path | None = None) -> list[str]:
@@ -32,22 +80,21 @@ def _child_command(args, claim: Path, *, child_entry: Path | None = None) -> lis
     if (child_path.is_symlink() or not child_path.is_file()
             or child_path.resolve() != child_path):
         raise ValueError("Gate 1 child entry must be a regular canonical file")
-    if child_entry is not None and (
-            child_path != CANARY_CHILD_ENTRY
-            or args.release_tag != CANARY_RELEASE_TAG):
-        raise ValueError("only the exact synthetic Gate 1 canary child is allowed")
+    if child_entry is not None and child_path != CANARY_CHILD_ENTRY:
+        raise ValueError("only the exact Gate 1 canary child is allowed")
     command = [sys.executable, str(child_path)]
     paths = (
         "root", "claim_root", "global_state_root", "decision_doc",
         "budget_root", "packet", "runtime_receipt", "env_file",
-        "tokenizer_cache",
+        "tokenizer_cache", "prior_canary_receipt",
     )
     strings = (
         "experiment_id", "budget_cap_usd", "cycle_id",
         "expected_packet_file_sha256", "expected_packet_canonical_sha256",
         "expected_head_sha256",
         "expected_decision_sha256", "prior_canary_sha256",
-        "release_tag", "expected_source_sha256",
+        "release_tag", "expected_release_commit",
+        "expected_release_tag_object", "expected_source_sha256",
     )
     for name in paths:
         command.extend(["--" + name.replace("_", "-"),
@@ -86,7 +133,57 @@ def _preflight_packet(args) -> dict:
     }
 
 
-def run(args, *, child_entry: Path | None = None) -> dict:
+def _preflight_canary(
+        args, *, child_entry: Path | None = None,
+        bootstrap_capability: object | None = None,
+        verified_publication: object | None = None) -> dict:
+    """Verify exact current canary evidence before creating a child process."""
+    runtime = entry.shared_entry._regular_json(args.runtime_receipt)
+    if bootstrap_capability is not None:
+        if bootstrap_capability is not _FIRST_CANARY_BOOTSTRAP_CAPABILITY:
+            raise ValueError("invalid first-canary bootstrap capability")
+        publication = _publication_from_token(verified_publication)
+        current = protocol_source_release.source_hashes()
+        if (publication["source_hashes"] != current
+                or digest(current) != publication["source_sha256"]):
+            raise ValueError("verified publication became stale before launch")
+        if (child_entry != CANARY_CHILD_ENTRY
+                or args.release_tag != publication["tag"]
+                or args.expected_release_commit != publication["commit"]
+                or args.expected_release_tag_object !=
+                publication["tag_object"]
+                or args.expected_source_sha256 !=
+                publication["source_sha256"]):
+            raise ValueError("invalid first-canary bootstrap capability")
+        verification = entry.gate1_canary_receipt.verify_first_canary_bootstrap(
+            args.prior_canary_receipt,
+            expected_bootstrap_sha256=args.prior_canary_sha256,
+            expected_source_sha256=args.expected_source_sha256,
+            expected_runtime_sha256=digest(runtime),
+            expected_release_tag=args.release_tag,
+            expected_release_commit=args.expected_release_commit,
+            expected_release_tag_object=args.expected_release_tag_object,
+            expected_child_entry=CANARY_CHILD_ENTRY,
+        )
+        if verification.get("publication") != publication:
+            raise ValueError("bootstrap proof differs from verified publication")
+        return verification
+    if verified_publication is not None:
+        raise ValueError("verified publication is bootstrap-only")
+    return entry.gate1_canary_receipt.verify_gate1_canary_receipt(
+        args.prior_canary_receipt,
+        expected_receipt_sha256=args.prior_canary_sha256,
+        expected_source_sha256=args.expected_source_sha256,
+        expected_runtime_sha256=digest(runtime),
+        expected_release_tag=args.release_tag,
+        expected_release_commit=args.expected_release_commit,
+        expected_release_tag_object=args.expected_release_tag_object,
+    )
+
+
+def run(args, *, child_entry: Path | None = None,
+        bootstrap_capability: object | None = None,
+        verified_publication: object | None = None) -> dict:
     identifier(args.cycle_id)
     _preflight_packet(args)
     if child_entry is None:
@@ -95,12 +192,16 @@ def run(args, *, child_entry: Path | None = None) -> dict:
         # outcomes; the outer review rejects fixed-trade plans without one.
         # The synthetic canary child is never exposed by this production CLI.
         entry._reviewed_catalog(args)
+    _preflight_canary(
+        args, child_entry=child_entry,
+        bootstrap_capability=bootstrap_capability,
+        verified_publication=verified_publication)
     supervisor_root = Path(args.supervisor_root)
     if supervisor_root.exists() or supervisor_root.is_symlink():
         raise FileExistsError("fresh Gate 1 Supervisor root required")
-    supervisor_root.mkdir(parents=True, mode=0o700)
     claim = supervisor_root / "supervisor-claim.json"
     command = _child_command(args, claim, child_entry=child_entry)
+    supervisor_root.mkdir(parents=True, mode=0o700)
     log_handle = (supervisor_root / "child.log").open("xb")
     child = subprocess.Popen(command, stdout=log_handle,
                              stderr=subprocess.STDOUT)

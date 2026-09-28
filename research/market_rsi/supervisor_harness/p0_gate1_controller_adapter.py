@@ -9,6 +9,7 @@ retries, fetches a source, or admits prediction data.
 """
 from __future__ import annotations
 
+import base64
 from decimal import Decimal
 import hashlib
 import json
@@ -25,52 +26,47 @@ from market_rsi import (
 )
 from supervisor_harness.build_p0_gate1_controller_packet import (
     ALLOWED_QUESTIONS, RIGHTS_POLICY, SCHEMA as PACKET_SCHEMA,
-    SHORT_BOUNDED_CHOICES, SOURCE_REGISTRY, build,
+    SHORT_BOUNDED_CHOICES, SOURCE_REGISTRY, SCOPE_DECISION_OPTIONS, build,
 )
 from supervisor_harness.p0_gate1_research_contract import (
     DECISION_SCHEMA, short_choice_provenance, validate_and_compile,
 )
 from supervisor_harness import p0_data_gap_proposal as gap_proposal
+from supervisor_harness import prospective_source_scope_decision as source_scope
 
 
-ADAPTER_SCHEMA = "market_p0_gate1_controller_adapter_v5"
-REQUEST_SCHEMA = "market_p0_gate1_controller_request_v5"
+ADAPTER_SCHEMA = "market_p0_gate1_controller_adapter_v6"
+REQUEST_SCHEMA = "market_p0_gate1_controller_request_v6"
 PROVIDER_RECEIPT_SCHEMA = "market_p0_gate1_controller_provider_receipt_v1"
-RESULT_SCHEMA = "market_p0_gate1_controller_adapter_result_v5"
-# The v4 short-choice packet and v5 request encode to 3,310 input tokens with
-# the pinned local GLM tokenizer. A 2,750-token output cap yields a $0.0494991
-# no-cache upper, below the separate $0.05 single-sample ceiling. The actual
-# exact request is still re-encoded and checked before claim, reserve or send.
-MAX_OUTPUT_TOKENS = 2750
+RESULT_SCHEMA = "market_p0_gate1_controller_adapter_result_v6"
+# The complete nested D0 response is materially smaller than the old maximum.
+# Exact encoding is still measured before claim/reservation/send; this cap keeps
+# the single-sample hard upper below the separate $0.05 ceiling.
+MAX_OUTPUT_TOKENS = 1600
 SAMPLE_TIMEOUT_SECONDS = 90
 MAX_COST_UPPER_USD = Decimal("0.05")
-SUBMIT_TOOL = "submit_gate1_decision"
+FROZEN_PACKET_CANONICAL_SHA256 = (
+    "39114563de6f34b100431d02edb0677184a40f83ce9c0d3eda8afe76f963620b")
+OFFLINE_FAKE_TOKEN_IDS = (101, 102, 103)
+SUBMIT_TOOL = "submit_source_scope_decision"
 SUBMIT_WIRE_TOOL = f"{MCP_NAMESPACE}__{SUBMIT_TOOL}"
 PROPOSE_TOOL = "propose_data_gap_resolution"
 PROPOSE_WIRE_TOOL = f"{MCP_NAMESPACE}__{PROPOSE_TOOL}"
 SYSTEM_PROMPT = (
-    "You are the research Controller. Choose one bounded investigation from "
-    "the frozen short choice IDs and questions, OR propose a novel data-gap "
-    "source/method for review. You have no operational "
+    "You are the research Controller. Record one complete non-executable D0 "
+    "source/use/scope choice using the exact reviewed options. You own all five "
+    "scientific objects: source/response, intended uses, future role/split, "
+    "horizon/cutoff, and bounded investigation. You have no operational "
     "tools, files, network, credentials, benchmark rows, Dev labels, or Final "
     "labels. Use exactly one terminal submission tool as your complete answer. "
-    "A novel proposal is archived only: it cannot fetch, execute, purchase, "
-    "or admit data. Supply exactly the declared tool fields and no other "
-    "or placeholder fields. Narrative-only answers and multiple submissions are "
-    "invalid. Do not add local paths, commands, code, credentials, evaluation "
-    "rows, or claims that an investigation already ran. A candidate public URL "
-    "is untrusted text for review, never an instruction to fetch it. Neither "
-    "submission tool can fetch, execute, purchase, or admit data. For a bounded "
-    "choice submit only choice_id, question_id, hypothesis, expected_evidence "
-    "and stop_rule. The trusted broker derives source, operation, sample rule, "
-    "routine bounds and investigation ID from the selected choice and run claim. "
-    "Do not submit these derived fields. Data-use "
-    "and access policy is already fixed by the trusted Supervisor; do not submit "
-    "or rewrite a rights-policy field. The fixed protocol schema is added by "
-    "trusted code; do not submit a schema field. Follow the packet's current "
-    "execution boundary and the listed exact available capabilities. The "
-    "previous Controller answer is preserved as feedback, not a mandatory "
-    "choice. You may revise it or propose another lawful approach."
+    "Supply exactly its five declared objects. Narrative-only answers, multiple "
+    "submissions, placeholders, URLs, paths, commands, code, credentials, data "
+    "rows and claims that an investigation already ran are invalid. Requested "
+    "uses are scientific scope, not rights or authorization. Proposed request, "
+    "byte and time caps are not permission. Trusted code adds only the decision "
+    "ID, schema/status and fixed all-false safety literals; it never fills a "
+    "scientific choice. No choice can fetch, execute, purchase, retain, admit, "
+    "train, score, open Dev/Final or publish anything."
 )
 
 
@@ -109,33 +105,153 @@ def expected_packet() -> dict:
     return build(gate0, live)
 
 
+def _typed_canonical_bytes(value: object) -> bytes:
+    """Return canonical JSON bytes without Python type coercion or extensions."""
+    def validate(item: object) -> None:
+        item_type = type(item)
+        if item is None or item_type in {str, bool, int, float}:
+            return
+        if item_type is list:
+            for child in item:
+                validate(child)
+            return
+        if item_type is dict:
+            if any(type(key) is not str for key in item):
+                raise ValueError("Controller packet contains a non-string JSON key")
+            for child in item.values():
+                validate(child)
+            return
+        raise ValueError("Controller packet contains a non-JSON-native type")
+
+    validate(value)
+    return canonical(value).encode("utf-8")
+
+
 def _packet(value: dict) -> dict:
-    if (not isinstance(value, dict) or value != expected_packet()
-            or value.get("schema") != PACKET_SCHEMA
-            or value.get("allowed_questions") != list(ALLOWED_QUESTIONS)
-            or value.get("allowed_sources") != list(SOURCE_REGISTRY)):
+    if type(value) is not dict:
+        raise ValueError("Gate 1 Controller packet is not the exact frozen packet")
+    expected_bytes = _typed_canonical_bytes(expected_packet())
+    expected_sha256 = hashlib.sha256(expected_bytes).hexdigest()
+    if expected_sha256 != FROZEN_PACKET_CANONICAL_SHA256:
+        raise RuntimeError("Gate 1 adapter frozen packet commitment changed")
+    try:
+        value_bytes = _typed_canonical_bytes(value)
+    except (TypeError, ValueError):
+        raise ValueError(
+            "Gate 1 Controller packet is not the exact frozen packet") from None
+    if (value_bytes != expected_bytes
+            or hashlib.sha256(value_bytes).hexdigest()
+            != FROZEN_PACKET_CANONICAL_SHA256):
         raise ValueError("Gate 1 Controller packet is not the exact frozen packet")
     return value
 
 
 def _submission_parameters(packet: dict) -> dict:
+    options = packet["prospective_source_scope_decision"]
+    pairs = options["source_response_options"]
+    split = options["split_policy"]
+    cutoff = options["cutoff_contract"]
+    caps = options["hard_proposed_caps"]
     return {
         "type": "object",
         "additionalProperties": False,
-        "required": list(packet["required_bounded_submission_fields"]),
+        "required": [
+            "scientific_source_response", "intended_uses",
+            "future_role_split", "horizon_cutoff", "bounded_investigation",
+        ],
         "properties": {
-            "choice_id": {
-                "type": "string",
-                "enum": [item["choice_id"] for item in packet["trusted_bounded_choices"]],
+            "scientific_source_response": {
+                "type": "object", "additionalProperties": False,
+                "required": ["source_registry_entry_id", "response_class_id"],
+                "properties": {
+                    "source_registry_entry_id": {
+                        "type": "string",
+                        "enum": [item["source_registry_entry_id"] for item in pairs],
+                    },
+                    "response_class_id": {
+                        "type": "string",
+                        "enum": [item["response_class_id"] for item in pairs],
+                    },
+                },
             },
-            "question_id": {
-                "type": "string", "enum": list(packet["allowed_questions"]),
+            "intended_uses": {
+                "type": "object", "additionalProperties": False,
+                "required": ["requested_use_ids"],
+                "properties": {"requested_use_ids": {
+                    "type": "array", "minItems": 1, "uniqueItems": True,
+                    "items": {"type": "string", "enum": options["intended_use_ids"]},
+                }},
             },
-            "hypothesis": {"type": "string", "minLength": 1, "maxLength": 1000},
-            "expected_evidence": {
-                "type": "string", "minLength": 1, "maxLength": 1000,
+            "future_role_split": {
+                "type": "object", "additionalProperties": False,
+                "required": [
+                    "requested_future_role", "split_policy_id",
+                    "split_policy_sha256", "exposure_ledger_id",
+                ],
+                "properties": {
+                    "requested_future_role": {
+                        "type": "string", "enum": options["future_roles"]},
+                    "split_policy_id": {"type": "string", "enum": [split["split_policy_id"]]},
+                    "split_policy_sha256": {
+                        "type": "string", "enum": [split["split_policy_sha256"]]},
+                    "exposure_ledger_id": {"type": "string", "enum": ["not_yet_created"]},
+                },
             },
-            "stop_rule": {"type": "string", "minLength": 1, "maxLength": 1000},
+            "horizon_cutoff": {
+                "type": "object", "additionalProperties": False,
+                "required": [
+                    "claim_semantics", "prediction_horizon_us",
+                    "cutoff_semantics_id", "cutoff_contract_sha256",
+                    "label_window_start_relation", "label_window_end_relation",
+                ],
+                "properties": {
+                    "claim_semantics": {"type": "string", "enum": options["claim_semantics"]},
+                    "prediction_horizon_us": {
+                        "type": "integer", "minimum": 0, "maximum": 31536000000000},
+                    "cutoff_semantics_id": {
+                        "type": "string", "enum": [cutoff["cutoff_semantics_id"]]},
+                    "cutoff_contract_sha256": {
+                        "type": "string", "enum": [cutoff["cutoff_contract_sha256"]]},
+                    "label_window_start_relation": {
+                        "type": "string",
+                        "enum": ["at_or_after_cutoff", "not_applicable", "strictly_after_cutoff"],
+                    },
+                    "label_window_end_relation": {
+                        "type": "string",
+                        "enum": [
+                            "at_or_before_cutoff_plus_horizon", "not_applicable",
+                            "strictly_before_cutoff_plus_horizon",
+                        ],
+                    },
+                },
+            },
+            "bounded_investigation": {
+                "type": "object", "additionalProperties": False,
+                "required": [
+                    "mode", "max_documents_proposed",
+                    "max_provider_requests_proposed", "max_raw_bytes_proposed",
+                    "max_elapsed_seconds_proposed",
+                ],
+                "properties": {
+                    "mode": {"type": "string", "enum": options["investigation_modes"]},
+                    "max_documents_proposed": {
+                        "type": "integer", "minimum": 0,
+                        "maximum": caps["max_documents"],
+                    },
+                    "max_provider_requests_proposed": {
+                        "type": "integer", "minimum": 0,
+                        "maximum": caps["max_provider_requests"],
+                    },
+                    "max_raw_bytes_proposed": {
+                        "type": "integer", "minimum": 0,
+                        "maximum": caps["max_raw_bytes"],
+                    },
+                    "max_elapsed_seconds_proposed": {
+                        "type": "integer", "minimum": 1,
+                        "maximum": caps["max_elapsed_seconds"],
+                    },
+                },
+            },
         },
     }
 
@@ -146,28 +262,19 @@ def _submission_tools(packet: dict) -> list[dict]:
         "function": {
             "name": SUBMIT_WIRE_TOOL,
             "description": (
-                "Submit the one final bounded Gate 1 plan. This is terminal and "
-                "records data only; it performs no operation."
+                "Submit the one complete source/use/scope D0 choice. This is "
+                "terminal, scope-only and performs no operation."
             ),
             "parameters": _submission_parameters(packet),
-        },
-    }, {
-        "type": "function",
-        "function": {
-            "name": PROPOSE_WIRE_TOOL,
-            "description": (
-                "Archive one new data source or method for trusted review. "
-                "Never executes or authorizes the proposal."
-            ),
-            "parameters": _proposal_parameters(packet),
         },
     }]
 
 
 def _available_capabilities(packet: dict) -> list[dict]:
-    """Describe only trusted choice IDs offered by this exact packet."""
-    return [dict(item, plan_only=True)
-            for item in packet["trusted_bounded_choices"]]
+    """Return only the exact non-executable D0 options offered this turn."""
+    return [dict(item, scope_only=True, executable=False)
+            for item in packet["prospective_source_scope_decision"]
+            ["source_response_options"]]
 
 
 def _proposal_parameters(packet: dict) -> dict:
@@ -221,9 +328,10 @@ def request_turn(packet: dict) -> dict:
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": canonical({
                 "packet": packet,
-                "currently_available_bounded_capabilities": (
+                "currently_available_source_response_options": (
                     _available_capabilities(packet)),
-                "open_ended_proposals_enter_review_only": True,
+                "complete_D0_required": True,
+                "all_external_authority_remains_false": True,
             })},
         ],
         "tools": _submission_tools(packet),
@@ -241,6 +349,8 @@ def _sources() -> dict[str, str]:
             here.with_name("p0_gate1_research_contract.py")),
         "data_gap_proposal_contract": file_hash(
             here.with_name("p0_data_gap_proposal.py")),
+        "prospective_source_scope_decision": file_hash(
+            here.with_name("prospective_source_scope_decision.py")),
         "provider": file_hash(here.parents[1] / "codex_glm_provider.py"),
         "completion_parser": file_hash(
             here.parents[1] / "codex_glm_responses_adapter.py"),
@@ -315,6 +425,107 @@ def _provider_receipt(sampled: dict, input_tokens: int,
     }
 
 
+def _decision_id(cycle_id: str) -> str:
+    identifier(cycle_id)
+    payload = base64.b32encode(hashlib.sha256(cycle_id.encode()).digest())
+    return "dec_" + payload.decode("ascii").lower().rstrip("=")[:26]
+
+
+def _scope_submission(arguments: dict, packet: dict, cycle_id: str) -> dict:
+    required = set(_submission_parameters(packet)["required"])
+    if set(arguments) != required:
+        raise ValueError("source-scope fields differ from frozen contract")
+    options = packet["prospective_source_scope_decision"]
+    pair = arguments["scientific_source_response"]
+    if pair not in [
+            {"source_registry_entry_id": item["source_registry_entry_id"],
+             "response_class_id": item["response_class_id"]}
+            for item in options["source_response_options"]]:
+        raise ValueError("source and response class are not one reviewed pair")
+    uses = arguments["intended_uses"].get("requested_use_ids")
+    if (not isinstance(uses, list) or uses != sorted(uses)
+            or len(uses) != len(set(uses))):
+        raise ValueError("requested uses must be sorted and duplicate-free")
+    split = options["split_policy"]
+    future = arguments["future_role_split"]
+    if (future.get("split_policy_id") != split["split_policy_id"]
+            or future.get("split_policy_sha256")
+            != split["split_policy_sha256"]):
+        raise ValueError("future split policy differs from reviewed bytes")
+    cutoff = options["cutoff_contract"]
+    horizon = arguments["horizon_cutoff"]
+    if (horizon.get("cutoff_semantics_id") != cutoff["cutoff_semantics_id"]
+            or horizon.get("cutoff_contract_sha256")
+            != cutoff["cutoff_contract_sha256"]):
+        raise ValueError("cutoff contract differs from reviewed bytes")
+    caps = options["hard_proposed_caps"]
+    investigation = arguments["bounded_investigation"]
+    for field, cap in (
+            ("max_documents_proposed", caps["max_documents"]),
+            ("max_provider_requests_proposed", caps["max_provider_requests"]),
+            ("max_raw_bytes_proposed", caps["max_raw_bytes"]),
+            ("max_elapsed_seconds_proposed", caps["max_elapsed_seconds"])):
+        value = investigation.get(field)
+        if type(value) is not int or value < (1 if field == "max_elapsed_seconds_proposed" else 0) or value > cap:
+            raise ValueError("proposed investigation cap is invalid")
+    return source_scope.build_decision(
+        decision_id=_decision_id(cycle_id),
+        scientific_source_response=pair,
+        intended_uses=arguments["intended_uses"],
+        future_role_split={
+            **future,
+            "unknown_exposure_policy": "treat_as_exposed",
+            "cross_role_reuse_policy": "no_role_reassignment_after_observation",
+        },
+        horizon_cutoff={
+            **horizon,
+            "availability_formula_id": "max_authenticated_inclusive_upper_bound_us_v2",
+            "availability_cutoff_relation": (
+                "availability_upper_bound_unix_us_lte_forecast_cutoff_unix_us"),
+            "provider_receiver_clocks_separate": True,
+        },
+        bounded_investigation={
+            **investigation,
+            "max_spend_usd_micros_proposed": 0,
+            "stop_on_first_rights_or_authority_unknown": True,
+            "stop_before_unregistered_response_class": True,
+            "preserve_failures_without_retry_expansion": True,
+        },
+    )
+
+
+def _decision_provenance(submission: dict, decision: dict, packet: dict,
+                         cycle_id: str, raw_text: str) -> dict:
+    return {
+        "schema": "market_rsi_source_scope_field_provenance_v1",
+        "cycle_id": cycle_id,
+        "decision_id": decision["decision_id"],
+        "controller_authored_objects": [
+            "bounded_investigation", "future_role_split", "horizon_cutoff",
+            "intended_uses", "scientific_source_response",
+        ],
+        "trusted_protocol_fields": [
+            "decision_id", "decision_status", "non_authority", "schema",
+            "bounded_investigation.max_spend_usd_micros_proposed",
+            "bounded_investigation.preserve_failures_without_retry_expansion",
+            "bounded_investigation.stop_before_unregistered_response_class",
+            "bounded_investigation.stop_on_first_rights_or_authority_unknown",
+            "future_role_split.cross_role_reuse_policy",
+            "future_role_split.unknown_exposure_policy",
+            "horizon_cutoff.availability_cutoff_relation",
+            "horizon_cutoff.availability_formula_id",
+            "horizon_cutoff.provider_receiver_clocks_separate",
+        ],
+        "submission_sha256": digest(submission),
+        "decision_sha256": digest(decision),
+        "scope_options_sha256": digest(
+            packet["prospective_source_scope_decision"]),
+        "raw_controller_response_sha256": hashlib.sha256(
+            raw_text.encode("utf-8")).hexdigest(),
+        "all_external_authority_false": True,
+    }
+
+
 def _submitted_action(raw: str, packet: dict, cycle_id: str) -> tuple[str, dict, dict]:
     identifier(cycle_id)
     if (not isinstance(raw, str)
@@ -334,10 +545,9 @@ def _submitted_action(raw: str, packet: dict, cycle_id: str) -> tuple[str, dict,
         raise ValueError("terminal submission must be the final Controller output")
     parsed = parse_glm_completion(
         raw,
-        (SUBMIT_TOOL, PROPOSE_TOOL),
+        (SUBMIT_TOOL,),
         tool_schemas={
             SUBMIT_WIRE_TOOL: _submission_parameters(packet),
-            PROPOSE_WIRE_TOOL: _proposal_parameters(packet),
         },
     )
     if parsed.get("kind") != "function_call":
@@ -345,45 +555,16 @@ def _submitted_action(raw: str, packet: dict, cycle_id: str) -> tuple[str, dict,
             "Controller must make exactly one terminal Gate 1 submission")
     arguments = parsed["arguments"]
     if parsed.get("name") == SUBMIT_WIRE_TOOL:
-        if set(arguments) != set(packet["required_bounded_submission_fields"]):
-            raise ValueError("short-choice fields differ from frozen contract")
-        choices = {item["choice_id"]: item
-                   for item in packet["trusted_bounded_choices"]}
-        choice_id = arguments["choice_id"]
-        if not isinstance(choice_id, str) or choice_id not in choices:
-            raise ValueError("bounded choice was not offered in this turn")
-        if arguments["question_id"] not in packet["allowed_questions"]:
-            raise ValueError("question was not offered in this turn")
-        selected = choices[choice_id]
-        decision = {
-            "schema": DECISION_SCHEMA,
-            "investigation_id": cycle_id,
-            "question_id": arguments["question_id"],
-            "source_id": selected["source_id"],
-            "hypothesis": arguments["hypothesis"],
-            "fixed_sample_rule": selected["fixed_sample_rule"],
-            "requested_operations": [selected["operation"]],
-            "expected_evidence": arguments["expected_evidence"],
-            **selected["derived_bounds"],
-            "stop_rule": arguments["stop_rule"],
-        }
-        return "bounded_plan", decision, dict(arguments)
-    if parsed.get("name") == PROPOSE_WIRE_TOOL:
-        if set(arguments) != set(_proposal_parameters(packet)["required"]):
-            raise ValueError("proposal fields differ from frozen contract")
-        return "non_executable_proposal", {
-            "schema": gap_proposal.PROPOSAL_SCHEMA,
-            "gap_sha256": digest(_gap(packet)),
-            **arguments,
-        }, dict(arguments)
+        return "source_scope_decision", _scope_submission(
+            arguments, packet, cycle_id), dict(arguments)
     raise ValueError("unknown terminal Gate 1 submission tool")
 
 
 def _submitted_decision(raw: str, packet: dict, cycle_id: str) -> dict:
-    """Compatibility helper for callers requiring the executable-plan lane."""
+    """Return the complete scope-only D0 decision from one exact submission."""
     kind, value, _submission = _submitted_action(raw, packet, cycle_id)
-    if kind != "bounded_plan":
-        raise ValueError("Controller submitted a proposal, not a bounded plan")
+    if kind != "source_scope_decision":
+        raise ValueError("Controller did not submit one source-scope decision")
     return value
 
 
@@ -392,10 +573,15 @@ class OfflineGate1ProviderFake:
 
     provider_called = False
 
-    def __init__(self, sampled: dict, *, token_ids: list[int] | None = None,
+    def __init__(self, sampled: dict, *,
+                 token_ids: tuple[int, ...] = OFFLINE_FAKE_TOKEN_IDS,
                  sample_error: Exception | None = None):
+        if (type(token_ids) is not tuple
+                or token_ids != OFFLINE_FAKE_TOKEN_IDS
+                or any(type(token) is not int for token in token_ids)):
+            raise ValueError("offline Controller token IDs are frozen")
         self.sampled = sampled
-        self.token_ids = [101, 102, 103] if token_ids is None else token_ids
+        self.token_ids = OFFLINE_FAKE_TOKEN_IDS
         self.sample_error = sample_error
         self.encode_calls = 0
         self.sample_calls = 0
@@ -410,7 +596,7 @@ class OfflineGate1ProviderFake:
                 "offline Controller accepts one low-effort terminal-tool encoding")
         return {
             "rendered_prompt": "offline-gate1:" + canonical(request),
-            "token_ids": list(self.token_ids),
+            "token_ids": list(OFFLINE_FAKE_TOKEN_IDS),
             "tokenizer_repo": HF_MODEL,
             "tokenizer_revision": TOKENIZER_REVISION,
             "chat_template_sha256": CHAT_TEMPLATE_SHA256,
@@ -419,7 +605,10 @@ class OfflineGate1ProviderFake:
     def sample(self, token_ids: list[int], max_output_tokens: int,
                timeout_seconds: int) -> dict:
         self.sample_calls += 1
-        if (self.sample_calls != 1 or token_ids != self.token_ids
+        if (self.sample_calls != 1
+                or type(token_ids) is not list
+                or any(type(token) is not int for token in token_ids)
+                or tuple(token_ids) != OFFLINE_FAKE_TOKEN_IDS
                 or max_output_tokens != MAX_OUTPUT_TOKENS
                 or timeout_seconds != SAMPLE_TIMEOUT_SECONDS):
             raise ValueError("offline Controller sample duplicated or changed")
@@ -468,8 +657,11 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
         "runtime": {"python_executable": str(Path(sys.executable).resolve()),
                     "python_version": sys.version},
         "requested_model": MODEL,
-        "tools": [SUBMIT_TOOL, PROPOSE_TOOL],
-        "trusted_rights_policy": RIGHTS_POLICY,
+        "tools": [SUBMIT_TOOL],
+        "scope_options_sha256": digest(
+            packet["prospective_source_scope_decision"]),
+        "rights_status": (
+            "unknown_each_requested_use_requires_later_D2_evidence"),
         "reasoning_effort": "low",
         "num_samples": 1,
         "temperature": 1.0,
@@ -563,21 +755,13 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
         expected_records["submission.json"] = submission
         fresh_json(root / "decision.json", decision)
         expected_records["decision.json"] = decision
-        stage = "compile"
-        if submission_kind == "bounded_plan":
-            field_provenance = short_choice_provenance(
-                submission["choice_id"], cycle_id)
-            fresh_json(root / "field-provenance.json", field_provenance)
-            expected_records["field-provenance.json"] = field_provenance
-            task = validate_and_compile(
-                decision, packet, field_provenance=field_provenance)
-            fresh_json(root / "task.json", task)
-            expected_records["task.json"] = task
-        else:
-            proposal_archive = gap_proposal.archive_proposal(
-                _gap(packet), decision)
-            fresh_json(root / "proposal.json", proposal_archive)
-            expected_records["proposal.json"] = proposal_archive
+        stage = "provenance"
+        if submission_kind != "source_scope_decision":
+            raise ValueError("only a source-scope decision is accepted")
+        field_provenance = _decision_provenance(
+            submission, decision, packet, cycle_id, raw_text)
+        fresh_json(root / "decision-provenance.json", field_provenance)
+        expected_records["decision-provenance.json"] = field_provenance
         stage = "final_integrity"
         if (load_json(registry) != claim
                 or _sources() != source_hashes
@@ -596,6 +780,7 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
         "claim.json", "input.json", "request.json", "encoded.json",
         "cost-preview.json", "raw-response.json", "raw-response.txt",
         "provider-receipt.json", "submission.json", "decision.json",
+        "decision-provenance.json",
         "field-provenance.json", "task.json",
         "proposal.json", "failure.json",
     )
@@ -604,9 +789,13 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
         "cycle_id": cycle_id,
         "execution_mode": mode,
         "submission_kind": submission_kind if passed else None,
-        "valid_plan_only_decision": passed and submission_kind == "bounded_plan",
-        "valid_non_executable_proposal": (
-            passed and submission_kind == "non_executable_proposal"),
+        "valid_source_scope_decision": (
+            passed and submission_kind == "source_scope_decision"),
+        # Compatibility alias for old read-only dashboards.  It no longer
+        # means an executable investigation plan and is not an admission gate.
+        "valid_plan_only_decision": (
+            passed and submission_kind == "source_scope_decision"),
+        "valid_non_executable_proposal": False,
         "completed_live_decision_pending_review": passed and mode == "live_pinned",
         "failure_type": None if error is None else type(error).__name__,
         "artifact_sha256": {
@@ -625,7 +814,7 @@ def run(*, root: Path, claim_root: Path, cycle_id: str,
         "dispatch_gate_called": dispatch_gate_called,
         "automatic_retry": False,
         "sample_count_max": 1,
-        "tools": [SUBMIT_TOOL, PROPOSE_TOOL],
+        "tools": [SUBMIT_TOOL],
         "public_fetch_performed": False,
         "sealed_data_read": False,
         "formal_data_admitted": False,

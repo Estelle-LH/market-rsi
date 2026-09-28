@@ -8,20 +8,48 @@ import unittest
 from glm_canary import HF_MODEL, cost
 from supervisor_harness.p0_gate1_executable_plan_canary_fixtures import VALID_DECISION
 from supervisor_harness.p0_gate1_controller_adapter import (
-    MAX_OUTPUT_TOKENS, OfflineGate1ProviderFake, PROPOSE_TOOL, SUBMIT_TOOL,
+    MAX_OUTPUT_TOKENS, OFFLINE_FAKE_TOKEN_IDS, OfflineGate1ProviderFake,
+    PROPOSE_TOOL, SUBMIT_TOOL,
     _available_capabilities, _submission_parameters,
     expected_packet, request_turn, run,
 )
-from supervisor_harness.p0_gate1_research_contract import DECISION_SCHEMA
+from supervisor_harness.prospective_source_scope_decision import SCHEMA as DECISION_SCHEMA
 
 
 def decision():
+    options = expected_packet()["prospective_source_scope_decision"]
+    pair = options["source_response_options"][1]
+    split = options["split_policy"]
+    cutoff = options["cutoff_contract"]
     return {
-        "choice_id": "pm_trades_docs_one",
-        "question_id": "2025_whole_season_trade_access",
-        "hypothesis": "The official interface documents historical market trade access.",
-        "expected_evidence": "A bounded page hash and documented interface fields.",
-        "stop_rule": "Stop after one response or any redirect, error, timeout, or rights uncertainty.",
+        "scientific_source_response": {
+            "source_registry_entry_id": pair["source_registry_entry_id"],
+            "response_class_id": pair["response_class_id"],
+        },
+        "intended_uses": {
+            "requested_use_ids": ["model_training", "private_research"],
+        },
+        "future_role_split": {
+            "requested_future_role": "train_candidate",
+            "split_policy_id": split["split_policy_id"],
+            "split_policy_sha256": split["split_policy_sha256"],
+            "exposure_ledger_id": "not_yet_created",
+        },
+        "horizon_cutoff": {
+            "claim_semantics": "prospective_point_in_time",
+            "prediction_horizon_us": 60_000_000,
+            "cutoff_semantics_id": cutoff["cutoff_semantics_id"],
+            "cutoff_contract_sha256": cutoff["cutoff_contract_sha256"],
+            "label_window_start_relation": "strictly_after_cutoff",
+            "label_window_end_relation": "at_or_before_cutoff_plus_horizon",
+        },
+        "bounded_investigation": {
+            "mode": "first_party_document_review_only",
+            "max_documents_proposed": 1,
+            "max_provider_requests_proposed": 0,
+            "max_raw_bytes_proposed": 0,
+            "max_elapsed_seconds_proposed": 300,
+        },
     }
 
 
@@ -70,8 +98,8 @@ def proposal():
 
 class Gate1ControllerAdapterTests(unittest.TestCase):
     def test_output_cap_fits_frozen_packet_under_single_sample_gate(self):
-        self.assertEqual(MAX_OUTPUT_TOKENS, 2750)
-        self.assertLessEqual(cost(3310, MAX_OUTPUT_TOKENS),
+        self.assertEqual(MAX_OUTPUT_TOKENS, 1600)
+        self.assertLessEqual(cost(6000, MAX_OUTPUT_TOKENS),
                              Decimal("0.05"))
 
     def test_next_input_preserves_prior_choice_and_exact_available_handlers(self):
@@ -88,30 +116,23 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
         self.assertEqual(feedback["raw_response_sha256"],
                          "b34b169ba79b1ecebb55c127c350ef568a982c518f0c4454459bc1c357bcb4bb")
         from supervisor_harness.p0_gate1_controller_adapter import _submission_parameters
-        choices = _submission_parameters(packet)["properties"]["choice_id"]["enum"]
-        self.assertEqual(set(choices), {
-            "pm_market_docs_one", "pm_market_docs_single",
-            "pm_trades_docs_one", "pm_trades_docs_single",
-            "kalshi_history_docs_one", "kalshi_history_docs_single",
-            "nflverse_pbp_release_one", "nflverse_pbp_release_single"})
-        self.assertNotIn("fetch_fixed_public_sample", choices)
+        parameters = _submission_parameters(packet)
+        self.assertEqual(set(parameters["required"]), {
+            "scientific_source_response", "intended_uses", "future_role_split",
+            "horizon_cutoff", "bounded_investigation"})
         capabilities = _available_capabilities(packet)
-        self.assertTrue(capabilities)
-        self.assertTrue(all(item["operation"] ==
-                            "inspect_official_documentation"
+        self.assertEqual(len(capabilities), 4)
+        self.assertTrue(all(item["scope_only"] is True
+                            and item["executable"] is False
                             for item in capabilities))
-        trade_docs = [item for item in capabilities if item["source_id"] ==
-                      "polymarket_official_trades"]
-        self.assertEqual(trade_docs[0]["derived_bounds"], {
-            "max_requests": 1, "max_bytes": 1000000,
-            "max_minutes": 5, "max_provider_cost_usd": "0"})
         turn = request_turn(packet)
         payload = json.loads(turn["messages"][1]["content"])
         self.assertEqual(payload["packet"]["prior_controller_feedback"],
                          feedback)
-        self.assertEqual(payload["currently_available_bounded_capabilities"],
+        self.assertEqual(payload["currently_available_source_response_options"],
                          capabilities)
-        self.assertTrue(payload["open_ended_proposals_enter_review_only"])
+        self.assertTrue(payload["complete_D0_required"])
+        self.assertTrue(payload["all_external_authority_remains_false"])
 
     def call(self, response: dict, *, packet=None):
         temporary = tempfile.TemporaryDirectory()
@@ -127,50 +148,41 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
                      backend=backend)
         return result, root, claims, backend
 
-    def test_one_first_response_compiles_one_plan_only_task(self):
+    def test_one_first_response_records_complete_scope_only_decision(self):
         raw = submitted(decision())
         result, root, _claims, backend = self.call(sampled(raw))
-        self.assertTrue(result["valid_plan_only_decision"])
+        self.assertTrue(result["valid_source_scope_decision"])
         self.assertFalse(result["provider_called"])
         self.assertEqual(backend.sample_calls, 1)
-        task = json.loads((root / "task.json").read_text())
         recorded = json.loads((root / "decision.json").read_text())
         choice = json.loads((root / "submission.json").read_text())
-        provenance = json.loads((root / "field-provenance.json").read_text())
+        provenance = json.loads((root / "decision-provenance.json").read_text())
         self.assertEqual(recorded["schema"], DECISION_SCHEMA)
-        self.assertEqual(recorded["investigation_id"], "gate1-controller-test-001")
-        self.assertEqual(recorded["source_id"], "polymarket_official_trades")
-        self.assertEqual(recorded["max_requests"], 1)
-        self.assertEqual(recorded["max_bytes"], 1000000)
-        self.assertEqual(recorded["max_minutes"], 5)
+        self.assertEqual(recorded["decision_status"], "scope_only_non_executable")
+        self.assertEqual(recorded["scientific_source_response"],
+                         decision()["scientific_source_response"])
+        self.assertTrue(all(value is False
+                            for value in recorded["non_authority"].values()))
         self.assertEqual(choice, decision())
-        self.assertEqual(provenance["bounded_choice_id"], "pm_trades_docs_one")
-        self.assertEqual(task["field_provenance"], provenance)
-        self.assertEqual(task["field_authority"]["trusted_derived_from_claim"],
-                         ["investigation_id"])
-        self.assertTrue(task["execution_boundary"]["plan_only"])
-        self.assertFalse(task["execution_boundary"]["network_fetch_authorized"])
+        self.assertEqual(provenance["cycle_id"], "gate1-controller-test-001")
+        self.assertTrue(provenance["all_external_authority_false"])
+        self.assertFalse((root / "task.json").exists())
         self.assertEqual((root / "raw-response.txt").read_text(), raw)
         request = json.loads((root / "request.json").read_text())
         self.assertEqual(request["reasoning_effort"], "low")
-        self.assertEqual(len(request["tools"]), 2)
+        self.assertEqual(len(request["tools"]), 1)
         self.assertEqual(request["tools"][0]["function"]["name"],
-                         "mcp__controller_tools__submit_gate1_decision")
-        self.assertEqual(request["tools"][1]["function"]["name"],
-                         "mcp__controller_tools__propose_data_gap_resolution")
+                         "mcp__controller_tools__submit_source_scope_decision")
 
-    def test_novel_proposal_is_terminal_but_cannot_execute(self):
+    def test_legacy_novel_proposal_tool_is_rejected(self):
         raw = submitted(proposal(), tool=PROPOSE_TOOL)
         result, root, _claims, backend = self.call(sampled(raw))
         self.assertEqual(backend.sample_calls, 1)
-        self.assertEqual(result["submission_kind"], "non_executable_proposal")
-        self.assertTrue(result["valid_non_executable_proposal"])
-        self.assertFalse(result["valid_plan_only_decision"])
+        self.assertIsNone(result["submission_kind"])
+        self.assertFalse(result["valid_non_executable_proposal"])
+        self.assertFalse(result["valid_source_scope_decision"])
         self.assertFalse((root / "task.json").exists())
-        archived = json.loads((root / "proposal.json").read_text())
-        self.assertEqual(archived["status"], "review_required")
-        self.assertFalse(archived["network_authorized"])
-        self.assertFalse(archived["formal_data_admitted"])
+        self.assertFalse((root / "proposal.json").exists())
 
     def test_novel_proposal_cannot_add_execution_authority(self):
         value = proposal()
@@ -229,6 +241,85 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
                 backend=backend)
         self.assertEqual(backend.sample_calls, 0)
         self.assertEqual(list(claims.iterdir()), [])
+
+    def test_packet_integer_to_float_coercion_fails_before_claim(self):
+        packet = copy.deepcopy(expected_packet())
+        packet["known_aggregate_evidence"]["season_2024"][
+            "trade_rows"] = 407225.0
+        self.assertEqual(packet, expected_packet())
+        self.assertIs(type(packet["known_aggregate_evidence"]["season_2024"]
+                           ["trade_rows"]), float)
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        parent = Path(temporary.name)
+        claims = parent / "claims"
+        claims.mkdir()
+        backend = OfflineGate1ProviderFake(sampled(submitted(decision())))
+        with self.assertRaisesRegex(ValueError, "exact frozen packet"):
+            run(root=parent / "gate1-int-float-coercion", claim_root=claims,
+                cycle_id="gate1-int-float-coercion", packet=packet,
+                backend=backend)
+        self.assertEqual(backend.encode_calls, 0)
+        self.assertEqual(backend.sample_calls, 0)
+        self.assertEqual(list(claims.iterdir()), [])
+
+    def test_packet_boolean_to_integer_coercion_fails_before_claim(self):
+        packet = copy.deepcopy(expected_packet())
+        packet["hard_limits"]["purchase_allowed"] = 0
+        self.assertEqual(packet, expected_packet())
+        self.assertIs(type(packet["hard_limits"]["purchase_allowed"]), int)
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        parent = Path(temporary.name)
+        claims = parent / "claims"
+        claims.mkdir()
+        backend = OfflineGate1ProviderFake(sampled(submitted(decision())))
+        with self.assertRaisesRegex(ValueError, "exact frozen packet"):
+            run(root=parent / "gate1-bool-int-coercion", claim_root=claims,
+                cycle_id="gate1-bool-int-coercion", packet=packet,
+                backend=backend)
+        self.assertEqual(backend.encode_calls, 0)
+        self.assertEqual(backend.sample_calls, 0)
+        self.assertEqual(list(claims.iterdir()), [])
+
+    def test_offline_fake_token_ids_are_exact_and_constructor_drift_fails(self):
+        response = sampled(submitted(decision()))
+        backend = OfflineGate1ProviderFake(response)
+        encoded = backend.encode(request_turn(expected_packet()))
+        self.assertEqual(OFFLINE_FAKE_TOKEN_IDS, (101, 102, 103))
+        self.assertEqual(encoded["token_ids"], list(OFFLINE_FAKE_TOKEN_IDS))
+        self.assertIs(backend.token_ids, OFFLINE_FAKE_TOKEN_IDS)
+        for changed in (
+                (101, 102, 104), [101, 102, 103],
+                (101.0, 102, 103), (True, 102, 103)):
+            with self.subTest(changed=changed):
+                with self.assertRaisesRegex(ValueError, "token IDs are frozen"):
+                    OfflineGate1ProviderFake(response, token_ids=changed)
+
+    def test_mutated_offline_preencoding_cannot_reach_a_valid_decision(self):
+        for changed, sample_calls in (([101, 102, 104], 1),
+                                      ([101.0, 102, 103], 0),
+                                      ([True, 102, 103], 0)):
+            with self.subTest(changed=changed):
+                temporary = tempfile.TemporaryDirectory()
+                self.addCleanup(temporary.cleanup)
+                parent = Path(temporary.name)
+                claims = parent / "claims"
+                claims.mkdir()
+                backend = OfflineGate1ProviderFake(
+                    sampled(submitted(decision())))
+                encoded = backend.encode(request_turn(expected_packet()))
+                encoded["token_ids"] = changed
+                result = run(
+                    root=parent / "gate1-mutated-token-encoding",
+                    claim_root=claims,
+                    cycle_id="gate1-mutated-token-encoding",
+                    packet=expected_packet(), backend=backend,
+                    preencoded=encoded,
+                )
+                self.assertFalse(result["valid_source_scope_decision"])
+                self.assertEqual(result["failure_type"], "ValueError")
+                self.assertEqual(backend.sample_calls, sample_calls)
 
     def test_legacy_verbose_submission_is_not_relabelled(self):
         legacy = decision()
@@ -340,7 +431,8 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
         self.assertTrue(result["valid_plan_only_decision"])
         self.assertEqual(backend.sample_calls, 1)
         self.assertTrue((root / "decision.json").is_file())
-        self.assertTrue((root / "task.json").is_file())
+        self.assertTrue((root / "decision-provenance.json").is_file())
+        self.assertFalse((root / "task.json").exists())
 
     def test_observation_terminator_plus_narrative_fails(self):
         raw = submitted(decision()) + "<|observation|>extra answer"

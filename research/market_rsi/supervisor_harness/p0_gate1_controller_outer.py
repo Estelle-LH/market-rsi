@@ -16,6 +16,7 @@ from glm_canary import MODEL, RATES, cost
 from market_rsi import canonical, digest, file_hash, fresh_json, identifier, load_json
 from paid_budget import PaidBudget, money
 from supervisor_harness import bounded_live_outer_runner_v3 as shared
+from supervisor_harness import gate1_canary_receipt
 from supervisor_harness import global_state_gate
 from supervisor_harness import p0_gate1_controller_adapter as adapter
 from supervisor_harness import p0_data_gap_proposal as gap_proposal
@@ -42,6 +43,8 @@ REQUIRED_SOURCE_FILES = (
     "supervisor_harness/build_p0_gate1_controller_packet.py",
     "supervisor_harness/p0_gate1_research_contract.py",
     "supervisor_harness/p0_data_gap_proposal.py",
+    "supervisor_harness/prospective_source_scope_decision.py",
+    "supervisor_harness/gate1_canary_receipt.py",
     "supervisor_harness/p0_gate1_controller_adapter.py",
     "supervisor_harness/p0_gate1_controller_outer.py",
     "supervisor_harness/p0_gate1_plan_compiler.py",
@@ -94,7 +97,22 @@ def _adapter_success(root: Path, outer_root: Path, claims: Path, cycle_id: str,
         decision = load_json(root / "decision.json")
         submission = load_json(root / "submission.json")
         submission_kind = result.get("submission_kind")
-        if submission_kind == "bounded_plan":
+        if submission_kind == "source_scope_decision":
+            provenance = load_json(root / "decision-provenance.json")
+            expected_decision = adapter._scope_submission(
+                submission, packet, cycle_id)
+            if (decision != expected_decision
+                    or adapter.source_scope.validate_decision(decision)
+                    != decision
+                    or provenance != adapter._decision_provenance(
+                        submission, decision, packet, cycle_id,
+                        (root / "raw-response.txt").read_text(encoding="utf-8"))
+                    or (root / "task.json").exists()
+                    or (root / "field-provenance.json").exists()
+                    or (root / "proposal.json").exists()
+                    or (outer_root / "compiled-plan.json").exists()):
+                return False
+        elif submission_kind == "bounded_plan":
             task = load_json(root / "task.json")
             provenance = load_json(root / "field-provenance.json")
             if (provenance != adapter.short_choice_provenance(
@@ -138,6 +156,7 @@ def _adapter_success(root: Path, outer_root: Path, claims: Path, cycle_id: str,
             "claim.json", "input.json", "request.json", "encoded.json",
             "cost-preview.json", "raw-response.json", "raw-response.txt",
             "provider-receipt.json", "submission.json", "decision.json",
+            "decision-provenance.json",
             "field-provenance.json", "task.json",
             "proposal.json", "failure.json",
         }
@@ -156,8 +175,10 @@ def _adapter_success(root: Path, outer_root: Path, claims: Path, cycle_id: str,
             result.get("schema") == adapter.RESULT_SCHEMA
             and result.get("cycle_id") == cycle_id
             and result.get("execution_mode") == mode
+            and result.get("valid_source_scope_decision")
+            is (submission_kind == "source_scope_decision")
             and result.get("valid_plan_only_decision")
-            is (submission_kind == "bounded_plan")
+            is (submission_kind in {"bounded_plan", "source_scope_decision"})
             and result.get("valid_non_executable_proposal")
             is (submission_kind == "non_executable_proposal")
             and result.get("completed_live_decision_pending_review")
@@ -176,8 +197,7 @@ def _adapter_success(root: Path, outer_root: Path, claims: Path, cycle_id: str,
             and result.get("dispatch_gate_called") is True
             and result.get("automatic_retry") is False
             and result.get("sample_count_max") == 1
-            and result.get("tools") == [adapter.SUBMIT_TOOL,
-                                        adapter.PROPOSE_TOOL]
+            and result.get("tools") == [adapter.SUBMIT_TOOL]
             and result.get("public_fetch_performed") is False
             and result.get("sealed_data_read") is False
             and result.get("formal_data_admitted") is False
@@ -207,7 +227,10 @@ def run_outer(*, root: Path, claim_root: Path,
               budget_cap_usd, cycle_id: str, packet: dict,
               expected_packet_sha256: str,
               expected_head_sha256: str, expected_decision_sha256: str,
+              prior_canary_receipt: Path,
               prior_canary_sha256: str, release_tag: str,
+              expected_release_commit: str,
+              expected_release_tag_object: str,
               expected_source_sha256: str, expected_runtime: dict,
               check_clear, backend, catalog_json: bytes | None = None,
               catalog_commitment_id: str | None = None) -> dict:
@@ -229,6 +252,15 @@ def run_outer(*, root: Path, claim_root: Path,
     if packet_sha != shared._sha(expected_packet_sha256, "Gate 1 packet"):
         raise ValueError("Gate 1 packet differs from frozen hash")
     mode = adapter._mode(backend)
+    canary_verification = gate1_canary_receipt.verify_gate1_canary_receipt(
+        Path(prior_canary_receipt),
+        expected_receipt_sha256=prior_canary_sha256,
+        expected_source_sha256=expected_source_sha256,
+        expected_runtime_sha256=digest(runtime),
+        expected_release_tag=release_tag,
+        expected_release_commit=expected_release_commit,
+        expected_release_tag_object=expected_release_tag_object,
+    )
     if mode == "live_pinned":
         if (catalog_json is None) != (catalog_commitment_id is None):
             raise ValueError("Gate 1 catalog bytes and commitment must travel together")
@@ -263,6 +295,10 @@ def run_outer(*, root: Path, claim_root: Path,
         fresh_json(root / "runtime.json", runtime)
         fresh_json(root / "input.json", packet)
         fresh_json(root / "preencoded.json", encoded)
+        prior_verification_path = (
+            root / gate1_canary_receipt.PRIOR_VERIFICATION_FILE)
+        fresh_json(prior_verification_path, canary_verification)
+        prior_verification_file_sha256 = file_hash(prior_verification_path)
         admission = {
             "schema": OUTER_SCHEMA,
             "cycle_id": cycle_id,
@@ -271,6 +307,7 @@ def run_outer(*, root: Path, claim_root: Path,
             "runtime_sha256": digest(runtime),
             "packet_sha256": packet_sha,
             "prior_canary_sha256": prior_canary_sha256,
+            "prior_canary_verification_sha256": digest(canary_verification),
             "budget_experiment_id": experiment_id,
             "budget_cap_usd": str(money(budget_cap_usd)),
             "budget_bucket": BUCKET,
@@ -306,6 +343,20 @@ def run_outer(*, root: Path, claim_root: Path,
                     or _publication(release_tag, expected_source_sha256)
                     != publication
                     or shared._runtime(expected_runtime) != runtime
+                    or file_hash(prior_verification_path) !=
+                    prior_verification_file_sha256
+                    or load_json(prior_verification_path) != canary_verification
+                    or digest(load_json(prior_verification_path)) !=
+                    admission["prior_canary_verification_sha256"]
+                    or gate1_canary_receipt.verify_gate1_canary_receipt(
+                        Path(prior_canary_receipt),
+                        expected_receipt_sha256=prior_canary_sha256,
+                        expected_source_sha256=expected_source_sha256,
+                        expected_runtime_sha256=digest(runtime),
+                        expected_release_tag=release_tag,
+                        expected_release_commit=expected_release_commit,
+                        expected_release_tag_object=expected_release_tag_object,
+                    ) != canary_verification
                     or shared._state_snapshot(
                         state, cycle_id, expected_head_sha256,
                         expected_decision_sha256, claimed=True
@@ -394,6 +445,20 @@ def run_outer(*, root: Path, claim_root: Path,
                 and shared._runtime(expected_runtime) == runtime
                 and load_json(root / "input.json") == packet
                 and load_json(root / "preencoded.json") == encoded
+                and file_hash(prior_verification_path) ==
+                prior_verification_file_sha256
+                and load_json(prior_verification_path) == canary_verification
+                and digest(load_json(prior_verification_path)) ==
+                admission["prior_canary_verification_sha256"]
+                and gate1_canary_receipt.verify_gate1_canary_receipt(
+                    Path(prior_canary_receipt),
+                    expected_receipt_sha256=prior_canary_sha256,
+                    expected_source_sha256=expected_source_sha256,
+                    expected_runtime_sha256=digest(runtime),
+                    expected_release_tag=release_tag,
+                    expected_release_commit=expected_release_commit,
+                    expected_release_tag_object=expected_release_tag_object,
+                ) == canary_verification
                 and shared._state_snapshot(
                     state, cycle_id, expected_head_sha256,
                     expected_decision_sha256, claimed=True
@@ -439,7 +504,9 @@ def run_outer(*, root: Path, claim_root: Path,
             "runtime_sha256": file_hash(root / "runtime.json"),
             "input_sha256": file_hash(root / "input.json"),
             "admission_sha256": file_hash(root / "admission.json"),
-            "preflight_sha256": file_hash(root / "preflight.json"),
+            "preflight_sha256": (
+                file_hash(root / "preflight.json")
+                if (root / "preflight.json").is_file() else None),
             "review_sha256": file_hash(root / "review.json"),
             "adapter_result_sha256": file_hash(adapter_root / "result.json"),
             "compiled_plan_sha256": review["compiled_plan_sha256"],

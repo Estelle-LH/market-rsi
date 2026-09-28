@@ -15,7 +15,7 @@ from pathlib import Path
 from market_rsi import digest
 
 
-SCHEMA = "market_p0_gate1_controller_packet_v4"
+SCHEMA = "market_p0_gate1_controller_packet_v5"
 RIGHTS_POLICY = {
     "policy_id": "official_public_research_only_v1",
     "requirements": [
@@ -104,6 +104,108 @@ SHORT_BOUNDED_CHOICES = [
         ("nflverse_pbp_release_single", "nflverse_official_pbp_releases", RELEASE_SAMPLE_RULES[1]),
     )
 ]
+
+# The v5 paid decision is a scope-only D0 choice.  These opaque identifiers
+# commit reviewed Controller-facing briefs without carrying a URL, endpoint,
+# credential, command, request or data row.  The legacy documentation choices
+# remain in the packet as immutable historical context, not as submission tools.
+SCOPE_SOURCE_RESPONSE_OPTIONS = (
+    {
+        "source_registry_entry_id": "src_" + "a" * 26,
+        "response_class_id": "rsp_" + "e" * 26,
+        "controller_brief": (
+            "Official Polymarket market metadata, price-history and order-book "
+            "response class; accessibility, rights, timing and coverage remain unknown."
+        ),
+    },
+    {
+        "source_registry_entry_id": "src_" + "b" * 26,
+        "response_class_id": "rsp_" + "f" * 26,
+        "controller_brief": (
+            "Official Polymarket market-scoped trade response class; accessibility, "
+            "rights, point-in-time timing and whole-season coverage remain unknown."
+        ),
+    },
+    {
+        "source_registry_entry_id": "src_" + "c" * 26,
+        "response_class_id": "rsp_" + "g" * 26,
+        "controller_brief": (
+            "Official Kalshi historical market/trade response class; mechanism "
+            "comparability, rights, timing and coverage remain unknown."
+        ),
+    },
+    {
+        "source_registry_entry_id": "src_" + "d" * 26,
+        "response_class_id": "rsp_" + "h" * 26,
+        "controller_brief": (
+            "Versioned nflverse play-by-play release response class; it supplies "
+            "event-clock/game evidence only and no prediction-market response."
+        ),
+    },
+)
+
+SCOPE_SPLIT_POLICY = {
+    "split_policy_id": "spl_" + "j" * 26,
+    "policy": {
+        "name": "prospective_chronological_train_dev_final_v1",
+        "roles": [
+            "development_candidate", "diagnostic_only", "final_candidate",
+            "train_candidate", "unassigned_candidate",
+        ],
+        "unknown_exposure_policy": "treat_as_exposed",
+        "cross_role_reuse_policy": "no_role_reassignment_after_observation",
+        "minimum_untouched_final_dates": 20,
+        "membership_committed_before_role_open": True,
+    },
+}
+SCOPE_SPLIT_POLICY["split_policy_sha256"] = digest(SCOPE_SPLIT_POLICY["policy"])
+
+SCOPE_CUTOFF_CONTRACT = {
+    "cutoff_semantics_id": "cut_" + "k" * 26,
+    "contract": {
+        "name": "predeclared_forecast_cutoff_and_label_window_v1",
+        "availability_formula_id": "max_authenticated_inclusive_upper_bound_us_v2",
+        "availability_cutoff_relation": (
+            "availability_upper_bound_unix_us_lte_forecast_cutoff_unix_us"
+        ),
+        "provider_receiver_clocks_separate": True,
+        "retrospective_event_clock_is_not_point_in_time": True,
+    },
+}
+SCOPE_CUTOFF_CONTRACT["cutoff_contract_sha256"] = digest(
+    SCOPE_CUTOFF_CONTRACT["contract"])
+
+SCOPE_DECISION_OPTIONS = {
+    "source_response_options": deepcopy(list(SCOPE_SOURCE_RESPONSE_OPTIONS)),
+    "split_policy": deepcopy(SCOPE_SPLIT_POLICY),
+    "cutoff_contract": deepcopy(SCOPE_CUTOFF_CONTRACT),
+    "intended_use_ids": [
+        "derived_dataset_redistribution", "durable_local_retention",
+        "external_derived_outputs", "internal_derived_outputs",
+        "model_artifact_redistribution", "model_training", "private_research",
+        "raw_data_redistribution",
+    ],
+    "future_roles": [
+        "development_candidate", "diagnostic_only", "final_candidate",
+        "train_candidate", "unassigned_candidate",
+    ],
+    "claim_semantics": [
+        "descriptive_no_forecast", "prospective_point_in_time",
+        "retrospective_event_clock_only",
+    ],
+    "investigation_modes": [
+        "bounded_metadata_canary_proposal", "bounded_response_canary_proposal",
+        "first_party_document_review_only", "synthetic_contract_fixture_only",
+    ],
+    "hard_proposed_caps": {
+        "max_documents": 5,
+        "max_provider_requests": 1,
+        "max_raw_bytes": 1_000_000,
+        "max_elapsed_seconds": 600,
+        "max_spend_usd_micros": 0,
+    },
+    "rights_status": "unknown_each_requested_use_requires_later_D2_evidence",
+}
 PRIOR_CONTROLLER_FEEDBACK = {
     "attempt_id": "market-rsi-gate1-controller-20260922-02",
     "raw_response_sha256": (
@@ -161,8 +263,8 @@ def build(gate0: dict, live_acceptance: dict) -> dict:
     return {
         "schema": SCHEMA,
         "purpose": (
-            "choose one bounded available investigation or propose a new "
-            "data-gap source or method for review"
+            "record one complete non-executable Controller D0 source/use/scope "
+            "decision; every operational and rights gate remains later"
         ),
         "prior_controller_feedback": deepcopy(PRIOR_CONTROLLER_FEEDBACK),
         "known_aggregate_evidence": {
@@ -206,6 +308,7 @@ def build(gate0: dict, live_acceptance: dict) -> dict:
             "expected_evidence", "stop_rule",
         ],
         "trusted_bounded_choices": deepcopy(SHORT_BOUNDED_CHOICES),
+        "prospective_source_scope_decision": deepcopy(SCOPE_DECISION_OPTIONS),
         "hard_limits": {
             "choose_exactly_one_question": True,
             "choose_exactly_one_source": True,
@@ -225,12 +328,10 @@ def build(gate0: dict, live_acceptance: dict) -> dict:
             "arbitrary_research_task_execution_accepted": False,
             "reviewed_real_train_catalog_available": False,
             "instruction": (
-                "Return a plan only. A fixed-trade plan cannot pass review "
-                "until a real Train catalog is separately admitted. Choose one "
-                "short trusted bounded choice ID or submit a novel proposal "
-                "for non-executable review. The broker derives source, operation, "
-                "exact sample rule, bounds and investigation ID from the choice "
-                "and fresh run claim. Do not submit those derived fields."
+                "Return one complete scope-only D0 decision across source/response, "
+                "intended uses, future role/split, horizon/cutoff and one bounded "
+                "investigation mode. This does not contact, fetch, purchase, retain, "
+                "admit, train, score, open Dev/Final or publish anything."
             ),
         },
     }
