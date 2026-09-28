@@ -2,11 +2,11 @@
 
 这是给内层 controller 用的数据科学工具和检查规则，不是另一个 LLM。
 下面的 Codex/GLM 图只描述旧的 controller 接入方式，**不是整个项目的
-最高层架构**。新的分层设计见
-[`CONTROLLER_RESEARCHER_SUPERVISOR_CONTRACT_2026-09-17.md`](../supervisor_harness/CONTROLLER_RESEARCHER_SUPERVISOR_CONTRACT_2026-09-17.md)：
-最外层是 GPT-5.6-Sol + Codex Supervisor Harness；内层 controller 自有
-Research Harness；controller 工具会话与 researcher 执行必须分属两个
-不同的 E2B sandbox。旧接入目前没有证明这种双 sandbox 隔离。
+最高层架构**。当前分层、信任边界和一次 D0 的实际调用链见
+[系统架构](../ARCHITECTURE.md)。最外层 Codex Supervisor 管授权、版本、
+状态、预算和证据；GLM Controller 负责科学选择；未来的 Researcher B
+只在获准的本地 Docker 环境执行；独立 evaluator 负责测量。历史双 E2B
+设计已被本地单 B 方向取代，合成传输 canary 也不等于模型研究结果。
 
 ```text
 Codex：执行、调用工具、维护会话

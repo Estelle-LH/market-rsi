@@ -1,5 +1,7 @@
 # Outer research supervisor harness
 
+当前全局结构先看 [`../ARCHITECTURE.md`](../ARCHITECTURE.md)。本文保留 Supervisor Harness 的细节和历史 canary 说明；带日期的旧 E2B 设计不再代表当前生产路径。
+
 The user-supplied charter is preserved byte-for-byte in
 `USER_SUPERVISION_CHARTER_2026-09-16.txt` (SHA256
 `c0b103a4299778c31db51d9a88955392b528684b6ce5b3ee091d83fe1567d296`).
@@ -13,13 +15,14 @@ point here, so the protocol is read at each new work block.
 cannot become a formal five-year benchmark until source coverage and admission
 are verified. This is a decision gate, not a claim that five seasons were found.
 
-The user-corrected role split is
-`CONTROLLER_RESEARCHER_SUPERVISOR_CONTRACT_2026-09-17.md`: supervisor watches
-and gates as the outer GPT-5.6-Sol + Codex Harness; the inner GLM controller
-has its own research Harness and chooses each scientific step; the researcher
-executes in a **different E2B sandbox**, and an independent trusted runner
-measures. This is a written operating contract with a synthetic provenance
-canary, not yet a verified model-led, two-sandbox end-to-end implementation.
+The current role split is summarized in `../ARCHITECTURE.md`: the outer Codex
+Supervisor owns authorization, version, state, budget and evidence; the inner
+GLM Controller chooses scientific steps through a bounded tool interface; a
+future Researcher B executes only admitted work in one local Docker container;
+and an independent trusted runner measures. The earlier two-E2B design in
+`CONTROLLER_RESEARCHER_SUPERVISOR_CONTRACT_2026-09-17.md` is historical. The
+later local-B direction supersedes it, and neither synthetic transport nor a
+Controller D0 response is a prediction result.
 
 This is the *outer* Codex research supervisor, not the GLM experiment's
 `data_scientist_harness`. It does not change frozen scientific code, its

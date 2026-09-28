@@ -1,5 +1,7 @@
 # Market RSI：预测研究
 
+**架构入口：**先读 [Market RSI 系统架构](ARCHITECTURE.md)。它区分当前已经运行的 Supervisor/Controller 路径、尚未准入的 Researcher/Data 路径和最终预测实验，并给出状态机、信任边界、代码地图与持久化布局。
+
 **当前研究问题：**在未见的未来比赛上，能否把 NFL prediction-market 价格变化预测得比一个充分调过的强时序基线更准？本项目只比较预测准确度；其他项目的交易收益、研究代理能力和训练分数都不是这里的 benchmark。先看 [Prediction benchmark v0](PREDICTION_BENCHMARK_V0_2026-09-16.md)和[强基线选拔研究](STRONG_FORECAST_BASELINES_2026-09-16.md)：零变化/Ridge是参考线，正式对手须在开放 Train 上公平选拔、冻结。配套 [开发版评分器](prediction_benchmark_v0/score.py)目前只用合成数据验证；它没有打开封存集，也不是新模型成绩。
 
 目前 2025 年的 163 场 Train 已开放、旧 50 场 Route-Dev 已经用过一次，40 场 Final 仍封存；赛程元数据表明 Final 只跨 11 个比赛日，按当前规则最多算 pilot。2024 年来源扩展还只是 [数据 screen](NFL_2024_DATA_EXPANSION_SCREEN_2026-09-16.md)，并未进入正式训练。现有的 30 秒 Train-only 方法分数不能直接填到 60 秒新 benchmark 榜单。历史 play 时间也不是实时接收时间，因此离线预测与未来的实时预测分开报告。
