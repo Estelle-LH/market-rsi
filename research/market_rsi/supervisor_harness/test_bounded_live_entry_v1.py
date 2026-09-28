@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from contextlib import redirect_stderr
+import io
 import os
 from pathlib import Path
 from subprocess import CompletedProcess
@@ -22,22 +24,87 @@ class LiveEntryClearTests(unittest.TestCase):
 
         return fake
 
+    def _parser_args(self, cycle_arguments):
+        values = []
+        for name in (
+                "root", "adapter-claim-root", "global-state-root",
+                "decision-doc", "budget-root", "packet", "runtime-receipt",
+                "env-file", "tokenizer-cache"):
+            values.extend(["--" + name, "/tmp/" + name])
+        for name in (
+                "experiment-id", "budget-cap-usd", "cycle-id",
+                "expected-packet-sha256", "expected-head-sha256",
+                "expected-decision-sha256", "prior-canary-sha256",
+                "release-tag", "expected-source-sha256"):
+            if name == "cycle-id":
+                values.extend(cycle_arguments)
+            else:
+                values.extend(["--" + name, "fixture"])
+        return values
+
+    def test_parser_rejects_cycle_abbreviations_and_accepts_exact_forms(self):
+        parser = entry.parser(require_supervisor_claim=False)
+        self.assertFalse(parser.allow_abbrev)
+        for option in ("--cycle-i", "--cycle"):
+            with self.subTest(rejected=option), redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as caught:
+                    parser.parse_args(self._parser_args([option, "fresh-id"]))
+                self.assertEqual(caught.exception.code, 2)
+        for arguments in (("--cycle-id", "fresh-id"),
+                          ("--cycle-id=fresh-id",)):
+            with self.subTest(accepted=arguments):
+                parsed = parser.parse_args(self._parser_args(arguments))
+                self.assertEqual(parsed.cycle_id, "fresh-id")
+
     def test_clear_excludes_entry_and_parent_but_detects_no_peer(self):
         pid = os.getpid()
-        rows = f"{pid} 42 python entry --cycle-id fresh-id\n42 1 zsh fresh-id\n"
+        rows = (f"{pid} 42 python entry --cycle-id fresh-id\n"
+                "42 1 zsh --cycle-id=fresh-id\n")
         with patch.object(entry.subprocess, "run", side_effect=self._run([rows, ""])):
             result = entry.exact_clear("fresh-id")
         self.assertTrue(result["clear"])
         self.assertEqual(result["matching_process_ids"], [])
         self.assertEqual(result["matching_container_ids"], [])
 
-    def test_matching_peer_fails_closed(self):
+    def test_matching_peer_both_exact_flag_forms_fail_closed(self):
         pid = os.getpid()
-        rows = f"{pid} 1 python entry\n9191 1 python worker fresh-id\n"
+        rows = (f"{pid} 1 python entry\n"
+                "9191 1 python worker --cycle-id fresh-id\n"
+                "9292 1 python worker --cycle-id=fresh-id\n")
         with patch.object(entry.subprocess, "run", side_effect=self._run([rows, ""])):
             result = entry.exact_clear("fresh-id")
         self.assertFalse(result["clear"])
-        self.assertEqual(result["matching_process_ids"], ["9191"])
+        self.assertEqual(result["matching_process_ids"], ["9191", "9292"])
+
+    def test_concurrent_docker_inspect_with_cycle_id_is_not_a_peer(self):
+        pid = os.getpid()
+        rows = (f"{pid} 1 python entry\n"
+                "9191 1 docker inspect market-rsi-b-fresh-id\n")
+        with patch.object(entry.subprocess, "run", side_effect=self._run([rows, ""])):
+            result = entry.exact_clear("fresh-id")
+        self.assertTrue(result["clear"])
+        self.assertEqual(result["matching_process_ids"], [])
+
+    def test_incidental_prefix_and_superset_cycle_ids_are_not_peers(self):
+        pid = os.getpid()
+        rows = (f"{pid} 1 python entry\n"
+                "9101 1 python worker fresh-id\n"
+                "9102 1 python worker --note=fresh-id\n"
+                "9103 1 python worker --cycle-id fresh\n"
+                "9104 1 python worker --cycle-id fresh-id-extra\n"
+                "9105 1 python worker --cycle-id=fresh-id-extra\n"
+                "9106 1 python worker --cycle-id-prefix fresh-id\n")
+        with patch.object(entry.subprocess, "run", side_effect=self._run([rows, ""])):
+            result = entry.exact_clear("fresh-id")
+        self.assertTrue(result["clear"])
+        self.assertEqual(result["matching_process_ids"], [])
+
+    def test_unparseable_process_command_fails_closed(self):
+        pid = os.getpid()
+        rows = f"{pid} 1 python entry\n9191 1 python worker '--cycle-id\n"
+        with patch.object(entry.subprocess, "run", side_effect=self._run([rows, ""])):
+            with self.assertRaisesRegex(RuntimeError, "unparseable process command"):
+                entry.exact_clear("fresh-id")
 
     def test_exact_container_fails_closed(self):
         pid = os.getpid()

@@ -10,6 +10,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+import shlex
 import subprocess
 import time
 
@@ -45,6 +46,23 @@ def _ancestor_pids(rows: list[tuple[int, int, str]]) -> set[int]:
     return excluded
 
 
+def _has_exact_cycle_id_argument(command: str, cycle_id: str) -> bool:
+    """Return whether a rendered command has one exact cycle-id argv form."""
+    if "--cycle-id" not in command:
+        return False
+    try:
+        arguments = shlex.split(command)
+    except ValueError as exc:
+        raise RuntimeError("unparseable process command") from exc
+    for index, argument in enumerate(arguments):
+        if argument == f"--cycle-id={cycle_id}":
+            return True
+        if (argument == "--cycle-id" and index + 1 < len(arguments)
+                and arguments[index + 1] == cycle_id):
+            return True
+    return False
+
+
 def exact_clear(cycle_id: str) -> dict:
     """Fail closed if another process or the exact local-B container exists."""
     rows = []
@@ -59,7 +77,8 @@ def exact_clear(cycle_id: str) -> dict:
     excluded = _ancestor_pids(rows)
     process_ids = sorted(
         str(pid) for pid, _ppid, command in rows
-        if pid not in excluded and cycle_id in command)
+        if (pid not in excluded
+            and _has_exact_cycle_id_argument(command, cycle_id)))
 
     container_name = "market-rsi-b-" + cycle_id
     container_ids = sorted(filter(None, (
@@ -195,7 +214,9 @@ def run(args) -> dict:
 
 
 def parser(*, require_supervisor_claim: bool = True) -> argparse.ArgumentParser:
-    value = argparse.ArgumentParser(description="Run one bounded live Controller-to-B canary")
+    value = argparse.ArgumentParser(
+        description="Run one bounded live Controller-to-B canary",
+        allow_abbrev=False)
     for name in (
         "root", "adapter-claim-root", "global-state-root", "decision-doc",
         "budget-root", "packet", "runtime-receipt", "env-file",

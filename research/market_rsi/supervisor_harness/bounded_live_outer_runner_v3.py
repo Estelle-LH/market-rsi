@@ -140,15 +140,33 @@ def _runtime(expected: dict) -> dict:
 
 def _clear(check_clear, cycle_id: str) -> dict:
     value = check_clear(cycle_id)
-    if (not isinstance(value, dict)
-            or set(value) != {"schema", "cycle_id", "clear",
-                              "matching_process_ids", "matching_container_ids"}
+    required = {"schema", "cycle_id", "clear",
+                "matching_process_ids", "matching_container_ids"}
+    if (not isinstance(value, dict) or set(value) != required
             or value.get("schema") != PREFLIGHT_SCHEMA
             or value.get("cycle_id") != cycle_id
-            or value.get("clear") is not True
-            or value.get("matching_process_ids") != []
-            or value.get("matching_container_ids") != []):
-        raise ValueError("matching process/container exists or preflight is incomplete")
+            or type(value.get("clear")) is not bool):
+        raise ValueError("process/container preflight is malformed or incomplete")
+    process_ids = value.get("matching_process_ids")
+    container_ids = value.get("matching_container_ids")
+
+    def safe_ids(items) -> bool:
+        return (isinstance(items, list)
+                and all(isinstance(item, str) and 0 < len(item) <= 128
+                        and all(character.isalnum() or character in "._:-"
+                                for character in item)
+                        for item in items))
+
+    if (not safe_ids(process_ids) or not safe_ids(container_ids)
+            or (value["clear"] is True and (process_ids or container_ids))
+            or (value["clear"] is False and not (process_ids or container_ids))):
+        raise ValueError("process/container preflight is malformed or incomplete")
+    if value["clear"] is False:
+        matches = json.dumps({
+            "matching_container_ids": container_ids,
+            "matching_process_ids": process_ids,
+        }, sort_keys=True, separators=(",", ":"))
+        raise ValueError("matching process/container exists: " + matches)
     return value
 
 

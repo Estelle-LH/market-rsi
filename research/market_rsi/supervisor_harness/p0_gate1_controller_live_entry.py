@@ -129,7 +129,8 @@ def run(args) -> dict:
 
 def parser(*, require_supervisor_claim: bool = True) -> argparse.ArgumentParser:
     value = argparse.ArgumentParser(
-        description="Run one published Gate 1 Controller decision")
+        description="Run one published Gate 1 Controller decision",
+        allow_abbrev=False)
     for name in (
         "root", "claim-root", "global-state-root", "decision-doc",
         "budget-root", "packet", "runtime-receipt", "env-file",

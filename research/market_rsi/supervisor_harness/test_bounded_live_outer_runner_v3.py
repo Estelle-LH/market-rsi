@@ -227,8 +227,11 @@ class OuterRunnerV3Tests(unittest.TestCase):
                 args["check_clear"] = ClearFake(
                     process_ids=["pid-1"] if kind == "process" else [],
                     container_ids=["container-1"] if kind == "container" else [])
-                with self.assertRaisesRegex(ValueError, "matching process/container"):
+                with self.assertRaisesRegex(
+                        ValueError,
+                        "pid-1" if kind == "process" else "container-1") as caught:
                     self._run(publication, args)
+                self.assertIn("matching process/container exists", str(caught.exception))
                 self.assertEqual((backend.sample_calls, process.launch_calls), (0, 0))
                 self.assertEqual(budget.snapshot()["jobs"][args["cycle_id"]]["state"],
                                  "cancelled_before_dispatch")
@@ -245,6 +248,24 @@ class OuterRunnerV3Tests(unittest.TestCase):
                 self.assertEqual(failure["supervisor_snapshot_sha256"],
                                  digest(state.snapshot()))
                 self.assertEqual(failure["reconciliation_errors"], [])
+
+    def test_clear_distinguishes_malformed_receipt_from_valid_nonclear(self):
+        valid_nonclear = {
+            "schema": outer.PREFLIGHT_SCHEMA,
+            "cycle_id": "exact-id",
+            "clear": False,
+            "matching_process_ids": ["9191"],
+            "matching_container_ids": ["abc123"],
+        }
+        with self.assertRaisesRegex(ValueError, "9191") as caught:
+            outer._clear(lambda _cycle_id: valid_nonclear, "exact-id")
+        self.assertIn("abc123", str(caught.exception))
+
+        malformed = {**valid_nonclear, "clear": True}
+        with self.assertRaisesRegex(
+                ValueError, "preflight is malformed or incomplete") as caught:
+            outer._clear(lambda _cycle_id: malformed, "exact-id")
+        self.assertNotIn("9191", str(caught.exception))
 
     def test_clear_callback_cannot_close_claim_then_permit_dispatch(self):
         _base, state, budget, publication, _clear, backend, process, _control, args = \

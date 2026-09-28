@@ -1,3 +1,5 @@
+from contextlib import redirect_stderr
+import io
 from pathlib import Path
 from types import SimpleNamespace
 import tempfile
@@ -9,6 +11,7 @@ from paid_budget import PaidBudget
 from supervisor_harness.bounded_live_outer_runner_v3 import runtime_receipt
 from supervisor_harness.global_state_gate import SupervisorGlobalState
 from supervisor_harness.p0_gate1_controller_adapter import expected_packet
+from supervisor_harness import p0_gate1_controller_live_entry as live_entry
 from supervisor_harness.p0_gate1_controller_live_entry import run
 from supervisor_harness.p0_gate1_controller_live_entry import _reviewed_catalog
 from supervisor_harness.p0_gate1_executable_plan_canary_fixtures import frozen_catalog_bytes
@@ -16,6 +19,40 @@ from supervisor_harness.p0_gate1_trade_query import SYNTHETIC_CATALOG_COMMITMENT
 
 
 class Gate1ControllerLiveEntryTests(unittest.TestCase):
+    def _parser_args(self, cycle_arguments):
+        values = []
+        for name in (
+                "root", "claim-root", "global-state-root", "decision-doc",
+                "budget-root", "packet", "runtime-receipt", "env-file",
+                "tokenizer-cache", "prior-canary-receipt"):
+            values.extend(["--" + name, "/tmp/" + name])
+        for name in (
+                "experiment-id", "budget-cap-usd", "cycle-id",
+                "expected-packet-file-sha256",
+                "expected-packet-canonical-sha256", "expected-head-sha256",
+                "expected-decision-sha256", "prior-canary-sha256",
+                "release-tag", "expected-release-commit",
+                "expected-release-tag-object", "expected-source-sha256"):
+            if name == "cycle-id":
+                values.extend(cycle_arguments)
+            else:
+                values.extend(["--" + name, "fixture"])
+        return values
+
+    def test_parser_rejects_cycle_abbreviations_and_accepts_exact_forms(self):
+        parser = live_entry.parser(require_supervisor_claim=False)
+        self.assertFalse(parser.allow_abbrev)
+        for option in ("--cycle-i", "--cycle"):
+            with self.subTest(rejected=option), redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as caught:
+                    parser.parse_args(self._parser_args([option, "fresh-id"]))
+                self.assertEqual(caught.exception.code, 2)
+        for arguments in (("--cycle-id", "fresh-id"),
+                          ("--cycle-id=fresh-id",)):
+            with self.subTest(accepted=arguments):
+                parsed = parser.parse_args(self._parser_args(arguments))
+                self.assertEqual(parsed.cycle_id, "fresh-id")
+
     def test_no_catalog_keeps_review_only_lane_available(self):
         args = SimpleNamespace(catalog=None,
                                expected_catalog_file_sha256=None,
