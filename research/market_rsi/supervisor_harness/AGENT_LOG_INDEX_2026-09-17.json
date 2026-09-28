@@ -666,6 +666,42 @@
       "active": false,
       "next": "Permanent canary ID is consumed and must not be rerun. Any paid v0.1.25 D0 needs a fresh ID and separate explicit authorization; any fetch remains a later separate gate.",
       "log": "AGENT_LOG_GATE1_V0125_FIRST_CANARY_REVIEW_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_d0_budget_state_preflight_20260928",
+      "title": "DONE · REPLAN：v0.1.25 paid D0 budget/state preflight",
+      "task": "Read-only audit the fresh paid D0 ID, authoritative setup budget, global decision-state hash/head, exact v0.1.25 prior canary, process/container absence and protected-data boundaries. Do not reserve, claim, call a provider or fetch.",
+      "status": "REPLAN: ID/state/canary/process gates passed, but setup available USD 0.044036812 is below the production fixed USD 0.05 reservation by USD 0.005963188.",
+      "active": false,
+      "next": "Obtain explicit append-only allocation-transfer authority, then version the plan and repeat the full preflight before launch.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_BUDGET_STATE_PREFLIGHT_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_d0_launch_binding_preflight_20260928",
+      "title": "DONE · REPLAN：v0.1.25 paid D0 launch-binding preflight",
+      "task": "Read-only derive and audit the exact production command/entry, release/source/runtime/prior-canary bindings, packet/token/cost upper, credential boundary, one-sample/no-retry controls and terminal receipts for the authorized D0. Do not execute it.",
+      "status": "REPLAN: immutable launch recipe passed, but production reserves fixed USD 0.05 and the durable decision state still needs a paid-authorization revision after the budget blocker is resolved.",
+      "active": false,
+      "next": "Keep the exact argv dormant; after explicit allocation authority, rebind state and rerun all launch gates.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_LAUNCH_BINDING_PREFLIGHT_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_d0_execution_20260928",
+      "title": "BLOCKED：v0.1.25 paid D0 one-shot execution",
+      "task": "After both independent preflights pass and Supervisor rechecks all gates, execute exactly one paid Controller D0 under market-rsi-v0125-gate1-controller-d0-20260928-01, at most one GLM/Tinker sample, no retry, exact upper $0.0389772; no fetch, Train/Dev/Final or training.",
+      "status": "Human authorization for the one-shot D0 is recorded, but execution is blocked before claim/reservation because setup is USD 0.005963188 short of the production fixed reservation. No ID was consumed.",
+      "active": false,
+      "next": "Require explicit bucket allocation-transfer authority, then append the transfer, rebind durable decision state and pass a fresh immediate preflight before the sole dispatch.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_EXECUTION_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_d0_independent_review_20260928",
+      "title": "WAITING：v0.1.25 paid D0 independent review",
+      "task": "After terminal execution artifacts exist, independently verify provider/sample/cost, exact release/source/runtime/canary lineage, immutable raw response and parsed decision/failure, no retry/fetch/data/training, budget/state closure and cleanup. Read-only.",
+      "status": "Registered before execution; not assigned until terminal artifacts exist.",
+      "active": false,
+      "next": "Return PASS or REPLAN before any downstream fetch or other action; never resample the ID.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_INDEPENDENT_REVIEW_2026-09-28.md"
     }
   ]
 }
