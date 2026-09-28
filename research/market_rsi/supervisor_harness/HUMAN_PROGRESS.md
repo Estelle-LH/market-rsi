@@ -970,3 +970,10 @@ untouched test.
 - `main` and annotated tag `market-rsi-protocol-v0.1.25` were atomically pushed to the standalone user repository at release commit `ed4048e55096b763ba763526e768057b5180cdeb`; tag object is `67b8e4a88e22c1f00e60850f521b26282517d682`.
 - Supervisor verification and a separate credential-free anonymous-clone review both passed. The remote release contains exactly 339 controlled files with digest `c61f48e21084671c1ff1257639f6a5d5ccfc8c1a64065e02157c5eb75c10a2d4`.
 - This release did not run a canary, call a provider, fetch data, read or admit Train/Dev/Final, or train. The next step is a separately authorized v0.1.25 zero-provider canary.
+
+## 2026-09-28 — v0.1.25 zero-provider first canary passed independent review
+
+- The one authorized run `market-rsi-v0125-gate1-first-current-source-20260928-01` completed once through the production CLI and Supervisor parent. It is permanently consumed and will not be retried.
+- Receipt SHA-256 `187c819a42a90361956145017d34a87f788f83026decfdfa5adc8d3b9e47671f` binds annotated v0.1.25, release commit `ed4048e55096b763ba763526e768057b5180cdeb`, tag object `67b8e4a88e22c1f00e60850f521b26282517d682`, 339-file controlled digest `c61f48e21084671c1ff1257639f6a5d5ccfc8c1a64065e02157c5eb75c10a2d4` and runtime digest `1faf044ade2390b0d4cdbc18605bb8851f84fb57951849400bed92e0025c83a3`.
+- Independent review and Supervisor verifier replay passed all 30 evidence hashes and terminal cleanup. Provider calls and real provider cost were zero; no public fetch, formal data admission, sealed Train/Dev/Final access, compiled task/plan or training occurred. The isolated `$0.00005103` metering is synthetic only. The authoritative paid journal remained unchanged.
+- This is infrastructure evidence, not a Controller-authored research decision or prediction experiment. The next discriminating step is one separately authorized paid v0.1.25 D0 under a fresh permanent ID, followed by independent review before any separately authorized fetch.

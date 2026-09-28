@@ -648,6 +648,24 @@
       "active": false,
       "next": "Release report finalized. A new zero-provider canary requires separate authorization; no provider/fetch/data/training authority is granted.",
       "log": "AGENT_LOG_GATE1_V0125_REMOTE_RELEASE_VERIFICATION_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_first_canary_execution_20260928",
+      "title": "DONE：v0.1.25 zero-provider first canary execution",
+      "task": "Run exactly once under permanent ID market-rsi-v0125-gate1-first-current-source-20260928-01 through the programmatic first-canary bootstrap and production CLI/Supervisor path. No retry, provider, fetch, Train/Dev/Final read/admission or training.",
+      "status": "One authorized execution completed PASS: production CLI/parent used, provider calls 0, provider cost USD 0, no fetch or formal data admission, no retry.",
+      "active": false,
+      "next": "Independent review passed and the receipt is promoted as zero-provider infrastructure evidence only; the permanent ID must not be rerun.",
+      "log": "AGENT_LOG_GATE1_V0125_FIRST_CANARY_EXECUTION_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_first_canary_review_20260928",
+      "title": "DONE：v0.1.25 zero-provider first canary independent review",
+      "task": "After the one authorized canary terminates, independently verify release/source/runtime binding, bootstrap capability, production CLI/parent path, provider/fetch/data/training zeros, isolated ledger/state closure, process/container cleanup and immutable receipt hashes. Read-only.",
+      "status": "Independent PASS: exact release/source/runtime/bootstrap and production CLI/parent bindings verified; provider/fetch/data/training zeros, isolated state/budget closure, 30 immutable evidence hashes and terminal cleanup all passed.",
+      "active": false,
+      "next": "Permanent canary ID is consumed and must not be rerun. Any paid v0.1.25 D0 needs a fresh ID and separate explicit authorization; any fetch remains a later separate gate.",
+      "log": "AGENT_LOG_GATE1_V0125_FIRST_CANARY_REVIEW_2026-09-28.md"
     }
   ]
 }
