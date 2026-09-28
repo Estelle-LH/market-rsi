@@ -965,3 +965,8 @@ untouched test.
 - The authorized integration combines the architecture documentation and the one-layer tool-schema visibility repair on `codex/v0125-release-integration`. The trusted semantic validator is unchanged and the original invalid D0 response remains rejected.
 - Fresh integrated checks passed: focused 48/48, full discovery 516/516 with 2 environment skips, `git diff --check`, JSON and secret/data-scope checks. The 339-file controlled-source digest remains `c61f48e21084671c1ff1257639f6a5d5ccfc8c1a64065e02157c5eb75c10a2d4`.
 - Independent integrated review returned PASS after tightening one causal statement and generalizing user-specific paths in the public architecture document. Publication and remote verification are authorized; no zero-provider canary, provider call, fetch, data admission or training is authorized in this step.
+## 2026-09-28 — v0.1.25 published and independently verified
+
+- `main` and annotated tag `market-rsi-protocol-v0.1.25` were atomically pushed to the standalone user repository at release commit `ed4048e55096b763ba763526e768057b5180cdeb`; tag object is `67b8e4a88e22c1f00e60850f521b26282517d682`.
+- Supervisor verification and a separate credential-free anonymous-clone review both passed. The remote release contains exactly 339 controlled files with digest `c61f48e21084671c1ff1257639f6a5d5ccfc8c1a64065e02157c5eb75c10a2d4`.
+- This release did not run a canary, call a provider, fetch data, read or admit Train/Dev/Final, or train. The next step is a separately authorized v0.1.25 zero-provider canary.

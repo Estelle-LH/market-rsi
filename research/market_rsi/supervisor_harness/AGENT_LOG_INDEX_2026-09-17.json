@@ -628,7 +628,7 @@
       "task": "Independently review the one-layer model-visible mode-limit description, regression tests, validator invariance, tokenizer cost and full-suite evidence; do not edit, publish, canary or call a provider.",
       "status": "Independent PASS: the only production hunk is the model-visible bounded_investigation description; captured failure remains rejected, one-field correction passes, focused 48/48 and full 516/516 tests pass with 2 environment skips.",
       "active": false,
-      "next": "Supervisor may commit the reviewed local snapshot. Publishing v0.1.25, running a new zero-provider canary and any paid/fetch work remain separately unauthorized.",
+      "next": "Superseded by the published and independently verified v0.1.25 release; a new zero-provider canary and any paid/fetch work remain separately unauthorized.",
       "log": "AGENT_LOG_GATE1_V0125_SCHEMA_VISIBILITY_REVIEW_2026-09-28.md"
     },
     {
@@ -637,8 +637,17 @@
       "task": "Independently audit the combined architecture-documentation and schema-visibility release candidate against main: exact diff, controlled-source digest, validator invariance, focused/full test evidence, secret/data scope and release gates. Read-only; do not edit, tag, push, canary, fetch or call a provider.",
       "status": "Independent PASS: exact integrated candidate has one production schema-description change, unchanged validator/parser/provider/outer/fetch layers, 48/48 focused and 516/516 full tests with 2 skips, clean secret/data scope and controlled digest c61f48e...a2d4.",
       "active": false,
-      "next": "Supervisor may perform mechanical bookkeeping commit, clean-tree/digest recheck, main integration, annotated v0.1.25 publication and remote verification. Canary/provider/fetch/data/training remain unauthorized.",
+      "next": "Publication and independent remote verification completed. Canary/provider/fetch/data/training remain unauthorized.",
       "log": "AGENT_LOG_GATE1_V0125_INTEGRATED_RELEASE_REVIEW_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_remote_release_verification_20260928",
+      "title": "DONE：v0.1.25 independent remote release verification",
+      "task": "Independently verify the published origin main ref, annotated v0.1.25 tag object and peeled commit, exact 339-file controlled-source digest and public release boundary from remote evidence. Read-only; do not edit, tag, push, canary, fetch project data or call a provider.",
+      "status": "Independent PASS from credential-free remote refs and anonymous clone: annotated tag object 67b8e4a8...d682 peels to ed4048e...cdeb and all 339 controlled files match digest c61f48e...a2d4.",
+      "active": false,
+      "next": "Release report finalized. A new zero-provider canary requires separate authorization; no provider/fetch/data/training authority is granted.",
+      "log": "AGENT_LOG_GATE1_V0125_REMOTE_RELEASE_VERIFICATION_2026-09-28.md"
     }
   ]
 }
