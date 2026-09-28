@@ -953,3 +953,10 @@ untouched test.
 - **真实新 blocker 1：** 第一版 consumer 会接受重新计算 row commitment 后的 `provider_verified=true`、`network_access_authorized=true`、`formal_training_authorized=true`、`improvement_claim_allowed=true`。原代码只覆盖了 rights 与 Dev/Final 的部分别名，权限字段检查不够通用。
 - **真实新 blocker 2：** 在读取过程中，把祖先目录短暂替换成指向同 inode hardlink 的 symlink、再在最后 pathname 检查前恢复，仍能通过。原因是 consumer 没有从 repo root 到文件一直持有完整 descriptor chain。
 - **处理：** 独立 verdict 明确记为 REPLAN。两个反例已推回 implementation owner，要求新 source/test snapshot、通用权限升级拒绝、全祖先 descriptor chain 持有与 deterministic tests。旧 review 只适用于 `cf2e…21838`；正在变化的新 bytes 没有 verdict。修复前不发布、不 admission、不联网、不付费。
+
+## 2026-09-28 — v0.1.25 tool-schema visibility repair is locally reviewed
+
+- **Problem:** Paid D0 `market-rsi-v0124-gate1-controller-d0-20260928-01` returned exactly one tool call but paired `bounded_response_canary_proposal` with `max_documents_proposed=1`. The local validator correctly requires zero; the model-visible schema had not exposed that cross-field rule. The old ID remains terminal failed and non-reusable.
+- **Single-layer repair:** Only the `bounded_investigation` tool-schema description now states the complete mode-dependent table. The frozen packet, semantic validator, parser/normalization, provider, budget, fetch, admission and training paths remain unchanged. Trusted code does not rewrite the model's value.
+- **Verification:** The captured mismatch remains rejected; a fixture changing only `1` to `0` passes. Focused tests passed 48/48; the full suite passed 516/516 with 2 environment skips. Pinned rendering is 4,020 input tokens with a `$0.0389772` no-cache upper under the `$0.05` ceiling.
+- **Independent review:** PASS with no blocking code finding. No provider call, credential read, fetch, data access, training, release, push or canary occurred. Publishing v0.1.25, running its zero-provider canary and any fresh paid ID still require separate authorization.

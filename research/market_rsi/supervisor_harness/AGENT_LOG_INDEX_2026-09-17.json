@@ -621,6 +621,15 @@
       "active": false,
       "next": "待协作工具恢复后可再做独立复核；当前不能伪称已有审查结论。",
       "log": "AGENT_LOG_ONE_B_LIVE_READINESS_2026-09-17.md"
+    },
+    {
+      "id": "gate1_v0125_schema_visibility_review_20260928",
+      "title": "DONE：v0.1.25 tool-schema visibility independent review",
+      "task": "Independently review the one-layer model-visible mode-limit description, regression tests, validator invariance, tokenizer cost and full-suite evidence; do not edit, publish, canary or call a provider.",
+      "status": "Independent PASS: the only production hunk is the model-visible bounded_investigation description; captured failure remains rejected, one-field correction passes, focused 48/48 and full 516/516 tests pass with 2 environment skips.",
+      "active": false,
+      "next": "Supervisor may commit the reviewed local snapshot. Publishing v0.1.25, running a new zero-provider canary and any paid/fetch work remain separately unauthorized.",
+      "log": "AGENT_LOG_GATE1_V0125_SCHEMA_VISIBILITY_REVIEW_2026-09-28.md"
     }
   ]
 }

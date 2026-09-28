@@ -299,6 +299,52 @@ class ProspectiveSourceScopeDecisionTests(unittest.TestCase):
                 with self.assertRaises(DecisionValidationError):
                     validate_decision(value)
 
+    def test_complete_mode_dependent_investigation_table(self):
+        for mode in (
+                "bounded_metadata_canary_proposal",
+                "bounded_response_canary_proposal"):
+            with self.subTest(mode=mode, documents=0):
+                value = valid_decision()
+                value["bounded_investigation"].update({
+                    "mode": mode,
+                    "max_documents_proposed": 0,
+                })
+                validate_decision(value)
+            with self.subTest(mode=mode, documents=1):
+                value["bounded_investigation"]["max_documents_proposed"] = 1
+                with self.assertRaises(DecisionValidationError):
+                    validate_decision(value)
+
+        value = valid_decision()
+        validate_decision(value)
+        for changed in (
+                {"max_documents_proposed": 0},
+                {"max_provider_requests_proposed": 1},
+                {"max_raw_bytes_proposed": 1}):
+            with self.subTest(mode="first_party_document_review_only",
+                              changed=changed):
+                invalid = valid_decision()
+                invalid["bounded_investigation"].update(changed)
+                with self.assertRaises(DecisionValidationError):
+                    validate_decision(invalid)
+
+        value = valid_decision()
+        value["bounded_investigation"].update({
+            "mode": "synthetic_contract_fixture_only",
+            "max_documents_proposed": 0,
+        })
+        validate_decision(value)
+        for changed in (
+                {"max_documents_proposed": 1},
+                {"max_provider_requests_proposed": 1},
+                {"max_raw_bytes_proposed": 1}):
+            with self.subTest(mode="synthetic_contract_fixture_only",
+                              changed=changed):
+                invalid = copy.deepcopy(value)
+                invalid["bounded_investigation"].update(changed)
+                with self.assertRaises(DecisionValidationError):
+                    validate_decision(invalid)
+
     def test_bound_exposure_ledger_id_must_be_opaque_and_role_fields_are_fixed(self):
         value = valid_decision()
         value["future_role_split"]["exposure_ledger_id"] = "led_" + "f" * 26

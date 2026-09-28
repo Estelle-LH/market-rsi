@@ -10,10 +10,12 @@ from supervisor_harness.p0_gate1_executable_plan_canary_fixtures import VALID_DE
 from supervisor_harness.p0_gate1_controller_adapter import (
     MAX_OUTPUT_TOKENS, OFFLINE_FAKE_TOKEN_IDS, OfflineGate1ProviderFake,
     PROPOSE_TOOL, SUBMIT_TOOL,
-    _available_capabilities, _submission_parameters,
+    _available_capabilities, _submission_parameters, _submitted_action,
     expected_packet, request_turn, run,
 )
-from supervisor_harness.prospective_source_scope_decision import SCHEMA as DECISION_SCHEMA
+from supervisor_harness.prospective_source_scope_decision import (
+    DecisionValidationError, SCHEMA as DECISION_SCHEMA,
+)
 
 
 def decision():
@@ -97,6 +99,16 @@ def proposal():
 
 
 class Gate1ControllerAdapterTests(unittest.TestCase):
+    MODE_LIMITS_DESCRIPTION = (
+        "Mode-dependent limits: bounded_metadata_canary_proposal and "
+        "bounded_response_canary_proposal require max_documents_proposed=0; "
+        "first_party_document_review_only requires "
+        "max_documents_proposed>=1, max_provider_requests_proposed=0, and "
+        "max_raw_bytes_proposed=0; synthetic_contract_fixture_only requires "
+        "max_documents_proposed=0, max_provider_requests_proposed=0, and "
+        "max_raw_bytes_proposed=0."
+    )
+
     def test_output_cap_fits_frozen_packet_under_single_sample_gate(self):
         self.assertEqual(MAX_OUTPUT_TOKENS, 1600)
         self.assertLessEqual(cost(6000, MAX_OUTPUT_TOKENS),
@@ -133,6 +145,44 @@ class Gate1ControllerAdapterTests(unittest.TestCase):
                          capabilities)
         self.assertTrue(payload["complete_D0_required"])
         self.assertTrue(payload["all_external_authority_remains_false"])
+
+    def test_tool_schema_exposes_mode_dependent_limits_exactly_once(self):
+        turn = request_turn(expected_packet())
+        parameters = turn["tools"][0]["function"]["parameters"]
+        bounded = parameters["properties"]["bounded_investigation"]
+        self.assertEqual(
+            bounded["description"], self.MODE_LIMITS_DESCRIPTION)
+        self.assertEqual(
+            json.dumps(turn, sort_keys=True).count(self.MODE_LIMITS_DESCRIPTION),
+            1,
+        )
+
+    def test_captured_canary_document_mismatch_stays_rejected_without_repair(self):
+        invalid = decision()
+        invalid["bounded_investigation"].update({
+            "mode": "bounded_response_canary_proposal",
+            "max_documents_proposed": 1,
+        })
+        preserved = copy.deepcopy(invalid)
+        with self.assertRaisesRegex(
+                DecisionValidationError,
+                "canary proposal modes require max_documents_proposed == 0"):
+            _submitted_action(
+                submitted(invalid), expected_packet(),
+                "gate1-controller-schema-visibility-regression",
+            )
+        self.assertEqual(invalid, preserved)
+
+        corrected = copy.deepcopy(invalid)
+        corrected["bounded_investigation"]["max_documents_proposed"] = 0
+        kind, recorded, submission = _submitted_action(
+            submitted(corrected), expected_packet(),
+            "gate1-controller-schema-visibility-positive",
+        )
+        self.assertEqual(kind, "source_scope_decision")
+        self.assertEqual(submission, corrected)
+        self.assertEqual(
+            recorded["bounded_investigation"]["max_documents_proposed"], 0)
 
     def call(self, response: dict, *, packet=None):
         temporary = tempfile.TemporaryDirectory()

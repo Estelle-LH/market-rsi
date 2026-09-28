@@ -227,6 +227,17 @@ def _submission_parameters(packet: dict) -> dict:
             },
             "bounded_investigation": {
                 "type": "object", "additionalProperties": False,
+                "description": (
+                    "Mode-dependent limits: bounded_metadata_canary_proposal "
+                    "and bounded_response_canary_proposal require "
+                    "max_documents_proposed=0; first_party_document_review_only "
+                    "requires max_documents_proposed>=1, "
+                    "max_provider_requests_proposed=0, and "
+                    "max_raw_bytes_proposed=0; synthetic_contract_fixture_only "
+                    "requires max_documents_proposed=0, "
+                    "max_provider_requests_proposed=0, and "
+                    "max_raw_bytes_proposed=0."
+                ),
                 "required": [
                     "mode", "max_documents_proposed",
                     "max_provider_requests_proposed", "max_raw_bytes_proposed",
