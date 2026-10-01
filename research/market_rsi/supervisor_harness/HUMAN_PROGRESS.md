@@ -1050,3 +1050,12 @@ untouched test.
 - **Verification:** The 75 focused tests passed again. Python/JSON syntax and credential-pattern checks passed for the pending source/report inventory. Historical Markdown whitespace warnings are preserved. This is not a new independent review of every baseline file.
 - **Scope:** Local Git only, no push/tag/release/live experiment. Raw data, credentials, runtime files, budget/global-state ledgers and raw run artifacts are excluded. Task-local reports and audit evidence use a separate research-records branch in the existing task repository.
 - **Next:** The live worker binding and bounded operational trial remain unperformed; checkpointing does not authorize deployment or establish autonomous improvement.
+
+### 2026-10-01: Standing checkpoint rule for replayable history
+
+- **User direction:** Make a Git checkpoint at every meaningful stage going forward, not just this one-time preservation pass.
+- **Parent/source:** `baa6b36`, repository `/Users/estelle/Developer/market-rsi`, branch `codex/market-rsi-coevolution-checkpoint-20261001`.
+- **Changed scope:** Project `AGENTS.md` and Supervisor procedure now require bounded source commits, result/failure commits, replay provenance, preservation of rejected candidates and append-only corrections. This progress entry and the human-direction log record the change.
+- **Verification/outcome:** Scoped documentation diff reviewed; `git diff --check` passed. No executable behavior changed. Runtime/model/data/configuration/seed/output identities are not applicable to this policy edit; no empirical replay is claimed.
+- **Evidence:** Main source/control checkpoints `793c302` and `baa6b36`; task-repository design/evidence checkpoints `81d0542` and `bd4a0ac`. The commit containing this entry is the policy checkpoint.
+- **Boundary/next:** No new hook, service, release gate, paid call, experiment or deployment. Apply this rule to the next existing-worker integration change and its subsequent verification.

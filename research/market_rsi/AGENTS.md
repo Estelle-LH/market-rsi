@@ -1,5 +1,33 @@
 # Research before changing the Market RSI harness
 
+## Replayable Git checkpoints — 2026-10-01 user instruction
+
+The user requires a local Git commit at every meaningful work checkpoint, not
+only at release time. The supervising integration owner must preserve the
+starting source, commit each completed bounded change, record experiment
+outcomes (including failures), and record acceptance or rollback as new history.
+Keep harness and researcher changes separate when testing their attribution.
+Do not squash, amend or rewrite an already referenced checkpoint unless the
+user explicitly requests it. Do not silently include unrelated concurrent work.
+
+Each checkpoint's existing progress/report entry must identify its purpose,
+parent/source commit, changed scope, actual verification and outcome, and next
+step. For executable work, also retain the exact command, configuration/seed,
+model/runtime/dependency identity, input data and memory manifest hashes, and
+immutable output/receipt locations and hashes. Use explicit not-applicable or
+unknown values rather than invented provenance. A run binds to its pre-run
+source commit; its later result commit records that binding. See the detailed
+checkpoint procedure in `supervisor_harness/RESEARCH_SUPERVISOR.md`.
+
+This is lightweight source/evidence bookkeeping, not a new research admission
+gate, mandatory release, per-round approval, Git hook or scientific success
+requirement. Failed and unfinished work can be preserved as clearly labelled
+local checkpoints; that does not make it approved for activation. Exclude raw
+data, credentials, runtimes and live budget/global-state ledgers from Git;
+retain evidence references instead. Local commits do not authorize remote
+pushes, release tags, paid reruns or deployment. Do not claim exact experiment
+replay from Git alone or rewind operational history when restoring source.
+
 ## Opened-Train Discovery policy — 2026-09-29 human override
 
 The active research mainline is `SettlementProbabilityTrainDiagnostic-v0`.
