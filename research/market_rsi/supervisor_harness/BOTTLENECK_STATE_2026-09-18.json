@@ -1,28 +1,46 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-09-22T20:38:00Z",
+  "updated_utc": "2026-09-29T20:00:00Z",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
     {
+      "id": "first-real-train-diagnostic-20260929-01",
+      "status": "continuous_discovery_batch1_five_attempts_complete_incumbent_v3",
+      "plan": "research/market_rsi/PREDICTION_EXPERIMENT_DESIGN_2026-09-21.md",
+      "result": "The two-hour continuous opened-Train Discovery batch completed five real, independently reviewed candidate runs without per-round human selection. MarketRecencyWeightedCompositePath-v3 is the current incumbent at Brier/log 0.203857/0.595837 versus market 0.205533/0.598451, with 3/4 market-fold Brier wins. Attempt 5 dispersion improved aggregate Brier/log to 0.202260/0.591819 and beat v3 in 3/4 folds, but beat market in only 2/4 folds, so the frozen rule correctly REVERTED it while preserving the branch. No Dev/Final, network, provider, external fetch, promotion or publication.",
+      "next": "Start a separately bounded next Discovery batch from v3 incumbent. Use Attempt 5 evidence to test a causal shrinkage or sign-stability treatment for orthogonal dispersion on identical masks/scorer; do not change the evaluation rule to force a KEEP.",
+      "evidence": "research/market_rsi/supervisor_harness/DISCOVERY_BATCH_2026-09-29.md",
+      "provider_cost_usd": "0"
+    },
+    {
+      "id": "p0-gate1-v0126-release-canary-doc-fetch-20260928",
+      "status": "v0126_local_release_preserved_strategy_paused_not_next_milestone",
+      "plan": "research/market_rsi/supervisor_harness/SUPERVISOR_GATE1_V0126_RELEASE_CANARY_FETCH_2026-09-28-v3.json",
+      "result": "Shared integration and fresh non-author review passed on 358-file source digest 2e3b6b14...f741a23f. An isolated persistent release worktree passed 516/516 with one skip and created local commit e26891f4...fa118c plus annotated tag object 4e00ec64...90d3f. Atomic push was rejected by the approval layer pending an exact payload/destination authorization; read-only verification confirms remote main remains 6403028a and v0.1.26 tag is absent. No canary or fetch occurred.",
+      "next": "The minimal loop has passed, but this documentation-fetch path is not on the immediate causal path. Preserve the clean worktree, commit and tag without pushing; reconsider only if the local-data inventory identifies this exact dependency.",
+      "evidence": "research/market_rsi/supervisor_harness/SUPERVISOR_GATE1_V0126_RELEASE_CANARY_FETCH_2026-09-28-v3.json",
+      "provider_cost_usd": "0"
+    },
+    {
       "id": "p0-candidate-admission-integration-20260922-01",
-      "status": "first_integration_replan_two_causal_fixes_active",
+      "status": "repair_evidence_preserved_replan_not_current_input_inventory_path",
       "plan": "research/market_rsi/supervisor_harness/SUPERVISOR_P0_ADMISSION_INTEGRATION_2026-09-22-v1.json",
       "result": "The first integration snapshot passed its author and Supervisor suites but independent review reproduced two causal gaps: recommitted generic provider/network/formal-training/improvement authority fields could be true, and a transient ancestor-directory symlink swap to a same-inode hardlink could evade the final pathname check. Verdict is REPLAN, not PASS. The consumer bytes have already changed and are unreviewed. No release, admission, network or paid work occurred.",
-      "next": "Implementation owner is producing a fresh stable snapshot with generalized authority rejection and an end-to-end held/validated ancestor descriptor chain plus adversarial tests. Then version the plan evidence and run a fresh independent rereview before resolve.",
+      "next": "The synthetic loop has passed. Preserve this REPLAN snapshot; first inventory already-opened local inputs against the new contract. Resume this admission consumer only if that inventory requires it, using one stable exact snapshot and fresh independent review.",
       "evidence": "research/market_rsi/supervisor_harness/AGENT_LOG_P0_ADMISSION_INTEGRATION_IMPLEMENTATION_2026-09-22.md",
       "provider_cost_usd": "0"
     },
     {
       "id": "p0-gate1-supervisor-current-20260921-01",
-      "status": "v021_launch_ready_not_authorized_2024_ledger_orientation_scoped_pass_integration_rights_pending",
-      "result": "Two earlier one-shot GLM decisions remain terminal formatting failures, metered $0.01666737 and $0.01790424, with no task, fetch, Train admission, prediction or Dev/Final read. The observed malformed-tag cause is preserved. Strict parsing plus a five-field short-choice interface passed independent integrated review, 132 Gate 1 and 20 parser/schema tests, was published as annotated v0.1.21 at f06214b3bb521096078d897fe60ec9ba589c00c6 only to the user's fork, and passed a fresh postrelease production-CLI zero-provider canary. The 324-file controlled source hash is 872f05ae48fa49deeb811bc6ca4705652168f198b5f1f9d69d3ce172ad0986da. A fresh packet was generated and offline encoded at 3310 input/2750 maximum output tokens with $0.0494991 hard upper. The global-state document/journal mismatch was detected and reconciled by a reasoned decision revision while idle; no new paid call or data fetch has occurred. The $200 ledger remains $85.122553742 metered, $0.071505532 setup available, and $2.30 historically reserved; real Train catalog is absent.",
-      "next": "Formal Train receipt, v2 cursor, exact 285-game ledger and bytes-only orientation verifier now have scoped independent offline PASS. They are not one admitted production path: add all modules to controlled release, build a non-test consumer that owns canonical path/symlink and TOCTOU guarantees, and independently verify rights/provider timing before any admission. Keep event 17330 explicitly unresolved. Any new Controller call still requires fresh authorization and perishable-state checks under unused ID market-rsi-gate1-controller-20260922-03.",
-      "plan": "research/market_rsi/supervisor_harness/SUPERVISOR_GATE1_FORMAT_BOUNDARY_2026-09-22-v5.json",
+      "status": "v0125_d0_evidence_preserved_request_bridge_strategy_paused",
+      "result": "The published v0.1.25 canary and single paid D0 passed independently. A stable 341-file local candidate now compiles that immutable D0 to deterministic non-executing request plan 34b45266df887dbf308b196eac865bfc5a3a6b65257c667849605e5a8b9b812c. Two prerequisite audits, focused 12/12, full 516/516 with 2 skips, parallel fetch-boundary cross-check and fresh non-author review passed. This is not a fetch or experiment result.",
+      "next": "Preserve the v0.1.25 D0 and deterministic request-plan evidence without publishing or fetching. Resume only if the prediction-first loop later identifies this documentation path as a necessary dependency.",
+      "plan": "research/market_rsi/supervisor_harness/SUPERVISOR_GATE1_V0125_D0_TO_REQUEST_BRIDGE_2026-09-28-v1.json",
       "coordination_plan": "research/market_rsi/supervisor_harness/SUPERVISOR_PARALLEL_READINESS_2026-09-22-v1.json",
       "active_engineering_plan": "research/market_rsi/supervisor_harness/SUPERVISOR_PARALLEL_ENGINEERING_2026-09-22-v1.json",
-      "evidence": "research/market_rsi/supervisor_harness/GATE1_V020_FIRST_RESPONSE_FAILURE_2026-09-22.md",
-      "provider_cost_usd": "0.03457161"
+      "evidence": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0125_D0_BRIDGE_REVIEW_2026-09-28.md",
+      "provider_cost_usd": "0.02574585"
     },
     {
       "id": "outer-supervisor-watchdog-live-runner-binding",
@@ -30,16 +48,16 @@
       "plan": "research/market_rsi/supervisor_harness/BOTTLENECK_ORCHESTRATION_CHANGE_2026-09-18.md",
       "result": "The live bounded entry now refuses to read the provider credential unless an outer Supervisor claim matches its exact child PID/command, Supervisor PID/command, cycle ID and durable watchdog head. The fixed parent owns the child command/log, maps the authoritative PaidBudget state, hashes allowlisted artifacts as material progress, emits heartbeats, and performs exact PID/Docker cleanup on a stall or child failure. A nominal success requires independent child/container absence and terminal budget state. Sixty-eight adjacent tests pass. Fresh zero-paid canary supervisor-live-parent-blocked-20260921-03 exercised the final dual-identity bytes with a real blocked macOS child and Docker container; it created one incident/repair packet, verified both absent, made no provider call, cost zero, and passed a separate fifteen-check review.",
       "next": "The bounded parent is in the published source and the v0.1.21 postrelease zero-provider Gate 1 production-CLI path passed. Two earlier one-shot live Gate 1 decisions closed and cleaned up. Do not confuse this limited Controller plan path with arbitrary code/researcher containment; before broader recursive research, independently test and review the exact local-B code/tool boundary. Paid prediction remains blocked by real data admission.",
-      "evidence": "artifacts/supervisor-live-parent-blocked-20260921-03/canary-result.json",
+      "evidence": "research/market_rsi/supervisor_harness/LOCAL_DEBUG_ACTIVITY_2026-09-17.md",
       "provider_cost_usd": "0"
     },
     {
       "id": "p0-data-admission-20260918-01",
-      "status": "v021_controller_interface_ready_2024_candidate_ledger_orientation_scoped_pass_rights_integration_pending",
-      "plan": "artifacts/p0-data-admission-gate0-20260918-01/plan.json",
+      "status": "resident_train_discovery_authorized_formal_admission_later",
+      "plan": "research/market_rsi/supervisor_harness/P0_DATA_ADMISSION_ORCHESTRATION_2026-09-18.md",
       "completed": ["gate0_exposure_inventory"],
       "result": "v0.1.21 is published with 324 controlled files, strict parser, five-field short-choice interface, independent review and fresh zero-provider canary. Two earlier GLM responses failed formatting and remain terminal; their combined new metered cost is $0.03457161. No valid live Controller data plan, real Train catalog, public fetch, formal admission, training or sealed evaluation read yet. The no-catalog lane allows only bounded documentation investigation or non-executable proposal.",
-      "next": "Integrate the independently reviewed 285-row ledger and 284 candidate orientation receipts into a controlled non-test admission consumer, preserving 2024_22_KC_PHI/event 17330 as explicitly missing. Close canonical-path/symlink and post-claim TOCTOU at the consumer. Exact data rights and provider publish/local receive provenance remain external gates; a Controller proposal does not authorize fetch or admission.",
+      "next": "Use already-opened resident Train for private diagnostics now, retaining rights/provenance caveats. Formal admission remains required only before protected evaluation, promotion or publication; do not fetch or open Dev/Final.",
       "evidence": "research/market_rsi/supervisor_harness/P0_GATE1_TRUSTED_SCHEMA_REPAIR_REVIEW_2026-09-21.md",
       "paid_provider_spend_usd": "0.02385774"
     },
@@ -53,11 +71,11 @@
     },
     {
       "id": "prediction-experiment-v1-data-admission",
-      "status": "draft_valid_blocked_on_data_admission",
+      "status": "settlement_probability_v0_continuous_discovery_batch1_complete",
       "plan": "research/market_rsi/PREDICTION_EXPERIMENT_DESIGN_2026-09-21.md",
-      "result": "A machine-checked non-executable experiment draft now freezes the prediction-only A/B boundary, identical rows, chronological Train/Route-Dev/Audit-Dev/Final roles, at least 20 untouched Final dates, strong-baseline comparison, paired date-block inference and zero current execution authority. Data, target, split, baseline and formal budget hashes remain null by design.",
-      "next": "After a valid published Gate 1 Controller plan, execute the bounded public-source audit and formal data admission. Then use opened Train only to select and hash one target and one strong baseline before any Dev result is opened.",
-      "evidence": "research/market_rsi/PREDICTION_EXPERIMENT_DRAFT_2026-09-21.json",
+      "result": "Five additional real resident-Train candidates completed in a continuous evidence-driven loop. Recency-weighted compressed path v3 is the current Discovery incumbent; the aggregate-better dispersion v5 remains a REVERTED research branch because it missed the frozen market-fold gate. Ordinary logistic remains only an ordinary reference. The 60/300-second price-change/MSE benchmark remains legacy and cannot be mixed with these results.",
+      "next": "Continue from v3 incumbent with a bounded dispersion-stability experiment. Design matched same-Astra fixed-process versus memory-enabled evaluation only after the research loop is stable, without opening protected Dev/Final.",
+      "evidence": "research/market_rsi/supervisor_harness/DISCOVERY_BATCH_2026-09-29.md",
       "provider_cost_usd": "0"
     },
     {
@@ -70,6 +88,31 @@
     }
   ],
   "resolved_this_session": [
+    {
+      "id": "real-input-containment-static-adapter-20260929-01",
+      "result": "Metadata-only inventory completed without opening protected outcomes: 2024 has adequate aggregate diagnostic coverage but no rights/provenance/materialization/admission yet; 2023 remains coverage-inadequate and opened 2025 Train is not untouched eval. The exact synthetic adapter v4 aggregate 87a32217...e9472b passed independent review at 0 P0 / 0 P1, 85/85 focused-plus-adjacent tests, 516/516 repository tests with 2 designed skips, and 11/11 added terminal mutation probes. This resolves static synthetic adapter readiness only and grants no live Docker, real data, scoring, training, provider, release or protected-split authority.",
+      "evidence": "research/market_rsi/supervisor_harness/AGENT_LOG_REAL_CANDIDATE_ADAPTER_INDEPENDENT_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "prediction-first-minimal-loop-20260929-01",
+      "result": "Exact v4 synthetic loop passed: deterministic label-free probabilities, identical-row proper scoring against market, one-shot Dev KEEP then REVERT, aggregate-only memory, persisted full scores, durable lifecycle/lineage recovery and sealed Final. Focused 54/54, adjacent 33/33 and fresh non-author review 0 P0 / 0 P1. Source/test aggregate 26059d5c...07839. This is synthetic orchestration evidence only and grants no real-data, isolation, provider, protected-split, promotion, PnL, release or publication authority.",
+      "evidence": "research/market_rsi/supervisor_harness/AGENT_LOG_PREDICTION_FIRST_MINIMAL_LOOP_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "pmb-primary-role-withdrawal-20260929",
+      "result": "The earlier PMB-primary-base assumption is superseded. PMB and pmb_simple_lane are frozen as optional public non-promotional smoke compatibility only; planned intake, hidden evaluation, Controller Swap and further PMB governance are cancelled. The replacement core is frozen-cutoff probability prediction with proper scoring before any separate PnL stage.",
+      "evidence": "research/market_rsi/PREDICTIONMARKETBENCH_ROLE_CORRECTION_2026-09-29.md"
+    },
+    {
+      "id": "p0-gate1-v0125-d0-to-request-bridge-20260928",
+      "result": "Two independent prerequisite audits, one pure offline integration, focused/full tests, a parallel fetch-boundary cross-check and a fresh non-author integrated review passed. The exact D0 deterministically compiles to request plan 34b45266df887dbf308b196eac865bfc5a3a6b65257c667849605e5a8b9b812c in local controlled source c80531648d07f83ff73c1c70c3a8c0d5fd5d02459bb1957c875959daa51faee2. It is unpublished and grants no release, canary, fetch, retention, admission, protected-data, training or evaluation authority.",
+      "evidence": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0125_D0_BRIDGE_REVIEW_2026-09-28.md"
+    },
+    {
+      "id": "v0125-paid-d0-one-shot-20260928",
+      "result": "The authorized v0.1.25 D0 executed exactly once after the USD 0.006 non-Final allocation transfer, durable state rebind, two fresh independent launch rechecks and an immediate Supervisor replay. Independent terminal review passed: one 4020/511/0-token sample cost $0.02574585, output is a valid scope-only non-executable decision, budget/global state closed, watchdog/cleanup passed, and no fetch/data/training occurred. The ID is permanently consumed.",
+      "evidence": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0125_D0_INDEPENDENT_REVIEW_2026-09-28.md"
+    },
     {
       "id": "live-controller-to-b-bounded-transport",
       "result": "Fresh cycle market-rsi-controller-b-canary-20260919-03 passed the complete bounded chain with one provider sample, one adapter call and one local Docker-B task. Independent review passed 18 checks; metered cost was $0.00285525; exact container cleanup passed. Failed precursors remain immutable and were not retried under the same ID.",

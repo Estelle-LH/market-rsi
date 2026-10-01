@@ -2,13 +2,25 @@
 
 本文是当前架构的入口文档。它说明系统现在实际运行什么、各层由谁负责、一次研究周期怎样流转，以及哪些能力仍然只是未来目标。
 
-状态快照：2026-09-28，当前公开协议版本是 `market-rsi-protocol-v0.1.25`；最近一次已通过的 zero-provider production-CLI canary 仍绑定 v0.1.24。
+状态快照：2026-09-29，当前公开协议版本仍是 `market-rsi-protocol-v0.1.25`；最近一次已通过并独立复核的 zero-provider production-CLI canary 和最近一次付费 D0 都绑定 v0.1.25。
+
+## 当前研究主线：`SettlementProbabilityTrainDiagnostic-v0`
+
+当前 Discovery 直接预测固定赛前 cutoff 的二元 settlement probability，并在完整事件分母上比较 decision-time market、ordinary LogisticRegression 和单一 Controller 候选。指标是 equal-event Brier、log loss、calibration、population coverage、时间 fold breadth 和同一行上的 paired delta。旧的 60/300 秒价格变化 + MSE benchmark 是独立 legacy experiment，不能与 settlement-probability scorecard 混用。
+
+第一张真实 Train scorecard 已在持久本地 2025 NFL moneyline cohort 上完成并独立复核：195 场完整分母、194 场二元目标、87 个 OOF Train 事件/20 个赛程日；market Brier `0.205533`，ordinary `0.235605`，HGB `0.269768`，因此 HGB 为 diagnostic **REVERT**。NFL 只是当前最可运行的 seed domain。下一候选是 `gpt-6-astra`/high Controller 冻结的 `MarketOffsetRidgeLogistic-v1`；它只改变 prediction stage，并在下一次 lock 中加入 600 秒 staleness fail-closed gate。
+
+## 2026-09-29 架构纠偏
+
+PredictionMarketBench（PMB）不再是主 benchmark、回放底座、hidden evaluator、promotion gate 或总体架构驱动。源码审计确认它是公开、同进程、易泄漏且只有四个高度相关事件的早期交易回放器；其 PnL/fill 结果不能证明 prediction 改善。旧 PMB v1/v2 与 synthetic-foundation 记录保留为历史，`pmb_simple_lane/` 仅冻结为可选 compatibility/smoke prototype，且不进入当前公开 release manifest。
+
+核心现在明确拆成两层：第一层在严格 cutoff 下输出概率，用 Brier、log loss、calibration、相对 decision-time market probability 的 paired 增量和时间 OOS 稳定性评估；第二层只在 prediction 冻结后单独测试 execution/PnL。当前最短路径不是发布更多 fetch/governance 代码，而是跑通最小闭环：历史可见输入 → 单一 prediction 改动 → 隔离 Dev 评分 → KEEP/REVERT → 可审计聚合记忆。详见 `PREDICTIONMARKETBENCH_ROLE_CORRECTION_2026-09-29.md` 和 `PREDICTION_FIRST_MINIMAL_LOOP_2026-09-29.md`。
 
 ## 一句话概括
 
 Market RSI 不是一个可以直接自由操作数据和训练模型的 LLM。它是一套分层、失败即关闭的研究系统：外层 Supervisor 管版本、授权、预算、状态和证据；GLM Controller 只做受约束的科学决策；Researcher 只能在获准的隔离环境中执行任务；数据入场、训练和封存评估各有独立门禁。
 
-当前真正跑通的是发布验证、零 provider canary、一次受监督的 GLM Controller D0 调用，以及失败后的预算和状态闭环。历史 2025 opened-Train 数据存在，但当前 P0 Gate 1 所需的新 real Train catalog 尚未正式入场，预测自循环实验尚未开始。
+当前已经跑通一轮真实 opened-Train settlement-probability Discovery：离线 runner、合成测试、一次真实本地训练、完整 scorecard、独立终审、REVERT 和下一轮 Controller memory 均已完成。它不是正式 OOS、promotion 或论文 benchmark；protected Dev/Final 仍关闭，rights/formal admission 仍未解决，decision-time fills 也不是可执行 quotes。
 
 ## 四个架构层
 
@@ -54,7 +66,7 @@ flowchart TB
     E -. 一次性门禁 .-> DV[Sealed Dev / Final]
 ```
 
-实线表示当前 D0 Controller 路径已经实际运行。虚线表示代码可能存在，但仍需要独立授权、当前版本 canary 和对应门禁；它们不是由一次 D0 回答自动开启的。
+实线表示当前 D0 Controller 路径已经实际运行并在 v0.1.25 下取得一次有效决定。虚线表示代码可能存在，但仍需要独立授权、当前版本 canary 和对应门禁；它们不是由一次 D0 回答自动开启的。
 
 ## 当前一次 D0 调用怎样运行
 
@@ -183,6 +195,7 @@ Supervisor 负责安全、版本和证据；Controller 负责研究选择；Rese
 | `supervisor_harness/p0_gate1_controller_outer.py` | global-state、预算、adapter、review 的原子式外层事务 |
 | `supervisor_harness/p0_gate1_controller_adapter.py` | 单样本 GLM 请求、工具接口、原始回复和 provider receipt |
 | `supervisor_harness/prospective_source_scope_decision.py` | D0 决定的权威语义 schema/validator |
+| `supervisor_harness/p0_gate1_source_scope_request_plan.py` | 把唯一已复核 D0 选择离线绑定到固定官方文档 request plan；本身无 fetch 权限 |
 | `supervisor_harness/global_state_gate.py` | 决策文档绑定、cycle claim/close、ID 去重 |
 | `paid_budget.py` | 授权、预留、dispatch、metering、uncertain 和 invoice 账本 |
 | `supervisor_harness/supervisor_watchdog.py` | 运行进度、进程/容器身份、incident 和终态清理 |
@@ -215,17 +228,19 @@ Supervisor 负责安全、版本和证据；Controller 负责研究选择；Rese
 
 ## 当前状态
 
-截至 2026-09-28：
+截至 2026-09-29（prediction-first reset 之后）：
 
-- v0.1.24 已发布并通过完整测试、独立发布验证和零 provider production-CLI canary。
+- v0.1.24 的历史发布、canary 和一次失败 D0 均保留；这些旧 ID 不可复用。
 - v0.1.25 已发布并通过独立远端验证。它只把既有 mode-dependent 限制暴露到模型可见 tool schema；本地 validator 保持不变。针对性测试 48/48、完整测试 516/516（2 个环境跳过）和独立代码审查通过。
-- D0 `market-rsi-v0124-gate1-controller-d0-20260928-01` 调用一次 GLM/Tinker 后终态失败。
-- 失败发生在本地语义校验：模型选择 `bounded_response_canary_proposal`，同时提交 `max_documents_proposed=1`；validator 要求 canary proposal 为 `0`。
-- 已定位的接口缺口是 mode-dependent 规则没有暴露在模型可见 tool schema；v0.1.25 修复该可见性缺口，但尚未证明下一次模型会遵守。该次失败不是网络、provider、预算或 watchdog 故障。
-- 计量费用为 `$0.02746872`，无自动重试、无 public fetch、无 sealed-data read、无数据入场、无训练。
-- 当前没有有效 Gate 1 数据调查计划，也没有预测改进结果。
+- v0.1.25 zero-provider production-CLI canary `market-rsi-v0125-gate1-first-current-source-20260928-01` 已一次通过并完成独立复核；provider 调用和真实费用均为零。
+- D0 `market-rsi-v0125-gate1-controller-d0-20260928-01` 只调用一次 GLM/Tinker，使用 4,020/511/0 tokens，计量 `$0.02574585`，无重试；预算、global state、watchdog 和清理均通过独立终审。
+- 该 D0 选择注册的 Polymarket 官方 market-scoped trades response class，用途为 private research，未来角色为 `unassigned_candidate`，horizon 为 descriptive/no-forecast，并提出一次 first-party-document review。决定状态是 `scope_only_non_executable`，所有外部权限位均为 false。
+- 本地候选已把该唯一 D0 的 decision、submission、provenance、packet、v0.1.25 release、完整 source registry 和 capability 哈希链绑定到一个确定的非执行 request plan；manifest 哈希为 `34b45266df887dbf308b196eac865bfc5a3a6b65257c667849605e5a8b9b812c`。针对性检查 12/12、固定 runtime 完整测试 516/516（2 个既有环境跳过）通过，fresh 非作者终审与并行 fetch-boundary 交叉复核均 PASS。
+- 该候选没有执行 public fetch、catalog/Train/Dev/Final 读取、数据入场、训练或评分，也没有预测改进结果。所有 fetch、retention、admission、训练、发布权限仍为 false。
+- clean v0.1.26 本地 commit/tag 及其审查证据完整保留，但发布/canary/fetch 链已策略性暂停；它不是当前 prediction milestone。
+- 当前唯一主线是 `SUPERVISOR_PREDICTION_FIRST_RESET_2026-09-29-v1.json`：先补概率合同/评分、label-free protocol 和 KEEP/REVERT lineage，再跑两轮 synthetic integration 与独立复核。
 
-下一步是等待单独授权的新 v0.1.25 zero-provider canary。只有新 canary 通过后，才可以为任何新付费运行申请全新 ID 和独立授权。
+因此当前下一步不是发布新版本。所有 release、canary、fetch、真实数据、provider、训练和 protected evaluation 继续关闭；旧候选只作为保留证据，除非最小 prediction loop 通过后证明它仍是必要依赖，才重新审议。
 
 ## 变更规则
 

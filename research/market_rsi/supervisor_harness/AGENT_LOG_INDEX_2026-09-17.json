@@ -2,12 +2,219 @@
   "purpose": "Human-readable, non-secret subagent work logs; these are not GLM research trajectories or live E2B tool streams.",
   "agents": [
     {
-      "id": "p0_admission_integration_implementation_20260922",
-      "title": "ACTIVE：P0 candidate-admission integration remediation",
-      "task": "Compose the reviewed ledger, orientation and Train receipt boundaries into one controlled candidate-only non-test consumer.",
-      "status": "First snapshot passed 13/13 focused and 95/95 combined, but independent reviewer reproduced generic authority-key escalation and an ancestor-directory symlink/hardlink race. A superseding source is already being written and remains unreviewed.",
+      "id": "continuous_discovery_minimal_orchestrator_20260929",
+      "title": "ACTIVE：Minimal continuous-Discovery state and recovery",
+      "task": "Implement the smallest durable batch state helper for attempt/deadline stops, incumbent-versus-branch tracking, result-bound Controller packets, next-stage scheduling and interruption recovery; no scientific choice or real execution.",
+      "status": "ACTIVE in parallel with attempt 1; exact write set is separate from candidate runner files.",
       "active": true,
-      "next": "Generalize authority escalation rejection, hold and validate the full ancestor descriptor chain end-to-end, add deterministic adversarial tests, and return fresh hashes for rereview.",
+      "next": "Return source/test hashes, focused tests and a persistent batch-state initialization command without invoking real Train.",
+      "log": "AGENT_LOG_CONTINUOUS_DISCOVERY_MINIMAL_ORCHESTRATOR_2026-09-29.md"
+    },
+    {
+      "id": "market_orthogonal_price_path_v1_pre_score_review_20260929",
+      "title": "ACTIVE：Discovery attempt 1 independent pre-score review",
+      "task": "Independently review the frozen Controller recipe and final implementation snapshot for causal compression, prior-only transforms, control parity, diagnostics, scoring and protected boundaries; no real Train execution.",
+      "status": "ACTIVE read-only methodology precheck; final verdict waits for exact source/test hashes.",
+      "active": true,
+      "next": "Return P0/P1 checklist now, then PASS/REPLAN the exact frozen implementation after hashes arrive.",
+      "log": "AGENT_LOG_MARKET_ORTHOGONAL_PRICE_PATH_V1_PRE_SCORE_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "market_orthogonal_price_path_v1_implementation_20260929",
+      "title": "ACTIVE：Discovery attempt 1 MarketOrthogonalPricePath-v1 implementation",
+      "task": "Implement the Astra-frozen compressed signed price-path families, prior-only market residualization, four-parameter offset fit, fixed diagnostics and five-arm scorecard; no real Train execution by worker.",
+      "status": "ACTIVE thin sibling runner and synthetic tests within continuous Discovery batch; no Dev/Final, network, provider, publication or promotion.",
+      "active": true,
+      "next": "Return exact source/test hashes, focused adjacent tests and a production command for independent pre-score review and actual attempt 1 execution.",
+      "log": "AGENT_LOG_MARKET_ORTHOGONAL_PRICE_PATH_V1_IMPLEMENTATION_2026-09-29.md"
+    },
+    {
+      "id": "market_offset_ridge_logistic_v1_implementation_20260929",
+      "title": "DONE：MarketOffsetRidgeLogistic-v1 implementation and mask repair",
+      "task": "Implement the Controller-frozen market-offset ridge residual candidate by directly reusing SettlementProbabilityTrainDiagnostic-v0 materialization/folds/scorer, with 600-second staleness and corrected schedule-day/week resampling; no real Train execution yet.",
+      "status": "DONE: initial 23/23 snapshot passed pre-score review; real -01 then exposed fold-order versus scorer-canonical mask hashing and failed before scoring. Minimal canonicalization repair passed fresh independent review and 24/24 tests; repaired -02 completed.",
+      "active": false,
+      "next": "Freeze repaired runner 6b788cf2...b974f as lineage for the completed offset -02 scorecard; preserve failed -01 and never treat it as scientific evidence.",
+      "log": "AGENT_LOG_MARKET_OFFSET_RIDGE_LOGISTIC_V1_IMPLEMENTATION_2026-09-29.md"
+    },
+    {
+      "id": "market_offset_ridge_result_independent_review_20260929",
+      "title": "DONE：MarketOffsetRidgeLogistic-v1 result review",
+      "task": "Independently verify the completed offset scorecard, exact lineage, parent parity, optimizer gates, corrected schedule-day/week inference, REVERT rule and protected-data boundaries.",
+      "status": "PASS at 0 P0 / 0 P1: all artifacts and 780/780 source receipts reproduced; 195→194, 87/20/7 breadth, losses, calibration, intervals and REVERT were independently recomputed; 24/24 tests passed.",
+      "active": false,
+      "next": "Archive offset -02 as opened-Train Discovery evidence. Current best remains market; retain offset as a research branch.",
+      "log": "AGENT_LOG_MARKET_OFFSET_RIDGE_RESULT_INDEPENDENT_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "market_calibration_next_controller_20260929",
+      "title": "DONE：Astra next Controller — market-only calibration",
+      "task": "Interpret the reviewed offset result and choose the next concrete Discovery experiment, including a past-only market calibration control.",
+      "status": "DONE: gpt-6-astra/high froze MarketOnlyRidgeCalibration-v1, a two-parameter market-logit-only nested control using the same offset objective, penalty and optimizer; no Train fit was run by Controller.",
+      "active": false,
+      "next": "Implement the thin sibling runner/tests, independently pre-review it, then execute one fresh local Train diagnostic and return the result to Controller.",
+      "log": "AGENT_LOG_MARKET_CALIBRATION_NEXT_CONTROLLER_2026-09-29.md"
+    },
+    {
+      "id": "market_only_ridge_calibration_implementation_20260929",
+      "title": "DONE：MarketOnlyRidgeCalibration-v1 implementation",
+      "task": "Implement the fixed two-parameter past-only market calibration control, archived full-offset comparison and direct tests without real Train execution.",
+      "status": "DONE: thin runner 71d32946...cc191 and tests 548d8d63...5bb0 passed 34/34 adjacent checks, independent pre-score review and one complete real Train execution.",
+      "active": false,
+      "next": "Freeze implementation as lineage for the completed calibration scorecard; archived offset was read only and never refit.",
+      "log": "AGENT_LOG_MARKET_ONLY_RIDGE_CALIBRATION_IMPLEMENTATION_2026-09-29.md"
+    },
+    {
+      "id": "market_only_ridge_calibration_result_review_20260929",
+      "title": "DONE：MarketOnlyRidgeCalibration-v1 result review",
+      "task": "Independently verify the completed market-only calibration artifact, four-arm metrics, archived-offset attribution, grouped inference and boundaries.",
+      "status": "PASS at 0 P0 / 0 P1: all artifacts and parent chains, 195→194→87 accounting, two-parameter reconstruction, four-arm arithmetic, corrected intervals and REVERT independently reproduced; 34/34 tests passed.",
+      "active": false,
+      "next": "Archive as opened-Train Discovery evidence. Market remains current best; calibration remains a research branch.",
+      "log": "AGENT_LOG_MARKET_ONLY_RIDGE_CALIBRATION_RESULT_INDEPENDENT_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "post_calibration_next_controller_20260929",
+      "title": "DONE：Astra next Controller — compressed orthogonal price path",
+      "task": "Interpret calibration and full-offset attribution, then select one next open-Discovery recipe for conditional information beyond market.",
+      "status": "DONE: gpt-6-astra/high froze MarketOrthogonalPricePath-v1, compressing existing causal paths to two signed families, prior-only residualizing them against market logit, and fitting a four-parameter offset ridge; no implementation or Train run yet.",
+      "active": false,
+      "next": "Implement a thin sibling runner/tests, independently pre-review, then execute under a fresh persistent ID if valid.",
+      "log": "AGENT_LOG_POST_CALIBRATION_NEXT_CONTROLLER_2026-09-29.md"
+    },
+    {
+      "id": "local_train_domain_inventory_20260929",
+      "title": "DONE：Domain-agnostic resident Train inventory",
+      "task": "Before reading new model scores, inventory already-resident local Train domains against timestamp, event breadth, chronological split, market-baseline and no-fetch readiness; select one domain for the first diagnostic.",
+      "status": "PASS: selected the resident 2025 NFL two-outcome moneyline Train before any new score, based only on role, persistence, causal timestamps, 195-event/42-date breadth and no-fetch readiness.",
+      "active": false,
+      "next": "Use the frozen 2025 NFL Train domain for the first private diagnostic; preserve rights caveat and all Dev/Final, network, provider, publication and promotion closures.",
+      "log": "AGENT_LOG_LOCAL_TRAIN_DOMAIN_INVENTORY_2026-09-29.md"
+    },
+    {
+      "id": "first_real_train_pipeline_audit_20260929",
+      "title": "DONE：First real Train diagnostic pipeline audit",
+      "task": "Locate the shortest existing executable path for chronological Train-only probability baselines, calibration and paired metrics without reading protected Dev/Final.",
+      "status": "PASS: existing probability contract, proper scorer, rolling-fit patterns and persistent sklearn runtime are reusable; the only remaining blocker is one offline settlement-probability runner plus focused synthetic tests.",
+      "active": false,
+      "next": "Implement and test the frozen 2025 NFL Train runner, then let Supervisor execute it once under a fresh persistent diagnostic ID.",
+      "log": "AGENT_LOG_FIRST_REAL_TRAIN_PIPELINE_AUDIT_2026-09-29.md"
+    },
+    {
+      "id": "first_real_train_runner_implementation_20260929",
+      "title": "DONE：First real Train settlement diagnostic runner",
+      "task": "Implement the frozen offline 2025 NFL settlement-probability materializer and chronological rolling A/B runner with focused synthetic tests; do not execute the real Train scorecard.",
+      "status": "PASS: repaired schedule-date runner 1f1bdccd...fb8b passed 9/9 focused tests, py_compile, diff-check and independent pre-score review; Supervisor's -02 execution completed.",
+      "active": false,
+      "next": "Preserve source and tests as exact lineage for the -02 Train scorecard; any next hypothesis must use a new source hash and fresh diagnostic ID.",
+      "log": "AGENT_LOG_FIRST_REAL_TRAIN_RUNNER_IMPLEMENTATION_2026-09-29.md"
+    },
+    {
+      "id": "first_real_train_spec_independent_review_20260929",
+      "title": "DONE：Independent first real Train spec review",
+      "task": "Independently review the frozen pre-score 2025 NFL settlement diagnostic for causal timestamps, orientation, chronological isolation, paired scoring and honest Train-only interpretation.",
+      "status": "PASS at 0 P0 / 0 P1 on the repaired schedule-date snapshot; 9/9 focused tests and exact source hashes independently reproduced before the successful run.",
+      "active": false,
+      "next": "Archived as pre-score evidence for runner 1f1bdccd...fb8b and tests 6c349018...5927.",
+      "log": "AGENT_LOG_FIRST_REAL_TRAIN_SPEC_INDEPENDENT_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "first_real_train_result_independent_review_20260929",
+      "title": "DONE：Independent first real Train result review",
+      "task": "Independently verify the complete -02 artifact, source/lock/code hashes, full denominator, folds, predictions, proper-score arithmetic, REVERT rule and no-Dev/Final/no-network boundary.",
+      "status": "PASS: all artifact/source hashes, 195→194 denominator, 87-event mask, folds, proper-score arithmetic, intervals and REVERT independently reproduced; 9/9 tests passed.",
+      "active": false,
+      "next": "Archive -02 as the independently reviewed first real Train scorecard; 20 schedule dates and 26 explicitly labeled UTC paired blocks are distinct valid summaries.",
+      "log": "AGENT_LOG_FIRST_REAL_TRAIN_RESULT_INDEPENDENT_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "first_real_train_next_hypothesis_20260929",
+      "title": "DONE：Next Train diagnostic hypothesis",
+      "task": "Interpret the completed -02 Train scorecard and propose exactly one next prediction-stage change that is causally motivated and testable on the same frozen rows/splits.",
+      "status": "DONE: gpt-6-astra/high proposed exactly one next candidate, MarketOffsetRidgeLogistic-v1, with fixed lambda=1 mean-NLL residual objective and a new 600-second fail-closed staleness gate.",
+      "active": false,
+      "next": "Implement synthetic gradient/staleness/control-parity tests, independently freeze the new snapshot, then run one fresh persistent Train diagnostic ID.",
+      "log": "AGENT_LOG_FIRST_REAL_TRAIN_NEXT_HYPOTHESIS_2026-09-29.md"
+    },
+    {
+      "id": "synthetic_adapter_canary_runner_worker_20260929",
+      "title": "PAUSED：Synthetic adapter one-shot runner implementation",
+      "task": "Implement the fixed two-row probe candidate, strict canary-evidence verifier and argument-free one-shot persistent runner from the two independent design reviews; no Docker launch.",
+      "status": "Interrupted by the Train Discovery authorization before any Docker run or persistent attempt-root creation. Partial unreviewed source is preserved; the authorized ID remains unconsumed.",
+      "active": false,
+      "next": "Do not resume before the first real Train scorecard; canary is not a Discovery prerequisite.",
+      "log": "AGENT_LOG_SYNTHETIC_ADAPTER_CANARY_RUNNER_IMPLEMENTATION_2026-09-29.md"
+    },
+    {
+      "id": "synthetic_adapter_canary_boundary_reviewer_20260929",
+      "title": "DONE/PAUSED：Synthetic adapter live-canary boundary review",
+      "task": "Read-only review of the exact v4 adapter and A01-A22 threat model; specify launch-critical live synthetic probes and later independently review the one-shot terminal artifacts.",
+      "status": "Design-boundary PASS at 0 P0 / 0 P1. Live terminal review is strategically paused; no Docker dispatch or ID consumption occurred.",
+      "active": false,
+      "next": "Preserve design evidence; do not treat it as a prerequisite for open Train Discovery.",
+      "log": "AGENT_LOG_SYNTHETIC_ADAPTER_CANARY_BOUNDARY_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "synthetic_adapter_canary_oneshot_reviewer_20260929",
+      "title": "DONE/PAUSED：Synthetic adapter one-shot launch-state review",
+      "task": "Audit the authorized ID's preflight, durable local paths, one-shot consumption, replay and failure semantics without running Docker.",
+      "status": "PASS_FOR_IMPLEMENTATION_ONLY at 0 P0 / 0 P1. Superseding authorization now permits local Train diagnostics and pauses this canary-first path. ID remains unconsumed.",
+      "active": false,
+      "next": "Preserve the one-shot contract for a later locked-Evaluation canary; do not resume before the first Train scorecard.",
+      "log": "AGENT_LOG_SYNTHETIC_ADAPTER_CANARY_ONESHOT_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "independent_real_candidate_adapter_reviewer_20260929",
+      "title": "DONE：Independent synthetic local candidate adapter v4 rereview",
+      "task": "Fresh non-author rereview of repaired aggregate 87a32217bca2919e1a4724785ef578a6b7cda23b10bf99c56319017235e9472b, replaying all three prior review rounds and the full A01-A22 disposition.",
+      "status": "PASS, 0 P0 / 0 P1 for exact v4 synthetic adapter readiness. Independently recomputed aggregate 87a32217...e9472b; 85/85 focused-plus-adjacent, 516/516 repository tests with 2 skips, and 11/11 extra terminal mutations passed/fail-closed. No live Docker canary or real data was used.",
+      "active": false,
+      "next": "Freeze this exact adapter snapshot. Request a separately authorized fresh-ID zero-provider synthetic Docker isolation canary; real data, scoring, training, provider, release and protected splits remain blocked.",
+      "log": "AGENT_LOG_REAL_CANDIDATE_ADAPTER_INDEPENDENT_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "real_candidate_adapter_threat_reviewer_20260929",
+      "title": "DONE：Real candidate adapter threat model",
+      "task": "Independently inspect the frozen synthetic prediction protocol and existing local Docker containment sources; specify the smallest attack-complete local adapter using synthetic fixtures only.",
+      "status": "PASS for synthetic-only implementation readiness: exact stdin/stdout interface, two read-only source mounts, host-owned fsync sequencing, exit/absence-before-completion, and A01-A22 attack matrix. 59 existing offline checks passed; no Docker or real data used.",
+      "active": false,
+      "next": "Supervisor implements the narrow adapter with synthetic fixtures only, then freezes one exact snapshot for independent integrated review.",
+      "log": "AGENT_LOG_REAL_CANDIDATE_ADAPTER_THREAT_MODEL_2026-09-29.md"
+    },
+    {
+      "id": "prediction_first_minimal_loop_20260929",
+      "title": "DONE：Prediction-first minimal loop",
+      "task": "Implement the smallest synthetic probability loop in three disjoint tracks, then integrate KEEP/REVERT and obtain fresh independent review.",
+      "status": "Exact v4 synthetic loop PASS：54/54 focused、33/33 adjacent and fresh non-author attack review with 0 P0 / 0 P1. KEEP then REVERT, frozen-Dev binding, full-score persistence, crash recovery and aggregate-only lineage all verified; no empirical prediction claim exists.",
+      "active": false,
+      "next": "Freeze this exact snapshot. Next, separately plan an already-opened local-data diagnostic and a real isolation canary; no fetch, protected split, provider, release or promotion is granted.",
+      "log": "AGENT_LOG_PREDICTION_FIRST_MINIMAL_LOOP_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "pmb_role_reversal_audit_20260929",
+      "title": "DONE：PMB role-reversal audit",
+      "task": "Locate every active PMB architectural claim and identify the minimal safe supersession without mutating historical hashes.",
+      "status": "Read-only PASS：42 PMB files form an isolated untracked island; current architecture/release manifest is PMB-free; one superseding decision is sufficient.",
+      "active": false,
+      "next": "Keep PMB smoke-only and cancel prospective intake/adapter/hidden-evaluator/Controller-swap work.",
+      "log": "AGENT_LOG_PREDICTION_FIRST_RESET_2026-09-29.md"
+    },
+    {
+      "id": "minimal_prediction_loop_audit_20260929",
+      "title": "DONE：Minimal prediction-loop component audit",
+      "task": "Map existing code to raw data, signal, prediction, objective and PnL, then identify the smallest missing prediction-first loop pieces.",
+      "status": "Read-only PASS：most primitives exist; the three real gaps are settlement probability scoring, isolated label-free prediction execution and KEEP/REVERT lineage.",
+      "active": false,
+      "next": "Build only the three gaps and prove two synthetic rounds before any real data or PnL work.",
+      "log": "AGENT_LOG_PREDICTION_FIRST_RESET_2026-09-29.md"
+    },
+    {
+      "id": "p0_admission_integration_implementation_20260922",
+      "title": "PAUSED：P0 candidate-admission integration remediation",
+      "task": "Compose the reviewed ledger, orientation and Train receipt boundaries into one controlled candidate-only non-test consumer.",
+      "status": "First snapshot was REPLAN; subsequent repair evidence is preserved. Strategy reset pauses additional admission governance until the minimal prediction loop exists.",
+      "active": false,
+      "next": "Do not resume automatically. After the synthetic loop passes, select one stable repair snapshot and obtain fresh independent review before any admission claim.",
       "log": "AGENT_LOG_P0_ADMISSION_INTEGRATION_IMPLEMENTATION_2026-09-22.md"
     },
     {
@@ -687,21 +894,120 @@
     },
     {
       "id": "gate1_v0125_d0_execution_20260928",
-      "title": "BLOCKED：v0.1.25 paid D0 one-shot execution",
+      "title": "DONE · PASS：v0.1.25 paid D0 one-shot execution",
       "task": "After both independent preflights pass and Supervisor rechecks all gates, execute exactly one paid Controller D0 under market-rsi-v0125-gate1-controller-d0-20260928-01, at most one GLM/Tinker sample, no retry, exact upper $0.0389772; no fetch, Train/Dev/Final or training.",
-      "status": "Human authorization for the one-shot D0 is recorded, but execution is blocked before claim/reservation because setup is USD 0.005963188 short of the production fixed reservation. No ID was consumed.",
+      "status": "PASS: invoked once; child exit 0, one 4020/511/0-token sample, metered USD 0.02574585, valid scope-only non-executable source-scope decision, terminal budget/state closure and exact cleanup. ID permanently consumed.",
       "active": false,
-      "next": "Require explicit bucket allocation-transfer authority, then append the transfer, rebind durable decision state and pass a fresh immediate preflight before the sole dispatch.",
+      "next": "Archived. Never rerun this ID; keep all downstream fetch/data/training gates closed pending a separate reviewed plan and authorization.",
       "log": "AGENT_LOG_GATE1_V0125_D0_EXECUTION_2026-09-28.md"
     },
     {
       "id": "gate1_v0125_d0_independent_review_20260928",
-      "title": "WAITING：v0.1.25 paid D0 independent review",
+      "title": "DONE · PASS：v0.1.25 paid D0 independent review",
       "task": "After terminal execution artifacts exist, independently verify provider/sample/cost, exact release/source/runtime/canary lineage, immutable raw response and parsed decision/failure, no retry/fetch/data/training, budget/state closure and cleanup. Read-only.",
-      "status": "Registered before execution; not assigned until terminal artifacts exist.",
+      "status": "PASS: fresh reviewer verified one sample, metered USD 0.02574585, immutable raw response, valid non-executable D0 semantics, budget/global-state closure, 74 healthy watchdog records and no residual process/container.",
       "active": false,
-      "next": "Return PASS or REPLAN before any downstream fetch or other action; never resample the ID.",
+      "next": "Archived. Operational D0 PASS only; it is not an experiment result and grants no fetch, data admission or training authority.",
       "log": "AGENT_LOG_GATE1_V0125_D0_INDEPENDENT_REVIEW_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_d0_post_transfer_budget_state_recheck_20260928",
+      "title": "DONE · PASS：v0.1.25 D0 post-transfer budget/state recheck",
+      "task": "After the authorized USD 0.006 repair-to-setup transfer and durable state rebind, independently repeat unique-ID, budget, state, canary, path, process and container gates. Read-only; no claim/reserve/provider/fetch/data/training.",
+      "status": "PASS: setup available USD 0.050036812; exact transferred budget and rebound state heads, fresh ID/path absence, canary and exact-clear checks all reproduced without mutation.",
+      "active": false,
+      "next": "Archived; Supervisor independently replays the perishable gates immediately before execution.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_POST_TRANSFER_BUDGET_STATE_RECHECK_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_d0_post_auth_launch_recheck_20260928",
+      "title": "DONE · PASS：v0.1.25 D0 post-authorization launch recheck",
+      "task": "After allocation transfer and state rebind, independently replay the exact dormant argv bindings, 4020/1600 token cost, one-sample/no-retry controls, credential boundary and terminal receipt checklist. Read-only.",
+      "status": "PASS: exact v0.1.25 launch bindings, 4020/1600 token cost, USD 0.0389772 upper, USD 0.05 reserve, one-sample/no-retry/no-catalog and credential metadata boundary reproduced.",
+      "active": false,
+      "next": "Archived; Supervisor uses the exact audited argv after its own immediate replay.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_POST_AUTH_LAUNCH_RECHECK_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_d0_bridge_gap_audit_20260928",
+      "title": "DONE · PASS：v0.1.25 D0-to-request gap audit",
+      "task": "Read-only trace the exact reviewed D0 source/response choice through the current packet, validator, compiler and production paths; identify the minimal deterministic offline bridge and adversarial cases.",
+      "status": "PASS: no existing reviewed path suffices; exact opaque-pair/registry crosswalk, immutable provenance bindings and adversarial rejects are fully specified for one pure offline bridge.",
+      "active": false,
+      "next": "Archived; Supervisor reproduces the findings during integration.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_BRIDGE_GAP_AUDIT_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_d0_fetch_boundary_audit_20260928",
+      "title": "DONE · PASS：v0.1.25 D0 fetch-boundary audit",
+      "task": "Read-only inspect fixed official-source mapping, public/watched-fetch contracts, rights boundary and watchdog ceilings; define the complete exact documentation-manifest checklist without contacting the source.",
+      "status": "PASS: fixed URL/GET/headers/limits/redirect/retry/content/hash/watchdog/rights boundaries specified; low-level generic-HTTPS gap identified without network action.",
+      "active": false,
+      "next": "Archived; Supervisor must bind the complete registry record before any later admission.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_FETCH_BOUNDARY_AUDIT_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_d0_bridge_integration_20260928",
+      "title": "DONE · PASS：v0.1.25 D0-to-request bridge integration",
+      "task": "After both independent audits pass, implement only the converged deterministic offline bridge and adversarial tests while preserving the D0 bytes and validator unchanged.",
+      "status": "PASS: exact D0 decision/provenance/packet/release/registry/capability commitments now compile offline to deterministic plan 34b45266...b9b812c; all fetch/data/training/release authority remains false.",
+      "active": false,
+      "next": "Archived as stable integration snapshot c8053164...a51faee2; no release or fetch authority.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_BRIDGE_INTEGRATION_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_d0_bridge_tests_20260928",
+      "title": "DONE · PASS：v0.1.25 D0-to-request bridge tests",
+      "task": "On one stable integration snapshot, run focused adversarial and full relevant offline tests plus diff/JSON/secret/data-scope checks.",
+      "status": "PASS: focused 12/12 and pinned-runtime full 516/516 with 2 existing skips; diff and source-only secret checks passed.",
+      "active": false,
+      "next": "Archived; stable candidate proceeds to non-author independent review only.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_BRIDGE_TESTS_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0125_d0_bridge_review_20260928",
+      "title": "DONE · PASS：v0.1.25 D0-to-request independent review",
+      "task": "After integration and tests stabilize, independently review the complete diff, provenance, manifest fixture, fail-closed adversarial cases and absence of network/data action.",
+      "status": "PASS: fresh non-author review reproduced the actual immutable-D0 compile twice, plan 34b45266...b9b812c, 341-file digest c8053164...a51faee2 and focused 12/12; exact mapping and all-false execution/data/release authority confirmed.",
+      "active": false,
+      "next": "Archived as an unpublished offline release candidate; release, fresh canary and fetch remain separate authorization gates.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_BRIDGE_REVIEW_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0126_release_scope_preflight_20260928",
+      "title": "DONE：v0.1.26 public release-scope preflight",
+      "task": "Read-only identify an isolated clean-origin release path and exact public allowlist that cannot publish internal D0/budget/state/orchestration evidence.",
+      "status": "PASS only for an isolated clean worktree from freshly verified origin/main; current main must not be pushed because it contains private orchestration history.",
+      "active": false,
+      "next": "After stable source review, construct the final public allowlist and release only from the clean worktree; never force-push or move a tag.",
+      "log": "AGENT_LOG_GATE1_V0126_RELEASE_SCOPE_PREFLIGHT_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0126_fetch_adapter_preflight_20260928",
+      "title": "DONE：v0.1.26 exact fetch-adapter preflight",
+      "task": "Read-only derive the minimal exact plan/release/authorization/watchdog adapter and adversarial contract before any real fetch.",
+      "status": "Design PASS, implementation required: distinct exact schemas, dual authority, permanent claim, outer watchdog, proxy hardening and terminal verification.",
+      "active": false,
+      "next": "Implement the adapter component on its exact v2 paths with fake transports only.",
+      "log": "AGENT_LOG_GATE1_V0126_FETCH_ADAPTER_PREFLIGHT_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0126_canary_path_preflight_20260928",
+      "title": "DONE：v0.1.26 zero-provider canary-path preflight",
+      "task": "Read-only select the release-bound zero-provider/no-network canary and enumerate fresh-ID/source/runtime/watchdog/cleanup evidence.",
+      "status": "Runbook PASS, implementation required: the generic production CLI canary is insufficient; a dedicated exact-D0 bridge canary and pure verifier are mandatory.",
+      "active": false,
+      "next": "Implement the dedicated component under permanent ID market-rsi-v0126-gate1-d0-bridge-first-current-source-20260928-01.",
+      "log": "AGENT_LOG_GATE1_V0126_CANARY_PATH_PREFLIGHT_2026-09-28.md"
+    },
+    {
+      "id": "gate1_v0126_fetch_binding_integration_20260928",
+      "title": "PAUSED：v0.1.26 exact fetch-binding integration",
+      "task": "Under v3, integrate the two accepted components into the distinct exact-plan/release-bound shared watched-fetch seam, controlled-source manifest and adversarial test surface, then run full checks and fresh independent review.",
+      "status": "Integration and fresh non-author review PASS on digest 2e3b6b14...f741a23f. Isolated release commit e26891f4 and annotated tag object 4e00ec64 are ready after 516/516 tests, but the approval layer rejected remote publication pending exact payload/destination authorization; remote remains unchanged.",
+      "active": false,
+      "next": "Preserve the clean worktree, commit, tag and reviews without pushing. Reconsider only after the minimal prediction loop passes and this documentation-fetch path is shown to be necessary.",
+      "log": "AGENT_LOG_GATE1_V0126_FETCH_BINDING_INTEGRATION_2026-09-28.md"
     }
   ]
 }

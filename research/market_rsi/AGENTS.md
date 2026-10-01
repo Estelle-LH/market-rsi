@@ -1,5 +1,42 @@
 # Research before changing the Market RSI harness
 
+## Opened-Train Discovery policy — 2026-09-29 human override
+
+The active research mainline is `SettlementProbabilityTrainDiagnostic-v0`.
+For already-opened, resident local Train data, private diagnostic research may
+read the full Train set, change code/features/models/training methods/tools,
+run repeated chronological validation and accumulate research memory without a
+new release, canary or per-round authorization.  This exception does not apply
+to protected Dev/Final, external acquisition, paid providers, publication,
+deployment or promotion.
+
+Discovery is open-ended.  A one-component A/B remains useful when the purpose
+is attribution or ablation, but it is not a universal restriction: a Controller
+may combine changes when exploring, provided the complete recipe, data-time
+boundary, score definition, resource budget and comparison rows are recorded.
+`KEEP`/`REVERT` changes only the current best prediction recipe; failed branches,
+code and evidence remain available for later development.  Failure is not proof
+that the Controller is weak or that a feature family has no incremental signal.
+
+Before adding complexity, distinguish market-only calibration from incremental
+non-market information.  Primary metrics stay equal-event proper scores on
+identical rows.  Resampling must preserve that estimand: sample complete
+schedule days or weeks, then recompute the equal-event metric inside every
+draw.  Always report event, schedule-date and game-week breadth.  Reused Train
+folds are Discovery, never untouched OOS.
+
+The self-evolution hypothesis is evaluated separately with matched model
+version, data permissions and resource budget: fixed research process versus a
+process that may accumulate memory and improve its workflow, over multiple
+independent runs.  Do not attribute a base-model upgrade to RSI.  Formal final
+evaluation must additionally address LLM memorization by freezing the candidate
+and model version before future events occur and settle; planning that boundary
+does not block current Train Discovery.
+
+The fixed 15-minute cutoff, 22 + 4x5 folds, NFL seed domain and named trainers
+are project choices, not literature consensus.  Literature-backed principles,
+project parameters and unvalidated hypotheses must be labelled separately.
+
 **Later 2026-09-17 execution correction:** The user retired new E2B
 connection tests. B Researcher now targets one local Docker container; A/GLM,
 the Supervisor, broker, keys, budget and evaluator remain outside it. A live

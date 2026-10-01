@@ -1,0 +1,242 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "market-rsi-v0126-release-canary-doc-fetch-20260928-v2",
+  "symptom": "The v1 preflights found that the reviewed D0 bridge is still inert, current main contains private orchestration history that must not be released, and neither a dedicated D0-bridge canary nor an exact release-bound live fetch adapter exists.",
+  "source_evidence": "SUPERVISOR_GATE1_V0126_RELEASE_CANARY_FETCH_2026-09-28-v1.json and the three AGENT_LOG_GATE1_V0126_*_PREFLIGHT_2026-09-28.md reports.",
+  "objective": "Implement and independently review the minimum fail-closed bridge canary and exact watched-document-fetch boundary, publish only the approved public source from a clean origin/main worktree as v0.1.26, run one fresh zero-provider canary, then execute and independently account for one authorized GET of the exact fixed official documentation page.",
+  "boundary": "Authorized: local source/tests/review, one immutable public v0.1.26 release, one fresh zero-provider and zero-source-network canary, and one fresh-ID one-request no-retry GET of the exact code-owned official documentation URL with a 1,000,000-byte response ceiling, 15-second transport timeout, 300-second outer ceiling, explicit fetch plus retention authority, and durable non-cloud local evidence. Excluded: purchases, credentials, provider/model calls, proxies, alternate pages, links, documented APIs, market/trade data, Train/Dev/Final, candidate or formal admission, training, evaluation, redistribution, publication of the fetched snapshot, and prediction claims.",
+  "resolution_check": "Every implementation component must merge on one stable source digest, pass focused and full pinned-runtime tests, privacy/secret/output checks and fresh non-author review. The release must be created from freshly verified origin/main in an isolated clean worktree and remotely verified. The exact published bytes must then pass one fresh permanent-ID canary and independent review before the one-shot watched fetch. The fetch ID is consumed by any terminal attempt and all downstream data/experiment gates remain closed.",
+  "supervisor_owner": "Supervisor · Market RSI",
+  "authorization": {
+    "user_text": "授权所有",
+    "interpreted_scope": "the three immediately preceding gates: safe release, fresh zero-provider canary, and one exact fixed-document watched fetch with minimal durable evidence retention",
+    "not_authorized": [
+      "purchase_or_credentials",
+      "provider_or_model_call",
+      "alternate_or_documented_api_or_market_data_fetch",
+      "catalog_or_train_dev_final_read",
+      "candidate_or_formal_data_admission",
+      "training_evaluation_or_prediction_claim"
+    ]
+  },
+  "identities": {
+    "release_tag": "market-rsi-protocol-v0.1.26",
+    "zero_provider_canary_id": "market-rsi-v0126-gate1-d0-bridge-first-current-source-20260928-01",
+    "watched_fetch_id": "market-rsi-v0126-gate1-official-doc-fetch-20260928-01",
+    "request_plan_canonical_sha256": "34b45266df887dbf308b196eac865bfc5a3a6b65257c667849605e5a8b9b812c",
+    "request_bundle_canonical_sha256": "7f340e20702a03200628cbad06f300257252d06a8b564985cbbf60ad8535b931",
+    "document_url_sha256": "2f12d47b49fc82adafda53effcc7a11edaa9fbd85a6de9b9403cc90f86cfb3fc"
+  },
+  "steps": [
+    {
+      "id": "release_scope_preflight",
+      "owner": "controller_launch_preflight",
+      "action": "Audit the dirty tree, standalone origin history and release privacy boundary and define the only safe release workflow.",
+      "depends_on": [],
+      "write_paths": ["research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0126_RELEASE_SCOPE_PREFLIGHT_2026-09-28.md"],
+      "expected_artifact": "Exact clean-worktree release method and public-only allowlist rule.",
+      "verification": "Supervisor reproduces local/remote ancestry and confirms current main cannot be pushed.",
+      "pass_condition": "A clean origin/main worktree can publish only independently approved public bytes without private logs or state.",
+      "failure_action": "Do not commit, tag or push from the dirty lineage.",
+      "time_bound_minutes": 20,
+      "result": {
+        "verdict": "pass",
+        "observed": "Direct release from current main is rejected because local commit 8e4a02b contains eight private state/log files. Release is permitted only from a fresh verified origin/main isolated worktree using an independently approved public allowlist, immutable new tag and remote verification; no force push or tag move.",
+        "reviewer": "controller_launch_preflight",
+        "evidence_path": "AGENT_LOG_GATE1_V0126_RELEASE_SCOPE_PREFLIGHT_2026-09-28.md",
+        "evidence_sha256": "6fc7108ce4c3f4badb13e5cec65fa3690eb020fdbe1cd38d76843a2dd0f058b3"
+      }
+    },
+    {
+      "id": "fetch_adapter_preflight",
+      "owner": "canary_receipt_verifier_worker",
+      "action": "Derive the exact plan/release/authorization/claim/watchdog contract for the only live documentation fetch entry.",
+      "depends_on": [],
+      "write_paths": ["research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0126_FETCH_ADAPTER_PREFLIGHT_2026-09-28.md"],
+      "expected_artifact": "A fail-closed design and adversarial checklist with no external action.",
+      "verification": "Supervisor traces the design through current public_fetch, watched_fetch, watchdog and global state.",
+      "pass_condition": "The design prevents generic task/URL substitution and specifies fresh-ID, process, output and terminal verification.",
+      "failure_action": "Do not implement, publish or fetch until the missing primitive is planned.",
+      "time_bound_minutes": 20,
+      "result": {
+        "verdict": "pass",
+        "observed": "The audit defined distinct exact task and admission schemas, complete bundle/plan/release/runtime/canary binding, separate fetch and retention authority, permanent global attempt claim, production parent/child outer watchdog, proxy-environment hardening, ambiguous-header rejection and terminal receipt verification. Current source still needs implementation.",
+        "reviewer": "canary_receipt_verifier_worker",
+        "evidence_path": "AGENT_LOG_GATE1_V0126_FETCH_ADAPTER_PREFLIGHT_2026-09-28.md",
+        "evidence_sha256": "040ba1e988584c438d2f7d1809c5b5758b04874eab53d575458757ad632f14c8"
+      }
+    },
+    {
+      "id": "canary_path_preflight",
+      "owner": "post_canary_experiment_preflight",
+      "action": "Select the exact release-bound D0 bridge canary path and enumerate immutable D0, source/runtime, process/output and review gates.",
+      "depends_on": [],
+      "write_paths": ["research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0126_CANARY_PATH_PREFLIGHT_2026-09-28.md"],
+      "expected_artifact": "Exact fresh-ID dedicated bridge-canary runbook.",
+      "verification": "Supervisor confirms the canary compiles the actual immutable D0 and cannot import or call fetch/network code.",
+      "pass_condition": "The runbook fixes one permanent ID and every zero-effect receipt and cleanup condition.",
+      "failure_action": "Do not release until the dedicated canary source and verifier exist.",
+      "time_bound_minutes": 20,
+      "result": {
+        "verdict": "pass",
+        "observed": "The audit rejected the unrelated production-CLI canary and specified a dedicated no-provider/no-source-network D0 bridge canary, pure receipt verifier, exact immutable D0 hashes and permanent ID market-rsi-v0126-gate1-d0-bridge-first-current-source-20260928-01. Current source still needs implementation.",
+        "reviewer": "post_canary_experiment_preflight",
+        "evidence_path": "AGENT_LOG_GATE1_V0126_CANARY_PATH_PREFLIGHT_2026-09-28.md",
+        "evidence_sha256": "223530c429bb1fbfc780ccedcb69bb530fed8bb62acd906f666298ca6c26b415"
+      }
+    },
+    {
+      "id": "fetch_adapter_component",
+      "owner": "canary_receipt_verifier_worker",
+      "action": "Implement the new pure exact adapter, sole live parent/child entry, terminal receipt verifier and focused fake-transport tests without editing shared legacy modules or running real network.",
+      "depends_on": ["release_scope_preflight", "fetch_adapter_preflight", "canary_path_preflight"],
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/p0_gate1_source_scope_fetch_adapter.py",
+        "research/market_rsi/supervisor_harness/p0_gate1_source_scope_watched_fetch_child.py",
+        "research/market_rsi/supervisor_harness/run_p0_gate1_source_scope_watched_fetch.py",
+        "research/market_rsi/supervisor_harness/source_scope_fetch_receipt.py",
+        "research/market_rsi/supervisor_harness/test_p0_gate1_source_scope_fetch_adapter.py",
+        "research/market_rsi/supervisor_harness/test_run_p0_gate1_source_scope_watched_fetch.py",
+        "research/market_rsi/supervisor_harness/test_source_scope_fetch_receipt.py",
+        "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0126_FETCH_ADAPTER_IMPLEMENTATION_2026-09-28.md"
+      ],
+      "expected_artifact": "A component snapshot with no generic URL/task input and no real transport in tests.",
+      "verification": "Supervisor reviews every field and runs component tests with transport-call assertions.",
+      "pass_condition": "The component is fail-closed and its live CLI cannot be redirected or transport-injected.",
+      "failure_action": "Preserve findings, do not integrate or release, and version a repair plan.",
+      "time_bound_minutes": 60
+    },
+    {
+      "id": "bridge_canary_component",
+      "owner": "post_canary_experiment_preflight",
+      "action": "Implement the dedicated D0 bridge canary child/parent, pure receipt verifier and focused tests; it must not import or call public_fetch, watched_fetch or network code.",
+      "depends_on": ["release_scope_preflight", "fetch_adapter_preflight", "canary_path_preflight"],
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/p0_gate1_source_scope_request_plan_canary_child.py",
+        "research/market_rsi/supervisor_harness/run_p0_gate1_source_scope_request_plan_canary.py",
+        "research/market_rsi/supervisor_harness/source_scope_request_plan_canary_receipt.py",
+        "research/market_rsi/supervisor_harness/test_p0_gate1_source_scope_request_plan_canary_child.py",
+        "research/market_rsi/supervisor_harness/test_run_p0_gate1_source_scope_request_plan_canary.py",
+        "research/market_rsi/supervisor_harness/test_source_scope_request_plan_canary_receipt.py",
+        "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0126_BRIDGE_CANARY_IMPLEMENTATION_2026-09-28.md"
+      ],
+      "expected_artifact": "A release-bound permanent-ID canary source path and verifier with zero external effects.",
+      "verification": "Supervisor runs focused tests and confirms imports, receipts, process cleanup and permanent claim semantics.",
+      "pass_condition": "The exact D0 compiles twice to plan hash 34b45266...b9b812c and every external-effect counter is zero.",
+      "failure_action": "Do not integrate, publish or run a canary.",
+      "time_bound_minutes": 60,
+      "result": {
+        "verdict": "pass",
+        "observed": "The dedicated component binds the fixed durable run/claim roots and exact immutable D0 evidence, compiles twice to plan 34b45266...b9b812c and bundle 7f340e20...35b931, uses a minimal isolated child plus permanent claim/watchdog/exact-clear receipts, imports no fetch/network/provider path, and passed 13/13 focused tests under Supervisor replay.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "AGENT_LOG_GATE1_V0126_BRIDGE_CANARY_IMPLEMENTATION_2026-09-28.md",
+        "evidence_sha256": "3d97c2d35ae22e063bbbdf3aa3c3584ec72d6b3e066c5947cada013c549e540a"
+      }
+    },
+    {
+      "id": "exact_fetch_binding_integration",
+      "owner": "Supervisor · Market RSI",
+      "action": "Merge both components, add the distinct schema path and proxy/header hardening to shared fetch/watchdog code, add cross-component adversarial tests, and update the controlled-source manifest and public architecture only.",
+      "depends_on": ["fetch_adapter_component", "bridge_canary_component"],
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/p0_gate1_public_fetch.py",
+        "research/market_rsi/supervisor_harness/p0_gate1_watched_fetch.py",
+        "research/market_rsi/supervisor_harness/protocol_source_release.py",
+        "research/market_rsi/supervisor_harness/test_p0_gate1_public_fetch.py",
+        "research/market_rsi/supervisor_harness/test_p0_gate1_watched_fetch.py",
+        "research/market_rsi/supervisor_harness/test_p0_gate1_source_scope_fetch_integration.py",
+        "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0126_FETCH_BINDING_INTEGRATION_2026-09-28.md"
+      ],
+      "expected_artifact": "One stable complete source candidate with an exact live seam and dedicated offline canary.",
+      "verification": "Compile from actual D0 twice, inspect full diff and hashes, run fake success plus all authority/substitution/proxy/header/failure cases, and prove canary imports no fetch/network path.",
+      "pass_condition": "Only an exact recompiled plan plus verified release/runtime/canary and fresh dual-authority document can reach one watched GET; all other paths fail before transport.",
+      "failure_action": "Do not release or fetch; version a revised plan.",
+      "time_bound_minutes": 60
+    },
+    {
+      "id": "candidate_test_privacy_check",
+      "owner": "Supervisor · Market RSI",
+      "action": "Run focused adversarial tests, full pinned-runtime discovery, source/diff/JSON/secret/privacy checks and construct the exact public release allowlist.",
+      "depends_on": ["exact_fetch_binding_integration"],
+      "expected_artifact": "Stable controlled-source digest, exact test receipt and public-only allowlist.",
+      "verification": "All checks are offline, reproducible and exclude internal logs/state/runs/credentials/data/local paths.",
+      "pass_condition": "Focused and full tests pass and the public allowlist is independently reviewable.",
+      "failure_action": "Return to integration; do not release.",
+      "time_bound_minutes": 40
+    },
+    {
+      "id": "independent_source_review",
+      "owner": "Independent v0.1.26 source reviewer",
+      "action": "Read-only review the stable source, actual D0 compile, live adapter, dedicated canary, tests and exact clean-worktree public allowlist.",
+      "depends_on": ["exact_fetch_binding_integration", "candidate_test_privacy_check"],
+      "write_paths": [],
+      "expected_artifact": "Fresh non-author PASS or REPLAN with exact hashes.",
+      "verification": "Supervisor reproduces every cited hash and test before any Git mutation.",
+      "pass_condition": "Reviewer confirms deterministic exact binding, no generic fetch bypass, no-network canary and safe public release scope.",
+      "failure_action": "Do not release; repair narrowly and obtain fresh review.",
+      "time_bound_minutes": 30
+    },
+    {
+      "id": "publish_v0126",
+      "owner": "Supervisor · Market RSI",
+      "action": "Freshly verify literal standalone origin/main and tag absence, create an isolated clean worktree, transfer only the approved public files, test, commit, create one annotated immutable v0.1.26 tag, push fast-forward branch plus tag, and verify remote source.",
+      "depends_on": ["independent_source_review"],
+      "expected_artifact": "Remote release receipt binding commit, tag object, controlled-source digest and exact paths.",
+      "verification": "Remote tag/commit/source hashes match; current dirty lineage and all private artifacts remain unpublished.",
+      "pass_condition": "The standalone origin contains exactly the approved public v0.1.26 snapshot.",
+      "failure_action": "Do not canary; never force-push or move a tag; preserve facts and repair with a new version if needed.",
+      "time_bound_minutes": 30
+    },
+    {
+      "id": "zero_provider_canary",
+      "owner": "Supervisor · Market RSI",
+      "action": "Execute exactly once from published bytes under permanent ID market-rsi-v0126-gate1-d0-bridge-first-current-source-20260928-01 in the fixed durable non-cloud root.",
+      "depends_on": ["publish_v0126"],
+      "expected_artifact": "Terminal release-bound D0 bridge canary receipt with zero provider/network/cost/external bytes and exact cleanup.",
+      "verification": "Recheck fresh ID/path/container/process and exact release/runtime/D0 hashes immediately before launch; replay the pure verifier after exit.",
+      "pass_condition": "One run passes and permanently consumes the ID; plan and bundle hashes match and every effect counter is zero.",
+      "failure_action": "Never retry the ID and do not fetch; preserve failure and version a repair/release plan.",
+      "time_bound_minutes": 20
+    },
+    {
+      "id": "independent_canary_review",
+      "owner": "Independent v0.1.26 canary reviewer",
+      "action": "Read-only verify the exact published canary inputs, receipts, watchdog/process cleanup, claim consumption and zero effects.",
+      "depends_on": ["zero_provider_canary"],
+      "expected_artifact": "PASS/REPLAN canary review with exact artifact hashes.",
+      "verification": "Supervisor replays the verifier and keeps live fetch closed on any mismatch.",
+      "pass_condition": "The canary is exact, terminal, zero-effect and bound to the published source.",
+      "failure_action": "Do not fetch; require a new release/canary identity after repair.",
+      "time_bound_minutes": 20
+    },
+    {
+      "id": "watched_document_fetch",
+      "owner": "Supervisor · Market RSI",
+      "action": "Construct the exact immutable dual-authority document bound to the reviewed release/canary, claim the fresh ID, sanitize environment, then execute exactly one watched GET to the fixed official documentation URL and durable output; never retry.",
+      "depends_on": ["independent_canary_review"],
+      "expected_artifact": "Terminal success or failure result, watchdog journal and, only on successful response, bounded snapshot and canonical receipt.",
+      "verification": "Verify request count one, redirects/retries zero, exact URL/hash/status/content/size, no proxy/alternate/API/data request, terminal global claim and exact child/container cleanup.",
+      "pass_condition": "The one exact attempt is fully accounted for; success is documentation evidence only and grants no rights or data/experiment authority.",
+      "failure_action": "Preserve terminal failure without retry, fallback or alternate page; keep all downstream gates closed.",
+      "time_bound_minutes": 10
+    },
+    {
+      "id": "independent_fetch_review",
+      "owner": "Independent watched-fetch reviewer",
+      "action": "Read-only verify the one-shot authorization, request/response evidence, release/plan/canary bindings, watchdog/cleanup and claim boundaries.",
+      "depends_on": ["watched_document_fetch"],
+      "expected_artifact": "Final PASS/REPLAN/terminal-negative review distinguishing documentation evidence from rights/data/experiment evidence.",
+      "verification": "Supervisor reproduces hashes and changes no protected decision without a separate plan.",
+      "pass_condition": "The attempt is independently accounted for with no retry or scope expansion.",
+      "failure_action": "Keep downstream gates closed and request a new scientific/authority decision only if needed.",
+      "time_bound_minutes": 20
+    }
+  ],
+  "parallel_work": {
+    "base_source_sha256": "c80531648d07f83ff73c1c70c3a8c0d5fd5d02459bb1957c875959daa51faee2",
+    "worker_step_ids": ["fetch_adapter_component", "bridge_canary_component"],
+    "integration_step_id": "exact_fetch_binding_integration",
+    "review_step_id": "independent_source_review"
+  },
+  "resolution": null
+}

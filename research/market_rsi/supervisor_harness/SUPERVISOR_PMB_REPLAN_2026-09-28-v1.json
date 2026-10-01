@@ -1,0 +1,133 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "market-rsi-pmb-replan-20260928-01",
+  "symptom": "The strict-v0 harness accumulated parser, release and canary machinery while the programme still lacked a direct deterministic episode replay path to prediction evidence. The user redirected the execution base to PredictionMarketBench and asked for a simple closed-loop experimental lane.",
+  "source_evidence": "The official PredictionMarketBench paper and repository describe deterministic event-driven replay, AgentContext, order-book/trade/settlement episode files, maker/taker fills, fees and standardized PnL logs. The four public January 2026 episodes are already inspected and therefore diagnostic only.",
+  "objective": "Freeze a concise, evidence-backed replan for minimal PMB integration, a first Train-only self-iteration episode, a fair Controller swap and explicit pause/retain decisions before implementation.",
+  "boundary": "Read-only local reconnaissance and planning only. No provider call, paid sample, download, purchase, sealed-Final read, protected-state mutation, empirical run, release, commit, tag, push or other external write. Exact upstream SHA must be verified, never invented.",
+  "resolution_check": "One integrated replan must name the adapter boundary, diagnostic episode protocol, prediction-first metrics, trading-after-freeze metrics, hidden-evaluator isolation, Controller-swap controls, paused legacy work, retained safety controls, implementation files/tests and unresolved authorization gates. A fresh independent reviewer must check the single integrated snapshot.",
+  "supervisor_owner": "Supervisor · Market RSI",
+  "parallel_work": {
+    "base_source_sha256": "788c2e367dd92e410fcdec1599cbf2efe596746d70e31ea38607d4395cad66a7",
+    "worker_step_ids": [
+      "pmb_adapter_recon",
+      "pmb_hidden_eval_boundary_recon",
+      "pmb_simple_lane_swap_recon"
+    ],
+    "integration_step_id": "integrate_pmb_replan",
+    "review_step_id": "independent_pmb_replan_review"
+  },
+  "steps": [
+    {
+      "id": "pmb_adapter_recon",
+      "owner": "pmb_adapter_recon_20260928",
+      "action": "Inspect local integration points and define the smallest adapter around an exact pinned PMB upstream without rewriting the replay engine.",
+      "depends_on": [],
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/AGENT_LOG_PMB_ADAPTER_RECON_2026-09-28.md"
+      ],
+      "expected_artifact": "A path- and API-specific adapter proposal with upstream-pin and focused-test requirements.",
+      "verification": "Supervisor checks cited local paths and confirms the plan delegates replay, maker/taker, fee and standard logging semantics to PMB.",
+      "pass_condition": "No simulator rewrite, no invented SHA, and a minimal deterministic contract covering prediction artifacts and PMB outputs.",
+      "failure_action": "Keep upstream integration blocked and reduce the adapter surface; do not fork the simulator to bypass uncertainty.",
+      "time_bound_minutes": 30,
+      "result": {
+        "verdict": "pass",
+        "observed": "Read-only audit proved the existing raw Kalshi replay and simplified taking diagnostic cannot substitute for PMB. It specified a separate thin adapter package, upstream/import/runtime verification and prediction-first tests. Supervisor independently resolved the official main ref to 611d66941717310858683278940df21c33c406f2 without vendoring it.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "AGENT_LOG_PMB_ADAPTER_RECON_2026-09-28.md",
+        "evidence_sha256": "f30c94ea751a9f693d7fc5135a5f1d7b90d4cc1f2cea222026d42a56bf17c0b8"
+      }
+    },
+    {
+      "id": "pmb_hidden_eval_boundary_recon",
+      "owner": "pmb_hidden_eval_boundary_20260928",
+      "action": "Inspect existing isolation and validator code and design Train/Dev/hidden-Final separation with aggregate-only evaluator feedback.",
+      "depends_on": [],
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/AGENT_LOG_PMB_HIDDEN_EVAL_BOUNDARY_2026-09-28.md"
+      ],
+      "expected_artifact": "A fail-closed evaluator boundary and threat/test matrix including untouched-date and settlement isolation.",
+      "verification": "Supervisor checks that Controller and Researcher cannot access hidden raw episodes, settlement or per-row results and that formal Final requires at least 20 untouched dates.",
+      "pass_condition": "Roles, paths, allowed outputs and failure behavior are explicit; public January 2026 episodes remain diagnostic only.",
+      "failure_action": "Do not build the empirical runner until an independently testable sealed boundary is specified.",
+      "time_bound_minutes": 30,
+      "result": {
+        "verdict": "pass",
+        "observed": "Read-only audit identified reusable one-shot, ledger, budget and credential primitives plus two concrete leakage mismatches in the legacy Controller/scorer path. It specified Controller=Train/aggregate-only, candidate=AgentContext-only, trusted-evaluator-private raw/settlement and a pre-open Final>=20 untouched-date gate.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "AGENT_LOG_PMB_HIDDEN_EVAL_BOUNDARY_2026-09-28.md",
+        "evidence_sha256": "ed63e0ed27d0d16d125fd3edb862d507b34f94331212b2a934655c155a0d0f8c"
+      }
+    },
+    {
+      "id": "pmb_simple_lane_swap_recon",
+      "owner": "pmb_simple_lane_swap_20260928",
+      "action": "Design the Simple Episode Lane and paired GLM-3.5 versus frontier Controller swap using the same episode, tools, budget and five research rounds.",
+      "depends_on": [],
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/AGENT_LOG_PMB_SIMPLE_LANE_SWAP_2026-09-28.md"
+      ],
+      "expected_artifact": "A minimal runner contract, paired comparison controls, diagnostic metrics and first-episode recommendation.",
+      "verification": "Supervisor checks single-episode lease, start/end snapshots, append-only artifacts, persistent Docker, no per-round global canary and prediction-first evaluation.",
+      "pass_condition": "The swap changes only Controller model identity and does not use a short-choice interface that masks research ability.",
+      "failure_action": "Keep the swap unrun and simplify the lane until equal treatment and reproducibility are mechanically testable.",
+      "time_bound_minutes": 30,
+      "result": {
+        "verdict": "pass",
+        "observed": "Read-only design specified five Controller decision slots, one persistent B, start/end snapshots, append-only artifacts, episode-wide accounting and equal paired-arm constraints. Exact Controller stacks remain unresolved; Supervisor excluded its legacy-NFL-first and supervisor_harness placement suggestions from the PMB integration.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "AGENT_LOG_PMB_SIMPLE_LANE_SWAP_2026-09-28.md",
+        "evidence_sha256": "07ba87e6fc2d440be76b5a402eb309f43a84a872ad617df2c4416ed0cb59d560"
+      }
+    },
+    {
+      "id": "integrate_pmb_replan",
+      "owner": "Supervisor · Market RSI",
+      "action": "Integrate the three reports with the paper/repository findings and causal evaluation gates into one concise implementation plan and update the human redirect/progress record.",
+      "depends_on": [
+        "pmb_adapter_recon",
+        "pmb_hidden_eval_boundary_recon",
+        "pmb_simple_lane_swap_recon"
+      ],
+      "write_paths": [
+        "research/market_rsi/PREDICTIONMARKETBENCH_REPLAN_2026-09-28.md",
+        "research/market_rsi/supervisor_harness/HUMAN_INTERVENTIONS.md",
+        "research/market_rsi/supervisor_harness/HUMAN_PROGRESS.md"
+      ],
+      "expected_artifact": "A single PMB replan with phases, metrics, boundaries, file/test map, blockers and authorization ledger.",
+      "verification": "Run link/path checks and compare every recommendation against the three worker reports and the prediction-first evaluation rules.",
+      "pass_condition": "The plan cleanly separates Track A prediction evidence from Track B trading, changes one causal stage per A/B, and names the next zero-paid implementation slice.",
+      "failure_action": "Preserve the reports and replan the conflicting interface before any code implementation or experiment.",
+      "time_bound_minutes": 30,
+      "result": {
+        "verdict": "pass",
+        "observed": "Supervisor integrated the official paper/repository evidence and three bounded reports into one replan. It pins prospective upstream commit 611d6694…06f2, freezes strict-v0, specifies a separate PMB lane, selects one public diagnostic Track A episode, separates Track B, defines hidden evaluation and four-episode Controller Swap, and records remaining permissions/blockers.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "PMB_REPLAN_INTEGRATION_EVIDENCE_2026-09-28.md",
+        "evidence_sha256": "20f43cd4282dcd1a28ee6c6e63b6fa5fe91609760ca6336cafdda0b810e5a09b"
+      }
+    },
+    {
+      "id": "independent_pmb_replan_review",
+      "owner": "independent_pmb_replan_reviewer",
+      "action": "Read-only review of the exact integrated replan for leakage, unsupported paper/repository claims, hidden multi-stage changes and unacknowledged execution gates.",
+      "depends_on": [
+        "integrate_pmb_replan"
+      ],
+      "write_paths": [],
+      "expected_artifact": "A non-empty exact-snapshot PASS or REPLAN report.",
+      "verification": "Supervisor confirms reviewer independence, exact document hash, claim/source traceability and explicit remaining permissions.",
+      "pass_condition": "No sealed-Final exposure, paid call, public data acquisition or release is implied; diagnostic episodes cannot support formal OOS claims.",
+      "failure_action": "Keep implementation blocked at the cited causal issue and version a repaired replan.",
+      "time_bound_minutes": 20,
+      "result": {
+        "verdict": "replan",
+        "observed": "Exact-snapshot review matched d08c213d…d2f4 and passed the major direction, but found two P0 and three P1 gaps: hidden Dev was not separated from terminal sealed Final; source/episode fetch authority was ambiguous; aggregate differencing, immutable-spec enforcement, separate Track B identity and pre-open versus post-replay common-mask checks were incomplete.",
+        "reviewer": "independent_pmb_replan_reviewer",
+        "evidence_path": "AGENT_LOG_PMB_REPLAN_INDEPENDENT_REVIEW_2026-09-28.md",
+        "evidence_sha256": "02055e9108a5887cff3d2a810c3dcf2acedd5b2a7c3aea234b4669772a69db71"
+      }
+    }
+  ]
+}
