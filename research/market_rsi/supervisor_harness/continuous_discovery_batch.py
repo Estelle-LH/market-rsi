@@ -24,11 +24,15 @@ import stat
 import tempfile
 from typing import Any, Callable, Iterator, Mapping
 
+from data_scientist_harness import co_evolution_loop as micro_evolution
+
 
 SCHEMA = "market_rsi_continuous_discovery_batch_v1"
 EVENT_SCHEMA = "market_rsi_continuous_discovery_event_v1"
 EVIDENCE_SCHEMA = "market_rsi_discovery_controller_evidence_v1"
 EVIDENCE_SCHEMA_V2 = "market_rsi_discovery_controller_evidence_v2"
+# Opt-in for fresh batches only. Legacy v1/v2 replay stays byte-for-byte stable.
+FINAL_SINGLETON_POLICY = "final-singleton-v1"
 ZERO_SHA256 = "0" * 64
 
 STAGES = (
@@ -795,7 +799,13 @@ class ContinuousDiscoveryBatch:
 
     @staticmethod
     def _is_v2(state: Mapping[str, Any]) -> bool:
-        return state.get("scheduling_version") == 2
+        # v3 retains the v2 pool protocol, with an explicit final-slot policy.
+        return state.get("scheduling_version") in {2, 3}
+
+    @staticmethod
+    def _singleton_allowed(state: Mapping[str, Any]) -> bool:
+        return (state.get("scheduling_version") == 3
+                and state["max_attempts"] - state["attempts_claimed"] == 1)
 
     @classmethod
     def _eligible_parent_records(cls, state: dict[str, Any]) -> list[dict[str, Any]]:
@@ -913,6 +923,8 @@ class ContinuousDiscoveryBatch:
         else:
             desired_slots = 2
         recommended_slots = min(desired_slots, remaining) if remaining >= 2 else 0
+        if cls._singleton_allowed(state):
+            recommended_slots = 1
         target_exploration = int(
             (state["attempts_claimed"] + recommended_slots)
             * state["exploration_reserve_fraction"]
@@ -989,14 +1001,18 @@ class ContinuousDiscoveryBatch:
                 incumbent=incumbent,
                 incumbent_history=[incumbent],
             )
-        elif event == "initialize_v2":
+        elif event in {"initialize_v2", "initialize_v3"}:
             keys = {
                 "batch_id", "start_utc", "deadline_utc", "max_attempts",
                 "boundary_flags", "initial_incumbent", "active_pool_capacity",
                 "exploration_reserve_fraction", "exploration_reserve_reason",
                 "initial_archived_parents",
             }
-            item = _exact_mapping(payload, keys, "v2 batch initialization")
+            if event == "initialize_v3":
+                keys.add("scheduling_policy")
+            item = _exact_mapping(payload, keys, "pool batch initialization")
+            if event == "initialize_v3" and item["scheduling_policy"] != FINAL_SINGLETON_POLICY:
+                raise DiscoveryBatchError("unknown scheduling policy")
             if state["initialized"]:
                 raise DiscoveryBatchError("batch initialized more than once")
             start = _utc_text(item["start_utc"], "batch start")
@@ -1072,8 +1088,45 @@ class ContinuousDiscoveryBatch:
                 exploitation_consumed_attempts=0,
                 initial_archived_parents=archived,
             )
+            if event == "initialize_v3":
+                state.update(scheduling_version=3, scheduling_policy=FINAL_SINGLETON_POLICY)
         elif not state["initialized"]:
             raise DiscoveryBatchError("batch event precedes initialization")
+        elif event == "micro_evolution":
+            item = _exact_mapping(payload, {
+                "action", "arguments", "expected_evolution_sha256", "event_time_utc",
+            }, "small-step evolution event")
+            event_time = _utc(item["event_time_utc"], "evolution time")
+            current = state.get("micro_evolution")
+            expected = current["record_sha256"] if current else ZERO_SHA256
+            if item["expected_evolution_sha256"] != expected:
+                raise DiscoveryBatchError("stale evolution state")
+            action, arguments = item["action"], item["arguments"]
+            if not isinstance(arguments, dict):
+                raise DiscoveryBatchError("evolution arguments must be an object")
+            if action == "initialize":
+                if current is not None or state["branches"] or state.get("scheduling_version") != 3:
+                    raise DiscoveryBatchError("configure evolution once on a fresh v3 batch")
+                operation = lambda: micro_evolution.initialize_micro_evolution(arguments)
+            else:
+                if current is None:
+                    raise DiscoveryBatchError("small-step evolution is not configured")
+                operations = {
+                    "propose": micro_evolution.propose_micro_evolution,
+                    "review": micro_evolution.review_micro_evolution,
+                    "rollback": micro_evolution.rollback_micro_evolution,
+                }
+                if action not in operations:
+                    raise DiscoveryBatchError("unknown evolution action")
+                if (action == "rollback" or
+                        (action == "review" and arguments.get("decision") == "accept")):
+                    if state["active_attempt_ids"]:
+                        raise DiscoveryBatchError("pair changes require an idle batch")
+                operation = lambda: operations[action](current, arguments)
+            try:
+                state["micro_evolution"] = operation()
+            except (ValueError, TypeError, KeyError) as exc:
+                raise DiscoveryBatchError(str(exc)) from exc
         elif event == "controller_pool_selected":
             item = _exact_mapping(
                 payload,
@@ -1105,7 +1158,7 @@ class ContinuousDiscoveryBatch:
             selections = item["selections"]
             if not isinstance(selections, list) or not selections:
                 raise DiscoveryBatchError("Controller pool must be a non-empty list")
-            if len(selections) < 2:
+            if len(selections) < 2 and not self._singleton_allowed(state):
                 raise DiscoveryBatchError("active global pool must contain 2 or 3 members")
             if len(selections) > hint["recommended_active_slots"]:
                 raise DiscoveryBatchError("Controller pool exceeds its global budget hint")
@@ -1315,12 +1368,14 @@ class ContinuousDiscoveryBatch:
             branch["spec_sha256"] = _sha(item["spec_sha256"], "experiment spec")
             branch["stage"] = "implementation_ready"
         elif event == "execution_claimed":
+            binding_fields = ({"runtime_pair_sha256", "memory_snapshot_sha256"}
+                              if "micro_evolution" in state else set())
             item = _exact_mapping(
                 payload,
                 {
                     "attempt_id", "claim_id", "attempt_number", "claimed_at_utc",
                     "runner_sha256", "spec_sha256",
-                },
+                } | binding_fields,
                 "execution claim",
             )
             branch = self._branch(state, _identifier(item["attempt_id"], "attempt ID"))
@@ -1342,6 +1397,11 @@ class ContinuousDiscoveryBatch:
             expected_number = state["attempts_claimed"] + 1
             if item["attempt_number"] != expected_number:
                 raise DiscoveryBatchError("execution attempt number changed")
+            if binding_fields:
+                if item["runtime_pair_sha256"] != micro_evolution.micro_pair_hash(state["micro_evolution"]):
+                    raise DiscoveryBatchError("execution pair differs from active pair")
+                _sha(item["memory_snapshot_sha256"], "memory snapshot")
+                branch.update({key: item[key] for key in binding_fields})
             branch.update(
                 claim_id=_identifier(item["claim_id"], "execution claim ID"),
                 attempt_number=expected_number,
@@ -1765,7 +1825,7 @@ class ContinuousDiscoveryBatch:
     def _evidence_packet_v2(
         cls, state: dict[str, Any], branch: dict[str, Any]
     ) -> dict[str, Any]:
-        return {
+        packet = {
             "schema": EVIDENCE_SCHEMA_V2,
             "batch_id": state["batch_id"],
             "pool_generation": branch["pool_generation"],
@@ -1814,6 +1874,12 @@ class ContinuousDiscoveryBatch:
             "evidence_scope": "reused_opened_train_discovery_only",
             "authority_granted": False,
         }
+        if "micro_evolution" in state:
+            packet["research_system"] = {
+                "runtime_pair_sha256": branch.get("runtime_pair_sha256"),
+                "memory_snapshot_sha256": branch.get("memory_snapshot_sha256"),
+            }
+        return packet
 
     def initialize(
         self,
@@ -1828,6 +1894,7 @@ class ContinuousDiscoveryBatch:
         exploration_reserve_fraction: float = 0.30,
         exploration_reserve_reason: str | None = None,
         initial_archived_parents: list[Mapping[str, Any]] | None = None,
+        scheduling_policy: str | None = None,
     ) -> dict[str, Any]:
         start = _utc_text(start_utc, "batch start")
         deadline = _utc_text(deadline_utc, "batch deadline")
@@ -1841,6 +1908,10 @@ class ContinuousDiscoveryBatch:
             type(active_pool_capacity) is not int or active_pool_capacity not in {2, 3}
         ):
             raise DiscoveryBatchError("active pool capacity must be 2 or 3")
+        if scheduling_policy is not None and (
+            scheduling_policy != FINAL_SINGLETON_POLICY or active_pool_capacity is None
+        ):
+            raise DiscoveryBatchError("known scheduling policy requires an active pool")
         reserve = _reserve_fraction(exploration_reserve_fraction)
         if active_pool_capacity is None and reserve != 0.30:
             raise DiscoveryBatchError(
@@ -1918,6 +1989,9 @@ class ContinuousDiscoveryBatch:
                 exploration_reserve_reason=exploration_reserve_reason,
                 initial_archived_parents=checked_archived,
             )
+            if scheduling_policy is not None:
+                event = "initialize_v3"
+                payload["scheduling_policy"] = scheduling_policy
         with self._locked():
             records, state = self._load_locked()
             if records or state["initialized"]:
@@ -1930,6 +2004,34 @@ class ContinuousDiscoveryBatch:
             _, state = self._load_locked()
             if not state["initialized"]:
                 raise DiscoveryBatchError("continuous Discovery batch is not initialized")
+            return self._public(state)
+
+    def record_micro_evolution(
+        self, action: str, arguments: Mapping[str, Any], *,
+        expected_state_sha256: str, now: str | datetime | None = None,
+    ) -> dict[str, Any]:
+        """Supervisor-only evidence recording, not permission or code deployment.
+
+        Uses the existing lock/journal. The caller must independently verify
+        review receipts and actual source/runtime identity outside the candidate.
+        A pending proposal does not prevent ordinary parent-pair research.
+        """
+        expected = _sha(expected_state_sha256, "expected batch state")
+        moment = self._trusted_now(now, "evolution time")
+        with self._locked():
+            records, state = self._load_locked()
+            if state["state_sha256"] != expected:
+                raise DiscoveryBatchError("stale batch state")
+            if not state["initialized"]:
+                raise DiscoveryBatchError("batch is not initialized")
+            if moment < _utc(state["start_utc"], "batch start"):
+                raise DiscoveryBatchError("evolution event predates batch start")
+            current = state.get("micro_evolution")
+            _, state = self._commit(records, "micro_evolution", {
+                "action": action, "arguments": dict(arguments),
+                "expected_evolution_sha256": current["record_sha256"] if current else ZERO_SHA256,
+                "event_time_utc": _utc_text(moment, "evolution time"),
+            })
             return self._public(state)
 
     def _stop_locked(
@@ -2097,7 +2199,7 @@ class ContinuousDiscoveryBatch:
             if state["active_attempt_ids"]:
                 raise DiscoveryBatchError("a global Controller pool is already active")
             hint = self._pool_selection_hint(state)
-            if len(checked) < 2:
+            if len(checked) < 2 and not self._singleton_allowed(state):
                 raise DiscoveryBatchError("active global pool must contain 2 or 3 members")
             if len(checked) > hint["recommended_active_slots"]:
                 raise DiscoveryBatchError("Controller pool exceeds its global budget hint")
@@ -2208,6 +2310,8 @@ class ContinuousDiscoveryBatch:
         attempt_id: str,
         *,
         claim_id: str,
+        runtime_pair_sha256: str | None = None,
+        memory_snapshot_sha256: str | None = None,
         now: str | datetime | None = None,
     ) -> dict[str, Any]:
         attempt_id = _identifier(attempt_id, "attempt ID")
@@ -2216,6 +2320,19 @@ class ContinuousDiscoveryBatch:
         with self._locked():
             records, state = self._load_locked()
             branch = self._branch(state, attempt_id)
+            binding = {}
+            if "micro_evolution" in state:
+                pair = _sha(runtime_pair_sha256, "runtime pair")
+                memory = _sha(memory_snapshot_sha256, "memory snapshot")
+                expected_pair = (branch.get("runtime_pair_sha256") or
+                    micro_evolution.micro_pair_hash(state["micro_evolution"]))
+                if pair != expected_pair:
+                    raise DiscoveryBatchError("execution pair differs from active pair")
+                if branch.get("memory_snapshot_sha256", memory) != memory:
+                    raise DiscoveryBatchError("claimed memory snapshot changed")
+                binding = {"runtime_pair_sha256": pair, "memory_snapshot_sha256": memory}
+            elif runtime_pair_sha256 is not None or memory_snapshot_sha256 is not None:
+                raise DiscoveryBatchError("runtime pair binding requires configured evolution")
             if branch["claim_id"] is not None:
                 if branch["claim_id"] == claim_id:
                     return self._public(state)
@@ -2235,6 +2352,7 @@ class ContinuousDiscoveryBatch:
                     "claimed_at_utc": _utc_text(moment, "claim time"),
                     "runner_sha256": branch["runner_sha256"],
                     "spec_sha256": branch["spec_sha256"],
+                    **binding,
                 },
             )
             return self._public(state)
