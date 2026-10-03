@@ -191,3 +191,53 @@ improvement and not a live research effect yet. Supervisor must checkpoint and
 refresh H/pair identities before any claim; existing baseline scores/history
 must not be rewritten. Log keeps earlier H review identities rather than
 silently relabelling them with the new source.
+
+## 2026-10-03 19:35 UTC — actual generation1 result reviews
+
+Reviewed completed A2 first and immediately returned its verified evidence to
+Supervisor before finishing A1, preserving asynchronous feedback ordering.
+Both ran at pre-run source commit
+`422c75dff716b71ca8ef7d9dcc9ba3f4c3ca2e42` in permanent pilot root
+`/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-01`.
+
+Saved independent result receipts as source metadata, not raw-data copies:
+
+- A2 `COEVO_RESULT_REVIEW_A2_2026-10-03.json`, SHA
+  `048d4f643a5c0ed494947c4b70935104fd861058fca93d3fde5379a494265a8e`.
+  Brier/logloss `0.14219132715636526 / 0.4296628599298944`;
+  market deltas `+0.00023879815313244062 / -0.000007924783348473572`;
+  raw Brier fold wins1/4. Date/week Brier intervals both cross0. REVERT and
+  REFUTED exact recipe reproduce frozen rules. Credit2 recommendation is for
+  valid negative evidence, not prediction success.
+- A1 `COEVO_RESULT_REVIEW_A1_2026-10-03.json`, SHA
+  `f327f4457a3801a661adfdfd8b15c01c5b83dafee39fbc38b2547729744b38a2`.
+  Brier/logloss `0.1419584856290269 / 0.4295469774994743`;
+  market deltas `+0.00000595662579408819 / -0.00012380721376853068`;
+  raw Brier fold wins2/4. Both Brier intervals cross0; REVERT / REFUTED exact
+  recipe valid. Credit2 recommendation for verified negative evidence.
+
+Each review independently compared all committed-source bytes with request
+hashes, current loaded source files, interpreter and memory hash, request/log/
+receipt/artifact hashes and complete frozen Controller recipe/lineage metadata.
+Current numpy1.26.4/scipy1.14.0/sklearn1.6.1 match the frozen installed-version
+manifest. Both have195=193+2 population accounting, all87 identical comparator/
+label/cutoff rows,20dates/sevenweeks and unchanged22+4x5 chronology.
+Read-only source rematerialization validates PBP and market receipts; no fit.
+
+Reconstructed all87 predictions per attempt from independent feature formulas
+and saved coefficients. Recomputed all four training objective values and
+stationarity gradients: maxA2 2.18e-10; maxA1 7.06e-9, within1e-8.
+Independently recalculated equal-event Brier/logloss, OLS calibration and
+reliability counts/means; every paired fold/date result and all12 date/week
+bootstrap intervals per attempt match saved outputs. Zero reviewer fits.
+Actual run wall A2 4.2975s / A1 4.3645s; sampled RSS137872/137232KiB;
+four fits each, no comparator refit or retry, source requests have no provider
+call. Polling RSS and trusted host execution remain explicitly limited.
+
+Actual research parent A2 is archived state recipe, compared separately with
+raw incumbent. Actual research parent A1 is raw market; frozen state arm is
+an additional control, not its lineage. Neither scientific result updates
+incumbent. Verified negative recipes may retain exploration qualification only
+for a distinct Controller hypothesis; do not repeat exact refuted recipe or
+credit the same evidence twice. No untouched-OOS, realtime edge, general
+information-family refutation or research-mechanism-superiority claim.
