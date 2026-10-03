@@ -1,0 +1,793 @@
+{
+  "schema": "market_rsi_independent_matched_information_review_v1",
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "review_observed_utc": "2026-10-03 20:19:58 UTC",
+  "verdict": "PASS_valid_matched_historical_Train_information_diagnostic",
+  "passed": true,
+  "both_Brier_grouped_upper_bounds_below_zero": false,
+  "brier_fold_wins_B2_over_B1": 3,
+  "diagnostic_artifact": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-hgb-pilot-20261003-02/existing_prediction_diagnostics.json",
+  "diagnostic_sha256": "a453d51cf229117faf900085bba3454db73689ccda41e3ca6d2513678c6fb695",
+  "existing_loss_diagnostics": [
+    {
+      "attempt": "attempt-01",
+      "correction_energy": 0.0014904933298786611,
+      "delta": 0.01169411703965643,
+      "fold": 1,
+      "signed_alignment": 0.01020362370977777,
+      "split_counts": {
+        "market_logit": 98,
+        "market_staleness_seconds": 35
+      }
+    },
+    {
+      "attempt": "attempt-01",
+      "correction_energy": 0.002364856890027416,
+      "delta": 0.007338681939267083,
+      "fold": 2,
+      "signed_alignment": 0.004973825049239673,
+      "split_counts": {
+        "market_logit": 117,
+        "market_staleness_seconds": 75
+      }
+    },
+    {
+      "attempt": "attempt-01",
+      "correction_energy": 0.0017389647776592783,
+      "delta": 0.014514344224259717,
+      "fold": 3,
+      "signed_alignment": 0.012775379446600446,
+      "split_counts": {
+        "market_logit": 92,
+        "market_staleness_seconds": 100
+      }
+    },
+    {
+      "attempt": "attempt-01",
+      "correction_energy": 0.0008613057036842006,
+      "delta": 0.006912327285325318,
+      "fold": 4,
+      "signed_alignment": 0.0060510215816411035,
+      "split_counts": {
+        "market_logit": 98,
+        "market_staleness_seconds": 82
+      }
+    },
+    {
+      "attempt": "attempt-02",
+      "correction_energy": 0.002390338372421222,
+      "delta": 0.01019617717733738,
+      "fold": 1,
+      "signed_alignment": 0.0078058388049161605,
+      "split_counts": {
+        "home_possession_field_advantage": 90,
+        "home_score_diff_pre": 6,
+        "market_staleness_seconds": 6,
+        "regulation_seconds_remaining": 15,
+        "yards_to_go": 17
+      }
+    },
+    {
+      "attempt": "attempt-02",
+      "correction_energy": 0.0029385401603464617,
+      "delta": 0.005530695302679973,
+      "fold": 2,
+      "signed_alignment": 0.0025921551423335105,
+      "split_counts": {
+        "home_possession_field_advantage": 57,
+        "home_score_diff_pre": 46,
+        "market_logit": 10,
+        "market_staleness_seconds": 26,
+        "possession_is_home": 9,
+        "regulation_seconds_remaining": 36
+      }
+    },
+    {
+      "attempt": "attempt-02",
+      "correction_energy": 0.003758968975211797,
+      "delta": -0.0017494251812103206,
+      "fold": 3,
+      "signed_alignment": -0.005508394156422112,
+      "split_counts": {
+        "home_possession_field_advantage": 56,
+        "home_score_diff_pre": 61,
+        "market_staleness_seconds": 19,
+        "regulation_seconds_remaining": 41
+      }
+    },
+    {
+      "attempt": "attempt-02",
+      "correction_energy": 0.003069370050088865,
+      "delta": 0.012699126457089682,
+      "fold": 4,
+      "signed_alignment": 0.0096297564070008,
+      "split_counts": {
+        "down_2": 2,
+        "home_possession_field_advantage": 52,
+        "home_score_diff_pre": 11,
+        "market_logit": 5,
+        "market_staleness_seconds": 18,
+        "possession_is_home": 6,
+        "regulation_seconds_remaining": 64,
+        "yards_to_go": 3
+      }
+    }
+  ],
+  "folds": [
+    {
+      "B2_minus_B1": {
+        "brier": -0.0014979398623190508,
+        "log_loss": -0.014619652090629875
+      },
+      "events": 26,
+      "fold": 1
+    },
+    {
+      "B2_minus_B1": {
+        "brier": -0.0018079866365871096,
+        "log_loss": -0.00244160927561906
+      },
+      "events": 16,
+      "fold": 2
+    },
+    {
+      "B2_minus_B1": {
+        "brier": -0.016263769405470037,
+        "log_loss": -0.04268734307897916
+      },
+      "events": 28,
+      "fold": 3
+    },
+    {
+      "B2_minus_B1": {
+        "brier": 0.005786799171764363,
+        "log_loss": 0.014712595717783425
+      },
+      "events": 17,
+      "fold": 4
+    }
+  ],
+  "independent_reviews": [
+    {
+      "path": "/Users/estelle/Developer/market-rsi/research/market_rsi/supervisor_harness/COEVO_RESULT_REVIEW_B1_2026-10-03.json",
+      "sha256": "37213fcba838be60009eed50ea753d96bcade9e0a4312769996807ed5be24ed0"
+    },
+    {
+      "path": "/Users/estelle/Developer/market-rsi/research/market_rsi/supervisor_harness/COEVO_RESULT_REVIEW_B2_2026-10-03.json",
+      "sha256": "4703575bbd7502e4eb328699686a889c321842bfaf893938dd635ecf7c87f597"
+    }
+  ],
+  "intervals": {
+    "brier": {
+      "by_schedule_date": [
+        {
+          "delta": 0.005123471552267122,
+          "events": 1,
+          "game_date": "2025-10-23"
+        },
+        {
+          "delta": -0.011796423619174145,
+          "events": 11,
+          "game_date": "2025-10-26"
+        },
+        {
+          "delta": 0.0032829732184211854,
+          "events": 1,
+          "game_date": "2025-10-27"
+        },
+        {
+          "delta": -0.003651857524794409,
+          "events": 1,
+          "game_date": "2025-10-30"
+        },
+        {
+          "delta": 0.007171636345393865,
+          "events": 12,
+          "game_date": "2025-11-02"
+        },
+        {
+          "delta": -0.00503523063166211,
+          "events": 1,
+          "game_date": "2025-11-03"
+        },
+        {
+          "delta": 0.027499339728227573,
+          "events": 1,
+          "game_date": "2025-11-06"
+        },
+        {
+          "delta": -0.004449073803531995,
+          "events": 12,
+          "game_date": "2025-11-09"
+        },
+        {
+          "delta": 0.0044401286015914865,
+          "events": 1,
+          "game_date": "2025-11-10"
+        },
+        {
+          "delta": -0.0024431382411667572,
+          "events": 1,
+          "game_date": "2025-11-13"
+        },
+        {
+          "delta": -0.018198923589717145,
+          "events": 13,
+          "game_date": "2025-11-16"
+        },
+        {
+          "delta": -0.0010266380842980825,
+          "events": 1,
+          "game_date": "2025-11-17"
+        },
+        {
+          "delta": -0.043383768297504136,
+          "events": 1,
+          "game_date": "2025-11-20"
+        },
+        {
+          "delta": -0.013794235803979657,
+          "events": 12,
+          "game_date": "2025-11-23"
+        },
+        {
+          "delta": -0.008858300657280034,
+          "events": 1,
+          "game_date": "2025-11-24"
+        },
+        {
+          "delta": 0.017261846430185437,
+          "events": 3,
+          "game_date": "2025-11-27"
+        },
+        {
+          "delta": 0.0697264600189576,
+          "events": 1,
+          "game_date": "2025-11-28"
+        },
+        {
+          "delta": -0.003543500755758747,
+          "events": 11,
+          "game_date": "2025-11-30"
+        },
+        {
+          "delta": 0,
+          "events": 1,
+          "game_date": "2025-12-01"
+        },
+        {
+          "delta": 0.015842094923826475,
+          "events": 1,
+          "game_date": "2025-12-04"
+        }
+      ],
+      "equal_event_mean": -0.004883726207343172,
+      "observed_game_week_interval": [
+        -0.012073846628049396,
+        0.002200127594975636
+      ],
+      "schedule_date_interval": [
+        -0.010663664994106568,
+        0.003077423187100146
+      ]
+    },
+    "log_loss": {
+      "by_schedule_date": [
+        {
+          "delta": 0.0469117588209674,
+          "events": 1,
+          "game_date": "2025-10-23"
+        },
+        {
+          "delta": -0.048935175331366244,
+          "events": 11,
+          "game_date": "2025-10-26"
+        },
+        {
+          "delta": 0.02333311657880445,
+          "events": 1,
+          "game_date": "2025-10-27"
+        },
+        {
+          "delta": -0.037571454628723,
+          "events": 1,
+          "game_date": "2025-10-30"
+        },
+        {
+          "delta": 0.010458546126466925,
+          "events": 12,
+          "game_date": "2025-11-02"
+        },
+        {
+          "delta": -0.02014806676342412,
+          "events": 1,
+          "game_date": "2025-11-03"
+        },
+        {
+          "delta": 0.07866716314821096,
+          "events": 1,
+          "game_date": "2025-11-06"
+        },
+        {
+          "delta": -0.004730962770339229,
+          "events": 12,
+          "game_date": "2025-11-09"
+        },
+        {
+          "delta": 0.00987719644373869,
+          "events": 1,
+          "game_date": "2025-11-10"
+        },
+        {
+          "delta": -0.05069048799435973,
+          "events": 1,
+          "game_date": "2025-11-13"
+        },
+        {
+          "delta": -0.051916694161701867,
+          "events": 13,
+          "game_date": "2025-11-16"
+        },
+        {
+          "delta": -0.017860479922979823,
+          "events": 1,
+          "game_date": "2025-11-17"
+        },
+        {
+          "delta": -0.09519132442769407,
+          "events": 1,
+          "game_date": "2025-11-20"
+        },
+        {
+          "delta": -0.028402312226062057,
+          "events": 12,
+          "game_date": "2025-11-23"
+        },
+        {
+          "delta": -0.06644903104587371,
+          "events": 1,
+          "game_date": "2025-11-24"
+        },
+        {
+          "delta": 0.036303436244544705,
+          "events": 3,
+          "game_date": "2025-11-27"
+        },
+        {
+          "delta": 0.15024448468075002,
+          "events": 1,
+          "game_date": "2025-11-28"
+        },
+        {
+          "delta": -0.012801638210677858,
+          "events": 11,
+          "game_date": "2025-11-30"
+        },
+        {
+          "delta": 0,
+          "events": 1,
+          "game_date": "2025-12-01"
+        },
+        {
+          "delta": 0.13177735410539054,
+          "events": 1,
+          "game_date": "2025-12-04"
+        }
+      ],
+      "equal_event_mean": -0.015681703238797473,
+      "observed_game_week_interval": [
+        -0.03428888193654208,
+        0.0028351429400229
+      ],
+      "schedule_date_interval": [
+        -0.03183097637548921,
+        0.005244765213160695
+      ]
+    }
+  },
+  "metrics": {
+    "B1_market_only": {
+      "brier": 0.15281893309736092,
+      "calibration_intercept": 0.03292022671564904,
+      "calibration_slope": 0.9476154877528791,
+      "log_loss": 0.4562724957206233,
+      "reliability_table": [
+        {
+          "bin": 0,
+          "events": 11,
+          "lower_inclusive": 0,
+          "mean_probability": 0.045558582820628864,
+          "observed_rate": 0.09090909090909091,
+          "upper_inclusive_only_for_last_bin": 0.1
+        },
+        {
+          "bin": 1,
+          "events": 9,
+          "lower_inclusive": 0.1,
+          "mean_probability": 0.15814327957222316,
+          "observed_rate": 0.1111111111111111,
+          "upper_inclusive_only_for_last_bin": 0.2
+        },
+        {
+          "bin": 2,
+          "events": 3,
+          "lower_inclusive": 0.2,
+          "mean_probability": 0.2503328754700439,
+          "observed_rate": 0.3333333333333333,
+          "upper_inclusive_only_for_last_bin": 0.3
+        },
+        {
+          "bin": 3,
+          "events": 18,
+          "lower_inclusive": 0.3,
+          "mean_probability": 0.34395403644312655,
+          "observed_rate": 0.3888888888888889,
+          "upper_inclusive_only_for_last_bin": 0.4
+        },
+        {
+          "bin": 4,
+          "events": 4,
+          "lower_inclusive": 0.4,
+          "mean_probability": 0.42247122192500236,
+          "observed_rate": 0.5,
+          "upper_inclusive_only_for_last_bin": 0.5
+        },
+        {
+          "bin": 5,
+          "events": 1,
+          "lower_inclusive": 0.5,
+          "mean_probability": 0.5753857973010825,
+          "observed_rate": 1,
+          "upper_inclusive_only_for_last_bin": 0.6
+        },
+        {
+          "bin": 6,
+          "events": 9,
+          "lower_inclusive": 0.6,
+          "mean_probability": 0.6390528421215477,
+          "observed_rate": 0.6666666666666666,
+          "upper_inclusive_only_for_last_bin": 0.7
+        },
+        {
+          "bin": 7,
+          "events": 6,
+          "lower_inclusive": 0.7,
+          "mean_probability": 0.7609581874134129,
+          "observed_rate": 0.3333333333333333,
+          "upper_inclusive_only_for_last_bin": 0.8
+        },
+        {
+          "bin": 8,
+          "events": 9,
+          "lower_inclusive": 0.8,
+          "mean_probability": 0.8548781426385319,
+          "observed_rate": 1,
+          "upper_inclusive_only_for_last_bin": 0.9
+        },
+        {
+          "bin": 9,
+          "events": 17,
+          "lower_inclusive": 0.9,
+          "mean_probability": 0.9633827121678349,
+          "observed_rate": 0.9411764705882353,
+          "upper_inclusive_only_for_last_bin": 1
+        }
+      ],
+      "rows": 87
+    },
+    "B2_market_state": {
+      "brier": 0.1479352068900177,
+      "calibration_intercept": 0.024179944505702267,
+      "calibration_slope": 0.970326786241873,
+      "log_loss": 0.44059079248182575,
+      "reliability_table": [
+        {
+          "bin": 0,
+          "events": 12,
+          "lower_inclusive": 0,
+          "mean_probability": 0.030883969256906896,
+          "observed_rate": 0.08333333333333333,
+          "upper_inclusive_only_for_last_bin": 0.1
+        },
+        {
+          "bin": 1,
+          "events": 8,
+          "lower_inclusive": 0.1,
+          "mean_probability": 0.1403882357677538,
+          "observed_rate": 0.125,
+          "upper_inclusive_only_for_last_bin": 0.2
+        },
+        {
+          "bin": 2,
+          "events": 4,
+          "lower_inclusive": 0.2,
+          "mean_probability": 0.23747234266420697,
+          "observed_rate": 0.25,
+          "upper_inclusive_only_for_last_bin": 0.3
+        },
+        {
+          "bin": 3,
+          "events": 9,
+          "lower_inclusive": 0.3,
+          "mean_probability": 0.34120044868998306,
+          "observed_rate": 0.2222222222222222,
+          "upper_inclusive_only_for_last_bin": 0.4
+        },
+        {
+          "bin": 4,
+          "events": 11,
+          "lower_inclusive": 0.4,
+          "mean_probability": 0.43078666057229104,
+          "observed_rate": 0.6363636363636364,
+          "upper_inclusive_only_for_last_bin": 0.5
+        },
+        {
+          "bin": 5,
+          "events": 5,
+          "lower_inclusive": 0.5,
+          "mean_probability": 0.5502537840009735,
+          "observed_rate": 0.4,
+          "upper_inclusive_only_for_last_bin": 0.6
+        },
+        {
+          "bin": 6,
+          "events": 6,
+          "lower_inclusive": 0.6,
+          "mean_probability": 0.6630302260545773,
+          "observed_rate": 0.6666666666666666,
+          "upper_inclusive_only_for_last_bin": 0.7
+        },
+        {
+          "bin": 7,
+          "events": 7,
+          "lower_inclusive": 0.7,
+          "mean_probability": 0.7440990697525022,
+          "observed_rate": 0.5714285714285714,
+          "upper_inclusive_only_for_last_bin": 0.8
+        },
+        {
+          "bin": 8,
+          "events": 9,
+          "lower_inclusive": 0.8,
+          "mean_probability": 0.8497243464750938,
+          "observed_rate": 0.8888888888888888,
+          "upper_inclusive_only_for_last_bin": 0.9
+        },
+        {
+          "bin": 9,
+          "events": 16,
+          "lower_inclusive": 0.9,
+          "mean_probability": 0.9625000033943718,
+          "observed_rate": 1,
+          "upper_inclusive_only_for_last_bin": 1
+        }
+      ],
+      "rows": 87
+    },
+    "ordinary_reference": {
+      "brier": 0.14548231253271718,
+      "calibration_intercept": -0.023504802267641844,
+      "calibration_slope": 1.0568122659695651,
+      "log_loss": 0.43992197245621956,
+      "reliability_table": [
+        {
+          "bin": 0,
+          "events": 8,
+          "lower_inclusive": 0,
+          "mean_probability": 0.03789970723562274,
+          "observed_rate": 0,
+          "upper_inclusive_only_for_last_bin": 0.1
+        },
+        {
+          "bin": 1,
+          "events": 11,
+          "lower_inclusive": 0.1,
+          "mean_probability": 0.14831852560349887,
+          "observed_rate": 0.18181818181818182,
+          "upper_inclusive_only_for_last_bin": 0.2
+        },
+        {
+          "bin": 2,
+          "events": 4,
+          "lower_inclusive": 0.2,
+          "mean_probability": 0.23654624341065966,
+          "observed_rate": 0.25,
+          "upper_inclusive_only_for_last_bin": 0.3
+        },
+        {
+          "bin": 3,
+          "events": 12,
+          "lower_inclusive": 0.3,
+          "mean_probability": 0.36811271908898363,
+          "observed_rate": 0.16666666666666666,
+          "upper_inclusive_only_for_last_bin": 0.4
+        },
+        {
+          "bin": 4,
+          "events": 10,
+          "lower_inclusive": 0.4,
+          "mean_probability": 0.4508806818622359,
+          "observed_rate": 0.7,
+          "upper_inclusive_only_for_last_bin": 0.5
+        },
+        {
+          "bin": 5,
+          "events": 3,
+          "lower_inclusive": 0.5,
+          "mean_probability": 0.592419218045036,
+          "observed_rate": 0.3333333333333333,
+          "upper_inclusive_only_for_last_bin": 0.6
+        },
+        {
+          "bin": 6,
+          "events": 9,
+          "lower_inclusive": 0.6,
+          "mean_probability": 0.6392976462430137,
+          "observed_rate": 0.6666666666666666,
+          "upper_inclusive_only_for_last_bin": 0.7
+        },
+        {
+          "bin": 7,
+          "events": 7,
+          "lower_inclusive": 0.7,
+          "mean_probability": 0.7489287833863141,
+          "observed_rate": 0.7142857142857143,
+          "upper_inclusive_only_for_last_bin": 0.8
+        },
+        {
+          "bin": 8,
+          "events": 13,
+          "lower_inclusive": 0.8,
+          "mean_probability": 0.8660715912021857,
+          "observed_rate": 0.9230769230769231,
+          "upper_inclusive_only_for_last_bin": 0.9
+        },
+        {
+          "bin": 9,
+          "events": 10,
+          "lower_inclusive": 0.9,
+          "mean_probability": 0.9622697687604307,
+          "observed_rate": 1,
+          "upper_inclusive_only_for_last_bin": 1
+        }
+      ],
+      "rows": 87
+    },
+    "raw_market": {
+      "brier": 0.14195252900323282,
+      "calibration_intercept": -0.011806646530491793,
+      "calibration_slope": 1.0370387494646494,
+      "log_loss": 0.4296707847132428,
+      "reliability_table": [
+        {
+          "bin": 0,
+          "events": 10,
+          "lower_inclusive": 0,
+          "mean_probability": 0.04095010474000001,
+          "observed_rate": 0,
+          "upper_inclusive_only_for_last_bin": 0.1
+        },
+        {
+          "bin": 1,
+          "events": 10,
+          "lower_inclusive": 0.1,
+          "mean_probability": 0.14705991685,
+          "observed_rate": 0.2,
+          "upper_inclusive_only_for_last_bin": 0.2
+        },
+        {
+          "bin": 2,
+          "events": 4,
+          "lower_inclusive": 0.2,
+          "mean_probability": 0.24999999847499998,
+          "observed_rate": 0.25,
+          "upper_inclusive_only_for_last_bin": 0.3
+        },
+        {
+          "bin": 3,
+          "events": 12,
+          "lower_inclusive": 0.3,
+          "mean_probability": 0.3546852343914418,
+          "observed_rate": 0.25,
+          "upper_inclusive_only_for_last_bin": 0.4
+        },
+        {
+          "bin": 4,
+          "events": 8,
+          "lower_inclusive": 0.4,
+          "mean_probability": 0.4474999763375,
+          "observed_rate": 0.625,
+          "upper_inclusive_only_for_last_bin": 0.5
+        },
+        {
+          "bin": 5,
+          "events": 2,
+          "lower_inclusive": 0.5,
+          "mean_probability": 0.548792000066477,
+          "observed_rate": 0.5,
+          "upper_inclusive_only_for_last_bin": 0.6
+        },
+        {
+          "bin": 6,
+          "events": 11,
+          "lower_inclusive": 0.6,
+          "mean_probability": 0.6436370023244122,
+          "observed_rate": 0.6363636363636364,
+          "upper_inclusive_only_for_last_bin": 0.7
+        },
+        {
+          "bin": 7,
+          "events": 7,
+          "lower_inclusive": 0.7,
+          "mean_probability": 0.7581566825741044,
+          "observed_rate": 0.7142857142857143,
+          "upper_inclusive_only_for_last_bin": 0.8
+        },
+        {
+          "bin": 8,
+          "events": 9,
+          "lower_inclusive": 0.8,
+          "mean_probability": 0.8717163079222222,
+          "observed_rate": 0.8888888888888888,
+          "upper_inclusive_only_for_last_bin": 0.9
+        },
+        {
+          "bin": 9,
+          "events": 14,
+          "lower_inclusive": 0.9,
+          "mean_probability": 0.9500788484714285,
+          "observed_rate": 1,
+          "upper_inclusive_only_for_last_bin": 1
+        }
+      ],
+      "rows": 87
+    }
+  },
+  "pair_artifact": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-hgb-pilot-20261003-02/paired_information_analysis.json",
+  "pair_sha256": "1ea2c80535bd588ec5e8f4f29b8c78802095d423027da7173f3f7e0e07817efd",
+  "predeclared_directional_support": true,
+  "reviewed_utc": "2026-10-03T20:19:53.217316+00:00",
+  "source_commit": "8a3102b125f714493394443f975bb4570e401ed8",
+  "controller_contract_sha256": "b6942eb906344b9acc97950f1c72c14024e981792744ed2bc83ca7944e6406b8",
+  "checks": {
+    "pair_hash_matches_received_exact_artifact": true,
+    "both_independent_result_receipts_pass_and_predate_pair_generation": true,
+    "all87_ordered_keys_labels_availability_cutoffs_folds_dates_weeks_controls_match": true,
+    "same195_denominator_193plus2_87checks_20dates_7weeks": true,
+    "all21_HGB_parameters_and_four64stage_fits_runtime_seed_memory_identical": true,
+    "only_nine_causal_state_columns_added_to_shared_two_market_columns": true,
+    "all_four_arm_scores_calibration_and_ten_bin_reliability_recomputed": true,
+    "all_four_block_deltas_and_three_Brier_wins_recomputed": true,
+    "all20_date_deltas_and_four_10000draw_date_week_intervals_recomputed": true,
+    "complete_groups_resampled_equal_event_metric_recomputed_each_draw": true,
+    "frozen_directional_support_rule_matches_true_stronger_bounds_rule_false": true,
+    "KEEP_and_raw_market_incumbent_unchanged": true,
+    "existing_prediction_diagnostics_hash_loss_identity_and_all_split_counts_match": true,
+    "existing_diagnostics_no_new_candidate_no_fit_no_extra_credit": true,
+    "no_reviewer_Train_fits_protected_reads_source_changes_or_artifact_overwrites": true
+  },
+  "interpretation": {
+    "data_increment": "Directional support for these nine causal state inputs under this exact fixed HGB trainer: aggregate Brier/log loss lower than market-only HGB and 3/4 Brier blocks improved.",
+    "uncertainty": "Both grouped Brier intervals cross zero; fourth block worsens. Not stronger interval-supported confirmation, not proof of universal PBP value.",
+    "prediction_gain": "Both candidates remain worse than raw market overall; incumbent unchanged and candidate REVERT decisions remain intact.",
+    "model_gain": "Parent contrasts change trainer/loss/representation, so they do not isolate HGB model benefit.",
+    "research_mechanism": "Parallel controlled search and subsequent verified feedback, not an equal-budget R self-modification/mechanism superiority experiment.",
+    "existing_diagnostic": "Bounded correction energy and signed alignment add exactly to the already-scored Brier delta. Split counts describe executed trees, not causal feature importance or new evidence credit."
+  },
+  "resources": {
+    "candidate_model_fits_total": 8,
+    "review_Train_fits": 0,
+    "extra_diagnostic_fits": 0,
+    "candidate_wall_seconds_sum": 8.51764320798975,
+    "candidate_sampled_peak_rss_kib_max": 138464,
+    "provider_calls": 0,
+    "provider_cost_usd": 0
+  },
+  "limitations": [
+    "Repeatedly inspected opened Train Discovery, not untouched OOS, promotion or independent future confirmation.",
+    "Same historical samples and protocol only; event clocks are not verified actual receive/publication times.",
+    "Seven observed weeks and twenty dates are small clustered evidence, not independent-play sample expansion or statistical sufficiency.",
+    "Exact Controller serving model remains unknown; no controlled same-model research-mechanism comparison.",
+    "No Strong-Baseline-1 selection or formal claim that HGB/state families are useless."
+  ]
+}

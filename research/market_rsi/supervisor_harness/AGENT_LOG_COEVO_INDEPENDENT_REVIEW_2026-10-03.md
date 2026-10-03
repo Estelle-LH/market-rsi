@@ -410,3 +410,62 @@ closed3/12pilot must not expand. No result, data increment, isolated model gain,
 R self-modification or mechanism superiority asserted. Saved standalone receipt
 `COEVO_CANDIDATE_REVIEW_B1_B2_2026-10-03.json`; no production edits/Train fits/
 protected reads/network/provider/commits by reviewer.
+
+## 2026-10-03 20:16:18 UTC — asynchronous B1 real-result review
+
+PASS independently completed B1 before accepting sibling feedback. Committed source
+8a3102b125f714493394443f975bb4570e401ed8 and27 request-bound files match.
+All6 output hashes including predictor_states.json,4 primitive hashes and bounded
+64tree graphs verify. Plain numeric tree walk reconstructs all87 probabilities
+exactly without fitting; strict-prior residual means, two causal market columns,
+minimum20 training events/leaf,5 declared clipped rows and no row removal verify.
+Full195=193+2, frozen87 keys/folds/controls and actualA1 parent unchanged. Recomputed
+all5 arms/calibration/reliability,4 folds,20 dates and16 date/week block intervals.
+Brier0.15281893309736092 versus raw0.14195252900323282 andA1 0.1419584856290269;
+raw delta+0.01086640409412808, all4 blocks worse. Logloss0.4562724957206233.
+Frozen KEEP yields REVERT/exact-recipe REFUTED. Recommend credit2 for distinct
+valid negative evidence, no prediction bonus/family-wide futility/R claim.
+Actual child48514 absent via escalated kill0 check. Four real fits,0retry,
+4.242267208s, sampled138464KiB; reviewer zero Train fits. Saved only registered
+COEVO_RESULT_REVIEW_B1_2026-10-03.json and own log. B2 review follows independently.
+
+## 2026-10-03 20:17:16 UTC — B2 real-result review
+
+PASS exact B2 snapshot after asynchronous B1 delivery. Independently all87
+probabilities reconstructed with zero error from4 hash-bound primitive states
+and256 bounded trees,11 causal features and strict-prior residual means. Six
+manifest output hashes,27 source bindings/runtime/memory/request/receipt and
+actualA2 parent match. Full195=193+2, exact87/folds and allcontrols unchanged.
+Recomputed all5 metrics/calibration/reliability,4 blocks/20dates/16 date-week
+intervals and unchanged judge. Brier0.1479352068900177/logloss0.44059079248182575;
+raw delta+0.005982677886784908,1/4 raw Brier block wins; frozen REVERT/REFUTED.
+Nine predeclared clipping rows remain in scoring. Recommend credit2 for valid
+new negative evidence, not family futility or prediction gain. Parent contrast
+is composite C; matched B2minusB1 comparison awaits Supervisor pair artifact.
+Four real fits,0retry,4.275376s/sampled138384KiB; actual48516 absent via kill0.
+Zero reviewer Train fits/source edits/protected reads/provider/commits. Saved
+only registered COEVO_RESULT_REVIEW_B2_2026-10-03.json plus own log.
+
+## 2026-10-03 20:19:58 UTC — matched HGB information review
+
+PASS exact paired_information_analysis.json SHA1ea2c80535bd588ec5e8f4f29b8c78802095d423027da7173f3f7e0e07817efd,
+created only after both hash-bound independent result PASS receipts. Recomputed
+all87 paired keys/labels/controls and identical training params/folds/runtime/seed.
+Only9 causal state columns added;195/193+2/87 and all scoring remain frozen.
+B2minusB1 equal-event Brier−0.004883726207343172/logloss−0.015681703238797473;
+blockBrier deltas−.0014979398623190508,−.0018079866365871096,−.016263769405470037,
++.005786799171764363. Predeclared directional support TRUE(3/4wins,bothlossesdown).
+Four whole-date/week bootstrap intervals independently reconstructed; Brier day
+[−.010663664994106568,+.003077423187100146],week[−.012073846628049396,+.002200127594975636].
+Stronger bounds-supported evidence FALSE. Each draw recomputes event-weighted
+mean after complete-group resampling; not date-equal weighting. Allcalibration/
+reliability bins and20 daily deltas also match. Both candidates still lose to
+market overall; REVERT/rawinc unchanged. Controlled data increment only, no
+isolated parentmodelgain/R superiority/untouchedOOS/realtime edge claim.
+
+Existing_prediction_diagnostics.json SHAa453d51cf229117faf900085bba3454db73689ccda41e3ca6d2513678c6fb695
+also independently PASS: bounded correction energy−2residualalignment exactly
+reproduces existing Brier delta in all8 blocks, saved64tree splitcounts exact.
+No new predictor/fit/counterfactual/credit; splitfrequency is not importance.
+Saved only registered COEVO_HGB_PAIRED_REVIEW_2026-10-03.json and own log;
+zero Train fits/production edits/protected reads/provider/commits by reviewer.
