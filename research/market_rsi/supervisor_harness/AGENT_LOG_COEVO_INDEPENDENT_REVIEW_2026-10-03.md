@@ -241,3 +241,45 @@ incumbent. Verified negative recipes may retain exploration qualification only
 for a distinct Controller hypothesis; do not repeat exact refuted recipe or
 credit the same evidence twice. No untouched-OOS, realtime edge, general
 information-family refutation or research-mechanism-superiority claim.
+
+
+## 2026-10-03 19:48 UTC — feedback-dependent C3 pre-score review
+
+Reviewed frozen generation2 contract `a177b01df267879275b337e73a86ee87c5a7c2e45da6312976ec2732d6f90fa2`
+against both already independently verified feedback packets and actual A1
+parent artifacts. Choice changes only C training objective, NLL to sum-Brier,
+with exact unchanged feature, ridge16, no intercept, fixed market-logit offset,
+and one-start analytic L-BFGS-B. No forecast result exists for C3 at this review.
+
+Final production SHA `a2e78cfc2c7dd21790b3d709dc8ff4bc1ae3f399e38a4fc31818e363d054602b`;
+final test SHA `cbfc11c4f729567340da314d64d19b65bb37fd5537ab9d6f3cb426a4aee86b0c`.
+Worker added a ninth full-population synthetic pipeline test after the initial
+eight-test snapshot; independently reran the final test bytes. Current candidate,
+scheduler, adapter and small-step suite: 103 PASS in1.510s. Separate unchanged
+probability/settlement/ingame/identity/stratified suite: 55 PASS in3.962s. Total
+158 distinct final-snapshot tests, all test fits synthetic. Existing production
+candidate, scorer, scheduler and worker bytes remain pinned, with no tracked
+production diff outside the two new candidate/test files.
+
+Read-only actual source/parent probe confirms195=193+2,42source dates, all193
+causal ages, all87 exact frozen keys/labels/cutoffs/control probabilities and
+all87 exact A1 feature parity using fit-only scaling. Fit counts106/132/148/176
+and check counts26/16/28/17 unchanged. Reviewer performed zero actual Train
+fits. Initial probe omitted one required helper keyword; repaired only the probe,
+not source or evaluation policy. Generation2 memory hash verified as
+`e1d39bf8ff7194c0a437a279bc79653bcf04a77f6fdb31b0429f79071cbdbe6f`.
+
+Explicitly accept309 production lines as one inseparable executable C-loss
+recipe and its frozen parent/output binding, not expanded H or R. Unchanged
+shared feature/probability/scoring/KEEP code is reused; actual A1 comparison is
+added evidence, not a substituted KEEP judge. Strict optimizer success, finite
+values and analytic-gradient<=1e-8 are required; failure stays invalid and no
+retry is authorized. Fixed16 in different loss units confounds objective alignment
+with effective shrinkage; no global optimum, realtime, untouched OOS or
+mechanism-superiority claim follows from this check.
+
+Verdict: PASS pre-score exact snapshot. Supervisor must source-checkpoint and
+bind committed source/runtime/request before the sole remaining four-fit attempt.
+Saved detailed receipt `COEVO_CANDIDATE_REVIEW_A3_2026-10-03.json`. No production
+edits, protected-data reads, external fetch, provider, release or promotion by
+reviewer.
