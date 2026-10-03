@@ -1,4 +1,4 @@
-# Market RSI decision state — 2026-09-29, predictive-autonomy work completed
+# Market RSI decision state — 2026-10-03, opened-Train pilot implementation
 
 Keep this page compact. Replace stale decisions; do not append a transcript.
 Detailed evidence stays in the batch report, independent reviews and immutable artifacts.
@@ -7,6 +7,8 @@ Detailed evidence stays in the batch report, independent reviews and immutable a
 | --- | --- |
 | Ultimate objective | Test whether an iterating research Agent can discover, implement and validate repeatable probability-prediction improvements over decision-time market probability and strong ordinary models, then transfer that capability across time or domain. |
 | Immediate result | The requested feedback-dependent loop ran through real prediction experiments. Three candidates were attempted: one failed pre-fit feasibility, two completed 4 chronological fits and 87 paired predictions each. Both valid candidates were independently reviewed and REVERT. |
+| Current work | User requested immediate implementation and five hours of persistence from 2026-10-03 19:10:37 UTC. Source branch is `codex/market-rsi-coevolution-checkpoint-20261001` at `/Users/estelle/Developer/market-rsi`. Bind actual reviewed worker execution to existing v3 scheduler, then run a nested 3-attempt/12-fit/90-minute opened-Train pilot. No new permission, provider, data or judge. |
+| Actual current tasks | Supervisor worker binding; independent review; Controller froze freshness and causal possession-pressure recipes; researcher implements their thin siblings. Zero new real fits so far. Prior results below remain unchanged. |
 | In-game incumbent | `InGameWinProbabilityTrainDiagnostic-v0-raw_market`: equal-event Brier/log loss `0.1419525290 / 0.4296707847` on 87 opened-Train chronological checks, 20 dates and 7 weeks. It remains unchanged. |
 | Candidate 1 | `InGamePreAnchorMomentumOffsetLogistic-v4`: invalid/cooldown. Three mandatory outer-fit games had reference ages `334/419/612s`, above the frozen `300s` maximum. Zero fits and zero predictions; this is an execution-feasibility failure, not a scientific refutation of momentum. |
 | Candidate 2 | `InGameIdentityAnchoredMarketCalibration-v1`: Brier/log loss `0.1436504644 / 0.4335652209`; better than ordinary but worse than raw market by `+0.0016979354 / +0.0038944362`, with candidate Brier wins versus raw `0/4`. Exact route refuted/stopped; REVERT. |
@@ -17,8 +19,8 @@ Detailed evidence stays in the batch report, independent reviews and immutable a
 | Scheduler bookkeeping | The combined three-attempt research work is complete. Primary v2 `...-03` is persisted at `2/3`, no active attempt and `stopped_reason=null` because it cannot schedule a singleton pool; recovery `...-04` is formally closed at `1/1`, `max_attempts_reached`. |
 | Research mechanism evidence | The loop autonomously optimized prediction candidates: verified feedback changed the later choice, implementation, execution and stop decision. It did not modify the research tools/workflow. No matched fixed-process control ran, so there is no evidence that self-iteration outperforms a fixed research process. |
 | Evaluation boundary | All scores are repeatedly inspected opened-Train Discovery. Protected Dev/Final, external acquisition, paid provider, publication, deployment and promotion remain closed. Historical event time does not establish realtime provider-publish/local-receive availability. |
-| Next separately budgeted experiment | Controller recommends `InGameMarketFreshnessInteractionOffset-v1`: first prove full causal fill-age coverage, then fit one frozen market-logit-offset interaction on the same protocol. This is a recommendation only, not an authorized attempt. |
+| Next experiment | Authorized opened-Train pilot generation 1: `InGameMarketFreshnessInteractionOffset-v1` and distinct `InGameCausalPossessionPressureOffset-v1`; actual 193/193 causal feature coverage confirmed read-only. Third candidate is not selected until verified new feedback. Exact serving Controller model unknown, so no Astra or same-model-mechanism claim. |
 | Formal confirmation | Before seeing a new evaluation result, freeze the candidate-selection rule and submission; later evaluate on games not used for selection, ideally future-settling events after model/version freeze. |
 | Detailed report | `INGAME_PREDICTIVE_AUTONOMY_BATCH_REPORT_2026-09-29.md` |
 
-Decision: **THE COMBINED AUTONOMOUS PREDICTOR-OPTIMIZATION WORK IS COMPLETE; NO CANDIDATE BEAT THE RAW-MARKET INCUMBENT UNDER THE FROZEN RULE; MECHANISM SUPERIORITY REMAINS UNTESTED.**
+Decision: **SEPTEMBER 29 RESULTS ARE PRESERVED; OCTOBER 3 IMPLEMENTATION AND BOUNDED PILOT ARE IN PROGRESS. MARKET INCUMBENT AND PROTECTED BOUNDARIES UNCHANGED; MECHANISM SUPERIORITY REMAINS UNTESTED.**

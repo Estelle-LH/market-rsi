@@ -1,9 +1,10 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-09-29T20:00:00Z",
+  "updated_utc": "2026-10-03T19:18:00Z",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
+    {"id":"opened-train-worker-binding-20261003-01","status":"implementation_and_independent_review","plan":"research/market_rsi/supervisor_harness/COEVO_IMPLEMENTATION_2026-10-03.json","result":"Existing recorder has no production worker call site. One new trusted worker adapter and synthetic tests implemented; 82 focused checks passed. Controller froze two candidate recipes; no new real fits yet.","next":"Freeze source/runtime and review thin candidates; launch bounded 3-attempt/12-fit/90-minute Train pilot through existing v3 policy.","evidence":"research/market_rsi/supervisor_harness/AGENT_LOG_COEVO_INDEPENDENT_REVIEW_2026-10-03.md","provider_cost_usd":"0"},
     {
       "id": "first-real-train-diagnostic-20260929-01",
       "status": "continuous_discovery_batch1_five_attempts_complete_incumbent_v3",
