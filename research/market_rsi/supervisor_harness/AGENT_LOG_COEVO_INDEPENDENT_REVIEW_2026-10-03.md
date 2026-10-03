@@ -469,3 +469,66 @@ reproduces existing Brier delta in all8 blocks, saved64tree splitcounts exact.
 No new predictor/fit/counterfactual/credit; splitfrequency is not importance.
 Saved only registered COEVO_HGB_PAIRED_REVIEW_2026-10-03.json and own log;
 zero Train fits/production edits/protected reads/provider/commits by reviewer.
+
+## 2026-10-03 20:24:55 UTC — B3 pre-score contract review started
+
+Read complete frozen generation2 contract1676d24e3815f50cc65692320eda833007f4e6df6ea95238fcd820153b183414,
+registered before dispatch and committed8f65fa4. One C output-link proposal,
+same11columns/residual target/21HGBparams/64stages/4fits/runtime/seed, bounded
+finaloneattempt slot. Verified prior feedback interpretation against independent
+B1/B2/pair and existing-loss diagnostics: no evidence clipping caused harm;
+alignment instability remains. Algebra factor4 derivative4p(1-p) is local atf0,
+finite-f map nonlinear; unchanged residual loss does not optimize linked Brier.
+Exactzero raw identity, canonical4statehashes and87prelink parity mandatory.
+No source yet; coordinated worker readiness. Re-read AGENTS and complete
+indicator-prediction-evals skill/evaluation-gates. User opened-Train rules take
+precedence over unrelated generic final-OOS/promotion gates; no new harness.
+Read current state and actual source diff: metadata only since8a3102b, protected
+old production unchanged. No Train fits/source edits/provider/protected reads.
+
+## 2026-10-03 20:29:31 UTC — B3 exact pre-score PASS
+
+Reviewed complete final260line source376b34c656e5a70666e8863b507f518675858011c3da6530cf592a0e192957fe
+and testef283f4bd24d74d86f29e90f70a0daf64bca988e8f3026ee332e4fc9277d41ab.
+Independently8 focused tests PASS0.170s and161 adjacent checks PASS12.952s.
+Supplement49 synthetic scalar examples, exactzero/sign/bounds/localderivative/
+finite-f distinction and nonfinite fail-closed passed(2.78e-17 maxformulaerror).
+Actual B2 parent loader read-only confirms87 rows/four hashes with no new Train
+prediction preview or fit. All27 prior source-bound files unchanged; tracked
+protected production diff empty, actual untrackedscope only newmodule/test.
+Same11features/21HGBparams/target/64stages/seed/4fits and strictpriors preserved.
+Canonicalstate plus residual/oldB2prob parity required before acceptedscore;
+manifest binds additional prelink_residuals.json and predictor_states.json.
+Parent remains additional comparator; unchanged KEEP/judge. No oldhelper
+monkeypatch, hiddenfit/retry/permission/runtime/data/H/R expansion.
+
+Explicit200line threshold review: ACCEPT260line single sibling as inseparable
+newoutputmap+requiredparentparity+preservedsource/population/chronology/failure/
+artifactboundary. Frozen sharedrunner acceptsoldcontract; splitting or changing
+it widens scope. Existing fit/scorer reused; oneC component, no newharness.
+Factor4 derivative localat0, finite-f nonlinear, unchangedtrainingloss notlinked
+Brier optimization; correctclipping notblamed. Contract before scores/params
+projectchoice/algebra distinctfromresearchclaim. Own Trainfits0/provider0.
+Saved COEVO_CANDIDATE_REVIEW_B3_2026-10-03.json PASS exactsnapshot, conditional
+on committed request/runtime/memory binding and bounded lastsingleton4fits.
+Liveparity notinferredfromsyntheticpass; postscore mustreviewall7outputhashes,
+replay87newlinkedprobabilities and immutablejudge. No priorreceipt edits/commits.
+Initial receipt-saving orchestration call failed JS syntax before any tool or
+file write(unquoted numeric-leading check key); corrected serialization only.
+No candidate change, fit or lost experiment resulted.
+
+## 2026-10-03 20:34:34 UTC — B3 test-only portability correction before activation
+
+Supervisor explicitly requested updating the still-uncommitted pre-score receipt
+before any real attempt. Originalreceipt8d6d1363e61ef1c9e39b121c9022c987be40d20c689075b831ab9c59fa6018cf
+and originaltestef283f4bd24d74d86f29e90f70a0daf64bca988e8f3026ee332e4fc9277d41ab
+remain recorded above/history. Finalproduction remains376b34c656e5a70666e8863b507f518675858011c3da6530cf592a0e192957fe.
+Finaltestc28d1fc0ab88c9a63c70212670fa0d26e0db3df95685e93f7ad4614f8add06f8
+read completely and independently8/8 PASS0.190s. Private actualparent unitcase
+replaced with portable synthetic87rows/four64numericstates and allhash/task/
+key/label/control/file drift cases; no production/contract/judge changes.
+ActualB2readonlypreflight retained as separate history, not a unitfixture.
+Previous161 adjacentchecks remain applicable to unchanged source/tests. Explicit
+260line inseparability assessment unchanged. Updated only currentunactivated
+B3receipt finaltestbinding and ownlog, as authorized; no prior scoredreceipt,
+score/result/data/source change, real Trainfit or rerun. gitdiffcheck PASS.

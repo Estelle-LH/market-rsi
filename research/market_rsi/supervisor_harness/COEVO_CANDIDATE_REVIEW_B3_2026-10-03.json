@@ -1,0 +1,128 @@
+{
+  "schema": "market_rsi_independent_candidate_prescore_review_v1",
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "review_observed_utc": "2026-10-03 20:34:34 UTC",
+  "candidate_id": "InGameMarketStateConfidenceLinkHGB-v2",
+  "attempt_id": "attempt-03",
+  "verdict": "PASS_exact_snapshot_for_one_bounded_Train_attempt",
+  "passed": true,
+  "source_parent_commit": "8a3102b125f714493394443f975bb4570e401ed8",
+  "contract_commit": "8f65fa4b84c88f8571cbd909aa59da3ea652353e",
+  "controller_contract_sha256": "1676d24e3815f50cc65692320eda833007f4e6df6ea95238fcd820153b183414",
+  "candidate_source_sha256": "376b34c656e5a70666e8863b507f518675858011c3da6530cf592a0e192957fe",
+  "candidate_test_sha256": "c28d1fc0ab88c9a63c70212670fa0d26e0db3df95685e93f7ad4614f8add06f8",
+  "reviewed_source_files": {
+    "research/market_rsi/experiments/nfl_ingame_market_state_confidence_link_hgb.py": "376b34c656e5a70666e8863b507f518675858011c3da6530cf592a0e192957fe",
+    "research/market_rsi/experiments/test_nfl_ingame_market_state_confidence_link_hgb.py": "c28d1fc0ab88c9a63c70212670fa0d26e0db3df95685e93f7ad4614f8add06f8"
+  },
+  "research_parent": {
+    "candidate_id": "InGameMarketStateResidualHGB-v1",
+    "runner_sha256": "ef77c1134207b47eb2040e83e0169f2d7bd0e8dfca7a529c003bd0ed708a54c4",
+    "shared_HGB_source_sha256": "a17220dea91373b73c3f2e3a5d6e36f2b3e1b2866c8714cdc292dd921aefad79",
+    "parent_prediction_sha256": "5c8e0f8309ceb5cd65f03abb819d1ef3d31b981324fce498b78c3ff74f4c9ea2",
+    "parent_predictor_states_sha256": "a187ebb7410d4ca14d51c9217f51e387fcfe2662fa110878ad51e9aa9bae1f8c",
+    "parent_state_sha256": [
+      "a98e790db52711092fab883826f9fe203c4112215ab6cb810cc4497b0c18ae2e",
+      "b9820608e9f71053b173033ca37b13a7427e209bda2bc594b3cf9efe6bfd0d63",
+      "dbb53b336721365398130884d2b27aeb2df2eef3ef111a596ad08e5666bb513c",
+      "cddcb54411acf7fcd7b5ec4e9264470174cf2f9fc7aaa0a1a792fc38d6455de9"
+    ],
+    "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f"
+  },
+  "checks": {
+    "complete_contract_scope_feedback_and_project_parameter_status_read": true,
+    "one_C_output_link_only_no_old_source_helper_monkeypatch": true,
+    "all27_previous_request_source_files_hash_unchanged": true,
+    "tracked_protected_production_diff_empty": true,
+    "same_exact11_features_21HGB_params_residual_target_seed64stages_strict_prior_fit": true,
+    "four_new_fits_only_no_control_fit_no_retry_no_grid_no_link_training_parameters": true,
+    "finite_guard_stable_sigmoid_exact_zero_raw_identity_sign_bounds": true,
+    "local_derivative4p1minusp_only_at_zero_finite_f_nonlinear": true,
+    "unchanged_residual_loss_not_claimed_to_optimize_linked_Brier": true,
+    "actual_frozen_B2_readonly_loader87_rows_four_states_success_no_new_Train_predictions": true,
+    "state_hash_and_all_prelink_old_probability_parity_gate_before_accepted_score": true,
+    "195_denominator_193plus2_fullcoverage_87mask_frozen_four_folds_preserved": true,
+    "parent_CSV_label_availability_controls_hash_bound_extra_not_KEEP_judge": true,
+    "same_scoring_bootstrap_calibration_and_KEEP_unchanged": true,
+    "seven_output_files_including_state_and_prelink_residuals_manifest_bound": true,
+    "terminal_failures_preserved_no_output_overwrite_no_retry": true,
+    "no_network_protected_data_provider_budget_release_or_model_authority_change": true,
+    "git_diff_check_pass": true,
+    "synthetic87_parent_four_numeric_states_portable_unit_fixture_and_hash_task_key_label_control_file_drift": true
+  },
+  "small_step_review": {
+    "production_modules": 1,
+    "production_lines": 260,
+    "threshold_triggered": true,
+    "disposition": "PASS_explicit_inseparability",
+    "reason": "One immutable sibling must carry the new output map and mandatory state/residual/parent parity alongside preserved source/population/chronology/failure/artifact boundaries. Frozen shared runner admits only its older contract; splitting to another shared component or editing it would widen the declared scope. Existing fit/scoring helpers are reused unchanged. This is a bounded C output-link recipe, not a new H/R framework.",
+    "axis": "C",
+    "component": "candidate_probability_output_link",
+    "fixed_K_M_H_R": true
+  },
+  "verification": {
+    "runtime": "/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python",
+    "environment": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1",
+      "PYTHONHASHSEED": "0"
+    },
+    "focused_command": "python -B -m unittest experiments.test_nfl_ingame_market_state_confidence_link_hgb -v",
+    "focused": {
+      "tests": 8,
+      "passed": true,
+      "elapsed_seconds": 0.19
+    },
+    "adjacent_command": "python -B -m unittest experiments.test_nfl_ingame_market_residual_hgb experiments.test_nfl_ingame_market_state_residual_hgb experiments.test_nfl_ingame_market_freshness_interaction_offset experiments.test_nfl_ingame_causal_possession_pressure_offset experiments.test_nfl_ingame_market_freshness_brier_offset experiments.test_nfl_ingame_identity_anchored_market_calibration experiments.test_nfl_ingame_win_probability_train_diagnostic experiments.test_nfl_ingame_market_offset_score_time_train_diagnostic experiments.test_nfl_ingame_static_state_nested_shrinkage_train_diagnostic supervisor_harness.test_opened_train_discovery_worker supervisor_harness.test_continuous_discovery_small_steps supervisor_harness.test_continuous_discovery_branch_retention supervisor_harness.test_continuous_discovery_batch",
+    "adjacent": {
+      "tests": 161,
+      "passed": true,
+      "elapsed_seconds": 12.952
+    },
+    "supplementary_math": {
+      "synthetic_scalar_examples": 49,
+      "max_scalar_formula_error": 2.7755575615628914e-17,
+      "zero_identity": true,
+      "local_derivative": true,
+      "finite_f_not_first_order": true,
+      "sign_bounds_nonfinite": true
+    },
+    "Train_fits": 0,
+    "new_Train_candidate_probabilities": 0,
+    "test_data_status": "All B3 unit data/fits are synthetic, including87-row parent/four64-tree fixture. Earlier independent actual B2 metadata preflight remains history; no Train fitting or new candidate score preview."
+  },
+  "launch_conditions": [
+    "Supervisor must commit this exact source/test snapshot and bind all current imports, pinned runtime, immutable verified-feedback memory and reviewed contract in a fresh request.",
+    "Use only the current batch final singleton attempt: maximum4 fits,900seconds,1thread,1GiB sampled RSS, no automatic retry, before batch deadline2026-10-03T21:41:56.530771Z and outer deadline.",
+    "Any real canonical-state,87prelink/old-parent parity, source/runtime/mask/time/coverage or finite-prediction failure is invalid, not scientific refutation; preserve claim/failure and do not retry.",
+    "Independent post-score review must hash all seven outputs, independently replay raw numeric trees and the scalar link, verify prelink87/state4 parity and unchanged scorer/KEEP."
+  ],
+  "limitations": [
+    "Synthetic pass is launch readiness, not live parity, prediction gain or successful research mechanism.",
+    "Repeatedly inspected opened Train is Discovery, not untouched OOS or promotion.",
+    "Factor4 is a frozen project choice. Its local derivative statement is algebra, not a literature consensus or optimized linked-Brier objective.",
+    "Correct-sided clipping in B2 is not blamed for its loss; output link cannot fix wrong residual signs.",
+    "Trusted host/sample-polled resource bounds are not arbitrary-code/network or OS-hard isolation.",
+    "Exact Controller serving version unknown; no authenticated Astra/same-model research-mechanism claim.",
+    "Broad legacy suite remains ungreen; current focused/adjacent checks pass."
+  ],
+  "preactivation_test_correction": {
+    "reason": "Supervisor requested removal of hardcoded resident private B2 artifact access from the B3 unit test; replaced with complete portable synthetic87-row/four-state artifact fixture.",
+    "prior_uncommitted_receipt_sha256": "8d6d1363e61ef1c9e39b121c9022c987be40d20c689075b831ab9c59fa6018cf",
+    "prior_test_sha256": "ef283f4bd24d74d86f29e90f70a0daf64bca988e8f3026ee332e4fc9277d41ab",
+    "prior_focused": {
+      "tests": 8,
+      "elapsed_seconds": 0.17,
+      "passed": true
+    },
+    "final_test_sha256": "c28d1fc0ab88c9a63c70212670fa0d26e0db3df95685e93f7ad4614f8add06f8",
+    "production_source_unchanged": true,
+    "science_scoring_contract_unchanged": true,
+    "prior_actual_parent_preflight_preserved_in_log": true,
+    "no_real_attempt_started_or_result_superseded": true,
+    "adjacent161_checks": "Earlier PASS applies to unchanged adjacent source/tests; only B3 fixture changed and its final8 focused checks rerun."
+  }
+}
