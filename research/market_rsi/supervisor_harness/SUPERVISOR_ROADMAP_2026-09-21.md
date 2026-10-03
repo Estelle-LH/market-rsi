@@ -1,8 +1,24 @@
 # Market RSI — Supervisor 总路线图与当前任务
 
-更新：2026-09-29 16:00 ET。负责人：本会话的总 Supervisor。这个文件是用户看的当前入口；历史细节留在 `HUMAN_PROGRESS.md`，机器闸门见对应 orchestration JSON。任务状态只能按真实 task 和证据更新，不能把计划写成结果。
+更新：2026-10-03 17:35 ET。负责人：本会话的总 Supervisor。当前入口以本节和 `RESEARCH_STATE.md` 为准；下方 September29 与更早记录保留为历史，不同任务的成绩不混用。历史细节留在 `HUMAN_PROGRESS.md`，状态只能按真实 task 和证据更新。
 
-## 2026-09-29 `SettlementProbabilityTrainDiagnostic-v0`（当前权威）
+## 2026-10-03 当前：真实赛中 Train 自主预测实验
+
+沿用 `InGameWinProbabilityTrainDiagnostic-v0`：195场完整分母，193有效+2明确排除；同87比赛/20日期/7周，四个既定 chronological checks，equal-event Brier 与固定评分规则不变。赛前 settlement 与60/300秒 MSE 均是独立历史任务。
+
+本次五小时窗口19:10:37–00:10:37UTC 已实际完成并独立核验9候选/36fits。三轮反馈依赖的后代不是预排模型：A1/A2证据→A3损失；B1/B2证据→B3输出链接；C1/C2证据→C3联合count/freshness。每个真实预测产物、源码checkpoint、父分支、市场比较、时间块/分组interval、失败和反馈都有记录。
+
+Raw市场 incumbent Brier/log0.1419525290/0.4296707847 未变。最低观测候选Brier为C2 0.1419480777，仅改善0.0000044513，2/4块、区间跨0，INCONCLUSIVE/REVERT；不是确认市场优势。C3联合候选0.1419582436/0.4294636054，log改善但Brier输raw/C2，互补性条件失败，REFUTED/REVERT。旧成绩和KEEP规则没有追溯修改。
+
+当前立即执行：Controller根据已核验C3的fit-Hessian与尺度证据，冻结最后一次 count-only fit-standard-deviation scaling 候选；具体新合同尚在完成，先冻结/独立源码审核，再运行4真实fits并反馈。只改变预测配方C，不把有效先验变化叫纯数值conditioning。独立batch03全链闭环核验与下一候选选择并行。保留全局两条实质研究路线，最终单执行槽不是把探索池退化成scoretop-one。
+
+已用9/10既定总尝试，剩1新ID；每次4fits/900秒/单线程/采样RSS1GiB；旧三个3attempt/12fit批次已封闭，不加第四轮、不重试。C2唯一bounded followup已由C3消耗；新批次不重新导入C2为fresh机会。信用影响科学探索但不抵消Brier。Provider0/$0，Codex成本不可由项目账本计量。
+
+已证实的是可信本地Train执行与反馈驱动的自主预测器优化。H有人工集成/绑定修复；此次科学候选没有R研究流程自修改。尚未运行同模型同预算固定流程对照；不得宣称自迭代机制优越、untouched OOS、实时接收时间、PnL或正式promotion。Exact Controller serving version未知，历史NFL为seed而非永久范围。Dev/Final、网络新增数据/文献获取、付费、push/release与promotion仍关闭。
+
+最近证据入口：`HUMAN_PROGRESS.md`、`COEVO_TRAJECTORY_2026-10-03.jsonl`、`COEVO_RESULT_REVIEW_C3_2026-10-03.json`。只新增这次实际结果与状态，不把框架计划当成绩。
+
+## 2026-09-29 `SettlementProbabilityTrainDiagnostic-v0`（历史赛前任务）
 
 主线已经切换为 **赛前 settlement probability**。旧的 60/300 秒价格变化 + MSE benchmark 只保留为独立 legacy experiment，不能与当前 Brier/log-loss 结果混用。NFL 是按结果无关的数据就绪标准选出的当前 seed domain，不是 Market RSI 的永久范围。
 

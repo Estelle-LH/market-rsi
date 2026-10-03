@@ -1,0 +1,449 @@
+{
+  "schema": "coevo_batch_independent_operational_resolution_v1",
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "reviewed_utc": "2026-10-03T21:35:03.814726+00:00",
+  "passed": true,
+  "verdict": "PASS_CLOSED_BATCH_CAPS_AND_EVIDENCE_CHAIN_WITH_EXPLICIT_CROSS_BATCH_FOLLOWUP_LIMIT",
+  "batch_id": "market-rsi-coevo-train-pilot-20261003-03",
+  "artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-03",
+  "C2_followup_consumed_and_excluded_in_current_state": true,
+  "all_prefixes": [
+    {
+      "active": [],
+      "claims": 0,
+      "event": "initialize_v3",
+      "sequence": 1
+    },
+    {
+      "active": [],
+      "claims": 0,
+      "event": "micro_evolution",
+      "sequence": 2
+    },
+    {
+      "active": [
+        "attempt-01",
+        "attempt-02"
+      ],
+      "claims": 0,
+      "event": "controller_pool_selected",
+      "sequence": 3
+    },
+    {
+      "active": [
+        "attempt-01",
+        "attempt-02"
+      ],
+      "claims": 0,
+      "event": "implementation_ready",
+      "sequence": 4
+    },
+    {
+      "active": [
+        "attempt-01",
+        "attempt-02"
+      ],
+      "claims": 1,
+      "event": "execution_claimed",
+      "sequence": 5
+    },
+    {
+      "active": [
+        "attempt-01",
+        "attempt-02"
+      ],
+      "claims": 1,
+      "event": "execution_terminal",
+      "sequence": 6
+    },
+    {
+      "active": [
+        "attempt-01",
+        "attempt-02"
+      ],
+      "claims": 1,
+      "event": "implementation_ready",
+      "sequence": 7
+    },
+    {
+      "active": [
+        "attempt-01",
+        "attempt-02"
+      ],
+      "claims": 2,
+      "event": "execution_claimed",
+      "sequence": 8
+    },
+    {
+      "active": [
+        "attempt-01",
+        "attempt-02"
+      ],
+      "claims": 2,
+      "event": "execution_terminal",
+      "sequence": 9
+    },
+    {
+      "active": [
+        "attempt-01",
+        "attempt-02"
+      ],
+      "claims": 2,
+      "event": "result_reviewed",
+      "sequence": 10
+    },
+    {
+      "active": [
+        "attempt-01",
+        "attempt-02"
+      ],
+      "claims": 2,
+      "event": "research_credit_recorded",
+      "sequence": 11
+    },
+    {
+      "active": [
+        "attempt-02"
+      ],
+      "claims": 2,
+      "event": "controller_feedback_ready",
+      "sequence": 12
+    },
+    {
+      "active": [
+        "attempt-02"
+      ],
+      "claims": 2,
+      "event": "result_reviewed",
+      "sequence": 13
+    },
+    {
+      "active": [
+        "attempt-02"
+      ],
+      "claims": 2,
+      "event": "research_credit_recorded",
+      "sequence": 14
+    },
+    {
+      "active": [],
+      "claims": 2,
+      "event": "controller_feedback_ready",
+      "sequence": 15
+    },
+    {
+      "active": [
+        "attempt-03"
+      ],
+      "claims": 2,
+      "event": "controller_pool_selected",
+      "sequence": 16
+    },
+    {
+      "active": [
+        "attempt-03"
+      ],
+      "claims": 2,
+      "event": "implementation_ready",
+      "sequence": 17
+    },
+    {
+      "active": [
+        "attempt-03"
+      ],
+      "claims": 3,
+      "event": "execution_claimed",
+      "sequence": 18
+    },
+    {
+      "active": [
+        "attempt-03"
+      ],
+      "claims": 3,
+      "event": "execution_terminal",
+      "sequence": 19
+    },
+    {
+      "active": [
+        "attempt-03"
+      ],
+      "claims": 3,
+      "event": "result_reviewed",
+      "sequence": 20
+    },
+    {
+      "active": [
+        "attempt-03"
+      ],
+      "claims": 3,
+      "event": "research_credit_recorded",
+      "sequence": 21
+    },
+    {
+      "active": [],
+      "claims": 3,
+      "event": "controller_feedback_ready",
+      "sequence": 22
+    }
+  ],
+  "all_prefixes_verified": true,
+  "artifact_sha256": {
+    "activation_memory-attempt-01.json": "a1c96e8cbd4c20e6eb690820ebe999ccf94f7fec5504948e6bd9f1dc85ecf457",
+    "activation_memory-attempt-02.json": "052702067841691bac81ac09e4067e21861cf86130b3e1a5310b5095b923967d",
+    "batch.json": "1c4449a009e7d8e22954c505d3b2e368e9a3aecc02ed0aa8de1bacdd9a886e5e",
+    "feedback-attempt-01.json": "7de9d3dd3f4af25856192d4732368de659e50c8e0407afcbbd5f89ca3c4b8f9e",
+    "feedback-attempt-02.json": "b5b47a4769408c7a7b45812653ecd48ca4cfc8a4eba0b53b74cd5a0b9dd6b26f",
+    "feedback-attempt-03.json": "b1fc10d571b0ac25350aaff3cfe9a8df3e6ad2cd6ba9fea29ec6ee2c1212f6df",
+    "generation2_launch_manifest.json": "c01fddf6c8ea9f9f3252de1b54863dd6f2c7fa27b7db6d639619bf92e5be7ba2",
+    "generation2_memory.json": "a07784f6e6fae55ff66112369ed1b893afa2ef48d9013af0522cb7d5963850ad",
+    "initial_memory.json": "b292c120098a8fa2f09db9449df8265713f175ebc7b42b79bbae08af84e4d4db",
+    "launch_manifest-attempt-01.json": "c105d175064e7aee71aa000c7372662faaa1fd733b03e6adb66c0dba910496f7",
+    "launch_manifest-attempt-02.json": "29d7bf244fa1dbb00cbfac52e4c09105c8ff039292de1d5618a80abb32d5fb96",
+    "pilot_terminal.json": "b1553233ea6de821852adaca6b2a7196aeeb576f7702c0d0619895f2c3f5167c",
+    "research_credit_mapping-attempt-02.json": "13f9e47af56bf821002cf91c5ae6d6fbe7cd7cab37df289ae852e5e408c5da8f"
+  },
+  "attempt_audit": [
+    {
+      "attempt_id": "attempt-01",
+      "candidate_id": "InGameIdentityBlendedIsotonic-v1",
+      "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+      "credit": 2,
+      "feedback_canonical_sha256": "7e76d6e679816ce618f470ce63e5d47ba27e3bb8e902b34c5932f93df901ae85",
+      "feedback_file_sha256": "7de9d3dd3f4af25856192d4732368de659e50c8e0407afcbbd5f89ca3c4b8f9e",
+      "manifest_sha256": "803edc240d6b702aa4ecc9dc666d9afe0f9bc7d0543cd0bf4e62ae0a103b5321",
+      "question_digest_sha256": "091e63e4eee55ebc10976a1ec6c356446212096888afee9f623b1020041af254",
+      "question_id": "ingame-identity-blended-isotonic-v1-q1",
+      "research_parent_sha256": "a17220dea91373b73c3f2e3a5d6e36f2b3e1b2866c8714cdc292dd921aefad79",
+      "review_sha256": "93400e9757c41d461bfdd1840d9b62bc30843e23d82c4accc969cfe5a9609f24",
+      "route_action": "branch",
+      "scorecard_sha256": "8f2002cf8c13c45756f1c691b8407e32d9110c04bdeb0f533e24b07a975d9bf9",
+      "source_commit": "4bd926a40bb099e548be7c1d53aea2a05125538d",
+      "source_files_bound": 35
+    },
+    {
+      "attempt_id": "attempt-02",
+      "candidate_id": "InGamePriorPlayVolumeOffset-v1",
+      "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+      "credit": 1,
+      "feedback_canonical_sha256": "cc9aa8df62c2ac6ccc43c8db6d8fb248c3f5e924730e1d24947003fc0172e912",
+      "feedback_file_sha256": "b5b47a4769408c7a7b45812653ecd48ca4cfc8a4eba0b53b74cd5a0b9dd6b26f",
+      "manifest_sha256": "19300efb81f9b17666531599e6a3b5d470dc21bf94b544f8e3d0c85278db5bf3",
+      "question_digest_sha256": "df46063d8c88d1a55aef39b3ff9f490cd07457c99289b6a70ac9233d242ca997",
+      "question_id": "ingame-prior-play-volume-offset-v1-q1",
+      "research_parent_sha256": "4ea2935fb896397b4d21125bb040a0f82ff82be01abd2779717378d3465a0ab3",
+      "review_sha256": "a8ff65b8abd5c78c911ff7a2e3b758d7e9440bbfea309b045bdc3fd707305cb8",
+      "route_action": "bounded_followup",
+      "scorecard_sha256": "e52c39ca3d4d585f0bb7f0f20b905a6bbfda435027ad9703202ef65b4e9f26c0",
+      "source_commit": "50895c74f93dd8f3def9cf2e4d6144dec9b10c7b",
+      "source_files_bound": 36
+    },
+    {
+      "attempt_id": "attempt-03",
+      "candidate_id": "InGamePriorPlayVolumeFreshnessJointOffset-v2",
+      "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+      "credit": 2,
+      "feedback_canonical_sha256": "971fba3ffc6a7ddba6b9e8e62f74df70168d65c0a87560cadca2f0dc05bc9c53",
+      "feedback_file_sha256": "b1fc10d571b0ac25350aaff3cfe9a8df3e6ad2cd6ba9fea29ec6ee2c1212f6df",
+      "manifest_sha256": "a111ba3fc79684ee3b6002d1e6152fe0d7669a850609450e154e94fc4f513672",
+      "question_digest_sha256": "9e7d515ef01b38343f6df869328bca90a3863b1de75c03335d72f58e00ab4992",
+      "question_id": "ingame-prior-play-volume-freshness-complementarity-v2-q1",
+      "research_parent_sha256": "45d1e7f2ef2de62102f115816db9d90e0249d169722700df3d5cc6000704c1ca",
+      "review_sha256": "c055b99fb38c60f9a0869061072a5679ceb695c28488591d72613ff07f41edc0",
+      "route_action": "branch",
+      "scorecard_sha256": "21371f48004a1ae0739012072c5b3a3285f4b566ed3ab47d7de7a36491477914",
+      "source_commit": "0af8ebd2bab55b8c19a4ab73f9ec757331a9aa71",
+      "source_files_bound": 40
+    }
+  ],
+  "cross_batch_consumption_not_encoded_by_archived_parent": "Supervisor must not reinsert C2 as fresh credit1 parent; current scheduler counts children only in current batch.",
+  "hardstop_verified": true,
+  "human_machine_C3_trajectory_matches": true,
+  "incumbent": {
+    "candidate_id": "InGameWinProbabilityTrainDiagnostic-v0-raw_market",
+    "candidate_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+    "review_sha256": "b41bd2b76d62678c99e08e2e3ac2837c94b3ca0c5ef80d75960d684c3aa544a0",
+    "scorecard_sha256": "74c2f23de2ae129ead4d7def1a692d69240ac799582e54db3623865c3525de87",
+    "source": "batch_start",
+    "updated_by_attempt_id": null
+  },
+  "journal_event_counts": {
+    "controller_feedback_ready": 3,
+    "controller_pool_selected": 2,
+    "execution_claimed": 3,
+    "execution_terminal": 3,
+    "implementation_ready": 3,
+    "initialize_v3": 1,
+    "micro_evolution": 1,
+    "research_credit_recorded": 3,
+    "result_reviewed": 3
+  },
+  "journal_head_sha256": "cf5a2baa6914651ebbb24b54ecb7b4f5e586e5d0d29714bc6677a7b63387d458",
+  "journal_records": 22,
+  "max_active_slots_seen": 2,
+  "micro_evolution": {
+    "active_pair": {
+      "harness_sha256": "50d32690f488a583b705d23d114091326af17ec8afab9343283c0f28b8514df0",
+      "researcher_sha256": "5bc2d879b4030190e3a6b17ddd186379b153c112ad1a5f58f5d571c9660bccf8"
+    },
+    "allowed_write_paths": {
+      "harness": [
+        "research/market_rsi/supervisor_harness/opened_train_discovery_worker.py"
+      ],
+      "researcher": [
+        "research/market_rsi/supervisor_harness/coevo_research_policy_v1.json"
+      ]
+    },
+    "anchor_pair": {
+      "harness_sha256": "50d32690f488a583b705d23d114091326af17ec8afab9343283c0f28b8514df0",
+      "researcher_sha256": "5bc2d879b4030190e3a6b17ddd186379b153c112ad1a5f58f5d571c9660bccf8"
+    },
+    "fixed_context": {
+      "authority_sha256": "37fecab6489e44e7e0ab498aa5fe5e57735b97801f10e09e4a158d2956fe0578",
+      "data_scope_sha256": "c94492041d5c331a2cc31c4d6cd529984742ce200e1b9365e3fb7d07e5b1ce64",
+      "evaluation_sha256": "c94492041d5c331a2cc31c4d6cd529984742ce200e1b9365e3fb7d07e5b1ce64",
+      "model_sha256": "32d09dd7c177b30932b9a0619b60246ba574f8989c9eac80869aff134cded58d",
+      "resource_policy_sha256": "ac2c76027c7085038cbc0a1be0063260f1024a09f23af419753ae27cb07b43bf"
+    },
+    "history": [],
+    "pending": null,
+    "previous_pair": null,
+    "protected_paths": [
+      ".agents",
+      ".codex",
+      ".git",
+      "artifacts",
+      "data_scientist_harness/co_evolution_loop.py",
+      "paid_budget.py",
+      "research/market_rsi/experiments",
+      "research/market_rsi/minimal_prediction_loop",
+      "research/market_rsi/supervisor_harness/continuous_discovery_batch.py",
+      "supervisor_harness/global_state_gate.py"
+    ],
+    "record_sha256": "7f0d3021f6b5d82efb93ea9ce6a396a19fe3d1d68fda1b201dd4f13dcff18965",
+    "reviewer_id": "coevo_independent_review_20261003",
+    "schema": "market_rsi_micro_evolution_v1",
+    "used_candidate_ids": []
+  },
+  "old_closed_caps_unchanged": true,
+  "pool_generation_sizes": [
+    2,
+    1
+  ],
+  "pure_replays": 2,
+  "python_diff": [
+    "258\t0\tresearch/market_rsi/experiments/nfl_ingame_identity_blended_isotonic.py",
+    "346\t0\tresearch/market_rsi/experiments/nfl_ingame_prior_play_volume_freshness_joint_offset.py",
+    "121\t0\tresearch/market_rsi/experiments/nfl_ingame_prior_play_volume_offset.py",
+    "171\t0\tresearch/market_rsi/experiments/test_nfl_ingame_identity_blended_isotonic.py",
+    "259\t0\tresearch/market_rsi/experiments/test_nfl_ingame_prior_play_volume_freshness_joint_offset.py",
+    "192\t0\tresearch/market_rsi/experiments/test_nfl_ingame_prior_play_volume_offset.py"
+  ],
+  "resources": {
+    "PIDs": [
+      52057,
+      52740,
+      54371
+    ],
+    "actual_fits": 12,
+    "attempts": 3,
+    "exploitation_attempts": 1,
+    "exploration_attempts": 2,
+    "failed_attempts": 0,
+    "outer_attempt_cap": 10,
+    "outer_attempts": 9,
+    "outer_fits": 36,
+    "prediction_rows": 261,
+    "sampled_peak_child_rss_kib": 142528,
+    "sum_worker_wall_seconds": 12.95360716698633,
+    "unique_games": 87
+  },
+  "terminal_state_sha256": "abceff11b5094d6fc9baa17c7165f003d197e5f67bcc3bc0613e00f9c1c98498",
+  "process_checks": [
+    {
+      "pid": 52057,
+      "absent": true
+    },
+    {
+      "pid": 52740,
+      "absent": true
+    },
+    {
+      "pid": 54371,
+      "absent": true
+    }
+  ],
+  "process_check_method": "Independent scoped escalated os.kill(pid,0), read-only; no signal sent.",
+  "operational_resolution": {
+    "bottleneck": "Feedback-dependent real candidate execution and exact independently reconstructable close-loop evidence, not prediction-success acceptance",
+    "status": "RESOLVED_FOR_THIS_BATCH",
+    "evidence": "Three unique completed candidates,12 actual fits,261 predictions on same87games; C1/C2 actual feedback triggered C3. All reviews/source/runtime/memory/request/artifact/credit/feedback and full22event chain bound. Original3cap closed; no active child/fourth request. Actual worker exercised; no added Harness or R source in batch.",
+    "evidence_level": "L3 historical opened-Train predictor diagnostic plus operational completed-history replay"
+  },
+  "checks": {
+    "journal": "All22canonical bytes/hash/sequence/previous links and snapshotdigest; two fresh pure replay objects exactly equal final snapshot. Everyprefix caps<=3/active<=2/incumbent fixed and H/Rpairhistory empty. Final singleton generation protocol [2,1] verified.",
+    "hard_stop": "max_attempts_reached at3claims, originaldeadline/max3/max2 unchanged; final active[]/allfeedback-ready. Pure _assert_live_batch denies any prefix at3, no attempt04 request/output.",
+    "candidate_artifacts": "Each3review passed exacthash; each manifest sixoutputhashes/4statedigests remain bound,87samekeys/fullpopulation and prior independent numeric/scoring review evidence retained; no refit during closure.",
+    "research_parent_vs_incumbent": "C1 archivedB1, C2 archivedA2, C3 C2actualparent+A1secondary, raw comparison incumbent unchanged; explicit distinct lineage and archive histories.",
+    "source_runtime_memory": "35/36/40 current+committed source bindings, Pythonbinary/request/commands/receipt/stdout/stderr/runtimepair/memory/pre-score review unchanged. Six prior packets and2current feedback+review/mapping frozen into C3 memory before fit.",
+    "credit": "All3scientific evidence2; legal recorded2/refute/branch,1/inconclusive/bounded_followup,2/refute/branch. Explicit C2 scientific2/recorded1mapping preserved; no predictionbonus/falseclassification/retroactiveH change.",
+    "followup": "Current C2 one bounded descendant consumed by selected/executed C3; C2 excluded from final eligible-parent records. Cross-batch reinsertion can reset current-only childcount unless Supervisor carries/enforces usage, so no automatic universal archive-persistence claim.",
+    "scope": "Actual basead5d2a8->0af8ebd Python diff exactly3newscientificmodules+3synthetictests, no deletion/oldmodule mutation.258/346-line triggers individually reviewed before fit;121lineC2 also reviewed, not inferred safe by threshold. All other changed paths registered contracts/reviews/logs/state/trajectory only, no hidden authority/scorer/protected-source edits.",
+    "trajectory": "Unique machine C3step source/parent/incumbent/beforeafterK/M/H/R/triggerC1C2feedback/contract/resultreview/feedback/terminal bound; matchinghuman progress accurately reports uncertainty, creditmapping/costs/failures. No R selfmodification attributed to normalmemory.",
+    "old_caps": "Both oldclosedpilot states/digests3attempts12fits unchanged. Thisbatch3/12closed; outer9/10actualattempts36fits before original00:10:37UTC deadline.",
+    "failures": "All3 real runs succeeded/0automaticretry; earlier synthetic/metadata/bookkeeping errors preserved as development/recovery notes, never scientific refutation or extra Train rerun. Completed history replay verifies persistent finished state, not deliberate interruption/recovery of a live fit."
+  },
+  "credit_mapping": {
+    "scientific_evidence": [
+      2,
+      2,
+      2
+    ],
+    "recorded_scheduling": [
+      2,
+      1,
+      2
+    ],
+    "C2_mapping_sha256": "13f9e47af56bf821002cf91c5ae6d6fbe7cd7cab37df289ae852e5e408c5da8f",
+    "C2_descendants_consumed": 1,
+    "C2_eligible_as_fresh_credit1_parent": false
+  },
+  "scientific_outcome": {
+    "incumbent_changed": false,
+    "valid_REVERT_candidates": 3,
+    "independent_scientific_labels": [
+      "REFUTED",
+      "INCONCLUSIVE",
+      "REFUTED"
+    ],
+    "best_new_Brier_candidate": "InGamePriorPlayVolumeOffset-v1",
+    "best_new_Brier": 0.14194807773589316,
+    "market_Brier": 0.14195252900323282,
+    "delta": -0.000004451267339672208,
+    "claim": "Tiny exploratory C2 aggregate difference,2/4wins/crossingintervals; no KEEP or confirmed edge. C3 improved logloss but failed Brier/complementarity. Autonomous predictoroptimization ran, not mechanismcomparison.",
+    "next_method_selected_by_reviewer": false
+  },
+  "limitations": [
+    "Repeated historical Train Discovery; no untouched OOS or real-time publish/receive timing proof",
+    "No matched equal-budget fixed-process comparison; no R selfmodification or self-evolution superiority",
+    "Source/synthetic/operational completion is not prediction improvement or research-capacity gain",
+    "Cross-batch consumed-followup metadata is not enforced automatically by current initial-archive schema; Supervisor must not reset C2",
+    "Broad legacy suite not green; available focused/scoring tests passed, no dependency installation",
+    "Trusted local host minimal env/timeout/sampled1GiB check is not network/arbitrary-code/OS-hard memory isolation",
+    "Exact Controller serving version unknown; no authenticated Astra claim",
+    "Completed-history pure replay, not deliberately interrupted real-fit recovery test",
+    "Codex usage/cost unmetered; reported worker seconds are not full research elapsed"
+  ],
+  "reviewer_actions": {
+    "new_receipt": true,
+    "own_log_append": true,
+    "actual_Train_fits": 0,
+    "new_predictions": 0,
+    "protected_reads": 0,
+    "provider_calls": 0,
+    "network": 0,
+    "source_edits": 0,
+    "pilot_artifact_or_journal_edits": 0,
+    "prior_receipt_edits": 0,
+    "commits": 0
+  }
+}

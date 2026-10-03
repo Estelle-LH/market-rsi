@@ -763,3 +763,127 @@ No marketedge, real-time, untouchedOOS, mechanismcomparison, Rself-modification,
 authenticatedAstra or full-literature claim. Existing credit2 evidence rubric
 and recorder1/inconclusive mapping remain explicit and frozen; broadlegacy
 suite notgreen. Only ownlog/newreceipt edited; no commit/artifact/source edit.
+
+### Supervisor registration: C3 post-score scope, 2026-10-03T21:28Z
+
+Actual one-time attempt-03 completed under source0af8ebd, request723e2b71…e427.
+Own only new COEVO_RESULT_REVIEW_C3_2026-10-03.json and append this log.
+Reconstruct existing numeric states and predictions without refitting; verify
+all193 causal count/age features, strict-prior masks, four objective/gradient/
+Hessian states,87 predictions and C2/A1 controls,20 intervals/calibration,
+unchanged judging, source/runtime/memory/caps/process absence. Return exact
+scientific-rubric versus frozen-recorder credit mapping. Old records immutable;
+no fits, provider/external/protected access, source/score/artifact edits or commits.
+
+## 2026-10-03 21:28:56 UTC — C3 actual result independently reviewed
+
+One run source0af8ebd2...9aa71/request723e2b71...e427 and generation2memory
+a07784f6...50ad,40committed/current source bindings independently verified.
+Sixmanifest outputs/allfour canonical states bound; no refit or new predictor
+preview. Independently recomputed all193 original count ratios+fractional
+causal ages, exact frozen195anchor/source/PBP/six-feature-hash bindings,195=
+193+2/exact87keys/20dates/7weeks and strict-prior available-label fit masks.
+Four normalizers recomputed from106/132/148/176prior rows only and match A1.
+Scalar NLL/ridge objectives,2D gradients/full Hessians/eigenvalues/state feature
+digests pass. Gradientinf max6.7235e-9<=1e-8, allpositiveHessian. All87candidate
+scalar probabilities match<=5.55e-17; C2/A1 control/nested<=1.11e-16 withoutfit.
+
+Six-arm aggregate/fourfold Brier/logloss/calibration/60aggregate+240fold
+reliability bins, all20dates and20whole-date/week10k eventweighted bootstrap
+intervals independently reproduced. Additional C2/A1 annotation/correction
+energy+alignment/correlation verified and do not change original judge.
+Candidate .14195824357373463/.42946360535319034; raw .14195252900323282/
+.4296707847132428, actual C2 .14194807773589316/.42957778268391095.
+RawBrier+5.7145705e-6/log-2.0717936e-4; C2Brier+1.0165838e-5/
+log-1.1417733e-4. Twoof4Brierwins raw/C2/A1; allraw/parentproper-lossintervals
+crosszero. FrozenREFUTED/REVERT, not statistical futility or marketedge.
+Predeclared conditional complementarity fails; history oppositeblockwins did
+not provide the required joint evidence. Raw incumbent unchanged.
+
+New question9e7d515e...4992/hypothesis7ce5ce3b...6c64 and originalrule2caa0e05
+match contract/preclaim/journal. Normalmemory preserves six previous andtwo
+verifiedcurrent packets plusexplicitC2creditmapping; newchildselectedafter
+actualverifiedfeedback, noRpolicychange. Independent recommendation evidence2,
+legalrecorder2/refute/branchfor a distinct futurequestion only; retainnegative
+finding, not exactrecipe repeat or scorecredit. No scientific nextmethodchosen.
+
+PID54371 independentlyabsent kill0; one4fit run4.447732875s/142528KiB,
+0retry/controlfit/provider. Currentbatch3claims12fits atunchangedcap; outer
+9/10claims36fits, oldclosed3/12caps unchanged. Combinedbatchworker12.953607167s.
+Resultreview/hardstopnotyetappended; this receipt doesnotassertclosure.
+Two initial readonlyinspection errors (wronggeneration2launchfilename,
+wrongarchivedA1 traineralias) failedprewrite/prefit; correctedinspection only,
+preserved here and receipt. ReviewerTrainfits0/newTrainpredictions0.
+
+Saved only newregisteredC3resultreceipt and appendedownlog. Historicalrepeated
+Train only; no liveavailability/untouchedOOS/puredata/mechanism/Rsuccess claim.
+UnknownexactControllerversion; trustedhost sampledRSS notnetwork/OS-hard sandbox;
+broadlegacytestsnotgreen. Controller receives verifiedevidence, notpredesign.
+
+### Supervisor registration: actual batch03 closure review
+
+Own only new COEVO_BATCH3_OPERATIONAL_RESOLUTION_2026-10-03.json and appendlog.
+Actual terminalb1553233/stateabceff11 closed21:30:39.267117Z at3claims12fits,
+all three accepted feedback and no active child. Verify read-only22hashchain/
+allprefix and fresh pure replay, exact3request/source/runtime/memory/review/
+credit/feedback/manifest bindings, capacity2/finalsingleton and stop, unchanged
+oldcaps/incumbent/K/M/H/R, C2consumed followup and no hidden fourth attempt.
+No pilot journal/snapshot/artifact edit, fits, source/oldreceipt edits or commit.
+Differentiate completed-history recovery from untested interrupted real fit;
+Controller's next science proceeds in parallel after already accepted C3result.
+
+## 2026-10-03 21:35:15 UTC — Batch03 independent operational closure
+
+Actualterminalb1553233...5167c/stateabceff11...98498 independentlychecked.
+All22canonical journalbytes/sequence/previous/eventhashes pass; twofresh pure
+replayobjects equal snapshot, eachprefix exactcaps/incumbent/H/Rhistory.
+Maxactive2, poolgenerations2then1; originalmax3/max2/deadlinefixed. All3branches
+feedback-ready, finalactive[], hardstopmax_attempts_reached. Pure admission
+checkrefusesfourth at3 throughout relevantprefixes; onlyrequests/runs01..03.
+PIDs52057/52740/54371 independentlyabsent by readonly escalatedkill0.
+
+Allthreeaccepted resultreviews/sourcecommits/35+36+40sourcebindings/request/
+Python/runtime/memory/pre-reviews/receipts/stdoutstderr/manifests/sixoutputs/
+fourstatedigests/credit/feedback packets bound. C1B1/C2A2/C3C2lineage distinct
+from unchangedraw incumbent. Six priorfeedback andtwoverifiedcurrent packets
+frozen into generation2normalmemory, not Rchange. Recordedcredit2/1/2 preserves
+C2scientific2/recorder1 explicitmapping, notfalse support/refute orscorebonus.
+C2 hasoneC3descendant and isexcluded current eligibleparents. IMPORTANTfuture
+boundary: initialarchive schema/currentparentranking counts only currentbatch
+children, so reinserting C2 asfreshcredit1 could reset eligibility. Supervisor
+must carry/enforce consumedusage, not restorefresh; parentnotified. NoH/source
+changehere and no unsupported globalarchive-resume guarantee.
+
+ExactlysixaddedPython paths (threecandidate+threeportabletests), nooldsource
+edit/deletion betweenad5d2a8 and0af8ebd.258/346-line triggers explicitlyreviewed;
+121-lineC2alsocausalreviewed. H/K/M/R/evaluation/permissionsunchanged, nohidden
+authorityfileschanged. Machine/human C3trajectory exacttrigger/source/control/
+review/feedback/terminal/metrics agree; addedcapacity+information inseparable,
+noRsuccessclaimed. Completedhistorystate recovery verified, not deliberately
+interruptedlivefit test. Priorbookkeeping repair/testfailures remainpreserved;
+all3realrunsexit0, nofitretry/repeat/overwrittenhistory.
+
+Closedbatch3attempts12fits261rows SAME87games, worker12.953607167s/
+sampledpeak142528KiB, exploit1/explore2, provider0/$0. Priorclosed3/12caps
+unchanged; outer9/10attempts36fitsoriginaldeadline00:10:37Z, nocapexpanded.
+All3REVERT, rawincumbentunchanged; C2tinyBrierdiagnosticinconclusive,
+C3loggain/Briermarginallyworse/complementarityfailed. Autonomous predictor
+optimization ran; not matchedfixedprocess mechanismcomparison, realtime/
+untouchedOOS/promotion/predictivesuccess. ExactControllerversionunknown,
+trustedhostnotsandbox, broadlegacytestnotgreen, Codexcostunmetered.
+
+Saved onlyregisteredoperationalresolution JSON+ownlog; nofits/source/artifact/
+journal/snapshot/oldreceipt/permissionedexternalchanges/commit. Scientific
+finalattemptchoice remainsController-owned afterverifiedC3evidence.
+
+## Supervisor registration: C4 independent pre-score source review
+
+Own only new COEVO_CANDIDATE_REVIEW_C4_2026-10-03.json and append this log.
+Frozen contractc40d9c30…c9394 from actualverified C3; worker owns one newrunner/
+test. Independently inspect final exact bytes/fit-only scale/no centering or
+floor/unchanged freshness parity/C3allfour states87controls/replay/2Dstationarity
+and effective native-prior algebra/full195denominator/chronology/judge/failure.
+Synthetic tests only, metadata oldparents allowed; no realfit/newcandidate
+predictionpreview/source/oldreceipt/artifact mutation or commit. Explicit scope
+and inseparability decision if >200productionlines; four realfits oneattempt
+only after Supervisor source checkpoint and runtime/memory freeze.

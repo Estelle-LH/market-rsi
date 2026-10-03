@@ -102,3 +102,18 @@ Registered before dispatch. New sibling code and synthetic tests only; real exec
 - Final broad in-game command with that same environment: `python -B -m unittest discover -s experiments -p 'test_nfl_ingame*.py' -q`: **171 passed**,12.269seconds. Available scoring/probability command `python -B -m unittest tests.test_minimal_probability_contract tests.test_polymarket_scoring -q`: **34 passed**,0.011seconds. `git diff --check` passed. Prior optional legacy Harbor import limitation remains logged; no dependency install or unrelated repair.
 - Separate actual **read-only metadata preflight** invoked new require_dependencies and frozen v0/control loaders, then load_controls; it verified C2/A1 exact87 rows each, their frozen source/artifact/state/lock bindings, with new Train fits0/new candidate predictions0. This is not private-data unit dependence or C3 preview. No new literature search/full-paper claim: reuse of already reviewed analytic solver/proper-score/fit-only principles; λ16, coordinates, cutoff/folds and annotation criteria are project choices/hypotheses.
 - Final source SHA `7a3175c1ec75465e2b71816260d7ef2d8fd75bfd6a854da6276d619271c046ce`; test SHA `d18078d83404cab66a067feb0d7276654ced6242100e64a6b53c2eaaecc752a3`. All editing and testing is finished; these exact candidate bytes are frozen for independent review, not provisionally ready. About7minutes worker elapsed, zero real Train fits/previews/commits/provider/network/protected operations. Supervisor owns one bounded actual launch only after review. Extra coordinate/covariance/capacity is inseparable in this C test; no pure-data, real-time, untouched-OOS or research-workflow self-modification claim.
+
+## Supervisor registration: final C4 fit-unit volume candidate
+
+Own only new nfl_ingame_prior_play_volume_unit_scale_joint_offset.py and its
+matching test plus append this log. Frozen Controller contractc40d9c30…c9394
+precedes implementation. ActualparentC3; divide volume by strictly-prior fit
+ddof0 standard deviation only, no centering/floor; freshness, 2Dsolver, loss,
+scorer, fixed195/193+2/87 and K/M/H/R unchanged. Save scale/effectiveprior/
+primitive coefficients/normalizers/objective/gradient/Hessian and exact parent
+state/control replay. New candidate-local admission, no oldglobals/runentry or
+sharedsource edits. Allfixtures synthetic/portable; metadata-only oldparent
+preflight allowed, zero Train fits/new candidate previews. One final actual
+attempt/fourfits by Supervisor only after exact source/test independent review.
+No provider/external/protected/release/commit; warning threshold needs explicit
+inseparability review, not an inferred safety claim from line count.
