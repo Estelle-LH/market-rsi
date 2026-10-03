@@ -64,3 +64,57 @@ normal evidence accumulation and predictive recipes are not research-capacity
 self-modification. Contracts/paths are `COEVO_BATCH3_CONTRACTS_2026-10-03.json`.
 Supervisor binds reviewed source/runtime/memory and executes; this record alone
 is not a research result or permission expansion.
+
+## 2026-10-03 21:08:18 UTC — verified feedback selects joint descendant
+
+Clock-observed timestamp, not a manual estimate. Read actual C1 and C2 packets,
+independent reviews and current C2/A1 source; SHA checks match. No preliminary
+C2 score was used while its independent review was pending. No fits/network,
+provider/protected evaluation or production edit by Controller.
+
+C1 is valid but loses market Brier in all four blocks. Its correction energy
+`.000379902` plus signed-alignment harm `.003130217` explains the raw deficit;
+near-one calibration slope does not repair the proper scores. Stop the exact
+isotonic recipe rather than grid its blend or claim lower complexity from its
+14/16/18/24 thresholds.
+
+C2's valid four fits yield Brier/log loss `.14194807773589316 /
+.42957778268391095`, raw deltas `-4.451267339672208e-6 /
+-.0000930020293318562`. Only folds 1 and 4 improve raw Brier; all raw grouped
+intervals cross zero. Positive coefficients `.0343/.0495/.0430/.0338` are a
+diagnostic, not confirmed information. It remains INCONCLUSIVE/REVERT and raw
+market stays incumbent. User-rubric independently verified scientific credit2
+is recorded separately from the unchanged recorder's credit1/inconclusive/
+bounded-followup mapping; do not rewrite that mapping or old score.
+
+Decision: spend its one bounded followup on
+`InGamePriorPlayVolumeFreshnessJointOffset-v2`, actual parent **C2**, secondary
+feature provenance/control **A1**, comparison incumbent **raw market**. Add
+A1's exact fit-only age-standardized market-logit coordinate to C2's unchanged
+causal play-volume ratio, fitting the two coefficients jointly with the existing
+two-dimensional NLL/Newton solver and penalty16 per coordinate. No new loss,
+blend/penalty grid, sign constraint, threshold or data extraction. Four fits
+total and no real parent refits.
+
+Why this next, rather than preplanned parallel search: verified C2 helps blocks
+1/4 whereas A1 helps 2/3, both have tiny aggregate log-loss advantages, and
+the market-only isotonic alternative just failed. This creates a concrete
+conditional-complementarity question, not evidence of the joint answer. Joint
+estimation may remove redundancy or amplify small-sample noise. Extra model
+capacity/covariance is inseparable from adding the coordinate in this test;
+do not call it pure data gain or research-process self-modification.
+
+Freeze both coordinates and strict-past normalization/labels, numeric state,
+zero-update and nested-coordinate identities, exact parent probability hashes,
+same195/193+2/87 rows/folds/scorer/KEEP and final four-fit budget. New contract
+`COEVO_BATCH3_GENERATION2_CONTRACT_2026-10-03.json` registers only one new runner
+and its test. Candidate-minus-C2 and candidate-minus-A1 comparisons are extra
+diagnostic evidence, never new judges. Opposite block wins alone do not show
+complementarity; final interpretation requires actual joint predictions.
+
+Global pool is count-process information plus conditional freshness calibration,
+not score-top recipes. Exact isotonic/HGB attempts are archived with evidence;
+their negative findings remain reusable but are not retested here. No R-policy
+change is warranted or forced. Supervisor now implements, reviews, freezes and
+runs this candidate; the batch ends after attempt3/12fits. Historical Train
+Discovery and unknown exact model-version boundaries remain explicit.
