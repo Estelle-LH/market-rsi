@@ -1,0 +1,195 @@
+{
+  "schema": "coevo_candidate_independent_review_v1",
+  "reviewed_utc": "2026-10-03 20:11:03 UTC",
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "candidate_ids": [
+    "InGameMarketResidualHGB-v1",
+    "InGameMarketStateResidualHGB-v1"
+  ],
+  "proposed_batch_id": "market-rsi-coevo-train-hgb-pilot-20261003-02",
+  "source_checkpoint_observed": "9cb307b006c335523fc21331035c733a6272f2ce",
+  "verdict": "PASS_PRE_SCORE_EXACT_SNAPSHOT",
+  "passed": true,
+  "launch_critical_findings": [],
+  "controller_contract_sha256": "b6942eb906344b9acc97950f1c72c14024e981792744ed2bc83ca7944e6406b8",
+  "source_sha256": {
+    "experiments/nfl_ingame_market_residual_hgb.py": "a17220dea91373b73c3f2e3a5d6e36f2b3e1b2866c8714cdc292dd921aefad79",
+    "experiments/nfl_ingame_market_state_residual_hgb.py": "ef77c1134207b47eb2040e83e0169f2d7bd0e8dfca7a529c003bd0ed708a54c4",
+    "experiments/test_nfl_ingame_market_residual_hgb.py": "535832e6c4c9b406a8fae0bca08865ba46be6b4ed9dcba0e25332b4ba35f50e8",
+    "experiments/test_nfl_ingame_market_state_residual_hgb.py": "7dbe3473d9c519e3b200d428ee557db04ca9c3d88ec5afc9efec5467cd2e2fbb",
+    "experiments/nfl_ingame_market_freshness_interaction_offset.py": "d7e16a2d745f6440fe84b97aba54950b2c78a23428172b6002b187b385f057cd",
+    "experiments/nfl_ingame_causal_possession_pressure_offset.py": "4ea2935fb896397b4d21125bb040a0f82ff82be01abd2779717378d3465a0ab3",
+    "supervisor_harness/continuous_discovery_batch.py": "1b3065ea2990e886ff05869d5c6afd39bc0e80ebb053436f51fd9d9cee0d148c",
+    "supervisor_harness/opened_train_discovery_worker.py": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360"
+  },
+  "checks": {
+    "exact21_constructor_parameters_match_frozen_contract_and_installed_sklearn161": true,
+    "matched_params_seed_and64_stages_except2versus11_columns": true,
+    "strict_prior_fit_target_y_minus_raw_probability": true,
+    "no_check_label_or_feature_driven_training_state": true,
+    "no_fit_scaler_imputer_internal_validation_or_early_stopping": true,
+    "no_hidden_grid_control_refit_or_retry": true,
+    "all193_features_complete_finite_and_causal": true,
+    "full195_equals193plus2_frozen_exclusions": true,
+    "exact87_control_parent_keys_labels_cutoffs_outcome_availability": true,
+    "both_actual_parent_source_and_manifest_scorecard_CSV_hashes": true,
+    "parent_vs_incumbent_distinction": true,
+    "candidate_internal_probability_clipping_counted_no_rows_removed": true,
+    "shared_scoring_KEEP_probability_contract_unchanged": true,
+    "actual_parent_is_additional_comparator_not_substituted_judge": true,
+    "unfinished_sibling_result_never_read": true,
+    "fourfit_and_nooverwrite_failure_preservation": true,
+    "primitive_tree_JSON_contains_no_pickle_joblib_or_executable_state": true,
+    "fourfold_state_hashes_bound_to_scorecard_and_extra_manifest_file_hash": true,
+    "synthetic64_tree_graph_shape_depth2_fourleaves_sevennodes_bounds": true,
+    "serialized_primitive_numeric_walk_exact_sklearn_predict_parity": true,
+    "real_source_old_harness_candidate_and_scoring_bytes_unchanged": true,
+    "no_reviewer_Train_fit_or_protected_external_paid_release_operation": true
+  },
+  "prediction_state_review": {
+    "schema": "hgb_numeric_prediction_states_v1",
+    "folds": 4,
+    "trees_per_fold": 64,
+    "max_nodes_per_tree": 7,
+    "max_depth": 2,
+    "max_leaves": 4,
+    "stores": [
+      "baseline_prediction",
+      "feature_names",
+      "stage_count",
+      "constructor_params",
+      "value",
+      "feature_idx",
+      "num_threshold",
+      "left",
+      "right",
+      "is_leaf",
+      "missing_go_to_left"
+    ],
+    "leaves_include_learning_rate": true,
+    "runtime_walk_required_exact_before_scoring": true,
+    "actual_result_can_be_reconstructed_without_refitting": true,
+    "independent_synthetic_probes": [
+      {
+        "independent_boundary_and_random_rows": 365,
+        "input_columns": 2,
+        "json_roundtrip_safe_primitive": true,
+        "maximum_nodes": 7,
+        "numeric_walk_exact_sklearn_parity": true,
+        "stages": 64
+      },
+      {
+        "independent_boundary_and_random_rows": 365,
+        "input_columns": 11,
+        "json_roundtrip_safe_primitive": true,
+        "maximum_nodes": 7,
+        "numeric_walk_exact_sklearn_parity": true,
+        "stages": 64
+      }
+    ],
+    "full_synthetic_pipeline_hash_checks": "Both recipes independently instrumented at manifest write: predictor_states.json file SHA, four state digests and scorecard trainer digests/features all match.",
+    "trust_scope": "Trusted version-pinned fitted numeric models with complete finite feature matrices; not a generalized untrusted tree-artifact loader.",
+    "additional_result_gate": "The frozen worker automatically verifies its existing five core output hashes. Supervisor and independent result review must also verify predictor_states.json SHA and all four state digests/graphs before accepting performance evidence; no H modification is needed."
+  },
+  "read_only_data_parent_check": {
+    "actual_Train_fits": 0,
+    "actual_parent_keys": [
+      87,
+      87
+    ],
+    "all193_feature_coverage": true,
+    "check_key_sha256": "2e35779fdbb4b83e129758008338b0c778d7f6281682118ad8d26d21293cc9f9",
+    "excluded_events": 2,
+    "folds": [
+      {
+        "check_events": 26,
+        "fit_events": 106,
+        "fold": 1
+      },
+      {
+        "check_events": 16,
+        "fit_events": 132,
+        "fold": 2
+      },
+      {
+        "check_events": 28,
+        "fit_events": 148,
+        "fold": 3
+      },
+      {
+        "check_events": 17,
+        "fit_events": 176,
+        "fold": 4
+      }
+    ],
+    "market_state_prefix_exact_equal": true,
+    "materialized_events": 193,
+    "source_events": 195,
+    "synthetic_primitive_probes": [
+      {
+        "independent_boundary_and_random_rows": 365,
+        "input_columns": 2,
+        "json_roundtrip_safe_primitive": true,
+        "maximum_nodes": 7,
+        "numeric_walk_exact_sklearn_parity": true,
+        "stages": 64
+      },
+      {
+        "independent_boundary_and_random_rows": 365,
+        "input_columns": 11,
+        "json_roundtrip_safe_primitive": true,
+        "maximum_nodes": 7,
+        "numeric_walk_exact_sklearn_parity": true,
+        "stages": 64
+      }
+    ],
+    "synthetic_supplemental_fits": 2
+  },
+  "independent_tests": {
+    "final_new_candidate_tests": {
+      "passed": 15,
+      "unittest_seconds": 0.196
+    },
+    "inherited_frozen_candidate_scoring_scheduler_adapter_tests": {
+      "passed": 158,
+      "unittest_seconds": 5.285
+    },
+    "total_distinct_tests_passed": 173,
+    "supplemental_independent_numeric_model_fits": 2,
+    "supplemental_synthetic_complete_pipeline_checks": 2,
+    "supplemental_pipeline_fits": 8,
+    "actual_Train_fits": 0,
+    "data": "All test fits synthetic. Actual resident opened Train inspected read-only for frozen parent, causal receipt, width and mask checks.",
+    "runtime": "ds-py312-20260912-01 Python3.12.3, numpy1.26.4, scipy1.14.0, sklearn1.6.1",
+    "thread_environment": "OMP/OPENBLAS/MKL/NUMEXPR/VECLIB=1; PYTHONHASHSEED=0; Python -B"
+  },
+  "small_step_review": {
+    "axis": "C",
+    "production_modules": 2,
+    "shared_B1_lines": 387,
+    "B2_wrapper_lines": 31,
+    "trigger": "More than200 production lines requires explicit inseparability review, not automatic acceptance.",
+    "explicit_inseparability_accepted": true,
+    "rationale": "The shared file contains one frozen residual HGB recipe, safe numeric inference provenance and immutable source/parent/output boundaries; the31-line sibling selects the separately frozen matched11-column recipe. Existing fixed common runner only binds generation1, so its top-level run cannot execute these new candidate identities. Feature/scoring/KEEP/chronology logic is reused without editing it. Numeric fitted-state export is needed to independently check this nonlinear predictor without an unauthorized refit or unsafe object deserialization. Splitting this candidate into a third harness module would not separate another scientific effect.",
+    "no_new_H_or_R_component": true,
+    "parent_change_attribution": "COMPOSITE_UNATTRIBUTABLE within C versus each linear parent: trainer/loss/representation change together. Do not claim isolated HGB model benefit.",
+    "controlled_information_comparison": "Only after both valid results: B2-minus-B1 is paired same-trainer/same-budget2versus11 causal-input comparison, not a replacement KEEP rule."
+  },
+  "launch_conditions": [
+    "Preserve the closed old pilot and its3attempt/12fit cap unchanged; initialize a separate bounded fresh batch.",
+    "Supervisor must source-checkpoint and bind both new source modules plus every loaded existing dependency in each worker request, especially the shared B1 source used by B2.",
+    "Bind exact runtime, immutable new evidence memory and candidate pre-score recipe before each claim.",
+    "At most two one-thread prediction children; four fits per initial attempt; no automatic retry.",
+    "Independently validate all numeric predictor states and paired predictions before Controller feedback; do not use an unfinished sibling as evidence."
+  ],
+  "scientific_claim_limits": [
+    "Implementation readiness only; no new real B1/B2 prediction result yet.",
+    "Project-selected shallow-tree settings and residual/Brier algebra are not asserted literature consensus.",
+    "Fixed64 boosting stages are not convex convergence or global optimum proof.",
+    "Same raw market and previously inspected Train folds; no untouched OOS or realtime advantage.",
+    "Information increment is a matched conditional test for this fixed trainer, not a general verdict on all state/PBP data.",
+    "No Strong-Baseline-1 selection, Controller R self-modification or mechanism superiority demonstrated.",
+    "Exact Controller serving model version unknown; trusted host and sampled RSS are not network/arbitrary-code isolation.",
+    "Broad legacy suite remains ungreen; this pre-score verdict covers the reviewed focused pathway."
+  ]
+}

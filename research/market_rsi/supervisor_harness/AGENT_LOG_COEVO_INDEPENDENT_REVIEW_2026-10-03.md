@@ -367,3 +367,46 @@ unknown; trusted-host/no-network-isolation and historical-Train limitations stay
 Do not expand or rerun old3/12pilot; any continuation must be a separate bounded
 fresh batch within the outer user window. First closure probe used wrong wrapper
 key for feedback files; corrected only read-only probe, no artifact/source change.
+
+
+## 2026-10-03 20:11:03 UTC — next-batch B1/B2 pre-score review
+
+Reviewed frozen contract `b6942eb906344b9acc97950f1c72c14024e981792744ed2bc83ca7944e6406b8`.
+Exact B1 source `a17220dea91373b73c3f2e3a5d6e36f2b3e1b2866c8714cdc292dd921aefad79`;
+B2 `ef77c1134207b47eb2040e83e0169f2d7bd0e8dfca7a529c003bd0ed708a54c4`.
+Final B1 test `535832e6c4c9b406a8fae0bca08865ba46be6b4ed9dcba0e25332b4ba35f50e8`;
+B2 test `7dbe3473d9c519e3b200d428ee557db04ca9c3d88ec5afc9efec5467cd2e2fbb`.
+Independently15 new synthetic tests PASS0.196s plus158 inherited tests PASS5.285s.
+No old production/harness/scorer changes. Runtime/constructor exact21 parameters,
+strict-prior y-p_raw target,64stages, no internal validation/early-stop/scaler,
+four fits and no retry. B1/B2 differ only by nine frozen causal columns under
+same params; actual parents remain old A1/A2, incumbent raw. Candidate clipping
+is predeclared internal with counts/no row removal; trusted scorer remains exact.
+
+Read-only actual parent/source check confirms195=193+2, both parents87 frozen
+hash/key/label/control rows, all193 finite2vs11 matrices, exact sharedmarketprefix,
+fit106/132/148/176 and check26/16/28/17, unchanged keyhash. Zero Train fits.
+Two supplementary synthetic fits JSON-round-tripped each64tree forest and used
+an independent numeric walk over365 random/threshold-boundary rows per width;
+exact sklearn.predict parity. All learned graphs finite numeric, max7nodes,
+depth2/fourleaves and valid feature/child indices. Two full synthetic population
+pipelines additionally checked predictor_states.json SHA, all4 state hashes,
+trainer digests/features and manifests before temporary artifacts disappeared.
+These supplemental fits are synthetic only, not candidate attempts.
+
+Explicitly accept387line sharedC plus31line matched wrapper as inseparable
+executable residual recipes, frozen boundaries and necessary safe nonlinear
+prediction provenance; not blind acceptance of size or a new H/R component.
+Parent contrasts are COMPOSITE_UNATTRIBUTABLE within C (trainer/loss/basis).
+Only verified B2-minus-B1 later isolates this fixed-trainer input difference.
+Primitive JSON avoids pickle/joblib; complete finite numeric features and pinned
+sklearn justify saved leaf-value routing. No generic hostile-tree loader claim.
+The fixed worker checks its five core outputs; independent result acceptance
+must additionally check the extra predictor-state file and all four graphs/hashes.
+
+Verdict PASS exact pre-score snapshot, subject to committed source/runtime/memory
+requests binding both new modules/all imports and a fresh bounded batch. Old
+closed3/12pilot must not expand. No result, data increment, isolated model gain,
+R self-modification or mechanism superiority asserted. Saved standalone receipt
+`COEVO_CANDIDATE_REVIEW_B1_B2_2026-10-03.json`; no production edits/Train fits/
+protected reads/network/provider/commits by reviewer.
