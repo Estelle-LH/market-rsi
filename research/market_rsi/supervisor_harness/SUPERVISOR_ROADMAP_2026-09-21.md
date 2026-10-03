@@ -10,7 +10,7 @@
 
 Raw市场 incumbent Brier/log0.1419525290/0.4296707847 未变。最低观测候选Brier为C2 0.1419480777，仅改善0.0000044513，2/4块、区间跨0，INCONCLUSIVE/REVERT；不是确认市场优势。C4有效先验候选0.1426785345/0.4291441157，log改善但Brier输raw/C3，2/4块、全部raw/parentproperloss区间跨0，REFUTED/REVERT。十个候选均未更新最佳；旧成绩和KEEP规则没有追溯修改。
 
-当前执行：旧十候选段closurec8bcc3fc与记忆fd3e2e3a永久保留；不扩旧cap或编造用户回复。C5通过独立pre-score1bde2345后，以source2d04e7c/48bindings/activationmemoryb99954ce真实完成一次4fits/87predictions。初步Brier/log0.1429305151/0.4297779729，比raw/C4都差，原judge输出REFUTED/REVERT。Root无fit数值复算4cf4c0eb一致；独立实际结果review正在收尾，尚不接受credit/feedback。复核后立即交Controller决定下一方向，剩余最多2prospective attempts/8fits，截止仍00:10:37UTC。旧结果不追溯修改。
+当前执行：C5独立实际reviewb5434529已PASS，source2d04e7c/result481ca42，Brier/log0.1429305151/0.4297779729输raw/C4，REFUTED/REVERT。数值拟合有效、correctionenergy近似不变但alignment转为有害；并非运行失败。Pilot05按原1/4封闭，feedbackc11f459e已交Controller。Controller据此停止原C4/C5目标先验路线，恢复REVERT但eligible的B3分支，选择同11因果inputs/同factor4输出link上的fixedlinear residual trainer+fit-onlypreprocessing，正在冻结可执行contract。不是新数据、评分修改、R自修改或预排模型。剩余最多2prospective attempts/8fits，原截止00:10:37UTC不变，旧十候选/caps不改。
 
 已完成十候选段40fits，870predictionversions来自同87比赛；worker-wall42.696988秒不等于整个研究耗时，采样peak142528KiB/child。旧三个3/12和最终1/4批次封闭、不扩cap、不重试。前瞻continuation最多3新attempt/12fits；pilot05单独1/4/90min且clip原00:10:37UTC，每次900秒/单线程/采样RSS1GiB。后续两个slot必须先有新真实反馈和独立contract，不能预排假迭代。C2唯一followup由C3消耗，保持排除。Provider0/$0，Codex成本未知。
 

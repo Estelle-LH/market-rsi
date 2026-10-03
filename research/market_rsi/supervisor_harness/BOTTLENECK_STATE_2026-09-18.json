@@ -1,10 +1,10 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-10-03T22:46:10Z",
+  "updated_utc": "2026-10-03T22:49:25Z",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
-    {"id":"opened-train-coevo-discovery-20261003","status":"C5_real_fit_complete_independent_result_review","plan":"research/market_rsi/supervisor_harness/RESEARCH_STATE.md","result":"Old10/40closed immutable; freshC5source2d04e7c completed1attempt/4fits/87predictions, preliminaryBrier/log.1429305151/.4297779729 worse raw/C4. Root no-fit replay4cf4c0eb matches; independent finalactualresult review active. No credit/feedback accepted yet, no provider/protected/network/release/Rpolicy change.","next":"Accept verifiedresult once then sendactualfeedback toController tochoose nextscience; remainingatmost2prospective attempts/8fits beforeoriginal00:10:37UTC. No preplanned model, oldcaprewrite, C2consumptionreset or scorerchange.","evidence":"research/market_rsi/supervisor_harness/COEVO_CANDIDATE_REVIEW_C5_2026-10-03.json","evidence_sha256":"1bde2345c74dbeac1f91e2bfbf91bec22d26d405135e9cd517664e25f934d64b","provider_cost_usd":"0"},
+    {"id":"opened-train-coevo-discovery-20261003","status":"C5_accepted_negative_feedback_Controller_nextchoice","plan":"research/market_rsi/supervisor_harness/RESEARCH_STATE.md","result":"Total11/44independentlyverified, old10/40immutable. C5bothscoresloseraw/C4; validnegativecredit2/refute/branch. Pilot05closedoriginal1/4,9events/nochild; feedbackc11f459e ready, source2d04e7c/result481ca42. K/M/H/R/judgefixed, provider0.","next":"Controller now selectsnextsciencefromactualC5+history; remainingatmost2prospective attempts/8fits beforeoriginal00:10:37UTC. Exactrecipe stops, archive/differentbranch eligible; no preplanned model, oldcaprewrite, C2reset or scorerchange.","evidence":"research/market_rsi/supervisor_harness/COEVO_RESULT_REVIEW_C5_2026-10-03.json","evidence_sha256":"b5434529b172ec90f7c3e65ff6714b20efa6f3e75bd780a0438594fad68a0333","provider_cost_usd":"0"},
     {
       "id": "first-real-train-diagnostic-20260929-01",
       "status": "continuous_discovery_batch1_five_attempts_complete_incumbent_v3",
