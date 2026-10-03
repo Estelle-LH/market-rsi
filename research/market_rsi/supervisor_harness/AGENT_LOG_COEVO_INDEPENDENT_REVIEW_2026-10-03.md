@@ -725,3 +725,41 @@ CommittedC2pre-score final16focused/160adjacent correct; one inheritedlimits
 sentence says151checks. Preserve committed bytes and noteclerical caveat here,
 not rewrite historicalreceipt. Saved only newregisteredC2resultreceipt andownlog;
 no raw/protected/provider/production/score/artifactwrites, fits or rerun.
+
+## 2026-10-03 21:21:03 UTC — C3 final independent pre-score review
+
+Final worker freeze confirmed before review: production7a3175c1...c046ce,
+testd18078d83...752a3. Read complete346-line candidate and259-line synthetic
+test; immutable generation2 contracta8d6d356...ae5a0c checked at459c03b.
+C2 is actual parent, archived A1 secondary/provenance only, raw incumbent
+unchanged. ExactC2 counts, A1 fit-only fractional causal-age normalization,
+original true2D NLL/Newton lambda16 and strict stationarity/Hessian checks
+match frozen contract. Zero/nested coordinate formulas replay; all87 controls
+remain distinct from KEEP judges. Additional20 paired intervals/conditional
+annotation/correction energy cannot change original scoring or decision.
+
+Explicit >200-line inseparability ACCEPT: one bounded C recipe carries joint
+fit/stationarity/numeric-state replay, mandatory dual frozen-control/reporting,
+and immutable source/population/time/failure entry. Existing C1 entry admits
+old contract only; no shared source/scheduler/H/R/judge/permission expansion.
+Old Python diff against f4c123a empty; new path allowlist exact. Counts193,
+full195=193+2/87/four chronological fits and future/check-label isolation
+covered by portable full synthetic fixtures. Extreme299s fixture correctly
+rejects existing epsilon policy; moderate40s confirms fit-state isolation.
+Worker's initial fixture failure is development evidence, not scientific
+refutation or excuse to add clipping. No source/science change in repair.
+
+Independently ran focused7/7 PASS0.042s and adjacent167/167 PASS1.785s,
+one-thread pinned runtime; diffcheckPASS. Separate scalar synthetic objective
+and Hessian error3.55e-15, gradientinf8.72e-15, probabilityerror5.55e-17.
+Metadata-only preflight separately validates actual C2/A1 each87 rows,
+fiveC2 artifact/state bindings and original dependency hashes; reviewer
+actualTrainfits0/newTrainpredictions0. No external/protected/provider action.
+
+Saved registered C3 pre-score receipt passed:true and exact final hashes.
+One bounded four-fit real attempt only after Supervisor source/memory/request
+freeze. Requires post-score independent full numeric/state/score/budget review.
+No marketedge, real-time, untouchedOOS, mechanismcomparison, Rself-modification,
+authenticatedAstra or full-literature claim. Existing credit2 evidence rubric
+and recorder1/inconclusive mapping remain explicit and frozen; broadlegacy
+suite notgreen. Only ownlog/newreceipt edited; no commit/artifact/source edit.
