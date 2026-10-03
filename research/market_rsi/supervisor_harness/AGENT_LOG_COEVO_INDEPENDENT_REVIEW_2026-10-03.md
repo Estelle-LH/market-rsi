@@ -876,6 +876,56 @@ Saved onlyregisteredoperationalresolution JSON+ownlog; nofits/source/artifact/
 journal/snapshot/oldreceipt/permissionedexternalchanges/commit. Scientific
 finalattemptchoice remainsController-owned afterverifiedC3evidence.
 
+## 2026-10-03 21:48:39 UTC — C4 final independent pre-score review
+
+Read complete frozen final-slot contract c40d9c30...c9394 at pre-dispatch
+checkpoint92c5966. Worker explicitly froze source ff251b12...c32da and test
+b91a6217...0beef before final review. Entire 313-line source/281-line synthetic
+test inspected; hashes reproduced, old Python diff against ac053d8 empty.
+
+The sole C change divides the native count ratio by strict-prior fit std ddof0;
+no centering/floor/check adaptation. Freshness/2D NLL/Newton/lambda16/model
+dimension/market coefficient1/nointercept and frozen judge remain unchanged.
+Independent algebra confirms native beta=theta/s and effective native prior
+16*s^2, not equivalent numerical conditioning or new data/capacity. Natural
+equal-count zero preserved. Invalid tiny/zero/nonfinite transformations fail
+closed; no imputation/drop/endpoint-policy weakening.
+
+Parent is C3 valid REVERT with a distinct unit-prior question, not consumed C2.
+Seven C3 file bindings/four canonical state/report hashes/87key-label-controls
+validated. Rebuilt all193 original native features/fractional causal ages and
+strict-prior label masks; with solver disabled, replayed all87 C3 probabilities,
+native fit-design hashes and four normalizers exactly. Zero actual Train fits,
+zero C4 Train predictions. Original feature/source/cohort/PBP hashes unchanged.
+Scaled fit and check provenance/state formulas are explicit; check changes
+leave fitted fields/optimizer invariant but correctly change CHECK digests.
+Portable parent states authored directly, no hidden control training.
+
+Independently ran 8 focused tests PASS0.044s and175 adjacent PASS1.818s in pinned
+one-thread runtime. Full synthetic195=193+2/87/four solver calls/numeric replay,
+zero/native-scaled identities, scale/no-floor/isolation, parent drift, exact
+KEEP and failure/no retry/no overwrite covered. Independent synthetic scalar
+std error1.39e-17, gradient5.16e-15, objective3.55e-15/Hessian7.11e-15,
+probability error0, effective-prior algebra error0. Diffcheck passed.
+Worker's initial constant0.2 std fixture was tiny positive due floating
+arithmetic; repaired exactzero fixture to0.25 only, preserving production
+no-floor contract and failure history. No actual experiment/Train retry.
+
+Explicit >200-line inseparability ACCEPT: one scientific sibling combines
+scaled fit/state replay, mandatory C3 parent proof and immutable source/data/
+time/failure/evidence entry; frozen old entry cannot admit new contract.
+No shared H/R/scorer/extractor/scheduler or permission expansion. This is a
+causal-scope decision, not waiver because code is called thin or below a count.
+
+Saved only registered pre-score receipt and appended own log. Ready for one
+final bounded attempt/fourfits/900s/sampled1GiB/thread1 after Supervisor exact
+source/runtime/memory/request freeze. Original outer10 cap and closed old
+3/12caps retained; C2 eligibility must not reset. Post-score independent review
+required. No new forecast claim/credit from synthetic checks; repeated Train,
+unknown exact Controller version, trusted host not network/OS-hard sandbox,
+broadlegacy suite not green. No source/artifact/oldreceipt/commit changes.
+
+
 ## Supervisor registration: C4 independent pre-score source review
 
 Own only new COEVO_CANDIDATE_REVIEW_C4_2026-10-03.json and append this log.
