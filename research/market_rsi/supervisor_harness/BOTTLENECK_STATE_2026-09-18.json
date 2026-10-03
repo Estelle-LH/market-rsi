@@ -1,10 +1,10 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-10-03T22:18:10Z",
+  "updated_utc": "2026-10-03T22:46:10Z",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
-    {"id":"opened-train-coevo-discovery-20261003","status":"ten_candidates_closed_prospective_C5_implementation_review","plan":"research/market_rsi/supervisor_harness/RESEARCH_STATE.md","result":"Ten one-time candidates/40fits closed/independently verified on same87games/20dates7weeks; four feedback descendants, all10REVERT/rawincumbent unchanged. Closurec8bcc3fc/memoryfd3e2e3a PASS. No protected/network/provider/release; Rpolicychanges0.","next":"Latest five-hour instruction prospectively interpreted bySupervisor as newboundedcontinuation, notoldcapexpansion oruserreply. C5singletoncontract2da17c7c source/test implementation and independentmath/source review parallel; no truefit yet. Samefeatures/scales, local-curvature-priorunit Briertraining; no pureloss/globaloptclaim. Max1/4thispilot, prospective3/12,90minclip00:10:37UTC. C2consumed exclusion stays.","evidence":"research/market_rsi/supervisor_harness/COEVO_BATCH5_CONTRACT_2026-10-03.json","evidence_sha256":"2da17c7c181ad3ffe050ac9c926bf3c0e27128f7d3a7e5aba2f1a9aca4b2f852","provider_cost_usd":"0"},
+    {"id":"opened-train-coevo-discovery-20261003","status":"C5_real_fit_complete_independent_result_review","plan":"research/market_rsi/supervisor_harness/RESEARCH_STATE.md","result":"Old10/40closed immutable; freshC5source2d04e7c completed1attempt/4fits/87predictions, preliminaryBrier/log.1429305151/.4297779729 worse raw/C4. Root no-fit replay4cf4c0eb matches; independent finalactualresult review active. No credit/feedback accepted yet, no provider/protected/network/release/Rpolicy change.","next":"Accept verifiedresult once then sendactualfeedback toController tochoose nextscience; remainingatmost2prospective attempts/8fits beforeoriginal00:10:37UTC. No preplanned model, oldcaprewrite, C2consumptionreset or scorerchange.","evidence":"research/market_rsi/supervisor_harness/COEVO_CANDIDATE_REVIEW_C5_2026-10-03.json","evidence_sha256":"1bde2345c74dbeac1f91e2bfbf91bec22d26d405135e9cd517664e25f934d64b","provider_cost_usd":"0"},
     {
       "id": "first-real-train-diagnostic-20260929-01",
       "status": "continuous_discovery_batch1_five_attempts_complete_incumbent_v3",

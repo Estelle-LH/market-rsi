@@ -1280,3 +1280,29 @@ Lower is better; every row uses identical87 unique games/20 dates/7 weeks, not87
 
 - Source checkpoint `8f7263b6e7f3500d60664961309fa42bee8a45cc` preserves exact C5 source/test. Independent receipt `COEVO_CANDIDATE_REVIEW_C5_2026-10-03.json`, SHA `1bde2345c74dbeac1f91e2bfbf91bec22d26d405135e9cd517664e25f934d64b`, PASS at observed22:41UTC:16focused/195in-game/78boundary/34scoring synthetic tests and exact87 archived C4 probabilities without fitting. Explicit418-line candidate-local inseparability accepted; fixed scorer/K/M/H/R unchanged. Counts overlap.
 - This checkpoint adds admission evidence and completed reviewer log only, not scientific results. Next is exactly one source/runtime/memory-bound pilot05 execution, max4fits, no automatic retry. Any actual result will be independently recomputed before Controller receives verified feedback. Source/test/contract immutable after launch.
+
+## 2026-10-03 — C5 actual experiment accepted; negative feedback advances the loop
+
+- Controller selected this C4 descendant only after verified C4's log-loss/Brier divergence and retained A3's loss-unit confound. Exactly C4 inputs/scales and two fitted parameters; combined C Brier objective/local-prior-unit/continuous-optimizer recipe, not isolated loss/data/R gain. Actual pre-run source `2d04e7c9f403c504f6afb338de9ac7bf314fd8ef`,48committed/current file bindings, activationmemory `b99954ce12350dcf5f60e5a9e9cbe7673f106c089144d9885a58f95344cccb99`. No H/K/M/R-policy change.
+- Exact command in pilot05 worker request/process/receipt: pinned ds-py312 Python -B -m experiments.nfl_ingame_curvature_unit_matched_brier_joint_offset, resident source nfl-2025-train-refresh-20260922-01, exclusive pilot05/runs/attempt-01 output, research/market_rsi cwd. Same Python3.12.3/numpy1.26.4/scipy1.14.0/sklearn1.6.1, seed23/hashseed0/thread1; source/model/data/memory/request refs in manifest/launchreceipt. Permanent artifact root `/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-05`.
+
+| Arm | Equal-event Brier | Log loss | C5 minus arm Brier |
+| --- | ---: | ---: | ---: |
+| Market / incumbent | 0.1419525290 | 0.4296707847 | +0.0009779861 |
+| Ordinary market-only Logistic | 0.1454823125 | 0.4399219725 | -0.0025517975 |
+| Frozen v0 market + state | 0.1606809902 | 0.4711973193 | -0.0177504751 |
+| Actual research parent C4 | 0.1426785345 | 0.4291441157 | +0.0002519806 |
+| New C5 Brier/local-prior recipe | 0.1429305151 | 0.4297779729 | — |
+
+| Check block / games | C5 minus market Brier | C5 minus C4 Brier |
+| --- | ---: | ---: |
+| 1 / 26 | +0.0002473151 | +0.0007180592 |
+| 2 / 16 | +0.0035534865 | -0.0003030261 |
+| 3 / 28 | +0.0025787504 | -0.0005402553 |
+| 4 / 17 | -0.0029650705 | +0.0013663725 |
+
+- Valid4fits/87samegames,195complete denominator193+2,20checkdates7weeks. C5 wins raw1/4 and C4 2/4; both aggregateproper losses worsenraw/C4. Frozenjudge REFUTED/REVERT and primaryalignmentannotationfalse. Raw Brierdateinterval[-0.003343994,+0.004139366],week[-0.002083704,+0.004261732]; C4paired date[-0.000441663,+0.001041882],week[-0.000539063,+0.000988520],allcross0. All16proper-score CIs/date deltas/calibration bins in scorecard; these reusedTrain blocks areDiscovery,notOOS.
+- Rootno-fit numericreplay `4cf4c0eb…85bde0`, independent result `b5434529b172ec90f7c3e65ff6714b20efa6f3e75bd780a0438594fad68a0333` PASS:193causal inputs/four exactdesigns+fitunits/actualgradient-Hessian/finalstrictstationarity/87scalarprobs<=2.22e-16/fivearm scores/calibration/fourfold/16CIs/48source-runtime-memory-request/PID60721absent. Initial L-BFGS relative-ftol gradients in folds3/4 ~1.40e-6/1.63e-6 received one predeclared samefit Newton step each, final<=1e-8; counts0/0/1/1, no restart/retry/prior/tolerance change. Localvalidity,notglobaloptimum.
+- Similar correctionenergy0.0008003335 versusC4 0.0008020377, but alignment flipped helpful-0.0000760322→harmful+0.0001776526. This exact recipe did not solve prediction direction; no general information-family refutation. Negative evidence earns independently checked researchcredit2/refute/branch, not score compensation or automatic recipe repetition. Exact route stopped, code/results archived; distinct newquestions remain eligible.
+- Actualchildwall4.993536s/sampleRSS140096KiB, fourfits/no controlrefits/no retry; total11attempts44fits957predictionversions on SAME87uniquegames, workerwallsum47.690524s notfullresearchtime, maxchildpeak142528KiB. Provider0/$0, Codexusage/costunmetered. No user per-round sciencechoices; Supervisor scoped integration/verification remained explicit. No newnetwork/protected/push/release/promotion.
+- Pilot05 closed22:49:25.473645UTC at original1/4,9events/statefad3dc6d/terminal98df1971; feedback `c11f459e1d5723413ad7592af28a4eea6d67a798b3fc8b325d7be03b84bc96e5` ready. Oldfourclosedcaps unchanged; prospectivecontinuation1/3 used,2attempts8fits remain beforeoriginal00:10:37UTC. Root registers Controller to decide nextscience from verifiedevidence, not a preselected algorithm. Machine trajectory adds14threcord for this same C5event; legacyfullsuite stillnotgreen, no RSImechanism/control/futureconfirmation claim.

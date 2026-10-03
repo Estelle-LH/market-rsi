@@ -1,0 +1,3 @@
+# Controller science after verified C5 — 2026-10-03
+
+Registered before dispatch at observed22:49UTC. Own this log and new COEVO_BATCH6_CONTRACT_2026-10-03.json only. C5 result reviewb5434529/feedbackc11f459e and all history are read-only; no real fits/code/tests/commit authority in this task. Select and freeze next hypothesis from actual evidence, with remainingprospective2attempts/8fits and original00:10:37UTC deadline. Keep actual researchparent separate from rawincumbent; global2–3method branches, not scoretop. K/M/H/R/judge/permissions fixed unless a separately reviewed attributable proposal is explicitly frozen; no new framework prerequisite.
