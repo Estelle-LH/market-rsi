@@ -1,0 +1,3 @@
+# C7 independent pre-score reviewer — 2026-10-03
+
+Registered23:24UTC beforedispatch. Own only declared new pre-score review and this log. Frozenf0d925977ef45677a557e2be18d6ec30ac56fe6fc8e9980df6a518a48b4b132b contract, actualC1parent/latestacceptedC6feedback/rawincumbent separate. Allsource/contract/Train/results read-only; syntheticmath and savedparentreplay only. No Trainfits/newcandidatepreview/commits/network/provider/protected or release. Review exact finalbytes/scope/inseparability/convexity/bracket/KKT/causality/parent/judge beforeSupervisorlaunch. Original00:10:37UTCdeadline, finaloneattempt/fourfits.

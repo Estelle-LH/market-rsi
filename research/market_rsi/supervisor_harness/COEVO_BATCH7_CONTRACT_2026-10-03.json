@@ -1,0 +1,234 @@
+{
+  "schema": "opened_train_controller_batch7_singleton_contract_v1",
+  "decision_id": "coevo-controller-market-temperature-offset-20261003-01",
+  "clock_observed_utc": "2026-10-03T23:19:48Z",
+  "author": "/root/coevo_controller_20261003",
+  "model_family": "GPT-6",
+  "exact_serving_model_version": "unknown",
+  "source_parent_commit": "b1257d2aad8db969b9508a3b6984f717a4299bfd",
+  "batch_id": "market-rsi-coevo-train-pilot-20261003-07",
+  "attempt_id": "attempt-01",
+  "candidate_id": "InGameMarketTemperatureOffset-v1",
+  "allocation": "exploration",
+  "method_family": "low_capacity_market_calibration",
+  "question_id": "ingame-market-temperature-offset-v1-q1",
+  "question": "Can a one-parameter, prior-to-market temperature calibration improve frozen historical predictions where flexible calibration and state-residual corrections failed?",
+  "hypothesis": "C6's valid twelve-parameter residual ridge increased energy and harmful signed alignment. Earlier C1 isotonic also failed proper scores despite slope near one. Restore that eligible calibration archive for a distinct capacity-limited predictor: one temperature deviation centered on raw, no intercept/PBP/preprocessing. Reduced capacity or market calibration need not help.",
+  "axis": "C",
+  "component": "one_scalar_market_temperature_nll_with_identity_centered_prior",
+  "expected_effect": "Four past-only scalar fits/87 replayable probabilities paired with raw/current incumbent, actualC1 parent, ordinary and v0state. Distinguish calibration-model recipe from data or R effects.",
+  "triggering_evidence": {
+    "C6_feedback_path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-06/feedback-attempt-01.json",
+    "C6_feedback_sha256": "ec82b6920167c984b52ec8f3ab1c2e740f5200a0c3e3283c0987a10a58a6e555",
+    "C6_review_sha256": "fdd8c61f4ef17b3698bd5fd219f80296091e53bfb9e8e91774bdea40bb8ca8ca",
+    "C1_review_sha256": "93400e9757c41d461bfdd1840d9b62bc30843e23d82c4accc969cfe5a9609f24",
+    "closed_ten_memory_sha256": "fd3e2e3a251f808a96fa00e4f630c229b9537bb84760373f1d4090217e599e37",
+    "accepted_eleven_activation_memory_sha256": "803548f616c578ea288c69411653e50f796bca15ff902d3aabde7e49540bb471",
+    "actual_facts": "C6Brier/log .15008379917666145/.44426645088737005 versusraw .14195252900323282/.4296707847132428/B3 .14685521793761888/.43970280354554125. Raw1/4,parent2/4Brierwins, allraw/parent proper-loss groupintervals cross0. C6 energy .0027587683747842674/alignment+.005372501798644354 exceed B3 .0018054675523356848/+.0030972213820503777. Four valid solves/no controlfits/retry, not executionfailure. C1 .1454626479403298/.4388601515199571,0/4rawwins,14/16/18/24thresholds/slope~1 not proper-score improvement.",
+    "decision_dependency": "AcceptedC6 failure changes question away from another state trainer/loss/prior grid to restricted market calibration. Actual restored parent C1, latest trigger C6, incumbent raw distinct. No final algorithm selected before acceptedC6feedback."
+  },
+  "research_parent": {
+    "candidate_id": "InGameIdentityBlendedIsotonic-v1",
+    "runner_sha256": "489d8268bd5243d94df9396f6dd5d616acfeab2d23f29d0e9e5903b7f156cce5",
+    "source_path": "research/market_rsi/experiments/nfl_ingame_identity_blended_isotonic.py",
+    "artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-03/runs/attempt-01",
+    "artifact_hashes": {
+      "exclusions.json": "e6b19b230318dc9daf89e6495504c93996f49b3245415a14a45144fece81fdfb",
+      "input_receipts.json": "557d287ae481c4b51269b8ba6c5c26ef7dbc29812df0811a78ad0e46968c7971",
+      "manifest.json": "803edc240d6b702aa4ecc9dc666d9afe0f9bc7d0543cd0bf4e62ae0a103b5321",
+      "pre_score_lock.json": "c28a05bab91b95f73893158f7479cf622f4b883c5d70ba5a54ddec4544cf9d62",
+      "predictions.csv": "c668c2ae9056874e05ee67974699d2ef63872c60002218e0259a6e4445921eb2",
+      "predictor_states.json": "0e4f69faedf3d3f2f348b34ed3eaa36102ffc628912179a2c6ce2697a6c11717",
+      "scorecard.json": "8f2002cf8c13c45756f1c691b8407e32d9110c04bdeb0f533e24b07a975d9bf9"
+    },
+    "manifest_sha256": "803edc240d6b702aa4ecc9dc666d9afe0f9bc7d0543cd0bf4e62ae0a103b5321",
+    "predictions_sha256": "c668c2ae9056874e05ee67974699d2ef63872c60002218e0259a6e4445921eb2",
+    "scorecard_sha256": "8f2002cf8c13c45756f1c691b8407e32d9110c04bdeb0f533e24b07a975d9bf9",
+    "state_schema": "identity_blended_isotonic_numeric_state_v1",
+    "state_sha256_by_fold": [
+      "3ec0c1570ad756b31897e2c837eb94221a0e024c2ff4ec311420106c6352a032",
+      "f0972556b3b49fc2d77a598c3461d9bee15f7f067fba0230f7618872b6155fec",
+      "d2110cf7a06e1f0b65743d05ec11c51465bd9c6d0c8b1d9dc1a600ba8e6386e8",
+      "eb982dd7904db5cf1eb5ac33643bbf1e6687d890cfdc51d2a6eb796a716c6386"
+    ],
+    "controller_contract_sha256": "c4fc188d525e87fdf1d84efc127ab7bf7a122eedf722db139f4f8fcd9f700b7f",
+    "validation": "Exact7 files/manifest bindings, source/contract/v0/PBP/materializedreceipts/exclusions/four state-report hashes/oldisotonicconstructor/blend. Original C1 pure numeric interpolation on same87raw probabilities must reproduce exact parent predictions/keys/labels/availability/raw/ordinary/v0controls, no parentfits. Reject symlinks/duplicate/missingkeys or drift.",
+    "old_score": {
+      "brier": 0.1454626479403298,
+      "log_loss": 0.4388601515199571
+    }
+  },
+  "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+  "fixed_predictive_information": {
+    "feature_names": [
+      "market_logit"
+    ],
+    "input": "Only raw same-checkpoint p and l=log(p/(1-p)); original C1 raw_probabilities validates exact storedmarketlogit. Validate all193causal rows before fit. No intercept/scaling/age/state/PBP/team/date/terminal/future/outcome-derived predictor.",
+    "causal_input_limit": "Oldsource/cohort/PBP receipts remain validated though PBP not candidateinput. Fitlabels mustalreadybeavailable before checkblock.",
+    "time_limit": "Historical eventclock/order only, actualpublication/receivetime unproven"
+  },
+  "changed_training_recipe": {
+    "alpha": 16,
+    "intercept": 0,
+    "fit_parameters": 1,
+    "normalization": "none",
+    "sample_weights": null,
+    "prediction": "temperature=1+beta; q=expit(temperature*l), beta>=-1, nonnegative/order-preserving temperature, no uppercap. At beta exactly0 return rawp exactly; otherwise original epsilonvalidator/clippingcounts/no rows removed. No B3factor4 residual link in this newrecipe.",
+    "objective": "F(beta)=sum[logaddexp(0,(1+beta)*l)-y*(1+beta)*l]+8*beta^2, beta>=-1. Sum binaryNLL/identity-centered lambda16 prior, no intercept, not Brier training.",
+    "gradient": "g=sum[(expit((1+beta)*l)-y)*l]+16*beta",
+    "hessian": "h=sum[expit((1+beta)*l)*(1-expit((1+beta)*l))*l^2]+16",
+    "solution": "One deterministic constrainedconvex scalar optimization/fold. upperB=1+sum(abs(l_fit))/16, fitinput only; require finiteB,F/g/h withh>=16 andg(B)>0. Ifg(-1)>=0 choose beta=-1 boundaryoptimum; else bisection[-1,B] max200midpoint evaluations, high=mid ifg(mid)>0, low=mid otherwise. Accept immediately onlyabs(g(mid))<=1e-8. No stagnation relaxation/restart/grid/refit/fallback. Save bracket endpoints/signs, actualsteps/evaluationcounts/finalF/g/h/KKT.",
+    "validity": "Finite binaryy/interiorp/exactl/nonemptyfit. Independently recompute F/g/h. Interior beta>-1: abs(g)<=1e-8; boundarybeta==-1: max(0,-g)<=1e-8; h>=16. Ffinal<=F(0)+1e-8. Trainingobjective decrease not heldout gain. Strictconvexity/coerciveprior gives mathematical unique constrainedoptimum; numericKKT separately verified, not predictive evidence. Any nonfinite/bracket/stationarity failure terminalinvalid.",
+    "numeric_state": [
+      "schema/featureorder/rawfit-checkhashes/fitcount",
+      "beta/temperature/lowerbound/alpha16/nointercept/noscaling",
+      "actualF/g/h/KKT/Fzero/bracket/step/evaluationreceipt",
+      "checkprobabilities/replay/zeroidentity/bounds"
+    ],
+    "statistical_fits": 4,
+    "control_refits": 0,
+    "automatic_retries": 0,
+    "post_score_tuning": false,
+    "count_semantics": "One statisticalfit entry/outerfold; bisection evaluations solversteps not candidates/retries. Record fitsentered/validcompleted/steps/evaluations/partialfailedreceipt truthfully. Returnedinvalidbeta not validfit completion.",
+    "attribution": "Against C1 functionalshape/capacity/loss/prior change together on market-only information. C6trigger used more inputs; C7 not matched state-data ablation. Samealpha16 not Ridge/HGB prior-equivalence. No newinformation or R modification."
+  },
+  "predeclared_evidence": {
+    "external_judge": "Unchanged oldSUPPORT/REFUTE/INCONCLUSIVE andKEEP/REVERT, actualparent gain cannot replace rawjudge.",
+    "annotation": "Calibration-recipe directional onlyifbothcandidateproperlosses<C1 AND>=3/4parentBrierblockwins; stronger adds bothparent date/weekBrierCIupper<0. Extra annotation notKEEP. Report perblockbeta/temperature and candidate/C1energy+alignment perblock/date. repair_of_signed_alignment onlyifaggregatecandidatealignment<0.",
+    "negative_or_inconclusive": "Eitherproperloss>=C1 exactcalibrationannotationnegative; otherpartial evidenceinconclusive. Beating poorC1 maylosemarket. Stop exactnegative recipe, not allcalibration/state families.",
+    "credit": "Supervisor verifies evidence2 onlyafter actual distinct fourfitexperiment/same87causal/source/scorer. Validcounterevidence counts; invalidleakage/binding/execution credit0. Noextra creditforcalculus/reading or duplicatedfinding.",
+    "failure": "Any contract/source/runtime/parent/mask/causal/judge/permission drift or optimizer/probability/replay/deadlinefailure terminalinvalid. Save truthful partialreceipt/fitcounts/consumedattempt, no automaticretry."
+  },
+  "boundary": {
+    "task": "InGameWinProbabilityTrainDiagnostic-v0",
+    "source_events": 195,
+    "source_dates": 42,
+    "materialized": 193,
+    "excluded": 2,
+    "check_events": 87,
+    "check_dates": 20,
+    "check_weeks": 7,
+    "fit_counts": [
+      106,
+      132,
+      148,
+      176
+    ],
+    "check_counts": [
+      26,
+      16,
+      28,
+      17
+    ],
+    "initial_fit_dates": 22,
+    "check_dates_each_fold": 5,
+    "check_key_sha256": "2e35779fdbb4b83e129758008338b0c778d7f6281682118ad8d26d21293cc9f9",
+    "exclusions": [
+      [
+        "2025_04_GB_DAL",
+        "unresolved_outcome"
+      ],
+      [
+        "2025_05_TEN_ARI",
+        "market_trade_too_stale"
+      ]
+    ],
+    "time": "SamefrozenQ3first<=08:00preplayhome-tokencheckpoint, strictly-earlierintegersecondfills/max300s; futureplays/terminalscore/latefitlabels prohibited",
+    "scorer": "Sameequal-eventBrierprimary/logloss/calibration/4blocks/datepaired;10000complete-date/weekeventweightedbootstrapdraws seed20260929",
+    "KEEP": "SameaggregateBrier+logloss belowraw/ordinary/v0state,>=3/4rawandordinaryBrierwins,bothrawdate/week Brier95upper<0. Parentextra only.",
+    "scientific": "SUPPORTEDiffKEEP; REFUTEDifanyaggregateproperloss>=raw OR<=1/4rawBrierwins; otherwiseINCONCLUSIVE",
+    "evidence_scope": "RepeatedlyinspectedhistoricalTrainDiscovery only, neverOOS/realtime/PnL/promotion",
+    "Dev_Final": false,
+    "network": false,
+    "newdata": false,
+    "providers": false,
+    "release": false,
+    "promotion": false
+  },
+  "fixed_K_M_H_R": {
+    "K_sha256": "c94492041d5c331a2cc31c4d6cd529984742ce200e1b9365e3fb7d07e5b1ce64",
+    "M_sha256": "32d09dd7c177b30932b9a0619b60246ba574f8989c9eac80869aff134cded58d",
+    "H_sha256": "50d32690f488a583b705d23d114091326af17ec8afab9343283c0f28b8514df0",
+    "R_policy_sha256": "5bc2d879b4030190e3a6b17ddd186379b153c112ad1a5f58f5d571c9660bccf8",
+    "memory": "Append acceptedC6evidence under unchangedpolicy; restoring validnegativeparent for distinctquestion is ordinaryautonomousresearch, not Rselfmodification."
+  },
+  "allowed_production_paths": [
+    "research/market_rsi/experiments/nfl_ingame_market_temperature_offset.py"
+  ],
+  "allowed_test_paths": [
+    "research/market_rsi/experiments/test_nfl_ingame_market_temperature_offset.py"
+  ],
+  "protected_paths": [
+    "Allexistingcandidate/helpers/contracts/results/oldmemory",
+    "K/scorer/continuous_discovery_batch/co_evolution_loop/opened_train_discovery_worker",
+    "rawTrain/DevFinal",
+    "network/provider/budget/releaseauthority"
+  ],
+  "implementation": "Newthin independent sibling; reuse immutableC1 rawvalidation/interpolation/genericfitloop andsharedmaterialization/scoring/pairedrecording as purehelpers. Do notcall oldrunadmission/mutateglobals oroldsource. Newlocalcontract/source/7parentreceipt/causal/output/optimizerboundary. >about200productionlines or>2modules explicitindependentinseparabilityreview beforefit, no harnessrewrite.",
+  "resource_ceiling": {
+    "this_pilot_attempts": 1,
+    "this_pilot_fits": 4,
+    "seconds": 900,
+    "sampled_rss_bytes": 1073741824,
+    "processes": 1,
+    "threads": 1,
+    "control_refits": 0,
+    "retries": 0,
+    "provider_calls": 0,
+    "provider_cost_usd": 0,
+    "batch_wall_seconds_max": 5400,
+    "deadline": "min(actualsystemclocklaunch+5400s,2026-10-04T00:10:37Z)",
+    "prospective_continuation_remaining_before_this": 1,
+    "prospective_fits_remaining_before_this": 4,
+    "closed_actual_attempts": 12,
+    "closed_actual_fits": 48,
+    "oldcaps": "3/12,3/12,3/12,1/4,1/4,1/4 unchanged; no newoldclaim orreset"
+  },
+  "research_pool": [
+    {
+      "family": "low_capacity_market_calibration",
+      "parent": "C1",
+      "source_sha256": "489d8268bd5243d94df9396f6dd5d616acfeab2d23f29d0e9e5903b7f156cce5",
+      "why": "C6 harmfuldirection plus C1 flexiblecalibration failures motivate one distinct restrictedcalibration test; validnegativecredit informs allocation, not deletion.",
+      "execution": "onecandidate/fourfits"
+    },
+    {
+      "family": "causal_state_residual_models",
+      "parent": "B3",
+      "source_sha256": "376b34c656e5a70666e8863b507f518675858011c3da6530cf592a0e192957fe",
+      "why": "Method-diversearchive retained because matchedB2/B1directionalinput evidence uncertain. ExactC6/B3 recipes stopped; onlydistinct futurequestion eligible. C5proper-loss route archived, not deleted/family-refuted.",
+      "execution": "nonepreplanned"
+    }
+  ],
+  "consumed_C2": "Excludedfromeligiblearchiveimports; C3usedonlyboundedfollowup. History/reference retained, noreset innewbatch.",
+  "exploration_policy": "30percentstartingguidance adjustable, notperroundquota. Currentfamilyrestoration isexploration; noRpolicychange, credithelpsdistinctquestionselection butneverchangesBrier/judge.",
+  "next_candidate": null,
+  "R_change_proposed": null,
+  "tests": [
+    "Syntheticgradient/hessian finite differences,Fzero/identity,positiveh/interior/boundaryKKT cases",
+    "Deterministicfit-onlyfinitebracket/signs/bisection<=200/no restart, independentKKT/objective<=Fzero",
+    "Checklabel/future/state/PBP mutation independentfitbeta; exactrawlogit/causalinput failclosed; no scaling/intercept",
+    "Primitivebeta/temperature/source/alpha/lowerbound/state replay driftfailclosed, originalbounds/no rowsremoved",
+    "C1exact7files/fourthresholdstates/87keys/controls/availability/receipts driftfailclosed, zero parentfits",
+    "Full195syntheticentry/193+2/87/fourfits/fixedjudge/fivearms/16intervals/date20correctionidentities",
+    "Partialsolver/postpredictionfailure receipts/entered vsvalidcompleted/evaluationcounts/no retry/overwrite",
+    "Focused+inherited tests/independentmath-source-parent review before realfit"
+  ],
+  "rollback_parent": "b1257d2aad8db969b9508a3b6984f717a4299bfd sourceonly; retain result/failure/consumedbudget/journal, never operationalrewind",
+  "literature_and_method_reuse": {
+    "principles": "Existing reviewed chronological/paired/proper-score/fit-only principles; no newlivepaper/fullpaper retrieval.",
+    "method": "Standard binaryNLL calculus/convex scalarroot; synthetic finite-difference/bracket/KKT supports numericalimplementation, not forecastedge.",
+    "project_parameters": "lambda16/nointercept/nonnegative-temperatureconstraint/bracket/max200/1e-8/cutoff/folds/KEEP projectchoices, not consensus or cross-estimatorprior equivalence.",
+    "hypothesis": "Restricted calibration's reusedTrain predictive effect unverified until actualfit/acceptedscore."
+  },
+  "candidate_source_sha256": "pendingimplementation/independentreview/prefitfreeze",
+  "unsupported_claims": [
+    "isolatedcapacity/model/prior/dataeffect",
+    "newinformationgain",
+    "marketedge/OOS/realtime/PnL/promotion",
+    "universalstate/PBP/calibrationfutility",
+    "Rworkflow/tool/policyselfmodification",
+    "samebudgetfixed-processsuperiority",
+    "authenticatedexactController/Astra version"
+  ]
+}
