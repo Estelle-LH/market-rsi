@@ -937,3 +937,155 @@ Synthetic tests only, metadata oldparents allowed; no realfit/newcandidate
 predictionpreview/source/oldreceipt/artifact mutation or commit. Explicit scope
 and inseparability decision if >200productionlines; four realfits oneattempt
 only after Supervisor source checkpoint and runtime/memory freeze.
+
+## Supervisor registration: C4 actual result independent review
+
+Own ONLY new COEVO_RESULT_REVIEW_C4_2026-10-03.json and append this log.
+Read pilot04/runs/attempt-01 from source checkpoint f55bff87598a25fabb6da5c1513a5384694bfc7c.
+One claimed attempt/four successful fits; outer10/40 now consumed. No realfits,
+source/score/oldreceipt/FSM writes or commits. Independently reconstruct193
+native volume/fractional causal ages, strict-prior fit scales/normalizers and
+four primitive states/objective/gradient/Hessian; scalar replay87candidate/C3
+controls and fivearm equal-event scores/calibration/16date-week paired intervals,
+fourblocks, unchanged KEEP/scientific judge and separate prior annotation.
+Verify44source+runtime+memory+request+resource bindings/process absence, exact
+full195denominator/2exclusions/87keys/20dates7weeks and C2consumption retained.
+Assess distinct-question predictive-test evidence and recorder credit without
+adding it to scores; repeatedTrain only, no R/mechanism superiority claim.
+
+
+## 2026-10-03 — C4 independent actual-result review
+
+Reviewed the one completed final candidate from source f55bff87598a25fabb6da5c1513a5384694bfc7c.
+Source ff251b12...c32da and test b91a6217...0beef remain unchanged; 44 source
+bindings matched both committed and current bytes. Source/parent pre-score
+review was reused, not recreated.
+
+Independently reconstructed all 193 original positive integer volume ratios
+and fractional causal event-clock ages; exact 195=193+2 denominator, frozen
+87 keys, 20 dates/7 weeks, strict-prior fit 106/132/148/176 and check
+26/16/28/17 masks preserved. Four fit-only ddof0 volume scales and unchanged
+C3 freshness normalizers, native and normalized FIT/CHECK feature digests,
+canonical state/report digests, scalar NLL/ridge objectives, gradients,
+Hessians/eigenvalues and stationarity verified with no refits. Gradient
+infinity maximum 2.9252e-9 and every Hessian positive definite. Scalar replay
+errors: candidate <=1.11e-16, actual C3 parent <=2.22e-16; native/scaled
+predictor identity and effective native ridge 16*s^2 verified.
+
+All five-arm aggregate/fourfold proper scores, calibration, 50 aggregate and
+200 fold reliability bins, per-date deltas and all 16 whole-date/week
+10,000-draw event-weighted intervals independently recalculated. Frozen
+judge and separate prior annotation match: valid REFUTED/REVERT. C4 Brier
+0.14267853451809134/log loss0.4291441156534457 versus C3
+0.14195824357373463/0.42946360535319034 and raw
+0.14195252900323282/0.4296707847132428. Two of four raw/parent Brier block wins;
+both raw/parent loss intervals cross zero. Primary Brier worsens despite
+log-loss improvement; raw incumbent retained. Exact prior-question condition
+fails; not a broad theorem of information futility.
+
+Fit scales change native volume ridge from16 to0.278–0.341 and native volume
+coefficients to0.634–1.197, not equivalent numerical conditioning. Candidate
+correction energy0.00080204 versus parent0.00006835 exceeds improved helpful
+alignment (-0.00007603 versus -0.00006263). This conclusion uses actual
+paired predictions, not only Hessian inspection. Distinct question is valid
+negative experimental evidence: user rubric2 and unchanged frozen recorder
+2/refute/branch agree. Exact failed recipe stops; future distinct-question
+archive eligibility does not authorize another run.
+
+Request/runtime/Python binary/one-thread environment/source/memory/pre-review/
+all artifact/stdout/stderr bindings verified. Nine previous feedback packets
+and independent score/review hashes, prior closures and C2 evidence mapping
+preserved. Consumed C2 is excluded from eight archive imports, not reset;
+cross-batch enforcement remains an explicit Supervisor check, not a claimed
+native scheduler capability. Six canonical journal records freshly replay
+to actual execution-terminal state; result-review/closure not yet appended.
+
+One actual attempt/four fits, zero retries/control fits,4.291123042s/
+sampled139408KiB; PID56473 independently absent via scoped read-only kill0.
+Outer10/10 attempts/40 fits consumed; new1/4 and previous closed3/12caps
+unchanged. No further actual candidate permitted. Eight focused synthetic
+tests independently PASS0.045s; review actual Train fits/new predictions0.
+
+Read-only review probe failures preserved: initial JS constant reassignment
+failed before nested execution; initial memory checks incorrectly assumed
+historical A1/A2 passed-field and archive-list schema. Corrected inspection
+to old PASS-verdict+checks and actual count8/state list, no receipts/artifacts/
+source edits, fits, retry or scoring changes.
+
+Saved only registered C4 result JSON and appended own log. Scientific next
+choice remains Controller-owned after verified feedback and fresh budget.
+No prediction gain, untouched OOS, real-time edge, R/tool/workflow modification
+or mechanism superiority claimed. Exact Controller version unknown, trusted
+host not network/OS-hard sandbox, broad legacy suite not green. Separate
+actual closure review required after Supervisor records stop/terminal.
+
+## Supervisor registration: actual final pilot04 closure review
+
+Own ONLY new COEVO_BATCH4_OPERATIONAL_RESOLUTION_2026-10-03.json and append this
+log. C4actualreview66b05545 alreadyaccepted; feedback3bd8a899, terminal3bf25e88,
+statef138424c/9events/max1attempt-fourfits closed at22:02:23Z. Metadata/source/
+artifacts read-only, no fits/source/oldreview/FSM/score writes or commits.
+Verify allcanonical journal links/prefixes/two purefresh replay/unchangedcaps/
+capacity/norepeat/noclient-process, C3actualparent/rawincumbent/credit2branch/
+C2consumed import exclusion,44source/runtime/request/memory/feedback/review/
+sevenartifact bindings and allthree oldclosed3/12states. Match thirteen machine
+events tohumanprogress, including four real feedback-dependent descendants.
+Outer10/40consumedbefore original00:10:37UTC; no newrun/implicitextension.
+Completed-history replay is not deliberate realfit interruption proof. Exact
+version/Hhostisolation/broadlegacy/Rmechanism limitations remain explicit.
+
+
+## 2026-10-03 — Final pilot04 independent operational closure
+
+Actual C4 result receipt66b05545...091c9 was accepted and recorded as
+2/refute/branch, feedback3bd8a899...5fe9a. Independently verified actual
+terminal3bf25e88...7c833/statef138424c...17a4 closed22:02:23.284805Z,
+max1/fourfits, nine canonical events, no active attempt or attempt02.
+All SHA links and canonical bytes, every prefix and two fresh pure replay
+objects recover exact final state. Every claimed prefix rejects a second
+admission under max1; no repeated qualified ID or operational rewind.
+This is completed-history recovery, not deliberate real-fit interruption.
+
+C3 actual parent versus raw incumbent, exact question/rule/source/spec/
+runtime/Python/request/memory/receipt/result/seven artifacts/four state
+bindings, review/credit/feedback and hard stop all match. Nine old feedback
+packets and prior closures retained. Consumed C2 excluded from eight archive
+imports; user-rubric2/recorder1 mapping not reset. Native scheduler cross-batch
+consumption enforcement remains absent; explicit Supervisor exclusion used.
+
+Cross-window read-only verification checked all ten request/receipts/source/
+runtime/memory/review/manifest/artifact bindings, including every committed
+and current source digest. All ten CSVs have the same87 keys/labels/raw/
+ordinary/v0-state controls; all candidate Brier/log-loss arithmetic reproduced.
+Previous three closed3/12 caps/terminal states/results unchanged. All ten
+identified child PIDs independently absent via read-only kill0, no signal sent.
+
+Total ten unique real attempts/40fits/870 prediction versions of SAME87games;
+worker-wall42.696988375944784s, sampled per-child peak142528KiB, provider0/$0.
+No actual-run failures/automatic retries/control refits. Outer10 ceiling
+consumed before original00:10:37Z deadline; not five hours elapsed. No
+implicit authority extension or additional fit. Codex cost unmetered; worker
+seconds are not full research elapsed. One-process/one-thread child bound
+and capacity2 persist; final singleton maxactive1.
+
+Thirteen machine trajectory records and human progress agree. Verified
+feedback-selected descendants A3/B3/C3/C4 are real sequential prediction
+experiments; generation-one pairs remain parallel search, matched HGB data
+analysis is not an additional candidate. C4 changes only effective volume
+prior/representation; K/M/H/R stay fixed. H bounded executor and valid
+REVERT-parent routing worked in actual runs, but Supervisor implementation
+is not autonomous R modification.
+
+All ten candidates REVERT under unchanged judge; raw incumbent retained.
+C2 lowest observed Brier gain4.45e-6 is uncertain/INCONCLUSIVE; C4 lower
+log-loss coexists with worse Brier. No confirmed market edge, real-time/OOS/
+PnL/promotion, research-process self-modification or mechanism superiority.
+Exact Controller serving version unknown; trusted host/sampled RSS not
+network/OS-hard sandbox, broad legacy tests not green. Relevant test suites
+overlap; do not sum their counts as unique tests.
+
+Saved only registered new operational resolution and appended own log.
+No fits/new candidate predictions/source/oldreceipt/FSM/artifact writes or
+commit. Future Controller memory/recommendations remain separate and cannot
+execute within consumed cap. Operational pilot closure PASS, not scientific
+success or claim that remaining framework limitations are resolved.

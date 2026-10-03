@@ -88,3 +88,74 @@ autonomous predictor optimization, not proof that research workflow evolved
 or beats a matched fixed policy. Repeatedly inspected Train remains Discovery;
 real-time availability, future-event confirmation and exact LLM version remain
 unsupported.
+
+## 2026-10-03 22:06:38 UTC — result-bound window memory, no further fit
+
+Clock-observed timestamp. Read independently accepted C4 packet/review/states,
+the activation memory's nine previous verified feedback packets, all13 machine
+trajectory records and current human progress. Checked allten packet hashes.
+No fit, external/provider/protected action, production edit, old-record rewrite
+or commit by Controller. The new memory file is
+`COEVO_CONTROLLER_WINDOW_MEMORY_2026-10-03.json`; it does not grant authority.
+
+C4 is valid REFUTED/REVERT: Brier/log loss `.14267853451809134 /
+.4291441156534457`, versus C3 `.14195824357373463 / .42946360535319034`.
+Parent deltas `+.0007202909443567163 / -.00031948969974465724`; only2/4 raw and
+parent Brierwins, all raw/parent intervals crosszero, prior annotation fails.
+Native volume prior weakened16→.278–.341 and coefficient grew to.634–1.197;
+energy `.00006835→.00080204` grew more than helpful alignment. Stronger
+coefficient/correction did not mean better primary prediction. Stop this exact
+scaling route; do not grid lambda/blend or call it new information.
+
+Ten real candidates/four fits each now exhaust the retained cap, before the
+00:10:37Z outer time boundary. Allten results are valid; preserved synthetic,
+metadata and recovery failures are not scientific refutations or real retries.
+Raw remains incumbent. Lowest observed candidate Brier isC2, raw delta
+`-.0000044513` with2/4 blocks/intervals crossingzero; C2's C3 followup remains
+consumed, not refreshed by newbatch archival restoration. No morefits now.
+
+The pool retains two method-diverse questions, not top scores: (1) C4 proper
+score alignment with local information, eligible only for a genuinely distinct
+question; (2) B3 nonlinear causal state information, retaining uncertain matched
+B2−B1 state-input evidence while stopping exact HGB/output-link recipes.
+Neither is a renewed attempt or incumbent. Archive all negative findings.
+
+One concrete future-budget proposal: C4-parent
+`InGameCurvatureUnitMatchedBrierJointOffset-v4`, exactsame features/scales but
+Brier objective with a fixed past-fit local-curvature prior-unit rule. For each
+coordinate, `r_j=sum(2*v^2*x_j^2)/sum(v*x_j^2)`, `v=p_market*(1-p_market)`,
+`lambda_B_j=16*r_j`; no grid or check-label tuning. This only matches the
+expected data/prior curvature diagonal at zero under hypothetical Bernoulli
+raw-market labels, not actual/full/higher-order geometry. It is a project
+convention, not a theorem or pure-loss attribution. Deterministic one-start
+L-BFGS-B/fourfits and independent finite gradient checks are proposed; local
+stationarity is not a global optimum. It is NOT implemented, authorized or run.
+
+Why the new actual feedback changes that choice: C4 strengthened corrections,
+improved logloss and worsened primaryBrier, while A3's earlier naive objective
+swap retained numeric16 in different loss units. The future question addresses
+that specific unresolved score/prior-unit coupling, rather than another unit
+scale retune or a claim that generalPBP is useless. A future frozen contract,
+newbudget/source/version/tests/review are required; no preplanned next
+descendant or fallback fits.
+
+Four real feedback-dependent C descendants demonstrate autonomous predictor
+optimization; initial paired branches are parallel search, not fictional
+sequential iteration. Human-directed H binding/recovery is separate. Rpolicy/
+tool/workflow changes0 and samebudget fixedprocess comparisons0. No confirmed
+market edge, untouchedOOS, realtime/PnL/promotion, exactController/Astra identity
+or research-mechanism superiority. Repeated Train and local reviewed-source
+reuse remain explicit; no new live paper search or fulltext reading claimed.
+
+## Supervisor registration: verified final Controller memory
+
+Own ONLY new COEVO_CONTROLLER_WINDOW_MEMORY_2026-10-03.json and append this log.
+Accepted C4 result66b055451d32c32a983d15de39695b5fb1765ca428ccafae0aeba01ad38091c9
+and feedback3bd8a89936325fe9f08e3b23af0d70fffa6cba399745c2abe28c3f7df655fe9a
+are actual evidence;10attempts/40fits consumed, no newrun/source/history/score/
+credit/contract edits or commits. Read C4 and fullnine priorverified feedback.
+Update findings/failures/uncertainty, global2–3 method-diverse research families
+and ONE distinct next prediction experiment conditional on future budget.
+Keep C2consumed status, parents separate from rawincumbent; future proposal is
+not an executed result. Record precise feedback-to-next-choice rationale;
+Rworkflow/toolpolicy did not change in thiswindow, exactLLMversion unknown.
