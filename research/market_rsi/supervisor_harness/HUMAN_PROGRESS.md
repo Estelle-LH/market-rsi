@@ -1204,3 +1204,53 @@ untouched test.
 - Fourfits/no retries/controlrefits; worker4.447733s/peak142528KiB. Batch03 closed21:30:39Z at3uniqueclaims/12fits/261rows on SAME87games,22events/stateabceff11; terminalb1553233. All three previous pilot caps/results immutable. Outer9attempts/36fits/783candidate rows, worker-wall sum38.405865s, not total research elapsed; provider0/$0, Codex cost unmetered. One new attempt remains under retained10 ceiling before00:10:37Z. Whole-pilot independent closure review is separate from already accepted candidate scores.
 - Initial Supervisor replay command omitted a required strict source-validator keyword and failed before writes/fits; corrected the verification script only. Reviewer read-only probes initially assumed wrong launch filename and newer A1 field; corrected metadata inspection only. Original failures preserved; no Train retry, scoring relaxation or result overwrite.
 - Evidence is a negative joint C recipe test; added information/parameter capacity/covariance are inseparable, not pure-data/model or R research-process gain. Autonomous feedback-driven predictor optimization ran; no matched fixed-process control, untouched OOS, realtime/PnL, promotion or self-evolution superiority. Controller receives exact feedbackb1fc10d5 before choosing the final scientific attempt; Supervisor prescribes no algorithm.
+
+### 2026-10-03: Final feedback-selected effective-prior candidate verified
+
+- Same machine step `joint-native-volume-to-fit-unit-prior`: Controller read actual C3 negative feedback and saved fit geometry, then selected C4. Actual parent C3 and raw incumbent remain separate. Contractc40d9c30/checkpoint92c5966 preceded exact sourcef55bff8 and one four-fit run. One313-line candidate received explicit independent inseparability acceptance, not a safety claim based on line count.
+- C changed only native volume x to x/std(pastfit,ddof0), with no centering/floor/check scaling. Freshness statistics, data/information, two-coordinate model, analytic NLL/Newton/lambda16, scorer and K/M/H/R stayed fixed. The native volume prior changed from16 to0.278–0.341 and native coefficients from~0.033–0.049 to0.634–1.197. This is effective-prior/representation change, not new data or equivalent conditioning.
+
+| Same87 Train checks | Brier | Log loss | C4 minus reference Brier |
+| --- | ---: | ---: | ---: |
+| Raw-market incumbent | 0.1419525290 | 0.4296707847 | +0.0007260055 |
+| Ordinary market-only reference | 0.1454823125 | 0.4399219725 | -0.0028037780 |
+| Actual C3 parent | 0.1419582436 | 0.4294636054 | +0.0007202909 |
+| C4 fit-unit prior candidate | 0.1426785345 | 0.4291441157 | — |
+
+| Check block | Games | C4 minus market Brier | C4 minus C3 Brier |
+| --- | ---: | ---: | ---: |
+| 2025-10-23–11-02 | 26 | -0.0004707441 | -0.0015355843 |
+| 2025-11-03–11-13 | 16 | +0.0038565126 | +0.0048924512 |
+| 2025-11-16–11-24 | 28 | +0.0031190056 | +0.0036103909 |
+| 2025-11-27–12-04 | 17 | -0.0043314430 | -0.0045164504 |
+
+- Only2/4 raw/parent Brier wins. Raw date95%[-0.0041649731,+0.0044869881], week[-0.0028341429,+0.0046877072]; all raw/C3 proper-loss intervals crosszero. Logloss improves but primary Brier worsens, so exact question fails and fixedjudge yields REFUTED/REVERT. Credit2/refute/branch records a valid distinct negative predictive experiment; it does not modify Brier or admit more runs.
+- Correction energy0.00006835→0.00080204, helpful signedalignment-0.00006263→-0.00007603: helpful alignment grew less than correction energy. Bigger coefficients are not evidence of better predictions. General volume/freshness/PBP information is not refuted by this one recipe.
+- Independent result66b05545…091c9 verifies193 causal inputs/four fit-only scales and unchanged C3normalizers/native+scaleddesignhashes/gradient<=2.93e-9/HessianPD/87scalar C4predictions<=1.12e-16 and parent<=2.23e-16/fivearm scores+calibration/16 intervals/44source-runtime-memory-request bindings/PID56473absent. Root solver-disabled replay and scores agree. Final root suites:179in-game tests/12.538s,123candidate+execution-boundary/1.379s,34probability+scoring/0.011s, allPASS. Suites overlap; counts are not a sum of unique tests. Broad legacy diagnostic remains920tests/45errors/1failure/1skip, notgreen; no unrelated dependency install.
+- Final pilot04 closed22:02:23.284805Z at original1attempt/4fits,9events/statef138424c/terminal3bf25e88. Feedback3bd8a899 is independently accepted and ready for Controller. Old three3/12 pilots unchanged. Allten real runs succeeded with no automaticretry/controlrefit; synthetic, metadata and bookkeeping errors remain preserved separately. Root read-only scorecard probe first used malformed quoting; corrected inspection only. Review probe schema/variable errors were similarly read-only, never fit reruns.
+
+### 2026-10-03: Ten-candidate comparable window scorecard
+
+Lower is better; every row uses identical87 unique games/20 dates/7 weeks, not870 independent games. Complete population stays195=193+2 explicit exclusions.
+
+| Attempt | Candidate recipe | Brier | Log loss | Brier wins vs market |
+| --- | --- | ---: | ---: | ---: |
+| reference | Decision-time market | 0.1419525290 | 0.4296707847 | — |
+| reference | Ordinary market-only Logistic | 0.1454823125 | 0.4399219725 | — |
+| A1 | Freshness interaction offset/NLL | 0.1419584856 | 0.4295469775 | 2/4 |
+| A2 | Causal possession-pressure offset | 0.1421913272 | 0.4296628599 | 1/4 |
+| A3 | A1 basis with Brier objective | 0.1419817703 | 0.4296664713 | 2/4 |
+| B1 | Market-only residual HGB | 0.1528189331 | 0.4562724957 | 0/4 |
+| B2 | Same HGB plus causal state | 0.1479352069 | 0.4405907925 | 1/4 |
+| B3 | B2 fixed-tree confidence link | 0.1468552179 | 0.4397028035 | 1/4 |
+| C1 | Identity-blended isotonic | 0.1454626479 | 0.4388601515 | 0/4 |
+| C2 | Prior-play volume offset | 0.1419480777 | 0.4295777827 | 2/4 |
+| C3 | Joint volume/freshness offset | 0.1419582436 | 0.4294636054 | 2/4 |
+| C4 | C3 fit-unit volume prior | 0.1426785345 | 0.4291441157 | 2/4 |
+
+- All10 independently verified;9REFUTED/1INCONCLUSIVE and10REVERT under unchangedrule. Lowest observed candidate Brier isC2, rawdelta-0.0000044513; its intervals crosszero and it did not passKEEP. Lowest logloss isC4 but Brierworse. Raw remains incumbent. Cross-window root CSV verification recomputed all10scores and exactkeys/labels/raw/ordinary/state controls withoutfitting.
+- Four genuine feedback-selected descendants ran: A1/A2→A3 loss; verified B1/B2→B3 link; verified C1/C2→C3 joint; verified C3 failure/geometry→C4 effectiveprior. B1/B2 andC1/C2 firstgeneration pairs are parallel search, not themselves a fabricated sequential trajectory. Actualsource/parent/trigger/feedback and before/afterK/M/C/H/R are in the machine journal.
+- Matched B2−B1 isolates added causal state under one fixed HGB recipe: Brier-0.0048837262/log-0.0156817032,3/4wins, but grouped Brier intervals crosszero and both candidates lose raw. This supports a conditional directional input effect, not confirmed marketedge or universal PBP benefit. Other composite recipe comparisons do not isolate data/model causes.
+- Total10uniqueattempts/40actualfits/870predictionversions on SAME87games. Sum worker-wall42.696988s, sampled peak142528KiB perchild, oneprocess/thread perbranch and at mosttwo concurrent. These seconds are not full research elapsed. Project provider0/$0, Codex usage/cost unmetered. No user per-round method selection; Supervisor performed execution coordination and explicit bookkeeping recovery, so this is not zero-intervention engineering.
+- Retained earlier10attempt ceiling is reached before the five-hour00:10:37UTC deadline. No claim that five hours elapsed; asynchronous question asked whether latest five-hour instruction supersedes that ceiling. No reply/extension is assumed. No more fits launch under current cap; all source/results/failed branches remain preserved. Formal independent final closure and Controller result-bound memory are next bookkeeping steps.
+- Implemented Harness benefit: real bounded worker/source-runtime-memory binding and explicitREVERT-branch retention worked in realpilot; their initial Hcheckpoints retain their original evidencelevels. Candidate updates areC. Research-policy/tool/workflow modificationsR=0, matchedmechanism comparison=0. RepeatedTrain isDiscovery, notOOS; no confirmed predictiongain, realtime/PnL, exactController/Astra identity or self-evolution superiority. Native crossbatch consumed-followup persistence remains a reported gap with Supervisor C2exclusion, not a silently fixed feature.
