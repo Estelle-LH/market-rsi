@@ -1140,3 +1140,23 @@ untouched test.
 - Matched B2−B1 Brier`−0.0048837262`, log`−0.0156817032`,3/4Brier blocks improved. Predeclared directionaldata-input support=true; strongerinterval support=false: dateBrier95%`[−0.010663665,+0.003077423]`, week`[−0.012073847,+0.002200128]`, fourthblock worsens. Pairartifact SHA`1ea2c805…17efd`, independentreview`e1a89fbb…deaa8`. This is conditional nine-field data evidence under the same fixedtrainer, not marketoutperformance or isolated HGBgain versus changedlinearparents. Judge/incumbent unchanged.
 - Optional existingprediction decomposition and treeusecounts independently checked, no extra candidate/fits/credit. Correction energy plus signedalignment exactly equals existingBrierdelta; B1alignment harmfulall4blocks, B2helpfulonlyfold3. Clippedexamples are correct-sided, so clipping is not shown as the cause. Splitfrequency is not featureimportance. Initial Supervisor extra replay incorrectly rounded eventclock and failedbeforeartifactwrites; correction uses the alreadyfrozen fractionalPBPevenclock, no candidate or evaluation edit. Bothpilot artifacts occupy about3.9MiB in permanentlocal ApplicationSupport storage, notcloud/temp.
 - Controller is choosing one attributable descendant from verifiedfeedback. Its preliminary confidence-linked outputmap holds all B2features/training/trees fixed; not preplanned beforefeedback, no fitted shrinkage grid, no R-change claim. Finalcontract must be frozen before implementation/fit; currentbatch has oneattempt/fourfits left,deadline21:41:56Z. No per-round user intervention.
+
+
+### 2026-10-03: Feedback-selected confidence link executed and independently verified
+
+- Same machine step `state-residual-HGB-to-confidence-link`: Controller chose B3 only after verified B1/B2 and matched-information diagnostics. Actual parent B2 differs from raw-market comparison incumbent. Contract1676d24e…83414 preceded sourcead5d2a8 and one actual four-fit execution; no per-round human algorithm selection.
+- C-only change: q=clip(sigmoid(logit(raw)+4f)) instead of additive raw+f. All four fitted-state hashes and87 pre-link residuals/oldparent probabilities match B2 exactly;31 source/runtime/memory bindings and7 output hashes checked. Supervisor replay error0; independent scalar error<=5.56e-17. K/M/H/R remained fixed. Factor4 is a project choice; unchanged residual training does not optimize linked Brier directly.
+
+| Same87 opened-Train checks | Brier | Log loss | New minus reference Brier |
+| --- | ---: | ---: | ---: |
+| Raw-market incumbent | 0.1419525290 | 0.4296707847 | +0.0049026889 |
+| Ordinary market-only reference | 0.1454823125 | 0.4399219725 | +0.0013729054 |
+| Actual B2 parent | 0.1479352069 | 0.4405907925 | -0.0010799890 |
+| B3 confidence-link candidate | 0.1468552179 | 0.4397028035 | — |
+
+- Parent Brier block deltas: -0.0019945400/-0.0014841930/-0.0003984941/-0.0004232985,4/4wins; raw deltas +0.0082016371/+0.0040465023/-0.0021479193/+0.0122758279,1/4wins. Parent and raw grouped intervals crosszero. No statistically sufficient/untouched-OOS claim.
+- Correction energy0.00306432→0.00180547 while signed alignment harm0.00291836→0.00309722: smaller corrections helped the parent, aggregate direction was not repaired. Clipping count0; prior correct-sided clipping was not blamed.
+- Final synthetic/adjacent suite177passed12.846s, candidate8synthetic cases portable. Independent result `COEVO_RESULT_REVIEW_B3_2026-10-03.json` SHAcb8cdc80…8f637; validREVERT/credit2/refute/branch only for a distinct new question. Incumbent unchanged; all failed directions/code/evidence preserved.
+- Secondpilot closed20:40:50Z at3uniqueclaims/12fits/261rows on SAME87games, no child present; terminal SHA7b6420aa…81461/state1fa93ceb…c9330. Worker-wall12.702687s; peak sampled139808KiB. Outer6attempts/24fits/522rows, fourattempts remain before00:10:37Z; provider0/$0, Codex usage unmetered. Separate independent closure receipt pending. Caps never expanded; no retry.
+- Extra Supervisor reconstruction initially used a nonexistent parent CSV alias and failed beforewrites; corrected to existing frozen_actual_parent_probability. This was a verification-script failure, not a new candidate attempt, fit or scorer change. Unit private-artifact dependency was replaced before activation, with original test/preflight hashes preserved. Prior source/receipts/results unchanged.
+- Next Controller now owns scientific choice for a fresh separately bounded batch. No R tool/workflow change so far; ordinary autonomous predictor optimization and conditional state-input evidence do not prove self-evolution superiority, realtime/PnL or promotion. Protected Dev/Final/network/paid/fetch/release remain closed.

@@ -532,3 +532,63 @@ Previous161 adjacentchecks remain applicable to unchanged source/tests. Explicit
 260line inseparability assessment unchanged. Updated only currentunactivated
 B3receipt finaltestbinding and ownlog, as authorized; no prior scoredreceipt,
 score/result/data/source change, real Trainfit or rerun. gitdiffcheck PASS.
+
+## 2026-10-03 20:38:43 UTC — B3 real result independently PASS
+
+Sourcead5d2a8bb98b3841b5d22008d25bc46487237412 and31 request-bound committed
+files/runtime/memory/generation2launch/command/stdout/stderr/receipt match.
+All7outputhashes verify. Independent bounded numeric walks reproduce all87
+prelink residuals exactly and all4 canonicalstates equal actual B2; old additive
+probabilities match parent CSV exactly. Stable scalar logit+4f/sigmoid replay
+matches new87 probabilities max5.551115123125783e-17(roundoff), zero clipped rows.
+Full195=193+2/exact87keys/labels/controls/causal11fields/strictprior106/132/148/176
+and26/16/28/17checks verify. Recomputed all5arms/calibration/reliability,4blocks,
+20dates and16date/week intervals under unchanged event-weighted judge.
+Brier.14685521793761888/log.43970280354554125, raw deltas+.004902688934386061/
++.01003201883229846;1/4 raw Brierwins; unchanged REFUTED/REVERT. ParentB2 delta
+−.0010799889523988475/−.0008879889362845189; all4 parentBrierblocks improve, but
+all parent intervals crosszero. Exactstate/residualparity isolates C outputmap,
+not H/R/self-iteration mechanism. Correctionenergy declines.0030643203→.0018054676,
+signed alignmentharm rises.0029183576→.0030972214; magnitude damping, not repaired
+aggregate residualdirection. Do notblame correct-sided clipping orclaim marketgain.
+
+Frozenquestioningame-market-state-confidence-link-hgb-v2-q1, canonicalstring
+SHA b3a4cd9549766fe9c1ff8da6452213fd025ed54681f338453313ac0fdd6fe185 matches
+preclaim journal/contract/hypothesis. Recommend credit2/refute/explorationbranch
+only for a new question, no scorebonus or automaticrerun; exactroute stops.
+Fourreal fits/0retry,4.185043625s/sampled139808KiB; actual50437 absent via kill0.
+OwnTrainfits0. Initialread-onlyprobe failed atserialization(modulealiasshadowed
+bybinindex) afterchecks, no writes; inline alias corrected and verified again.
+Saved registered COEVO_RESULT_REVIEW_B3_2026-10-03.json and ownlog only. Terminal
+journal/hardstop review remains pending actual Supervisorclosure; no premature
+operational-resolution or priorreceipt/source/artifact edits.
+
+## 2026-10-03 20:43:50 UTC — HGB pilot closure independently PASS
+
+Actual Supervisorclosure20:40:50Z reviewed only afterterminal existed. Manual
+canonical22record chain SHA a5f17a99c00598dffd05dbe9b9e468f4ec414ccb28a73e5816150f116446d59c,
+two fresh pure in-memory replays equal actual batchsnapshot state
+1fa93ceb4b0aa39f0cebb2a4c31e58517d1190ffbb2c6333c7dfef7d134c9330. Everyprefix
+keepsmax3/capacity2/rawinc, noH/Rpolicyhistory. Final3claims/12reservedactualfits,
+active[],max_attempts_reached, liveassertion rejects; noattempt04 oroldcapextension.
+All three source/request/runtime/memory/receipt/result/review/credit/feedback and
+exact frozen question stringdigests verified. Parent A1/A2/B2 distinctfromrawinc;
+validREVERT B2 actuallyparentsnewquestionB3 afterverified pair, notpreplanned
+third independentmodel. Credit2 validnegative/mixedquestions preserved, no score
+bonus; exploration1/3 vs adjustable.3reserve, global2slots no hiddenbreadth.
+Actual PIDs48514/48516/50437 absent via scopedkill0.12fits/261rows SAME87games,
+wallSUM12.70268683298491s/sampledpeak139808KiB; outer6/10claims24fits, provider0.
+Oldclosed3/12pilot state8f161427...489cbe unchanged. All Python checkpointdiffs
+sinceclosedoldpilot exactlynewB1/B2/B3 andtheirtests; protectedscorer/H/Rpolicy/
+authority/configpaths emptydiff. Explicitpre-score>200reviews preserveCscope.
+
+Separate matchedstate input and isolatedoutputlink effects are validated Train
+Discovery; nonebeatmarketoverall. NoRworkflowselfmodification, samebudgetfixed
+processcomparison, authenticatedexactControllermodel, realtime/OOS/promotionclaim.
+Completedhistory replay is not deliberatelyinterruptedreal-fitresumption.
+Read-onlyprobes initiallymisassumed feedbackpaths/wrapperformat; independently
+confirmedunchangedfilehashes andcompared exactnestedschedulerpackets afterlocal
+probe corrections, no operationalwrites/fits. Supervisor testportability change
+is preservedpreactivationengineering, notscientificorRselfchange. Saved only
+registered COEVO_HGB_OPERATIONAL_RESOLUTION_2026-10-03.json and ownlog; no prior
+receiptedits/source/data/artifact/commit/provider actions byreviewer.
