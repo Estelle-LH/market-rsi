@@ -1,6 +1,6 @@
 # Market RSI — Supervisor 总路线图与当前任务
 
-更新：2026-10-03 18:04 ET。负责人：本会话的总 Supervisor。当前入口以本节和 `RESEARCH_STATE.md` 为准；下方 September29 与更早记录保留为历史，不同任务的成绩不混用。历史细节留在 `HUMAN_PROGRESS.md`，状态只能按真实 task 和证据更新。
+更新：2026-10-03 18:18 ET（最近时钟观察）。负责人：本会话的总 Supervisor。当前入口以本节和 `RESEARCH_STATE.md` 为准；下方 September29 与更早记录保留为历史，不同任务的成绩不混用。历史细节留在 `HUMAN_PROGRESS.md`，状态只能按真实 task 和证据更新。
 
 ## 2026-10-03 当前：真实赛中 Train 自主预测实验
 
@@ -10,9 +10,9 @@
 
 Raw市场 incumbent Brier/log0.1419525290/0.4296707847 未变。最低观测候选Brier为C2 0.1419480777，仅改善0.0000044513，2/4块、区间跨0，INCONCLUSIVE/REVERT；不是确认市场优势。C4有效先验候选0.1426785345/0.4291441157，log改善但Brier输raw/C3，2/4块、全部raw/parentproperloss区间跨0，REFUTED/REVERT。十个候选均未更新最佳；旧成绩和KEEP规则没有追溯修改。
 
-当前收尾：最终C4真实四fits、87逐样本预测和独立结果复核已完成，feedback3bd8a899返回Controller。Controller编写结果绑定研究记忆、全局2–3条方法差异路线与一个具体未来实验；独立Reviewer同时核验最终1/4pilot的9事件完整闭环/停止/旧cap不变。只改变配方C，R研究工具/工作流没有自修改。纯数值conditioning、新增数据和有效先验变化不混用。下次实验需先明确预算，不由Supervisor逐轮指定算法。
+当前执行：十候选段独立closurec8bcc3fc与Controller记忆fd3e2e3a均完成并永久保留。最新五小时不停止指令被Supervisor前瞻解释为允许另开有界pilot，不扩旧cap或编造用户对异步问题的回答。C5 contract2da17c7c冻结一个真实C4后代：同信息/同scales，Brier训练与past-fit局部diagonal data/prior曲率单位，预声明有限同目标optimizer continuation。Worker实现/测试和Reviewer数学/源码检查并行；尚未训练，不把proposal/code称为成绩。旧十候选记录不追溯改写。
 
-已用10/10保留总尝试/40fits，870predictionversions来自同87比赛；worker-wall总42.696988秒不等于整个研究耗时，采样peak142528KiB/child。每次4fits/900秒/单线程/采样RSS1GiB；旧三个3/12和最终1/4批次封闭、不扩cap、不重试。C2唯一bounded followup已由C3消耗；新批次不重新导入C2为fresh机会。信用影响探索但不抵消Brier。已异步询问五小时新指令是否替代旧10次上限，未假定用户回答。Provider0/$0，Codex成本不可由项目账本计量。
+已完成十候选段40fits，870predictionversions来自同87比赛；worker-wall42.696988秒不等于整个研究耗时，采样peak142528KiB/child。旧三个3/12和最终1/4批次封闭、不扩cap、不重试。前瞻continuation最多3新attempt/12fits；pilot05单独1/4/90min且clip原00:10:37UTC，每次900秒/单线程/采样RSS1GiB。后续两个slot必须先有新真实反馈和独立contract，不能预排假迭代。C2唯一followup由C3消耗，保持排除。Provider0/$0，Codex成本未知。
 
 已证实的是可信本地Train执行与反馈驱动的自主预测器优化。H有人工集成/绑定修复；此次科学候选没有R研究流程自修改。尚未运行同模型同预算固定流程对照；不得宣称自迭代机制优越、untouched OOS、实时接收时间、PnL或正式promotion。Exact Controller serving version未知，历史NFL为seed而非永久范围。Dev/Final、网络新增数据/文献获取、付费、push/release与promotion仍关闭。
 
