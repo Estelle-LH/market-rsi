@@ -1,0 +1,14 @@
+{
+  "schema":"problem_bound_change_contract_v1","step":"Hbind-to-Hbranch","parent_commit":"22ecd45","axis":"H","component":"scheduling","proposal_author":"Supervisor operational correction under standing user research-pool instruction",
+  "trigger":"Static inspection: _archived_parent admits credit2/refute/branch, but newly recorded verified refute candidates accept only stop/cooldown. A new valid REVERT branch therefore cannot produce descendants within a batch, contrary to user policy.",
+  "expected_effect":"Opt-in v3 can explicitly retain a verified refuted recipe as parent for a different question; incumbent and frozen performance decision unchanged. Legacy v1/v2 still reject branch action.",
+  "allowed_production_paths":["research/market_rsi/supervisor_harness/continuous_discovery_batch.py"],
+  "allowed_test_paths":["research/market_rsi/supervisor_harness/test_continuous_discovery_branch_retention.py"],
+  "protected_paths":["all experiments","minimal_prediction_loop","data_scientist_harness/co_evolution_loop.py","opened_train_discovery_worker.py","raw data","Dev/Final","budget/global-state journals"],
+  "fixed_identities":"K/M/C/R unchanged; H candidate hash frozen after bounded source change, before any new prediction score. Pilot has not been initialized or executed.",
+  "before_H_sha256":"47cfed25fc1727ceee2e36b6e90a95b1e3053a87739e888d441c1d12ed6c3065","after_H_sha256":"pending_source_freeze",
+  "resource_ceiling":{"real_fits":0,"provider_calls":0,"network":false,"development_minutes":15},
+  "tests":["valid REVERT parent retained with distinct descendant question","same question rejected","invalid/failed candidate cannot retain positive credit","global capacity2 unchanged","legacyv2 rejects newaction","restart/history exact replay"],
+  "review":"Distinct reviewer must audit one scheduling effect and fixed judge, inherited tests and exact scope before pilot activation.",
+  "rollback_parent":"22ecd45; append rollback history, never rewind attempts/results","requested_evidence_level":"L2 synthetic matched eligibility/restart; L3 only if real feedback selects such a parent"
+}

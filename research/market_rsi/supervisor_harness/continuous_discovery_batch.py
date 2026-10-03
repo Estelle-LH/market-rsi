@@ -53,7 +53,7 @@ RESOURCE_CLASSES = frozenset(
     {"local_analysis", "small_experiment", "metadata_lookup", "bounded_page_read"}
 )
 RESEARCH_OUTCOMES = frozenset({"invalid", "inconclusive", "support", "refute"})
-ROUTE_ACTIONS = frozenset({"cooldown", "stop", "bounded_followup", "continue"})
+ROUTE_ACTIONS = frozenset({"cooldown", "stop", "bounded_followup", "continue", "branch"})
 
 BOUNDARY_FLAGS = {
     "resident_opened_train_only": True,
@@ -847,6 +847,9 @@ class ContinuousDiscoveryBatch:
             route_is_eligible = (
                 credit == 2 and outcome == "support" and action == "continue"
             ) or (
+                state.get("scheduling_version") == 3
+                and credit == 2 and outcome == "refute" and action == "branch"
+            ) or (
                 credit == 1
                 and outcome == "inconclusive"
                 and action == "bounded_followup"
@@ -1546,6 +1549,9 @@ class ContinuousDiscoveryBatch:
                 item["credit"] == 2
                 and outcome == "refute"
                 and action in {"cooldown", "stop"}
+            ) or (
+                state.get("scheduling_version") == 3
+                and item["credit"] == 2 and outcome == "refute" and action == "branch"
             )
             if not valid_route:
                 raise DiscoveryBatchError("credit/outcome/route action contract changed")
@@ -2539,6 +2545,9 @@ class ContinuousDiscoveryBatch:
             credit == 2
             and outcome == "refute"
             and route_action in {"cooldown", "stop"}
+        ) or (
+            credit == 2 and outcome == "refute" and route_action == "branch"
+            and self.snapshot().get("scheduling_version") == 3
         )
         if not valid_route:
             raise DiscoveryBatchError("credit/outcome/route action contract changed")

@@ -97,3 +97,97 @@ authenticated model-provenance receipt. Save/open failures can leave a durable
 active claim; that is visible conservative recovery, not automatic resumption.
 No live effect, descendant feedback, prediction gain or H/R superiority earned
 yet. Root was informed of the exact verdict and limitations before launch.
+
+## 2026-10-03 19:20 UTC — revised worker final H verdict
+
+Supervisor added parent-process RSS sampling and one-second bounded waits in the
+same child-lifecycle component. Re-reviewed complete adapter/tests and ran the
+same independent focused command: 47 tests passed in 0.807s (nine adapter,
+38 inherited). RSS over-limit test verifies process-group kill and terminal
+failure. New exact adapter SHA-256
+`512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360`;
+test SHA `00f4bd421d8fe0098d24bfa2bb092231da71b5cc5b9580a85e1044e76119c60e`;
+164 production lines. No launch-critical issue under the same trusted/frozen
+pilot conditions. Sampling is parent-only polling; short peaks and descendants
+are not bounded by an OS hard memory limit. Complete source/runtime freeze,
+candidate review and actual result review remain separate prerequisites.
+
+Starting candidate pre-score review in parallel. No fits. First Controller
+contract timestamp was corrected before candidate pinning; frozen corrected
+contract SHA `e3b7bac05aeef4376674e8bbf01832e75f7ea6b6c8a6613d541fae01896ffa39`.
+Source-only new recipe dependency check and immutable V0 validator pass;
+both feature definitions cover all193 materialized games. C1 293 production
+lines/C2 57 trigger explicit inseparability review, not implicit smallness.
+
+## 2026-10-03 19:24 UTC — candidate pre-score verdict
+
+Final exact candidate source: freshness
+`d7e16a2d745f6440fe84b97aba54950b2c78a23428172b6002b187b385f057cd`;
+possession-pressure
+`4ea2935fb896397b4d21125bb040a0f82ff82be01abd2779717378d3465a0ab3`.
+Test hashes respectively
+`a0c6d740d8b9025959ae5d78dcb0b85875db4dcd0774c6ba9c4175eddafb4f32` /
+`4b33c4f9ab5e22893b615e47d6729a7dd449173938bb4cbafcc38c3a98f04d10`.
+
+Independently run 16 new synthetic tests: PASS in 0.024s. Combined source
+boundary/scaffold regressions plus adapter/small-step tests: 91 PASS in12.458s.
+Command: pinned `python -B -m unittest` on both new candidate test modules,
+`test_nfl_ingame_win_probability_train_diagnostic`,
+`test_nfl_ingame_prior_play_success_uncertainty_stratified_offset`,
+`test_nfl_ingame_identity_anchored_market_calibration`,
+`supervisor_harness.test_opened_train_discovery_worker` and
+`supervisor_harness.test_continuous_discovery_small_steps`, with frozen one-thread
+environment. All fitted test cases used synthetic data, not resident Train.
+
+Separate reviewer-written arithmetic check (without fitting) confirms direct
+NLL+8*beta², gradient/Hessian and finite differences; fit-age statistics cannot
+change when check ages change; pressure uses exactly the four declared pre-play
+fields and ignores poisoned future/terminal fields. Immutable source guards and
+V0 validator pass. Recipe feature coverage is193/193; live runner rechecks all
+PBP receipt hashes, exact materialized receipt equality,195->193+2 attrition,
+87keys,106/132/148/176 fit counts and26/16/28/17 check counts. Four scientific
+fits; no comparator refit or label-unavailable fit row is permitted.
+
+Explicit inseparability review: ACCEPT the over200-line warning for the
+freshness module. Its extra lines are the minimum self-contained causal input
+validation and immutable run/prediction/score/failure writer around one frozen
+feature/trainer recipe. Actual solver/scorer/decision still reuse existing
+unchanged modules. Splitting that single runner into another production module
+does not isolate another scientific effect. This acceptance does not imply that
+350 source lines are automatically safe; static and synthetic boundaries were
+reviewed. Pressure is a second independent C recipe using a pinned common source,
+not a change to the external evaluator or permissions.
+
+Verdict: PASS pre-score for these exact sources, subject to Supervisor's committed
+source/runtime/request manifest. K/M/H/R must remain fixed across their prediction
+comparison. Their result/credit and descendant are unreviewed until actual run.
+Parent H source at this point is22ecd45. Supervisor separately identified a v3
+branch-credit scheduling contradiction; that narrow new H proposal requires its
+own review and identity checkpoint, not retroactive inclusion in this verdict.
+
+## 2026-10-03 19:26 UTC — bounded v3 branch-retention review
+
+Reviewed separate H scheduling contract
+`603ce04e72549db60d1e25a3ef201a1641e06ca4765b00cbee411698d692193b`.
+Measured production diff: ten additions/one removal in the sole allowlisted
+`continuous_discovery_batch.py`; no candidate, evaluator, permission, budget,
+model or data change. Exact scheduler SHA
+`1b3065ea2990e886ff05869d5c6afd39bc0e80ebb053436f51fd9d9cee0d148c`;
+new test SHA `675976511122192be61aa074fe51a48831119afa635cbc14eac7209e4180d7d5`.
+
+Independent command on branch-retention, original scheduler, small-step and
+adapter test modules: 78 PASS in1.386s, including all six new retention cases.
+Verified public recorder, journal replay and parent-eligibility agree: only v3
+can explicitly retain `credit2/refute/branch`. Failed or unreviewed outcomes
+cannot get positive credit. Legacy v2 still rejects new action. Duplicate
+question digest remains forbidden; global capacity stays2. Valid REVERT can
+parent a distinct question while incumbent stays unchanged, and reconstructed
+history/state equals original. C1/C2 source hashes remain the exact accepted
+values above. No real Train fit or running pilot existed at activation boundary.
+
+Verdict: PASS the narrow human-directed H scheduling correction atL2 synthetic
+eligibility/restart evidence. Not a change to scientific KEEP/scoring, not an R
+improvement and not a live research effect yet. Supervisor must checkpoint and
+refresh H/pair identities before any claim; existing baseline scores/history
+must not be rewritten. Log keeps earlier H review identities rather than
+silently relabelling them with the new source.
