@@ -2,6 +2,14 @@
 
 Registered before dispatch. Own log only; no edits to candidate, scheduler, protected evaluator or historical artifacts. No fits.
 
+## 2026-10-03 20:06 UTC — next review registration
+
+Supervisor registers a new task after the old pilot was independently closed:
+exact frozen next contract `b6942eb906344b9acc97950f1c72c14024e981792744ed2bc83ca7944e6406b8`,
+both residual HGB candidate sources/tests and primitive prediction-state output.
+Reviewer owns this log and `COEVO_CANDIDATE_REVIEW_B1_B2_2026-10-03.json` only.
+No real Train fit, production edit, commit or historical receipt rewrite.
+
 ## 2026-10-03 19:15 UTC — baseline launch review
 
 Read the applicable AGENTS, Supervisor, current state, Oct3 implementation
@@ -283,3 +291,79 @@ bind committed source/runtime/request before the sole remaining four-fit attempt
 Saved detailed receipt `COEVO_CANDIDATE_REVIEW_A3_2026-10-03.json`. No production
 edits, protected-data reads, external fetch, provider, release or promotion by
 reviewer.
+
+
+## 2026-10-03 19:53 UTC — actual feedback-dependent C3 result review
+
+Actual C3 ran once at committed source
+`35e4c0303cf317289c5070e1b61efe171a5c921e`; four fits,87 predictions,
+4.087569s and sampled137008KiB RSS. Independently verified all26 request source
+files against committed and current bytes, interpreter/runtime versions, immutable
+memory, launch/request/process/receipt/log hashes and all six output hashes.
+Pre-score lock precedes completion and pilot deadline. Scoped escalated
+`os.kill(46930,0)` confirms the actual completed child is absent; no signal sent.
+
+Read-only rematerialization confirms195=193+2 population, exact exclusions,
+all193 causal market/PBP receipts and ages, exact87 keys/labels/cutoffs/outcome
+availability,22+4x5 chronology and strict prior fit labels. Independently rebuilt
+all87 features and probabilities from saved beta and fit-only age stats; maximum
+probability difference <=2e-16. All87 parent probabilities exactly match original
+A1 CSV. All four Brier objectives and analytic gradients reproduce; gradient
+magnitudes4.40e-12/4.72e-9/3.05e-11/3.96e-9 satisfy frozen1e-8 condition.
+No reviewer fit, parent refit, retry or source edit.
+
+Recomputed all five arms' equal-event Brier/logloss, calibration and reliability,
+every fold/date paired result and all16 full-date/week bootstrap intervals with
+frozen seed20260929 and10000 draws. C3 Brier/logloss
+`0.1419817702645588 / 0.4296664712947707`. Versus raw market:
+`+0.00002924126132597374 / -0.000004313418472122303`; versus actual A1:
+`+0.000023284635531885547 / +0.00011949379529640836`.
+Raw Brier wins2/4; date/week Brier intervals cross0. Exact unchanged rules yield
+REVERT / REFUTED exact recipe. Recommend credit2 for verified negative evidence,
+not predictor improvement; Controller chooses branch disposition separately.
+
+Feedback dependency is genuine: verified A1/A2 evidence led to this later
+same-feature Brier-trained descendant. This executed C predictor optimization,
+not R self-modification. No data increment, realtime, untouched OOS, global
+optimum, general-method futility or mechanism-superiority claim. Loss-unit change
+also changes effective shrinkage at fixed16; preserve that unresolved confound.
+Saved detailed immutable receipt `COEVO_RESULT_REVIEW_A3_2026-10-03.json`.
+
+
+## 2026-10-03 20:01:13 UTC — whole-pilot operational closure review
+
+Independently verified all22 canonical journal records and their exact hash chain.
+Two fresh pure in-memory scheduler replays equal the saved snapshot and terminal
+state `8f161427db1accbe040ba100458abb5f93ed605ee1ea7bad3d315a398a489cbe`.
+Every prefix holds max3/capacity2, the unchanged raw incumbent/history and fixed
+K/M/H/R identities. Final active set is empty; pure live-batch assertion rejects
+max_attempts_reached. Three unique actual claims/requests/runs,12 reserved and
+actual fits,261 predictions. Stop derives from replay once claim3 exhausts cap;
+terminal artifact records closure, with no additional stop journal event needed.
+
+All source/runtime/memory/spec/result/credit/feedback bindings match all three
+attempts. A2 terminal/review/feedback preceded A1 asynchronously; both verified
+packets precede generation2 selection. Valid REVERT A1 actually became a parent
+for distinct C3 question while incumbent stayed raw. Credit2 supports preserved
+negative evidence and exploration eligibility, never a Brier bonus. Snapshot
+archive retains all three results/recipes; inactive archived eligibility is not
+extra active capacity. All three actual PIDs45313/45315/46930 independently absent
+via scoped escalated kill0; no signal sent and zero reviewer fits.
+
+Actual Python diffs26d7121..35e4c03 are exactly the declared worker/test, separate
+10added/1removed retention scheduling fix/test, and three new C recipes/tests.
+Protected scorer, authority/global-state/paid paths and old experiments untouched.
+Both H corrections were frozen before real prediction runs. H worker was used
+in the live loop; micro-evolution policy history is empty and K/M/H/R hold across
+pilot comparisons. Normal feedback/memory accumulation is not Controller R
+self-modification. The operational missing-call-site bottleneck is resolved;
+no predictor improvement or research-mechanism superiority follows.
+
+Saved standalone `COEVO_OPERATIONAL_RESOLUTION_2026-10-03.json` with module,
+test, actual-result, source-diff, history and terminal evidence for Supervisor's
+plan resolution. Relevant independent158 tests passed; legacy suite expressly
+not green:920tests/45errors/1failure/1skip. Exact Controller serving version is
+unknown; trusted-host/no-network-isolation and historical-Train limitations stay.
+Do not expand or rerun old3/12pilot; any continuation must be a separate bounded
+fresh batch within the outer user window. First closure probe used wrong wrapper
+key for feedback files; corrected only read-only probe, no artifact/source change.

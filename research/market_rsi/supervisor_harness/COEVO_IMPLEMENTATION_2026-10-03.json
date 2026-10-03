@@ -1,28 +1,144 @@
 {
-  "schema":"supervisor_bottleneck_plan_v1",
-  "id":"opened-train-worker-binding-20261003-01",
-  "symptom":"The scheduler records transitions but no production worker call site launches a candidate through it.",
-  "source_evidence":"26d7121; production call-site inspection at 2026-10-03 19:12 UTC; no running experiment process; September 29 completed scorecards and Controller memory.",
-  "objective":"Bind one reviewed local Train worker to existing v3 scheduler, execute up to three prediction attempts and deliver verified feedback before the descendant decision.",
-  "boundary":"Resident opened Train only. No Dev/Final, network, paid calls, releases or promotion. Three attempts / twelve fits / ninety minutes from first pilot action within outer 19:10:37Z–00:10:37Z work window. Trusted host execution, not arbitrary-code isolation.",
-  "supervisor_owner":"root",
-  "resolution_check":"Independent source review, success/failure/restart/history tests, real artifact verification and clean scheduler terminal state.",
-  "steps":[
-    {"id":"controller","owner":"coevo_controller","action":"Read real history and freeze two differentiated candidate contracts; later choose descendant from verified feedback.","depends_on":[],"expected_artifact":"AGENT_LOG_COEVO_CONTROLLER_2026-10-03.md","verification":"Question, causal recipe, parent vs incumbent, expected support/refutation, four-fit ceiling and exact write scope predeclared.","pass_condition":"Executable recipe using existing source/scorer; no new data or provider.","failure_action":"Return bounded blocker to Supervisor; do not invent score or alter judge.","time_bound_minutes":20},
-    {"id":"bind","owner":"root","action":"Add one closed-command trusted worker adapter and synthetic tests; no scheduler/evaluator edits.","depends_on":[],"expected_artifact":"opened_train_discovery_worker.py and test_opened_train_discovery_worker.py","verification":"Scope review, source/runtime binding, durable no-repeat claim, bounded child timeout, terminal receipts, replay and restart tests.","pass_condition":"Actual subprocess result can return through existing journal without unsafe automatic retry.","failure_action":"Preserve rejected code/evidence, bounded correction in new checkpoint.","time_bound_minutes":45},
-    {"id":"candidate","owner":"coevo_predictor_worker","action":"Implement Controller recipes as separate thin sibling runners and synthetic tests.","depends_on":["controller"],"expected_artifact":"New experiments modules and tests named in Controller contract","verification":"Fit-only transformations, causal input coverage, fixed rows/folds/scorer and frozen comparator hashes.","pass_condition":"Independent pre-score review passes.","failure_action":"No real fit; return exact implementation failure to Controller.","time_bound_minutes":40},
-    {"id":"review","owner":"coevo_independent_review","action":"Independently audit binding and recipes, then verify per-sample results.","depends_on":["bind","candidate"],"expected_artifact":"AGENT_LOG_COEVO_INDEPENDENT_REVIEW_2026-10-03.md","verification":"Recompute losses, paired blocks, input/artifact/source commitments, unchanged K/M boundaries.","pass_condition":"No unresolved launch-critical issue; results honestly classified.","failure_action":"Block affected candidate, preserve evidence; finite repair.","time_bound_minutes":30},
-    {"id":"execute","owner":"root","action":"Freeze exact source, run up to two first-generation jobs with one thread each, return reviewed feedback and execute Controller-selected descendant if budget permits.","depends_on":["review"],"expected_artifact":"Permanent local pilot artifacts and append-only trajectory","verification":"At most 3 claims, at most 12 fits, no repeated claimed ID, complete 195 denominator/87 paired checks, feedback before next decision.","pass_condition":"Real predictions, verified results and clean terminal batch; improvement not required.","failure_action":"Save current state at deadline; do not consume a retry or expand authority.","time_bound_minutes":90}
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "opened-train-worker-binding-20261003-01",
+  "symptom": "The scheduler records transitions but no production worker call site launches a candidate through it.",
+  "source_evidence": "26d7121; production call-site inspection at 2026-10-03 19:12 UTC; no running experiment process; September 29 completed scorecards and Controller memory.",
+  "objective": "Bind one reviewed local Train worker to existing v3 scheduler, execute up to three prediction attempts and deliver verified feedback before the descendant decision.",
+  "boundary": "Resident opened Train only. No Dev/Final, network, paid calls, releases or promotion. Three attempts / twelve fits / ninety minutes from first pilot action within outer 19:10:37Z–00:10:37Z work window. Trusted host execution, not arbitrary-code isolation.",
+  "supervisor_owner": "root",
+  "resolution_check": "Independent source review, success/failure/restart/history tests, real artifact verification and clean scheduler terminal state.",
+  "steps": [
+    {
+      "id": "controller",
+      "owner": "coevo_controller",
+      "action": "Read real history and freeze two differentiated candidate contracts; later choose descendant from verified feedback.",
+      "depends_on": [],
+      "expected_artifact": "AGENT_LOG_COEVO_CONTROLLER_2026-10-03.md",
+      "verification": "Question, causal recipe, parent vs incumbent, expected support/refutation, four-fit ceiling and exact write scope predeclared.",
+      "pass_condition": "Executable recipe using existing source/scorer; no new data or provider.",
+      "failure_action": "Return bounded blocker to Supervisor; do not invent score or alter judge.",
+      "time_bound_minutes": 20,
+      "result": {
+        "verdict": "pass",
+        "observed": "Two differentiated causal recipes frozen before generation1; generation2 chose an exact-feature Brier-trained A1 descendant only after both independent result packets.",
+        "reviewer": "/root/coevo_independent_review_20261003",
+        "evidence_path": "COEVO_OPERATIONAL_RESOLUTION_2026-10-03.json",
+        "evidence_sha256": "a3bc72f42616b20f80e8f265cf9e77faee6790fcf8fac96f40b40117fec6a35a"
+      }
+    },
+    {
+      "id": "bind",
+      "owner": "root",
+      "action": "Add one closed-command trusted worker adapter and synthetic tests; no scheduler/evaluator edits.",
+      "depends_on": [],
+      "expected_artifact": "opened_train_discovery_worker.py and test_opened_train_discovery_worker.py",
+      "verification": "Scope review, source/runtime binding, durable no-repeat claim, bounded child timeout, terminal receipts, replay and restart tests.",
+      "pass_condition": "Actual subprocess result can return through existing journal without unsafe automatic retry.",
+      "failure_action": "Preserve rejected code/evidence, bounded correction in new checkpoint.",
+      "time_bound_minutes": 45,
+      "result": {
+        "verdict": "pass",
+        "observed": "The exact reviewed164-line worker produced exclusive request/process/log/receipt artifacts for all three real children and hash-bound scheduler claims/terminal records. Two-slot, four-fit per attempt,12-fit reservation, bounded timeout and sampled RSS controls remained fixed.",
+        "reviewer": "/root/coevo_independent_review_20261003",
+        "evidence_path": "COEVO_OPERATIONAL_RESOLUTION_2026-10-03.json",
+        "evidence_sha256": "a3bc72f42616b20f80e8f265cf9e77faee6790fcf8fac96f40b40117fec6a35a"
+      }
+    },
+    {
+      "id": "candidate",
+      "owner": "coevo_predictor_worker",
+      "action": "Implement Controller recipes as separate thin sibling runners and synthetic tests.",
+      "depends_on": [
+        "controller"
+      ],
+      "expected_artifact": "New experiments modules and tests named in Controller contract",
+      "verification": "Fit-only transformations, causal input coverage, fixed rows/folds/scorer and frozen comparator hashes.",
+      "pass_condition": "Independent pre-score review passes.",
+      "failure_action": "No real fit; return exact implementation failure to Controller.",
+      "time_bound_minutes": 40,
+      "result": {
+        "verdict": "pass",
+        "observed": "Three new, separately versioned executable recipes and synthetic tests; reused fixed scorer/data/time contracts. Reviewed309-line runners explicitly accepted as single executable recipes, not additional harness components.",
+        "reviewer": "/root/coevo_independent_review_20261003",
+        "evidence_path": "COEVO_OPERATIONAL_RESOLUTION_2026-10-03.json",
+        "evidence_sha256": "a3bc72f42616b20f80e8f265cf9e77faee6790fcf8fac96f40b40117fec6a35a"
+      }
+    },
+    {
+      "id": "review",
+      "owner": "coevo_independent_review",
+      "action": "Independently audit binding and recipes, then verify per-sample results.",
+      "depends_on": [
+        "bind",
+        "candidate"
+      ],
+      "expected_artifact": "AGENT_LOG_COEVO_INDEPENDENT_REVIEW_2026-10-03.md",
+      "verification": "Recompute losses, paired blocks, input/artifact/source commitments, unchanged K/M boundaries.",
+      "pass_condition": "No unresolved launch-critical issue; results honestly classified.",
+      "failure_action": "Block affected candidate, preserve evidence; finite repair.",
+      "time_bound_minutes": 30,
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent exact-source, prediction reconstruction, causal195=193+2 accounting,87 masks, four objectives/gradients, equal-event scores/calibration, paired date/week intervals and unchanged KEEP review completed for each attempt; all valid negative experiments.",
+        "reviewer": "/root/coevo_independent_review_20261003",
+        "evidence_path": "COEVO_OPERATIONAL_RESOLUTION_2026-10-03.json",
+        "evidence_sha256": "a3bc72f42616b20f80e8f265cf9e77faee6790fcf8fac96f40b40117fec6a35a"
+      }
+    },
+    {
+      "id": "execute",
+      "owner": "root",
+      "action": "Freeze exact source, run up to two first-generation jobs with one thread each, return reviewed feedback and execute Controller-selected descendant if budget permits.",
+      "depends_on": [
+        "review"
+      ],
+      "expected_artifact": "Permanent local pilot artifacts and append-only trajectory",
+      "verification": "At most 3 claims, at most 12 fits, no repeated claimed ID, complete 195 denominator/87 paired checks, feedback before next decision.",
+      "pass_condition": "Real predictions, verified results and clean terminal batch; improvement not required.",
+      "failure_action": "Save current state at deadline; do not consume a retry or expand authority.",
+      "time_bound_minutes": 90,
+      "result": {
+        "verdict": "pass",
+        "observed": "Generation1 two parallel jobs, A2 reviewed and returned first asynchronously, then A1; generation2 C3 uses REVERT A1 as a distinct-question parent. Three unique claims,12 actual fits,261 prediction rows; raw-market incumbent unchanged; all terminal feedback preserved.",
+        "reviewer": "/root/coevo_independent_review_20261003",
+        "evidence_path": "COEVO_OPERATIONAL_RESOLUTION_2026-10-03.json",
+        "evidence_sha256": "a3bc72f42616b20f80e8f265cf9e77faee6790fcf8fac96f40b40117fec6a35a"
+      }
+    }
   ],
-  "change_contract":{
-    "step":"H0-to-Hbind","parent_commit":"26d7121","axis":"H","component":"feedback_delivery","proposal_author":"human-directed Supervisor",
-    "evidence":"Missing worker call site; historical manual handoffs and v2 singleton dead end.","expected_effect":"A completed or failed local child yields a hash-bound scheduler terminal receipt; a restart cannot relaunch a claimed attempt.",
-    "allowed_production_paths":["research/market_rsi/supervisor_harness/opened_train_discovery_worker.py"],
-    "allowed_test_paths":["research/market_rsi/supervisor_harness/test_opened_train_discovery_worker.py"],
-    "resource_note":"RSS is observed at one-second intervals and exceeding 1GiB terminates the child. This is not OS-hard memory or network isolation. Trusted approved code only.",
-    "protected_paths":["research/market_rsi/minimal_prediction_loop","research/market_rsi/supervisor_harness/continuous_discovery_batch.py","research/market_rsi/data_scientist_harness/co_evolution_loop.py","all existing experiments","raw data","paid budget and global-state journals"],
-    "identities":"K/M/C/R manifest frozen before child execution; H after source hash pending until implementation checkpoint. No scientific comparison during engineering.",
-    "rollback_parent":"26d7121","resource_ceiling":"No real fits in adapter development; no external/network/provider access; bounded local synthetic tests.",
-    "evidence_requested":"L2 matched terminal/recovery tests then L3 one bounded opened-Train pilot; not research mechanism superiority"
+  "change_contract": {
+    "step": "H0-to-Hbind",
+    "parent_commit": "26d7121",
+    "axis": "H",
+    "component": "feedback_delivery",
+    "proposal_author": "human-directed Supervisor",
+    "evidence": "Missing worker call site; historical manual handoffs and v2 singleton dead end.",
+    "expected_effect": "A completed or failed local child yields a hash-bound scheduler terminal receipt; a restart cannot relaunch a claimed attempt.",
+    "allowed_production_paths": [
+      "research/market_rsi/supervisor_harness/opened_train_discovery_worker.py"
+    ],
+    "allowed_test_paths": [
+      "research/market_rsi/supervisor_harness/test_opened_train_discovery_worker.py"
+    ],
+    "resource_note": "RSS is observed at one-second intervals and exceeding 1GiB terminates the child. This is not OS-hard memory or network isolation. Trusted approved code only.",
+    "protected_paths": [
+      "research/market_rsi/minimal_prediction_loop",
+      "research/market_rsi/supervisor_harness/continuous_discovery_batch.py",
+      "research/market_rsi/data_scientist_harness/co_evolution_loop.py",
+      "all existing experiments",
+      "raw data",
+      "paid budget and global-state journals"
+    ],
+    "identities": "K/M/C/R manifest frozen before child execution; H after source hash pending until implementation checkpoint. No scientific comparison during engineering.",
+    "rollback_parent": "26d7121",
+    "resource_ceiling": "No real fits in adapter development; no external/network/provider access; bounded local synthetic tests.",
+    "evidence_requested": "L2 matched terminal/recovery tests then L3 one bounded opened-Train pilot; not research mechanism superiority"
+  },
+  "resolution": {
+    "verdict": "pass",
+    "observed": "The reviewed trusted-host worker was exercised through the v3 scheduler for three real opened-Train prediction attempts, including a verified-feedback-selected descendant. All results and source identities are preserved, independent review and credit reached Controller feedback, and the original three-attempt/twelve-fit pilot is closed with exact journal replay and no active child.",
+    "reviewer": "/root/coevo_independent_review_20261003",
+    "evidence_sha256": "a3bc72f42616b20f80e8f265cf9e77faee6790fcf8fac96f40b40117fec6a35a",
+    "claim_boundary": "Operational worker binding and bounded feedback-driven predictor experimentation only; not predictive success or research-mechanism superiority."
   }
 }

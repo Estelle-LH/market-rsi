@@ -1,10 +1,9 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-10-03T19:41:27Z",
+  "updated_utc": "2026-10-03T20:06:02Z",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
-    {"id":"opened-train-worker-binding-20261003-01","status":"real_generation1_complete_feedback_descendant_implementation","plan":"research/market_rsi/supervisor_harness/COEVO_IMPLEMENTATION_2026-10-03.json","result":"Reviewed worker binding completed two real four-fit Train candidates and returned immutable terminal receipts.149 integrated checks pass; broader legacy suite does not pass in available environments. Independent reviewer verified both87-row results; both REVERT, incumbent unchanged, valid-negative parents retained. Feedback selected Brier-objective descendant, not a preplanned third model.","next":"Finish independently reviewed descendant, freeze source and updated evidence memory, execute final one-attempt/four-fit slot, verify result and clean terminal journal before whole-bottleneck resolution.","evidence":"research/market_rsi/supervisor_harness/AGENT_LOG_COEVO_INDEPENDENT_REVIEW_2026-10-03.md","provider_cost_usd":"0"},
     {
       "id": "first-real-train-diagnostic-20260929-01",
       "status": "continuous_discovery_batch1_five_attempts_complete_incumbent_v3",
@@ -89,6 +88,7 @@
     }
   ],
   "resolved_this_session": [
+    {"id":"opened-train-worker-binding-20261003-01","status":"resolved","plan":"research/market_rsi/supervisor_harness/COEVO_IMPLEMENTATION_2026-10-03.json","result":"Three unique real candidate attempts and twelve fits completed; feedback from a valid REVERT parent selected and executed C3. All three exact recipes REVERT; raw market remains incumbent. Independent 22-entry journal replay, child absence, unchanged K/M/H/R, hard-stop rejection and five-step operational resolution passed. Relevant Supervisor suite159 tests passes; legacy full suite remains ungreen. This resolves the trusted opened-Train worker callsite only, not arbitrary-code containment, predictive gain or research-mechanism superiority.","next":"Old pilot is terminal and not extended. Execute the separately frozen next matched HGB pair within its own3attempt/12fit/90minute cap and unchanged outer window.","evidence":"research/market_rsi/supervisor_harness/COEVO_OPERATIONAL_RESOLUTION_2026-10-03.json","evidence_sha256":"a3bc72f42616b20f80e8f265cf9e77faee6790fcf8fac96f40b40117fec6a35a","provider_cost_usd":"0"},
     {
       "id": "real-input-containment-static-adapter-20260929-01",
       "result": "Metadata-only inventory completed without opening protected outcomes: 2024 has adequate aggregate diagnostic coverage but no rights/provenance/materialization/admission yet; 2023 remains coverage-inadequate and opened 2025 Train is not untouched eval. The exact synthetic adapter v4 aggregate 87a32217...e9472b passed independent review at 0 P0 / 0 P1, 85/85 focused-plus-adjacent tests, 516/516 repository tests with 2 designed skips, and 11/11 added terminal mutation probes. This resolves static synthetic adapter readiness only and grants no live Docker, real data, scoring, training, provider, release or protected-split authority.",
