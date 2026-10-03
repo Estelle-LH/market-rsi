@@ -1,6 +1,6 @@
 # Market RSI — Supervisor 总路线图与当前任务
 
-更新：2026-10-03 18:46 ET（最近时钟观察）。负责人：本会话的总 Supervisor。当前入口以本节和 `RESEARCH_STATE.md` 为准；下方 September29 与更早记录保留为历史，不同任务的成绩不混用。历史细节留在 `HUMAN_PROGRESS.md`，状态只能按真实 task 和证据更新。
+更新：2026-10-03 19:18 ET（最近时钟观察）。负责人：本会话的总 Supervisor。当前入口以本节和 `RESEARCH_STATE.md` 为准；下方 September29 与更早记录保留为历史，不同任务的成绩不混用。历史细节留在 `HUMAN_PROGRESS.md`，状态只能按真实 task 和证据更新。
 
 ## 2026-10-03 当前：真实赛中 Train 自主预测实验
 
@@ -10,13 +10,13 @@
 
 Raw市场 incumbent Brier/log0.1419525290/0.4296707847 未变。最低观测候选Brier为C2 0.1419480777，仅改善0.0000044513，2/4块、区间跨0，INCONCLUSIVE/REVERT；不是确认市场优势。C4有效先验候选0.1426785345/0.4291441157，log改善但Brier输raw/C3，2/4块、全部raw/parentproperloss区间跨0，REFUTED/REVERT。十个候选均未更新最佳；旧成绩和KEEP规则没有追溯修改。
 
-当前执行：C5独立实际reviewb5434529已PASS，source2d04e7c/result481ca42，Brier/log0.1429305151/0.4297779729输raw/C4，REFUTED/REVERT。数值拟合有效、correctionenergy近似不变但alignment转为有害；并非运行失败。Pilot05按原1/4封闭，feedbackc11f459e已交Controller。Controller据此停止原C4/C5目标先验路线，恢复REVERT但eligible的B3分支，选择同11因果inputs/同factor4输出link上的fixedlinear residual trainer+fit-onlypreprocessing，正在冻结可执行contract。不是新数据、评分修改、R自修改或预排模型。剩余最多2prospective attempts/8fits，原截止00:10:37UTC不变，旧十候选/caps不改。
+当前执行：C5验证负结果促使Controller停止原loss/prior路线，恢复REVERT但eligible的B3分支，并真实执行C6同11因果inputs/同factor4link上的fixedlinear residual trainer+fit-onlypreprocessing。C6source6e686cc/独立实际reviewfdd8c61f PASS，Brier/log0.1500837992/0.4442664509输raw/B3，raw1/4,parent2/4块，REFUTED/REVERT；数值拟合有效但correctionenergy和有害alignment均变大，不是运行失败。Pilot06按原1/4封闭，feedbackec82b692已交Controller，研究credit2/refute/branch不抵消评分退步。总12候选48fits/六条反馈依赖后代；不是新数据、评分修改、R自修改或预排模型。只剩1prospective attempt/4fits，Controller根据这项真实反馈选最后实验，原截止00:10:37UTC不变，旧成绩/caps不改。
 
-已完成十候选段40fits，870predictionversions来自同87比赛；worker-wall42.696988秒不等于整个研究耗时，采样peak142528KiB/child。旧三个3/12和最终1/4批次封闭、不扩cap、不重试。前瞻continuation最多3新attempt/12fits；pilot05单独1/4/90min且clip原00:10:37UTC，每次900秒/单线程/采样RSS1GiB。后续两个slot必须先有新真实反馈和独立contract，不能预排假迭代。C2唯一followup由C3消耗，保持排除。Provider0/$0，Codex成本未知。
+十候选段40fits完整保留，随后两个新singleton各4fits，总12候选48fits/1044predictionversions来自同87比赛；worker-wall总51.812217秒不等于整个研究耗时，采样peak142528KiB/child。旧三个3/12与04/05/06各1/4批次封闭、不扩cap、不重试。前瞻continuation最多3新attempt/12fits，已用2/8；每次900秒/单线程/采样RSS1GiB，最后freshsingleton须单独contract且clip原00:10:37UTC，不能预排假迭代。C2唯一followup由C3消耗，保持排除；native跨batch消费持久化仍是明确的H缺口，不假称已修。Provider0/$0，Codex成本未知。
 
 已证实的是可信本地Train执行与反馈驱动的自主预测器优化。H有人工集成/绑定修复；此次科学候选没有R研究流程自修改。尚未运行同模型同预算固定流程对照；不得宣称自迭代机制优越、untouched OOS、实时接收时间、PnL或正式promotion。Exact Controller serving version未知，历史NFL为seed而非永久范围。Dev/Final、网络新增数据/文献获取、付费、push/release与promotion仍关闭。
 
-最近证据入口：`HUMAN_PROGRESS.md`十候选结果表、`COEVO_TRAJECTORY_2026-10-03.jsonl`十三条变化轨迹、`COEVO_RESULT_REVIEW_C4_2026-10-03.json`。Root179in-game/123candidate-boundary/34scoring各suitePASS，计数有重叠；旧full920diagnostic仍45errors/1failure/1skip。只报告实际证据，不把框架/测试完成当预测或自迭代成功。
+最近证据入口：`HUMAN_PROGRESS.md`十候选与新增C5/C6配对结果表、`COEVO_TRAJECTORY_2026-10-03.jsonl`十五条变化轨迹、`COEVO_RESULT_REVIEW_C6_2026-10-03.json`。C6独立14focused/209in-game/112boundary-scoring与root209/99/44各suitePASS，计数重叠；旧full920diagnostic仍45errors/1failure/1skip。只报告实际证据，不把框架/测试完成当预测或自迭代成功。
 
 ## 2026-09-29 `SettlementProbabilityTrainDiagnostic-v0`（历史赛前任务）
 

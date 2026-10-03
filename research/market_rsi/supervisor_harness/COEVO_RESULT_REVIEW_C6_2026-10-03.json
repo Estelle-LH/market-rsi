@@ -1,0 +1,612 @@
+{
+  "schema": "coevo_independent_actual_result_review_v1",
+  "reviewed_utc": "2026-10-03T23:15:50Z",
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "passed": true,
+  "verdict": "PASS_VALID_REAL_TRAIN_DISCOVERY_RESULT_REFUTED_REVERT",
+  "candidate_id": "InGameMarketStateRidgeResidualLink-v1",
+  "candidate_arm": "market_state_ridge_residual_link",
+  "batch_id": "market-rsi-coevo-train-pilot-20261003-06",
+  "attempt_id": "attempt-01",
+  "question_id": "ingame-state-ridge-residual-link-v1-q1",
+  "question_digest_sha256": "1cf46089c86dfa36199e47ce0aa21314b897736bcf5541295ec4e1df4d52c2ab",
+  "hypothesis_digest_sha256": "75cef089fea2d35e4b13c06a134d0e1c4f592918ddd71b7481c5f2b5722f8417",
+  "predeclared_rule_sha256": "2caa0e05ce534795beae886da3d30b1df5dcef47449a38cae2ecd959bceb9372",
+  "source_commit": "6e686cc837262b0e6834bd8dcab5b3206bda95b9",
+  "source_files_checked": 52,
+  "exact_source_hashes": {
+    "research/market_rsi/experiments/nfl_ingame_market_state_ridge_residual_link.py": "ef699e85feb678578e2673da3e515298ccafd57ddc5672fd0a2d7b00dd6c0801",
+    "research/market_rsi/experiments/test_nfl_ingame_market_state_ridge_residual_link.py": "06b3bc3d907f0d2eee6ee0419f44bfa39a97884c43ab3ac899168cf7fe20413b"
+  },
+  "contract_sha256": "dc6b34a1ef0dadb744345bc34d7c200088c637c01e4fe73b80ec05ef1119d753",
+  "pre_score_review_sha256": "a6da0f08bc9592cb75050e990721f672a736d656b0d8ebd250c53c6660baa8ea",
+  "artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-06/runs/attempt-01",
+  "artifact_sha256": {
+    "exclusions.json": "e6b19b230318dc9daf89e6495504c93996f49b3245415a14a45144fece81fdfb",
+    "fit_progress.json": "d7a150ba82a69c4037028def97dc0b4d5560aebbb2a34c50fc543e09af6d02c8",
+    "input_receipts.json": "50dcbc3ceffedb00d9c7178918d3056dd4d9695296819e5547abb3fa0ac5b1c4",
+    "manifest.json": "5d33ccfbce42a5393b09052123bd9fdc65af81544a0c7ff65f2f9a9375091c54",
+    "pre_score_lock.json": "b24824d34d63212c06a2e7a4d12c8e144ca6ca9c1305cb70eb256c46b84f7d91",
+    "predictions.csv": "61b88497e3d0689dfa7e1e2428c52041b98de365874a808389dd861d8d45ee1d",
+    "predictor_states.json": "fddf120d3051199f9bc88704f8e7f3630a9555cb3a8b33bd408a003107b40c01",
+    "prelink_residuals.json": "01b7615b2631ad8004c18d0d87115ed7014e292fed9d1b36df51d1880fe80362",
+    "scorecard.json": "3922273d9bff5f6fed00a026d106547dbe0be700b3c64f181c0cb5aaecdd892e"
+  },
+  "request_sha256": "93e51fbed2a2793a45637dd04abec3257cc832fbfa4c9c0e38ac96b39cfa096e",
+  "execution_receipt_sha256": "ae666227f559f43f4bb9d7c2cefba97022c2870bbb62efdae34a20414fb6ef92",
+  "launch_manifest_sha256": "53f85eb67463f70791f545d43e64631b37e95d9b23581d6d876134e21a7587dd",
+  "memory_sha256": "803548f616c578ea288c69411653e50f796bca15ff902d3aabde7e49540bb471",
+  "runtime_pair_sha256": "ad5bbccc2bbd16c4dd06d355fddb5310176a10a4f39ecc5052a3516a4b55fad7",
+  "research_parent_sha256": "376b34c656e5a70666e8863b507f518675858011c3da6530cf592a0e192957fe",
+  "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+  "scientific_decision": "REFUTED",
+  "operational_decision": "REVERT",
+  "population": {
+    "check_dates": 20,
+    "check_events": 87,
+    "check_game_weeks": 7,
+    "dates": 42,
+    "events": 195,
+    "excluded_events": 2,
+    "materialized_events": 193
+  },
+  "metrics": {
+    "frozen_actual_research_parent": {
+      "brier": 0.14685521793761888,
+      "calibration_intercept": 0.009883096820886172,
+      "calibration_slope": 0.9965672388881741,
+      "log_loss": 0.43970280354554125,
+      "rows": 87
+    },
+    "frozen_v0_market_plus_state_parent": {
+      "brier": 0.16068099016465245,
+      "calibration_intercept": 0.04813167873790908,
+      "calibration_slope": 0.9186856458868063,
+      "log_loss": 0.4711973192666776,
+      "rows": 87
+    },
+    "frozen_v0_ordinary_market_only": {
+      "brier": 0.14548231253271718,
+      "calibration_intercept": -0.023504802267641844,
+      "calibration_slope": 1.0568122659695651,
+      "log_loss": 0.43992197245621956,
+      "rows": 87
+    },
+    "market_state_ridge_residual_link": {
+      "brier": 0.15008379917666145,
+      "calibration_intercept": 0.015369688314352481,
+      "calibration_slope": 0.9748233483216486,
+      "log_loss": 0.44426645088737005,
+      "rows": 87
+    },
+    "raw_market": {
+      "brier": 0.14195252900323282,
+      "calibration_intercept": -0.011806646530491793,
+      "calibration_slope": 1.0370387494646494,
+      "log_loss": 0.4296707847132428,
+      "rows": 87
+    }
+  },
+  "folds": [
+    {
+      "candidate_minus_actual_parent": {
+        "brier": 0.008734447644679733,
+        "log_loss": 0.015561976882386197
+      },
+      "candidate_minus_market": {
+        "brier": 0.01693608477215368,
+        "log_loss": 0.033710041240777866
+      },
+      "check_events": 26,
+      "fit_events": 106,
+      "fold": 1,
+      "metrics": {
+        "frozen_actual_research_parent": {
+          "brier": 0.1326800682436742,
+          "log_loss": 0.39616002700164504
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.15019918218394343,
+          "log_loss": 0.43593711570560223
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.13061710877713692,
+          "log_loss": 0.39656213359146736
+        },
+        "market_state_ridge_residual_link": {
+          "brier": 0.14141451588835394,
+          "log_loss": 0.41172200388403124
+        },
+        "raw_market": {
+          "brier": 0.12447843111620026,
+          "log_loss": 0.3780119626432534
+        }
+      }
+    },
+    {
+      "candidate_minus_actual_parent": {
+        "brier": -0.0024738517025798823,
+        "log_loss": -0.006153390964172445
+      },
+      "candidate_minus_market": {
+        "brier": 0.0015726505986378148,
+        "log_loss": 0.0037622651943755026
+      },
+      "check_events": 16,
+      "fit_events": 132,
+      "fold": 2,
+      "metrics": {
+        "frozen_actual_research_parent": {
+          "brier": 0.17701004845149884,
+          "log_loss": 0.5137434316838572
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.1673579315846153,
+          "log_loss": 0.5021972845123244
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.17589549592451675,
+          "log_loss": 0.5127619202842759
+        },
+        "market_state_ridge_residual_link": {
+          "brier": 0.17453619674891896,
+          "log_loss": 0.5075900407196847
+        },
+        "raw_market": {
+          "brier": 0.17296354615028114,
+          "log_loss": 0.5038277755253092
+        }
+      }
+    },
+    {
+      "candidate_minus_actual_parent": {
+        "brier": -0.0009534153297712233,
+        "log_loss": -0.007923557271902026
+      },
+      "candidate_minus_market": {
+        "brier": -0.00310133459012632,
+        "log_loss": -0.013926206818664744
+      },
+      "check_events": 28,
+      "fit_events": 148,
+      "fold": 3,
+      "metrics": {
+        "frozen_actual_research_parent": {
+          "brier": 0.14722476118552266,
+          "log_loss": 0.45419512046026617
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.16613856976689173,
+          "log_loss": 0.48697318908653625
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.15180591666281168,
+          "log_loss": 0.4660691786040406
+        },
+        "market_state_ridge_residual_link": {
+          "brier": 0.14627134585575144,
+          "log_loss": 0.44627156318836414
+        },
+        "raw_market": {
+          "brier": 0.14937268044587776,
+          "log_loss": 0.4601977700070289
+        }
+      }
+    },
+    {
+      "candidate_minus_actual_parent": {
+        "brier": 0.007062834441758953,
+        "log_loss": 0.01839645757865127
+      },
+      "candidate_minus_market": {
+        "brier": 0.01933866235044862,
+        "log_loss": 0.04253526074714381
+      },
+      "check_events": 17,
+      "fit_events": 176,
+      "fold": 4,
+      "metrics": {
+        "frozen_actual_research_parent": {
+          "brier": 0.13954518222462925,
+          "log_loss": 0.41274264274059735
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.16143885580678952,
+          "log_loss": 0.46996446595500513
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.12917780945822577,
+          "log_loss": 0.3946157885206703
+        },
+        "market_state_ridge_residual_link": {
+          "brier": 0.1466080166663882,
+          "log_loss": 0.4311391003192486
+        },
+        "raw_market": {
+          "brier": 0.12726935431593958,
+          "log_loss": 0.3886038395721048
+        }
+      }
+    }
+  ],
+  "paired": {
+    "candidate_minus_frozen_actual_research_parent": {
+      "brier": {
+        "delta_equal_event": 0.0032285812390425595,
+        "game_date_interval_95": [
+          -0.004060284551723129,
+          0.011182103757517029
+        ],
+        "game_week_interval_95": [
+          -0.003739352421396985,
+          0.009587224410461156
+        ]
+      },
+      "log_loss": {
+        "delta_equal_event": 0.004563647341828707,
+        "game_date_interval_95": [
+          -0.011189828768312779,
+          0.023492062114463544
+        ],
+        "game_week_interval_95": [
+          -0.010373078452872084,
+          0.019852226609826336
+        ]
+      }
+    },
+    "candidate_minus_frozen_v0_market_plus_state_parent": {
+      "brier": {
+        "delta_equal_event": -0.010597190987991017,
+        "game_date_interval_95": [
+          -0.019296084578963455,
+          0.00038041966556225695
+        ],
+        "game_week_interval_95": [
+          -0.019006882732892943,
+          -0.0009093687089420622
+        ]
+      },
+      "log_loss": {
+        "delta_equal_event": -0.026930868379307592,
+        "game_date_interval_95": [
+          -0.047202374635968554,
+          -0.00252296786379858
+        ],
+        "game_week_interval_95": [
+          -0.04485016575659117,
+          -0.006775832877423113
+        ]
+      }
+    },
+    "candidate_minus_frozen_v0_ordinary_market_only": {
+      "brier": {
+        "delta_equal_event": 0.004601486643944274,
+        "game_date_interval_95": [
+          -0.0039777350535670575,
+          0.014870577972514688
+        ],
+        "game_week_interval_95": [
+          -0.005072655975440246,
+          0.015016729971007666
+        ]
+      },
+      "log_loss": {
+        "delta_equal_event": 0.004344478431150468,
+        "game_date_interval_95": [
+          -0.016785878681818914,
+          0.028591865027384818
+        ],
+        "game_week_interval_95": [
+          -0.019149111075154046,
+          0.029199213547959093
+        ]
+      }
+    },
+    "candidate_minus_raw_market": {
+      "brier": {
+        "delta_equal_event": 0.008131270173428622,
+        "game_date_interval_95": [
+          -0.0012988817172166467,
+          0.020363526087800454
+        ],
+        "game_week_interval_95": [
+          -0.002716048198856214,
+          0.02044821941630609
+        ]
+      },
+      "log_loss": {
+        "delta_equal_event": 0.014595666174127164,
+        "game_date_interval_95": [
+          -0.008658407684565671,
+          0.043939348450331955
+        ],
+        "game_week_interval_95": [
+          -0.011631448971290004,
+          0.04429400710081368
+        ]
+      }
+    }
+  },
+  "decision_conditions": {
+    "candidate_brier_below_all_three": false,
+    "candidate_log_loss_below_all_three": false,
+    "date_brier_upper_below_zero": false,
+    "ordinary_brier_fold_wins": [
+      false,
+      true,
+      true,
+      false
+    ],
+    "ordinary_brier_fold_wins_at_least_3_of_4": false,
+    "raw_brier_fold_wins": [
+      false,
+      false,
+      true,
+      false
+    ],
+    "raw_brier_fold_wins_at_least_3_of_4": false,
+    "raw_brier_fold_wins_at_most_1_of_4": true,
+    "week_brier_upper_below_zero": false
+  },
+  "raw_brier_fold_wins": 1,
+  "ordinary_brier_fold_wins": 2,
+  "annotation": {
+    "annotation_only_not_keep_judge": true,
+    "candidate_minus_actual_parent": {
+      "brier": 0.0032285812390425717,
+      "log_loss": 0.0045636473418287915
+    },
+    "directional_trainer_evidence": false,
+    "exact_recipe_question_failed": true,
+    "parent_brier_block_wins": 2,
+    "repair_of_signed_alignment": false,
+    "stronger_local_evidence": false
+  },
+  "correction_diagnostics": {
+    "frozen_actual_research_parent": {
+      "equal_event_brier_delta_raw_identity": 0.004902688934386062,
+      "equal_event_correction_energy": 0.0018054675523356848,
+      "equal_event_signed_alignment": 0.0030972213820503777
+    },
+    "market_state_ridge_residual_link": {
+      "equal_event_brier_delta_raw_identity": 0.008131270173428622,
+      "equal_event_correction_energy": 0.0027587683747842674,
+      "equal_event_signed_alignment": 0.005372501798644354
+    }
+  },
+  "clipped_total": 0,
+  "primitive_checks": [
+    {
+      "fold": 1,
+      "state_sha256": "4c65d819fc0bc6743a3d4fdff886d0cf96a4dadb8dff7fbb0d8f1953d3ad97a3",
+      "fit_events": 106,
+      "check_events": 26,
+      "objective": 6.90200757530005,
+      "scalar_objective": 6.90200757530005,
+      "gradient_infinity_norm": 3.941291737419306e-15,
+      "equation_residual_infinity_norm": 8.881784197001252e-16,
+      "actual_A_min_eigenvalue": 16,
+      "actual_full_unpenalized_intercept_hessian_min_eigenvalue": 15.999999999999986,
+      "exact_vector_prediction_replay": true,
+      "max_scalar_probability_error": 5.551115123125783e-17,
+      "max_scalar_prelink_error": 2.7755575615628914e-17,
+      "max_native_residual_error": 3.3306690738754696e-16,
+      "solve_calls_started": 1,
+      "solve_calls_returned": 1,
+      "valid_fit_completed": true,
+      "feature_sha256": {
+        "native_check": "5c47873423dcac42cb7e235c206d109b70f029aac112869be4ba847208f32929",
+        "native_fit": "c0383c6b336ef9bd4e843fddce4cbd8013673201ffedcb04ac84931c4a98f2dc",
+        "normalized_check": "ef90b6ed24a037e1dae433ad2a9d3592212f94706e24abdf4429f0e1d6c724e9",
+        "normalized_fit": "d0728f7a760256a2fe86e606f7e976ca0a4a67915abc8992a9509e8433629e40"
+      }
+    },
+    {
+      "fold": 2,
+      "state_sha256": "80d49b2101ab0cc87137f28f3c879daf059b33f048138d3d1d0a46c3785a5f94",
+      "fit_events": 132,
+      "check_events": 16,
+      "objective": 8.56849057466963,
+      "scalar_objective": 8.568490574669632,
+      "gradient_infinity_norm": 2.708944180085382e-14,
+      "equation_residual_infinity_norm": 8.881784197001252e-16,
+      "actual_A_min_eigenvalue": 15.99999999999993,
+      "actual_full_unpenalized_intercept_hessian_min_eigenvalue": 15.99999999999988,
+      "exact_vector_prediction_replay": true,
+      "max_scalar_probability_error": 5.551115123125783e-17,
+      "max_scalar_prelink_error": 1.3877787807814457e-17,
+      "max_native_residual_error": 6.38378239159465e-16,
+      "solve_calls_started": 1,
+      "solve_calls_returned": 1,
+      "valid_fit_completed": true,
+      "feature_sha256": {
+        "native_check": "7de4a65962b6f94863630a95f2047f16ee60963c6657250bad3aedc8db411d53",
+        "native_fit": "b3a66d4024025f0b5d435981df9bdb8271319b1dcf5bb1005bbe2637eee4bdf4",
+        "normalized_check": "d51af1db9fc5ec400f7b7ec858bfab43805e8a710558157b3bee51e3f8ee4ba3",
+        "normalized_fit": "cb329008ca8898ad40045decf5f7e39585a960b473f6e71bdbb3b63cb2c00afc"
+      }
+    },
+    {
+      "fold": 3,
+      "state_sha256": "5da47c754bb3200c36c4e96ffdd666e6b89c85ad05aecf6036e9f53f5818669e",
+      "fit_events": 148,
+      "check_events": 28,
+      "objective": 9.919155502090671,
+      "scalar_objective": 9.91915550209067,
+      "gradient_infinity_norm": 1.637578961322106e-14,
+      "equation_residual_infinity_norm": 2.6645352591003757e-15,
+      "actual_A_min_eigenvalue": 15.999999999999982,
+      "actual_full_unpenalized_intercept_hessian_min_eigenvalue": 15.999999999999865,
+      "exact_vector_prediction_replay": true,
+      "max_scalar_probability_error": 1.1102230246251565e-16,
+      "max_scalar_prelink_error": 5.551115123125783e-17,
+      "max_native_residual_error": 1.5543122344752192e-15,
+      "solve_calls_started": 1,
+      "solve_calls_returned": 1,
+      "valid_fit_completed": true,
+      "feature_sha256": {
+        "native_check": "9d46c05d26c4828a2c6750426a34213c6f644bc3383e78e266960b59c486a911",
+        "native_fit": "902be2808b71349f679526b55af11f6390187dcda7d5eccaf779944c75e64112",
+        "normalized_check": "75251b9a24d66afed76e04db53e0d340fb3b5ac7242b100cc13850457f1e5af4",
+        "normalized_fit": "dfed7ec6203a3518ad02704c4804c7e07f6dff948a0a60574ab055a1e86e5286"
+      }
+    },
+    {
+      "fold": 4,
+      "state_sha256": "42194c5246b47efdda3940614b4cf13fc6a5b80fdddb6c80d3124ec5313d0769",
+      "fit_events": 176,
+      "check_events": 17,
+      "objective": 11.864820224988135,
+      "scalar_objective": 11.864820224988135,
+      "gradient_infinity_norm": 5.573319583618286e-14,
+      "equation_residual_infinity_norm": 1.7763568394002505e-15,
+      "actual_A_min_eigenvalue": 15.999999999999972,
+      "actual_full_unpenalized_intercept_hessian_min_eigenvalue": 15.999999999999915,
+      "exact_vector_prediction_replay": true,
+      "max_scalar_probability_error": 5.551115123125783e-17,
+      "max_scalar_prelink_error": 1.3877787807814457e-17,
+      "max_native_residual_error": 1.304512053934559e-15,
+      "solve_calls_started": 1,
+      "solve_calls_returned": 1,
+      "valid_fit_completed": true,
+      "feature_sha256": {
+        "native_check": "5657f61c5e2cda199a190fe6ddf788e843ea0d2d1e193ce35968181bec51771d",
+        "native_fit": "ac4b2a4ea9300d608e6117d3e3af7533bf1cdc96a4b612887741fd040ea4e64a",
+        "normalized_check": "b6cfbd3b20a16884bbecd7f8263a7b6310ee615e63bf7ca479f692b964822206",
+        "normalized_fit": "c061c7bbb19c7f7e1ffd9a732a85a4e99ab72c2640b7d82f18bb8585f9794146"
+      }
+    }
+  ],
+  "resources": {
+    "PID": 62934,
+    "automatic_retries": 0,
+    "control_refits": 0,
+    "model_fits": 4,
+    "provider_calls_requested": 0,
+    "review_Train_fits": 0,
+    "review_linear_resolves": 0,
+    "sampled_peak_rss_kib": 140064,
+    "wall_seconds": 4.121692875007284
+  },
+  "process_absence": {
+    "pid": 62934,
+    "absent": true,
+    "probe": "Scoped escalated os.kill(pid,0) returned ProcessLookupError; no signal sent."
+  },
+  "binding_verification": {
+    "initial_memory_sha256": "b990740fb2c090482cf9aada62de326b8636c8b353b6e75fcf1b85de613d2918",
+    "activation_memory_sha256": "803548f616c578ea288c69411653e50f796bca15ff902d3aabde7e49540bb471",
+    "execution_state_sha256": "1628ed64406cf1f7e092e667def7032cf84fb76521acb830880ed45a72617817",
+    "journal_records": 6,
+    "journal_head_sha256": "8f8b8912c02d2ef4919152f3b911182a13dd21a3ca016db1accec9aa7a650ca4",
+    "batch_claims": 1,
+    "batch_reserved_fits": 4,
+    "prior_closed_claims": 11,
+    "prior_closed_fits": 44,
+    "prospective_claims": 2,
+    "prospective_fits": 8,
+    "prospective_cap": 3,
+    "old_closed_batch_caps": [
+      3,
+      3,
+      3,
+      1,
+      1
+    ],
+    "old_closed_caps_unchanged": true,
+    "consumed_C2_excluded": true,
+    "actual_parent": "B3",
+    "latest_verified_feedback_trigger": "C5",
+    "comparison_incumbent": "raw_market",
+    "normal_memory_not_R_policy_change": true,
+    "verified_prior_feedback": 11,
+    "runtime_versions": {
+      "numpy": "1.26.4",
+      "python": "3.12.3",
+      "scipy": "1.14.0",
+      "sklearn": "1.6.1"
+    },
+    "thread_environment_contract": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONHASHSEED": "0",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "old_result_artifact_files_rechecked": 76,
+    "deadline_utc": "2026-10-04T00:10:37Z",
+    "C6_result_review_not_yet_appended_to_state_at_observation": true
+  },
+  "checks": {
+    "outputs": "PASS all8 output manifest hashes plus manifest/worker-stdout identity, four canonical state/report/fit-progress digests and87-key prelink artifact. Nine artifact files hashed.",
+    "causal_features": "PASS full195=193+2 exact reasons/materialized/V0/PBP/source/cohort receipts; independently reconstructed all193 complete native eleven inputs, original fractional checkpoint-minus-prior-trade age[0,300], pre-play state, rawlogit relation/physical bounds. No new/future/outcome predictor field.",
+    "past_only_fit": "PASS strict available-before-check labels and exact frozen22initial+four5-date folds; FIT106/132/148/176,CHECK26/16/28/17. All87labels/orientations/keys/checkpoints/outcome-availability/raw/ordinary/v0state/actualB3 controls match.",
+    "normalization": "PASS allfour eleven FIT-only means/population std ddof0/scales/exactconstant masks; no positive floor/drop/impute, allnative and standardized FIT/CHECK digests exact. Independent scalar moments agree. Native beta=theta/scale and b_native=b-mean.beta exactly.",
+    "normal_equations": "PASS recorded theta only: recompute A=Z'Z+16I and rhs=Z'(y-rawp-mean residual), objective .5sum(error²)+8theta², slope and unpenalized-intercept gradients, Atheta-rhs, actual A eigenvalues and full12parameter Hessian. No np.linalg.solve/optimizer/refit; largest valid gradient5.57e-14, residual<=2.67e-15, A min~16, fullH positive.",
+    "numeric_replay": "PASS allfour saved primitive states and all87 residual/vector probabilities exact; independent scalar sigmoid max1.11e-16, standardized/native residual equivalence. Exact oldB3 eight-file/four64tree states/all87prelinks/linked probabilities replay without parent fits. Zero clipping, original factor4/epsilon/zeroidentity retained.",
+    "failure_accounting": "PASS fit_progress4entered/4valid completed, four converged equation receipts each physicalsolve1started/1returned, retry/fallback/control fits0. Code/request bound to single actual execution; failed-return semantics were frozen before this score.",
+    "scores": "PASS fivearm equal-event Brier/logloss/calibration and fourfold metrics; all250 aggregate/fold reliability bins and every paired schedule-date delta, all16 whole-date/week pooled-event10k intervals independently recomputed, seed20260929.",
+    "diagnostics": "PASS candidate/B3 aggregate/fourfold/20dates87events correctionenergy+signedalignment=Brierdelta identity. Frozen trainer annotation negative, no signedalignment repair. Parent paired comparison additional, cannot replace external judge.",
+    "judge": "PASS unchanged conditions independently return REFUTED/REVERT; candidate Brier/log above raw, only1/4raw wins, grouped raw upper intervals>=0. Current raw incumbent unchanged; failure is this exact recipe, not allstate/linear-information refutation.",
+    "provenance": "PASS all52 committed/current bytes, pinned Python binary/runtime pair/source commit/module/request/command/activation+initial memory/prereview/receipt/stdout/stderr. Exact installedversions independently checked; candidate receipt reports Python/numpy/sklearn while recursive pinned runtime also binds SciPy.",
+    "memory_and_caps": "PASS canonical six-event journal/fresh pure replay/current state, eleven prior feedback file hashes/normalized packets and matching reviews/76 old result artifact hashes, five old immutable terminal/state caps3,3,3,1,1. C5 evidence precedes C6 selection but B3 is actual eligible parent. C2 consumed followup remains excluded, no reset/nativecrossbatch guarantee.",
+    "scope": "PASS no tracked Python diff from exact actual source checkpoint; prior431-line one-module inseparability review still applies. No K/M/H/R/scorer/scheduler/worker/data/authority mutation or new general infrastructure.",
+    "resources": "PASS one current claim/four valid fits4.121692875007284s/sample140064KiB,thread/process1,900s/1GiB sampling limit, provider0, no attempt02 or duplicate request, actual child62934 independently absent. Current max1/4 must stop after accepted feedback; one prospective fresh4fit attempt remains before original deadline.",
+    "reviewer_Train_fits": 0,
+    "reviewer_linear_resolves": 0,
+    "reviewer_new_unscored_Train_predictions": 0,
+    "protected_reads": 0,
+    "external_fetches": 0,
+    "provider_calls": 0
+  },
+  "verification": {
+    "method": "Recorded-state pure replay with fit_ridge/solve_ridge/numpy.linalg.solve/HGB fit/old analytic trainer explicitly disabled. Scalar moments/matrix sums/objective/gradient/link and independently pooled-event bootstrap arithmetic; did not rely on Supervisor supplemental replay.",
+    "date_correction_identities": 20,
+    "calibration_bins": 250,
+    "grouped_intervals": 16,
+    "tests": "No repeated pre-score suites; exact unchanged source/test already independently reviewed and synthetic14/209 plus boundary/proper112 checks passed in bound pre-review.",
+    "pre_score_evidence": "COEVO_CANDIDATE_REVIEW_C6_2026-10-03.json SHAa6da0f08bc9592cb75050e990721f672a736d656b0d8ebd250c53c6660baa8ea",
+    "historical_parent_evidence": "COEVO_RESULT_REVIEW_B3_2026-10-03.json SHAcb8cdc801a2a921bbcd8c4c7619de8490ad45ecbab27a785307fef3c0fd8f637"
+  },
+  "interpretation": {
+    "result": "Valid negative predictive experiment. C6 minus raw Brier +.008131270173428629/log+.01459566617412722; versus actualB3 +.0032285812390425717/+.0045636473418287915,2/4parent wins and crossing-zero intervals. Numerically valid exactridge solution did not improve correction direction.",
+    "decomposition": "C6 energy .0027587683747842674 and harmful alignment+.005372501798644354 both exceed B3 .0018054675523356848/+.0030972213820503777; their sums reproduce raw Brier gaps. This is prediction behavior, not only Hessian/implementation evidence.",
+    "attribution": "Combined C linear trainer/FIT-only preprocessing on same B3 information,target,link. Priorunits/complexity differ; residual-square objective not linked Brier. Cannot infer newdata gain, isolated pure estimator effect or universalstate futility.",
+    "boundary": "Repeatedly inspected historical Train Discovery, not untouched OOS/realtime/PnL/promotion; actual data publish/receive time unproven and historical LLM memory confounding unresolved.",
+    "mechanism": "Evidence-led archive restoration and new predictor are ordinary autonomous research; no R workflow/tool/policy self-modification or same-budget fixed-flow comparison. Exact Controller serving version unknown.",
+    "runtime": "Trusted-host worker/requested no provider/network; no network/arbitrary-code/OS-hard memory isolation claim. RSS sampled at1sec. Broad legacy suite remains not green.",
+    "skill": "indicator-prediction-evals applied causal/paired/fit-only attribution; explicit Train authorization overrides promotion/significance/one-component restrictions for this diagnostic combined trainer recipe. Project alpha16/scaling/link/cutoff/folds/judge are choices, not literature consensus."
+  },
+  "credit_recommendation": {
+    "evidence_value_under_user_rubric": 2,
+    "problem_id": "historical-ingame-settlement",
+    "question_id": "ingame-state-ridge-residual-link-v1-q1",
+    "question_digest_sha256": "1cf46089c86dfa36199e47ce0aa21314b897736bcf5541295ec4e1df4d52c2ab",
+    "predeclared_rule_sha256": "2caa0e05ce534795beae886da3d30b1df5dcef47449a38cae2ecd959bceb9372",
+    "value": 2,
+    "outcome": "refute",
+    "route_action": "branch",
+    "frozen_recorder_admissible": {
+      "value": 2,
+      "outcome": "refute",
+      "route_action": "branch"
+    },
+    "reason": "Distinct predeclared same-eleven-information/B3-target/link linear-trainer hypothesis actually ran four fits and produced independently verified87 predictions/proper-score/time-block evidence. Both proper losses worsened actualB3 and market, with higher correctionenergy and harmfulalignment: valid negative experimental evidence, not execution failure or credit for reading/closedform mathematics alone. Stop this exactrecipe; preserve code/result/finding and exploration eligibility only for a genuinely distinct feedback-led question, not allstate-family refutation.",
+    "mapping": "Userrubric2 agrees with frozen recorder2/refute/branch. Credit never changes Brier/KEEP, adds authority or resets consumedC2 allowance.",
+    "execution_after_result": "Close current pilot06 at immutable1attempt/4fit cap afteracceptedfeedback. Last scientific choice belongs Controller onlyafterthis accepted feedback and separate fresh singleton contract inside one remaining prospectiveattempt/fourfits/original00:10:37UTC deadline; no preplanned retry/oldcap expansion.",
+    "next_scientific_choice": "Controller-owned; reviewer selects no algorithm."
+  },
+  "fixed_hashes": {
+    "K": "c94492041d5c331a2cc31c4d6cd529984742ce200e1b9365e3fb7d07e5b1ce64",
+    "M": "32d09dd7c177b30932b9a0619b60246ba574f8989c9eac80869aff134cded58d",
+    "H": "50d32690f488a583b705d23d114091326af17ec8afab9343283c0f28b8514df0",
+    "R_policy": "5bc2d879b4030190e3a6b17ddd186379b153c112ad1a5f58f5d571c9660bccf8",
+    "worker": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360",
+    "scheduler": "1b3065ea2990e886ff05869d5c6afd39bc0e80ebb053436f51fd9d9cee0d148c",
+    "scorer": "64165cbceb4bcba6d03b6b42402ea7a47790c9a57f9280b15bfe2fe57becc06b",
+    "probability_contract": "7ba4a32d3c3a2ab80ac17ca6c18ea29fe864b958de8a81ac2be59dba121e9d74"
+  },
+  "review_probe_failures_preserved": [],
+  "scientific_next_method_selected": false
+}

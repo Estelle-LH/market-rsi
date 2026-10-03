@@ -1321,3 +1321,28 @@ Lower is better; every row uses identical87 unique games/20 dates/7 weeks, not87
 - Independent final-source/parent/math/boundary/inseparability admission is being completed; actual pilot06 still0claims at this entry. Next is one four-fit run on committed exact source/runtime/memory, no retries. All oldcaps, original00:10:37UTC deadline and protected/provider boundaries remain fixed.
 
 - Final independent admission `COEVO_CANDIDATE_REVIEW_C6_2026-10-03.json`, SHA `a6da0f08bc9592cb75050e990721f672a736d656b0d8ebd250c53c6660baa8ea`, PASS: exact431/401-line source/tests read, explicit one-module inseparability accepted,14focused/209in-game/112boundary-scoring tests passed and existingB3all87 predictions replayed withoutfit. Completed owner logs/source/test/review now form a narrow local pre-run checkpoint. This is admission, not a C6score.
+
+## 2026-10-03 — C6 actual training complete; final result receipt pending
+
+- Single pilot06 run completed23:08:48.556992UTC, exactsource checkpoint `6e686cc837262b0e6834bd8dcab5b3206bda95b9`,52current+committed file bindings, request `93e51fbe…cfa096e`, activationmemory `803548f6…0bb471`. Exactlyfourfits/87predictions, no controlrefits/retries. ParentB3 is restored archived REVERT branch; latestfeedbacktriggerC5 and rawincumbent are separate. Originaldeadline00:10:37UTC and alloldcaps unchanged.
+
+| Arm | Equal-event Brier | Log loss | C6 minus arm Brier |
+| --- | ---: | ---: | ---: |
+| Market / incumbent | 0.1419525290 | 0.4296707847 | +0.0081312702 |
+| Ordinary market-only Logistic | 0.1454823125 | 0.4399219725 | +0.0046014866 |
+| Frozen v0 market + state | 0.1606809902 | 0.4711973193 | -0.0105971910 |
+| Actual archived parent B3 | 0.1468552179 | 0.4397028035 | +0.0032285812 |
+| New C6 linear residual ridge | 0.1500837992 | 0.4442664509 | — |
+
+| Check block / games | C6 minus market Brier | C6 minus B3 Brier |
+| --- | ---: | ---: |
+| 1 / 26 | +0.0169360848 | +0.0087344476 |
+| 2 / 16 | +0.0015726506 | -0.0024738517 |
+| 3 / 28 | -0.0031013346 | -0.0009534153 |
+| 4 / 17 | +0.0193386624 | +0.0070628344 |
+
+- Root no-fit numeric replay `697680fb…d8d4` verifies193nativeinputs/fourFIT-onlymeans-scales/designs/A/rhs/F/gradients/nativecoefficients/fourcanonicalstates/87scalar+vectorprobabilities/fivearmmetrics/calibration/16date-weekintervals/20dateidentities/judge, candidate fits and np.linalg.solve disabled. Gradients<=5.58e-14/minA approximately16. Binding replay `b8a495a5…77aef` verifies52current+Gitfiles/executable/memory/request/eightoutputs and PID62934absent. This did not refit any Train/control model.
+- Numericallyvalid candidate energy0.0027587684/alignment+0.0053725018 versusB3 0.0018054676/+0.0030972214; larger harmful correction. Parentdirectional/repair annotations false. RawBrierdateCI[-0.001298882,+0.020363526],week[-0.002716048,+0.020448219]; parentdate[-0.004060285,+0.011182104],week[-0.003739352,+0.009587224],allcross0. PreliminaryfixedjudgeREFUTED/REVERT, rawstillincumbent; no generalstate/linearmodelrefutation. Independentnumeric/scoring/PID checks agree; finalresultcreditreceipt and Controllerfeedback stillpending atthisentry.
+- Workerwall4.121693s/sample140064KiB, total12actualattempts48fits/1044predictionversions on SAME87games; workerwallsum51.812217s is notfullresearchelapsed. Provider0/$0,Codexusageunmetered. Prospective2/3attempts8/12fits physicallyused; onefreshstep onlyafter independentlyacceptedfeedback, not preplanned. C2followupconsumption remains excluded bySupervisor, no nativecrossbatchguarantee. RepeatedTrainDiscovery only, K/M/H/R/judgefixed, no network/protected/push/promotion or mechanismadvantage claim.
+
+- Final actualresult receipt `COEVO_RESULT_REVIEW_C6_2026-10-03.json`, SHA `fdd8c61f4ef17b3698bd5fd219f80296091e53bfb9e8e91774bdea40bb8ca8ca`, PASS/validnegative accepted23:16:30.919565UTC, credit2/refute/branch. All52bindings/9artifact hashes/4states/193inputs/87predictions/fivearmcalibration250bins/16CIs/date20identities/currentjournal/oldcaps/C2consumption/PIDabsence independently verified withoutsolve/fits. Pilot06 closes original1/4,9events/statedf39596b/terminala60f167d/exactrestart/noactive. Feedback `ec82b6920167c984b52ec8f3ab1c2e740f5200a0c3e3283c0987a10a58a6e555` delivered to Controller before any next scientific choice. All12now independentlyverified:11REFUTED/1INCONCLUSIVE,12REVERT; raw remainsincumbent. Machinejournal adds15th same-event record, realC6 archived-parent restoration counts sixthfeedback-dependent descendant. Controller chooses one final prospective actual experiment; no preplanned algorithm, oneattempt/fourfits remain beforeoriginal00:10:37UTC.
