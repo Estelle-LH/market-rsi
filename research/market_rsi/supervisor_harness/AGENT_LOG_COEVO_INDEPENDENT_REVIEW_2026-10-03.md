@@ -592,3 +592,136 @@ probe corrections, no operationalwrites/fits. Supervisor testportability change
 is preservedpreactivationengineering, notscientificorRselfchange. Saved only
 registered COEVO_HGB_OPERATIONAL_RESOLUTION_2026-10-03.json and ownlog; no prior
 receiptedits/source/data/artifact/commit/provider actions byreviewer.
+
+## 2026-10-03 20:54:18 UTC — Batch3 C1 pre-score independently PASS
+
+Frozencontract c4fc188d...0b7f at6051332491d7e6c52e668287206392cd6f80f3b9
+fully read. Final C1source489d8268bd5243d94df9396f6dd5d616acfeab2d23f29d0e9e5903b7f156cce5,
+test a05624944ec1b72012b2c7e0d0cbcf88b666a1e44f277b4e92e0cc2d9130e7d9.
+Pinned one-thread Python -B focused7/7PASS0.025s and151 adjacent/inherited
+checksPASS1.748s. Four independent synthetic threshold/interpolation/onepoint/
+endpoint/allzero/allone/checklabel-state-isolation cases agree exactly; no Train
+fits/newpredictions. Installed sklearn1.6.1 isotonic.py source2a3b5e0b...12903
+fit/_build_y/_build_f/_transform read; equalweights, monotone PAVA, linear
+interpolation and endpoint clip confirmed. Fixed.25blend is projectchoice;
+monotonicity is not proof of lowvariance or fewer effectiveparameters.
+
+ActualB1parent87/source/contract/runtime metadata preflightPASS; unchanged full
+195=193+2/exact87/fourfolds/controls/judge/data-time boundaries. Parent is separate
+fromrawinc and extra comparator, not newKEEP judge. Portable synthetic87parent
+and195pipeline only. C1vsB1 explicitly COMPOSITE_UNATTRIBUTABLE withinC (algorithm,
+inputrepresentation and blend); no H/R change or scientificgain claim.
+
+258productionlines triggers explicitinseparabilityreview: one calibration method
+plus numeric-state replay and immutable source/fourfold/parent/evidence boundary;
+old runners admit frozenoldcontracts and remain untouched. No worker/scheduler/
+scorer/permissions changed. OldtrackedPython diff sincead5 empty, worker/scorer/
+scheduler hashes unchanged and diffcheckPASS. C2 candidate-localreuse allowed
+without editingC1; separate receipt required. Sourcecontract/science immutable.
+Initialread-onlyshell checks used wrong directory glob/index/module paths and
+returned missingpath before actions; corrected exact paths. No scope/state/Train
+write, provider, network, protected read or priorreceipt change. Saved only
+registered C1pre-score receipt and ownlog; real resultreview separately required.
+
+## 2026-10-03 20:56:43 UTC — Batch3 C2 pre-score independently PASS
+
+Final C2source45d1e7f2ef2de62102f115816db9d90e0249d169722700df3d5cc6000704c1ca,
+test33c6f7f023727e83b79a032c1c36a637ef48e34fa8b8addccb2c0168cbb6a2a9.
+C1source489d8268...6cce5 unchanged. Focused14/14PASS0.038s;158adjacent/
+inheritedPASS1.754s in pinned one-thread runtime. Independent three synthetic
+scalar stationarity/prediction/zeroidentity casesPASS maxgrad1.1861623e-11,
+maxprobabilityerror1.1102230e-16; reviewerTrainfits0/newpredictions0.
+
+ActualA2parent87source/manifest/score/CSV identity/control preflightPASS. Frozen
+priorcount sixhashes/source/cohort/PBPreceipts and195anchors/193counts match;
+featuredigest92c2d33b...d7fe,ratio range[-.39130435,+.45882353]. ExistingRextractor
+source inspected read-only: orderSequence<anchor selection before eligibility;
+no extractor rerun. Count-onlyfeature ignores success/terminal/target fields;
+existing success arithmetic is validation, not a predictive input. Full195
+population/twoexclusions/exact87/fourfolds/scorer/KEEP maintained. Strictsame
+A2single-offsetsolver, penalty16/no intercept/marketcoef1/zeroexactraw; persisted
+beta plus feature/sourcehashes allow no-refit verification. Checklabels/features
+cannot affect fit/scale. All newunitfixtures syntheticportable.
+
+C2one121line module +155testlines undertrigger, actualscope/boundaries checked,
+not accepted merelybecause small. FrozenC1candidate-localboundaryreuse only;
+oldsource/scorer/H/R remain unchanged. Parent effect tests feature/representation,
+not pure data gain: different scale changes effectivepenalty. Historical causal
+order does not prove publish/receive-time availability, no universalPBPclaim.
+Saved only registered C2pre-score receipt and ownlog; no protectedreads/providers/
+network/commits, actualTrainfits or priorreceipt/artifact/source edits.
+
+## 2026-10-03 20:58:06 UTC — C2 final pre-activation test binding
+
+Worker added two synthetic-only tests immediately after initialC2receiptwrite:
+A2-specific87parent/control binding and strictconvergence/state/feature failure.
+Production remains45d1e7f...04c1ca and C1 remains489d8268...6cce5. Initialtest
+33c6f7f0...6a2a9/155lines with14focused158adjacentPASS and uncommitted/unactivated
+receipt00a0f503734899881544dc8313e1a3774552220ad934b53ba7e2f2022283276b are
+preserved here as superseded pre-launch history, not silently claimed final.
+Finaltest774e69025e16b345b0c1cc5a6a70c8c95242956f312cdcd8bc84e0fb690a6cd8
+has192lines; independently16focusedPASS0.044s and160adjacentPASS1.769s.
+Worker confirmed no furtheredits ongoing. Updated only currentunactivatedC2
+pre-score receipt binding/results and ownlog before anyC2launch. No oldscored/
+committedreceipt, prediction, rule, source or data change; Trainfits0. Root was
+explicitly notified to withhold consumption of initialC2receipt. C1 independent
+verdict unchanged. Source/featurepreflight and121line bound remain valid.
+
+## 2026-10-03 21:02:08 UTC — C1 real result independently PASS
+
+One4fit run source4bd926a40bb099e548be7c1d53aea2a05125538d;35 exactcommitted/
+current files/source/runtime/request/memory/pre-review/stdout/stderr/receipts bind.
+All6outputhashes/fourstatethresholds/constructors/fixedblend/fitcounts verify.
+All87 independent scalar interpolations plus.75raw+.25calibrated agree exactly,
+maxerror0. Thresholdcounts14/16/18/24; one above-fitprice usesendpoint, no deletion.
+Full195=193+2/exact87/20dates7weeks/strictpriorfourfolds/rawordinaryv0stateactualB1
+controls match. Independentall5arms/4folds/calibration/reliability/20date deltas/
+16event-weighted complete-date/week intervals and unchangedjudge recomputed.
+Brier.1454626479403298/log.4388601515199571; rawdelta+.003510118937096953/
++.009189366806714326;0/4rawBrierwins, REFUTED/REVERT. All4blocks beat actualB1
+parent; Brierdelta−.007356285157031127, bothparentintervals belowzero. Rawweek
+Brierinterval[+.0018481595,+.0050229981]; monotonicity/blend did notbeat raw for
+thisrecipe. Calibration slope near1 does not override properloss. Parent comparison
+COMPOSITE withinC, not isolatedisotonicgain orH/Rmechanism claim.
+
+Canonicalfrozenquestion091e63e4...af254/hypothesis32de56e3...fc8e5/rule2caa0e05...
+bound topreclaimjournal. Allsixmemory feedbackfile/packet references verified;
+no fabricatedscores orRpolicychange. Recommendcredit2/refute/branch only for new
+question; exactrecipe stops, notscorebonus. PID52057 independentlyabsent kill0;
+wall4.041902917s/sampled138720KiB,4fits0retry; currentbatch2claims8reservedfits,
+oldbudgets notreset. ReviewerTrainfits0. Initialreadonlyprobe expectedgeneric
+launchfilename; per-attemptfile resolved frominventory beforechecks, no writes.
+Saved only newregisteredC1resultreceipt andownlog; C2review now proceeds.
+
+## 2026-10-03 21:04:49 UTC — C2 real result independently PASS
+
+One actual4fit run source50895c74f93dd8f3def9cf2e4d6144dec9b10c7b/36boundfiles/
+request/runtime/activationmemory/finalpre-review exactlyverify. Sixoutputhashes/
+fourstatedigests bind. Independently195priorfeature rows/exactfrozenanchorIDs/
+order and193positiveintegercount ratios, sixoriginalfile/source/cohort/PBPhashes
+verify, featuredigest92c2d33b...d7fe. No extractor rerun. Scalarobjective/gradient
+reconstruction from allstrictprior fit rows and persistedbetas confirmsgradients
+<=1.61e-14, penalty16/marketcoef1/nointercept/no scaling/sameA2analytic trainer.
+87scalarprobabilityreplays max1.1102230e-16; controls/actualA2/full195=193+2/
+87/20dates7weeks/allfourfolds/metrics/calibration/reliability/16intervals verify.
+Brier.14194807773589316/log.42957778268391095; tinyrawdelta−.000004451267339672208/
+−.0000930020293318562;2/4rawwins, rawdate/week intervals crosszero. Exactjudge
+INCONCLUSIVE/REVERT; rawinc unchanged, not confirmededge. Fourbetas.03430/.04945/
+.04302/.03375positive, applicabilityuncertain; same-model feature/representation
+with effectivepenaltyscale caveat, notpuredata orR/Hmechanism gain.
+
+Questiondf46063d...ca997/hypothesis6146ce86...2186a/rule2caa0e05... match preclaim
+contract/journal. Sixpriorfeedbackpacket bindings/memory verify; no sibling
+feedbackinvented. PID52740 independentlyabsent kill0;4.463971375s/139424KiB;
+batch2claims8fits, outer8/10claims32fits (prior6/24preserved),0retry/provider.
+Reviewerfits0. Independent evidencegrade2 per user validhypothesistest rubric,
+but frozenrecorder only admits credit1/inconclusive/boundedfollowup. Explicitly
+recommendrecording legal1 with separate scientific2 evidence, notfalse support/
+refute orsilentH/judge rewrite; Controller decides boundednextscience. This
+legacy coupling is a research-credit bookkeeping limitation, not scientific
+failure or reason to stop authorizedDiscovery. Parent notified before receipt.
+
+CommittedC2pre-score final16focused/160adjacent correct; one inheritedlimits
+sentence says151checks. Preserve committed bytes and noteclerical caveat here,
+not rewrite historicalreceipt. Saved only newregisteredC2resultreceipt andownlog;
+no raw/protected/provider/production/score/artifactwrites, fits or rerun.
