@@ -1,3 +1,23 @@
 # Candidate implementation — 2026-10-03
 
 Registered before dispatch. New sibling code and synthetic tests only; real execution and Git integration belong to Supervisor.
+
+## 2026-10-03 19:21:46 UTC — implementation ready for synthetic checks
+
+- Read AGENTS, Supervisor rules, current state, indicator-evaluation skill and existing primary-source reading note. Reused reviewed chronology, fit-only normalization and proper-scoring implementation; no new live search or full-text-reading claim.
+- Pinned corrected immutable Controller contract SHA `e3b7bac05aeef4376674e8bbf01832e75f7ea6b6c8a6613d541fae01896ffa39`; mutable Controller log is not executable authority.
+- Only four declared new candidate/test paths and this registered log are written. Existing experiments, scorer, scheduler, state, artifacts and data are unchanged.
+- A1 common runner materializes the unchanged causal rows and validates exact195->193+2 attrition, frozen receipt equality, strict chronology and87-key mask. A2 supplies its own pressure basis and distinct recipe/arm; it imports A1's common runner, which is an explicit cross-candidate source dependency.
+- Each single scientific coefficient uses the frozen two-column analytic Newton implementation with design `[x,0]`. The dummy coefficient, its gradient and cross-Hessian are exactly zero; it is not a second fitted scientific effect. This equivalence is tested.
+- Inseparability-review request: the A1 source exceeds the approximate200-line warning threshold because it includes the new recipe, exact input/row validation, existing-scaffold adaptation and immutable prediction/score/failure artifact writer. Splitting the same bounded runner into a third production module adds no independent change axis and would violate the existing two-production-path contract. It changes one predictive recipe, not scoring, permissions, dependencies or research capacity. Supervisor and independent reviewer must assess actual scope before activation.
+- Tests planned: causal age and physical-state bounds, fit-only scaling, future-field exclusion, analytic derivative/zero-column parity, exact zero-beta raw identity, four synthetic fits/no control refits, fixed-mask and chronology rejection, immutable contract/source drift, preserved failures/no overwrite and scorer/decision parity. No real fit has run.
+
+## 2026-10-03 19:23:34 UTC — focused synthetic verification passed
+
+- Exact command from `research/market_rsi`: `env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONHASHSEED=0 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest experiments.test_nfl_ingame_market_freshness_interaction_offset experiments.test_nfl_ingame_causal_possession_pressure_offset -v`.
+- Result: **16/16 passed**, 0.030 seconds unittest time. Includes a full synthetic195->193+2 run, exactly87 predictions/four fits, frozen fit/check counts, file-hash-bound manifest, fixed-scoring parity and preserved failure/no overwrite. These are synthetic fits only; zero real Train fits or provider calls were executed by this worker.
+- Fixed the explicit missing-plus-extra state-key regression and added direct final label-availability invariant. Zero beta returns the exact frozen raw probability bytes when those probabilities are supplied; no endpoint or scoring policy changed.
+- A1 source SHA `d7e16a2d745f6440fe84b97aba54950b2c78a23428172b6002b187b385f057cd`; A2 source SHA `4ea2935fb896397b4d21125bb040a0f82ff82be01abd2779717378d3465a0ab3`.
+- A1 test SHA `a0c6d740d8b9025959ae5d78dcb0b85875db4dcd0774c6ba9c4175eddafb4f32`; A2 test SHA `4b33c4f9ab5e22893b615e47d6729a7dd449173938bb4cbafcc38c3a98f04d10`.
+- `git diff --check` passed. Independent reviewer has the exact source snapshot. Activation, source checkpoint and real Train execution remain Supervisor-owned. Scientific evidence remains L1 until actual predictions are independently verified.
+- One failed patch application was rejected before file edits because of a malformed hunk; corrected patch applied without changing the frozen recipe or paths. No execution attempt was consumed.
