@@ -28,6 +28,56 @@ retain evidence references instead. Local commits do not authorize remote
 pushes, release tags, paid reruns or deployment. Do not claim exact experiment
 replay from Git alone or rewind operational history when restoring source.
 
+## Attributable small changes — 2026-10-03 user instruction
+
+Every co-evolution checkpoint must identify exactly where change occurred. Use
+five separately hashed identities: `K` for the protected evaluation kernel and
+data boundary, `M` for the base model/runtime, `C` for the prediction candidate,
+`H` for the execution/research harness, and `R` for researcher capacity such as
+memory, hypothesis selection, evidence interpretation or research workflow.
+Changing features, a trainer or a loss is `C`, not proof that `R` improved.
+Human-directed integration work is `H` with human authorship, not autonomous
+self-evolution. Keep `K` fixed and protected; hold all but one of `C/H/R` fixed
+for an attributable comparison. A useful composite Discovery experiment is
+allowed, but label it `COMPOSITE_UNATTRIBUTABLE` and do not assign its effect to
+one mechanism.
+
+Before implementation, freeze a problem-bound change contract containing the
+parent step, triggering evidence, proposal author, one change axis, one named
+component, one observable expected effect, exact allowed and protected paths,
+fixed `K/M/C/H/R` hashes as applicable, resource ceiling, test plan and rollback
+parent. The trusted Supervisor must compare the measured Git diff and runtime
+manifest with that contract. The final changed file set must equal the declared
+allowlist; an unexpected file, dependency, permission, model/runtime, data,
+evaluator, authority, network or budget change fails closed. The small-step
+journal's hashes are records, not proof of the actual filesystem or process.
+
+Judge smallness by causal and operational blast radius, not line count. For the
+first pilot, one `C` proposal is one frozen candidate recipe on identical rows
+and scorer; one `H` proposal changes one operational component and one named
+benefit; one `R` proposal changes one memory, selection or interpretation policy
+while tools, permissions and Harness remain fixed. More than two production
+modules or about 200 changed lines triggers mandatory splitting or an explicit
+inseparability review, but staying below that warning threshold is not safety
+evidence. A one-line permission expansion is broad and prohibited.
+
+Advance a proposed `H` or `R` change only through: static scope review, targeted
+and inherited tests, matched replay of success/failure/restart/history, distinct
+independent review, and at most one bounded live trial after the batch is idle.
+Accept only when the predeclared benefit is observed and fixed identities remain
+fixed; otherwise reject or roll back and preserve the evidence. Do not silently
+repair a failed proposal in place. Record evidence level separately: `L0` code
+exists, `L1` tests pass, `L2` matched replay effect, `L3` opened-Train operational
+effect, `L4` repeated matched fixed-versus-evolving comparison, and `L5` frozen
+future-event confirmation. Never report a higher level than the evidence earned.
+
+Maintain an append-only trajectory whose machine and human views share the same
+records. Each step must include before/after `K/M/C/H/R`, exact commit and files,
+triggering evidence, actual tool/runtime use, execution and review receipts,
+prediction metrics, Harness/research-capacity metrics, resource use, decision,
+rollback and claim boundary. Final reports must answer prediction change,
+Harness change and researcher-capacity change separately.
+
 ## Opened-Train Discovery policy — 2026-09-29 human override
 
 The active research mainline is `SettlementProbabilityTrainDiagnostic-v0`.

@@ -1059,3 +1059,11 @@ untouched test.
 - **Verification/outcome:** Scoped documentation diff reviewed; `git diff --check` passed. No executable behavior changed. Runtime/model/data/configuration/seed/output identities are not applicable to this policy edit; no empirical replay is claimed.
 - **Evidence:** Main source/control checkpoints `793c302` and `baa6b36`; task-repository design/evidence checkpoints `81d0542` and `bd4a0ac`. The commit containing this entry is the policy checkpoint.
 - **Boundary/next:** No new hook, service, release gate, paid call, experiment or deployment. Apply this rule to the next existing-worker integration change and its subsequent verification.
+
+### 2026-10-03: Attributable small-change rule added
+
+- **Goal:** Make every co-evolution checkpoint show what changed, where it changed, who proposed it and whether the evidence concerns prediction, Harness operation or researcher capacity.
+- **Rule:** The governing instructions now require separate `K/M/C/H/R` identities, one declared `C/H/R` axis and one named effect for an attributable comparison, exact allowed/protected paths, measured-diff and runtime verification, fixed resource ceilings, matched replay, independent review, idle activation and one-step rollback. Composite Discovery changes remain allowed but are labelled `COMPOSITE_UNATTRIBUTABLE`.
+- **Smallness:** Causal and authority blast radius controls acceptance. More than two production modules or about 200 changed lines triggers splitting or an explicit inseparability review; it is not a safe-harbor threshold. Any permission, protected-data, evaluator, model/runtime, network, budget or authority change outside the contract fails closed.
+- **Evidence:** Each trajectory step records exact commits/files, before/after identities, triggering evidence, execution/review receipts, prediction and capacity metrics, resources, decision and evidence level `L0` through `L5`. Final reports separate predictor, Harness and researcher-capacity conclusions.
+- **Verification/outcome:** Documentation-only policy change; scoped diff and whitespace checks required before the local checkpoint. No runner, evaluator, data, experiment, provider, release or deployment changed. Apply the rule first to the worker-binding checkpoint and the bounded co-evolution pilot.

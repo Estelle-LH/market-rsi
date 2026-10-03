@@ -147,6 +147,46 @@ research retains its existing authority; commits grant no new execution rights.
 Keep data, keys, local runtimes and live ledgers outside Git. Remote publication
 and release tags remain separate actions, not implied by this standing rule.
 
+### Small-change and attribution gate — 2026-10-03 user instruction
+
+Before dispatching a candidate change, the Supervisor freezes a compact change
+contract and rejects implementation until it is complete. Required fields are:
+
+1. step and parent IDs; triggering evidence and its hash; proposal author;
+2. exactly one change axis (`C`, `H`, or `R`), one component and one observable
+   expected effect;
+3. before/after commitments for protected kernel `K`, base model/runtime `M`,
+   prediction candidate `C`, Harness `H` and researcher policy `R`;
+4. exact allowed write paths, protected paths and interfaces that must not move;
+5. resource ceiling, matched replay inputs, tests, rollback parent and requested
+   evidence level.
+
+The Supervisor verifies the actual Git diff and runtime manifest rather than
+trusting proposal metadata. Unexpected files or changes to dependencies,
+permissions, evaluator, data boundary, model/runtime, network, authority, budget
+or protected state reject the proposal. More than two production modules or
+about 200 changed lines is a split/review trigger, not a safe-harbor rule. Any
+permission expansion is broad regardless of line count.
+
+Use these axis-specific checks:
+
+- `C`: identical population, row keys, target, folds, scorer and comparison
+  baselines; report paired prediction metrics. A combined candidate is permitted
+  in Discovery but cannot identify which internal component caused its result.
+- `H`: hold `K/M/C/R` fixed; measure the named operational benefit on matched
+  success, failure, restart and history-replay tasks before one live trial.
+- `R`: hold `K/M/C/H`, tool permissions and initial evidence fixed; measure valid
+  experiments per budget, explicit feedback use, executable-result rate,
+  recovery, repetition and research credit separately from prediction score.
+
+At each gate, append one trajectory record with exact files/commit, execution and
+review receipts, metrics, resource use, accept/reject/rollback and the earned
+level `L0` through `L5` defined in `AGENTS.md`. If multiple axes moved, label the
+step `COMPOSITE_UNATTRIBUTABLE`. Do not patch a failed proposal in place; archive
+it and create a new child step. Activation and rollback occur only while the
+batch is idle. The trajectory must support both a machine-readable append-only
+view and a concise human table without inventing missing provenance.
+
 ## Before each work block
 
 Read `RESEARCH_STATE.md`. Identify the most important gate or bottleneck and
