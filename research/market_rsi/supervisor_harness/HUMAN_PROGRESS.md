@@ -1358,3 +1358,55 @@ Lower is better; every row uses identical87 unique games/20 dates/7 weeks, not87
 - At23:36UTC source `f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085` (419lines/oneproductionmodule), test `04c99f64d9ecbb1333bb6f0cca9a4548a867462d2732cb8783ca9d440308bc36` (424lines) are jointly frozen. Independent admission `843a84ea3d16e80803504bce3e99fc60f366d5aebcbbc2c42b138d1f7c617258` explicitly accepts >200line inseparability for one bounded scalar recipe plus mandatory frozen-parent/output checks; below-threshold is never a safety proof.
 - Root independently ran224 in-game tests PASS12.423s; reviewer15focused/224in-game/112boundary-proper-score PASS. Earlier synthetic fixture error and eight malformed-receipt assertion failures were repaired before scoring and retained in owner logs; no candidate attempt or Train fit consumed by synthetic testing. Final returned-invalid-beta guard is tested; oldjudge, scientificrecipe, solver tolerance and existing sources remain unchanged.
 - C1's sevenfiles/fourstates/87predictions and all193causalinputs replayed without fitting or previewing C7Train predictions. Separate actual-result review still required. One fresh ID/four fits/900s/sampled1GiB/one-thread, no retry; original00:10:37UTCdeadline and all six oldcaps unchanged. This checkpoint is implementation/pre-score validation, not forecasting success or research-workflow self-modification.
+
+## 2026-10-03 — Final C7 real training completed; independent result review pending
+
+- Actual source checkpoint `9481f77275459dabb350f53b77b191e89d449f10`, once-only pilot07/attempt-01/request `26dab031…77be3`, activationmemory `6faa9616…92501`,56committed+current source bindings. Exactlyfourfits/87predictions, no controlrefit/retry, source195=193+2 and oldjudge unchanged. ArchivedC1 actualresearchparent and latestC6 feedbacktrigger remain distinct fromrawincumbent.
+
+| Arm | Equal-event Brier | Log loss | C7 minus arm Brier |
+| --- | ---: | ---: | ---: |
+| Market / incumbent | 0.1419525290 | 0.4296707847 | +0.0000015751 |
+| Ordinary market-only Logistic | 0.1454823125 | 0.4399219725 | -0.0035282085 |
+| Frozen v0 market + state | 0.1606809902 | 0.4711973193 | -0.0187268861 |
+| Actual archived parent C1 | 0.1454626479 | 0.4388601515 | -0.0035085439 |
+| New C7 scalar temperature | 0.1419541041 | 0.4288860888 | — |
+
+| Check block / games | C7 minus market Brier | C7 minus C1 Brier |
+| --- | ---: | ---: |
+| 1 / 26 | +0.0004018468 | -0.0029182762 |
+| 2 / 16 | +0.0009108263 | -0.0037843962 |
+| 3 / 28 | -0.0004381823 | -0.0054653193 |
+| 4 / 17 | -0.0007420647 | -0.0009287562 |
+
+- Root no-fit numeric replay `ca13001a…aec44c` verifies193inputs/fourstrictpast designs/raw-logithashes/recorded beta/F/g/h/KKT/Fzero/brackets/87scalar+vectorpredictions/fivearmcalibration/16whole-date-weekintervals/date20identities/originaljudge. Fits/solver/parentfits disabled; scalarprediction maxerror0 and scalarderivative maxerror1.42e-14. Temperatures1.04468764/1.04869245/1.03173923/1.04557221, KKT<=9.97736e-9 under unchanged1e-8 threshold, h>=38.6466;34/36/36/34 bisection steps are solver evaluations, not extra experiments/fits. Zero clipping or rows removed. Binding replay `055ec2b7…2bf7bf` confirms56files/runtime/memory/sevenmanifest outputs/PID65466absent.
+- Candidate-minus-market Brier+0.0000015751/log-0.0007846959,raw2/4Brierwins; Brier dateCI[-0.000763113,+0.000707184],week[-0.000485319,+0.000586802], bothcross0. C7 beats actualC1bothlosses/all4blocks, parentBrierdate[-0.005387565,-0.000244689],week[-0.004850949,-0.002082351]. These describe a better local calibration recipe than this C1, notmarketedge or untouchedOOS. Parent annotation true does not override unchanged REFUTED/REVERT/rawincumbent.
+- Correctionenergy0.0000433830 plus helpfulalignment-0.0000418080 nearlycancel; C1 energy0.0003799021 plus harmfulalignment+0.0031302169. Restrictedrecipe repairs C1's harmfulalignment, but smallremainingenergy outweighs benefit under Brier. Combined shape/capacity/loss/prior C change, not data increment or purecapacity ablation; K/M/H/R fixed.
+- Workerwall4.063088s/sample143088KiB. Physically13attempts52fits/1131candidatepredictionversions on SAME87games, sumworkerwall55.875305s/notfullresearchduration. Prospectivecontinuation3/3attempts12/12fits used, no furtherfits intheseclosedcaps. Provider0/$0,Codexusageunmetered; no protected/network/release/promotion. Independent result receipt/credit/Controller finalmemory still pending atthisentry; no premature all-results-accepted claim.
+
+## 2026-10-03 — All thirteen actual results accepted; final window consolidation
+
+- C7 actualresultreview `301743d9b74cfbedda3ac210789741caae576977c8724963afb24bf053470075` PASS accepted23:42:54.104466UTC, credit2/refute/branch. Positive C1 comparison and negative market KEEP finding both retained; no whole calibration-family refutation. Feedback `79ef2f34da500756bd427231b67497a070bc3861ed0452c48c806f77d328a4f9` delivered to registered Controller only after acceptance. Pilot07 closes original1/4,9journalrecords/state4ed46bd5/terminale34d5e57/exactrestart/PID65466absent/noactive. All13results independentlyaccepted,12REFUTED/1INCONCLUSIVE and13REVERT; rawincumbent unchanged.
+
+| Candidate | Brier | Log loss | Candidate minus market Brier | Decision |
+| --- | ---: | ---: | ---: | --- |
+| A1 · freshness NLL | 0.1419584856 | 0.4295469775 | +0.0000059566 | REFUTED / REVERT |
+| A2 · possession pressure | 0.1421913272 | 0.4296628599 | +0.0002387982 | REFUTED / REVERT |
+| A3 · freshness Brier | 0.1419817703 | 0.4296664713 | +0.0000292413 | REFUTED / REVERT |
+| B1 · market residual HGB | 0.1528189331 | 0.4562724957 | +0.0108664041 | REFUTED / REVERT |
+| B2 · same HGB + causal state | 0.1479352069 | 0.4405907925 | +0.0059826779 | REFUTED / REVERT |
+| B3 · state HGB confidence link | 0.1468552179 | 0.4397028035 | +0.0049026889 | REFUTED / REVERT |
+| C1 · identity-blended isotonic | 0.1454626479 | 0.4388601515 | +0.0035101189 | REFUTED / REVERT |
+| C2 · prior-play volume | 0.1419480777 | 0.4295777827 | -0.0000044513 | INCONCLUSIVE / REVERT |
+| C3 · volume + freshness | 0.1419582436 | 0.4294636054 | +0.0000057146 | REFUTED / REVERT |
+| C4 · fit-unit prior | 0.1426785345 | 0.4291441157 | +0.0007260055 | REFUTED / REVERT |
+| C5 · curvature-unit Brier | 0.1429305151 | 0.4297779729 | +0.0009779861 | REFUTED / REVERT |
+| C6 · linear state residual ridge | 0.1500837992 | 0.4442664509 | +0.0081312702 | REFUTED / REVERT |
+| C7 · scalar market temperature | 0.1419541041 | 0.4288860888 | +0.0000015751 | REFUTED / REVERT |
+
+- Same market reference0.1419525290/0.4296707847; same87games/20dates/7weeks, not thirteen independentdatasets or1131independentgames. C2 has best observed Brier by4.4513e-6 but uncertain2/4blocks and consumedfollowup; C7 has best observed logloss but primaryBrier worse by1.5751e-6. Neither is a KEEP, confirmededge or uninspectedOOS. Ordinary remains an ordinary reference, no Strong-Baseline-1selection claim.
+- Sixteen machineevents contain two human H implementation fixes, thirteen actual C candidates and one matched B2/B1 evidenceanalysis, with changedpaths/checkpoint/author/actualparent/feedbacktrigger/unchanged K/M/H/R/scorer and paired artifact IDs. Seven accepted-feedback descendants: A1/A2→A3; B1/B2→B3; C1/C2→C3; C3→C4; C4→C5; C5→C6; C6→C7. Initial pairs are parallel search, not fabricated sequential iteration; later choices genuinely follow actual reviewed feedback. Candidate internalrepresentation/trainer/loss changes are not R research-policy modification; normal memory accumulation is not Rchange.
+- Original first-ten40fit segment/caps/history unchanged; separately declared prospectivecontinuation3newattempts/12fits now exhausted. No furthercandidate fits or cap expansion. Originalfive-hourwindow ends00:10:37UTC; remaining time is actualresult/pure recovery/source-bound trajectory verification and Controller finalmemory/report consolidation, not moreharness. Provider0/$0;52actualfits/55.875305s sumworkerwall/samplepeak143088KiB, researchtime is muchlarger and Codexusageunmetered. Parallelimplementation/test/review reduced waiting, atmosttwo concurrentcandidatebranches; perchildthread1, no actualtrainingfailure/retry. Synthetic fixture/guard repairs preserved before scores; broadlegacy920diagnostic still45errors/1failure/1skip, not whole-repo green.
+- Scientificclassification: B2−B1 is same-model/samebudget conditional state-input comparison (Brier−.0048837262/log−.0156817032,3/4blocks,groupedintervalscross0). Other C recipes are model/training/representation or combinedchanges with attribution limits; no causal claim that swapping baseLLM improved RSI. H receipt/worker/scheduler integration is humanengineering, not automated scientific gain. No same-model/same-budget fixed-versus-selfmodifying workflow control or prospectivefutureconfirmation ran.
+- Remaininglimits: repeatedTrainselection,87events/7weeks, historicaleventtime≠proven receive-time, exact Controller servingversionunknown/notauthenticatedAstra, provider-publish/rights/formalconfirmation incomplete, nativecrossbatchfollowupconsumption persistence absent (Supervisor excludesconsumedC2), inconclusiveusercredit2 versus frozenrecorder1mappinggap, trusted-host/sampleRSS worker≠network/arbitrary-code/OS-hardmemorysandbox. Allprotecteddata/network/provider/push/release/promotion boundaries remain closed. No zero-humanengineering, marketedge/PnL/promotion or selfevolution-mechanismsuccess claim.
+
+- Verified per-candidate resourcecollector `window_summary_after_feedback.json` atpilot07, SHA `308dc78c2bec6ce4352c9a1da64d7a578fc5e74b1f78af6d5ec6c958c7e49ca3`, confirmsall13feedback/source/review/card IDs andeachfourfit receipt: total55.875305126959574s/samplemax143088KiB. Eight ofthirteen attempts taggedexploration (61.5% ofattempts), not30%actualCPU/fee spend;30%remains adjustableinitialreserve, notquota or scientificreward. Everyvalidquestion earneduser-rubric2;C2recorded1/inconclusive remains explicit. Collector firstread assumedflatlegacyfeedback andfailedKeyError before anywrite; corrected read-only normalization forA1/A2 scheduler_packet wrappers, source/results unchanged, nofit/retry.

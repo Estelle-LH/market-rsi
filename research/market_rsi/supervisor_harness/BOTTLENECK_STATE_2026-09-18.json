@@ -1,10 +1,10 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-10-03T23:16:30Z",
+  "updated_utc": "2026-10-03T23:42:54Z",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
-    {"id":"opened-train-coevo-discovery-20261003","status":"C6_accepted_negative_feedback_Controller_finalchoice","plan":"research/market_rsi/supervisor_harness/RESEARCH_STATE.md","result":"Total12/48independentlyverified, oldresultsimmutable. C6bothscoresloseraw/B3; validnegativecredit2/refute/branch, notexecutionfailure. Pilot06closedoriginal1/4,9events/nochild; feedbackec82b692 delivered, source6e686cc. K/M/H/R/judgefixed, provider0.","next":"Controller selectsfinalsciencefromactualC6+allhistory; oneprospective attempt/fourfits beforeoriginal00:10:37UTC. Exactrecipe stops, archive/differentbranch eligible; no preplanned model, oldcaprewrite, C2reset or scorerchange.","evidence":"research/market_rsi/supervisor_harness/COEVO_RESULT_REVIEW_C6_2026-10-03.json","evidence_sha256":"fdd8c61f4ef17b3698bd5fd219f80296091e53bfb9e8e91774bdea40bb8ca8ca","provider_cost_usd":"0"},
+    {"id":"opened-train-coevo-discovery-20261003","status":"C7_accepted_all13_completed_experiment_cap_exhausted","plan":"research/market_rsi/supervisor_harness/RESEARCH_STATE.md","result":"Total13/52 independentlyverified,13REVERT/12REFUTED/1INCONCLUSIVE/rawincumbentunchanged. C7bothproperlossesbeatC1/all4blocks/parentintervalsbelowzero, butrawprimaryBrier+1.5751e-6/log-.000784696/raw2wins/marketintervalscrosszero. Positiveparentfinding retained, credit2/refute/branch. Finalpilot07closedoriginal1/4/9events/state4ed46bd5/terminale34d5e57/nochild; feedback79ef2f34 delivered/source9481f772. K/M/H/R/judgefixed/provider0.","next":"No furthercandidatefits in exhausted3prospectiveattempt/12fitcap. Remainingoriginal00:10:37UTCwindow: Controller finalresult-bound memory and nextseparatelybounded question, operationalrecovery and human/machine trajectory consistency review. No oldcaprewrite/C2reset/scorerchange or implicitRgain.","evidence":"research/market_rsi/supervisor_harness/COEVO_RESULT_REVIEW_C7_2026-10-03.json","evidence_sha256":"301743d9b74cfbedda3ac210789741caae576977c8724963afb24bf053470075","provider_cost_usd":"0"},
     {
       "id": "first-real-train-diagnostic-20260929-01",
       "status": "continuous_discovery_batch1_five_attempts_complete_incumbent_v3",

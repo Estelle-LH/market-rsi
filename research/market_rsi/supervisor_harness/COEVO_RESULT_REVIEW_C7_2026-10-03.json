@@ -1,0 +1,742 @@
+{
+  "schema": "coevo_independent_actual_result_review_v1",
+  "reviewed_utc": "2026-10-03T23:41:25Z",
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "passed": true,
+  "verdict": "PASS_VALID_ACTUAL_EXPERIMENT_NOT_PROMOTION",
+  "candidate_id": "InGameMarketTemperatureOffset-v1",
+  "candidate_arm": "market_temperature_offset",
+  "batch_id": "market-rsi-coevo-train-pilot-20261003-07",
+  "attempt_id": "attempt-01",
+  "question_id": "ingame-market-temperature-offset-v1-q1",
+  "question_digest_sha256": "4174b550fba8ac95b077c1b9577826cc28c1dfd8063da0db18f8548e3ef15d84",
+  "hypothesis_digest_sha256": "88e8cae74d018cef3acaabccaf72ac334b6d9355943b98547dd3e96e376d486a",
+  "predeclared_rule_sha256": "2caa0e05ce534795beae886da3d30b1df5dcef47449a38cae2ecd959bceb9372",
+  "source_commit": "9481f77275459dabb350f53b77b191e89d449f10",
+  "source_files_checked": 56,
+  "exact_source_hashes": {
+    "research/market_rsi/experiments/nfl_ingame_market_temperature_offset.py": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+    "research/market_rsi/experiments/test_nfl_ingame_market_temperature_offset.py": "04c99f64d9ecbb1333bb6f0cca9a4548a867462d2732cb8783ca9d440308bc36"
+  },
+  "contract_sha256": "f0d925977ef45677a557e2be18d6ec30ac56fe6fc8e9980df6a518a48b4b132b",
+  "pre_score_review_sha256": "843a84ea3d16e80803504bce3e99fc60f366d5aebcbbc2c42b138d1f7c617258",
+  "artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-07/runs/attempt-01",
+  "artifact_sha256": {
+    "exclusions.json": "e6b19b230318dc9daf89e6495504c93996f49b3245415a14a45144fece81fdfb",
+    "fit_progress.json": "e4a2a97ef6f158667f0454904caa2ba3bf4dcbeadb17e4d2ff82ff8002bed38a",
+    "input_receipts.json": "77e970806c4e14333d09047a353a305209a4fbb2ab8c03c0061d3ad9e53ab032",
+    "manifest.json": "7e49ff2af477d3362e22b4347fa9c0c6c7ad7648b544d6cb34297f756308f6c0",
+    "pre_score_lock.json": "2d387a00d25b0aa32c24dcd04e94c2068c33b08db5a981792832b4597e32677a",
+    "predictions.csv": "d31adca8574a908573a49bee2c8447d23062376f60a46287b75e954bc0d50fbf",
+    "predictor_states.json": "fb15ae99d79a448e59822bf14eabe4a347b75292784ed10a1fa40e865caf7ce9",
+    "scorecard.json": "a6835a0df4d2e4eee8ebde8da3b16f37f730b614a0d6a953a5db9bcdf421a07b"
+  },
+  "request_sha256": "26dab031043af44ceda75cdb446dfb8fbc0f5ed3b7991e2a65c8ff42e3773be3",
+  "execution_receipt_sha256": "5be6a22ccf1907f4baa3e4ac7f3a03464a5ef8d09c6220cb025caa9beb0cacbd",
+  "launch_manifest_sha256": "7c05f5e71caa37d3526247b4b64de9cbf23ac3e7efc11eee64a79c3d8cf824c6",
+  "memory_sha256": "6faa961636ad4066371cfd70e22f1fdf90518b492b33806e3c798d141ba92501",
+  "runtime_pair_sha256": "ad5bbccc2bbd16c4dd06d355fddb5310176a10a4f39ecc5052a3516a4b55fad7",
+  "research_parent_sha256": "489d8268bd5243d94df9396f6dd5d616acfeab2d23f29d0e9e5903b7f156cce5",
+  "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+  "scientific_decision": "REFUTED",
+  "operational_decision": "REVERT",
+  "population": {
+    "check_dates": 20,
+    "check_events": 87,
+    "check_game_weeks": 7,
+    "dates": 42,
+    "events": 195,
+    "excluded_events": 2,
+    "materialized_events": 193
+  },
+  "metrics": {
+    "frozen_actual_research_parent": {
+      "brier": 0.1454626479403298,
+      "calibration_intercept": 0.01368993751119374,
+      "calibration_slope": 0.9923396441767715,
+      "log_loss": 0.4388601515199571,
+      "rows": 87
+    },
+    "frozen_v0_market_plus_state_parent": {
+      "brier": 0.16068099016465245,
+      "calibration_intercept": 0.04813167873790908,
+      "calibration_slope": 0.9186856458868063,
+      "log_loss": 0.4711973192666776,
+      "rows": 87
+    },
+    "frozen_v0_ordinary_market_only": {
+      "brier": 0.14548231253271718,
+      "calibration_intercept": -0.023504802267641844,
+      "calibration_slope": 1.0568122659695651,
+      "log_loss": 0.43992197245621956,
+      "rows": 87
+    },
+    "market_temperature_offset": {
+      "brier": 0.14195410408172784,
+      "calibration_intercept": -0.0024641133052663022,
+      "calibration_slope": 1.018681140256926,
+      "log_loss": 0.4288860887954059,
+      "rows": 87
+    },
+    "raw_market": {
+      "brier": 0.14195252900323282,
+      "calibration_intercept": -0.011806646530491793,
+      "calibration_slope": 1.0370387494646494,
+      "log_loss": 0.4296707847132428,
+      "rows": 87
+    }
+  },
+  "folds": [
+    {
+      "candidate_minus_actual_parent": {
+        "brier": -0.0029182762099724674,
+        "log_loss": -0.006132446142313619
+      },
+      "candidate_minus_market": {
+        "brier": 0.00040184676063584335,
+        "log_loss": -0.0005802653552720027
+      },
+      "check_events": 26,
+      "fit_events": 106,
+      "fold": 1,
+      "metrics": {
+        "frozen_actual_research_parent": {
+          "brier": 0.12779855408680857,
+          "log_loss": 0.383564143430295
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.15019918218394343,
+          "log_loss": 0.43593711570560223
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.13061710877713692,
+          "log_loss": 0.39656213359146736
+        },
+        "market_temperature_offset": {
+          "brier": 0.1248802778768361,
+          "log_loss": 0.37743169728798137
+        },
+        "raw_market": {
+          "brier": 0.12447843111620026,
+          "log_loss": 0.3780119626432534
+        }
+      }
+    },
+    {
+      "candidate_minus_actual_parent": {
+        "brier": -0.003784396208725116,
+        "log_loss": -0.012351245414412904
+      },
+      "candidate_minus_market": {
+        "brier": 0.0009108262886981522,
+        "log_loss": 0.0022777657840604704
+      },
+      "check_events": 16,
+      "fit_events": 132,
+      "fold": 2,
+      "metrics": {
+        "frozen_actual_research_parent": {
+          "brier": 0.1776587686477044,
+          "log_loss": 0.5184567867237826
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.1673579315846153,
+          "log_loss": 0.5021972845123244
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.17589549592451675,
+          "log_loss": 0.5127619202842759
+        },
+        "market_temperature_offset": {
+          "brier": 0.1738743724389793,
+          "log_loss": 0.5061055413093697
+        },
+        "raw_market": {
+          "brier": 0.17296354615028114,
+          "log_loss": 0.5038277755253092
+        }
+      }
+    },
+    {
+      "candidate_minus_actual_parent": {
+        "brier": -0.005465319257626916,
+        "log_loss": -0.016392045477880812
+      },
+      "candidate_minus_market": {
+        "brier": -0.0004381822902215782,
+        "log_loss": -0.0009630178487329277
+      },
+      "check_events": 28,
+      "fit_events": 148,
+      "fold": 3,
+      "metrics": {
+        "frozen_actual_research_parent": {
+          "brier": 0.1543998174132831,
+          "log_loss": 0.47562679763617677
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.16613856976689173,
+          "log_loss": 0.48697318908653625
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.15180591666281168,
+          "log_loss": 0.4660691786040406
+        },
+        "market_temperature_offset": {
+          "brier": 0.14893449815565618,
+          "log_loss": 0.45923475215829596
+        },
+        "raw_market": {
+          "brier": 0.14937268044587776,
+          "log_loss": 0.4601977700070289
+        }
+      }
+    },
+    {
+      "candidate_minus_actual_parent": {
+        "brier": -0.0009287562168192598,
+        "log_loss": -0.003041332783796369
+      },
+      "candidate_minus_market": {
+        "brier": -0.0007420647317900042,
+        "log_loss": -0.003685964611481518
+      },
+      "check_events": 17,
+      "fit_events": 176,
+      "fold": 4,
+      "metrics": {
+        "frozen_actual_research_parent": {
+          "brier": 0.12745604580096884,
+          "log_loss": 0.38795920774441967
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.16143885580678952,
+          "log_loss": 0.46996446595500513
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.12917780945822577,
+          "log_loss": 0.3946157885206703
+        },
+        "market_temperature_offset": {
+          "brier": 0.12652728958414958,
+          "log_loss": 0.3849178749606233
+        },
+        "raw_market": {
+          "brier": 0.12726935431593958,
+          "log_loss": 0.3886038395721048
+        }
+      }
+    }
+  ],
+  "paired": {
+    "candidate_minus_frozen_actual_research_parent": {
+      "brier": {
+        "delta_equal_event": -0.003508543858601922,
+        "game_date_interval_95": [
+          -0.005387565285169471,
+          -0.0002446885660275829
+        ],
+        "game_week_interval_95": [
+          -0.004850948743454762,
+          -0.0020823506216133287
+        ],
+        "paired_schedule_dates_verified": 20
+      },
+      "log_loss": {
+        "delta_equal_event": -0.009974062724551248,
+        "game_date_interval_95": [
+          -0.01574544414910596,
+          -0.0007883889880125673
+        ],
+        "game_week_interval_95": [
+          -0.014779716736647863,
+          -0.00534086369413809
+        ],
+        "paired_schedule_dates_verified": 20
+      }
+    },
+    "candidate_minus_frozen_v0_market_plus_state_parent": {
+      "brier": {
+        "delta_equal_event": -0.018726886082924606,
+        "game_date_interval_95": [
+          -0.036719548939581494,
+          -0.0018451070335457661
+        ],
+        "game_week_interval_95": [
+          -0.036243996889534794,
+          -0.0014142200018473585
+        ],
+        "paired_schedule_dates_verified": 20
+      },
+      "log_loss": {
+        "delta_equal_event": -0.04231123047127168,
+        "game_date_interval_95": [
+          -0.08806156898963888,
+          -0.0010610409072736545
+        ],
+        "game_week_interval_95": [
+          -0.0845895581878399,
+          -0.001618074930295032
+        ],
+        "paired_schedule_dates_verified": 20
+      }
+    },
+    "candidate_minus_frozen_v0_ordinary_market_only": {
+      "brier": {
+        "delta_equal_event": -0.003528208450989315,
+        "game_date_interval_95": [
+          -0.0061807522805994225,
+          -0.0016818437527530222
+        ],
+        "game_week_interval_95": [
+          -0.005780289956325011,
+          -0.0021624100718589815
+        ],
+        "paired_schedule_dates_verified": 20
+      },
+      "log_loss": {
+        "delta_equal_event": -0.011035883660813617,
+        "game_date_interval_95": [
+          -0.018555799164694933,
+          -0.006240987695632461
+        ],
+        "game_week_interval_95": [
+          -0.017776899727018864,
+          -0.006697597163308316
+        ],
+        "paired_schedule_dates_verified": 20
+      }
+    },
+    "candidate_minus_raw_market": {
+      "brier": {
+        "delta_equal_event": 0.00000157507849503111,
+        "game_date_interval_95": [
+          -0.000763112901206497,
+          0.0007071843890813029
+        ],
+        "game_week_interval_95": [
+          -0.0004853187713147576,
+          0.0005868024295693071
+        ],
+        "paired_schedule_dates_verified": 20
+      },
+      "log_loss": {
+        "delta_equal_event": -0.0007846959178369206,
+        "game_date_interval_95": [
+          -0.003437367078855585,
+          0.0014606167308978569
+        ],
+        "game_week_interval_95": [
+          -0.0024369093385211665,
+          0.0012238122345889274
+        ],
+        "paired_schedule_dates_verified": 20
+      }
+    }
+  },
+  "decision_conditions": {
+    "candidate_brier_below_all_three": false,
+    "candidate_log_loss_below_all_three": true,
+    "date_brier_upper_below_zero": false,
+    "ordinary_brier_fold_wins": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "ordinary_brier_fold_wins_at_least_3_of_4": true,
+    "raw_brier_fold_wins": [
+      false,
+      false,
+      true,
+      true
+    ],
+    "raw_brier_fold_wins_at_least_3_of_4": false,
+    "raw_brier_fold_wins_at_most_1_of_4": false,
+    "week_brier_upper_below_zero": false
+  },
+  "raw_brier_fold_wins": 2,
+  "ordinary_brier_fold_wins": 4,
+  "annotation": {
+    "annotation_only_not_keep_judge": true,
+    "candidate_minus_actual_parent": {
+      "brier": -0.0035085438586019424,
+      "log_loss": -0.009974062724551203
+    },
+    "directional_calibration_evidence": true,
+    "exact_recipe_question_failed": false,
+    "parent_brier_block_wins": 4,
+    "repair_of_signed_alignment": true,
+    "stronger_local_evidence": true
+  },
+  "correction_diagnostics": {
+    "frozen_actual_research_parent": {
+      "equal_event_brier_delta_raw_identity": 0.003510118937096956,
+      "equal_event_correction_energy": 0.0003799020546947569,
+      "equal_event_signed_alignment": 0.003130216882402199
+    },
+    "market_temperature_offset": {
+      "equal_event_brier_delta_raw_identity": 0.0000015750784950309548,
+      "equal_event_correction_energy": 0.00004338303753726794,
+      "equal_event_signed_alignment": -0.000041807959042236984
+    }
+  },
+  "clipped_total": 0,
+  "primitive_checks": [
+    {
+      "F_zero": 44.92735900860058,
+      "KKT": 8.566791720454603e-11,
+      "beta": 0.044687640807370366,
+      "bisection_steps": 34,
+      "bracket_count_width_invariant_verified": true,
+      "check_events": 26,
+      "check_raw_sha256": "1d442767498e3f2949205e7c1a8456c6270fd665469af826fdc761583421a7d3",
+      "evaluations": 38,
+      "exact_vector_candidate_replay": true,
+      "final_bracket": [
+        0.044687639996002476,
+        0.044687641618738255
+      ],
+      "final_bracket_gradients": [
+        -3.1442280779003795e-8,
+        3.127093761712274e-8
+      ],
+      "fit_events": 106,
+      "fit_logit_sha256": "aeb0779735e8314b1c948fc23ce675368ea6d3009ade5e5100a95336849df413",
+      "fit_only_bracket_upper": 12.93919423633173,
+      "fit_raw_sha256": "2561138520288aa06ab98192731332b7c7da3680a786586e3e4249b7389eba14",
+      "fold": 1,
+      "gradient": -8.566791720454603e-11,
+      "hessian": 38.646598611211736,
+      "initial_bracket_gradients": [
+        -93.75141814836675,
+        224.6249013003934
+      ],
+      "max_scalar_prediction_error": 5.551115123125783e-17,
+      "objective": 44.88816391011899,
+      "recorded_beta_only_no_solver_rerun": true,
+      "scalar_gradient": -8.566836129375588e-11,
+      "scalar_hessian": 38.64659861121174,
+      "scalar_objective": 44.88816391011898,
+      "state_sha256": "9e654f3d74fcd6353a176efb0b7b5cca38c6e90dea3c6d0f3debf47fadb505d2",
+      "temperature": 1.0446876408073704
+    },
+    {
+      "F_zero": 54.755670037325174,
+      "KKT": 1.1474360350760548e-9,
+      "beta": 0.04869244933276986,
+      "bisection_steps": 36,
+      "bracket_count_width_invariant_verified": true,
+      "check_events": 16,
+      "check_raw_sha256": "8c57a3fee45301049cb95152051f74f7f8bcfb02c641fd0fbc0b694a7199fc5e",
+      "evaluations": 40,
+      "exact_vector_candidate_replay": true,
+      "final_bracket": [
+        0.04869244908242258,
+        0.04869244958311714
+      ],
+      "final_bracket_gradients": [
+        -1.247126313330682e-8,
+        1.0176380849102884e-8
+      ],
+      "fit_events": 132,
+      "fit_logit_sha256": "412324a8fc955d0c55bcaf56ac31c88591b66025876bec0f1c2a4d53b2f25b0a",
+      "fit_only_bracket_upper": 16.203733907026255,
+      "fit_raw_sha256": "707100fec92545034efe1850fed8ac16a8df6e43a6f87a9a01b275b6fe7900d4",
+      "fold": 2,
+      "gradient": -1.1474360350760548e-9,
+      "hessian": 45.232450822957944,
+      "initial_bracket_gradients": [
+        -115.29477239814987,
+        281.4707176955824
+      ],
+      "max_scalar_prediction_error": 5.551115123125783e-17,
+      "objective": 54.70102475429155,
+      "recorded_beta_only_no_solver_rerun": true,
+      "scalar_gradient": -1.1474371452990795e-9,
+      "scalar_hessian": 45.232450822957944,
+      "scalar_objective": 54.70102475429155,
+      "state_sha256": "3f0b68472d9a2ba70b9ca8db99a93a09585b3b37735c022065a89a683c0588e6",
+      "temperature": 1.0486924493327698
+    },
+    {
+      "F_zero": 62.81691444573012,
+      "KKT": 6.414287989642276e-10,
+      "beta": 0.031739226027776284,
+      "bisection_steps": 36,
+      "bracket_count_width_invariant_verified": true,
+      "check_events": 28,
+      "check_raw_sha256": "3fe99125195415d8e81dc2e25f816d1cb4a30305e048258e8da3168aa9103519",
+      "evaluations": 40,
+      "exact_vector_candidate_replay": true,
+      "final_bracket": [
+        0.03173922575219465,
+        0.03173922630335792
+      ],
+      "final_bracket_gradients": [
+        -1.4294339489850927e-8,
+        1.3011490329617459e-8
+      ],
+      "fit_events": 148,
+      "fit_logit_sha256": "f2ec27183873e3569fd8dc4a71285f762ba3400661359aeeeec9e63f073f965b",
+      "fit_only_bracket_upper": 17.93782586361605,
+      "fit_raw_sha256": "126bd3b716cf45be246338c878a09c1fae1caff7ed1ce4b7771374b7e6985d63",
+      "fold": 3,
+      "gradient": -6.414287989642276e-10,
+      "hessian": 49.54217711162938,
+      "initial_bracket_gradients": [
+        -125.54951752796754,
+        312.83094789292545
+      ],
+      "max_scalar_prediction_error": 5.551115123125783e-17,
+      "objective": 62.79164128157361,
+      "recorded_beta_only_no_solver_rerun": true,
+      "scalar_gradient": -6.414277997635054e-10,
+      "scalar_hessian": 49.54217711162938,
+      "scalar_objective": 62.79164128157361,
+      "state_sha256": "8483dfe83fb36735e89085e421b1124ef5ab039b13799f8bb08f7c4f6f78f235",
+      "temperature": 1.0317392260277762
+    },
+    {
+      "F_zero": 75.70245200592693,
+      "KKT": 9.977360382329437e-9,
+      "beta": 0.04557220791738257,
+      "bisection_steps": 34,
+      "bracket_count_width_invariant_verified": true,
+      "check_events": 17,
+      "check_raw_sha256": "ab5ea8bf877adc2d77cbad22bb209e0812644aad8d6295ad968b9ac420d51b4b",
+      "evaluations": 38,
+      "exact_vector_candidate_replay": true,
+      "final_bracket": [
+        0.04557220667114045,
+        0.045572209163624686
+      ],
+      "final_bracket_gradients": [
+        -7.766012077858875e-8,
+        5.7705384692852135e-8
+      ],
+      "fit_events": 176,
+      "fit_logit_sha256": "e9aecee88fbad1e9a19355de53bdc8c9f530d1c7af088ad4822eca8521c02283",
+      "fit_only_bracket_upper": 20.41027654852024,
+      "fit_raw_sha256": "22dedd673cd61d6a00afe1a27c128c04f3813208750e13d77ed039898d491f43",
+      "fold": 4,
+      "gradient": -9.977360382329437e-9,
+      "hessian": 54.30947625735992,
+      "initial_bracket_gradients": [
+        -140.87708647142478,
+        356.85664551511854
+      ],
+      "max_scalar_prediction_error": 5.551115123125783e-17,
+      "objective": 75.64498890500552,
+      "recorded_beta_only_no_solver_rerun": true,
+      "scalar_gradient": -9.977359716195622e-9,
+      "scalar_hessian": 54.30947625735992,
+      "scalar_objective": 75.64498890500553,
+      "state_sha256": "e50bb267034c0b931707d9a02255e6979ab1e9c62b12addd9c8dd36b112995d5",
+      "temperature": 1.0455722079173826
+    }
+  ],
+  "resources": {
+    "PID": 65466,
+    "automatic_retries": 0,
+    "control_refits": 0,
+    "model_fits": 4,
+    "provider_calls_requested": 0,
+    "review_Train_fits": 0,
+    "review_optimizer_runs": 0,
+    "sampled_peak_rss_kib": 143088,
+    "wall_seconds": 4.063088292008615
+  },
+  "process_absence": {
+    "PID": 65466,
+    "child_absent": true,
+    "probe": "Independent scoped os.kill(pid,0); no signal sent."
+  },
+  "binding_verification": {
+    "C2_followup_consumed_not_reset": true,
+    "C7_completed_but_result_review_not_yet_appended": true,
+    "activation_memory_sha256": "6faa961636ad4066371cfd70e22f1fdf90518b492b33806e3c798d141ba92501",
+    "actual_parent": "C1",
+    "authority_interpretation": {
+      "C2_consumed": "C3 consumedC2's only boundedfollowup; C2 is memory/reference only and excludedfromeligibleimports. No opportunity reset.",
+      "basis": "Supervisor prospectively interprets latest five-hour persistence instruction as superseding older overallattempt ceiling, without changing four closedpilot caps, any old result or claiming an async user reply",
+      "first_ten_segment": "Immutable result-bound memory fd3e2e3a251f808a96fa00e4f630c229b9537bb84760373f1d4090217e599e37 remains accurate for closedten/40fits segment",
+      "permissions": "Opened resident localTrain only; no provider/network/newdata/DevFinal/push/release/promotion",
+      "prospective_continuation_ceiling": "At most3new attempts/12fits across prospectivecontinuation insideoriginal deadline; any remaining two choices require actualnew verifiedfeedback and fresh separatelybounded singleton contracts, not preplanned algorithms or retries",
+      "this_new_pilot": "Singleton only, max1attempt/fourfits, at most90min clipped original00:10:37Z. No forced weaksecondbranch or Hchange to admit initialsingleparent."
+    },
+    "batch_claims": 1,
+    "batch_reserved_fits": 4,
+    "comparison_incumbent": "raw_market",
+    "contract_sha256": "f0d925977ef45677a557e2be18d6ec30ac56fe6fc8e9980df6a518a48b4b132b",
+    "execution_state_sha256": "427e56fb5e37b1b370ac92a583d1dec76c97810821005465f8e5bd1ee1b838d5",
+    "hypothesis_digest_sha256": "88e8cae74d018cef3acaabccaf72ac334b6d9355943b98547dd3e96e376d486a",
+    "initial_memory_sha256": "7e11efd378d4a64addfec2e8373316698b5f6ce9ef0037d90b4898cfd8f29b6b",
+    "journal_head_sha256": "cbcbd5cf0a94508fd7c1488c260d29f565c2aa31328c594f15e9265c34645663",
+    "journal_records": 6,
+    "latest_feedback_trigger": "C6",
+    "max_child_peak_rss_kib": 143088,
+    "normal_memory_not_R_change": true,
+    "old_closed_batch_caps": [
+      3,
+      3,
+      3,
+      1,
+      1,
+      1
+    ],
+    "old_closed_batch_caps_unchanged": true,
+    "old_closed_pilots": [
+      {
+        "batch_id": "market-rsi-coevo-train-pilot-20261003-01",
+        "original_cap": 3,
+        "state_sha256": "8f161427db1accbe040ba100458abb5f93ed605ee1ea7bad3d315a398a489cbe",
+        "terminal_sha256": "f12c136f240a673e1424960be0465d957de1794bb33a619dfd7edc37441fe000"
+      },
+      {
+        "batch_id": "market-rsi-coevo-train-hgb-pilot-20261003-02",
+        "original_cap": 3,
+        "state_sha256": "1fa93ceb4b0aa39f0cebb2a4c31e58517d1190ffbb2c6333c7dfef7d134c9330",
+        "terminal_sha256": "7b6420aa04c3be7d0cfe693eca4818055ce7876814a9310a262c6faa67a81461"
+      },
+      {
+        "batch_id": "market-rsi-coevo-train-pilot-20261003-03",
+        "original_cap": 3,
+        "state_sha256": "abceff11b5094d6fc9baa17c7165f003d197e5f67bcc3bc0613e00f9c1c98498",
+        "terminal_sha256": "b1553233ea6de821852adaca6b2a7196aeeb576f7702c0d0619895f2c3f5167c"
+      },
+      {
+        "batch_id": "market-rsi-coevo-train-pilot-20261003-04",
+        "original_cap": 1,
+        "state_sha256": "f138424cb269195034bad970213ac7c9c2cc9e64bb0cdcbcec360b2c4c3817a4",
+        "terminal_sha256": "3bf25e888ff4c7c97570d2a683725946b788703a6bbfc3c2a0322c5f3737c833"
+      },
+      {
+        "batch_id": "market-rsi-coevo-train-pilot-20261003-05",
+        "original_cap": 1,
+        "state_sha256": "fad3dc6dbdd36ab32b9c316f3301d645bea1ec6cdf5281b058d32852f1620d6b",
+        "terminal_sha256": "98df19716554552244503bb491b7640905fb38c0423894e8dadf9680077b34ee"
+      },
+      {
+        "batch_id": "market-rsi-coevo-train-pilot-20261003-06",
+        "original_cap": 1,
+        "state_sha256": "df39596b23fe28a7600a854bcdb9f7fe65856cc8eca18229fab366f09a7f9262",
+        "terminal_sha256": "a60f167dc3f849cc43c05825c693fa90f1f28232bd72bcec78d13407feec3718"
+      }
+    ],
+    "pre_score_review_sha256": "843a84ea3d16e80803504bce3e99fc60f366d5aebcbbc2c42b138d1f7c617258",
+    "predeclared_rule_sha256": "2caa0e05ce534795beae886da3d30b1df5dcef47449a38cae2ecd959bceb9372",
+    "prior_closed_claims": 12,
+    "prior_closed_fits": 48,
+    "prospective_cap": 3,
+    "prospective_claims": 3,
+    "prospective_fits": 12,
+    "question_digest_sha256": "4174b550fba8ac95b077c1b9577826cc28c1dfd8063da0db18f8548e3ef15d84",
+    "question_id": "ingame-market-temperature-offset-v1-q1",
+    "runtime_versions_reported_in_candidate": {
+      "numpy": "1.26.4",
+      "python": "3.12.3",
+      "scipy": "1.14.0",
+      "sklearn": "1.6.1"
+    },
+    "sum_worker_wall_seconds": 4.063088292008615,
+    "thread_environment_contract": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONHASHSEED": "0",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "verified_prior_feedback": 12
+  },
+  "checks": {
+    "outputs": "PASS seven manifest-output hashes plus manifest/stdout identity, four canonical state/report/progress digests and exact87 CSV. Eight actual artifact files hashed.",
+    "causal_inputs": "PASS full195=193+2 exact exclusions/current source/cohort/V0/PBP/materialized receipts; all193 raw probabilities/math.log logits/fractional pre-play clock/prior-trade cutoff/staleness validated. One market-logit input only; no state/age/future label in predictor.",
+    "past_only_fit": "PASS exact22initial+four5-date folds, strict labels available before first CHECK cutoff; FIT106/132/148/176/CHECK26/16/28/17 and exact87keys/20dates/7weeks/outcome orientation/availability/raw/ordinary/v0state/C1controls.",
+    "temperature_math": "PASS recorded beta only: summed unweighted NLL+8beta², analytic g and h, scalar independent sums, alpha16/no intercept/no scaling/beta>=-1. MaxKKT9.977360382329437e-9<=1e-8, hmin38.646598611211736, allF<=Fzero.",
+    "brackets_and_counts": "PASS FIT-only B=1+sum|logit|/16 and positive upper gradients, final endpoint gradient signs/midpoint/width-versus-step invariant, steps34/36/36/34, evals38/40/40/38, one solver entry/valid completion perfit, no fallback/retry. No bisection/optimizer rerun; necessary recorded-path invariants plus frozen source checked, not independently refitting full trajectories.",
+    "numeric_replay": "PASS four saved beta/temperature/FIT raw-logit and CHECK raw digests, all87 vector probabilities exact; independent scalar sigmoid max5.55e-17. C1 seven-file/four-threshold-state/all87 original predictions exact without parent fits. Zero final clipping.",
+    "scores": "PASS five equal-event Brier/logloss/OLS calibration and fourfold scores, all250 aggregate/fold reliability bins, every paired date delta and all16 whole-date/week pooled-event bootstrap intervals independently recomputed with seed20260929/10k.",
+    "diagnostics": "PASS C7/C1 aggregate/fourfold/20date87event energy+signedalignment=Brier delta identity, frozen separate calibration annotation. C1 parent gains/all4wins/parent date-week intervals<0 are valid local Discovery comparison; cannot override raw judge.",
+    "judge": "PASS independently reconstructed original REFUTED/REVERT. Market Brier+1.575078495e-6 despite logloss-.000784695918; only2/4rawBrierwins and allmarket intervals crosszero. No post-score threshold change or promotion.",
+    "provenance": "PASS all56 current+Git committed bindings, exact module/test/source checkpoint/Python binary/runtime pair/request/commands/activation+initialmemory/prereview/receipt/stdout/stderr. Exact installed Python3.12.3/numpy1.26.4/scipy1.14.0/sklearn1.6.1 checked.",
+    "memory_and_caps": "PASS canonical six-event chain/fresh pure replay/current executed-but-unreviewed state, twelve prior feedback hashes/packets/reviews and85 immutable old result artifact hashes; six terminal/state caps3,3,3,1,1,1 retained. C6 accepted feedback precedes C7 choice, but C1 is actual research parent; consumedC2 excluded without reset/nativecrossbatch claim.",
+    "scope": "PASS unchanged exact419-line candidate reviewed inseparability/source diff; no old helper/worker/scheduler/scorer/K/M/H/R/authority/data boundary modification. Credit/memory update is not R self-modification.",
+    "resources": "PASS once-only actual four fits4.063088292008615s/sample143088KiB, one process/thread,900s/1GiB polling/no retry/provider0; PID65466 absent. Thirteen total attempts52fits and all3 prospective attempts12fits now consumed; no further candidate inside this continuation.",
+    "reviewer_Train_fits": 0,
+    "reviewer_optimizer_runs": 0,
+    "reviewer_new_unscored_Train_predictions": 0,
+    "protected_reads": 0,
+    "external_fetches": 0,
+    "provider_calls": 0
+  },
+  "verification": {
+    "prior_exact_candidate_review_sha256": "843a84ea3d16e80803504bce3e99fc60f366d5aebcbbc2c42b138d1f7c617258",
+    "parent_review_sha256": "93400e9757c41d461bfdd1840d9b62bc30843e23d82c4accc969cfe5a9609f24",
+    "trigger_review_sha256": "fdd8c61f4ef17b3698bd5fd219f80296091e53bfb9e8e91774bdea40bb8ca8ca",
+    "review_numerical_probe": "Pure arithmetic/replay script; c.fit_temperature/c.solve_temperature/parent Isotonic fit/HGB fit/old analytic fitter disabled. Recorded beta only, no Train optimization/refit.",
+    "old_artifacts_and_runtime": {
+      "actual_Train_fits": 0,
+      "exact_pinned_runtime_versions_independently_checked": {
+        "numpy": "1.26.4",
+        "python": "3.12.3",
+        "scipy": "1.14.0",
+        "sklearn": "1.6.1"
+      },
+      "old_result_artifact_files_checked": 85,
+      "old_result_reviews_checked": 12,
+      "optimizer_runs": 0
+    },
+    "calibration_bins_verified": 250,
+    "paired_group_intervals_verified": 16,
+    "paired_schedule_date_deltas_verified": 160,
+    "date_correction_diagnostics_verified": 20,
+    "not_repeated": "No repeated broad/pre-score suite or old scientific audit; inherited source pre-review remains frozen."
+  },
+  "interpretation": {
+    "predictive_evidence": "Restricted temperature is better than flexible C1 on this repeatedly inspected historical Train validation: Brier-.0035085438586/logloss-.00997406272455,4/4parent blocks and parent grouped intervals belowzero. It does not beat raw market on the primary Brier or meet unchanged KEEP.",
+    "correction_evidence": "Energy .00004338303753726794 and helpful signed alignment-.000041807959042236984 almost cancel, leaving +.0000015750784950309548 Brier delta. Parent energy .0003799020546947569 and harmful alignment+.003130216882402199. Valid lowcapacity-versus-flexible calibration finding, not new market information or general calibration theorem.",
+    "axis": "One C recipe combines capacity/shape/loss/prior versus C1. No H/R change, new data, same-budget fixed workflow comparison or proved self-evolution benefit.",
+    "limits": [
+      "Repeated Train Discovery, not untouched OOS or prospective confirmation",
+      "Historical event-time evidence does not establish actual receive-time availability",
+      "Exact Controller serving version unknown; not authenticated Astra mechanism study",
+      "Trusted-host worker with sampled RSS, not arbitrary-code/network/OS-hard memory sandbox",
+      "Broad legacy suite not green; no dependency installation",
+      "Native crossbatch allowance persistence not implemented; Supervisor excludes consumed C2",
+      "No market edge/PnL/promotion/release or new external data/provider authority"
+    ]
+  },
+  "credit_recommendation": {
+    "evidence_value_under_user_rubric": 2,
+    "problem_id": "historical-ingame-settlement",
+    "question_id": "ingame-market-temperature-offset-v1-q1",
+    "question_digest_sha256": "4174b550fba8ac95b077c1b9577826cc28c1dfd8063da0db18f8548e3ef15d84",
+    "predeclared_rule_sha256": "2caa0e05ce534795beae886da3d30b1df5dcef47449a38cae2ecd959bceb9372",
+    "value": 2,
+    "outcome": "refute",
+    "route_action": "branch",
+    "frozen_recorder_admissible": {
+      "value": 2,
+      "outcome": "refute",
+      "route_action": "branch"
+    },
+    "reason": "Distinct predeclared lowcapacity calibration question produced four valid fits and independently verified87 actual predictions/proper-score/time-block evidence. Exact recipe fails unchanged primary market Brier/KEEP, while improving both proper scores and allfour blocks versus archived flexible C1 with positive parent annotation. Credit is for this predictive experiment and informative mixed/negative evidence, not convexity reading or engineering. Stop/revert this exact recipe; retain code/results and calibration finding for genuinely distinct future questions, not blanket calibration-family refutation.",
+    "mapping": "Userrubric2 agrees with frozen recorder2/refute/branch under original primary market scientific judge. Positive parent annotation is additional and does not replace that outcome, alter Brier/KEEP, grant authority or reset consumedC2.",
+    "execution_after_result": "Close pilot07 at unchanged1attempt/fourfit cap after accepted feedback. All3 prospective attempts12fits and13 total attempts52fits consumed; no new candidate/refit before original00:10:37UTC within this continuation. Any later study needs a new separately bounded batch under valid authority.",
+    "next_scientific_choice": "Controller owns future research-memory interpretation, not executed here; reviewer selects no next algorithm."
+  },
+  "fixed_hashes": {
+    "K": "c94492041d5c331a2cc31c4d6cd529984742ce200e1b9365e3fb7d07e5b1ce64",
+    "M": "32d09dd7c177b30932b9a0619b60246ba574f8989c9eac80869aff134cded58d",
+    "H": "50d32690f488a583b705d23d114091326af17ec8afab9343283c0f28b8514df0",
+    "R_policy": "5bc2d879b4030190e3a6b17ddd186379b153c112ad1a5f58f5d571c9660bccf8",
+    "worker": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360",
+    "scheduler": "1b3065ea2990e886ff05869d5c6afd39bc0e80ebb053436f51fd9d9cee0d148c",
+    "scorer": "64165cbceb4bcba6d03b6b42402ea7a47790c9a57f9280b15bfe2fe57becc06b",
+    "probability_contract": "7ba4a32d3c3a2ab80ac17ca6c18ea29fe864b958de8a81ac2be59dba121e9d74"
+  },
+  "review_probe_failures_preserved": [],
+  "scientific_next_method_selected": false
+}
