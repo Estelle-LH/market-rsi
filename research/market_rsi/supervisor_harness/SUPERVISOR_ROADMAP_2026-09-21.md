@@ -1,6 +1,6 @@
 # Market RSI — Supervisor 总路线图与当前任务
 
-更新：2026-10-03 19:45 ET（最近时钟观察）。负责人：本会话的总 Supervisor。当前入口以本节和 `RESEARCH_STATE.md` 为准；下方 September29 与更早记录保留为历史，不同任务的成绩不混用。历史细节留在 `HUMAN_PROGRESS.md`，状态只能按真实 task 和证据更新。
+更新：2026-10-03 20:01 ET（最近时钟观察）。负责人：本会话的总 Supervisor。当前入口以本节和 `RESEARCH_STATE.md` 为准；下方 September29 与更早记录保留为历史，不同任务的成绩不混用。历史细节留在 `HUMAN_PROGRESS.md`，状态只能按真实 task 和证据更新。
 
 ## 2026-10-03 当前：真实赛中 Train 自主预测实验
 
@@ -17,6 +17,8 @@ Raw市场 incumbent Brier/log0.1419525290/0.4296707847 未变。最低观测候�
 已证实的是可信本地Train执行与反馈驱动的自主预测器优化。H有人工集成/绑定修复；此次科学候选没有R研究流程自修改。尚未运行同模型同预算固定流程对照；不得宣称自迭代机制优越、untouched OOS、实时接收时间、PnL或正式promotion。Exact Controller serving version未知，历史NFL为seed而非永久范围。Dev/Final、网络新增数据/文献获取、付费、push/release与promotion仍关闭。
 
 最近证据入口：`HUMAN_PROGRESS.md`十三候选总表和C7五arm/四块配对表、`COEVO_TRAJECTORY_2026-10-03.jsonl`十六条变化轨迹、`COEVO_RESULT_REVIEW_C7_2026-10-03.json`。C7独立15focused/224in-game/112boundary-scoring与root224/112各suitePASS，计数重叠；旧full920diagnostic仍45errors/1failure/1skip。Controller finalmemory从已接受C7证据提出下一批具体问题，不执行已耗尽预算。只报告实际证据，不把框架/测试完成当预测或自迭代成功。
+
+最终收尾已完成：Controller memory `d7bd0a67` 保留两条全局研究family（C7受限校准、B3/A2因果state）与下一批尚未执行的joint-temperature-pressure问题。独立operational closure `cbc9c5e7` PASS，核验13候选binding/评分、102journal prefixes、14fresh pure replays、七个原cap和全部13实际childPID absence；仅证明本地运行/记录/恢复闭环，不证明预测或研究机制成功。原00:10:37UTC截止未提前改写，当前不新增fits。
 
 ## 2026-09-29 `SettlementProbabilityTrainDiagnostic-v0`（历史赛前任务）
 
