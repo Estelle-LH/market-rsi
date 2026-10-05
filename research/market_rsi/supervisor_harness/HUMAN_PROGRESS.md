@@ -1,5 +1,11 @@
 # Market RSI — human progress
 
+## 2026-10-05 16:33 UTC — once-only numerical feedback handoff checkpoint
+
+The user’s four additions are preserved in both plan DOCX files and the worklog. D1 is a completed, independently reviewed negative Train experiment, not an execution failure; REVERT leaves valid branches eligible. The remaining immediate blocker was child cleanup after a post-spawn receipt error. Independent review reproduced it using synthetic processes, and the bounded fix is checkpointed as `3d44ae3`; no live account decision was sampled during the repair. Communication is bounded at 120 seconds plus one five-second cleanup; this is not OS-hard filesystem/scheduler isolation. Controller scientific choice and a real descendant experiment remain necessary before claiming continuation and useful accumulation.
+
+Root verification: the exact consumer and existing worker test modules passed 56 executions in 0.700 seconds. An earlier command guessed a nonexistent third journal module and consequently reported one import error after the same 56 actual tests; this was a Supervisor command mistake, not a scientific result or source failure. The corrected command used observed module paths. Implementation, review, command corrections and coordination are included in batch overhead; no evidence of researcher-process superiority is inferred from this repair.
+
 This is an append-only plain-language summary, separate from engineering logs.
 
 - 2026-09-29 — 今晚要求的真实自主预测迭代已在约 46 分钟内完成，不是新一轮框架建设。Controller 首代并行提出两个候选：120 秒 momentum offset 在拟合前发现 3 个必需 fit game 的 reference age 超出冻结的 300 秒上限，因此 0 fit fail-closed；identity-anchored market calibration 完成 4 fits/87 predictions，但 Brier/log loss `0.143650/0.433565` 均差于 raw market，0/4 raw-Brier fold wins，REVERT。两项经核验的反馈随后实际改变了第二代选择：Controller 不再延续失效路线，改用全 193 场有覆盖的 prior-play success × market-uncertainty offset。该候选也完成 4 fits/87 predictions，Brier `0.1419536874` 只比 raw market 差 `0.0000011584`，log loss 好 `0.0000377670`，但 raw-Brier 仅赢 1/4 folds，日期与周区间均跨零，所以按预先冻结规则 REFUTED/REVERT。独立复核重算了 87 行、四折与区间；raw market incumbent 不变。总计 3 attempts、2 个真实 scored candidates、8 fits、174 candidate prediction rows、零网络/付费/Dev/Final。闭环证明了“已有证据→Controller 选修改→实际训练预测→独立评分→反馈改变后续选择”能跑通；它没有证明历史 Train 上的预测改善，也没有同预算固定流程对照，因此不能声称 self-iteration 优于固定研究流程或系统自我进化。
