@@ -1,5 +1,11 @@
 # Market RSI — human progress
 
+## 2026-10-05 17:42 EDT — fresh account approval received; actual Controller selected down-dependent calibration
+
+The user's explicit “yes” approved the exact fresh account payload question (`cb50a794`); it did not supply a hypothesis or algorithm. One original, no-tools/no-retry `gpt-6.1-sol` decision completed (`ddc4bfac`, serving snapshot unknown;121898 input/1985 output tokens, USD unknown). D5's reviewed possession-only negative result led it to a different down×market-logit calibration question, `InGameTemperatureDownSlopeJointOffset-v1`, actual research parent C7, raw-market incumbent. The Controller retained two distinct global branches C7 calibration and B3 nonlinear state; no second experiment was preselected.
+
+Independent original-decision review and exact mechanical contract/operation preparation are running in parallel. New actual Train fits remain0 at this checkpoint. No external/protected/paid-provider/publication actions. Original cutoff18:24:55/deadline18:39:55 New York and3attempt/12fit caps are unchanged; old6/24 remains closed. This is an actual feedback-dependent scientific proposal, not yet an executed result, predictive gain, learning benefit or self-evolution success.
+
 ## 2026-10-05 17:24 EDT — fresh pilot binding verified; actual Controller launch awaits account-payload authorization
 
 The user said “go ahead” after the checkpoint upgrade. A fresh conservative local pilot was bounded prospectively at **17:09:55–18:39:55 New York**, selection cutoff18:24:55, at most3candidate attempts/12actual fits, max2live children/one thread each. The old six-attempt/24-fit batch remains closed and unchanged. Waiting does not reset this clock.

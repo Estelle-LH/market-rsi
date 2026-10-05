@@ -1,10 +1,10 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-10-05T21:27:00Z",
+  "updated_utc": "2026-10-05T21:42:00Z",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
-    {"id":"learning-checkpoint-fresh-pilot-20261005","status":"binding_verified_boundary_stop_fresh_account_payload_approval_pending","plan":"research/market_rsi/supervisor_harness/LEARNING_CHECKPOINT_PILOT_2026-10-05-v1.json","result":"Source948c897/d31e4a16 explicit51line binding independently admitted review8049faa1; root229tests15.738s/independent22915.795s;45oldprefixes unchanged,11roleD5input exact68sources. Newcandidateattempts0/Trainfits0/accountcalls0; no scientificcontinuation claim.","next":"Explicit fresh accountpayload authorization, then original remainingwindow/budget/source checks and actual Controllerchoice→candidate. Hard22:39:55UTC, selection22:24:55; never reset old6/24 or clock. Do not continue frameworkwork while this solelaunchpermission is missing.","evidence":"research/market_rsi/supervisor_harness/CHECKPOINT_PILOT_BINDING_REVIEW_2026-10-05.json","provider_cost_usd":"0"},
+    {"id":"learning-checkpoint-fresh-pilot-20261005","status":"actual_controller_choice_received_parallel_decision_review_and_exact_candidate_preparation","plan":"research/market_rsi/supervisor_harness/LEARNING_CHECKPOINT_PILOT_2026-10-05-v2.json","result":"Approvalcb50 received; one actual original Controller responseddc4 selected down×market calibration after D5 evidence, C7parent/rawincumbent/globalC7+B3pool. Newcandidateattempts0/Trainfits0/accountcalls1; no executed result or gain claimed.","next":"Exact C1 contract/scope then bounded source implementation/review/actual4fit run; return real reviewed feedback immediately. Hard22:39:55UTC, selection22:24:55 unchanged; no old6/24 revival or clock reset.","evidence":"research/market_rsi/supervisor_harness/CHECKPOINT_PILOT_CONTROLLER_ADMISSION_2026-10-05.json","provider_cost_usd":"0"},
     {
       "id": "opened-train-eight-hour-20261005",
       "status": "expired_window_preserved_later_repair_batch_closed_no_live_children",

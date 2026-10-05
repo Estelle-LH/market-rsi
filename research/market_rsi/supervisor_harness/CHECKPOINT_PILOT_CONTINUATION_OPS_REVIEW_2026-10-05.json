@@ -1,0 +1,16 @@
+{
+  "schema":"independent_root_continuation_operation_review_v1",
+  "passed":true,
+  "verdict":"PASS_EXACT_REVIEWED_ROOT_GLUE_NOT_LIVE_CONTINUATION_PROOF",
+  "reviewed_utc":"2026-10-05T21:53:18Z",
+  "script_sha256":"bca47f82f8028dd23ac216d8e315bd5501a21e1beb781873cf1dcc0128f84469",
+  "source_lines":68,
+  "script_path":"/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-pilot-20261005-01/continuation_account_launch.py",
+  "consumer_source_sha256":"d31e4a161a2b9a1fcfee75147a264ee52d91a4dca451f340d43bb0df446078fd",
+  "authorization_sha256":"cb50a7945231ec8f74da53ede33e282344de3f210902469016da803f0f24ac55",
+  "checks":{"complete_script_read":true,"AST_syntax_and_single_consume_call":true,"exact_local_ids_and_original_packet_hash":true,"current_numeric_input_reproducibility_before_call":true,"locked_shared_budget_and_three_handoff_cap":true,"no_duplicate_call_ID_or_feedback":true,"durable_reservation_before_transport":true,"fresh_cutoff_deadline_check_immediately_before_consume":true,"fresh_now_passed_to_pinned_consumer":true,"original_failure_preserved_no_auto_retry":true,"original_response_sha_recorded_after_success":true,"no_science_menu_or_method_substitution":true},
+  "scope":"Root alone may invoke after independently accepted actual candidate result and separate learning checkpoint, exact prepared numeric packet, still-open fresh authority and one approved handoff per accepted feedback. Does not authorize new data/provider/fees, alter scorer/consumer/worker/R or extend clock/caps.",
+  "budget":{"attempts":3,"fits":12,"account_handoffs":3,"selection_cutoff_utc":"2026-10-05T22:24:55Z","deadline_utc":"2026-10-05T22:39:55Z","paid_provider_calls":0},
+  "limitations":["Static review plus inherited pinned consumer tests, not a new actual service call or retry/recovery trial","Root trusted orchestration; once guards are not OS isolation","Failed or cutoff-blocked reservations must not be reported as successful calls or zero unknown usage","Actual account token/elapsed overhead separately recorded; serving snapshot unknown","Human-directed glue/H repair, not autonomous R modification or research-mechanism gain"],
+  "reviewer_operations":{"model_calls":0,"real_fits":0,"source_edits":0,"script_main_invocations":0}
+}
