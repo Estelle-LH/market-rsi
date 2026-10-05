@@ -76,10 +76,21 @@ def prospective_pilot_binding():
             "paid_provider_calls": 0, "paid_provider_spend_usd": "0"}}
 
 
+def continuation_pilot_binding():
+    """Exact separately approved continuation; never reopens either old window."""
+    return {"schema": "controller_prospective_budget_binding_v1",
+        "batch_id": "market-rsi-learning-checkpoint-continuation-20261005-01",
+        "start_utc": "2026-10-05T22:32:32Z", "selection_cutoff_utc": "2026-10-05T23:47:32Z",
+        "deadline_utc": "2026-10-06T00:02:32Z",
+        "limits": {"attempts": 2, "statistical_fits": 8, "live_candidate_processes": 2,
+            "threads_per_candidate": 1, "per_attempt_seconds": 900, "sampled_rss_bytes": 1073741824,
+            "paid_provider_calls": 0, "paid_provider_spend_usd": "0"}}
+
+
 def _prospective_binding(binding):
     if binding is None: return None
     # Canonical comparison rejects extra fields, coercible bools/floats and self-grants.
-    if type(binding) is not dict or _digest(binding) != _digest(prospective_pilot_binding()):
+    if type(binding) is not dict or _digest(binding) not in (_digest(prospective_pilot_binding()), _digest(continuation_pilot_binding())):
         raise ValueError("prospective budget binding drift")
     return _json(json.dumps(binding, allow_nan=False))
 

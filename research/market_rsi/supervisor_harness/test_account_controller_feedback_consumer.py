@@ -678,4 +678,119 @@ class ConsumerTests(unittest.TestCase):
         self.assertEqual(self.calls, 0)
 
 
+    def continuation(self):
+        binding = c.continuation_pilot_binding()
+        authority = {key: deepcopy(binding[key]) for key in ("batch_id", "start_utc", "selection_cutoff_utc", "deadline_utc", "limits")}
+        authority["attempts"] = []
+        self.f.write("authority", authority)
+        now = datetime(2026, 10, 5, 22, 40, tzinfo=timezone.utc)
+        packet = c.prepare_input(self.f.bindings, self.f.batch, self.f.repo, now, prospective_binding=binding)
+        return binding, authority, packet, now
+
+    def test_continuation_exact_copy_preserves_original_defaults_and_rejects_selfgrant(self):
+        binding, authority, packet, now = self.continuation()
+        self.assertEqual((binding["batch_id"], binding["start_utc"], binding["selection_cutoff_utc"], binding["deadline_utc"]),
+            ("market-rsi-learning-checkpoint-continuation-20261005-01", "2026-10-05T22:32:32Z", "2026-10-05T23:47:32Z", "2026-10-06T00:02:32Z"))
+        self.assertEqual(binding["limits"], {"attempts": 2, "statistical_fits": 8, "live_candidate_processes": 2,
+            "threads_per_candidate": 1, "per_attempt_seconds": 900, "sampled_rss_bytes": 1073741824,
+            "paid_provider_calls": 0, "paid_provider_spend_usd": "0"})
+        self.assertEqual((c.DEADLINE, c.CUTOFF), ("2026-10-05T19:27:11Z", "2026-10-05T19:12:11Z"))
+        self.assertEqual(c.prospective_pilot_binding()["limits"]["attempts"], 3)
+        self.assertNotIn("prospective_budget_binding", self.packet)
+        for field, value in (("attempts", True), ("attempts", 2.0), ("statistical_fits", 12),
+                ("paid_provider_calls", 1), ("paid_provider_spend_usd", 0), ("threads_per_candidate", 2)):
+            changed = deepcopy(binding); changed["limits"][field] = value
+            with self.subTest(field=field, value=value), self.assertRaises(ValueError):
+                c.check_budget(authority, now, prospective_binding=changed)
+        for field, value in (("schema", "other"), ("batch_id", "other"), ("authority_granted", True),
+                ("deadline_utc", "2026-10-06T01:00:00Z")):
+            changed = deepcopy(binding); changed[field] = value
+            with self.assertRaises(ValueError): c.check_budget(authority, now, prospective_binding=changed)
+        binding["limits"]["attempts"] = 999
+        self.assertEqual(packet["prospective_budget_binding"]["limits"]["attempts"], 2)
+        self.assertEqual(c.continuation_pilot_binding()["limits"]["attempts"], 2)
+        self.assertEqual(self.calls, 0)
+
+    def test_continuation_two_eight_clock_caps_cross_window_and_duplicate_fit_guards(self):
+        binding, authority, packet, now = self.continuation()
+        c.check_budget(authority, binding["start_utc"], prospective_binding=binding)
+        for moment in ("2026-10-05T22:32:31Z", binding["selection_cutoff_utc"], binding["deadline_utc"]):
+            with self.assertRaisesRegex(ValueError, "selection stop"):
+                c.check_budget(authority, moment, prospective_binding=binding)
+        for other in (None, c.prospective_pilot_binding()):
+            with self.assertRaises(ValueError): c.check_budget(authority, now, prospective_binding=other)
+        old = c.prospective_pilot_binding()
+        old_authority = {key: deepcopy(old[key]) for key in ("batch_id", "start_utc", "selection_cutoff_utc", "deadline_utc", "limits")}
+        old_authority["attempts"] = []
+        with self.assertRaises(ValueError): c.check_budget(old_authority, now, prospective_binding=old)
+        with self.assertRaises(ValueError): c.check_budget(old_authority, now, prospective_binding=binding)
+        authority["attempts"] = [{"attempt_id": "one", "fits_reserved": 4, "actual_fits": 4, "status": "closed"}]
+        c.check_budget(authority, now, prospective_binding=binding)
+        authority["attempts"].append({"attempt_id": "two", "fits_reserved": 4, "actual_fits": 4, "status": "closed"})
+        with self.assertRaisesRegex(ValueError, "selection stop"):
+            c.check_budget(authority, now, prospective_binding=binding)
+        authority["attempts"] = [{"attempt_id": "one", "fits_reserved": 4, "actual_fits": True, "status": "closed"}]
+        with self.assertRaisesRegex(ValueError, "invalid actual/reserved"):
+            c.check_budget(authority, now, prospective_binding=binding)
+        authority["limits"]["threads_per_candidate"] = True
+        with self.assertRaises(ValueError): c.check_budget(authority, now, prospective_binding=binding)
+
+    def test_continuation_claim_input_binding_original_recovery_and_cross_window_drift(self):
+        binding, authority, packet, now = self.continuation()
+        root = self.f.root / "continuation-calls"
+        result = c.consume(packet, root, batch=self.f.batch, repo=self.f.repo, now=now,
+            transport=self.transport, prospective_binding=binding)
+        directory = next(root.glob("*/claim.json")).parent
+        claim = c._json((directory / "claim.json").read_bytes())
+        self.assertEqual(claim["prospective_budget_binding_sha256"], c._digest(binding))
+        self.assertEqual(claim["input_sha256"], c._digest(packet))
+        self.f.write("authority", {"closed": True}); self.f.source.write_bytes(b"later source")
+        recovered = c.consume(packet, root, batch=self.f.batch, repo=self.f.repo, now="2026-10-06T01:00:00Z",
+            transport=lambda *args: self.fail("no resample"), prospective_binding=binding)
+        self.assertEqual(recovered, result)
+        for other in (None, c.prospective_pilot_binding()):
+            with self.assertRaisesRegex(ValueError, "explicit prospective"):
+                c.consume(packet, root, batch=self.f.batch, repo=self.f.repo, now=now,
+                    transport=self.transport, prospective_binding=other)
+        changed = deepcopy(packet); changed["prospective_budget_binding"]["limits"]["attempts"] = 3
+        with self.assertRaisesRegex(ValueError, "explicit prospective"):
+            c.consume(changed, root, batch=self.f.batch, repo=self.f.repo, now=now,
+                transport=self.transport, prospective_binding=binding)
+        claim["prospective_budget_binding_sha256"] = c._digest(c.prospective_pilot_binding())
+        (directory / "claim.json").write_text(json.dumps(claim))
+        with self.assertRaisesRegex(ValueError, "same feedback changed"):
+            c.consume(packet, root, batch=self.f.batch, repo=self.f.repo, now=now,
+                transport=self.transport, prospective_binding=binding)
+        self.assertEqual(self.calls, 1)
+
+    def test_continuation_retains_original_runtime_source_commit_and_review_guards(self):
+        binding, authority, packet, now = self.continuation()
+        for path in (self.f.source, self.f.python):
+            original = path.read_bytes(); path.write_bytes(b"drift")
+            with self.assertRaises(ValueError):
+                c.prepare_input(self.f.bindings, self.f.batch, self.f.repo, now, prospective_binding=binding)
+            path.write_bytes(original)
+        with patch.object(c.subprocess, "check_output", return_value=b"wrong frozen commit"):
+            with self.assertRaisesRegex(ValueError, "source commit drift"):
+                c.prepare_input(self.f.bindings, self.f.batch, self.f.repo, now, prospective_binding=binding)
+        review = deepcopy(self.f.values["review"]); review["passed"] = False
+        self.f.write("review", review)
+        with self.assertRaisesRegex(ValueError, "admission drift"):
+            c.prepare_input(self.f.bindings, self.f.batch, self.f.repo, now, prospective_binding=binding)
+        self.assertEqual(self.calls, 0)
+
+    def test_continuation_failed_original_transport_never_retries_or_resets_budget(self):
+        binding, authority, packet, now = self.continuation()
+        def failed(*args):
+            self.calls += 1
+            raise RuntimeError("synthetic uncertain capacity")
+        kwargs = {"batch": self.f.batch, "repo": self.f.repo, "now": now, "prospective_binding": binding}
+        root = self.f.root / "continuation-failed"
+        with self.assertRaises(RuntimeError): c.consume(packet, root, transport=failed, **kwargs)
+        with self.assertRaises(FileNotFoundError): c.consume(packet, root, transport=self.transport, **kwargs)
+        self.assertEqual(self.calls, 1)
+        self.assertEqual(self.f.values["authority"], authority)
+        self.assertTrue(c._json(next(root.glob("*/failure.json")).read_bytes())["no_resample"])
+
+
 if __name__ == "__main__": unittest.main()
