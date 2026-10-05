@@ -1,5 +1,13 @@
 # Market RSI — human progress
 
+## 2026-10-05 13:20 EDT — D2 source checkpoint, before actual fits
+
+Checkpoint `885dd62` contains one new C component: 204 production lines `f00c1586` and 268 test lines `378e47af`. It reuses all six original helpers without editing them; the transitive A2 import is pinned only for provenance, not used as a feature. Worker focused 10 checks passed; its integrated 117 passed in 8.980 seconds, and root independently ran the same relevant 117 in 8.986 seconds. Root also ran 88 unchanged Supervisor-path checks in 1.152 seconds. These overlapping suites are not additive unique-test counts and are not real Train fits. The whole legacy repository is not claimed green.
+
+Root's first integrated command guessed a nonexistent probability test module: 99 checks succeeded plus one import error in 9.026 seconds. The actual path was discovered, then the corrected suite passed. This is a Supervisor invocation error and coordination overhead, not scientific negative evidence or a candidate retry. The parallel operational check also found two missing hash checks in root's read-only result supplement operation; root added them before any derivation. No scoring change or new fit occurred.
+
+Source review ready-step passed before distinct reviewer dispatch. The 204-line component crosses the review trigger and needs explicit semantic inseparability admission; no guards were removed to meet a cosmetic limit. Runtime launcher and pre-score research rule are prepared, not executed. Three selected/12 reserved/eight actual fits, original deadline and permissions unchanged. The source checkpoint is not D2 performance or autonomous-loop completion.
+
 ## 2026-10-05 13:12 EDT — actual feedback selected D2; implementation underway
 
 The explicitly authorized fresh transaction succeeded once. Original response `630d8032`, strict acknowledgement and independent decision review `e1e76e4c` preserve a real feedback-dependent selection: D1's valid negative stopped the exact pressure recipe, prior C7 gains restored C7 as the research parent, and existing age-route memory led to `InGameTemperatureReceiptAgeSlopeOffset-v1`. This is selection/refinement of an already recorded route, not a newly discovered source. Requested model was `gpt-6.1-sol`; exact serving snapshot is unknown. Reported account usage was 78,774 input/1,856 output tokens; account USD cost is unknown. No paid-provider call occurred and the original HTTP400 remains terminal.
