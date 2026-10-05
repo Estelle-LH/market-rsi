@@ -1,5 +1,17 @@
 # Market RSI — human progress
 
+## 2026-10-05 12:52 EDT — schema repair independently admitted; replacement call not authorized yet
+
+Independent receipt `576e93b4…82450` binds source checkpoint `74688e1`, compares all 34 schema nodes and the complete production AST, and confirms exactly ten consistent type additions with all other logic/values unchanged. Its 57 distinct tests passed in 0.716 seconds. Original failure hashes and actual PID absence were independently verified. The next fresh transaction still needs the separately requested human authorization; the original claim is terminal. No new model decision, scientific candidate or fit has occurred. Gate result fields are reconciled after the observed source review, not falsely claimed as a prior ready-step check. The implementation ready-step check did pass before worker dispatch.
+
+The attempted post-result `--ready-step source_review` check correctly rejected `already has a result; version plan before retry`. Root did not clear the result, rerun review or weaken the checker; source review was already complete, and this command was an operational misuse rather than additional source failure. Minute-labelled worklog headings are approximate working notes, not physical dispatch timestamps; the immutable worker/independent receipts provide exact observed times. No fresh transaction is selected or called while replacement authorization remains pending.
+
+## 2026-10-05 12:50 EDT — narrow schema fix checkpointed
+
+Actual source diff is only five replaced production lines: ten explicit schema types and v2 scope binding. Source `d6b72f61…f3ae`/test `b2aea883…7e08` are checkpointed at `74688e1`; root read the whole diff and 57 named targeted/inherited methods passed in 0.732 seconds. Worker reported 82 executions including inherited overlap, not 82 distinct tests. Production remains 255 lines; decision fields/values, validator, once-only transport and all scientific scoring remain unchanged. Independent final review and fresh replacement-ID permission are separate unfinished gates, so this is not live API acceptance or another experiment.
+
+Root’s two partial-index staging commands also failed (empty patch, then insufficient hunk context); neither changed the index or unrelated existing dirty history. The resulting commit `8996f7e` contains the four explicitly listed failure/scope/worklog files, not the unstaged task-index rows. These operational mistakes add coordination overhead and are not Controller scientific evidence. All original failed call artifacts and D1 scores remain immutable.
+
 ## 2026-10-05 12:47 EDT — actual Controller transport failed before generation
 
 The authorized once-only transaction actually launched with source `b8c2824`, consumer `cd0f0a75`, pinned CLI and independently reviewed D1 input `28407eed`. It returned exit 1 / HTTP 400 `invalid_json_schema`: the response-schema `boundary` property lacked an explicit `type`. Events SHA `b738dc361b1b8bdb8a553f2b2ee283210271335d36f92ab183e94e234ec40a38` has no final scientific response or observed tool call; exact account token/cost usage is unavailable, not invented zero. This is an H service-interface failure missed by mocked tests and prior source review, not scientific negative evidence or Controller weakness. The original call’s claim, input, schema, events, completion and failure are preserved and will not be retried.
