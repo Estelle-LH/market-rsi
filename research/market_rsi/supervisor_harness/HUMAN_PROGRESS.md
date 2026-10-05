@@ -1,5 +1,11 @@
 # Market RSI — human progress
 
+## 2026-10-05 18:26 EDT — continuation checked after original selection cutoff
+
+The user said “continue.” First observed clock was22:25:01UTC, after the frozen22:24:55 selection cutoff. Existing guard independently of transport rejects `outer selection stop`; no active pilot child remains. This is not a negative-score stop or an exhausted attempt cap. The original hard18:39:55 finish deadline and1/3attempts/4/12fits/1of3completed account calls remain preserved. No next Controller call, descendant training, permission bypass or clock reset occurred.
+
+Current evidence remains the one valid C1 negative experiment, unchanged REVERT, verifiedlearning2/branch and observedD5evidence use with unmeasured benefit. Detailed paired results and trace remain in `CHECKPOINT_PILOT_C1_REPORT_2026-10-05.md`; closure pointers are in `CHECKPOINT_PILOT_CLOSEOUT_2026-10-05.json`. Scope continuation now needs a fresh bounded window; one combined question requests<=90minutes/two remaining candidates/eightfits/two original decisions and same-account reviewed scores/memory/history/metadata transfer. No algorithm/menu is asked of the human; all protected/externaldata/paid/release/promotion boundaries hold. Pending authorization is not a launched batch.
+
 ## 2026-10-05 18:08 EDT — real C1 result and separated learning accepted; next transfer blocked before launch
 
 The new down×market candidate completed four real local fits/87 same-key forecasts: Brier0.142251175/log0.430401674, worse than C7 and market, so frozen REFUTED/REVERT remains. Independent reconstruction753c31ca passed. Separate learning565a14ef accepts2/nonduplicate for a valid negative hypothesis test; branch eligibility survives without forcing pool membership. D5 negative evidence use is observed, benefit unmeasured. Actual feedbackab6211ab and nextpacketbbda9c7e are ready.

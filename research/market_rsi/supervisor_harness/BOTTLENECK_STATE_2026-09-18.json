@@ -1,16 +1,16 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-10-05T22:09:05.932742+00:00",
+  "updated_utc": "2026-10-05T22:27:06.253306+00:00",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
     {
       "id": "learning-checkpoint-fresh-pilot-20261005",
-      "status": "actual_C1_feedback_accepted_next_account_transfer_blocked_before_process_pending_direct_reconfirmation",
+      "status": "original_selection_window_closed_no_active_child_fresh_bounded_continuation_pending",
       "plan": "research/market_rsi/supervisor_harness/LEARNING_CHECKPOINT_PILOT_2026-10-05-v2.json",
-      "result": "Real1attempt/4fits/87predictions; independent753c/separatelearning565a PASS. REVERT, verifiednegativecredit2/branch eligibility, observedD5reuse benefitunmeasured; readyactualfeedbackab621/inputbbda. Priorpilotapproval inspected but approvalreviewer denied2preprocess nexttransfer; no process/reservation/callretry.",
-      "next": "Await exactpayload directuserreply; no workaround or next algorithm substitution. If authorized before originalselection cutoff, one original accountdecision then exactnextimplementation/review/run within remaining2attempts/8fits. At boundary save and report, no clock extension.",
-      "evidence": "research/market_rsi/supervisor_harness/CHECKPOINT_PILOT_C1_ACCEPTANCE_2026-10-05.json",
+      "result": "Original cutoff22:24:55 passed; observed22:25:01 after usercontinue. Existingguard rejects outerselectionstop. Onecompletedcandidate/fourfits/oneoriginalaccountdecision, noC1feedbackaccounttransport or descendant. Realnegative753c/learning565a/feedbackab621 preserved; rawincumbent unchanged.",
+      "next": "Await one combined fresh<=90min/2candidate/8fit/2onceonlyaccountdecision and same-account reviewedpayload approval; preserve oldauthority/results/consumption and no launch under expired original selectionwindow. No new algorithm selected by Supervisor.",
+      "evidence": "research/market_rsi/supervisor_harness/CHECKPOINT_PILOT_CLOSEOUT_2026-10-05.json",
       "provider_cost_usd": "0"
     },
     {
