@@ -16,7 +16,7 @@ from supervisor_harness.continuous_discovery_batch import _digest
 CLI = Path("/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex")
 CLI_SHA = "6b582e8813ce7e8ed4c52814ee5cf230dba647bf2292df747a4003f2657ef201"
 MODEL = "gpt-6.1-sol"
-SCOPE_SHA = "8ffb84454e800828f00fce8cdd1675b03cc1d849fda48fe7b65aaca830de37c1"
+SCOPE_SHA = "505a7c92fa05512eda83d2c3953bea7b6ca37d28d912ba270e0983ee1ba8589b"
 CLEANUP_SECONDS = 5
 DEADLINE, CUTOFF = "2026-10-05T19:27:11Z", "2026-10-05T19:12:11Z"
 ROLES = {"feedback", "review", "scorecard", "predictions", "supplement", "memory", "history", "pool", "authority", "overhead", "request"}
@@ -123,13 +123,13 @@ def _object(properties):
 TEXT = {"type": "string", "minLength": 1}
 EVIDENCE = _object({"sha256": TEXT, "finding": TEXT, "choice_consequence": TEXT})
 BRANCH = _object({"parent_sha256": TEXT, "method_family": TEXT, "reason": TEXT})
-SCHEMA = _object({"schema": {"const": "controller_next_decision_v1"}, "input_sha256": TEXT, "feedback_sha256": TEXT,
-    "requested_model": {"const": MODEL}, "serving_snapshot": {"const": "unknown"}, "action": {"enum": ["propose_candidate", "stop_in_scope", "request_closed_authority"]},
+SCHEMA = _object({"schema": {"type": "string", "const": "controller_next_decision_v1"}, "input_sha256": TEXT, "feedback_sha256": TEXT,
+    "requested_model": {"type": "string", "const": MODEL}, "serving_snapshot": {"type": "string", "const": "unknown"}, "action": {"type": "string", "enum": ["propose_candidate", "stop_in_scope", "request_closed_authority"]},
     "candidate_id": TEXT, "question_id": TEXT, "actual_parent_sha256": TEXT, "comparison_incumbent_sha256": TEXT, "hypothesis": TEXT, "recipe": TEXT, "expected_evidence": TEXT,
     "evidence_used": {"type": "array", "items": EVIDENCE, "minItems": 1}, "active_pool": {"type": "array", "items": BRANCH, "minItems": 2, "maxItems": 3},
     "memory_additions": TEXT, "stopped_exact_recipes": TEXT, "attribution": TEXT,
-    "resources": _object({"fits": {"const": 4}, "seconds": {"const": 900}, "threads": {"const": 1}, "rss_bytes": {"const": 1073741824}, "provider_calls": {"const": 0}}),
-    "boundary": {"const": "resident_train_only_fixed_scoring_no_external_no_protected_no_release"}})
+    "resources": _object({"fits": {"type": "integer", "const": 4}, "seconds": {"type": "integer", "const": 900}, "threads": {"type": "integer", "const": 1}, "rss_bytes": {"type": "integer", "const": 1073741824}, "provider_calls": {"type": "integer", "const": 0}}),
+    "boundary": {"type": "string", "const": "resident_train_only_fixed_scoring_no_external_no_protected_no_release"}})
 
 
 def _validate(value, schema):

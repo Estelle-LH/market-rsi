@@ -385,5 +385,30 @@ class ConsumerTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "bounded cleanup"): self.consume(c._transport)
             kill.assert_called_once()
 
+    def test_service_schema_nodes_have_explicit_consistent_types(self):
+        nodes = []
+        def walk(node):
+            nodes.append(node)
+            self.assertIn(node["type"], {"object", "array", "string", "integer"})
+            if "const" in node:
+                expected = str if node["type"] == "string" else int
+                self.assertIs(type(node["const"]), expected)
+            if "enum" in node:
+                self.assertEqual(node["type"], "string")
+                self.assertTrue(all(type(value) is str for value in node["enum"]))
+            for child in node.get("properties", {}).values(): walk(child)
+            if "items" in node: walk(node["items"])
+        walk(c.SCHEMA); self.assertGreater(len(nodes), 20)
+        decision = self.f.decision(self.packet); c._validate(decision, c.SCHEMA)
+        self.assertEqual(set(c.SCHEMA["required"]), set(decision))
+        self.assertIs(c.SCHEMA["additionalProperties"], False)
+        for name, value in {"schema": "controller_next_decision_v1", "requested_model": "gpt-6.1-sol",
+            "serving_snapshot": "unknown", "boundary": "resident_train_only_fixed_scoring_no_external_no_protected_no_release"}.items():
+            self.assertEqual(c.SCHEMA["properties"][name]["const"], value)
+        self.assertEqual(c.SCHEMA["properties"]["action"]["enum"], ["propose_candidate", "stop_in_scope", "request_closed_authority"])
+        resource_nodes = c.SCHEMA["properties"]["resources"]["properties"]
+        self.assertEqual({name: node["const"] for name, node in resource_nodes.items()},
+            {"fits": 4, "seconds": 900, "threads": 1, "rss_bytes": 1073741824, "provider_calls": 0})
+
 
 if __name__ == "__main__": unittest.main()
