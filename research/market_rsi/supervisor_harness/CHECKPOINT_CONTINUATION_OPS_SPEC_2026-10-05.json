@@ -1,0 +1,49 @@
+{
+  "schema": "checkpoint_continuation_root_ops_spec_v1",
+  "source_parent_commit": "6a68396049c59879d1167c9f78848f4c09ac80ec",
+  "author": "Auxiliary mechanical OPS helper; no scientific selection",
+  "new_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01",
+  "old_root_immutable": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-pilot-20261005-01",
+  "allowed_new_artifact_paths": [
+    "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01/bootstrap_input.py",
+    "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01/launch_next.py",
+    "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01/accept_next.py",
+    "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01/prepare_next.py",
+    "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01/account_launch.py",
+    "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01/archive_imports.json"
+  ],
+  "window": {
+    "start_utc": "2026-10-05T22:32:32Z",
+    "selection_cutoff_utc": "2026-10-05T23:47:32Z",
+    "deadline_utc": "2026-10-06T00:02:32Z",
+    "attempts": 2,
+    "fits": 8,
+    "account_handoffs": 2
+  },
+  "authorization_sha256": "cf6731278a94e73054bed4c0c042a7f4337117668572f55b844346bfd3e516ab",
+  "stages": [
+    "bootstrap original accepted C1 eleven-role numerical packet using read-only snapshot and native continuation binding",
+    "independent admission of exact prospective archival imports, retaining native C1 learning and original C7/B3/D5 findings and C2 consumption",
+    "Root-only once account launch; actual model decision then separately reviewed candidate contract/source",
+    "Root-only generic launch/accept/prepare for actual feedback-driven candidates"
+  ],
+  "verification": [
+    "pure AST parse of all scripts",
+    "read-only old original request file hashes and binding compatibility",
+    "pure v4 archive schema and eligibility checks; no credit reearning",
+    "independent root review before any execution"
+  ],
+  "protected": [
+    "old artifact roots",
+    "shared authority before root execution",
+    "candidate science/source/scorer",
+    "all closed caps and once claims"
+  ],
+  "rollback": "Do not execute unadmitted new scripts; preserve new rejected evidence without rewinding old roots.",
+  "claims": {
+    "model_calls_by_helper": 0,
+    "fits_by_helper": 0,
+    "prediction_gain": false,
+    "research_self_evolution": false
+  }
+}
