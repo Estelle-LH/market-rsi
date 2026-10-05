@@ -1,0 +1,144 @@
+{
+  "schema": "market_rsi_checkpoint_pilot_binding_review_v1",
+  "passed": true,
+  "verdict": "PASS_CODE_AND_IMMUTABLE_BOOTSTRAP_ONLY",
+  "reviewed_at_utc": "2026-10-05T21:25:17Z",
+  "reviewer": "coevo_independent_review_20261003",
+  "source_commit": "948c897885cddd9a5f72f5f324c7b6741509871a",
+  "comparison_parent_commit": "7caf829b3062e08c766fb990432ba8f807878253",
+  "source_sha256": "d31e4a161a2b9a1fcfee75147a264ee52d91a4dca451f340d43bb0df446078fd",
+  "test_sha256": "df1939ca21bdd07204cec9b548825ed757fa5ffca0a29f6e9ab134c8cde41a94",
+  "plan_sha256": "d6e43a42e41faf2d8b22d562f4f0396cb05859aaee5a97922c031fbdcc4cf8f4",
+  "root_verification_sha256": "725a8b9030fb201aba2d925f263b7dcfb9e0b4d2c30daf248f37a3b6ee300ccc",
+  "small_step": {
+    "axis": "H",
+    "component": "Explicit exact prospective numerical-consumer budget binding",
+    "author": "Human-directed Supervisor and implementation helper",
+    "production_modules": 1,
+    "added": 42,
+    "removed": 9,
+    "changed_lines": 51,
+    "semantic_judgment": "BOUNDED_SINGLE_COMPONENT_ADMITTED_NOT_LOC_SAFETY",
+    "no_generic_dynamic_budget_or_permission_service": true
+  },
+  "prospective_binding": {
+    "batch_id": "market-rsi-learning-checkpoint-pilot-20261005-01",
+    "start_utc": "2026-10-05T21:09:55Z",
+    "selection_cutoff_utc": "2026-10-05T22:24:55Z",
+    "deadline_utc": "2026-10-05T22:39:55Z",
+    "attempts": 3,
+    "statistical_fits": 12,
+    "live_processes": 2,
+    "threads": 1,
+    "per_candidate_seconds": 900,
+    "sampled_rss_bytes": 1073741824,
+    "paid_provider_calls": 0
+  },
+  "verification": {
+    "complete_source_and_changed_tests_read": true,
+    "current_and_git_source_test_protected_bytes_match": true,
+    "independent_full_relevant_suite": {
+      "passed": 229,
+      "unique_methods": 229,
+      "modules": 14,
+      "seconds": 15.795,
+      "includes_focused81_not_additive": true,
+      "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONHASHSEED=0 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest supervisor_harness.test_learning_checkpoint_assessment supervisor_harness.test_continuous_discovery_batch supervisor_harness.test_account_controller_feedback_consumer experiments.test_nfl_ingame_temperature_possession_only_joint_offset experiments.test_nfl_ingame_temperature_odd_confidence_joint_offset experiments.test_nfl_ingame_temperature_intercept_joint_offset experiments.test_nfl_ingame_temperature_receipt_age_slope_offset experiments.test_nfl_ingame_temperature_possession_pressure_joint_offset experiments.test_nfl_ingame_temperature_possession_pressure_entry experiments.test_nfl_ingame_candidate_evidence_adapter experiments.test_nfl_ingame_market_temperature_offset experiments.test_nfl_ingame_market_freshness_interaction_offset tests.test_minimal_probability_contract supervisor_harness.test_opened_train_discovery_worker -q",
+      "portable_synthetic_only": true
+    },
+    "AST": {
+      "only_changed_original_functions": [
+        "check_budget",
+        "prepare_input",
+        "consume"
+      ],
+      "added_functions": [
+        "_prospective_binding",
+        "prospective_pilot_binding"
+      ],
+      "unchanged_original_functions": 14,
+      "all_constants_model_CLI_schema_prompt_transport_original_recovery_exact": true
+    },
+    "explicit_binding_required_no_default_reset": true,
+    "exact_types_window_id_caps_extra_field_and_selfgrant_drift_rejected": true,
+    "packet_and_claim_bind_full_envelope_and_sha256": true,
+    "fresh_claim_after_cutoff_or_cap_rejected": true,
+    "saved_original_recovery_after_deadline_source_or_live_ledger_change_no_transport_retry": true,
+    "legacy_default_budget_packet_claim_structure_and_evidence_guards_preserved": true,
+    "legacy_pure_replay": {
+      "canonical_events": 45,
+      "prefixes": 45,
+      "pilots": 5,
+      "all_saved_states_exact": true,
+      "no_filesystem_recovery_writes": true
+    },
+    "bootstrap": {
+      "input_file_sha256": "98ee0c8e112fb3084d287ca1b72f4e5ee84e1db054e9c925ccdb4c908e212625",
+      "input_canonical_sha256": "6658e188ce411a4548a4b5c2adfd2b21258f4a30c8d3e53c4a7f67b26b7cd474",
+      "bytes": 400210,
+      "exact_eleven_roles": true,
+      "independent_prepare_input_exact": true,
+      "preparation_writes": 0,
+      "frozen_old_snapshot_read_only_facade": true,
+      "historical_source_commit": "d7d4a0be2c3d0af98a097ecd2fb8d9f359d6ef9c",
+      "historical_validation_files": 68,
+      "old_feedback_sha256": "46248f574755c033e1e68516591f74de6c0534c9de94ec81a4340f0f63447d02",
+      "old_feedback_schema": "market_rsi_discovery_controller_evidence_v2",
+      "old_scheduling_version": 3,
+      "old_memory_sha256": "31708df6e99aca7f2ce7d9d85e13c04748c3f81f5e5cff39655dec4303fba3eb",
+      "consumed_C2_exact_copy": true,
+      "prepare_script_sha256": "8a7b93cf186ae2f9a72482171beceb8bbc30c58da8554b9c473c55ef78ac239f"
+    },
+    "fresh_authority": {
+      "sha256": "8aac48cbe0e200197200d98b542fde3ad125c2587f570d6c07ccd30116b9d83d",
+      "attempts_selected": 0,
+      "actual_fits": 0,
+      "no_claim_process_completion_or_worker_request_found": true
+    },
+    "old_authority": {
+      "sha256": "94ebe9cf3d07dcd0679bf013410f07932896479d495d68387c87a884c27cf735",
+      "attempts": 6,
+      "actual_fits": 24,
+      "unchanged": true
+    },
+    "CLI_sha256": "6b582e8813ce7e8ed4c52814ee5cf230dba647bf2292df747a4003f2657ef201",
+    "python_sha256": "80ee2dd97bc26259d4e30853336f72ad38aa4aa0531bb196cc444d899422689d",
+    "diff_check_pass": true
+  },
+  "protected_hashes": {
+    "learning_helper": "a53d348a9b3c09306bb7bf24e4960ee3233eb955b82733612c11277d02219926",
+    "recorder": "3d0c0508cda74948119da9bd353cb326dd35b9ed8bcf9e42fb35b9862fee8183",
+    "proper_scoring": "64165cbceb4bcba6d03b6b42402ea7a47790c9a57f9280b15bfe2fe57becc06b",
+    "probability_contract": "7ba4a32d3c3a2ab80ac17ca6c18ea29fe864b958de8a81ac2be59dba121e9d74",
+    "worker": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360",
+    "frozen_D5_reviewer_log": "efcba3eb78b5c8f9113e158b110ba32c0ae2c3f3b37120b2d94f5156f419a288"
+  },
+  "admission": {
+    "code_admitted": true,
+    "bootstrap_metadata_admitted": true,
+    "fresh_account_payload_authorization_verified_by_this_review": false,
+    "actual_transport_admitted_by_this_review": false,
+    "actual_candidate_or_fit_admitted_by_this_review": false,
+    "required_next_gate": "Fresh destination-specific human approval, exact one-shot source/input/ID admission, then actual decision and candidate-specific source/result reviews within original prospective window."
+  },
+  "limitations": [
+    "The envelope is an exact operational binding, not human authorization. Fresh account-payload approval remains an external trusted-Supervisor prerequisite; the consumer does not natively inspect an authorization receipt.",
+    "Bootstrap remains accepted historical D5 v3 evidence, not a newly completed v4 experiment. Future v4 archives/findings/consumption and each real candidate require their own actual verified bindings.",
+    "Original claims remain preserved and tied to their original consumer/source identities; changed code does not migrate or resample an old transaction. Recovery tests are synthetic, not a deliberate real process interruption.",
+    "Read-only refers to historical source/evidence. Root's preparation script writes only new prospective output files; this reviewer neither invoked the script nor wrote those artifacts.",
+    "Failed-run learning remains core metadata only; numeric consumer still requires completed real scorecard/CSV/supplement. No fabricated prediction or full failed-run-to-Controller claim.",
+    "Canonical finding novelty, real reuse/benefit and consumption receipts need trusted independent evidence verification; schema/hash checks alone cannot establish them.",
+    "No real account call, actual Train fit, prediction gain, autonomous R modification, L3 benefit, matched mechanism superiority, exact serving-version identity, untouched OOS or real-time market advantage is certified. Prior stale state-page windows are not current authority.",
+    "No protected data, external acquisition, paid provider, release or promotion authority is expanded. Provider0 does not establish zero account/agent token cost."
+  ],
+  "resources": {
+    "actual_train_fits": 0,
+    "new_train_predictions": 0,
+    "actual_account_calls": 0,
+    "paid_provider_calls": 0,
+    "network_calls": 0,
+    "old_artifact_writes": 0,
+    "commits": 0,
+    "read_only_existing_accepted_metadata_and_CSV": true
+  }
+}

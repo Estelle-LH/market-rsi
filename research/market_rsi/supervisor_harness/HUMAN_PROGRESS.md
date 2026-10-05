@@ -1,5 +1,21 @@
 # Market RSI — human progress
 
+## 2026-10-05 17:24 EDT — fresh pilot binding verified; actual Controller launch awaits account-payload authorization
+
+The user said “go ahead” after the checkpoint upgrade. A fresh conservative local pilot was bounded prospectively at **17:09:55–18:39:55 New York**, selection cutoff18:24:55, at most3candidate attempts/12actual fits, max2live children/one thread each. The old six-attempt/24-fit batch remains closed and unchanged. Waiting does not reset this clock.
+
+The direct execution blocker was the numerical consumer's intentionally expired old window. Source checkpoint `948c897` adds one explicit exact prospective binding, sealed into input and once-only claim, while preserving the legacy defaults and14otherfunctions, model/schema/CLI/no-tools/fees/source guards. Production change42additions/9removals in one module; no new framework or dependency. This is user-directed Supervisor H work, not autonomous R modification.
+
+Two disjoint helpers overlapped implementation and read-only provenance work. Root's **229 unique full relevant synthetic tests** passed15.738s; the independent reviewer reran229 in15.795s and reproduced the exact prepared input. Focused81 are included in229, not added. The historical D5 request's68sourcefiles were verified against its original `d7d4a0b` checkout without weakening source checks or instantiating/recovery-writing its old recorder. Original feedback `46248f57`, original activation memory `31708df6`, final memory and consumedC2 remain preserved. A new eleven-role input `98ee0c8e` includes the completed D5 evidence and last actually selected C7/B3 pool; no new scientific hypothesis or pool selection was invented.
+
+**New candidate attempts0; real Train fits0; account Controller calls0; paid provider0/$0.** No protected Dev/Final, external acquisition, publication or promotion. All-agent tokens/CPU/USD and a serial scheduling counterfactual are unmetered; preparation elapsed about15minutes, not training time. A synthetic test-fixture write-once error was repaired only in the temporary test fixture; initial log timestamp corrections are retained. The existing dashboard endpoint was unavailable, so live display was not claimed or rebuilt.
+
+The remaining boundary is specific: the previous explicit permission to send private Train scores/memory/history/run metadata to the ChatGPT account said **“existing batch only.”** The fresh asynchronous question requests that transfer for this pilot, once per reviewed feedback/no retries/no tools/no paid provider. It has not yet received a reply. Local Train research is already authorized; this is not a new per-round algorithm or training approval. The Supervisor will not substitute its own scientific decision to bypass this gate.
+
+Final independent receipt `8049faa1` and frozen reviewer log `a021eaad` admit this source/immutable bootstrap only. VerifiedCLI/Python hashes remain `6b582e88`/`80ee2dd9`; no livechild was found at21:24UTC. The preserved checkpoint trajectory is `CHECKPOINT_PILOT_TRAJECTORY_2026-10-05.jsonl`; this permission stop is not a resolved scientific milestone.
+
+Independent code/input review supports L2 only. Actual v4 Train checkpoint feedback, failed-run-to-Controller transport, predictive improvement, demonstrated learning benefit and fixed-versus-evolving superiority are still untested here. KEEP/scorer and old results remain unchanged. Next action: after the fresh transfer approval and within the original remaining window, obtain one actual evidence-cited Controller choice, implement/review/run it, then return its real feedback for continuation. If the fixed window expires first, preserve it rather than silently extending.
+
 ## 2026-10-05 17:05 EDT — Word plan saved; prospective learning-checkpoint fix independently reviewed
 
 The approved plan is saved as `plans/MARKET_RSI_LEARNING_CHECKPOINT_UPGRADE_2026-10-05.docx` (four pages, all visually inspected, accessibility audit zero findings; SHA `6e642e59c6288b709b7280d02dcf85ce398f62f172fed3c849581ebb893b8755`). Reproducible builder and plan are retained. Local source checkpoints are `ebb739d` (document/scope), `79efe01` (recorder core), and `9dbf1df` (separate feedback consumer). Nothing was pushed or released.

@@ -1,9 +1,10 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-10-05T21:05:10Z",
+  "updated_utc": "2026-10-05T21:27:00Z",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
+    {"id":"learning-checkpoint-fresh-pilot-20261005","status":"binding_verified_boundary_stop_fresh_account_payload_approval_pending","plan":"research/market_rsi/supervisor_harness/LEARNING_CHECKPOINT_PILOT_2026-10-05-v1.json","result":"Source948c897/d31e4a16 explicit51line binding independently admitted review8049faa1; root229tests15.738s/independent22915.795s;45oldprefixes unchanged,11roleD5input exact68sources. Newcandidateattempts0/Trainfits0/accountcalls0; no scientificcontinuation claim.","next":"Explicit fresh accountpayload authorization, then original remainingwindow/budget/source checks and actual Controllerchoice→candidate. Hard22:39:55UTC, selection22:24:55; never reset old6/24 or clock. Do not continue frameworkwork while this solelaunchpermission is missing.","evidence":"research/market_rsi/supervisor_harness/CHECKPOINT_PILOT_BINDING_REVIEW_2026-10-05.json","provider_cost_usd":"0"},
     {
       "id": "opened-train-eight-hour-20261005",
       "status": "expired_window_preserved_later_repair_batch_closed_no_live_children",
