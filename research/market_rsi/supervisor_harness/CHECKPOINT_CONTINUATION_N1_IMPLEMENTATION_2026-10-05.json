@@ -1,0 +1,146 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "checkpoint-continuation-n1-20261005",
+  "symptom": "Actual original scientific field-position hypothesis now needs bounded execution, not further framework work",
+  "source_evidence": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01/account-controller/market-rsi-learning-checkpoint-continuation-controller-c1-feedback-20261005-01/ab6211abf4b1335f211c8a1119c9dc349a7ea3f0964f0f6af039a2c06be4553f/response.json SHAcc35bb18096b116abe1c752622192b37ede2c31380c7041643371631002a85e7",
+  "objective": "One real four-fit field-position prediction experiment followed by actual Controller feedback-dependent next decision",
+  "boundary": "Fresh2newattempt8fits2accountdecisions; no retry;23:47:32selection/00:02:32hard;residentTrainonly/fixedjudge/noexternal/protected/paid/release",
+  "resolution_check": "Actual same-sample scorecard and separately assessed learning accepted; no engineering or ordinary memory mistaken for prediction or R gain",
+  "supervisor_owner": "root",
+  "response_sha256": "cc35bb18096b116abe1c752622192b37ede2c31380c7041643371631002a85e7",
+  "steps": [
+    {
+      "id": "decision",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [],
+      "action": "Independently verify actual original once transaction and evidence-driven next proposal",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N1_DECISION_REVIEW_2026-10-05.json",
+      "verification": "Original response/claim/process/completion/no tools/usage/citations/parent/pool/budget",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 4,
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent original cc35 transaction/139916input1894output24reasoning/no tools/PID absent/actualC1 evidence-dependent fieldposition choice passed",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N1_DECISION_REVIEW_2026-10-05.json",
+        "evidence_sha256": "95e2d5b22b9ef64efc15821776d7fbdb6dce6b16193e35a851a02587d5ac4357"
+      }
+    },
+    {
+      "id": "ops",
+      "owner": "coevo_controller_20261003",
+      "depends_on": [],
+      "action": "Mechanical exact contract and rule transcription of actual field-position proposal; no algorithm choice",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N1_CONTRACT_2026-10-05.json",
+      "verification": "Exact original recipe; causal field mapping identified without Train outcome analysis; reuse solver/H unchanged",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 4,
+      "result": {
+        "verdict": "pass",
+        "observed": "Exact original recipe and physical field mapping transcribed30df; C7 parent/artifacts/solver/scorer fixed; Root wrong shorthand corrected before source edits",
+        "reviewer": "root exact transcription check",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N1_CONTRACT_2026-10-05.json",
+        "evidence_sha256": "30dfeb91294875146d671b257a7e413dc64384251cef019639a848c7a633284b"
+      }
+    },
+    {
+      "id": "scope",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [
+        "decision",
+        "ops"
+      ],
+      "action": "Independently admit exact contract and finite single-C scope",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N1_SCOPE_REVIEW_2026-10-05.json",
+      "verification": "Physical field bounds/orientation, fixed recipe, unchanged task/scorer/permissions",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 3
+    },
+    {
+      "id": "implementation",
+      "owner": "coevo_predictor_worker_20261003",
+      "depends_on": [
+        "scope"
+      ],
+      "action": "Implement exact candidate-local source/test/log, no prior modules changed",
+      "expected_artifact": "AGENT_LOG_CHECKPOINT_CONTINUATION_N1_IMPLEMENTER_2026-10-05.md",
+      "verification": "Synthetic mathematics/physical-field orientation/gamma0/complement/future and check-label isolation/once entry/numeric replay/failure; report actual smallness",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 7,
+      "write_paths": [
+        "research/market_rsi/experiments/nfl_ingame_temperature_field_position_slope_joint_offset.py",
+        "research/market_rsi/experiments/test_nfl_ingame_temperature_field_position_slope_joint_offset.py",
+        "research/market_rsi/supervisor_harness/AGENT_LOG_CHECKPOINT_CONTINUATION_N1_IMPLEMENTER_2026-10-05.md"
+      ]
+    },
+    {
+      "id": "source_review",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [
+        "implementation"
+      ],
+      "action": "Read exact source and independently test; >200lines requires explicit semantic ruling",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N1_SOURCE_REVIEW_2026-10-05.json",
+      "verification": "Old helpers/H/K/worker unchanged; exact contract/source/runtime/request guards",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 4
+    },
+    {
+      "id": "run",
+      "owner": "root",
+      "depends_on": [
+        "source_review"
+      ],
+      "action": "Commit admitted source and Root executes four actual Train fits once",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N1_EXECUTION_2026-10-05.json",
+      "verification": "Exact unchanged87same-key predictions, actualfit progress/receipt/currentbudget/deadline/source",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 3
+    },
+    {
+      "id": "result",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [
+        "run"
+      ],
+      "action": "Independently reconstruct predictions/parameters/score/paired blocks and intervals with no refit",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N1_RESULT_REVIEW_2026-10-05.json",
+      "verification": "Same judge, physical artifacts/currentGit pins, no implementation failure counted as scientific evidence",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 4
+    },
+    {
+      "id": "learning",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [
+        "result"
+      ],
+      "action": "Independently verify separate Root learning checkpoint, canonical finding and actual C1 feedback reuse",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N1_LEARNING_REVIEW_2026-10-05.json",
+      "verification": "Learning0/1/2 separate Brier/KEEP; novelty/dedup/branch evidence; observed reuse benefit unmeasured",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 3
+    },
+    {
+      "id": "feedback",
+      "owner": "root",
+      "depends_on": [
+        "learning"
+      ],
+      "action": "Accept reviewed real feedback, prepare next actual decision immediately",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N1_ACCEPTANCE_2026-10-05.json",
+      "verification": "Root-only incumbent/pool/ledger; fresh2/8/2 caps; next method not preselected",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 3
+    }
+  ]
+}
