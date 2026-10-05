@@ -142,7 +142,14 @@
       "verification": "Exact unchanged87same-key predictions, actualfit progress/receipt/currentbudget/deadline/source",
       "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
       "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
-      "time_bound_minutes": 3
+      "time_bound_minutes": 3,
+      "result": {
+        "verdict": "pass",
+        "observed": "One actual once run succeeded;4entered/completed,87same-key predictions,4.602s/RSS139888KiB; results need independentreview, no scientificscoreinference from run alone",
+        "reviewer": "root run/receipt verification",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N1_EXECUTION_2026-10-05.json",
+        "evidence_sha256": "54fce7729daad48151d70ff9bff97839c303efae21af467192ef6a60e3aa271f"
+      }
     },
     {
       "id": "result",
@@ -155,7 +162,14 @@
       "verification": "Same judge, physical artifacts/currentGit pins, no implementation failure counted as scientific evidence",
       "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
       "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
-      "time_bound_minutes": 4
+      "time_bound_minutes": 4,
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent no-refit reconstruction exact193+2/87/fourstates/all5arms/blocks/intervals/current74bindings; actual REFUTED/REVERT remains unchanged",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N1_RESULT_REVIEW_2026-10-05.json",
+        "evidence_sha256": "03375e7ffdbf81f796964e7a65a0f7f3de40fad56658af48446ca62546cfc628"
+      }
     },
     {
       "id": "learning",
@@ -168,7 +182,14 @@
       "verification": "Learning0/1/2 separate Brier/KEEP; novelty/dedup/branch evidence; observed reuse benefit unmeasured",
       "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
       "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
-      "time_bound_minutes": 3
+      "time_bound_minutes": 3,
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent actualcanonical/semanticdedup validnegativecredit2/branch; originalC1reuse observedbenefitunmeasured; no scoring/authoritychanges",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N1_LEARNING_REVIEW_2026-10-05.json",
+        "evidence_sha256": "8979e98149526a4d1104a1c2bfe53ef6336c19798115d61d221e7e58263ae645"
+      }
     },
     {
       "id": "feedback",
@@ -181,9 +202,21 @@
       "verification": "Root-only incumbent/pool/ledger; fresh2/8/2 caps; next method not preselected",
       "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
       "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
-      "time_bound_minutes": 3
+      "time_bound_minutes": 3,
+      "result": {
+        "verdict": "pass",
+        "observed": "Actual reviewed score+credit2 accepted; e9a256 feedback and exactc7a570 nextinput prepared once; next actual decision not yet called",
+        "reviewer": "root independent receipt+nativeaccept verification",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N1_ACCEPTANCE_2026-10-05.json",
+        "evidence_sha256": "9359aa6716812ff229a8d127b63d5380331e104f0c4e858ad17b55596404094f"
+      }
     }
   ],
   "contract_path": "research/market_rsi/supervisor_harness/CHECKPOINT_CONTINUATION_N1_CONTRACT_V2_2026-10-05.json",
-  "supersedes_plan_sha256": "46bf9a3abe1777948c24d8a2062d6d9d11504b18141931b80f8d77dabff29fa0"
+  "supersedes_plan_sha256": "46bf9a3abe1777948c24d8a2062d6d9d11504b18141931b80f8d77dabff29fa0",
+  "resolution": {
+    "verdict": "pass",
+    "observed": "Actual N1 prediction experiment, independent result+learning acceptance and next numeric feedback ready; negative recipe preserved, market incumbentunchanged",
+    "reviewer": "root verified independent result03375/learning8979"
+  }
 }
