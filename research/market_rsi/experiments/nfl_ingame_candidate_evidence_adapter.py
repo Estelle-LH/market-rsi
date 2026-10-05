@@ -12,22 +12,31 @@ import platform
 from experiments import nfl_ingame_market_temperature_offset as c7
 
 parent_module, shared, common = c7.parent_module, c7.shared, c7.common
-CONTRACT = Path(__file__).parents[1] / "supervisor_harness/COEVO_H1_CONTRACT_2026-10-05-v2.json"
-CONTRACT_SHA256 = "e047c2b5214b0c39e53a1bd47e0cfa3db43b542a291dcbd84ea0286e14241e74"
+CONTRACT = Path(__file__).parents[1] / "supervisor_harness/COEVO_H1_CONTRACT_2026-10-05-v3.json"
+CONTRACT_SHA256 = "9317c9d2e888cc8b6ca4a65bb8fe361a2493472eca37bbbad25bd462dfb39e3b"
 C7_SHA256 = "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085"
 MODEL_FITS, FIT_COUNTS, CHECK_COUNTS = 4, (106, 132, 148, 176), (26, 16, 28, 17)
 
 def validate_binding(binding, callbacks):
     """Hashes bind approved host callbacks, not an arbitrary-code sandbox."""
+    if set(callbacks) != {"prepare_features", "fit_predict", "replay_predictor"}:
+        raise ValueError("exact three callbacks required")
+    expected = held_c7_binding()["dependency_source_hashes"]
+    if any(binding["dependency_source_hashes"].get(path) != digest for path, digest in expected.items()):
+        raise ValueError("immutable helper dependency coverage changed")
     paths = {binding["candidate_source_path"]: binding["candidate_source_sha256"],
         binding["candidate_contract_path"]: binding["candidate_contract_sha256"],
         binding["adapter_contract_path"]: binding["adapter_contract_sha256"],
-        str(Path(__file__).resolve()): binding["adapter_source_sha256"], **binding["dependency_source_hashes"]}
+        str(Path(__file__).resolve()): binding["adapter_source_sha256"]}
+    for path, digest in binding["dependency_source_hashes"].items():
+        if path in paths and paths[path] != digest:
+            raise ValueError("conflicting source and dependency binding")
+        paths[path] = digest
     if Path(binding["adapter_contract_path"]).resolve() != CONTRACT.resolve() or binding["adapter_contract_sha256"] != CONTRACT_SHA256:
         raise ValueError("H1 contract binding changed")
     for filename, digest in paths.items():
         path = Path(filename)
-        if not path.is_absolute() or path.is_symlink() or not path.is_file() or len(digest) != 64 or common._sha256(path) != digest:
+        if not path.is_absolute() or path.is_symlink() or not path.is_file() or not isinstance(digest, str) or len(digest) != 64 or common._sha256(path) != digest:
             raise ValueError(f"admitted source/spec changed: {path.name}")
     for name, callback in callbacks.items():
         source = str(Path(inspect.getsourcefile(callback)).resolve())
@@ -37,8 +46,10 @@ def validate_binding(binding, callbacks):
     contract = common.settlement._strict_json(Path(binding["candidate_contract_path"]))
     names = contract.get("fixed_predictive_information", contract.get("predictive_information", {}))["feature_names"]
     incumbent = contract.get("comparison_incumbent_sha256", contract.get("comparison_incumbent", {}).get("sha256"))
+    attribution = contract.get("attribution", contract.get("changed_training_recipe", {}).get("attribution"))
     if (contract["candidate_id"] != binding["candidate_id"] or contract["research_parent"] != binding["research_parent"]
-            or names != binding["feature_names"] or incumbent != binding["comparison_incumbent_sha256"]):
+            or names != binding["feature_names"] or incumbent != binding["comparison_incumbent_sha256"]
+            or attribution != binding["attribution"] or binding["arm"] != callbacks["fit_predict"].__globals__.get("ARM_CANDIDATE")):
         raise ValueError("scientific contract/parent/features/incumbent changed")
     return contract
 
@@ -72,7 +83,11 @@ def load_parent(contract, controls, frozen):
             or any(receipts.get(key) != value for key, value in common.BOUNDARY_FLAGS.items())):
         raise ValueError("C7 parent causal/authority receipts changed")
     artifact, card = [common.settlement._strict_json(root / f"{name}.json") for name in ("predictor_states", "scorecard")]
-    if artifact["task_id"] != c7.TASK_ID or card["task_id"] != c7.TASK_ID or [item["fold"] for item in artifact["folds"]] != [1, 2, 3, 4]:
+    progress = common.settlement._strict_json(root / "fit_progress.json")
+    if (artifact["task_id"] != c7.TASK_ID or card["task_id"] != c7.TASK_ID
+            or [item["fold"] for item in artifact["folds"]] != [1, 2, 3, 4]
+            or len(evidence["state_sha256_by_fold"]) != 4 or len(card["folds"]) != 4
+            or progress["fit_calls_entered"] != 4 or progress["fit_calls_completed"] != 4):
         raise ValueError("C7 parent state task/folds changed")
     states = {}
     for item, report, digest in zip(artifact["folds"], card["folds"], evidence["state_sha256_by_fold"], strict=True):
@@ -87,6 +102,8 @@ def load_parent(contract, controls, frozen):
 def replay_parent(rows, folds, parent, states, parent_id):
     if parent_id == parent_module.TASK_ID:
         return c7.replay_parent(rows, folds, parent, states)
+    if parent_id != c7.TASK_ID or [fold["fold"] for fold in folds] != [1, 2, 3, 4] or set(states) != {1, 2, 3, 4}:
+        raise ValueError("C7 replay requires exact parent and ordered four states/folds")
     by_date = defaultdict(list)
     for row in rows:
         by_date[row.game_date].append(row)
@@ -96,7 +113,9 @@ def replay_parent(rows, folds, parent, states, parent_id):
         fit, unavailable = common.nested._strict_prior_rows(by_date, fold["fit_dates"], check)
         state = states[fold["fold"]]
         values, _ = c7.replay_predictor(state, check)
-        if unavailable or state["fit_events"] != len(fit) or state["raw_fit_sha256"] != common._digest(parent_module.raw_probabilities(fit).tolist()):
+        if (unavailable or state["fit_events"] != len(fit)
+                or state["raw_fit_sha256"] != common._digest(parent_module.raw_probabilities(fit).tolist())
+                or state["fit_logit_sha256"] != common._digest([row.market_features[0] for row in fit])):
             raise ValueError("C7 parent past-only fit inputs/count changed")
         if any(row.key in seen or value != parent[row.key] for row, value in zip(check, values, strict=True)):
             raise ValueError("C7 exact parent replay changed")
@@ -120,8 +139,9 @@ def run_recipe(source_root, output, binding, prepare_features, fit_predict, repl
     common.base._validate_roots(source_root, output, allow_test_paths=allow_test_paths)
     output.mkdir(parents=True, exist_ok=False)
     progress = {"fit_calls_entered": 0, "fit_calls_completed": 0, "optimizer_receipts": [], "entry_semantics": "candidate fit function entry; valid completion includes numeric solve and output replay"}
-    candidate_id, arm = binding["candidate_id"], binding["arm"]
+    candidate_id = binding.get("candidate_id", "UNKNOWN") if isinstance(binding, dict) else "UNKNOWN"
     try:
+        arm = binding["arm"]
         contract = validate_binding(binding, dict(prepare_features=prepare_features, fit_predict=fit_predict, replay_predictor=replay_predictor))
         frozen = common.frozen_v0._validate_v0_artifact(shared.V0_ARTIFACT_ROOT)
         controls = common.identity._frozen_controls(frozen)
@@ -147,16 +167,20 @@ def run_recipe(source_root, output, binding, prepare_features, fit_predict, repl
         common.base._atomic_json(output / "exclusions.json", {"source_events": 195, "materialized_events": 193, "excluded_events": 2, "reconciles_to_source_denominator": True, "exclusions": exclusions})
         def tracked_fit(fit, check, unused):
             ordinal = progress["fit_calls_entered"]
-            context = {**copy.deepcopy(features or {}), "fold_id": ordinal + 1, "parent_state": copy.deepcopy(parent_states[ordinal + 1])}
-            if ordinal >= 4 or len(fit) != FIT_COUNTS[ordinal] or len(check) != CHECK_COUNTS[ordinal] or any(row.trusted["outcome_available_ms"] >= min(item.trusted["checkpoint_ms"] for item in check) for row in fit):
+            if ordinal >= 4 or len(fit) != FIT_COUNTS[ordinal] or len(check) != CHECK_COUNTS[ordinal] or any(row.trusted["outcome_available_ms"] >= min(item.trusted["cutoff_ms"] for item in check) for row in fit):
                 raise ValueError("prefit exact chronology/four-fit/count boundary changed")
+            context = {**copy.deepcopy(features or {}), "fold_id": ordinal + 1, "parent_state": copy.deepcopy(parent_states[ordinal + 1])}
             progress["fit_calls_entered"] += 1
             trainer = None
             try:
                 values, trainer = fit_predict(fit, check, context)
                 state = trainer["primitive_prediction_state"]
-                if trainer["model_fits"] != 1 or common._digest(state) != trainer["predictor_state_sha256"] or "optimizer" not in trainer:
+                if (type(trainer["model_fits"]) is not int or trainer["model_fits"] != 1
+                        or state["fit_events"] != len(fit) or common._digest(state) != trainer["predictor_state_sha256"]
+                        or not isinstance(trainer.get("optimizer"), dict) or trainer["optimizer"].get("converged") is not True):
                     raise ValueError("candidate state/one-fit receipt changed")
+                for value in values:
+                    common.probability_contract.validate_probability(value, common.probability_contract.DEFAULT_PROBABILITY_POLICY, arm)
                 replayed, bounds = replay_predictor(state, check, context)
                 if values != replayed or trainer["bounding"] != bounds:
                     raise ValueError("candidate exact numeric prediction replay changed")
@@ -207,6 +231,7 @@ def held_c7_binding():
     contract = common.settlement._strict_json(c7.CONTRACT)
     dependencies = {str(Path(module.__file__).resolve()): digest for module, digest in common.DEPENDENCIES.items()}
     dependencies.update({str(Path(common.__file__).resolve()): shared.COMMON_SOURCE_SHA256, str(Path(shared.__file__).resolve()): parent_module.SHARED_SOURCE_SHA256, str(Path(parent_module.__file__).resolve()): c7.PARENT_SOURCE_SHA256})
+    dependencies[str(Path(c7.__file__).resolve())] = C7_SHA256
     return {"candidate_id": c7.TASK_ID, "arm": c7.ARM_CANDIDATE, "candidate_source_path": str(Path(c7.__file__).resolve()), "candidate_source_sha256": C7_SHA256, "candidate_contract_path": str(c7.CONTRACT.resolve()), "candidate_contract_sha256": c7.CONTRACT_SHA256, "adapter_contract_path": str(CONTRACT.resolve()), "adapter_contract_sha256": CONTRACT_SHA256, "adapter_source_sha256": common._sha256(Path(__file__)), "dependency_source_hashes": dependencies, "research_parent": contract["research_parent"], "comparison_incumbent_sha256": contract["comparison_incumbent_sha256"], "feature_names": c7.FEATURE_NAMES, "attribution": contract["changed_training_recipe"]["attribution"], "callback_source_bindings": {"prepare_features": str(Path(__file__).resolve()), "fit_predict": str(Path(c7.__file__).resolve()), "replay_predictor": str(Path(__file__).resolve())}}
 
 def main():

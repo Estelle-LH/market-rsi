@@ -15,9 +15,16 @@
       "action": "Review v3 operational rebind and unchanged exact parity scope before resuming partial H implementation; no source edits/fits.",
       "expected_artifact": "COEVO_H1_PROPOSAL_REVIEW_V3_2026-10-05.json",
       "verification": "One bounded H component; exactC7/K/M/R/worker/scorer unchanged, concrete matched benefit/allowlist and no permission expansion.",
-      "pass_condition": "No proposal-level scope/provenance issue; code still unimplemented.",
+      "pass_condition": "Prospective operational rebind scope passes; existing partial source remains unadmitted pending implementation/tests and final review.",
       "failure_action": "Preserve rejection, freeze a distinct correction; no Hsource under rejected contract.",
-      "time_bound_minutes": 8
+      "time_bound_minutes": 8,
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent v3 scope PASS ONLY; parsed nine-field operational rebind with held parity/identities/interface/protected sections exactly unchanged. Partial220line source requires later inseparability review.",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "COEVO_H1_PROPOSAL_REVIEW_V3_2026-10-05.json",
+        "evidence_sha256": "6ec2d13d4974b5fe6e3b4cd57daa67296c2d3900efea9b6096976bf2f4caf321"
+      }
     },
     {
       "id": "implementation",
@@ -34,7 +41,14 @@
       "write_paths": [
         "research/market_rsi/experiments/nfl_ingame_candidate_evidence_adapter.py",
         "research/market_rsi/experiments/test_nfl_ingame_candidate_evidence_adapter.py"
-      ]
+      ],
+      "result": {
+        "verdict": "pass",
+        "observed": "Exact assigned scope; frozen adapter f62a5459 and test b8ad2377, author97 integrated plus50 boundary synthetic tests PASS. No resident Train fits.245line component requires distinct inseparability review before live admission.",
+        "reviewer": "root integration verification of handoff; not final independent source admission",
+        "evidence_path": "AGENT_LOG_REPAIR_H1_IMPLEMENTER_2026-10-05.md",
+        "evidence_sha256": "52fe61d112ed683eb7ddcb4f7df71fd86e72b6d8166cb49ec38aba2be68afdbe"
+      }
     },
     {
       "id": "integration",
@@ -47,7 +61,14 @@
       "verification": "Source/runtime bindings and noactivecandidate; no scientificoldsource edits.",
       "pass_condition": "One integrated source ready for distinct non-author review.",
       "failure_action": "Reject unintended changes and preserve checkpoint.",
-      "time_bound_minutes": 10
+      "time_bound_minutes": 10,
+      "result": {
+        "verdict": "pass",
+        "observed": "Root read exact integrated source/test/diff;84 relevant synthetic methods PASS6.087s with required resource environment. Source locally checkpointed before distinct review; no old source, score or Train fit changed.",
+        "reviewer": "root; final non-author review remains separate",
+        "evidence_path": "AGENT_LOG_REPAIR_H1_SUPERVISOR_2026-10-05.md",
+        "evidence_sha256": "96be62fee285aafde345ebbf795c7bb1c8daddab94b9c22f71d0e690ad5acb27"
+      }
     },
     {
       "id": "source_review",
