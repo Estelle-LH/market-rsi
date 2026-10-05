@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "review_id": "learning-checkpoint-independent-code-scope-20261005-v1",
+  "reviewed_at_utc": "2026-10-05T20:38:00Z",
+  "verdict": "PASS",
+  "passed": true,
+  "scope": "CODE_ONLY_PROSPECTIVE_H_COMPONENT; NOT_SOURCE_OR_LIVE_RESEARCH_ADMISSION",
+  "repo": "/Users/estelle/Developer/market-rsi",
+  "parent_commit": "83461bd6d0011b72d6e364bde684b7f4a378331b",
+  "plan_path": "research/market_rsi/supervisor_harness/LEARNING_CHECKPOINT_UPGRADE_2026-10-05-v1.json",
+  "reviewed_plan_sha256": "ca94a389fc416296d79f615dd7096d96a87eece11376d0aaf7409c6b1784853e",
+  "author_axis": {
+    "author": "Human-approved Supervisor checkpoint protocol",
+    "change_axis": "H",
+    "component": "Existing checkpoint assessment and scheduler integration",
+    "not_claimed": "Autonomous R source evolution, scientific choice or prediction improvement"
+  },
+  "observed_baseline": {
+    "recorder_sha256": "1b3065ea2990e886ff05869d5c6afd39bc0e80ebb053436f51fd9d9cee0d148c",
+    "consumer_sha256": "b0c4c7a28f2eeb333587b9a53faa230a3b751d707433c0dc3b6f4d3e78e0e68e",
+    "credit_route_coupling": "Credit0 only invalid/cooldown-or-stop;1 only inconclusive/bounded_followup;2 support/continue or refute/stop-cooldown, with refute/branch opt-in v3.",
+    "archive_zero_credit_rejected": true,
+    "valid_zero_credit_independent_REVERT_parent_excluded": true,
+    "consumer_duplicates_legacy_credit_route_eligibility": true,
+    "positive_credit_bound_to_success_and_independent_review": true,
+    "legacy_duplicate_guard": "question_id/question_digest or same problem+evidence_bundle; no separate canonical finding/reuse record.",
+    "v3_valid_credit2_refute_branch_already_admitted": true,
+    "new_diagnostic": "Current synthetic actual functions reproduce valid0 exclusion without file writes, fits or consumer invocation."
+  },
+  "admitted_core_production_paths": [
+    "research/market_rsi/supervisor_harness/learning_checkpoint_assessment.py",
+    "research/market_rsi/supervisor_harness/continuous_discovery_batch.py"
+  ],
+  "admitted_core_test_and_log_paths": [
+    "research/market_rsi/supervisor_harness/test_learning_checkpoint_assessment.py",
+    "research/market_rsi/supervisor_harness/test_continuous_discovery_batch.py",
+    "research/market_rsi/supervisor_harness/AGENT_LOG_LEARNING_CHECKPOINT_IMPLEMENTER_2026-10-05.md"
+  ],
+  "later_separate_integration_paths": [
+    "research/market_rsi/supervisor_harness/account_controller_feedback_consumer.py",
+    "research/market_rsi/supervisor_harness/test_account_controller_feedback_consumer.py"
+  ],
+  "required_source_admission_checks": [
+    "Explicit new opt-in schema/version only. Legacy v1-v3 initialization, event validation, canonical replay/state hashes, public API defaults and old packets/claims remain identical; no silent migration or relabeling old REFUTED/REVERT/credit.",
+    "Separate execution validity, frozen predictor replacement, evidence-based learning assessment and development/branch disposition. KEEP alone updates incumbent; credit never adds to Brier, overrides fixed judge or implies learning success.",
+    "Valid zero-credit/non-improving REVERT may retain code and become a parent for a justified distinct bounded question. Invalid/leaked/missing/failed execution is not valid prediction evidence; verified diagnosis/repair learning requires its own specific reviewed artifacts, not automatic reward for failure or code existence.",
+    "Learning0 for activity/no new verifiable evidence,1 for independently verifiable relevant nonduplicate finding,2 for a valid key-hypothesis test or validated reusable research capability; gains, significance, sign stability, model/paper/call counts or word count alone do not determine credit.",
+    "Stable canonical finding identity and evidence references prevent re-crediting the same finding under fresh question/source names. Preserve duplicates as history with zero new credit; truthful reuse records cite an existing accepted finding plus concrete later action/evidence and distinguish proposed from observed/validated reuse.",
+    "Reasonable first small hypothesis needs neither positive prior score nor prior learning credit. Its bounded allowance is durable and consumed by a scheduled/failed attempt; prevent alias-based allowance reset, exact recipe repeats, restoring consumed legacy C2 or bypassing global/per-pilot caps.",
+    "Keep global active pool capacity2-3 and method-diverse selection; do not mechanically choose top scores/credit or retain three descendants per parent. Exploration eligibility is not mandatory active membership or automatic continuation of a refuted exact question.",
+    "Core receipt/metadata bound to independent result/evidence/source/predeclared question and trusted Supervisor verification, not Controller self-rating. New replay checks must validate exact strict fields/types/finite values/order/hash/idempotence.",
+    "Actual new assessment and reuse reach canonical feedback and consumer parent eligibility, not a standalone unconsumed log. Consumer integration follows independently admitted core; legacy transport/schema/once-claim/source checks/original completion recovery remain unchanged.",
+    "Original clock/cap/scope guards remain fixed and all old ledgers/records/artifacts are read-only. New exploratory or reuse flags cannot grant data/network/model/provider/release authority or reopen a closed budget.",
+    "Matched synthetic success/failure/repaired-child/restart/history tests plus complete inherited recorder suite. Pure legacy closed-chain replay must reproduce old states/hashes without filesystem recovery writes; no real fit/call is needed or admitted here.",
+    "Freeze exact modules/tests and measured diff before final core review; later consumer review binds exact integrated snapshot. Unexpected file/dependency/tool/runtime/evaluator/authority change rejects; preserve failed child/source evidence instead of rewriting history."
+  ],
+  "smallness": {
+    "scope_admitted": "At most two core production modules, one checkpoint-assessment/scheduling H component, exact declared test/log paths.",
+    "warning_trigger": "More than about200 changed production lines or more than2 modules requires explicit final semantic inseparability judgment or split; no cosmetic compression/removal of guards.",
+    "prospective_rationale": "A pure assessment helper plus existing recorder can be inseparable because persistence, replay and scheduling must share one validated assessment. No final line-count or source verdict issued before actual diff.",
+    "consumer_checkpoint": "Subsequent single consumer integration is separately checkpointed/reviewed; the three-module final integration does not waive the core warning or merge scientific R/predictor changes.",
+    "forbidden": "New general reward service, reinforcement learning, large harness restructuring, research method menu or per-round authorization/governance expansion."
+  },
+  "fixed_protected_bindings": {
+    "research/market_rsi/minimal_prediction_loop/proper_scoring.py": "64165cbceb4bcba6d03b6b42402ea7a47790c9a57f9280b15bfe2fe57becc06b",
+    "research/market_rsi/minimal_prediction_loop/probability_contract.py": "7ba4a32d3c3a2ab80ac17ca6c18ea29fe864b958de8a81ac2be59dba121e9d74",
+    "research/market_rsi/supervisor_harness/opened_train_discovery_worker.py": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360",
+    "research/market_rsi/supervisor_harness/AGENT_LOG_REPAIR_D5_REVIEWER_2026-10-05.md": "efcba3eb78b5c8f9113e158b110ba32c0ae2c3f3b37120b2d94f5156f419a288",
+    "old_final_memory.json": "eb023a542b21db4bed85f96c165476387e4fedb544d80aeb355dba539c334dc9",
+    "old_batch_terminal_v2.json": "7ef60d9994f8ce779842252af1203691aadd2e5200c31a2b95f05f40748ffdd8"
+  },
+  "current_closed_budget": {
+    "attempts": 6,
+    "fits": 24,
+    "live_admission": false,
+    "old_cap_reset": false
+  },
+  "observed_state_caveat": "Protected RESEARCH_STATE.md still describes an expired eight-hour live window; current immutable completed-batch ledgers/reviews are authoritative for this code-only work. It is not edited or used to revive64/256.",
+  "actual_checks": {
+    "pure_synthetic_baseline_probe_passed": true,
+    "production_files_written": 0,
+    "old_artifacts_written": 0,
+    "train_fits": 0,
+    "model_calls": 0,
+    "optimizer_calls": 0,
+    "network_calls": 0,
+    "test_suite_status": "No new/full test suite claimed; exact final core and integrated tests are future required steps."
+  },
+  "evidence_level": "Prospective code scope only; baseline defect independently reproduced. Requested future L2 synthetic matched operational separation, not L3 live learning/prediction benefit or L4 mechanism superiority.",
+  "limitations": [
+    "No source exists/admitted yet; final exact-source review remains required.",
+    "No learned capability benefit, predictive gain, same-model mechanism comparison, serving-version authentication or zero-human-intervention claim.",
+    "Word rendering/QA belongs to Supervisor document step, not certified by this code-only scope."
+  ]
+}
