@@ -1669,5 +1669,264 @@ class ContinuousDiscoveryBatchTests(unittest.TestCase):
         self.assertEqual(state["branches"][0]["execution_outcome"], "succeeded")
 
 
+class LearningCheckpointRecorderTests(unittest.TestCase):
+    """Prospective lifecycle and matched restart fixtures; no experiment execution."""
+
+    def setUp(self):
+        from supervisor_harness.test_learning_checkpoint_assessment import checkpoint
+        self.checkpoint = checkpoint
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.root = Path(self.temporary.name).resolve() / "v4"
+        self.helpers = ContinuousDiscoveryBatchTests()
+
+    def make(self, *, root=None, archived=None, maximum=6, capacity=2):
+        batch = ContinuousDiscoveryBatch(root or self.root, allow_temporary=True,
+                                         test_clock=lambda: BASE, allow_test_clock=True)
+        batch.initialize(batch_id="prospective-learning-v4", start_utc=BASE,
+                         deadline_utc=BASE + timedelta(hours=1), max_attempts=maximum,
+                         initial_incumbent={"candidate_id": "market", "candidate_sha256": sha("market-baseline"),
+                                            "scorecard_sha256": sha("market-card"), "review_sha256": ZERO_SHA256},
+                         active_pool_capacity=capacity, learning_checkpoint_version=1,
+                         initial_archived_parents=archived)
+        return batch
+
+    def pool(self, batch, one, two, *, parent=None, minute=1):
+        return batch.select_controller_pool([
+            self.helpers.pool_member(one, parent=parent),
+            self.helpers.pool_member(two, allocation="exploration", method_family="tree")],
+            now=BASE + timedelta(minutes=minute))
+
+    def reviewed(self, batch, label, minute, *, outcome="succeeded", independent=True, validity=None):
+        batch.mark_implementation_ready(label, runner_sha256=sha(label + ":runner"), spec_sha256=sha(label + ":spec"), now=BASE + timedelta(minutes=minute))
+        batch.claim_execution(label, claim_id=label + "-claim", now=BASE + timedelta(minutes=minute, seconds=1))
+        batch.mark_execution_terminal(label, claim_id=label + "-claim", outcome=outcome,
+                                      execution_receipt_sha256=sha(label + ":execution"), now=BASE + timedelta(minutes=minute, seconds=2))
+        return batch.record_result_review(label, decision="REVERT", scorecard_sha256=sha(label + ":card"),
+                                          review_sha256=sha(label + ":review"), independently_reviewed=independent,
+                                          performance_validity=validity or self.checkpoint(label, status="valid" if outcome == "succeeded" else "invalid")["validity"],
+                                          now=BASE + timedelta(minutes=minute, seconds=3))
+
+    def finish(self, batch, label, minute, *, assessment=None, outcome="succeeded"):
+        self.reviewed(batch, label, minute, outcome=outcome, validity=(assessment or self.checkpoint(label))["validity"])
+        batch.record_learning_checkpoint(label, assessment or self.checkpoint(label), now=BASE + timedelta(minutes=minute, seconds=4))
+        return batch.mark_controller_feedback_ready(label, now=BASE + timedelta(minutes=minute, seconds=5))
+
+    def archive(self, source, label, consumed=0):
+        branch = next(b for b in source["branches"] if b["attempt_id"] == label)
+        return {"candidate_id": branch["candidate_id"], "candidate_sha256": branch["runner_sha256"],
+                "source_batch_id": source["batch_id"], "source_attempt_id": label,
+                "archive_manifest_sha256": sha(label + ":archive"), "independent_review_sha256": branch["review_sha256"],
+                "authority_snapshot_sha256": sha(label + ":authority"), "problem_id": "synthetic-question",
+                "question_digest_sha256": branch["question_digest_sha256"], "evidence_bundle_sha256": sha(label + ":evidence"),
+                "research_credit": branch["research_credit"], "research_outcome": branch["research_outcome"],
+                "route_action": branch["route_action"], "authority_granted": False,
+                "learning_checkpoint": branch["learning_checkpoint"], "consumed_followups": consumed,
+                "consumption_receipt_sha256": sha(label + ":consumption"),
+                "consumed_question_sha256s": [sha(label + ":next-question")] if consumed else []}
+
+    def test_valid_zero_revert_feedback_pool_lineage_consumption_and_restart(self):
+        batch = self.make()
+        self.pool(batch, "one", "two")
+        self.finish(batch, "one", 2)
+        state = self.finish(batch, "two", 3, assessment=self.checkpoint("two", action="stop"))
+        packet = state["branches"][0]["feedback_packet"]
+        self.assertEqual(packet["schema"], discovery_module.EVIDENCE_SCHEMA_V4)
+        self.assertEqual(packet["protocol_version"], 4)
+        self.assertEqual(packet["learning_checkpoint"]["prediction_decision"], "REVERT")
+        self.assertEqual(state["incumbent"]["candidate_sha256"], sha("market-baseline"))
+        member = self.helpers.pool_member("three", parent=sha("one:runner"))
+        member["question_digest_sha256"] = sha("one:next-question")
+        selection = batch.select_controller_pool([member, self.helpers.pool_member("four", allocation="exploration", method_family="tree")], now=BASE + timedelta(minutes=4))
+        self.assertEqual(selection["bounded_followups_consumed"][sha("one:allowance")], 1)
+        self.assertEqual(selection["branches"][2]["research_parent_sha256"], sha("one:runner"))
+        self.assertEqual(selection["branches"][2]["comparison_incumbent_sha256"], sha("market-baseline"))
+        batch.snapshot_path.unlink()
+        self.assertEqual(ContinuousDiscoveryBatch(self.root, allow_temporary=True).snapshot(), selection)
+        self.finish(batch, "three", 5, assessment=self.checkpoint("three", status="invalid", action="stop"), outcome="failed")
+        self.finish(batch, "four", 6, assessment=self.checkpoint("four", action="stop"))
+        self.assertNotIn(sha("one:runner"), [p["candidate_sha256"] for p in batch.pool_selection_hint()["ranked_research_parents"]])
+
+    def test_checkpoint_dedup_idempotence_reuse_feedback_and_credit_do_not_promote(self):
+        batch = self.make()
+        self.pool(batch, "one", "two")
+        first = self.checkpoint("one", credit=2, action="branch")
+        self.finish(batch, "one", 2, assessment=first)
+        second = self.checkpoint("two", credit=2)
+        second["learning"]["finding_sha256"] = sha("one:finding")
+        second["reuse"] = {"finding_sha256": sha("one:finding"), "status": "observed", "action_sha256": sha("reuse-action"),
+                          "evidence_sha256": sha("actual-reuse"), "review_sha256": sha("reuse-review"),
+                          "benefit": "unmeasured", "benefit_evidence_sha256": None}
+        self.reviewed(batch, "two", 3)
+        saved = batch.record_learning_checkpoint("two", second, now=BASE + timedelta(minutes=3, seconds=4))
+        self.assertEqual(saved["branches"][1]["research_credit"], 0)
+        self.assertEqual(batch.record_learning_checkpoint("two", second, now=BASE + timedelta(minutes=3, seconds=4)), saved)
+        modified = json.loads(json.dumps(second))
+        modified["learning"]["reason"] = "different"
+        with self.assertRaises(DiscoveryBatchError):
+            batch.record_learning_checkpoint("two", modified, now=BASE + timedelta(minutes=3, seconds=4))
+        final = batch.mark_controller_feedback_ready("two", now=BASE + timedelta(minutes=3, seconds=5))
+        self.assertEqual(final["accepted_finding_sha256s"], [sha("one:finding")])
+        self.assertEqual(final["branches"][1]["feedback_packet"]["learning_checkpoint"]["reuse"]["benefit"], "unmeasured")
+        self.assertEqual(final["incumbent"]["candidate_sha256"], sha("market-baseline"))
+        self.assertGreaterEqual(batch.pool_selection_hint()["ranked_research_parents"][0]["research_credit"], 2)
+
+    def test_verified_failure_repair_learning_is_not_forecast_parent(self):
+        batch = self.make()
+        self.pool(batch, "one", "two")
+        state = self.finish(batch, "one", 2, outcome="failed", assessment=self.checkpoint("one", credit=2, status="invalid", kind="failure_repair"))
+        self.assertEqual(state["branches"][0]["research_credit"], 2)
+        self.assertEqual(state["failed_attempts"], 1)
+        self.assertNotIn(sha("one:runner"), [p["candidate_sha256"] for p in batch.pool_selection_hint()["ranked_research_parents"]])
+
+    def test_archive_zero_credit_and_consumed_legacy_allowance_cannot_reset(self):
+        batch = self.make()
+        self.pool(batch, "one", "two")
+        self.finish(batch, "one", 2)
+        state = self.finish(batch, "two", 3, assessment=self.checkpoint("two", action="stop"))
+        archived = self.archive(state, "one")
+        fresh = self.make(root=Path(self.temporary.name).resolve() / "archive-open", archived=[archived])
+        self.assertIn(sha("one:runner"), [p["candidate_sha256"] for p in fresh.pool_selection_hint()["ranked_research_parents"]])
+        consumed = self.make(root=Path(self.temporary.name).resolve() / "archive-consumed", archived=[self.archive(state, "one", 1)])
+        self.assertNotIn(sha("one:runner"), [p["candidate_sha256"] for p in consumed.pool_selection_hint()["ranked_research_parents"]])
+        member = self.helpers.pool_member("child", parent=sha("one:runner"))
+        member["question_digest_sha256"] = sha("one:next-question")
+        with self.assertRaises(DiscoveryBatchError):
+            consumed.select_controller_pool([member, self.helpers.pool_member("control", allocation="exploration", method_family="tree")], now=BASE + timedelta(minutes=1))
+        malformed = dict(archived)
+        malformed.pop("consumption_receipt_sha256")
+        with self.assertRaises(DiscoveryBatchError):
+            self.make(root=Path(self.temporary.name).resolve() / "archive-no-receipt", archived=[malformed])
+
+    def test_specific_followup_pool_bounds_and_no_legacy_path_in_v4(self):
+        batch = self.make(maximum=2)
+        self.pool(batch, "one", "two")
+        self.reviewed(batch, "one", 2)
+        with self.assertRaises(DiscoveryBatchError):
+            batch.mark_controller_feedback_ready("one", now=BASE + timedelta(minutes=2, seconds=4))
+        state = batch.record_learning_checkpoint("one", self.checkpoint("one"), now=BASE + timedelta(minutes=2, seconds=4))
+        self.assertEqual(state["attempts_claimed"], 1)
+        batch.mark_controller_feedback_ready("one", now=BASE + timedelta(minutes=2, seconds=5))
+        self.finish(batch, "two", 3, assessment=self.checkpoint("two", action="stop"))
+        with self.assertRaises(BatchStoppedError):
+            self.pool(batch, "three", "four", minute=4)
+        self.assertEqual(batch.snapshot()["attempts_claimed"], 2)
+
+    def test_leaking_keep_rejects_before_incumbent_and_checkpoint_cannot_reclassify(self):
+        batch = self.make()
+        self.pool(batch, "one", "two")
+        self.reviewed(batch, "one", 2)
+        before = batch.snapshot()
+        reclassified = self.checkpoint("one")
+        reclassified["validity"]["reason"] = "Rewritten original independent classification."
+        with self.assertRaisesRegex(DiscoveryBatchError, "original independent"):
+            batch.record_learning_checkpoint("one", reclassified, now=BASE + timedelta(minutes=2, seconds=4))
+        self.assertEqual(batch.snapshot(), before)
+        batch.record_learning_checkpoint("one", self.checkpoint("one"), now=BASE + timedelta(minutes=2, seconds=4))
+        batch.mark_controller_feedback_ready("one", now=BASE + timedelta(minutes=2, seconds=5))
+        batch.mark_implementation_ready("two", runner_sha256=sha("two:runner"), spec_sha256=sha("two:spec"), now=BASE + timedelta(minutes=3))
+        batch.claim_execution("two", claim_id="two-claim", now=BASE + timedelta(minutes=3, seconds=1))
+        batch.mark_execution_terminal("two", claim_id="two-claim", outcome="succeeded", execution_receipt_sha256=sha("two:execution"), now=BASE + timedelta(minutes=3, seconds=2))
+        before = batch.snapshot()
+        leaked = self.checkpoint("two")["validity"]
+        leaked["leakage_detected"] = True
+        with self.assertRaisesRegex(DiscoveryBatchError, "nonleaking"):
+            batch.record_result_review("two", decision="KEEP", scorecard_sha256=sha("two:card"), review_sha256=sha("two:review"),
+                                       independently_reviewed=True, performance_validity=leaked, now=BASE + timedelta(minutes=3, seconds=3))
+        self.assertEqual(batch.snapshot(), before)
+        self.assertEqual(batch.snapshot()["incumbent"]["candidate_sha256"], sha("market-baseline"))
+
+    def test_alias_allowance_and_wrong_question_are_rejected_without_writes(self):
+        batch = self.make()
+        self.pool(batch, "one", "two")
+        self.finish(batch, "one", 2)
+        aliased = self.checkpoint("two")
+        aliased["exploration"]["allowance_id_sha256"] = sha("one:allowance")
+        state = self.finish(batch, "two", 3, assessment=aliased)
+        one = self.helpers.pool_member("child-one", parent=sha("one:runner"))
+        one["question_digest_sha256"] = sha("one:next-question")
+        two = self.helpers.pool_member("child-two", parent=sha("two:runner"), allocation="exploration", method_family="tree")
+        two["question_digest_sha256"] = sha("two:next-question")
+        before = batch.snapshot()
+        with self.assertRaisesRegex(DiscoveryBatchError, "aliased bounded"):
+            batch.select_controller_pool([one, two], now=BASE + timedelta(minutes=4))
+        self.assertEqual(batch.snapshot(), before)
+        one["question_digest_sha256"] = sha("unreviewed-question")
+        with self.assertRaisesRegex(DiscoveryBatchError, "reviewed question"):
+            batch.select_controller_pool([one, self.helpers.pool_member("control", allocation="exploration", method_family="tree")], now=BASE + timedelta(minutes=4))
+        self.assertEqual(batch.snapshot(), before)
+        archived_one = self.archive(state, "one", 1)
+        archived_two = self.archive(state, "two", 0)
+        restored = self.make(root=Path(self.temporary.name).resolve() / "aliased-archive", archived=[archived_one, archived_two])
+        self.assertEqual(len(restored.pool_selection_hint()["ranked_research_parents"]), 1)
+
+    def test_credit_influences_budget_hint_not_mandatory_active_membership(self):
+        batch = self.make(capacity=3, maximum=9)
+        selected = batch.select_controller_pool([
+            self.helpers.pool_member("one"), self.helpers.pool_member("two", method_family="tree"),
+            self.helpers.pool_member("three", allocation="exploration", method_family="calibration")], now=BASE + timedelta(minutes=1))
+        self.assertEqual(len(selected["active_attempt_ids"]), 3)
+        self.finish(batch, "one", 2, assessment=self.checkpoint("one", credit=1, action="continue"))
+        self.finish(batch, "two", 3, assessment=self.checkpoint("two", action="stop"))
+        self.finish(batch, "three", 4, assessment=self.checkpoint("three", action="stop"))
+        hint = batch.pool_selection_hint()
+        self.assertEqual(hint["recommended_active_slots"], 2)
+        self.assertEqual(hint["ranked_research_parents"][0]["research_credit"], 1)
+        # Eligibility does not force inclusion: choose two distinct baseline questions.
+        selection = self.pool(batch, "four", "five", minute=5)
+        self.assertTrue(all(b["research_parent_sha256"] == sha("market-baseline") for b in selection["branches"][-2:]))
+        self.finish(batch, "four", 6, assessment=self.checkpoint("four", credit=2, action="branch"))
+        final = self.finish(batch, "five", 7, assessment=self.checkpoint("five", action="stop"))
+        self.assertEqual(batch.pool_selection_hint()["recommended_active_slots"], 3)
+        self.assertEqual(final["incumbent"]["candidate_sha256"], sha("market-baseline"))
+
+    def test_feedback_seal_replay_and_prospective_assessment_do_not_enter_legacy(self):
+        batch = self.make()
+        self.pool(batch, "one", "two")
+        self.finish(batch, "one", 2)
+        with batch._locked():
+            records = batch._read_records()
+        altered = json.loads(json.dumps(records))
+        altered[-1]["payload"]["packet"]["learning_checkpoint"]["learning"]["credit"] = 2
+        with self.assertRaisesRegex(DiscoveryBatchError, "packet changed"):
+            batch._replay(altered)
+        legacy_root = Path(self.temporary.name).resolve() / "legacy"
+        helper = ContinuousDiscoveryBatchTests()
+        helper.root = legacy_root
+        legacy = helper.make_v2_batch()
+        before = legacy.snapshot()
+        self.assertNotIn("learning_checkpoint_version", before)
+        with self.assertRaisesRegex(DiscoveryBatchError, "explicit v4"):
+            legacy.record_learning_checkpoint("one", self.checkpoint("one"), now=BASE)
+        self.assertEqual(legacy.snapshot(), before)
+
+    def test_pending_bounded_question_is_chosen_by_controller_after_feedback(self):
+        batch = self.make(maximum=4)
+        self.pool(batch, "one", "two")
+        pending = self.checkpoint("one")
+        pending["exploration"]["next_question_sha256"] = None
+        self.finish(batch, "one", 2, assessment=pending)
+        state = self.finish(batch, "two", 3, assessment=self.checkpoint("two", action="stop"))
+        packet = state["branches"][0]["feedback_packet"]
+        self.assertIsNone(packet["learning_checkpoint"]["exploration"]["next_question_sha256"])
+        child = self.helpers.pool_member("controller-chosen-child", parent=sha("one:runner"))
+        control = self.helpers.pool_member("control", allocation="exploration", method_family="tree")
+        repeated = dict(child, question_digest_sha256=sha("one:question"))
+        before = batch.snapshot()
+        with self.assertRaisesRegex(DiscoveryBatchError, "question was already"):
+            batch.select_controller_pool([repeated, control], now=BASE + timedelta(minutes=4))
+        self.assertEqual(batch.snapshot(), before)
+        selected = batch.select_controller_pool([child, control], now=BASE + timedelta(minutes=4))
+        saved = selected["branches"][2]
+        self.assertEqual(saved["controller_decision_sha256"], child["controller_decision_sha256"])
+        self.assertEqual(saved["question_digest_sha256"], child["question_digest_sha256"])
+        self.assertEqual(saved["predeclared_rule_sha256"], child["predeclared_rule_sha256"])
+        self.assertEqual(selected["bounded_followups_consumed"][sha("one:allowance")], 1)
+        self.finish(batch, "controller-chosen-child", 5, assessment=self.checkpoint("controller-chosen-child", action="stop"))
+        self.finish(batch, "control", 6, assessment=self.checkpoint("control", action="stop"))
+        with self.assertRaises(BatchStoppedError):
+            self.pool(batch, "over-cap-one", "over-cap-two", minute=7)
+
+
 if __name__ == "__main__":
     unittest.main()

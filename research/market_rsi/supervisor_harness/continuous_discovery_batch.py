@@ -25,6 +25,10 @@ import tempfile
 from typing import Any, Callable, Iterator, Mapping
 
 from data_scientist_harness import co_evolution_loop as micro_evolution
+from supervisor_harness.learning_checkpoint_assessment import (
+    EVIDENCE_SCHEMA_V4, assess_checkpoint, parent_eligibility,
+    validate_saved_checkpoint, validate_validity,
+)
 
 
 SCHEMA = "market_rsi_continuous_discovery_batch_v1"
@@ -230,6 +234,46 @@ def _archived_parent(value: object) -> dict[str, Any]:
         "route_action": action,
         "authority_granted": False,
     }
+
+
+def _archived_parent_v4(value: object) -> dict[str, Any]:
+    """Prospective archive import explicitly carries original evidence/consumption."""
+    keys = {"candidate_id", "candidate_sha256", "source_batch_id", "source_attempt_id",
+            "archive_manifest_sha256", "independent_review_sha256", "authority_snapshot_sha256",
+            "problem_id", "question_digest_sha256", "evidence_bundle_sha256", "research_credit",
+            "research_outcome", "route_action", "authority_granted", "learning_checkpoint",
+            "consumed_followups", "consumption_receipt_sha256", "consumed_question_sha256s"}
+    item = _exact_mapping(value, keys, "v4 archived parent")
+    checked = dict(item)
+    for field in ("candidate_id", "source_batch_id", "source_attempt_id", "problem_id"):
+        checked[field] = _identifier(item[field], field)
+    for field in keys - {"candidate_id", "source_batch_id", "source_attempt_id", "problem_id",
+                         "research_credit", "research_outcome", "route_action", "authority_granted",
+                         "learning_checkpoint", "consumed_followups", "consumed_question_sha256s"}:
+        checked[field] = _sha(item[field], field)
+    if item["authority_granted"] is not False:
+        raise DiscoveryBatchError("archived evidence cannot grant authority")
+    if type(item["consumed_followups"]) is not int or item["consumed_followups"] not in {0, 1}:
+        raise DiscoveryBatchError("archive must preserve bounded allowance consumption")
+    questions = item["consumed_question_sha256s"]
+    if not isinstance(questions, list) or len(set(questions)) != len(questions):
+        raise DiscoveryBatchError("archive requires distinct consumed questions")
+    checked["consumed_question_sha256s"] = [_sha(q, "consumed question") for q in questions]
+    if not isinstance(item["learning_checkpoint"], dict):
+        raise DiscoveryBatchError("archive learning checkpoint must be an object")
+    branch = {"review_decision": item["learning_checkpoint"].get("prediction_decision"),
+              "review_sha256": item["independent_review_sha256"], "execution_outcome": "succeeded",
+              "independently_reviewed": True, "question_digest_sha256": item["question_digest_sha256"]}
+    try:
+        checked["learning_checkpoint"] = validate_saved_checkpoint(item["learning_checkpoint"], branch)
+    except (ValueError, TypeError, KeyError) as exc:
+        raise DiscoveryBatchError(str(exc)) from exc
+    assessment = checked["learning_checkpoint"]
+    if (type(item["research_credit"]) is not int or item["research_credit"] != assessment["learning"]["credit"]
+            or item["route_action"] != assessment["exploration"]["action"]
+            or item["research_outcome"] not in RESEARCH_OUTCOMES):
+        raise DiscoveryBatchError("archive assessment projections changed")
+    return checked
 
 
 def _utc(value: str | datetime, label: str) -> datetime:
@@ -800,15 +844,44 @@ class ContinuousDiscoveryBatch:
     @staticmethod
     def _is_v2(state: Mapping[str, Any]) -> bool:
         # v3 retains the v2 pool protocol, with an explicit final-slot policy.
-        return state.get("scheduling_version") in {2, 3}
+        return state.get("scheduling_version") in {2, 3, 4}
 
     @staticmethod
     def _singleton_allowed(state: Mapping[str, Any]) -> bool:
-        return (state.get("scheduling_version") == 3
+        return (state.get("scheduling_version") in {3, 4}
                 and state["max_attempts"] - state["attempts_claimed"] == 1)
 
     @classmethod
     def _eligible_parent_records(cls, state: dict[str, Any]) -> list[dict[str, Any]]:
+        if state.get("scheduling_version") == 4:
+            ranked = []
+            seen = set()
+            sources = [(p, p["candidate_sha256"], p["source_batch_id"], p["source_attempt_id"])
+                       for p in state["initial_archived_parents"]]
+            sources += [(b, b.get("runner_sha256"), state["batch_id"], b["attempt_id"])
+                        for b in reversed(state["branches"]) if b.get("learning_checkpoint") is not None]
+            for source, candidate, batch_id, attempt_id in sources:
+                assessment = source["learning_checkpoint"]
+                allowance = assessment["exploration"]["allowance_id_sha256"]
+                remaining = (1 - state["bounded_followups_consumed"].get(allowance, 0)
+                             if allowance is not None else None)
+                record = {"candidate_id": source["candidate_id"], "candidate_sha256": candidate,
+                          "source_batch_id": batch_id, "source_attempt_id": attempt_id,
+                          "research_credit": source["research_credit"], "research_outcome": source["research_outcome"],
+                          "route_action": source["route_action"], "followups_remaining": remaining,
+                          "learning_checkpoint": assessment, "question_digest_sha256": source["question_digest_sha256"],
+                          "execution_outcome": source.get("execution_outcome", "succeeded"),
+                          "independently_reviewed": source.get("independently_reviewed", True),
+                          "review_sha256": source.get("review_sha256", source.get("independent_review_sha256"))}
+                if candidate is not None and candidate not in seen and parent_eligibility(record, 4):
+                    seen.add(candidate)
+                    ranked.append(record)
+            baseline = state["incumbent_history"][0]
+            if baseline["candidate_sha256"] not in seen:
+                ranked.append({"candidate_id": baseline["candidate_id"], "candidate_sha256": baseline["candidate_sha256"],
+                               "source_batch_id": state["batch_id"], "source_attempt_id": None, "research_credit": 0,
+                               "research_outcome": "baseline", "route_action": "batch_start", "followups_remaining": None})
+            return sorted(ranked, key=lambda p: (-p["research_credit"], p["candidate_sha256"]))
         ranked: list[dict[str, Any]] = []
         seen: set[str] = set()
         for archived in state.get("initial_archived_parents", []):
@@ -1004,18 +1077,22 @@ class ContinuousDiscoveryBatch:
                 incumbent=incumbent,
                 incumbent_history=[incumbent],
             )
-        elif event in {"initialize_v2", "initialize_v3"}:
+        elif event in {"initialize_v2", "initialize_v3", "initialize_v4"}:
             keys = {
                 "batch_id", "start_utc", "deadline_utc", "max_attempts",
                 "boundary_flags", "initial_incumbent", "active_pool_capacity",
                 "exploration_reserve_fraction", "exploration_reserve_reason",
                 "initial_archived_parents",
             }
-            if event == "initialize_v3":
+            if event in {"initialize_v3", "initialize_v4"}:
                 keys.add("scheduling_policy")
+            if event == "initialize_v4":
+                keys.add("learning_checkpoint_version")
             item = _exact_mapping(payload, keys, "pool batch initialization")
-            if event == "initialize_v3" and item["scheduling_policy"] != FINAL_SINGLETON_POLICY:
+            if event in {"initialize_v3", "initialize_v4"} and item["scheduling_policy"] != FINAL_SINGLETON_POLICY:
                 raise DiscoveryBatchError("unknown scheduling policy")
+            if event == "initialize_v4" and (type(item["learning_checkpoint_version"]) is not int or item["learning_checkpoint_version"] != 1):
+                raise DiscoveryBatchError("unknown learning checkpoint version")
             if state["initialized"]:
                 raise DiscoveryBatchError("batch initialized more than once")
             start = _utc_text(item["start_utc"], "batch start")
@@ -1046,7 +1123,8 @@ class ContinuousDiscoveryBatch:
             raw_archived = item["initial_archived_parents"]
             if not isinstance(raw_archived, list):
                 raise DiscoveryBatchError("initial archived parents must be a list")
-            archived = [_archived_parent(parent) for parent in raw_archived]
+            archive_validator = _archived_parent_v4 if event == "initialize_v4" else _archived_parent
+            archived = [archive_validator(parent) for parent in raw_archived]
             for field in (
                 "candidate_sha256", "archive_manifest_sha256",
                 "question_digest_sha256",
@@ -1093,6 +1171,24 @@ class ContinuousDiscoveryBatch:
             )
             if event == "initialize_v3":
                 state.update(scheduling_version=3, scheduling_policy=FINAL_SINGLETON_POLICY)
+            if event == "initialize_v4":
+                consumed = {}
+                findings = []
+                credited_findings = []
+                for parent in archived:
+                    checkpoint = parent["learning_checkpoint"]
+                    allowance = checkpoint["exploration"]["allowance_id_sha256"]
+                    if allowance is not None:
+                        consumed[allowance] = max(consumed.get(allowance, 0), parent["consumed_followups"])
+                    if checkpoint["learning"]["requested_credit"] > 0:
+                        findings.append(checkpoint["learning"]["finding_sha256"])
+                    if checkpoint["learning"]["credit"] > 0:
+                        credited_findings.append(checkpoint["learning"]["finding_sha256"])
+                if len(set(credited_findings)) != len(credited_findings):
+                    raise DiscoveryBatchError("archive duplicates credited canonical findings")
+                state.update(scheduling_version=4, scheduling_policy=FINAL_SINGLETON_POLICY,
+                             learning_checkpoint_version=1, learning_checkpoints=[],
+                             accepted_finding_sha256s=sorted(set(findings)), bounded_followups_consumed=consumed)
         elif not state["initialized"]:
             raise DiscoveryBatchError("batch event precedes initialization")
         elif event == "micro_evolution":
@@ -1108,7 +1204,7 @@ class ContinuousDiscoveryBatch:
             if not isinstance(arguments, dict):
                 raise DiscoveryBatchError("evolution arguments must be an object")
             if action == "initialize":
-                if current is not None or state["branches"] or state.get("scheduling_version") != 3:
+                if current is not None or state["branches"] or state.get("scheduling_version") not in {3, 4}:
                     raise DiscoveryBatchError("configure evolution once on a fresh v3 batch")
                 operation = lambda: micro_evolution.initialize_micro_evolution(arguments)
             else:
@@ -1185,6 +1281,7 @@ class ContinuousDiscoveryBatch:
                     )
             if any(
                 count > 1
+                and state.get("scheduling_version") != 4
                 and eligible_parents.get(parent_sha, {}).get("research_credit") == 1
                 for parent_sha, count in selected_parent_counts.items()
             ):
@@ -1199,6 +1296,23 @@ class ContinuousDiscoveryBatch:
                 parent["question_digest_sha256"]
                 for parent in state["initial_archived_parents"]
             )
+            if state.get("scheduling_version") == 4:
+                used_questions.update(q for p in state["initial_archived_parents"] for q in p["consumed_question_sha256s"])
+                bounded_parents = {sha: p for sha, p in eligible_parents.items() if p["followups_remaining"] == 1}
+                if any(selected_parent_counts.get(sha, 0) > 1 for sha in bounded_parents):
+                    raise DiscoveryBatchError("bounded parent permits one distinct follow-up")
+                used_allowances = set()
+                for selection in selections:
+                    parent = bounded_parents.get(selection.get("research_parent_sha256"))
+                    if parent is not None:
+                        route = parent["learning_checkpoint"]["exploration"]
+                        if route["allowance_id_sha256"] in used_allowances:
+                            raise DiscoveryBatchError("aliased bounded allowance was selected twice")
+                        used_allowances.add(route["allowance_id_sha256"])
+                        if route["next_question_sha256"] is not None and selection.get("question_digest_sha256") != route["next_question_sha256"]:
+                            raise DiscoveryBatchError("bounded follow-up changed its independently reviewed question")
+                        if selection.get("resource_hint", {}).get("max_attempts") != 1:
+                            raise DiscoveryBatchError("bounded follow-up permits one small attempt")
             attempt_ids: list[str] = []
             pool_hypotheses: set[str] = set()
             pool_questions: set[str] = set()
@@ -1306,6 +1420,12 @@ class ContinuousDiscoveryBatch:
             state["branches"].extend(new_branches)
             state["active_attempt_ids"] = attempt_ids
             state["pool_generation"] = item["pool_generation"]
+            if state.get("scheduling_version") == 4:
+                for selection in selections:
+                    parent = bounded_parents.get(selection["research_parent_sha256"])
+                    if parent is not None:
+                        allowance = parent["learning_checkpoint"]["exploration"]["allowance_id_sha256"]
+                        state["bounded_followups_consumed"][allowance] = 1
         elif event == "controller_selected":
             item = _exact_mapping(
                 payload,
@@ -1453,7 +1573,7 @@ class ContinuousDiscoveryBatch:
                 {
                     "attempt_id", "decision", "scorecard_sha256", "review_sha256",
                     "independently_reviewed",
-                },
+                } | ({"performance_validity"} if state.get("scheduling_version") == 4 else set()),
                 "result review",
             )
             branch = self._branch(state, _identifier(item["attempt_id"], "attempt ID"))
@@ -1463,6 +1583,16 @@ class ContinuousDiscoveryBatch:
                 raise DiscoveryBatchError("result review must be KEEP or REVERT")
             if type(item["independently_reviewed"]) is not bool:
                 raise DiscoveryBatchError("independent-review flag must be boolean")
+            if state.get("scheduling_version") == 4:
+                try:
+                    validity = validate_validity(item["performance_validity"], {
+                        "review_decision": item["decision"], "review_sha256": item["review_sha256"],
+                        "execution_outcome": branch["execution_outcome"],
+                        "independently_reviewed": item["independently_reviewed"],
+                    })
+                except (ValueError, TypeError, KeyError) as exc:
+                    raise DiscoveryBatchError(str(exc)) from exc
+                branch["performance_validity"] = validity
             if item["decision"] == "KEEP" and (
                 item["independently_reviewed"] is not True
                 or branch["execution_outcome"] != "succeeded"
@@ -1508,7 +1638,31 @@ class ContinuousDiscoveryBatch:
                 incumbent_after_sha256=after,
                 stage="result_reviewed",
             )
+        elif event == "learning_checkpoint_recorded":
+            item, event_time = _mapping_with_optional_event_time(payload, {"attempt_id", "assessment"}, "learning checkpoint")
+            if state.get("scheduling_version") != 4:
+                raise DiscoveryBatchError("learning checkpoint requires explicit v4 opt-in")
+            branch = self._branch(state, _identifier(item["attempt_id"], "attempt ID"))
+            if branch["stage"] != "result_reviewed" or branch["research_credit"] is not None:
+                raise DiscoveryBatchError("checkpoint requires one unassessed reviewed result")
+            try:
+                assessment = assess_checkpoint(item["assessment"], branch, set(state["accepted_finding_sha256s"]))
+            except (ValueError, TypeError, KeyError) as exc:
+                raise DiscoveryBatchError(str(exc)) from exc
+            learning = assessment["learning"]
+            branch.update(learning_checkpoint=assessment, research_credit=learning["credit"],
+                          research_credit_evidence_bundle_sha256=learning["evidence_sha256"],
+                          research_credit_problem_id=branch["question_id"], research_credit_reason=learning["reason"],
+                          authority_snapshot_sha256=assessment["authority_snapshot_sha256"],
+                          research_outcome="invalid" if assessment["validity"]["status"] != "valid" else "inconclusive",
+                          route_action=assessment["exploration"]["action"], credit_review_sha256=learning["review_sha256"])
+            state["learning_checkpoints"].append({"attempt_id": branch["attempt_id"], "assessment": assessment})
+            state["research_credit_records"].append({"attempt_id": branch["attempt_id"], "credit": learning["credit"]})
+            if learning["credit"] > 0:
+                state["accepted_finding_sha256s"].append(learning["finding_sha256"])
         elif event == "research_credit_recorded":
+            if state.get("scheduling_version") == 4:
+                raise DiscoveryBatchError("v4 requires separate learning checkpoint assessment")
             item, event_time = _mapping_with_optional_event_time(
                 payload,
                 {
@@ -1885,6 +2039,9 @@ class ContinuousDiscoveryBatch:
                 "runtime_pair_sha256": branch.get("runtime_pair_sha256"),
                 "memory_snapshot_sha256": branch.get("memory_snapshot_sha256"),
             }
+        if state.get("scheduling_version") == 4:
+            packet.update(schema=EVIDENCE_SCHEMA_V4, protocol_version=4,
+                          learning_checkpoint=branch["learning_checkpoint"])
         return packet
 
     def initialize(
@@ -1901,6 +2058,7 @@ class ContinuousDiscoveryBatch:
         exploration_reserve_reason: str | None = None,
         initial_archived_parents: list[Mapping[str, Any]] | None = None,
         scheduling_policy: str | None = None,
+        learning_checkpoint_version: int | None = None,
     ) -> dict[str, Any]:
         start = _utc_text(start_utc, "batch start")
         deadline = _utc_text(deadline_utc, "batch deadline")
@@ -1918,6 +2076,10 @@ class ContinuousDiscoveryBatch:
             scheduling_policy != FINAL_SINGLETON_POLICY or active_pool_capacity is None
         ):
             raise DiscoveryBatchError("known scheduling policy requires an active pool")
+        if learning_checkpoint_version is not None:
+            if type(learning_checkpoint_version) is not int or learning_checkpoint_version != 1 or active_pool_capacity is None:
+                raise DiscoveryBatchError("learning checkpoint version 1 requires an explicit active pool")
+            scheduling_policy = FINAL_SINGLETON_POLICY
         reserve = _reserve_fraction(exploration_reserve_fraction)
         if active_pool_capacity is None and reserve != 0.30:
             raise DiscoveryBatchError(
@@ -1933,7 +2095,8 @@ class ContinuousDiscoveryBatch:
             raise DiscoveryBatchError("initial archived parents must be a list")
         else:
             checked_archived = [
-                _archived_parent(parent) for parent in initial_archived_parents
+                (_archived_parent_v4 if learning_checkpoint_version is not None else _archived_parent)(parent)
+                for parent in initial_archived_parents
             ]
         if active_pool_capacity is None and checked_archived:
             raise DiscoveryBatchError("archived parents require an active v2 pool")
@@ -1998,6 +2161,9 @@ class ContinuousDiscoveryBatch:
             if scheduling_policy is not None:
                 event = "initialize_v3"
                 payload["scheduling_policy"] = scheduling_policy
+            if learning_checkpoint_version is not None:
+                event = "initialize_v4"
+                payload["learning_checkpoint_version"] = learning_checkpoint_version
         with self._locked():
             records, state = self._load_locked()
             if records or state["initialized"]:
@@ -2257,6 +2423,7 @@ class ContinuousDiscoveryBatch:
                 )
             if any(
                 count > 1
+                and state.get("scheduling_version") != 4
                 and eligible_parents.get(parent_sha, {}).get("research_credit") == 1
                 for parent_sha, count in selected_parent_counts.items()
             ):
@@ -2415,6 +2582,7 @@ class ContinuousDiscoveryBatch:
         review_sha256: str,
         independently_reviewed: bool,
         now: str | datetime | None = None,
+        performance_validity: Mapping[str, Any] | None = None,
     ) -> dict[str, Any]:
         attempt_id = _identifier(attempt_id, "attempt ID")
         scorecard = _sha(scorecard_sha256, "scorecard")
@@ -2427,12 +2595,18 @@ class ContinuousDiscoveryBatch:
         with self._locked():
             records, state = self._load_locked()
             branch = self._branch(state, attempt_id)
+            extra = {}
+            if state.get("scheduling_version") == 4:
+                extra["performance_validity"] = performance_validity
+            elif performance_validity is not None:
+                raise DiscoveryBatchError("performance validity requires explicit v4 opt-in")
             if branch["stage"] != "execution_terminal":
                 if (
                     branch["review_decision"] == decision
                     and branch["scorecard_sha256"] == scorecard
                     and branch["review_sha256"] == review
                     and branch["independently_reviewed"] is independently_reviewed
+                    and (not extra or branch["performance_validity"] == performance_validity)
                 ):
                     return self._public(state)
                 raise DiscoveryBatchError("review evidence changed or branch is terminal")
@@ -2462,6 +2636,7 @@ class ContinuousDiscoveryBatch:
                     "review_sha256": review,
                     "independently_reviewed": independently_reviewed,
                     "event_time_utc": _utc_text(moment, "result-review time"),
+                    **extra,
                 },
             )
             return self._public(state)
@@ -2614,6 +2789,26 @@ class ContinuousDiscoveryBatch:
             )
             return self._public(state)
 
+    def record_learning_checkpoint(self, attempt_id: str, assessment: Mapping[str, Any], *,
+                                   now: str | datetime | None = None) -> dict[str, Any]:
+        """Persist one prospective assessment; judge and incumbent are unchanged."""
+        attempt_id = _identifier(attempt_id, "attempt ID")
+        moment = self._trusted_now(now, "learning checkpoint time")
+        with self._locked():
+            records, state = self._load_locked()
+            if state.get("scheduling_version") != 4:
+                raise DiscoveryBatchError("learning checkpoint requires explicit v4 opt-in")
+            branch = self._branch(state, attempt_id)
+            previous = next((r for r in records if r["event"] == "learning_checkpoint_recorded" and r["payload"]["attempt_id"] == attempt_id), None)
+            if previous is not None:
+                if previous["payload"]["assessment"] != assessment:
+                    raise DiscoveryBatchError("checkpoint attempt reused with different evidence")
+                return self._public(state)
+            _, state = self._commit(records, "learning_checkpoint_recorded",
+                                    {"attempt_id": attempt_id, "assessment": dict(assessment),
+                                     "event_time_utc": _utc_text(moment, "learning checkpoint time")})
+            return self._public(state)
+
 
 __all__ = [
     "BOUNDARY_FLAGS",
@@ -2622,6 +2817,8 @@ __all__ = [
     "DiscoveryBatchError",
     "EVIDENCE_SCHEMA",
     "EVIDENCE_SCHEMA_V2",
+    "EVIDENCE_SCHEMA_V4",
+    "parent_eligibility",
     "EXECUTION_OUTCOMES",
     "SCHEMA",
     "STAGES",
