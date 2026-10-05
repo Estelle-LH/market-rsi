@@ -266,6 +266,12 @@ class ConsumerTests(unittest.TestCase):
         self.assertIn("input_sha256=" + c._digest(self.packet), prompts[0])
         self.assertIn("feedback_sha256=" + self.packet["bindings"]["feedback"]["sha256"], prompts[0])
         self.assertIn("do not calculate hashes", prompts[0])
+        for guidance in ["Within the still-open budget", "reasonable distinct small actual prediction hypothesis",
+            "even without prior improvement", "first small hypotheses do not require prior gains",
+            "Negative scores or implementation overhead are not reasons to stop", "Supervisor owns allowed stop conditions",
+            "Methods remain open", "no forced R modification or scoring change",
+            "specific genuinely necessary next operation", "not a disguised voluntary stop", "a request grants no authority"]:
+            self.assertIn(guidance, prompts[0])
         completion = c._json((directory / "completion.json").read_bytes())
         self.assertTrue(completion["timed_out"]); self.assertEqual(completion["exit_code"], -9)
         self.assertNotIn("response.json", completion["hashes"])
@@ -405,10 +411,40 @@ class ConsumerTests(unittest.TestCase):
         for name, value in {"schema": "controller_next_decision_v1", "requested_model": "gpt-6.1-sol",
             "serving_snapshot": "unknown", "boundary": "resident_train_only_fixed_scoring_no_external_no_protected_no_release"}.items():
             self.assertEqual(c.SCHEMA["properties"][name]["const"], value)
-        self.assertEqual(c.SCHEMA["properties"]["action"]["enum"], ["propose_candidate", "stop_in_scope", "request_closed_authority"])
+        self.assertEqual(c.SCHEMA["properties"]["action"]["enum"], ["propose_candidate", "request_closed_authority"])
         resource_nodes = c.SCHEMA["properties"]["resources"]["properties"]
         self.assertEqual({name: node["const"] for name, node in resource_nodes.items()},
             {"fits": 4, "seconds": 900, "threads": 1, "rss_bytes": 1073741824, "provider_calls": 0})
+
+    def test_open_budget_voluntary_stop_rejected_original_preserved_no_resample(self):
+        c.check_budget(self.packet["authority"], NOW)
+        decision = self.f.decision(self.packet); decision["action"] = "stop_in_scope"
+        with self.assertRaisesRegex(ValueError, "response enum drift"): c._validate(decision, c.SCHEMA)
+        def stopped(directory, packet, timeout):
+            self.calls += 1
+            self.f.transport(directory, packet, timeout, mutate=lambda response: response.update(action="stop_in_scope"))
+        with self.assertRaisesRegex(ValueError, "response enum drift"): self.consume(stopped)
+        with self.assertRaisesRegex(ValueError, "response enum drift"): self.consume()
+        self.assertEqual(self.calls, 1)
+        directory = next((self.f.root / "calls").glob("*/claim.json")).parent
+        self.assertEqual(c._json((directory / "response.json").read_bytes())["action"], "stop_in_scope")
+        self.assertTrue(c._json((directory / "failure.json").read_bytes())["no_resample"])
+        self.assertFalse((directory / "ack.json").exists())
+
+    def test_proposal_and_closed_request_valid_typed_bounded_not_authority(self):
+        original_authority = deepcopy(self.f.values["authority"])
+        for action in ["propose_candidate", "request_closed_authority"]:
+            decision = self.f.decision(self.packet); decision["action"] = action
+            c._validate(decision, c.SCHEMA)
+            def selected(directory, packet, timeout):
+                self.calls += 1
+                self.f.transport(directory, packet, timeout, mutate=lambda response: response.update(action=action))
+            response = self.consume(selected, root=self.f.root / action)
+            self.assertEqual(response["action"], action)
+            self.assertEqual(response["resources"], {"fits":4,"seconds":900,"threads":1,"rss_bytes":1073741824,"provider_calls":0})
+            self.assertEqual(response["boundary"], "resident_train_only_fixed_scoring_no_external_no_protected_no_release")
+            self.assertEqual(self.f.values["authority"], original_authority)
+        self.assertEqual(self.calls, 2)
 
 
 if __name__ == "__main__": unittest.main()

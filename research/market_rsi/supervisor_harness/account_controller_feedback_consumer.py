@@ -16,7 +16,7 @@ from supervisor_harness.continuous_discovery_batch import _digest
 CLI = Path("/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex")
 CLI_SHA = "6b582e8813ce7e8ed4c52814ee5cf230dba647bf2292df747a4003f2657ef201"
 MODEL = "gpt-6.1-sol"
-SCOPE_SHA = "505a7c92fa05512eda83d2c3953bea7b6ca37d28d912ba270e0983ee1ba8589b"
+SCOPE_SHA = "63b2746021625c40198815439fcde4e6fe0b9f878f86ed05a3b6249bec248f58"
 CLEANUP_SECONDS = 5
 DEADLINE, CUTOFF = "2026-10-05T19:27:11Z", "2026-10-05T19:12:11Z"
 ROLES = {"feedback", "review", "scorecard", "predictions", "supplement", "memory", "history", "pool", "authority", "overhead", "request"}
@@ -124,7 +124,7 @@ TEXT = {"type": "string", "minLength": 1}
 EVIDENCE = _object({"sha256": TEXT, "finding": TEXT, "choice_consequence": TEXT})
 BRANCH = _object({"parent_sha256": TEXT, "method_family": TEXT, "reason": TEXT})
 SCHEMA = _object({"schema": {"type": "string", "const": "controller_next_decision_v1"}, "input_sha256": TEXT, "feedback_sha256": TEXT,
-    "requested_model": {"type": "string", "const": MODEL}, "serving_snapshot": {"type": "string", "const": "unknown"}, "action": {"type": "string", "enum": ["propose_candidate", "stop_in_scope", "request_closed_authority"]},
+    "requested_model": {"type": "string", "const": MODEL}, "serving_snapshot": {"type": "string", "const": "unknown"}, "action": {"type": "string", "enum": ["propose_candidate", "request_closed_authority"]},
     "candidate_id": TEXT, "question_id": TEXT, "actual_parent_sha256": TEXT, "comparison_incumbent_sha256": TEXT, "hypothesis": TEXT, "recipe": TEXT, "expected_evidence": TEXT,
     "evidence_used": {"type": "array", "items": EVIDENCE, "minItems": 1}, "active_pool": {"type": "array", "items": BRANCH, "minItems": 2, "maxItems": 3},
     "memory_additions": TEXT, "stopped_exact_recipes": TEXT, "attribution": TEXT,
@@ -168,7 +168,7 @@ def _terminate(child):
 
 def _transport(directory, packet, timeout):
     if sha(CLI) != CLI_SHA: raise ValueError("CLI source drift")
-    prompt = "No tools, file/data/network/credentials access or authority changes. Use only this verified numerical evidence and prior memory. Return one non-executable evidence-cited scientific next decision; no invented results or preselected model.\nCopy these binding values verbatim; do not calculate hashes: input_sha256=" + _digest(packet) + " feedback_sha256=" + packet["bindings"]["feedback"]["sha256"] + "\n" + json.dumps(packet, allow_nan=False)
+    prompt = "No tools, file/data/network/credentials access or authority changes. Use only this verified numerical evidence and prior memory. Return one non-executable evidence-cited scientific next decision; no invented results or preselected model. Within the still-open budget, propose a reasonable distinct small actual prediction hypothesis even without prior improvement; reasonable first small hypotheses do not require prior gains. Negative scores or implementation overhead are not reasons to stop; Supervisor owns allowed stop conditions. Methods remain open, with no forced R modification or scoring change. Use request_closed_authority only for a specific genuinely necessary next operation outside the fixed task/data/permission boundary, not a disguised voluntary stop; a request grants no authority.\nCopy these binding values verbatim; do not calculate hashes: input_sha256=" + _digest(packet) + " feedback_sha256=" + packet["bindings"]["feedback"]["sha256"] + "\n" + json.dumps(packet, allow_nan=False)
     command = _command(directory)
     child, cleanup_attempted = None, False
     try:

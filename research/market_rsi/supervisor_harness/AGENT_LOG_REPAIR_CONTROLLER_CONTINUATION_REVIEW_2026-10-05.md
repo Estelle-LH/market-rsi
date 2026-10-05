@@ -1,0 +1,9 @@
+# Independent Controller continuation-contract reviewer — 2026-10-05
+
+## 2026-10-05T18:29:00Z — prospective narrow H scope
+
+Read complete scope63b2746021625c40198815439fcde4e6fe0b9f878f86ed05a3b6249bec248f58 and registered role before this receipt. Read actual fresh direct-human authorization96193e6b: exactlyone new IDmarket-rsi-repair-d4-controller-continuation-policyfix-20261005-01/samepayload-account/noauto retry/noclock-budget-authority extension. Originalv4 review8972c6ae and consumer d6 source preserved. Scope PASS allows implementation ONLY at three locations: compiledscope hash/actionenum/prompt. No final source or live call admission yet.
+
+Research-progress skill read completely for this review: stop an exact losing recipe and preserve evidence, but continue smallest authorized distinct tests rather than stop at a poor score; separate Hengineering from R/predictive success. This influenced enforcing open reasonable first hypotheses and refusing positive-score/method-menu/R-rewrite requirements. The skill authorizes no external model call or expanded data.
+
+Static scope is appropriate: fresh check_budget refuses capped/cutoff calls; actual permitted stops remain Supervisor-owned. Removing voluntary stop_in_scope while time/one4fit slot remains does not remove genuine closed-operation request or authorize protected operations. request_closed_authority requires independently verified specific necessity, never a renamed avoid-experiment decision. Actualdiff/type-complete schema/stop-refusal/propose/closed-request and inherited onceclaim/recovery/source/budget tests must be checked on frozen final bytes; originalresponse cannot be rewritten/retried. Change is human/Supervisor-directed H contract repair, not autonomous R evolution, predictor success or lower-cost proof. Four-hour6/24/cutoff/deadline unchanged. Reviewer Trainfits/optimizers/model/transport/source/oldrecord operations0; only this new scope receipt/ownlog.
