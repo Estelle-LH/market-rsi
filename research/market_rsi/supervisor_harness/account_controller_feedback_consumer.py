@@ -16,6 +16,7 @@ from supervisor_harness.continuous_discovery_batch import _digest
 CLI = Path("/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex")
 CLI_SHA = "6b582e8813ce7e8ed4c52814ee5cf230dba647bf2292df747a4003f2657ef201"
 MODEL = "gpt-6.1-sol"
+SCOPE_SHA = "8ffb84454e800828f00fce8cdd1675b03cc1d849fda48fe7b65aaca830de37c1"
 DEADLINE, CUTOFF = "2026-10-05T19:27:11Z", "2026-10-05T19:12:11Z"
 ROLES = {"feedback", "review", "scorecard", "predictions", "supplement", "memory", "history", "pool", "authority", "overhead", "request"}
 FLAGS = {"external_fetch": False, "paid_provider": False, "route_dev_opened": False, "sealed_final_opened": False, "promotion_authorized": False}
@@ -89,7 +90,7 @@ def prepare_input(bindings, batch, repo, now):
             or card["research_parent_sha256"] != feedback["research_parent_sha256"] or supplement["actual_parent_source_sha256"] != feedback["research_parent_sha256"]):
         raise ValueError("feedback/review/parent/supplement admission drift")
     if any(card.get(key) is not value for key, value in FLAGS.items()): raise ValueError("protected permission flag changed")
-    if card.get("historical_event_clock_only") is not True or card.get("provider_cost_usd") != 0: raise ValueError("historical/cost flag changed")
+    if card.get("historical_event_clock_only") is not True or type(card.get("provider_cost_usd")) is not str or card["provider_cost_usd"] != "0": raise ValueError("historical/cost flag changed")
     if card["source_denominator"] != {"events": 195, "dates": 42, "materialized_events": 193, "excluded_events": 2, "check_events": 87, "check_dates": 20, "check_game_weeks": 7}:
         raise ValueError("frozen population changed")
     if [fold["fit_events"] for fold in card["folds"]] != [106, 132, 148, 176] or [fold["check_events"] for fold in card["folds"]] != [26, 16, 28, 17]:
@@ -146,6 +147,10 @@ def _command(directory):
     return [str(CLI), "exec", "--ephemeral", "--ignore-user-config", "--skip-git-repo-check", "--sandbox", "read-only", "--cd", str(directory), "--model", MODEL, "--json", "--output-schema", str(directory / "schema.json"), "--output-last-message", str(directory / "response.json"), "-"]
 
 
+def _identity():
+    return {"consumer_source_sha256": sha(Path(__file__).resolve()), "scope_sha256": SCOPE_SHA}
+
+
 def _hashes(value):
     if isinstance(value, dict): return set().union(*(_hashes(item) for item in value.values())) if value else set()
     if isinstance(value, list): return set().union(*(_hashes(item) for item in value)) if value else set()
@@ -154,11 +159,11 @@ def _hashes(value):
 
 def _transport(directory, packet, timeout):
     if sha(CLI) != CLI_SHA: raise ValueError("CLI source drift")
-    prompt = "No tools, file/data/network/credentials access or authority changes. Use only this verified numerical evidence and prior memory. Return one non-executable evidence-cited scientific next decision; no invented results or preselected model.\n" + json.dumps(packet, allow_nan=False)
+    prompt = "No tools, file/data/network/credentials access or authority changes. Use only this verified numerical evidence and prior memory. Return one non-executable evidence-cited scientific next decision; no invented results or preselected model.\nCopy these binding values verbatim; do not calculate hashes: input_sha256=" + _digest(packet) + " feedback_sha256=" + packet["bindings"]["feedback"]["sha256"] + "\n" + json.dumps(packet, allow_nan=False)
     command = _command(directory)
     with (directory / "events.jsonl").open("xb") as stdout, (directory / "stderr").open("xb") as stderr:
         child = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=stdout, stderr=stderr, start_new_session=True)
-        save(directory / "process.json", {"pid": child.pid, "command": command, "cli_sha256": CLI_SHA, "input_sha256": _digest(packet)})
+        save(directory / "process.json", {"pid": child.pid, "command": command, "cli_sha256": CLI_SHA, "input_sha256": _digest(packet), **_identity()})
         timed_out = False
         try: child.communicate(prompt.encode(), timeout=timeout)
         except subprocess.TimeoutExpired:
@@ -166,16 +171,18 @@ def _transport(directory, packet, timeout):
         stdout.flush(); os.fsync(stdout.fileno()); stderr.flush(); os.fsync(stderr.fileno())
     names = ["process.json", "events.jsonl", "stderr", "schema.json", "input.json"]
     if (directory / "response.json").exists(): names.append("response.json")
-    save(directory / "completion.json", {"exit_code": child.returncode, "timed_out": timed_out, "hashes": {name: sha(directory / name) for name in names}})
+    save(directory / "completion.json", {"exit_code": child.returncode, "timed_out": timed_out, "hashes": {name: sha(directory / name) for name in names}, **_identity()})
 
 
 def _recover(directory, packet):
     completion = _json((directory / "completion.json").read_bytes())
+    if any(completion.get(key) != value for key, value in _identity().items()): raise ValueError("consumer completion provenance drift")
     required = {"process.json", "events.jsonl", "stderr", "schema.json", "input.json", "response.json"}
     if completion["exit_code"] != 0 or completion["timed_out"] is not False or set(completion["hashes"]) != required:
         raise RuntimeError("original process incomplete/failed; do not resample")
     for name, digest in completion["hashes"].items(): _read({"path": str(directory / name), "sha256": digest}, True)
     process = _json((directory / "process.json").read_bytes())
+    if any(process.get(key) != value for key, value in _identity().items()): raise ValueError("consumer process provenance drift")
     if process["cli_sha256"] != CLI_SHA or process["input_sha256"] != _digest(packet) or process["command"] != _command(directory): raise ValueError("original process identity drift")
     usage, completed, message = None, False, None
     for line in (directory / "events.jsonl").read_text().splitlines():
@@ -217,7 +224,7 @@ def consume(packet, root, *, batch, repo, now=None, transport=None):
     if directory.resolve() != directory: raise ValueError("call directory symlink")
     with (directory / ".lock").open("a+") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
-        claim = {"input_sha256": _digest(packet), "schema_sha256": _digest(SCHEMA), "cli_sha256": CLI_SHA}
+        claim = {"input_sha256": _digest(packet), "schema_sha256": _digest(SCHEMA), "cli_sha256": CLI_SHA, **_identity()}
         if (directory / "claim.json").exists():
             if _json((directory / "claim.json").read_bytes()) != claim: raise ValueError("same feedback changed")
             if _json((directory / "input.json").read_bytes()) != packet or _json((directory / "schema.json").read_bytes()) != SCHEMA:

@@ -47,7 +47,7 @@ class Fixture:
         self.write("overhead", {"implementation_seconds": 12, "capabilities": "C1/C7 parent schemas only; alpha16; not generic"})
         metric = {"brier": .14, "log_loss": .43, "calibration_slope": 1., "reliability_table": [{"n": 87}]}
         self.write("scorecard", {"task_id": "synthetic-candidate", "research_parent_sha256": PARENT,
-            "comparison_incumbent_sha256": INCUMBENT, "historical_event_clock_only": True, "provider_cost_usd": 0, **c.FLAGS,
+            "comparison_incumbent_sha256": INCUMBENT, "historical_event_clock_only": True, "provider_cost_usd": "0", **c.FLAGS,
             "source_denominator": {"events": 195, "dates": 42, "materialized_events": 193, "excluded_events": 2,
                 "check_events": 87, "check_dates": 20, "check_game_weeks": 7},
             "aggregate": {"candidate": metric, "raw_market": metric},
@@ -109,14 +109,14 @@ class Fixture:
         response = self.decision(packet)
         if mutate: mutate(response)
         c.save(directory / "process.json", {"pid": 123, "command": c._command(directory),
-            "cli_sha256": c.CLI_SHA, "input_sha256": c._digest(packet)})
+            "cli_sha256": c.CLI_SHA, "input_sha256": c._digest(packet), **c._identity()})
         c.save(directory / "response.json", response)
         events = [{"type": "thread.started"}, {"type": "item.completed", "item": {"type": "agent_message", "text": json.dumps(response)}},
             {"type": "turn.completed", "usage": {"input_tokens": 10, "output_tokens": 5}}]
         if event: events.insert(1, event)
         (directory / "events.jsonl").write_text("\n".join(json.dumps(item) for item in events))
         (directory / "stderr").write_bytes(b"")
-        record = {"exit_code": 0, "timed_out": False, "hashes": {name: c.sha(directory / name) for name in
+        record = {"exit_code": 0, "timed_out": False, **c._identity(), "hashes": {name: c.sha(directory / name) for name in
             ["process.json", "events.jsonl", "stderr", "schema.json", "input.json", "response.json"]}}
         if completion: record.update(completion)
         c.save(directory / "completion.json", record)
@@ -251,15 +251,20 @@ class ConsumerTests(unittest.TestCase):
     def test_transport_frozen_args_and_timeout_process_truth(self):
         directory = self.f.root / "transport"; directory.mkdir()
         c.save(directory / "input.json", self.packet); c.save(directory / "schema.json", c.SCHEMA)
+        prompts = []
         class Child:
             pid, returncode = 321, -9
-            def communicate(self, data, timeout): raise subprocess.TimeoutExpired("synthetic", timeout)
+            def communicate(self, data, timeout):
+                prompts.append(data.decode()); raise subprocess.TimeoutExpired("synthetic", timeout)
             def wait(self): return self.returncode
         with patch.object(c.subprocess, "Popen", return_value=Child()) as popen, patch.object(c.os, "killpg") as kill:
             c._transport(directory, self.packet, 12)
         command = popen.call_args.args[0]
         self.assertEqual(command, c._command(directory)); self.assertIn("--ignore-user-config", command)
         self.assertTrue(popen.call_args.kwargs["start_new_session"]); kill.assert_called_once()
+        self.assertIn("input_sha256=" + c._digest(self.packet), prompts[0])
+        self.assertIn("feedback_sha256=" + self.packet["bindings"]["feedback"]["sha256"], prompts[0])
+        self.assertIn("do not calculate hashes", prompts[0])
         completion = c._json((directory / "completion.json").read_bytes())
         self.assertTrue(completion["timed_out"]); self.assertEqual(completion["exit_code"], -9)
         self.assertNotIn("response.json", completion["hashes"])
@@ -321,6 +326,30 @@ class ConsumerTests(unittest.TestCase):
                 self.consume(lambda directory, value, timeout: self.f.transport(directory, value, timeout, mutate=mutate),
                     packet=packet, root=self.f.root / ("route-" + str(index)))
         self.f.write("feedback", old)
+
+    def test_exact_actual_string_zero_cost_not_numeric_or_bool_coercion(self):
+        self.assertEqual(self.f.prepare()["numerical"]["aggregate"]["candidate"]["brier"], .14)
+        for cost in ["1", 0, False, 0.0, "0.0", None]:
+            card = deepcopy(self.f.values["scorecard"]); card["provider_cost_usd"] = cost
+            self.f.write("scorecard", card)
+            supplement = deepcopy(self.f.values["supplement"])
+            supplement["scorecard_sha256"] = self.f.bindings["scorecard"]["sha256"]; self.f.write("supplement", supplement)
+            review = deepcopy(self.f.values["review"])
+            review["supplement_sha256"] = self.f.bindings["supplement"]["sha256"]; self.f.write("review", review)
+            feedback = deepcopy(self.f.values["feedback"])
+            feedback.update(scorecard_sha256=self.f.bindings["scorecard"]["sha256"], review_sha256=self.f.bindings["review"]["sha256"])
+            self.f.write("feedback", feedback)
+            with self.subTest(cost=cost):
+                with self.assertRaisesRegex(ValueError, "historical/cost"): self.f.prepare()
+
+    def test_consumer_source_and_scope_bound_no_code_drift_recovery(self):
+        self.consume(); directory = next((self.f.root / "calls").glob("*/claim.json")).parent
+        for name in ["claim.json", "process.json", "completion.json"]:
+            receipt = c._json((directory / name).read_bytes())
+            for key, value in c._identity().items(): self.assertEqual(receipt[key], value)
+        with patch.object(c, "_identity", return_value={"consumer_source_sha256": OTHER, "scope_sha256": c.SCOPE_SHA}):
+            with self.assertRaisesRegex(ValueError, "same feedback changed"): self.consume()
+        self.assertEqual(self.calls, 1)
 
 
 if __name__ == "__main__": unittest.main()
