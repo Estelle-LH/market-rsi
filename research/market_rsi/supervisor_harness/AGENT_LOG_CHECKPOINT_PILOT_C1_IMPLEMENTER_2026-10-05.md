@@ -1,0 +1,3 @@
+# Fresh pilot C1 down-slope predictor implementation
+
+2026-10-05 17:44 EDT: Registered before implementation dispatch. Own only new experiments/nfl_ingame_temperature_down_slope_joint_offset.py, matching test and this log under frozen actual Controller contract e9ef31ab. Must await exact independent scope receipt and ready-step gate. No old source/helpers/scorer/H/R/worker/recorder/data/runtime/authority changes, account calls, real fits or commits. Report actual source/test hashes, full relevant tests, actual line count; >200 production lines requires independent semantic inseparability admission before execution. Preserve failure evidence and unchanged hypothesis/solver/tolerances.

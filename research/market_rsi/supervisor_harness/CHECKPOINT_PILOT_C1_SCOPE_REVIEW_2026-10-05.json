@@ -1,0 +1,30 @@
+{
+  "schema": "independent_small_candidate_scope_review_v1",
+  "passed": true,
+  "verdict": "PASS_CODE_ONLY_EXACT_CONTROLLER_SCOPE",
+  "reviewed_utc": "2026-10-05T21:43:00Z",
+  "source_commit": "8d0c3d36f125863f785e26b83a6ea0e7625755f3",
+  "candidate_id": "InGameTemperatureDownSlopeJointOffset-v1",
+  "question_id": "ingame-temperature-conditional-down-slope-v1-q1",
+  "contract_sha256": "e9ef31ab5ec2f171368f27965f10a1b7e6c2935da23c43f6cf0526aa9200fe8a",
+  "plan_sha256": "3fd6f45176f033a6d7dee3233dc47ae623280ba9e347625e73ca4a33f6e49ad2",
+  "response_sha256": "ddc4bfac5619fb943c4ace9fda980dd9325d206581758d15aecc39b84a010344",
+  "checks": {
+    "exact_original_recipe_evidence_expected_evidence_transcribed": true,
+    "down_available_in_existing_causal_state_schema": true,
+    "finite_integer_anchor_down_matches_frozen_onehot3to7_required": true,
+    "same_generic_convex_F_gradient_Hessian_and_brackets": true,
+    "beta_bound_gamma_unrestricted_no_extra_monotonicity": true,
+    "C7_warm_and_gamma_zero_parent_identity_required": true,
+    "same_fixed_population_mask_folds_scoring_and_judge": true,
+    "one_new_C_module_and_test_no_existing_helpers_modified": true
+  },
+  "math": "X=[l,((d-1)/3)l]; g=X'(q-y)+16theta; H=X'diag(q(1-q))X+16I>=16I. Fit-only B=1+sum|l|/16 and G=1+sum|z|/16 bound coordinate roots because |q-y|<=1. Boundary beta=-1 uses one-sided KKT; gamma free. Complement symmetry follows l->-l/down fixed; monotonicity need not hold and is not claimed. No new optimization or Train predictions performed.",
+  "helper_hashes": {
+    "experiments/nfl_ingame_temperature_possession_pressure_joint_offset.py":"c57ed002b507e219c788c256b33e0f853fc418ea41713fbfbc845bcb7782d838",
+    "experiments/nfl_ingame_win_probability_train_diagnostic.py":"e61668c7e29cf4dda95f6cc315b248dbe6744a9dcc0ae0cd6077d880ca6265b7"
+  },
+  "admission_conditions": ["Only new registered down-slope source/test/log; helper/scorer/H/R/worker/recorder/runtime/authority/history unchanged","Missing/noninteger/nonfinite/mismatched down rejects entire candidate before fit; no imputation/drop/fetch","Synthetic derivative/KKT/gamma0/zero-column/complement/time/checklabel/partial/no-repeat/full195-193+2-87 tests and exact committed-source review before claim","If production exceeds200lines require explicit semantic inseparability judgment, not compression or LOC proof","Prospective v4 parent evidence import must preserve old original credit/result and consumedC2, source-linked review required","Supervisor rechecks live shared3/12 and original cutoff/deadline; scope receipt grants code only"],
+  "attribution": "C representation and parameter count change together. Negative ancestry supports a distinct first hypothesis, not expected gain. No H/R benefit, down-family attribution, market advantage or formal OOS conclusion.",
+  "boundary": "No real fits/optimizers/account calls/source edits/old artifact mutations by reviewer. Exact source and actual result admission remain separate."
+}
