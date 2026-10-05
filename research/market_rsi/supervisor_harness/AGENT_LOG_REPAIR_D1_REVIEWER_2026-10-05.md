@@ -1,0 +1,13 @@
+# Repair D1 independent review
+
+Registered 2026-10-05 15:52 UTC. Own only D1 entry scope receipt, distinct integrated-source receipt and this log. Prospective envelope fb968b7ff45b22211d4de581cdf43784bc7b734e7eef7348adaff8bf9761cab0; exact two-file entry/test scope, all existing science/H/scorer/worker and contracts immutable. No source or Train fits. Scope admission does not admit integrated entry/math or predict success.
+
+## 2026-10-05 15:53:19 UTC — prospective thin-entry scope PASS only
+
+Read complete frozen envelopefb968b7ff45b22211d4de581cdf43784bc7b734e7eef7348adaff8bf9761cab0. Current immutable scientificD1c57ed002/contract36f69b70/A2basis4ea2935f/C7parentf5a80888/Hadapterf62a5459 held; fresh operationalenvelope19:27:11deadline distinct from historical12:37:44. Scope one H thin explicit binding/worker entry plus matchingportabletest, not science/solver/scorer change. Actual UTC, compiledenvelope hash, workerrequest path/ID/module/output/currentHEAD/source/runtime and actual Hsource+liveparity receipt predicates required beforeHdata/fit. No future review/hash or model version invented. Original source/contract/history/KEEP/parents unchanged.
+
+Scope PASS permits only named entry/test implementation. Full239line D1math inseparability/exact integratedentry+math+test/replay/causal/source review and completedrealHparity remain separate gates before oneactualD1. Parentrelative correction supplement must derive aggregate/fold/date fromsame87CSV withoutchangingH/rawcard orjudge. Candidate-parentC7 vsA2basis vsrawincumbent/latestC7feedback distinct. Newselectedimplementation/pre-fit failures countglobally under6/24; oneD1/fourfits/thread1/900s/sampleRSS1GiB/provider0, nonewselectionafter19:12:11, no expiredwindow revival/retry/reset.
+
+At first attempt actualindex lackednewexactreview/log and logread failed; toldSupervisor, heldformalwrites until actualregistration/logcreated15:52. Rootreportedfirstcombinedregistrationpatch failedbeforewrite thenseparatepatches succeeded; operationalbookkeeping issue only, not sciencefailure. Envelope describes oldHactivation status atproposal, notnewclaimed outcome. Hactualresult verification continuesseparately; thisreceipt deliberatelydoesnotcertifyit.
+
+No newentrysource/testcode, fits/optimizer/newpredictions/source/oldlog/artifact/FSM edits/network/provider/protected reads/commits. Existing research-progressskill influences scope/actualbenefit separation: memory/negative evidence reuse neednotrewriteRcode; no mechanism/autocontinuationgain fromwrapper alone. Earliest scopeverdict returned before Hresultauditfinishes so boundedimplementation canproceed inparallel.
