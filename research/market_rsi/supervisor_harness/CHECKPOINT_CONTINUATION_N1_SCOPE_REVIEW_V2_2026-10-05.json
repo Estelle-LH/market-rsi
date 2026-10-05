@@ -1,0 +1,21 @@
+{
+  "schema": "checkpoint_continuation_manifest_scope_review_v2",
+  "passed": true,
+  "verdict": "PREFIT_DEPENDENCY_MANIFEST_CORRECTION_ONLY_ADMITTED",
+  "contract_sha256": "8e8af7359331a1ae3783420418d92e34e43e3229d911cdf0893b2fa91294067d",
+  "supersedes_contract_sha256": "30dfeb91294875146d671b257a7e413dc64384251cef019639a848c7a633284b",
+  "original_scope_review_sha256": "95496b1bbe78f381898e1abfebb49f0b9a8fd848159f770267a069433af97a88",
+  "observed_source_commit": "a797e7a75b694619d2780a314f3e0e2bfb574ae1",
+  "semantic_diff": "Only frozen R extractor reuse_helpers addition and supersedes/revision metadata; removing them yields exact original parsed JSON. Text1e-8 to1e-08 is equal numeric serialization, not tolerance change.",
+  "required_dependency": {"path": "research/market_rsi/experiments/extract_nfl_ingame_checkpoint.R", "sha256": "37a26997406de0e54bd9d91de10e7417a8b340c68b675892c4f16e9a51675163", "current_and_Git_bytes_exact": true, "execution_allowed": false},
+  "old_request_sha256": "f8940e0bab9847415b9105de73df5515e587788d08b11071fe98c0038581c775",
+  "old_request_files": 68,
+  "old_request_omits_R_dependency": true,
+  "unchanged_launch_next_sha256": "7838d65e7145e65f4310ca5e69e8fc3247e92abe3dade240dbe832a27d8cf411",
+  "launcher_automatically_pins_all_reuse_helpers_before_worker_validation": true,
+  "scientific_recipe_helpers_scoring_population_budget_clock_authority_unchanged": true,
+  "current_candidate_attempts": 0,
+  "reviewer_Train_fits": 0,
+  "reviewer_model_calls": 0,
+  "limits": "Code/manifest scope only. Original contract/scope/history preserved; exact-source/runtime/request/clock admission and real result review still required. R dependency is provenance only, no execution/acquisition/authority expansion. Pre-fit manifest fix is not a failed real experiment."
+}

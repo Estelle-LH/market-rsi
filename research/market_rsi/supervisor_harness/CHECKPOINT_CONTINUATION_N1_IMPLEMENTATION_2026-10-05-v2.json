@@ -1,8 +1,8 @@
 {
   "schema": "supervisor_bottleneck_plan_v1",
-  "id": "checkpoint-continuation-n1-20261005",
+  "id": "checkpoint-continuation-n1-20261005-v2",
   "symptom": "Actual original scientific field-position hypothesis now needs bounded execution, not further framework work",
-  "source_evidence": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01/account-controller/market-rsi-learning-checkpoint-continuation-controller-c1-feedback-20261005-01/ab6211abf4b1335f211c8a1119c9dc349a7ea3f0964f0f6af039a2c06be4553f/response.json SHAcc35bb18096b116abe1c752622192b37ede2c31380c7041643371631002a85e7",
+  "source_evidence": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01/account-controller/market-rsi-learning-checkpoint-continuation-controller-c1-feedback-20261005-01/ab6211abf4b1335f211c8a1119c9dc349a7ea3f0964f0f6af039a2c06be4553f/response.json SHAcc35bb18096b116abe1c752622192b37ede2c31380c7041643371631002a85e7; exact oldD5 request has noR extractor pin; zero currentcandidate attempts/fits",
   "objective": "One real four-fit field-position prediction experiment followed by actual Controller feedback-dependent next decision",
   "boundary": "Fresh2newattempt8fits2accountdecisions; no retry;23:47:32selection/00:02:32hard;residentTrainonly/fixedjudge/noexternal/protected/paid/release",
   "resolution_check": "Actual same-sample scorecard and separately assessed learning accepted; no engineering or ordinary memory mistaken for prediction or R gain",
@@ -67,10 +67,30 @@
       }
     },
     {
+      "id": "scope_v2",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [
+        "scope"
+      ],
+      "action": "Independently admit only pre-fit exact R provenance dependency addition and preserved scientific v1recipe",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N1_SCOPE_REVIEW_V2_2026-10-05.json",
+      "verification": "Only reuse_helpers frozen R37a hash and supersedes/reason metadata differ; unchanged existing launcher includes pin; no execution of R, no old edits or numerical/scoring/budget changes",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 2,
+      "result": {
+        "verdict": "pass",
+        "observed": "Parsedscientific v1 exact exceptRprovenanceentry/supersedes metadata; unchanged existing launcher automaticallypinsR;0newattempt/fits; newcompiledbinding8e8 admitted",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N1_SCOPE_REVIEW_V2_2026-10-05.json",
+        "evidence_sha256": "98870cbb3e1e92634e0721909c87ff455363247e1a7f7f948cb8f267945f0d75"
+      }
+    },
+    {
       "id": "implementation",
       "owner": "coevo_predictor_worker_20261003",
       "depends_on": [
-        "scope"
+        "scope_v2"
       ],
       "action": "Implement exact candidate-local source/test/log, no prior modules changed",
       "expected_artifact": "AGENT_LOG_CHECKPOINT_CONTINUATION_N1_IMPLEMENTER_2026-10-05.md",
@@ -82,7 +102,14 @@
         "research/market_rsi/experiments/nfl_ingame_temperature_field_position_slope_joint_offset.py",
         "research/market_rsi/experiments/test_nfl_ingame_temperature_field_position_slope_joint_offset.py",
         "research/market_rsi/supervisor_harness/AGENT_LOG_CHECKPOINT_CONTINUATION_N1_IMPLEMENTER_2026-10-05.md"
-      ]
+      ],
+      "result": {
+        "verdict": "pass",
+        "observed": "One-C233source/353test frozen; focused11/full256producer19.405s and Root19.261s PASS; no realfits, >200 semanticreviewpending",
+        "reviewer": "root integratedsourcecheck",
+        "evidence_path": "AGENT_LOG_CHECKPOINT_CONTINUATION_N1_IMPLEMENTER_2026-10-05.md",
+        "evidence_sha256": "12b764e6efb238ce0f23641dc081fd6e7f5eaf73222cfd9ad51b926915e7fcd1"
+      }
     },
     {
       "id": "source_review",
@@ -149,5 +176,7 @@
       "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
       "time_bound_minutes": 3
     }
-  ]
+  ],
+  "contract_path": "research/market_rsi/supervisor_harness/CHECKPOINT_CONTINUATION_N1_CONTRACT_V2_2026-10-05.json",
+  "supersedes_plan_sha256": "46bf9a3abe1777948c24d8a2062d6d9d11504b18141931b80f8d77dabff29fa0"
 }

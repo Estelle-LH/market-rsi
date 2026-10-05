@@ -1,0 +1,30 @@
+{
+  "schema": "checkpoint_continuation_candidate_scope_review_v1",
+  "passed": true,
+  "verdict": "CODE_ONLY_SINGLE_C_COMPONENT_SCOPE_ADMITTED",
+  "contract_sha256": "30dfeb91294875146d671b257a7e413dc64384251cef019639a848c7a633284b",
+  "decision_review_sha256": "95e2d5b22b9ef64efc15821776d7fbdb6dce6b16193e35a851a02587d5ac4357",
+  "response_sha256": "cc35bb18096b116abe1c752622192b37ede2c31380c7041643371631002a85e7",
+  "predeclared_rule_sha256": "efa38938ff206de843f9179f5f18e9f0cd24c9a92feb8273f58091eb02451330",
+  "source_parent_commit": "4e3383a2900469b0dae878b0b5a877b680f548a2",
+  "candidate_id": "InGameTemperatureFieldPositionSlopeJointOffset-v1",
+  "checks": {
+    "recipe_hypothesis_expected_evidence_and_citations_verbatim": true,
+    "existing_helper_and_parent_eight_artifact_hashes": true,
+    "existing_R_physical_orientation_independently_read": true,
+    "physical_mapping": "Raw r is possessing-team yards to opponent goal: own yardline100-yard, opponent yardlineyard, midfield50. State index8 is sign*((50-r)/50), not sign*(1-r/100). Validate binary anchor/state possession and this guard; predictive z=(1-r/100)*market_logit has no home-sign multiplier.",
+    "synthetic_only_objective_gradient_max_error": 6.189049273075398e-12,
+    "synthetic_hessian_min": 16.155050682153803,
+    "fit_only_coordinate_bracket_endpoint_signs": true,
+    "convexity": "Summed binary NLL with linear two-column eta plus8theta squared has Hessian X'WX+16I; beta boundary KKT and gamma free, no new monotonicity constraint.",
+    "source_changes_allowed": ["experiments/nfl_ingame_temperature_field_position_slope_joint_offset.py"],
+    "test_changes_allowed": ["experiments/test_nfl_ingame_temperature_field_position_slope_joint_offset.py"],
+    "old_helpers_H_worker_recorder_scoring_R_permissions_held": true
+  },
+  "smallness": "One predictor feature/basis component with own state/replay/direct immutable admission. Final actual changed scope and >200-line trigger require an explicit exact-source semantic inseparability assessment; no premature LOC safety claim or cosmetic compression.",
+  "execution_prerequisites": "Exact frozen source and portable tests, gamma0/zero-column parent identity, physical bounds/orientation and strict pre-play/full193 coverage, complement symmetry, check-label/future isolation, primitive replay/partial-failure truth, current source/runtime/clock/authority bindings and independent source admission remain required before one real four-fit attempt.",
+  "boundary": "Full195 population=193+2, same87 checks/20dates/7weeks/four chronological folds/scorer/KEEP; current2 attempts/8fits/2account decisions with selection23:47:32Z/hard00:02:32Z, no repeat/control refit, provider0 and resident Train only.",
+  "claim_limits": "Code-only scope, no trained/scored candidate or positive signal. Basis plus parameter-capacity change is this fixed recipe, not pure data gain or R mechanism improvement. Serving version unknown; historical event clock is not confirmed real-time availability; no protected/external/paid/release/promotion expansion.",
+  "reviewer_real_fits": 0,
+  "reviewer_model_calls": 0
+}

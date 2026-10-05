@@ -153,7 +153,14 @@
       "verification": "Reviewedpacket/input/source/approval/liveclock/uniqueclaim/no-tools/pin/runtime/response/usage",
       "pass_condition": "ActualControllerproposal,notSupervisoralgorithm",
       "failure_action": "Preserve failure; no scoring/authority relaxation, no sameIDresample or budget/clockreset",
-      "time_bound_minutes": 3
+      "time_bound_minutes": 3,
+      "result": {
+        "verdict": "pass",
+        "observed": "One actual original account decision cc35 afterC1feedback; independent transaction/evidence review95e2 PASS; modelalias6.1sol servingunknown; no invented secondmodel or results",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N1_DECISION_REVIEW_2026-10-05.json",
+        "evidence_sha256": "95e2d5b22b9ef64efc15821776d7fbdb6dce6b16193e35a851a02587d5ac4357"
+      }
     },
     {
       "id": "experiments",
