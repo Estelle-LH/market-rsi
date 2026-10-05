@@ -99,7 +99,14 @@
       "verification": "Actual4fits/same87/fivearms/unchangedscorer/source/runtime, sampledRSS/childabsence/caps",
       "pass_condition": "Realcomplete result, not yetindependent scientificadmission",
       "failure_action": "Preserve partialfailure/counts, no sameIDretry",
-      "time_bound_minutes": 15
+      "time_bound_minutes": 15,
+      "result": {
+        "verdict": "pass",
+        "observed": "Once-only D4 at967107b/request3ed6d4eb/pairba8bd3c0/memory66155457, four realfits entered/completed, exit0,87samekeypredictions,4.595896s,138848KiB sampledpeak/PID87742absent. Separate locked supplement24a255d3: worsebothparentlosses/1parentblockwin, frozenREVERT/REFUTED provisional until independent numerical admission. Outer5selected20actualfits.",
+        "reviewer": "root actual execution observation; independent result review separate",
+        "evidence_path": "COEVO_D4_EXECUTION_OBSERVED_2026-10-05.json",
+        "evidence_sha256": "c617f729c80c348b9dafec42e04c4a9279b0733abaf2329c61c9c13839d840cf"
+      }
     },
     {
       "id": "result_review",
@@ -112,7 +119,14 @@
       "verification": "Keycoverage/source/time/score/4blocks/intervals/energyidentity/partialreceipts andboundary",
       "pass_condition": "Validactualscores andhonestfrozenKEEP plusseparateresearch finding",
       "failure_action": "No promotion/incumbentupdate; preserveinvalidresult",
-      "time_bound_minutes": 10
+      "time_bound_minutes": 10,
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent no-refit68current/Gitfiles/193causal tanh/fourstrictpastfitstates/FghKKT/brackets/87scalarpredictions/fivearms/calibration/fourblocks/all16pooleddate-weekintervals/energy/memory/pair/6journal/PIDabsence verified. FrozenREVERT/REFUTED; exact odd-confidence recipe worse thanC7bothlosses/1block, credit2/refute/branch not wholefamilyabsence.",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "COEVO_D4_RESULT_REVIEW_2026-10-05.json",
+        "evidence_sha256": "10297dae02ffb5ae1034bca74f6631b71e3023f4bfd4a45a8d8e15ce7ee8400a"
+      }
     },
     {
       "id": "feedback",
@@ -125,7 +139,14 @@
       "verification": "SpecificD4evidence changesnextchoice, no preplannedindependentcandidate orforcedRrewrite",
       "pass_condition": "VerifiedfeedbackpassedtoactualController; nextscientificimplementationmustcontinuewithinbudget",
       "failure_action": "Preserveoperationalfailure, no unauthorizedretry orfabricatedchoice",
-      "time_bound_minutes": 5
+      "time_bound_minutes": 5,
+      "result": {
+        "verdict": "pass",
+        "observed": "D4 feedback02faff3c originally caused unsupported stop6c4b; preserved and independently denied8972. Explicit human96193 fresh replacement once under reviewed Hfixb0/c221 returned actual D5 possession-only proposal385acc, independently verified4637. No old result overwritten or cap/clock reset; D5 actual execution still pending.",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "COEVO_ACTUAL_CONTROLLER_DECISION_REVIEW_2026-10-05-v5.json",
+        "evidence_sha256": "4637f12adad80663482740f074d8eb32fa431500aa87cf0bbd329e55db13895a"
+      }
     }
   ]
 }

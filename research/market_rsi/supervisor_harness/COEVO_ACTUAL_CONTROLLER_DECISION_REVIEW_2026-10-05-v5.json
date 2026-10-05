@@ -1,0 +1,213 @@
+{
+  "C2_consumed": "45d1e7f2ef2de62102f115816db9d90e0249d169722700df3d5cc6000704c1ca",
+  "D4_both_loss_parent_increment": {
+    "brier": 0.00010614152216451012,
+    "log_loss": 0.00020753286465435838
+  },
+  "D4_parent_block_wins": 1,
+  "action": "propose_candidate",
+  "active_pool": [
+    {
+      "method_family": "restricted_calibration_conditional_causal_state",
+      "parent_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+      "reason": "Retain C7 for one distinct possession-only information question, preserving its verified C1 comparison."
+    },
+    {
+      "method_family": "nonlinear_causal_state_representation",
+      "parent_sha256": "376b34c656e5a70666e8863b507f518675858011c3da6530cf592a0e192957fe",
+      "reason": "Retain method diversity and the unresolved conditional state finding; no additional descendant selected."
+    }
+  ],
+  "agent_messages": 1,
+  "artifacts_sha256": {
+    ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ack.json": "f58d49ac022e08da70f3e15e93efda5f6cb8a5694b4972106a356714c74dbe3f",
+    "claim.json": "adb31b6a4aac0bcd38c821978b19c05590bae4a89be24df122d61c8fba7ba54a",
+    "completion.json": "efa0900a489d904f084cc6379ae13d06c2d1776aac306a61bbd39e67aec41854",
+    "events.jsonl": "0b349d43ceb35f56f3723081c478ec023bfad3b15fdbb426f1cbbc9df193062a",
+    "input.json": "0abe2a72b9558d977a8a0aa1236e8ceeb50d87bcf8194a5f03641c81e1127a91",
+    "process.json": "404d4d9715b85088a054776767f3bac7fe150b1054412a163218e262785ff814",
+    "response.json": "385accf2c8da600f2c72679034a2e88f50c70dc7dace7e463264701c1d0b1dad",
+    "schema.json": "85e0346d77fdffc463f621ea1a0ceeba0bf27477116a67fee7b164ec984c06df",
+    "stderr": "73c7859ce83ec7be8b6929e2a49e21eb3754642fa0815c9804919cd4c401165d"
+  },
+  "authorization_sha256": "96193e6b1ec563524d96d3dad12acf9ffaeca4ea7894486da29ad4b350b6a12d",
+  "binding_roles": {
+    "authority": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/d4/continuation-policyfix-01/authority.json",
+      "sha256": "e021a89ca5e22668a9841e8f7db477231e0a6713624f116f4734095a3a337112"
+    },
+    "feedback": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/d4/feedback-repair-d4-odd-confidence-joint-01.json",
+      "sha256": "02faff3cd86a1b213bd288766abbb59b5f15b8ec18f47dce52c670a1c0d2f275"
+    },
+    "history": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/d4/continuation-policyfix-01/history.json",
+      "sha256": "f45ca53eac01119451913a8d6b6cfc0af8bcd0ebc42178cf2875562259802e64"
+    },
+    "memory": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/d4/activation_memory.json",
+      "sha256": "66155457843b3908b16d9ef7920825c42a57fd1a253fcbe4fd409d8d950337c9"
+    },
+    "overhead": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/d4/continuation-policyfix-01/overhead.json",
+      "sha256": "ff69f13448156693edebb1d88367a560aabd25e322c094fc92f21f6481ef3f65"
+    },
+    "pool": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/d4/pool-at-feedback.json",
+      "sha256": "0c1a6eb9589a52a35c5ac78230b2a3f9317ed1e04f74409e4c881e2f28a98859"
+    },
+    "predictions": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/d4/runs/repair-d4-odd-confidence-joint-01/predictions.csv",
+      "sha256": "0944f5aaeedbe8f3a20d554c480c8920257eaa6544f97096f11508c953568d1e"
+    },
+    "request": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/d4/worker/repair-d4-odd-confidence-joint-01.request.json",
+      "sha256": "3ed6d4eb71858513914c31a33f71909cc5af6dfb7812954f9b3b044ac9ef2ed5"
+    },
+    "review": {
+      "path": "/Users/estelle/Developer/market-rsi/research/market_rsi/supervisor_harness/COEVO_D4_RESULT_REVIEW_2026-10-05.json",
+      "sha256": "10297dae02ffb5ae1034bca74f6631b71e3023f4bfd4a45a8d8e15ce7ee8400a"
+    },
+    "scorecard": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/d4/runs/repair-d4-odd-confidence-joint-01/scorecard.json",
+      "sha256": "be8eac8616894b011c128a91da356ec392efc0d64c04e884be6f862db2da31ff"
+    },
+    "supplement": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/d4/result_parent_supplement.json",
+      "sha256": "24a255d39ad703023a31aa4ae4cb1ab84126adf64ad5ed28d28e254d70d8e72d"
+    }
+  },
+  "caller_head": "3311bb446c0a212d208a770183c80cb7e60bdf41",
+  "candidate_id": "InGameTemperaturePossessionOnlyJointOffset-v1",
+  "decision_canonical_sha256": "9a10697edc0e031310965c90a53971439ebaa963cdd5a746529df13bff6bd7d1",
+  "eligible_parent_count": 17,
+  "event_counts": {
+    "item.completed": 1,
+    "thread.started": 1,
+    "turn.completed": 1,
+    "turn.started": 1
+  },
+  "input_canonical_sha256": "2821b6b85751a8e69a3018ca2cda48505214d530327298b6dfa41de53346f9ca",
+  "input_snapshot_actual_fits": 20,
+  "input_snapshot_remaining_attempts": 1,
+  "input_snapshot_selected": 5,
+  "input_snapshot_unreserved_fits": 4,
+  "item_types": [
+    "agent_message"
+  ],
+  "journal_events": 9,
+  "journal_state_sha256": "d76e62ecccad69f0fc340ebeff06b0c6510a87ba960d130d1c90bd96f67dbb4d",
+  "launch_admission_sha256": "91bb4d1fb28d9ec2eb42b315d684819876a2037793203cba5b312631ebc4c631",
+  "live_actual_fits": 20,
+  "live_reserved_fits": 20,
+  "live_selected": 5,
+  "no_file_mutation": true,
+  "observed_utc": "2026-10-05T18:40:33.732270+00:00",
+  "passed": true,
+  "pid": 91373,
+  "prepared_packet_exact_from_read_only_journal_replay": true,
+  "prior_successful_stop_failed_transactions_unchanged": true,
+  "question_id": "ingame-temperature-conditional-possession-only-v1-q1",
+  "read_only_recovery_save_transport_disabled": true,
+  "reviewer_model_calls": 0,
+  "reviewer_optimizer_calls": 0,
+  "reviewer_train_fits": 0,
+  "reviewer_transport_calls": 0,
+  "source_commit_of_feedback_candidate": "967107b8dca1c8cce21af2b39209078bc660306b",
+  "source_review_sha256": "c221cacab02b840467b6a80f8833baa741d27cc63bbd728f9003b5478b3c4d8d",
+  "usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 0,
+    "input_tokens": 112265,
+    "output_tokens": 1945,
+    "reasoning_output_tokens": 61
+  },
+  "window_elapsed_seconds": 11602.73227,
+  "schema": "market_rsi_independent_original_controller_transaction_review_v1",
+  "verdict": "PASS_ORIGINAL_EXPLICIT_FRESH_TRANSACTION_AND_SCIENTIFIC_IMPLEMENTATION_SCOPE_ONLY",
+  "scientific_scope_pass": true,
+  "continuation_policy_admitted": true,
+  "batch_completion_authorized": false,
+  "current_consumer_source_sha256": "b0c4c7a28f2eeb333587b9a53faa230a3b751d707433c0dc3b6f4d3e78e0e68e",
+  "scope_sha256": "63b2746021625c40198815439fcde4e6fe0b9f878f86ed05a3b6249bec248f58",
+  "fresh_call_id": "market-rsi-repair-d4-controller-continuation-policyfix-20261005-01",
+  "original_transaction_preserved_review_sha256": "8972c6ae1b6848e0edf5b7fb495198cec3de212b17bced1598699636fbb8743b",
+  "current_and_feedback_runGit_science_sources_verified": 68,
+  "pid_absent_observed_utc": "2026-10-05T18:40:43.966754+00:00",
+  "independent_read_only_proof_seconds": 0.718490375,
+  "no_observed_tools": true,
+  "same_id_resamples": 0,
+  "new_context_not_byte_identical_to_original_stopped_packet": true,
+  "new_context_change": "New versioned history cites actual original stop and independent policy denial; overhead records 4 prior successful calls, direct fresh approval and literal stopping conditions. Scientific D4 feedback/card/CSV/supplement/activation memory/pool/request/parent/incumbent remain identical, no added data.",
+  "scientific_recipe": {
+    "candidate_id": "InGameTemperaturePossessionOnlyJointOffset-v1",
+    "question_id": "ingame-temperature-conditional-possession-only-v1-q1",
+    "actual_parent_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+    "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+    "feature": "z=2*existing strict-binary pre-play possession_is_home-1; no imputation, filtering, new fetch or additional feature.",
+    "predictor": "eta=(1+beta)*frozen market_logit+gamma*z; beta>=-1, gamma free, no intercept.",
+    "objective": "Unweighted summed NLL+8*(beta^2+gamma^2), alpha16; no altered scorer.",
+    "solver": "Existing generic deterministic beta-then-gamma coordinate bisection: 100 sweeps/200 coordinate steps/tolerance1e-10/KKT<=1e-8/eigenvalues>=16 within existing tolerance/F<=samefold verified C7 warm+1e-8; fit-only beta[-1,1+sum|l|/16], gamma[-G,G],G=1+sum|z|/16. No restarts/grids/fallback/control fits.",
+    "hypothesis": "First bounded possession-only conditional representation; negatives for pressure/tanh are not evidence of its improvement or all state information being absent.",
+    "expected_evidence": "Four real prior-only fits, same87 predictions and195/193+2 accounting; all fixed loss/calibration/folds/date-week intervals/control comparisons. Conditional parent gain requires both losses improve and>=3/4 parent Brier wins, separate from frozen KEEP.",
+    "source_admission_required": "Freeze own candidate/primitive replay/strict possession causality/derivatives/zero-column C7 equivalence/complement symmetry/check-label isolation/failure/resource boundary and exact contract; any compatibility change separately scoped/source reviewed. Do not call D1 pressure guard for binary possession.",
+    "real_candidate_implemented_or_trained_by_this_receipt": false
+  },
+  "evidence_to_choice": [
+    {
+      "source_sha256": "10297dae02ffb5ae1034bca74f6631b71e3023f4bfd4a45a8d8e15ce7ee8400a",
+      "verified_finding": "D4 both parent losses worsen,1/4 parent wins.",
+      "consequence": "Stop exact tanh basis; select causal-information question, not another confidence basis."
+    },
+    {
+      "source_sha256": "6dced80a06b5c078caa6d9f82cd28166dd717b3707a5691a28ca4c7f8b220853",
+      "verified_finding": "D1 native composite pressure worsens C7; does not test possession alone.",
+      "consequence": "Remove down/distance/field-position weights, isolate binary possession."
+    },
+    {
+      "source_sha256": "301743d9b74cfbedda3ac210789741caae576977c8724963afb24bf053470075",
+      "verified_finding": "C7 all4 parent wins over C1 but raw KEEP fails.",
+      "consequence": "Restore C7 as actual parent; raw incumbent unchanged."
+    },
+    {
+      "source_sha256": "f45ca53eac01119451913a8d6b6cfc0af8bcd0ebc42178cf2875562259802e64",
+      "verified_finding": "Supplied B1/B2 paired differences reproduce from saved87-row aggregate cards;3/4 block wins/intervals cross zero in provided history.",
+      "consequence": "Keep B3 state family active and give reasonable first compressed representation attempt; do not assume signal."
+    }
+  ],
+  "cost_truth": {
+    "current_usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 0,
+      "input_tokens": 112265,
+      "output_tokens": 1945,
+      "reasoning_output_tokens": 61
+    },
+    "successful_account_decisions": 5,
+    "known_actual_account_submissions_including_original_failed400": 6,
+    "cumulative_reported_input_tokens": 488283,
+    "cumulative_reported_output_tokens": 8901,
+    "cumulative_reasoning_tokens_in_output": 664,
+    "cached_input_tokens": 0,
+    "failed400_usage": "unknown",
+    "account_usd": "unknown",
+    "paid_provider_calls": 0,
+    "all_agent_tokens_cpu_usd": "unknown",
+    "window_elapsed_seconds_at_verification": 11602.73227,
+    "completed_train_worker_wall_seconds_reported": 22.003475625941064,
+    "manual_scope_authorization_and_AI_coordination_overhead_not_hidden": true
+  },
+  "reviewer_errors_preserved": [
+    "First read-only proof guessed a standard-launch result_review_sha256 key; fresh launch uses H_source_review_sha256. KeyError after input/recovery passed; corrected verifier to actual schema, no writes/calls/fits.",
+    "Second read-only proof demanded full decimal substrings in narrative history; values were present as saved B1/B2 card metrics, with block/interval prose. Corrected to subtract saved values and verify3/4/cross-zero evidence; no candidate/payload/result edits."
+  ],
+  "limitations": [
+    "Actual model-owned scientific decision is feedback-dependent, but negative-memory reuse plus chosen proposal alone is not full next-fit completion or demonstrated benefit.",
+    "Direct human fresh approval and Supervisor three-line H repair were required after original invalid stop; no zero-human-intervention/autonomous R self-modification claim.",
+    "Requested account model gpt-6.1-sol, exact serving version unknown; no observed tools does not prove OS/network isolation. Original fixed model/mechanism-control comparison absent.",
+    "Same reused historical Train is Discovery; no untouched OOS/realtime/market/PnL/RSI superiority claim. Representation and parameter count change together.",
+    "Supervisor must recheck selection deadline19:12:11/full19:27:11 and last1attempt4fits before source/actual run. No new provider/data/protected DevFinal/release authority or cap reset.",
+    "Source/scoring/records immutable. Original stopped/failed calls preserved; this explicitly approved fresh ID is not a retry of their claims."
+  ]
+}
