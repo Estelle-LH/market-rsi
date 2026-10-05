@@ -4,7 +4,7 @@
   "symptom": "Verified N1 negative led original Controller to distinct distance-dependent prediction hypothesis",
   "source_evidence": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01/account-controller/market-rsi-learning-checkpoint-continuation-controller-n1-feedback-20261005-01/e9a256fdcae45372ef52aecdb1aba7fcf9c402c35ab77d81750e676dfeab4e90/response.json SHAdcc7607d0a6af36a1a1796475b7bdfab5337e8fc9bcfef34b68aa33c8b94e3ba",
   "objective": "Complete last actual4-fit distance prediction experiment, independent score/learning and batchcloseout",
-  "boundary": "Fresh2/8/2; current1attempt4fits2decisions; no retries23:47:32selection00:02:32hard; residentTrain/fixedjudge/closedexternalprotectedpaidrelease",
+  "boundary": "Fresh2/8/2; current2attempts8fits2decisions; allcaps consumed; no retries23:47:32selection00:02:32hard; residentTrain/fixedjudge/closedexternalprotectedpaidrelease",
   "resolution_check": "Actualsame-samplescorecard accepted, learningseparate, truthfulcapstop; no R/mechanismbenefitfiction",
   "supervisor_owner": "root",
   "response_sha256": "dcc7607d0a6af36a1a1796475b7bdfab5337e8fc9bcfef34b68aa33c8b94e3ba",
@@ -142,7 +142,14 @@
       "verification": "Exact unchanged87same-key predictions, actualfit progress/receipt/currentbudget/deadline/source",
       "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
       "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
-      "time_bound_minutes": 3
+      "time_bound_minutes": 3,
+      "result": {
+        "verdict": "pass",
+        "observed": "Actual first/only successful N2 worker;4entered/completed fits87predictions4.382618s139136KiB, receipt545dc8, outer2/8/2. Original preclaimprefix preserved; independent numerical review next.",
+        "reviewer": "root execution observation, not independent score acceptance",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N2_EXECUTION_2026-10-05.json",
+        "evidence_sha256": "d785a892f5db9aa6ae5f7811a5d97e82deaff55672e89124d56de5131a3bed52"
+      }
     },
     {
       "id": "result",
@@ -155,7 +162,14 @@
       "verification": "Same judge, physical artifacts/currentGit pins, no implementation failure counted as scientific evidence",
       "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
       "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
-      "time_bound_minutes": 4
+      "time_bound_minutes": 4,
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent75bindings/193causalrows/4savedfits/87scalarpredictions exact/all5arm metrics/4blocks/16intervals/supplement/firstclaim/preserved3prefix/PID18857absent/current2/8/2 PASS. ValidnegativeREFUTED/REVERT, no refit.",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N2_RESULT_REVIEW_2026-10-05.json",
+        "evidence_sha256": "b77c502680902c0fd1d209db7d6e5a8bb9ffaf647b1a2aa7bb9daba7c49fe214"
+      }
     },
     {
       "id": "learning",
@@ -168,7 +182,14 @@
       "verification": "Learning0/1/2 separate Brier/KEEP; novelty/dedup/branch evidence; observed reuse benefit unmeasured",
       "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
       "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
-      "time_bound_minutes": 3
+      "time_bound_minutes": 3,
+      "result": {
+        "verdict": "pass",
+        "observed": "Separate independent canonical/dedup/actualauthority/reuse assessment PASS credit2/validnegative/branch, unchangedREVERT; benefitunmeasured.",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N2_LEARNING_REVIEW_2026-10-05.json",
+        "evidence_sha256": "c09dfceee296822039472f19ecd808cc55a696cc6aea93f7f3e78fe85903d807"
+      }
     },
     {
       "id": "feedback",
@@ -181,10 +202,22 @@
       "verification": "Root-only incumbent/pool/ledger; outer2/8/2 terminal consumed, no nextselection/call",
       "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
       "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
-      "time_bound_minutes": 3
+      "time_bound_minutes": 3,
+      "result": {
+        "verdict": "pass",
+        "observed": "Native result/learning accepted, journal9/stateaecee85d/feedbackbe23c4f2; rawincumbentheld. Caps2/8/2 consumed; no nextinput/call.",
+        "reviewer": "root exact native acceptance",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N2_ACCEPTANCE_2026-10-05.json",
+        "evidence_sha256": "d4482a236c5e20f13ee0f6e2aa3fc726f5a1afdd2936bf84cdd65869fee395e0"
+      }
     }
   ],
   "contract_path": "research/market_rsi/supervisor_harness/CHECKPOINT_CONTINUATION_N2_CONTRACT_2026-10-05.json",
   "supersedes_plan_sha256": "d62f86e3fc49d15c7f8d3d8cc0e3206ed391fa5ca3b99eb0bdc22cccab2f832e",
-  "preclaim_fault": "Rootrelativepathargumenterror after selected3-eventprefix but beforeouterreservation/claim/workerfit; actualattempt remains sameN2, no retry/reset. Preserve unactivated operational drafts and independentguardfix review."
+  "preclaim_fault": "Rootrelativepathargumenterror after selected3-eventprefix but beforeouterreservation/claim/workerfit; actualattempt remains sameN2, no retry/reset. Preserve unactivated operational drafts and independentguardfix review.",
+  "resolution": {
+    "verdict": "pass",
+    "observed": "All steps independently admitted/actualexecuted/accepted; second genuine feedback-dependent experiment complete; exhaustedcapstop, no score/data/clock/permission changes.",
+    "reviewer": "Root synthesis of independent source/result/learning receipts and actual native acceptance"
+  }
 }

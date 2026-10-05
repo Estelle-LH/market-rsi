@@ -1,0 +1,203 @@
+{
+  "actual_parent_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+  "aggregate": {
+    "arms": {
+      "candidate": {
+        "brier": 0.14200244888989477,
+        "log_loss": 0.4291438435813962
+      },
+      "ordinary": {
+        "brier": 0.14548231253271718,
+        "log_loss": 0.43992197245621956
+      },
+      "parent": {
+        "brier": 0.14195410408172784,
+        "log_loss": 0.4288860887954059
+      },
+      "raw_market": {
+        "brier": 0.14195252900323282,
+        "log_loss": 0.4296707847132428
+      }
+    },
+    "candidate_minus_market": {
+      "brier": 4.991988666194769e-05,
+      "log_loss": -0.0005269411318466477
+    },
+    "candidate_minus_parent": {
+      "brier": 4.834480816692799e-05,
+      "log_loss": 0.0002577547859902718
+    },
+    "events": 87,
+    "parent_brier_identity_residual": 2.1555294441727435e-17,
+    "parent_correction_energy": 3.715479495826298e-07,
+    "parent_correction_signed_alignment": 4.7973260217323807e-05
+  },
+  "attempt_id": "continuation-n2-distance-slope-01",
+  "blocks": [
+    {
+      "arms": {
+        "candidate": {
+          "brier": 0.12493200087076681,
+          "log_loss": 0.3778968605127727
+        },
+        "ordinary": {
+          "brier": 0.13061710877713692,
+          "log_loss": 0.39656213359146736
+        },
+        "parent": {
+          "brier": 0.1248802778768361,
+          "log_loss": 0.37743169728798137
+        },
+        "raw_market": {
+          "brier": 0.12447843111620026,
+          "log_loss": 0.3780119626432534
+        }
+      },
+      "candidate_minus_market": {
+        "brier": 0.000453569754566549,
+        "log_loss": -0.00011510213048065987
+      },
+      "candidate_minus_parent": {
+        "brier": 5.1722993930705674e-05,
+        "log_loss": 0.00046516322479134287
+      },
+      "events": 26,
+      "fold": 1,
+      "parent_brier_identity_residual": 1.0340578220080499e-17,
+      "parent_correction_energy": 5.570925807820764e-07,
+      "parent_correction_signed_alignment": 5.1165901349913255e-05
+    },
+    {
+      "arms": {
+        "candidate": {
+          "brier": 0.17382002579241398,
+          "log_loss": 0.5059101058959063
+        },
+        "ordinary": {
+          "brier": 0.17589549592451675,
+          "log_loss": 0.5127619202842759
+        },
+        "parent": {
+          "brier": 0.1738743724389793,
+          "log_loss": 0.5061055413093697
+        },
+        "raw_market": {
+          "brier": 0.17296354615028114,
+          "log_loss": 0.5038277755253092
+        }
+      },
+      "candidate_minus_market": {
+        "brier": 0.0008564796421328402,
+        "log_loss": 0.0020823303705971297
+      },
+      "candidate_minus_parent": {
+        "brier": -5.434664656531196e-05,
+        "log_loss": -0.0001954354134633407
+      },
+      "events": 16,
+      "fold": 2,
+      "parent_brier_identity_residual": -1.0279591847878189e-17,
+      "parent_correction_energy": 9.545326477515956e-08,
+      "parent_correction_signed_alignment": -5.444209983007684e-05
+    },
+    {
+      "arms": {
+        "candidate": {
+          "brier": 0.1490668205721438,
+          "log_loss": 0.45971662288916565
+        },
+        "ordinary": {
+          "brier": 0.15180591666281168,
+          "log_loss": 0.4660691786040406
+        },
+        "parent": {
+          "brier": 0.14893449815565618,
+          "log_loss": 0.45923475215829596
+        },
+        "raw_market": {
+          "brier": 0.14937268044587776,
+          "log_loss": 0.4601977700070289
+        }
+      },
+      "candidate_minus_market": {
+        "brier": -0.0003058598737339657,
+        "log_loss": -0.0004811471178632343
+      },
+      "candidate_minus_parent": {
+        "brier": 0.00013232241648761245,
+        "log_loss": 0.00048187073086969345
+      },
+      "events": 28,
+      "fold": 3,
+      "parent_brier_identity_residual": -1.3931997916438732e-17,
+      "parent_correction_energy": 5.820795045990309e-07,
+      "parent_correction_signed_alignment": 0.00013174033698302735
+    },
+    {
+      "arms": {
+        "candidate": {
+          "brier": 0.12652880247542686,
+          "log_loss": 0.38491581664813185
+        },
+        "ordinary": {
+          "brier": 0.12917780945822577,
+          "log_loss": 0.3946157885206703
+        },
+        "parent": {
+          "brier": 0.12652728958414958,
+          "log_loss": 0.3849178749606233
+        },
+        "raw_market": {
+          "brier": 0.12726935431593958,
+          "log_loss": 0.3886038395721048
+        }
+      },
+      "candidate_minus_market": {
+        "brier": -0.0007405518405127209,
+        "log_loss": -0.0036880229239729667
+      },
+      "candidate_minus_parent": {
+        "brier": 1.5128912772832681e-06,
+        "log_loss": -2.0583124914486106e-06
+      },
+      "events": 17,
+      "fold": 4,
+      "parent_brier_identity_residual": -1.4987824485191217e-17,
+      "parent_correction_energy": 8.697734223170164e-10,
+      "parent_correction_signed_alignment": 1.5120215038759389e-06
+    }
+  ],
+  "candidate_id": "InGameTemperatureDistanceSlopeJointOffset-v1",
+  "candidate_source_sha256": "88b4f9e9114a62724ea566059e60d921af2642b9e259d9ee77155430d030f7fe",
+  "claim": "Actual original N1-feedback-dependent next choice implemented and trained. No R process modification or gain, pure data attribution, OOS or superiority claim.",
+  "fits_completed": 4,
+  "fits_entered": 4,
+  "incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+  "memory_sha256": "28bf1fe958b4387e209f1652e0447ad641c0274964a176ac2bba8e177500e3ed",
+  "next": "Independent actual result reconstruction then separate learning/acceptance; stop at actual2new candidates/8fits/2calls. Do not prepare third input or call.",
+  "operational_decision": "REVERT",
+  "operational_fault": "Root relativepath launcher caller failed before worker claim or training. Exact initial journal preserved; independent v3 recovery admitted first/only worker start under same logical N2 ID. No worker retry/extra fit/call.",
+  "outcome": "succeeded",
+  "population": {
+    "check_dates": 20,
+    "check_events": 87,
+    "check_game_weeks": 7,
+    "dates": 42,
+    "events": 195,
+    "excluded_events": 2,
+    "materialized_events": 193
+  },
+  "predictions_sha256": "2cbccc3e7b42c564b91154eb9e639c241e36fc691d29d7f3c18572df83f11eb8",
+  "recorded_utc": "2026-10-05T23:38:16.669938+00:00",
+  "request_sha256": "ecd4107650fff0ac6a3b5c35d78748e8f6295b423a7f611e98a606efaa884f96",
+  "runtime_pair_sha256": "7be10b7ef4a368f95d04658dcc1f122a93f79a09bbcc145ca732e96fa6820872",
+  "sampled_peak_rss_kib": 139136,
+  "schema": "actual_prediction_trial_observation_v1",
+  "scientific_decision": "REFUTED",
+  "scorecard_sha256": "aeecff9de7082926991322aa75d481fec342ae836bfa0a331d731a1c5149ba4b",
+  "source_commit": "ba5d642b745499bd3a30e55f551b46ac3ef2537b",
+  "supplement_sha256": "1e334ea6c62c7deb6d5a08b3e3b17fb5db6f4494cbe5c6b4a546bcb381a10ecb",
+  "verification_status": "Completed actual four-fit run; independent result/learning assessment pending. Not accepted Controller feedback yet.",
+  "wall_seconds": 4.382618166971952,
+  "worker_receipt_sha256": "545dc8acd7688c3dae58a84cd4c563bd8f04a57aa18723b3bf6dfb90a91cf049"
+}

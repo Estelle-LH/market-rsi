@@ -173,7 +173,14 @@
       "verification": "Identicalscoring/data/baselines/parent/samples andcreditseparate, shared2/8/calls2/no-retries",
       "pass_condition": "Twoactualcandidates feedbackdependent wherebudgetpermits; truthfullycountfailedattempts",
       "failure_action": "Preserve failure; no scoring/authority relaxation, no sameIDresample or budget/clockreset",
-      "time_bound_minutes": 45
+      "time_bound_minutes": 45,
+      "result": {
+        "verdict": "pass",
+        "observed": "Two real feedback-dependent candidates/eightfits/two originaldecisions independently accepted; both validnegativeREVERT/credit2; rawincumbentunchanged; actualN1finding changedN2 choice.",
+        "reviewer": "Root independent receipt synthesis",
+        "evidence_path": "CHECKPOINT_CONTINUATION_RESULT_2026-10-05.json",
+        "evidence_sha256": "3b0c7ed58435cb8a8662dfe2748523b23879d3257e827d69cf2d228312c318fe"
+      }
     },
     {
       "id": "closeout",
@@ -186,7 +193,19 @@
       "verification": "Actualcounts/hashes/processabsence/unsupportedclaimsbeforeoriginaldeadline",
       "pass_condition": "Closedauditablebatch,notclaimedmechanismsuperiority",
       "failure_action": "Preserve failure; no scoring/authority relaxation, no sameIDresample or budget/clockreset",
-      "time_bound_minutes": 8
+      "time_bound_minutes": 8,
+      "result": {
+        "verdict": "pass",
+        "observed": "Actual2/8/2 accepted, rawincumbentheld,149 current/runGitpins/pure9+9journal/4PIDabsence/oldtraceprefix/6archivewrappers/C2preservation/capreject/newinputabsent verified. Report, memory/pool/archive saved; no additionalscience.",
+        "reviewer": "Root final operational checks; prior independent result/learning receipts reused, not new independent closure",
+        "evidence_path": "CHECKPOINT_CONTINUATION_CLOSEOUT_2026-10-05.json",
+        "evidence_sha256": "6866bffa8ce7a05f33c12fa023631641fc6ca5ff88c0de0357f353972ce09ad3"
+      }
     }
-  ]
+  ],
+  "resolution": {
+    "verdict": "pass",
+    "observed": "Two real feedback-dependent candidates independently reviewed and separatecredit2 accepted; truthfulcapstop/report/trace/rootverification complete beforeharddeadline; localGit evidencecheckpoint next.",
+    "reviewer": "Root synthesis of prior independent reviews and final actual operational verification"
+  }
 }

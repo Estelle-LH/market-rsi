@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "verdict": "PASS_DISTINCT_VALID_NEGATIVE_LEARNING_WITH_OBSERVED_REUSE",
+  "reviewed_utc": "2026-10-05T23:42:53.291174Z",
+  "assessment_sha256": "0f18c2746082da36d6dff3c74f768363880e520281bce6260182fcaa5d353157",
+  "result_review_sha256": "b77c502680902c0fd1d209db7d6e5a8bb9ffaf647b1a2aa7bb9daba7c49fe214",
+  "physical_hashes": {
+    "learning_evidence_core.json": "c2d61b6f2a3f9ec50176d7a96d10a88573082f4a467ec51d86780ecdbb7fcfad",
+    "learning_finding_identity.json": "90db32fbde11238081fc07aa0bd454a88774602c0593425d84b0e1befcac6a0b",
+    "learning_authority_snapshot.json": "40a7c682bc37b9ea700de38b6bbf54a1b3904250a3011b107ba2089b0e5bf748",
+    "learning_reuse_action.json": "5058c3ccfc6bbdb42d88b869a6a04adde7c507d574cf1169a20b91ec1859e856"
+  },
+  "canonical_hashes": {
+    "finding": "7a148619185f2f915ba33fe8fcd5f0434dc99b9197dde57ce6d2f8477990cb1a",
+    "evidence": "a9fcdcd5b6fccb4c5f58bedc834fc3f7eb060e4bc0e471eab4984ca06afac303",
+    "authority": "fe7d3890eacde6600e65161f27d57229b1b4d3ad4a96b0e1721b3ce04c566aa6",
+    "reuse": "8716a9a544c92382abced6f128ae76dcf87402138d1001dc126d86dbf30e5322"
+  },
+  "checks": {
+    "five_physical_files_and_canonical_body_bindings": true,
+    "core_matches_actual_review_outputs_source_request_receipt": true,
+    "authority_equals_current_two_attempts_eight_fits_two_calls": true,
+    "semantic_question_distinct_from_five_accepted_findings": true,
+    "pure_assessment_credit_two_not_duplicate": true,
+    "synthetic_duplicate_guard_credit_zero": true,
+    "observed_N1_finding_to_dcc760_choice_to_88b4_source_to_545dc8_run": true,
+    "reuse_benefit_unmeasured": true,
+    "REVERT_unchanged_no_allowance_forced_pool_or_C2_reset": true
+  },
+  "learning_credit": 2,
+  "exploration_action": "branch",
+  "prediction_decision": "REVERT",
+  "scientific_decision": "REFUTED",
+  "native_projection": "Pure prospective reviewed-branch projection only; preaccept review_decision is null. Subsequent v4 research_outcome inconclusive remains separate from scientific REFUTED.",
+  "semantic_novelty": "Isolated fixed distance t/(10+t) by market-logit slope at alpha16 tests a different question from down, field-position, composite-pressure and other imported findings. Negative evidence concerns this exact recipe, not all distance/PBP information.",
+  "limits": "Learning credit is not forecast gain. Observed feedback reuse is not validated performance/efficiency benefit, LLM weight learning, R-policy modification or fixed-workflow superiority. Outer 2/8/2 exhausted: no next input, call, fit or new authority. No reviewer optimizer, source/FSM/ledger/output change."
+}

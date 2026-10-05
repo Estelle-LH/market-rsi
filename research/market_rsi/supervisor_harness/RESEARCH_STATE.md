@@ -1,3 +1,17 @@
+# Current verified Market RSI state — October 5, 2026, 23:47:07 UTC
+
+Fresh continuation is CLOSED at approved2new candidates/8actual fits/2original Controller decisions. Both real prediction experiments independently reconstructed and separately accepted at learningcredit2; both REVERT. Rawmarket remains incumbent, Brier/log0.141952529/0.429670785. N1field-position0.141983546/0.428988574; N2distance0.142002449/0.429143844.
+
+Observed C1negative→N1 choice→real fit→acceptedN1feedback→originalN2choice→real fit→acceptedN2feedback; no third input/call. This is evidence-dependent candidate optimization and accumulation, not autonomousRworkflow modification or demonstrated research-process superiority. Last actual globalpool remains two families: C7conditionalcalibration and archivedB3nonlinearstate; incumbent separate, valid negative children retain distinct-question eligibility without forced active retention.
+
+All149 current/runGit source pins,9+9nativejournal replay, exactacceptedreceipts and four exactprocessPIDs checked; no activeTrainchild. Workerwall8.984s, elapsed74.6min atverification, provider0/USD0; account333112input/3824output(reasoning64included), totalAIcostunmetered. Humanfreshscopeapproval1, per-roundscience/repairinstructions0; substantialAIRootcoordination/preclaimrepair remains.
+
+ResidentTrainDiscoveryonly, same195denominator193+2/87checks/20dates7weeks/fourfolds/scorer/KEEP. ProtectedDevFinal, externalacquisition/literature, paidproviders, release/promotion closed. Requestedgpt-6.1-sol servingversionunknown. No new batch implicitly authorized by remaining oldcaps.
+
+Evidence: [continuation report](CHECKPOINT_CONTINUATION_REPORT_2026-10-05.md), CHECKPOINT_CONTINUATION_CLOSEOUT_2026-10-05.json, append-only CHECKPOINT_PILOT_TRAJECTORY_2026-10-05.jsonl. PersistentNEW artifacts include acceptedN2feedbackbe23c4f2 and factualhandoffmemory. Nextscientificchoice remains futureController-owned, not preselected here.
+
+## Historical state snapshot — preserved verbatim below, not current authority
+
 # Market RSI decision state — 2026-10-05, eight-hour iteration
 
 ## Live eight-hour batch
