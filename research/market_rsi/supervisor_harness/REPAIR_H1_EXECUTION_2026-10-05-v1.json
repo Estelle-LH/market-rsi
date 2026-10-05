@@ -101,7 +101,14 @@
       "verification": "Actualsource/probability/state/metric/decision equality againstC7, childabsence/budgetterminal; no Controller science change.",
       "pass_condition": "Measured originalC7 parity plus truthful evidence entry and actualsmallness; only then activateH forD1.",
       "failure_action": "Recordinvalidtrial, no automaticretry; Controller gets factualfeedback.",
-      "time_bound_minutes": 15
+      "time_bound_minutes": 15,
+      "result": {
+        "verdict": "pass",
+        "observed": "One real held-C7 worker4fits/4.3729seconds completed; distinct reviewer reconstructed60 source bindings,87 five-arm rows/four states/all34 original card fields/calibration/16 intervals and exact source/runtime/newpair. No refits/retries, childabsent. Exact parity accepted; reusableH entry not prediction/R/automaticcontinuation gain.",
+        "reviewer": "/root/coevo_independent_review_20261003; root actual acceptance",
+        "evidence_path": "COEVO_H1_LIVE_PARITY_REVIEW_2026-10-05.json",
+        "evidence_sha256": "c619bca98e52d1947b542647644500838dfb1dcdbb3eea803dc5a0b0c0ee9db0"
+      }
     }
   ],
   "active_contract": "COEVO_H1_CONTRACT_2026-10-05-v3.json",

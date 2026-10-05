@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "review_id": "repair_h1_live_parity_reviewer_20261005",
+  "reviewed_at_utc": "2026-10-05T15:59:04Z",
+  "verdict": "PASS",
+  "passed": true,
+  "scope": "H1 held-C7 parity only; no predictive/R/automatic-continuation gain",
+  "adapter_source_sha256": "f62a5459a8e3c78bcdd7810e25291d1ef164ccc2d41f876fa37fb166f9dcc8bc",
+  "source_review_sha256": "13913664f1f24590adcbd265f5d39121e95f2e71615651795242b87d372dd4cb",
+  "contract_sha256": "9317c9d2e888cc8b6ca4a65bb8fe361a2493472eca37bbbad25bd462dfb39e3b",
+  "predictions_exact": true,
+  "predictor_states_exact": true,
+  "original_scorecard_fields_exact": true,
+  "fit_calls_entered": 4,
+  "fit_calls_completed": 4,
+  "control_refits": 0,
+  "same_id_retries": 0,
+  "source_K_C_worker_unchanged": true,
+  "independent_verification": {
+    "actual_refits": 0,
+    "all_old_card_fields_exact": 34,
+    "artifact_hashes": {
+      "exclusions.json": "e6b19b230318dc9daf89e6495504c93996f49b3245415a14a45144fece81fdfb",
+      "fit_progress.json": "e4a2a97ef6f158667f0454904caa2ba3bf4dcbeadb17e4d2ff82ff8002bed38a",
+      "input_receipts.json": "20f86ea7e51513884412ad2f58f145250a601b412c9550143e61a538d02924dd",
+      "manifest.json": "fbf34b9afa83d871d1092b60ad3bb18d2ef886c39a70f53bf7fe9af73d73948b",
+      "pre_score_lock.json": "0f1142638494a88d7c38ffa0834fee55cc6430beab70d1d8d17df12864060e6e",
+      "predictions.csv": "d31adca8574a908573a49bee2c8447d23062376f60a46287b75e954bc0d50fbf",
+      "predictor_states.json": "fb15ae99d79a448e59822bf14eabe4a347b75292784ed10a1fa40e865caf7ce9",
+      "scorecard.json": "3b6869ae419faf39a90d946a1ea17d14be31cb7d56d3f03386a1059441d165e0"
+    },
+    "candidate_brier": 0.14195410408172784,
+    "candidate_log_loss": 0.4288860887954059,
+    "checks": [
+      87,
+      20,
+      7
+    ],
+    "decision": [
+      "REFUTED",
+      "REVERT"
+    ],
+    "gradient_abs": [
+      8.566825027145342e-11,
+      1.147437256321382e-9,
+      6.414284658973202e-10,
+      9.977360271307134e-9
+    ],
+    "journal_head": "2f2785ba8b777387ef7833b7e358cfa34e3ab8bc4cbf7fdb8a0ce9bb862cbe38",
+    "journal_records": 6,
+    "max_scalar_probability_error": 0,
+    "memory_sha256": "6faa961636ad4066371cfd70e22f1fdf90518b492b33806e3c798d141ba92501",
+    "pair_sha256": "7953e6e3795204980a22ceffe449f04a24a82995a8b9bbddf799d6b755b90422",
+    "passed": true,
+    "pid": 72276,
+    "population": [
+      195,
+      193,
+      2
+    ],
+    "request_files_verified": 60,
+    "request_sha256": "de8ec84d489c040340961432ff9a975394c623491ce01a90956b5faa839b18e3",
+    "sampled_peak_rss_kib": 146912,
+    "source_commit": "3b03164f013bf8f507440eb63df0bee839dc5ed7",
+    "stage": "execution_terminal_pending_independent_review",
+    "state_sha256": "3d0ea025fc714f4db1e9fb16e0d7c63b775655c03913a8685fde46f7b272f3b8",
+    "wall_seconds": 4.372921708971262,
+    "worker_receipt_sha256": "6435eba6f40967f0758044df56ec08f564776d2c31b40ef01aa2347df1d121c5",
+    "child_absent": true,
+    "child_absence_check": "escalated os.kill(72276,0) raised ProcessLookupError; read-only signal 0",
+    "optimizer_fit_callbacks_disabled": true,
+    "independent_scalar_proper_scores_all_five_arms_and_four_blocks_exact": true,
+    "calibration_and_sixteen_grouped_intervals_recomputed_exact": true,
+    "source_files_current_and_run_commit_verified": true
+  },
+  "artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/held-c7/runs/repair-h1-held-c7-01",
+  "old_control_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-07/runs/attempt-01",
+  "method": "Read-only reconstruction from saved states and existing authorized Train. No optimizer/solver/parent fit called. Exact CSV/state bytes and all34 original card fields, input/time/label/causal receipts, five-arm score arithmetic, folds/calibration/grouped intervals and unchanged scientific/KEEP judges verified independently.",
+  "budget": {
+    "held_pilot_max_attempts": 1,
+    "held_pilot_max_fits": 4,
+    "actual_attempts": 1,
+    "actual_fits": 4,
+    "global_cap": [
+      6,
+      24
+    ],
+    "global_ledger_status": "Supervisor separately manages selected/reserved cumulative ledger; this receipt verifies own control request and local cap, not an unprovided global-ledger path."
+  },
+  "remaining_actions": [
+    "Supervisor may accept this parity receipt and close held pilot before separately reviewed D1 admission and launch.",
+    "Journal observed at six records with execution terminal pending independent review, not already closed; no claim of automatic continuation."
+  ],
+  "limitations": [
+    "One actual held-C7 parity control demonstrates this adapter preserved the selected recipe and old result; not general H efficiency, prediction gain, R evolution or autonomous continuation.",
+    "No new scientific credit: reused C7 remains REFUTED/REVERT against raw under unchanged frozen judge.",
+    "Exact Controller serving identity unknown; no same-model mechanism comparison.",
+    "Trusted local host and sampled RSS enforcement, not OS/network sandbox isolation.",
+    "Historical repeatedly used Train Discovery, not untouched OOS, prospective or monetization evidence.",
+    "Human-authored repair, coordination and manual handoffs remain; prior-finding reuse/automatic next execution still require actual evidence."
+  ],
+  "verification_script_failures": [
+    {
+      "kind": "read-only PID probe shell quoting syntax error",
+      "effect": "No signal or state mutation; corrected scoped heredoc signal-0 probe passed."
+    },
+    {
+      "kind": "read-only lookup used nonexistent AGENT_LOG_INDEX.md path",
+      "effect": "No write or scientific operation; registration was already confirmed by Supervisor and exact actual index located separately."
+    }
+  ],
+  "production_source_edits": 0,
+  "real_train_refits": 0,
+  "provider_calls": 0,
+  "network_operations": 0,
+  "protected_data_reads": 0
+}
