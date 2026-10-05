@@ -1,15 +1,24 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-10-05T22:27:06.253306+00:00",
+  "updated_utc": "2026-10-05T22:36:01.160611+00:00",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
     {
+      "id": "learning-checkpoint-continuation-20261005-01",
+      "status": "approved_exact_prospective_binding_ops_preflight_parallel",
+      "plan": "research/market_rsi/supervisor_harness/CHECKPOINT_CONTINUATION_IMPLEMENTATION_2026-10-05-v1.json",
+      "result": "Directhumanapprove, localapprovalcf673127, fresh2/8/2 start22:32:32/selection23:47:32/deadline00:02:32. ActualC1feedbackab621 ready; freshsource/script/data preflight disjoint. New actualcandidate/fits/accountcalls0.",
+      "next": "Integrate+independentlyreview minimalexactbinding andreusedops, committhencallactualControlleronce onC1negativefeedback. No Supervisoralgorithmchoice.",
+      "evidence": "research/market_rsi/supervisor_harness/CHECKPOINT_CONTINUATION_IMPLEMENTATION_2026-10-05-v1.json",
+      "provider_cost_usd": "0"
+    },
+    {
       "id": "learning-checkpoint-fresh-pilot-20261005",
-      "status": "original_selection_window_closed_no_active_child_fresh_bounded_continuation_pending",
+      "status": "original_selection_window_closed_preserved_new_continuation_approved",
       "plan": "research/market_rsi/supervisor_harness/LEARNING_CHECKPOINT_PILOT_2026-10-05-v2.json",
       "result": "Original cutoff22:24:55 passed; observed22:25:01 after usercontinue. Existingguard rejects outerselectionstop. Onecompletedcandidate/fourfits/oneoriginalaccountdecision, noC1feedbackaccounttransport or descendant. Realnegative753c/learning565a/feedbackab621 preserved; rawincumbent unchanged.",
-      "next": "Await one combined fresh<=90min/2candidate/8fit/2onceonlyaccountdecision and same-account reviewedpayload approval; preserve oldauthority/results/consumption and no launch under expired original selectionwindow. No new algorithm selected by Supervisor.",
+      "next": "Originalwindow staysclosed; newlyapprovedremaining-capacity continuation is trackedseparately below/above with2newattempts8fits2decisions, no original rerun or reset.",
       "evidence": "research/market_rsi/supervisor_harness/CHECKPOINT_PILOT_CLOSEOUT_2026-10-05.json",
       "provider_cost_usd": "0"
     },

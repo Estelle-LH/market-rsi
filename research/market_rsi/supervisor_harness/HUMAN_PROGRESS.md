@@ -1,5 +1,11 @@
 # Market RSI — human progress
 
+## 2026-10-05 18:36 EDT — fresh two-candidate continuation explicitly approved
+
+User “approve” answered the combined fresh-window and same-account reviewedresearch-payload question. Newprospective batch `market-rsi-learning-checkpoint-continuation-20261005-01` is bounded at18:32:32–20:02:32NewYork, selection19:47:32, atmosttwo newcandidates/eightfits/two once-onlyaccountdecisions/max2live/thread1. Oldpilot1candidate/4fits/1decision andclosedselectioncutoff remain unchanged; the freshcap allocates its unused2/8/2, not a C1rerun or an implicit oldclock reset. Freshapprovalcf673127 is persisted locally outsideGit.
+
+Current executableconsumer accepts only the previous exactexpired envelopes; one minimal staticnew-envelope addition is directly required, with originaldefaults/old3/12binding preserved. Registeredproducer, mechanicalopshelper andindependentreadonlypreflight are runningdisjointly afterpassingdispatch/ready gates; expectedbinding<30productionlines1module, no newframeworkservice. Rootownsactualaccountcall andledger; helpers do notpick science orfitTrain. ExistingactualC1feedbackab621/result753c/learning565a will drive thenextControllerdecision. Freshcandidate/controller/fits countsare0atthisscopecheckpoint. Paidproviders/externalacquisition/protectedDevFinal/publish/promotion remainclosed.
+
 ## 2026-10-05 18:26 EDT — continuation checked after original selection cutoff
 
 The user said “continue.” First observed clock was22:25:01UTC, after the frozen22:24:55 selection cutoff. Existing guard independently of transport rejects `outer selection stop`; no active pilot child remains. This is not a negative-score stop or an exhausted attempt cap. The original hard18:39:55 finish deadline and1/3attempts/4/12fits/1of3completed account calls remain preserved. No next Controller call, descendant training, permission bypass or clock reset occurred.
