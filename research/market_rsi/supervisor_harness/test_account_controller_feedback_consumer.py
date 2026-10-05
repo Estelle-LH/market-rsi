@@ -11,6 +11,10 @@ import unittest
 from unittest.mock import patch
 
 from supervisor_harness import account_controller_feedback_consumer as c
+from supervisor_harness.test_learning_checkpoint_assessment import (
+    branch as learning_branch, checkpoint, ranked,
+)
+from supervisor_harness.learning_checkpoint_assessment import assess_checkpoint
 
 
 NOW = datetime(2026, 10, 5, 16, 0, tzinfo=timezone.utc)
@@ -137,6 +141,91 @@ class ConsumerTests(unittest.TestCase):
 
     def transport(self, directory, packet, timeout):
         self.calls += 1; self.assertLessEqual(timeout, 120); self.f.transport(directory, packet, timeout)
+
+    def use_v4(self):
+        feedback = deepcopy(self.f.values["feedback"])
+        value = checkpoint("parent")
+        value["validity"]["review_sha256"] = feedback["review_sha256"]
+        value["exploration"]["next_question_sha256"] = None
+        original = learning_branch("parent")
+        original["review_sha256"] = feedback["review_sha256"]
+        assessment = assess_checkpoint(value, original, set())
+        feedback.update(schema=c.EVIDENCE_SCHEMA_V4, protocol_version=4, learning_checkpoint=assessment,
+                        review_decision="REVERT", execution_outcome="succeeded")
+        feedback["research_credit"].update(value=0, question_digest_sha256=original["question_digest_sha256"])
+        parents = []
+        for label, source in [("parent", PARENT), ("other", OTHER)]:
+            record = ranked(label)
+            record["candidate_sha256"] = source
+            parents.append(record)
+        feedback["next_pool_selection_hint"]["ranked_research_parents"] = parents
+        self.f.write("feedback", feedback)
+        self.packet = self.f.prepare()
+        return feedback
+
+    def test_v4_zero_credit_revert_reaches_input_and_shared_parent_recovery(self):
+        feedback = self.use_v4()
+        self.assertEqual(self.packet["feedback"]["learning_checkpoint"], feedback["learning_checkpoint"])
+        self.assertEqual(self.packet["feedback"]["learning_checkpoint"]["prediction_decision"], "REVERT")
+        self.assertIsNone(self.packet["feedback"]["learning_checkpoint"]["exploration"]["next_question_sha256"])
+        self.assertEqual(set(self.packet["bindings"]), c.ROLES)
+        self.assertEqual(self.consume()["actual_parent_sha256"], PARENT)
+        self.assertEqual(self.calls, 1)
+
+    def test_v4_opt_in_missing_or_mixed_markers_reject_before_transport(self):
+        original = self.use_v4()
+        for mutate in [lambda f: f.update(schema="legacy"), lambda f: f.update(protocol_version=True),
+                       lambda f: f.update(protocol_version=5), lambda f: f.pop("learning_checkpoint")]:
+            feedback = deepcopy(original); mutate(feedback); self.f.write("feedback", feedback)
+            with self.assertRaises((ValueError, KeyError)): self.f.prepare()
+        self.assertEqual(self.calls, 0)
+
+    def test_v4_consumed_invalid_or_drifted_parent_is_not_valid_evidence(self):
+        original = self.use_v4()
+        def invalidate(record):
+            record["execution_outcome"] = "failed"
+            record["learning_checkpoint"]["validity"]["status"] = "invalid"
+        for index, mutate in enumerate([lambda r: r.update(followups_remaining=0), invalidate,
+                                       lambda r: r.update(review_sha256=CONSUMED),
+                                       lambda r: r["learning_checkpoint"]["learning"].update(credit=2)]):
+            feedback = deepcopy(original)
+            mutate(feedback["next_pool_selection_hint"]["ranked_research_parents"][0])
+            self.f.write("feedback", feedback); packet = self.f.prepare()
+            with self.assertRaisesRegex(ValueError, "unprovided evidence/parent"):
+                self.consume(packet=packet, root=self.f.root / ("v4-invalid-" + str(index)))
+
+    def test_v4_original_response_recovery_ignores_changed_live_pool_and_deadline(self):
+        original = self.use_v4()
+        response = self.consume()
+        changed = deepcopy(original)
+        changed["next_pool_selection_hint"]["ranked_research_parents"][0]["followups_remaining"] = 0
+        self.f.write("feedback", changed)
+        self.f.write("authority", {"closed": True})
+        self.f.stage = "result_reviewed"
+        recovered = c.consume(self.packet, self.f.root / "calls", batch=self.f.batch, repo=self.f.repo,
+                              now=c.DEADLINE, transport=lambda *args: self.fail("never resample"))
+        self.assertEqual(recovered, response)
+        self.assertEqual(self.calls, 1)
+
+    def test_v4_checkpoint_projection_cannot_inflate_credit_or_reclassify_result(self):
+        original = self.use_v4()
+        for mutate in [lambda f: f["research_credit"].update(value=2),
+                       lambda f: f["learning_checkpoint"].update(prediction_decision="KEEP"),
+                       lambda f: f["learning_checkpoint"]["validity"].update(review_sha256=CONSUMED)]:
+            feedback = deepcopy(original); mutate(feedback); self.f.write("feedback", feedback)
+            with self.assertRaises(ValueError): self.f.prepare()
+        self.assertEqual(self.calls, 0)
+
+    def test_v4_hash_mention_is_not_verified_citation_or_new_authority(self):
+        feedback = self.use_v4()
+        feedback["learning_checkpoint"]["learning"]["evidence_sha256"] = "f" * 64
+        self.f.write("feedback", feedback); packet = self.f.prepare()
+        def mutate(response): response["evidence_used"][0]["sha256"] = "f" * 64
+        with self.assertRaisesRegex(ValueError, "unprovided evidence/parent"):
+            self.consume(lambda directory, value, timeout: self.f.transport(directory, value, timeout, mutate=mutate),
+                         packet=packet, root=self.f.root / "v4-unverified-citation")
+        with self.assertRaisesRegex(ValueError, "outer selection stop"):
+            c.check_budget(self.f.values["authority"], c.CUTOFF)
 
     def test_direct_numbers_compact_and_bound(self):
         self.assertEqual(self.packet["numerical"]["aggregate"]["candidate"]["brier"], .14)

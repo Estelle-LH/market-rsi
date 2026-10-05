@@ -12,6 +12,9 @@ import subprocess
 
 from supervisor_harness.opened_train_discovery_worker import save as _save, sha
 from supervisor_harness.continuous_discovery_batch import _digest
+from supervisor_harness.learning_checkpoint_assessment import (
+    EVIDENCE_SCHEMA_V4, parent_eligibility, validate_saved_checkpoint,
+)
 
 CLI = Path("/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex")
 CLI_SHA = "6b582e8813ce7e8ed4c52814ee5cf230dba647bf2292df747a4003f2657ef201"
@@ -76,6 +79,25 @@ def check_budget(authority, now):
         raise ValueError("shared fit/concurrency ceiling")
 
 
+def _feedback_protocol(feedback):
+    """Validate opt-in evidence; legacy packets keep their original predicates."""
+    if feedback.get("schema") != EVIDENCE_SCHEMA_V4:
+        if "protocol_version" in feedback or "learning_checkpoint" in feedback:
+            raise ValueError("learning checkpoint requires explicit v4 feedback")
+        return 3
+    if type(feedback.get("protocol_version")) is not int or feedback["protocol_version"] != 4:
+        raise ValueError("learning feedback protocol changed")
+    assessment = validate_saved_checkpoint(feedback.get("learning_checkpoint"), {
+        "review_decision": feedback["review_decision"], "review_sha256": feedback["review_sha256"],
+        "execution_outcome": feedback["execution_outcome"], "independently_reviewed": feedback["independently_reviewed"],
+        "question_digest_sha256": feedback["research_credit"]["question_digest_sha256"],
+    })
+    if (type(feedback["research_credit"]["value"]) is not int
+            or feedback["research_credit"]["value"] != assessment["learning"]["credit"]):
+        raise ValueError("learning feedback credit projection changed")
+    return 4
+
+
 def prepare_input(bindings, batch, repo, now):
     """Called by the trusted Supervisor after review; copies real numbers, not hashes alone."""
     if set(bindings) != ROLES: raise ValueError("exact feedback file roles required")
@@ -90,6 +112,7 @@ def prepare_input(bindings, batch, repo, now):
             or supplement["scorecard_sha256"] != bindings["scorecard"]["sha256"] or supplement["predictions_sha256"] != bindings["predictions"]["sha256"]
             or card["research_parent_sha256"] != feedback["research_parent_sha256"] or supplement["actual_parent_source_sha256"] != feedback["research_parent_sha256"]):
         raise ValueError("feedback/review/parent/supplement admission drift")
+    _feedback_protocol(feedback)
     if any(card.get(key) is not value for key, value in FLAGS.items()): raise ValueError("protected permission flag changed")
     if card.get("historical_event_clock_only") is not True or type(card.get("provider_cost_usd")) is not str or card["provider_cost_usd"] != "0": raise ValueError("historical/cost flag changed")
     if card["source_denominator"] != {"events": 195, "dates": 42, "materialized_events": 193, "excluded_events": 2, "check_events": 87, "check_dates": 20, "check_game_weeks": 7}:
@@ -209,10 +232,13 @@ def _recover(directory, packet):
     if not completed or message != response: raise ValueError("original final message/completion missing or differs")
     hashes = {item["sha256"] for item in packet["bindings"].values()} | _hashes(packet["memory"]) | _hashes(packet["history"])
     ranked = packet["feedback"]["next_pool_selection_hint"]["ranked_research_parents"]
-    parents = {item["candidate_sha256"] for item in ranked if
-        (item["research_credit"] == 2 and (item["research_outcome"], item["route_action"]) in {("support", "continue"), ("refute", "branch")})
-        or (item["research_credit"] == 1 and item["research_outcome"] == "inconclusive" and item["route_action"] == "bounded_followup" and item["followups_remaining"] == 1)
-        or (item["research_credit"] == 0 and item["research_outcome"] == "baseline" and item["route_action"] == "batch_start")}
+    if _feedback_protocol(packet["feedback"]) == 4:
+        parents = {item["candidate_sha256"] for item in ranked if parent_eligibility(item, 4)}
+    else:
+        parents = {item["candidate_sha256"] for item in ranked if
+            (item["research_credit"] == 2 and (item["research_outcome"], item["route_action"]) in {("support", "continue"), ("refute", "branch")})
+            or (item["research_credit"] == 1 and item["research_outcome"] == "inconclusive" and item["route_action"] == "bounded_followup" and item["followups_remaining"] == 1)
+            or (item["research_credit"] == 0 and item["research_outcome"] == "baseline" and item["route_action"] == "batch_start")}
     parents.discard(packet["pool"].get("C2_consumed", {}).get("source_sha256"))
     if response["input_sha256"] != _digest(packet) or response["feedback_sha256"] != packet["bindings"]["feedback"]["sha256"] or response["comparison_incumbent_sha256"] != packet["feedback"]["comparison_incumbent_sha256"]:
         raise ValueError("response input/control binding drift")
