@@ -1,6 +1,14 @@
 # Market RSI — Supervisor 总路线图与当前任务
 
-更新：2026-10-03 20:10 ET（五小时窗口终态）。负责人：本会话的总 Supervisor。当前入口以本节和 `RESEARCH_STATE.md` 为准；下方 September29 与更早记录保留为历史，不同任务的成绩不混用。历史细节留在 `HUMAN_PROGRESS.md`，状态只能按真实 task 和证据更新。
+更新：2026-10-05 00:43 ET（新八小时窗口进行中）。负责人：本会话的总 Supervisor。当前入口以本节和 `RESEARCH_STATE.md` 为准；下方 October3/September29记录保留为历史，不同任务的成绩不混用。
+
+## 2026-10-05 当前：小步八小时 Train 迭代
+
+04:37:44–12:37:44UTC/00:37:44–08:37:44NewYork，起点clean c979577，无候选子进程。现有Controller/researcher/independentreviewer三worker均已注册并启动，Supervisor统一integration/budget。Controller自主选科学下一步和全局三条探索优先分支，研究者先找最小复用实现，reviewer独立核验实际源码/控制/运行边界。新候选评分尚未发生，不提前声称H/R改善。
+
+实际发现：旧runner entry硬绑定旧contract，短数学改动仍会迫使复制200–400行证据处理。仅考虑一个H admission/evidence adapter，保持C7/K/M/R，匹配replay和idle时一次live trial验收后才激活；不能把人工H集成算Controller自进化。之后真实候选与审查/下一轮选择持续闭环，所有失败和父/反馈/三分支快照保留。每步目标单productionmodule/120changedLOC，超过200需split或明确独立inseparability review。
+
+预算：外层Supervisor累计64attempt/256fits为防护上限，每个现有worker pilot仍≤3attempt/12reservedfits，单候选≤4fits/900s/thread1/采样RSS1GiB；最多2训练child，原截止不变。Paid0，Dev/Final/网络新增数据文献/发布promotion关闭。旧13结果/市场incumbent与历史caps不变。
 
 ## 2026-10-03 当前：真实赛中 Train 自主预测实验
 

@@ -1,4 +1,22 @@
-# Market RSI decision state — 2026-10-03, opened-Train pilot implementation
+# Market RSI decision state — 2026-10-05, eight-hour iteration
+
+## Live eight-hour batch
+
+Window: October5 00:37:44–08:37:44 NewYork / 04:37:44–12:37:44UTC. Actual clean starting checkout c979577 in /Users/estelle/Developer/market-rsi; no candidate child at preflight. This is a new authorized batch, not an extension or rewrite of closed October3 caps.
+
+| Item | Live decision |
+| --- | --- |
+| Current stage | Three registered subagents running: Controller scientific contract/three-branch selection, researcher read-only reuse feasibility, independent baseline preflight. Dispatch v2 gate PASS; v1 rejected dependency grouping retained with zero executions. |
+| Next real experiment | Controller must confirm/change prior unexecuted C7-plus-native-pressure recommendation and freeze its exact small recipe before source implementation. No new score or fit yet. |
+| Incumbent | Raw market unchanged, Brier/log0.1419525290/0.4296707847 on the same87Train check games/20dates/7weeks. |
+| Three branches | Pending actual Controller ranked pool, not invented score-top3. Historical pool had only two families; consumedC2 remains excluded. Incumbent and exploration eligibility separate. |
+| Small-step evidence | One C/H/R component per attributable checkpoint; target120changed production lines/one module. Over200 or two-module warning requires split or explicit independent review. Diff/runtime verified, rollback retained. |
+| Harness / Controller claims | H/R proposals require frozen named benefit, matched success/failure/restart/history checks, independent review and idle activation. No improvement claim from code, logging, memory accumulation or human instructions alone. |
+| Resource ceilings | Fresh prospective64candidate attempts/256actualfits, fourfits/900s/thread1/sampleRSS1GiB perattempt, max2live candidate children; hard original eight-hour deadline. Provider0/$0; Codex usage unmetered. |
+| Fixed boundaries | Repeated opened resident Train Discovery, frozen target/195denominator/193+2/87masks/folds/scorer/KEEP and prior results. Dev/Final, external acquisition/newpapers/network, paid providers, push/release/publication/promotion closed. |
+| Trace | COEVO_TRAJECTORY_2026-10-05.jsonl and detailed unique agent logs; source/result/decision checkpoints. Ranked three-branch snapshot, actual parent/incumbent/feedback trigger and C/H/R evidence level each step. |
+
+## Prior closed October3 batch — immutable scientific history
 
 Keep this page compact. Replace stale decisions; do not append a transcript.
 Detailed evidence stays in the batch report, independent reviews and immutable artifacts.
