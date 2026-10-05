@@ -67,7 +67,8 @@
       "verification": "Actual C7/ones/solver/kernel/source/runtime/fourfit/time/probability guards and changed-component smallness",
       "pass_condition": "Exactsource admitted forone boundedworkerattempt",
       "failure_action": "No realfit; preserve findings",
-      "time_bound_minutes": 10
+      "time_bound_minutes": 10,
+      "result": {"verdict":"pass","observed":"Exact196line Csource c744dbf0/testca3b802f at a93598a independently admitted for one bounded D3 attempt. Reviewer10focused/127relevant PASS10.481s; root127PASS10.490s. One Ccomponent; H/helper/scorer/source/runtime/parent gates unchanged, no realfit yet.","reviewer":"coevo_independent_review_20261003","evidence_path":"COEVO_D3_SOURCE_REVIEW_2026-10-05.json","evidence_sha256":"e256f351f7440bd354dc9c82d6b6ce434577df4b23969eaf93d17618ee02a146"}
     },
     {
       "id": "execution",
