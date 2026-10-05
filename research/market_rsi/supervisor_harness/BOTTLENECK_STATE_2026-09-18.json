@@ -1,16 +1,16 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-10-05T19:10:54Z",
+  "updated_utc": "2026-10-05T21:05:10Z",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
     {
       "id": "opened-train-eight-hour-20261005",
-      "status": "Controller_contract_and_minimal_reuse_adapter_preflight_active",
+      "status": "expired_window_preserved_later_repair_batch_closed_no_live_children",
       "plan": "research/market_rsi/supervisor_harness/COEVO_EIGHT_HOUR_IMPLEMENTATION_2026-10-05-v2.json",
-      "result": "Clean c979577/noactivecandidate/24GiBlocalfree verified. Threeworkers registered/dispatched. Actual reusefinding: shortscience math but immutableoldentries need small H admission/evidence adapter or>200LOCduplication. Old56bindings/runtime/scorer unchanged; preliminary65syntheticexecutions/40uniquePASS, noTrainfits. V1parallelmetadata rejectedbeforedispatch, v2correctedgroupPASS/guardunchanged.",
-      "next": "ReceiveController frozenD1 andglobal threebranches; admit one smallH adapter proposal preservingC7/K/M/R and matchedreplay plus boundedlive trial whileidle. NoH/Rgain ornewscoreclaimed. Outer64/256Supervisorcumulative, workerpilotsremain\u22643/12; originaldeadline12:37:44UTC andallclosedpermissionsunchanged.",
-      "evidence": "research/market_rsi/supervisor_harness/AGENT_LOG_COEVO_RESEARCHER_2026-10-05.md",
+      "result": "Earlier expired eight-hour window preserved. The later separately approved repair batch completed6attempts/24fits, five real scientific REVERT candidates plus held-C7 parity; final independent closure19:09:08UTC PASS efcba3eb. Raw market incumbent unchanged; old R/source/budgets not reset.",
+      "next": "No live experiment or automatic continuation under either closed cap. Current authorized work is prospective checkpoint code/doc/tests only; future real pilot requires a separately bounded batch, not revival of64/256 or6/24.",
+      "evidence": "research/market_rsi/supervisor_harness/AGENT_LOG_REPAIR_D5_REVIEWER_2026-10-05.md",
       "provider_cost_usd": "0"
     },
     {
@@ -109,6 +109,16 @@
     }
   ],
   "resolved_this_session": [
+    {
+      "id": "learning-checkpoint-upgrade-20261005-v1",
+      "status": "resolved_code_only_opt_in_checkpoints_no_live_benefit",
+      "plan": "research/market_rsi/supervisor_harness/LEARNING_CHECKPOINT_UPGRADE_2026-10-05-v1.json",
+      "result": "Word4page visual/a11y PASS; docs ebb739d/core79efe01/consumer9dbf1df. Independent final2773be0a:222unique synthetic PASS15.581s and45legacy prefixes exact. Separate validity/prediction/learning/exploration, zero-credit REVERT bounded first question after actual Controller feedback, duplicate/reuse/allowance/cap/lineage guards implemented.393-line core semantic ruling plus34-line consumer separate; no real fit/call or prediction/R benefit.",
+      "next": "Future real pilot needs separately bounded prospective window/source/authority, never reset consumed6/24. Failed-run learning remains metadata only; numerical transport requires completed artifacts. Semantic novelty/actual reuse require trusted verification; matched fixed-versus-evolving and prospective confirmation remain unrun.",
+      "evidence": "research/market_rsi/supervisor_harness/LEARNING_CHECKPOINT_INTEGRATED_REVIEW_2026-10-05.json",
+      "evidence_sha256": "2773be0a4abad4339803569ab7a60400b829ca2e1f5090d04c18403c62a5e46e",
+      "provider_cost_usd": "0"
+    },
     {
       "id": "opened-train-repair-discovery-20261005-01",
       "status": "resolved_bounded_batch_complete_caps_closed",
