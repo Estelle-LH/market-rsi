@@ -1,0 +1,121 @@
+{
+  "schema": "market_rsi_independent_source_review_v1",
+  "review_id": "repair-h1-source-v3-20261005",
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "observed_at_utc": "2026-10-05T15:46:59Z",
+  "passed": true,
+  "verdict": "EXACT_SOURCE_ADMITTED_FOR_ONE_BOUNDED_HELD_C7_TRIAL",
+  "source_commit": "30a690869f26656d18e222fedfcb88ffff6abcc2",
+  "source_sha256": "f62a5459a8e3c78bcdd7810e25291d1ef164ccc2d41f876fa37fb166f9dcc8bc",
+  "test_sha256": "b8ad2377b8e390114eddab4370c1e75c538b043212e602b886defdbf29acd376",
+  "contract_sha256": "9317c9d2e888cc8b6ca4a65bb8fe361a2493472eca37bbbad25bd462dfb39e3b",
+  "proposal_review_sha256": "6ec2d13d4974b5fe6e3b4cd57daa67296c2d3900efea9b6096976bf2f4caf321",
+  "source_paths": [
+    "research/market_rsi/experiments/nfl_ingame_candidate_evidence_adapter.py",
+    "research/market_rsi/experiments/test_nfl_ingame_candidate_evidence_adapter.py"
+  ],
+  "dependency_hashes": {
+    "research/market_rsi/experiments/nfl_ingame_identity_anchored_market_calibration.py": "dc4e372440dc3f29091770394a8989c3602e83c37f0909367a5ce321bc614b05",
+    "research/market_rsi/experiments/nfl_ingame_identity_blended_isotonic.py": "489d8268bd5243d94df9396f6dd5d616acfeab2d23f29d0e9e5903b7f156cce5",
+    "research/market_rsi/experiments/nfl_ingame_market_freshness_interaction_offset.py": "d7e16a2d745f6440fe84b97aba54950b2c78a23428172b6002b187b385f057cd",
+    "research/market_rsi/experiments/nfl_ingame_market_residual_hgb.py": "a17220dea91373b73c3f2e3a5d6e36f2b3e1b2866c8714cdc292dd921aefad79",
+    "research/market_rsi/experiments/nfl_ingame_market_temperature_offset.py": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+    "research/market_rsi/experiments/nfl_ingame_prior_play_success_residual_audit.py": "a612371ae77a78441c2d9416d6edc035a916879057fed9ef731de46476a07bcb",
+    "research/market_rsi/experiments/nfl_ingame_prior_play_success_uncertainty_stratified_offset.py": "b827eecdd669451d92a24a1023e2407a10ddebd26585f4515e395c0f486ff589",
+    "research/market_rsi/experiments/nfl_ingame_static_state_nested_shrinkage_train_diagnostic.py": "a3026d5a12fa0028087f470e44b71f4e6eb9de1432e351e415e72a039b83f65b",
+    "research/market_rsi/experiments/nfl_ingame_win_probability_train_diagnostic.py": "e61668c7e29cf4dda95f6cc315b248dbe6744a9dcc0ae0cd6077d880ca6265b7",
+    "research/market_rsi/experiments/nfl_settlement_probability_train_diagnostic.py": "1f1bdccd69d799be1af99ece4ee6198ffbd02f3a4550e651936fb3edfa83fb8b",
+    "research/market_rsi/minimal_prediction_loop/probability_contract.py": "7ba4a32d3c3a2ab80ac17ca6c18ea29fe864b958de8a81ac2be59dba121e9d74",
+    "research/market_rsi/minimal_prediction_loop/proper_scoring.py": "64165cbceb4bcba6d03b6b42402ea7a47790c9a57f9280b15bfe2fe57becc06b",
+    "research/market_rsi/supervisor_harness/continuous_discovery_batch.py": "1b3065ea2990e886ff05869d5c6afd39bc0e80ebb053436f51fd9d9cee0d148c",
+    "research/market_rsi/supervisor_harness/opened_train_discovery_worker.py": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360"
+  },
+  "dependency_verification": "14 current hashes == review Git30a6908 == pre-H c979577; scientific contract/source and H contract/source also match review commit; actual validate_binding and c7.require_dependencies PASS",
+  "runtime": {
+    "executable_sha256": "80ee2dd97bc26259d4e30853336f72ad38aa4aa0531bb196cc444d899422689d",
+    "numpy": "1.26.4",
+    "python": "3.12.3",
+    "scipy": "1.14.0",
+    "sklearn": "1.6.1"
+  },
+  "scope": {
+    "axis": "H",
+    "component": "one immutable candidate admission/evidence entry adapter",
+    "production_modules": 1,
+    "production_lines": 245,
+    "test_lines": 272,
+    "repair_delta": {
+      "added": 36,
+      "removed": 11,
+      "parent_partial_lines": 220
+    },
+    "warning_exceeded": true,
+    "inseparability_verdict": "ACCEPTED_FOR_THIS_NAMED_COMPONENT_ONLY",
+    "reason": "The full245-line review unit coherently binds existing scientific callbacks/contract, exact frozen C1/C7 parent receipts and numeric replay, unchanged fold/scorer delegation, and truthful atomic success/failure outputs. One control boundary holds these linked invariants. Splitting it solely to meet LOC would add interfaces without reducing causal or operational blast radius. No new scorer, model, dataset, authority, worker, scheduler, provider or researcher-policy capability. This is not a general arbitrary-code runner or a LOC safety waiver.",
+    "function_lines": {
+      "diagnostics": 8,
+      "held_c7_binding": 6,
+      "load_parent": 45,
+      "main": 6,
+      "prepare_c7": 3,
+      "replay_c7": 2,
+      "replay_parent": 25,
+      "run_recipe": 85,
+      "validate_binding": 35
+    },
+    "actual_commit_scope": "30a6908 changes only named H production/test plus registered evidence/plan logs; D1 source/test existed separately at2bf4c63, not a hidden H change. Old scientific/scorer/worker/scheduler files and current dependencies match c979577."
+  },
+  "independent_tests": {
+    "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONHASHSEED=0 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest experiments.test_nfl_ingame_candidate_evidence_adapter experiments.test_nfl_ingame_market_temperature_offset supervisor_harness.test_opened_train_discovery_worker -v",
+    "cwd": "/Users/estelle/Developer/market-rsi/research/market_rsi",
+    "executed_methods": 59,
+    "result": "PASS",
+    "unittest_seconds": 5.658,
+    "command_wall_seconds": 6.351954541,
+    "new_H_methods": 10,
+    "C7_methods": 15,
+    "worker_and_imported_journal_methods": 34,
+    "real_resident_Train_fits_or_previews": 0,
+    "fixtures": "Portable authored synthetic195-event population/193+2/87 checks; actual synthetic fits are not resident Train fits or scientific evidence. Temporary outputs, not persistent live ledger mutation."
+  },
+  "verified_effects": [
+    "Matched original C7/new adapter synthetic predictionsCSV byte exact and four primitive stateJSON byte exact; every original scorecard field equal including aggregates/four folds/calibration/10000-draw grouped intervals/KEEP,20-date diagnostics.",
+    "Source/spec/H/dependency omission/conflict/drift, callback path/arm, scientific attribution/incumbent/parent drift fail closed; fixed CLI uses exact immutable c7.fit_temperature. No JSON-selected imports/eval/global mutation.",
+    "Frozen source/root/PBP/materialized receipts and195 denominator/193+2 exclusions/87key masks delegated to unchanged validators; fourfit/check counts106/132/148/176 and26/16/28/17 plus strict outcome availability checked before callback entry.",
+    "Exact C1 seven-artifact/C7 eight-artifact parent controls, four canonical states and historic raw/logit fit inputs checked; replay87 without parent optimizer/refit; check labels and future fields do not enter heldC7 fit.",
+    "Prefit bad-source failure has0entries; bounded second-fold failure2entered/1valid completion with prior successful and latest partial receipts preserved. Postsolve prediction failure preserves completed/converged optimizer but0valid predictor completion.",
+    "Invalid NaN/value/state/fit-events/bool or2fit counter/nonconverged/bounding/replay drift terminal; no failure scorecard/complete manifest, no fallback or automatic retry, exclusive existing output cannot overwrite.",
+    "Explicit context/features/parent states copied across four folds; saved numeric replay with solve disabled; unchanged worker/journal synthetic history/restart and claimed-ID no-relaunch checks pass."
+  ],
+  "trial_admission": {
+    "allowed": true,
+    "purpose": "sole operational unchanged C7 parity control, not scientific candidate selection",
+    "fresh_attempts_max": 1,
+    "actual_fits_max": 4,
+    "seconds_max": 900,
+    "threads": 1,
+    "sampled_rss_bytes": 1073741824,
+    "provider_calls": 0,
+    "source_entry": "experiments.nfl_ingame_candidate_evidence_adapter --source-root <existing opened Train> --output <fresh permanent exclusive directory>",
+    "before_launch": [
+      "Supervisor rechecks idle/no competing claim and current exact source/runtime, records immutable fresh ID/request/source commit/memory and accepted actual new H/source plus held R pair; historical ad5 is not newpair.",
+      "Reserve selected H attempt against fresh outer6 including implementation/pre-fit failures, fits against outer24 and native per-pilot guard. No sub-batch budget reset.",
+      "Bound launch to19:27:11UTC hard deadline; no new selections after19:12:11UTC. Current fresh window not an extension of expired8hour window."
+    ],
+    "result_acceptance": "Distinct independent actual-result receipt must reconcile all87/five arms/four canonical states/proper scores/calibration/fold/date-week metrics/judge EXACT with accepted oldC7; only predeclared operational metadata differs. Any discrepancy invalidates this trial, never loosens tolerances or relaunches sameID."
+  },
+  "remaining_gates": [
+    "Real held-C7 parity and named operational benefit still pending; H not yet adopted for scientific use.",
+    "D1 thin binding/full synthetic integration/source review and actual Train execution remain separate; this receipt does not admit D1.",
+    "Automatic continuation requires actual verified feedback consumed by Controller and next selected/executed candidate, not queued hashes, logging or mocked dispatch.",
+    "Prior-finding reuse may occur through memory and negative evidence without code rewrite; verify actual carried evidence and its consequence in subsequent decision. Code modification is not a prerequisite or sufficient proof of researcher improvement."
+  ],
+  "attribution_limits": [
+    "Human-authorized Supervisor repair/control/integration and worker implementation are H engineering; record manual handoffs/environment correction costs, not autonomous self-evolution.",
+    "Exact reviewer/Controller serving version unknown; no authenticated Astra or fixed-model mechanism superiority.",
+    "No new prediction success, market edge, untouched OOS, real-time availability, PnL, transfer or promotion. Reused Train is historical Discovery.",
+    "Trusted host/hash binding and sampledRSS are not arbitrary-code/network isolation or OS-hard containment. Relevant synthetic suites do not make broad legacy suite green.",
+    "Root first84 command lacked required environment and correctly had5fail-closed errors/79successes; corrected same source84PASS6.087s reported separately. Not an actual Train failure/retry; not counted as independent reviewer59methods."
+  ],
+  "reviewer_actions": "Read source/test through EOF and exact repair/full scope diff; run source/dependency/current+Git checks and synthetic tests only. No source/test/old-receipt edits, commits, real Train optimizer/fits/previews, provider/network/protected operations."
+}

@@ -81,7 +81,14 @@
       "verification": "All originalC7/scorer controls and matchedsuccess/failure/restart/history, actualscope/resourcechecks.",
       "pass_condition": "Named bounded trial admitted; not Hgainyet.",
       "failure_action": "Blocktrial and preserve findings, bounded newversion repair.",
-      "time_bound_minutes": 15
+      "time_bound_minutes": 15,
+      "result": {
+        "verdict": "pass",
+        "observed": "Distinct reviewer exactsource admission of f62a5459/b8ad2377 under9317c9d2;59 independent synthetic methods PASS5.658s and14 old dependency hashes unchanged. Explicit245line onecomponent inseparability accepted for sole held-C7 trial only; no actualH/prediction gain yet.",
+        "reviewer": "/root/coevo_independent_review_20261003",
+        "evidence_path": "COEVO_H1_SOURCE_REVIEW_V3_2026-10-05.json",
+        "evidence_sha256": "13913664f1f24590adcbd265f5d39121e95f2e71615651795242b87d372dd4cb"
+      }
     },
     {
       "id": "live_trial",
