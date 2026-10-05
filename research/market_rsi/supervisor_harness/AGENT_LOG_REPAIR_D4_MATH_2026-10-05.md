@@ -1,0 +1,25 @@
+# D4 synthetic math applicability
+
+## 2026-10-05 18:05:36–18:06:15 UTC
+
+Registered role `repair_d4_math_precheck_20261005`; wrote only this log and `COEVO_D4_MATH_PREFLIGHT_2026-10-05.json`. Read actual frozen D4 contract `91f85ded…18b1`, generic D1 solver `c57ed002…d838`, applicable AGENTS and prediction-evaluation/research-progress skills. This role verifies an actual account Controller decision, requested gpt-6.1-sol/exact serving snapshot unknown; it does not choose another scientific method.
+
+Reused unchanged locally reviewed objective/coordinate solver. Ran inline synthetic-only code with pinned ds-py312 Python `80ee2dd9…9d`, `-B`, hashseed0 and all numeric thread limits1. Six primary solver cases plus zero-column and fit-only repeat checks made nine synthetic solver calls; no real Train fitting, protected data, source edits, model calls or external retrieval. Main synthetic vectors used seven logits `[-5,-2,-.7,0,.4,1.8,5]` with fixed tanh; further cases covered all-positive/all-negative labels, eight zero logits, ten collinear constant logits and240 deliberately inverted extreme logits for beta=-1 boundary.
+
+PASS: gradient/Hessian finite-difference maximum errors `1.2804424187606855e-11`/`4.7261750069083064e-11`; all unchanged jointKKT<=1e-8, F<=warm+1e-8, numerical Hessian>=16−1e-10, exact fit-only brackets/endpoint signs and zero-column gamma0. Odd eta exact within these cases; probability and symmetric epsilon-bounded complement error<=2.220446049250313e-16, including beta=-1 and negative gamma. Unrelated synthetic check mutation leaves identical solver receipts. Synthetic math duration0.071746s; task overhead is additional and not prediction-training time.
+
+Sent actionable pitfalls promptly to root/implementer: own D4 state/transform/admission, exact gamma0 C7 delegation, no fitted scale/age/PBP, fit-only brackets, stable unclipped NLL vs postprediction bounding. Oddness is NOT monotonicity: derivative `1+beta+gamma*sech(l)^2` may be negative, so no gamma constraint is allowed. Beta=-1 is not automatically probability0.5 when gamma is nonzero. Prescribed caps/partial failure truth remain unchanged. This mathematical check does not admit the new full D4 source/replay, predict its Train result, establish new information, or prove researcher self-improvement.
+
+## 2026-10-05 18:10:27–18:11:59 UTC — expanded one-shot operational preparation
+
+Root assigned exactly three NEW permanent outer scripts plus this existing log. Mechanically adapted fully read `launch_d3.py`, `accept_d3_feedback.py`, `prepare_d3_input.py`; all previous operations/results untouched. Current adaptation parents SHA `ed2e938089b49bcc50cd59fb417526ef4b54f6a6363a52171ecb9a0ee4bfffa3` / `116c82de2c171fbf96718259aa14910e7ba5c238fa95c9589b9f3c2abe265546` / `9035002e5d4036122b787cf1a889a7cb314dfe2d371231ca964ed496f1d02259`. Target directory is `/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01`.
+
+- `launch_d4.py`:147 lines, SHA `f6f60f2400f2b75b48b1c2d5c54b673258e9f0c9d8a30a9cbb3da7dea6df434e`.
+- `accept_d4_feedback.py`:75 lines, SHA `bc7d73635ab6dae266208d0035bb55cb8012c8c740826f155625c1a839ef71a3`.
+- `prepare_d4_input.py`:66 lines, SHA `4f2865fac8a1138f89ced17280279a0ad23d6278b23aea39a0f7e3a3a00d64cc`.
+
+Validation used pinned Python `-B` solely for `ast.parse`/read-only byte hashes; all three AST PASS. No script import/main/worker/Controller execution; no authority, credit, incumbent or pool mutation, no claim or fit. Fully inspected each actual D3→D4 diff. Launch binds exact contract91f85ded, source/module `nfl_ingame_temperature_odd_confidence_joint_offset`, attempt `repair-d4-odd-confidence-joint-01`, pilot `d4`, d4 research rule, actual decision b692b41a and v3 review2856d6bd. Actual C7 remains the research parent; D3 is latest trigger, not relabelled as parent. Existing source HEAD/runtime/worker request checks remain dynamic and root-owned.
+
+Archive assembly has15 distinct candidate hashes after adding actual valid D3 alongside old11/C7/D1/D2; consumed C2 absent. D3 activation-memory nesting, accepted feedback and actual pool are copied without resetting history. Feedback preparation copies the full D3 input history and appends only runtime-loaded actual accepted D3→D4 provenance/results; no proposed D4 scores inserted. Copied current Controller pool preserves explicit consumed C2 unchanged. Cumulative overhead is copied from D3 and adds only actual D4 receipt wall/RSS at runtime; repeated historical failure descriptions were not re-added.
+
+Existing one-shot semantics remain: exclusive pilot/output saves, no same-ID relaunch; partial preclaim/review/export failures require exact Supervisor inspection/recovery, not naive rerun/deletion. No broad recovery/harness change implemented. Root alone must fully inspect these scripts before execution and update authoritative state. This is delegated Supervisor operational preparation, not scientific D5 selection or researcher self-evolution. Frozen D4 math receipt3483ae82 remains unchanged.

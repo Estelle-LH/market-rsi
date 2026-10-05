@@ -1,0 +1,117 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "repair-d4-odd-confidence-20261005-v1",
+  "symptom": "Actual reviewed D3 negative selected odd confidence question; proceed to real predictions, not another design",
+  "source_evidence": "D3acceptedfeedback2566d785/result45f5a7f9; originalD4choiceb692b41a/v3review2856d6bd; contract91f85ded; outer5selected/20reserved/16actualfits",
+  "objective": "One actual Controller-chosen C7 plus fixed tanh marketlogit predictor, four real fits, independently scored and returned inside unchanged caps",
+  "boundary": "OpenedresidentTrain only; K/scorer/folds/H1/worker/oldsource/results unchanged; no DevFinal/external/provider/release/promotion or same-ID retries",
+  "resolution_check": "Actual fourfits/87 samekey predictions and independent result acceptance plus subsequent evidence-based choice; no claim fromsource/tests/decision alone",
+  "supervisor_owner": "root",
+  "steps": [
+    {
+      "id": "math_precheck",
+      "owner": "coevo_controller_20261003",
+      "depends_on": [],
+      "action": "Pure synthetic odd-basis applicability of unchanged D1 solver",
+      "expected_artifact": "COEVO_D4_MATH_PREFLIGHT_2026-10-05.json",
+      "verification": "tanh derivatives/fit-only analytic brackets/KKT/Hessian/warmobjective/gamma0/complement symmetry, no monotonicity claim/no Train",
+      "pass_condition": "Reusablefrozenhelpers validforthisexactrecipe, no new method selection",
+      "failure_action": "Return concretehelper blocker to candidateauthor beforefit, preserve findings",
+      "time_bound_minutes": 5,
+      "result": {
+        "verdict": "pass",
+        "observed": "Nine synthetic solver calls PASS; no Train, no algorithm selection. Odd complement does not mean monotonicity.",
+        "reviewer": "coevo_controller_20261003",
+        "evidence_path": "COEVO_D4_MATH_PREFLIGHT_2026-10-05.json",
+        "evidence_sha256": "3483ae82bf8d417612c317cb88f2bb1deb9768f5e5166c9733442464d69d2012"
+      }
+    },
+    {
+      "id": "scope_review",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [],
+      "action": "Compare exactD4 transcription with actualoriginalControllerresponse and frozenprotocol",
+      "expected_artifact": "COEVO_D4_SCOPE_REVIEW_2026-10-05.json",
+      "verification": "Actual response fidelity, fixed tanh/no age/PBP/intercept/newdata, eligible C7 and unchanged K/H1/alpha16",
+      "pass_condition": "Code-only scopePASS",
+      "failure_action": "Preserve rejectedscope, no codeunderit",
+      "time_bound_minutes": 3,
+      "result": {
+        "verdict": "pass",
+        "observed": "Actual completed response/contract independently scope-admitted for code only, not realfits or scores.",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "COEVO_D4_SCOPE_REVIEW_2026-10-05.json",
+        "evidence_sha256": "608593af2a2401c3c7b2b685ad2af9a13346c9a115d6869cc36e8ce78da5228a"
+      }
+    },
+    {
+      "id": "implementation",
+      "owner": "coevo_predictor_worker_20261003",
+      "depends_on": [
+        "scope_review"
+      ],
+      "action": "Only new odd-confidence Cmodule/test/log, unchanged D1solver and H1",
+      "expected_artifact": "nfl_ingame_temperature_odd_confidence_joint_offset.py and matchingtest",
+      "verification": "Actualallowlist/LOC/causality/numericstate/replay/partialfailure andfullrelevantchecks",
+      "pass_condition": "Frozenvalidsource andsyntheticchecks, zeroTrainfits",
+      "failure_action": "Preserve failedimplementation/consumedattempt, boundedrepair not hiddenretry",
+      "time_bound_minutes": 15,
+      "write_paths": [
+        "research/market_rsi/experiments/nfl_ingame_temperature_odd_confidence_joint_offset.py",
+        "research/market_rsi/experiments/test_nfl_ingame_temperature_odd_confidence_joint_offset.py"
+      ]
+    },
+    {
+      "id": "source_review",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [
+        "implementation"
+      ],
+      "action": "Independently reviewexact integratedsource/math/entry andGitbindings",
+      "expected_artifact": "COEVO_D4_SOURCE_REVIEW_2026-10-05.json",
+      "verification": "Actual C7/tanh/solver/kernel/source/runtime/fourfit/time/complement and changed-component semantic smallness",
+      "pass_condition": "Exactsource admitted forone boundedworkerattempt",
+      "failure_action": "No realfit; preserve findings",
+      "time_bound_minutes": 10
+    },
+    {
+      "id": "execution",
+      "owner": "root",
+      "depends_on": [
+        "source_review"
+      ],
+      "action": "Reserve claim insharedledger then existingworker once under frozenrequest",
+      "expected_artifact": "D4worker/request/receipt/predictions/scorecard in permanentbatch/d4",
+      "verification": "Actual4fits/same87/fivearms/unchangedscorer/source/runtime, sampledRSS/childabsence/caps",
+      "pass_condition": "Realcomplete result, not yetindependent scientificadmission",
+      "failure_action": "Preserve partialfailure/counts, no sameIDretry",
+      "time_bound_minutes": 15
+    },
+    {
+      "id": "result_review",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [
+        "execution"
+      ],
+      "action": "No-refit independentactual result andparent supplement verification",
+      "expected_artifact": "COEVO_D4_RESULT_REVIEW_2026-10-05.json",
+      "verification": "Keycoverage/source/time/score/4blocks/intervals/energyidentity/partialreceipts andboundary",
+      "pass_condition": "Validactualscores andhonestfrozenKEEP plusseparateresearch finding",
+      "failure_action": "No promotion/incumbentupdate; preserveinvalidresult",
+      "time_bound_minutes": 10
+    },
+    {
+      "id": "feedback",
+      "owner": "root",
+      "depends_on": [
+        "result_review"
+      ],
+      "action": "Existingrecorder credit/pool/archive + numericconsumer actualnextdecision withinremainingouterbudget",
+      "expected_artifact": "AcceptedD4feedback/input/originalnextControllerresponse",
+      "verification": "SpecificD4evidence changesnextchoice, no preplannedindependentcandidate orforcedRrewrite",
+      "pass_condition": "VerifiedfeedbackpassedtoactualController; nextscientificimplementationmustcontinuewithinbudget",
+      "failure_action": "Preserveoperationalfailure, no unauthorizedretry orfabricatedchoice",
+      "time_bound_minutes": 5
+    }
+  ]
+}

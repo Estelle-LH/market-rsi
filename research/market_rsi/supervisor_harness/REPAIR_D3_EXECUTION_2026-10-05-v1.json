@@ -36,7 +36,13 @@
       "pass_condition": "Code-only scopePASS",
       "failure_action": "Preserve rejectedscope, no codeunderit",
       "time_bound_minutes": 3,
-      "result": {"verdict":"pass","observed":"Independent exact actual response/contract review admits implementation only; no new result or execution authority.","reviewer":"coevo_independent_review_20261003","evidence_path":"COEVO_D3_SCOPE_REVIEW_2026-10-05.json","evidence_sha256":"91b10df482dd53c232483c6047781edcefa977bc3fb01f50359e4e75b57a07de"}
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent exact actual response/contract review admits implementation only; no new result or execution authority.",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "COEVO_D3_SCOPE_REVIEW_2026-10-05.json",
+        "evidence_sha256": "91b10df482dd53c232483c6047781edcefa977bc3fb01f50359e4e75b57a07de"
+      }
     },
     {
       "id": "implementation",
@@ -50,7 +56,13 @@
       "pass_condition": "Frozenvalidsource andsyntheticchecks, zeroTrainfits",
       "failure_action": "Preserve failedimplementation/consumedattempt, boundedrepair not hiddenretry",
       "time_bound_minutes": 15,
-      "result": {"verdict":"pass","observed":"Worker freezes196line Csource c744dbf0/testca3b802f/logf6f72ef2;10 focused/127 integrated synthetic PASS, no realTrainfits, oldhelpers/H/scorer unchanged. Independent final admission and root integrated checks remain separate.","reviewer":"root read entire source/tests; worker synthetic evidence, not independent source admission","evidence_path":"AGENT_LOG_REPAIR_D3_IMPLEMENTER_2026-10-05.md","evidence_sha256":"f6f72ef2ac36f858c87e51f95b444fd9dc21b267a7ee07cc8f2dd9045ca03f19"},
+      "result": {
+        "verdict": "pass",
+        "observed": "Worker freezes196line Csource c744dbf0/testca3b802f/logf6f72ef2;10 focused/127 integrated synthetic PASS, no realTrainfits, oldhelpers/H/scorer unchanged. Independent final admission and root integrated checks remain separate.",
+        "reviewer": "root read entire source/tests; worker synthetic evidence, not independent source admission",
+        "evidence_path": "AGENT_LOG_REPAIR_D3_IMPLEMENTER_2026-10-05.md",
+        "evidence_sha256": "f6f72ef2ac36f858c87e51f95b444fd9dc21b267a7ee07cc8f2dd9045ca03f19"
+      },
       "write_paths": [
         "research/market_rsi/experiments/nfl_ingame_temperature_intercept_joint_offset.py",
         "research/market_rsi/experiments/test_nfl_ingame_temperature_intercept_joint_offset.py"
@@ -68,7 +80,13 @@
       "pass_condition": "Exactsource admitted forone boundedworkerattempt",
       "failure_action": "No realfit; preserve findings",
       "time_bound_minutes": 10,
-      "result": {"verdict":"pass","observed":"Exact196line Csource c744dbf0/testca3b802f at a93598a independently admitted for one bounded D3 attempt. Reviewer10focused/127relevant PASS10.481s; root127PASS10.490s. One Ccomponent; H/helper/scorer/source/runtime/parent gates unchanged, no realfit yet.","reviewer":"coevo_independent_review_20261003","evidence_path":"COEVO_D3_SOURCE_REVIEW_2026-10-05.json","evidence_sha256":"e256f351f7440bd354dc9c82d6b6ce434577df4b23969eaf93d17618ee02a146"}
+      "result": {
+        "verdict": "pass",
+        "observed": "Exact196line Csource c744dbf0/testca3b802f at a93598a independently admitted for one bounded D3 attempt. Reviewer10focused/127relevant PASS10.481s; root127PASS10.490s. One Ccomponent; H/helper/scorer/source/runtime/parent gates unchanged, no realfit yet.",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "COEVO_D3_SOURCE_REVIEW_2026-10-05.json",
+        "evidence_sha256": "e256f351f7440bd354dc9c82d6b6ce434577df4b23969eaf93d17618ee02a146"
+      }
     },
     {
       "id": "execution",
@@ -81,7 +99,14 @@
       "verification": "Actual4fits/same87/fivearms/unchangedscorer/source/runtime, sampledRSS/childabsence/caps",
       "pass_condition": "Realcomplete result, not yetindependent scientificadmission",
       "failure_action": "Preserve partialfailure/counts, no sameIDretry",
-      "time_bound_minutes": 15
+      "time_bound_minutes": 15,
+      "result": {
+        "verdict": "pass",
+        "observed": "Once-only D3 actual exit0 atbfdaac3/requestc88ed927/pair2e9d5d04/memory06a0a586;4entered/4completed/87predictions in4.1955s,140768KiB sampledpeak/PID85075absent. Immutable195=193+2/fivearms/card56072755/CSV52d45d5f, separate parent supplementec124620. FrozenREVERT provisional untilindependent numerical review; outer4selected16actualfits.",
+        "reviewer": "root execution observation; independent result admission separate",
+        "evidence_path": "COEVO_D3_EXECUTION_OBSERVED_2026-10-05.json",
+        "evidence_sha256": "e87045a62a4f1ac0f6107b12a5e5f6f3a0c25fbb380a53f631cf08df989a08d1"
+      }
     },
     {
       "id": "result_review",
@@ -94,7 +119,14 @@
       "verification": "Keycoverage/source/time/score/4blocks/intervals/energyidentity/partialreceipts andboundary",
       "pass_condition": "Validactualscores andhonestfrozenKEEP plusseparateresearch finding",
       "failure_action": "No promotion/incumbentupdate; preserveinvalidresult",
-      "time_bound_minutes": 10
+      "time_bound_minutes": 10,
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent no-refit68source/currentGit/193ones-features/strictpast4fitstates/FghKKT/brackets/87predictions/fivearms/calibration/4blocks/all16date-weekintervals/energyidentity/PIDabsence/memory-pair-journal PASS. Exact intercept recipe hurts both losses in all4parentblocks; unchangedREVERT/REFUTED and credit2/refute/branch, not all-intercept absence.",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "COEVO_D3_RESULT_REVIEW_2026-10-05.json",
+        "evidence_sha256": "45f5a7f9e6091f123973801021af62320ff90ddea5f2dd621c191f111a48b542"
+      }
     },
     {
       "id": "feedback",
@@ -107,7 +139,19 @@
       "verification": "SpecificD3evidence changesnextchoice, no preplannedindependentcandidate orforcedRrewrite",
       "pass_condition": "VerifiedfeedbackpassedtoactualController; nextscientificimplementationmustcontinuewithinbudget",
       "failure_action": "Preserveoperationalfailure, no unauthorizedretry orfabricatedchoice",
-      "time_bound_minutes": 5
+      "time_bound_minutes": 5,
+      "result": {
+        "verdict": "pass",
+        "observed": "Accepted actual D3 feedback2566d785 was sent once to actual requested gpt-6.1-sol. Original responseb692b41a independently verified2856d6bd: D3 both-loss/allfour-block negative stops the exact intercept and selects distinct odd confidence D4. One original generation; new D4 performance remains unknown. Same batch/pool/boundaries.",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "COEVO_ACTUAL_CONTROLLER_DECISION_REVIEW_2026-10-05-v3.json",
+        "evidence_sha256": "2856d6bd823c42d375d3fa5f9a624801404f6667cbdfc0c1d985200670a98e16"
+      }
     }
-  ]
+  ],
+  "resolution": {
+    "verdict": "pass",
+    "observed": "Actual D3 source/execution/result and fresh verified Controller feedback completed. D3 remains REVERT/REFUTED; subsequent D4 is selected but not trained. This resolves D3 handoff only, not the ongoing batch or mechanism-superiority claim.",
+    "reviewer": "Independent exact-source/result/original-transaction receipts, reconciled by root"
+  }
 }

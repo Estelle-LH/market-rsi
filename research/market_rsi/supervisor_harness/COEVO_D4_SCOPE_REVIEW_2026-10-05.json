@@ -1,0 +1,65 @@
+{
+  "schema": "market_rsi_independent_candidate_scope_review_v1",
+  "passed": true,
+  "verdict": "PASS",
+  "observed_utc": "2026-10-05T18:06:38Z",
+  "scope": "D4 implementation scope only; no exact-source or real-fit admission",
+  "contract_sha256": "91f85dedb2fbc9a47d8b4ebc492c66792f51977caf104c8cf21db8c69d8e18b1",
+  "original_response_sha256": "b692b41a235c2fa9d644c72e708878bb662e62f6eb1adf4dbeb49d5f84a7522b",
+  "decision_canonical_sha256": "c823899b37f8f0abb17527839d30af087a1a1345c9578edc26ece6af01928162",
+  "feedback_sha256": "2566d7852eae4d839de66a74efe2feb99795d128f746e9777d7728cccf939622",
+  "candidate_id": "InGameTemperatureOddConfidenceJointOffset-v1",
+  "question_id": "ingame-temperature-conditional-odd-confidence-v1-q1",
+  "actual_parent_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+  "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+  "recipe": {
+    "eta": "(1+beta)*market_logit+gamma*tanh(market_logit)",
+    "constraint": "beta>=-1; gamma unrestricted",
+    "second_column": "Fixed rowwise tanh(market_logit), no fitted scale/intercept/age/PBP",
+    "loss": "Unweighted summed NLL+8*(beta^2+gamma^2); alpha16",
+    "warm_start": "Original same-fold verified C7 beta and gamma0",
+    "solver": "Existing unchanged generic D1 solve_joint; never pressure-specific predictor",
+    "coordinate_derivative_tolerance": 1e-10,
+    "joint_kkt_tolerance": 1e-8,
+    "max_coordinate_steps": 200,
+    "max_sweeps": 100,
+    "fit_only_brackets": "beta[-1,1+sum|l|/16]; gamma[-G,G], G=1+sum|tanh(l)|/16"
+  },
+  "math_admissibility": "For finite logits and binary outcomes, X' diag(q(1-q)) X+16I is positive definite. Absolute data-gradient bounds give strict opposite gamma endpoint signs for the fit-only bracket. tanh is odd and eta(-l)=-eta(l), so probabilities complement; unrestricted gamma does not imply monotonicity. Boundary KKT, independent stationarity and objective<=warm+1e-8 remain source-admission checks, not proven implementation.",
+  "evidence_verified": {
+    "D3_review_sha256": "45f5a7f9e6091f123973801021af62320ff90ddea5f2dd621c191f111a48b542",
+    "D3_parent_brier_delta": 0.0017086642596517987,
+    "D3_parent_log_loss_delta": 0.004271119491562225,
+    "D3_parent_brier_blocks_won": 0,
+    "D3_consequence": "Stop the exact asymmetric intercept; test a distinct orientation-symmetric calibration shape, not tune an already negative recipe.",
+    "C7_review_sha256": "301743d9b74cfbedda3ac210789741caae576977c8724963afb24bf053470075",
+    "D2_consequence": "Stop the tested exact age/300 slope; preserve evidence and no global age-absence claim",
+    "D1_consequence": "Do not repeat the tested native-pressure interaction",
+    "positive_D4_evidence_claimed": false
+  },
+  "active_pool": [
+    {
+      "method_family": "restricted_market_calibration",
+      "parent_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+      "reason": "Retain C7 for one distinct odd-confidence calibration-shape question; stop the tested intercept, pressure and age recipes."
+    },
+    {
+      "method_family": "nonlinear_causal_state_representation",
+      "parent_sha256": "376b34c656e5a70666e8863b507f518675858011c3da6530cf592a0e192957fe",
+      "reason": "Preserve method diversity and the unresolved B2–B1 conditional state finding; no descendant recipe is selected for this slot."
+    }
+  ],
+  "activation_conditions": [
+    "Freeze exact one new C module/test; preserve original response and old helpers/H/R/scorer/worker/recorder/source/data.",
+    "Independent exact source plus synthetic derivatives/tanh-column bounds/KKT/state replay/gamma0/C7 equivalence/full195=193+2/87/four-fit/failure tests before live fit. Above200 production lines requires an explicit semantic inseparability ruling.",
+    "No age/PBP/new-data features, normalization, intercept, relaxed tolerance, restart, control refit or protected operation.",
+    "Same source-backed C7/alpha16 H1 admission; own primitive odd-confidence prediction/replay rather than pressure-specific guard; gamma0 reproduces C7.",
+    "Freeze separate parent both-loss and>=3/4 Brier-block annotation before scores; unchanged primary KEEP and full population/chronology/calibration/date-week scorer.",
+    "Supervisor rechecks fresh source/runtime/memory/request, actual shared6/24/2 budget, cutoff19:12:11 and deadline19:27:11UTC; model response is not execution authority."
+  ],
+  "attribution": "Calibration shape and parameter count change jointly; odd complement symmetry is not monotonicity. No new data, positive prediction result, R-source modification, automatic coordination gain, untouched OOS or same-model fixed-flow superiority certified.",
+  "reviewer_model_calls": 0,
+  "reviewer_train_fits": 0,
+  "reviewer_optimizer_calls": 0,
+  "reviewer_source_edits": 0
+}
