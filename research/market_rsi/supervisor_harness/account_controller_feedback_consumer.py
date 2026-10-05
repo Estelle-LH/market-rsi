@@ -17,6 +17,7 @@ CLI = Path("/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/
 CLI_SHA = "6b582e8813ce7e8ed4c52814ee5cf230dba647bf2292df747a4003f2657ef201"
 MODEL = "gpt-6.1-sol"
 SCOPE_SHA = "8ffb84454e800828f00fce8cdd1675b03cc1d849fda48fe7b65aaca830de37c1"
+CLEANUP_SECONDS = 5
 DEADLINE, CUTOFF = "2026-10-05T19:27:11Z", "2026-10-05T19:12:11Z"
 ROLES = {"feedback", "review", "scorecard", "predictions", "supplement", "memory", "history", "pool", "authority", "overhead", "request"}
 FLAGS = {"external_fetch": False, "paid_provider": False, "route_dev_opened": False, "sealed_final_opened": False, "promotion_authorized": False}
@@ -157,21 +158,34 @@ def _hashes(value):
     return {value} if type(value) is str and len(value) == 64 and all(char in "0123456789abcdef" for char in value) else set()
 
 
+def _terminate(child):
+    if child.poll() is None:
+        try: os.killpg(child.pid, signal.SIGKILL)
+        except ProcessLookupError: pass
+    try: child.wait(timeout=CLEANUP_SECONDS)
+    except subprocess.TimeoutExpired as error: raise RuntimeError("fresh child unreaped after bounded cleanup; no retry") from error
+
+
 def _transport(directory, packet, timeout):
     if sha(CLI) != CLI_SHA: raise ValueError("CLI source drift")
     prompt = "No tools, file/data/network/credentials access or authority changes. Use only this verified numerical evidence and prior memory. Return one non-executable evidence-cited scientific next decision; no invented results or preselected model.\nCopy these binding values verbatim; do not calculate hashes: input_sha256=" + _digest(packet) + " feedback_sha256=" + packet["bindings"]["feedback"]["sha256"] + "\n" + json.dumps(packet, allow_nan=False)
     command = _command(directory)
-    with (directory / "events.jsonl").open("xb") as stdout, (directory / "stderr").open("xb") as stderr:
-        child = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=stdout, stderr=stderr, start_new_session=True)
-        save(directory / "process.json", {"pid": child.pid, "command": command, "cli_sha256": CLI_SHA, "input_sha256": _digest(packet), **_identity()})
-        timed_out = False
-        try: child.communicate(prompt.encode(), timeout=timeout)
-        except subprocess.TimeoutExpired:
-            timed_out = True; os.killpg(child.pid, signal.SIGKILL); child.wait()
-        stdout.flush(); os.fsync(stdout.fileno()); stderr.flush(); os.fsync(stderr.fileno())
-    names = ["process.json", "events.jsonl", "stderr", "schema.json", "input.json"]
-    if (directory / "response.json").exists(): names.append("response.json")
-    save(directory / "completion.json", {"exit_code": child.returncode, "timed_out": timed_out, "hashes": {name: sha(directory / name) for name in names}, **_identity()})
+    child, cleanup_attempted = None, False
+    try:
+        with (directory / "events.jsonl").open("xb") as stdout, (directory / "stderr").open("xb") as stderr:
+            child = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=stdout, stderr=stderr, start_new_session=True)
+            save(directory / "process.json", {"pid": child.pid, "command": command, "cli_sha256": CLI_SHA, "input_sha256": _digest(packet), **_identity()})
+            timed_out = False
+            try: child.communicate(prompt.encode(), timeout=timeout)
+            except subprocess.TimeoutExpired:
+                timed_out = True; cleanup_attempted = True; _terminate(child)
+            stdout.flush(); os.fsync(stdout.fileno()); stderr.flush(); os.fsync(stderr.fileno())
+        names = ["process.json", "events.jsonl", "stderr", "schema.json", "input.json"]
+        if (directory / "response.json").exists(): names.append("response.json")
+        save(directory / "completion.json", {"exit_code": child.returncode, "timed_out": timed_out, "hashes": {name: sha(directory / name) for name in names}, **_identity()})
+    except BaseException:
+        if child is not None and not cleanup_attempted: _terminate(child)
+        raise
 
 
 def _recover(directory, packet):
@@ -233,7 +247,7 @@ def consume(packet, root, *, batch, repo, now=None, transport=None):
             if sha(CLI) != CLI_SHA or prepare_input(packet["bindings"], batch, repo, now) != packet: raise ValueError("CLI drift/unverified numerical input")
             save(directory / "input.json", packet); save(directory / "schema.json", SCHEMA); save(directory / "claim.json", claim)
             try: (transport or _transport)(directory, packet, min(120., (_time(DEADLINE) - _time(now)).total_seconds()))
-            except Exception as error:
+            except BaseException as error:
                 save(directory / "failure.json", {"error": str(error), "no_resample": True}); raise
         try: return _recover(directory, packet)
         except Exception as error:

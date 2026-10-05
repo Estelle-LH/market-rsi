@@ -256,7 +256,8 @@ class ConsumerTests(unittest.TestCase):
             pid, returncode = 321, -9
             def communicate(self, data, timeout):
                 prompts.append(data.decode()); raise subprocess.TimeoutExpired("synthetic", timeout)
-            def wait(self): return self.returncode
+            def poll(self): return None
+            def wait(self, timeout): return self.returncode
         with patch.object(c.subprocess, "Popen", return_value=Child()) as popen, patch.object(c.os, "killpg") as kill:
             c._transport(directory, self.packet, 12)
         command = popen.call_args.args[0]
@@ -350,6 +351,39 @@ class ConsumerTests(unittest.TestCase):
         with patch.object(c, "_identity", return_value={"consumer_source_sha256": OTHER, "scope_sha256": c.SCOPE_SHA}):
             with self.assertRaisesRegex(ValueError, "same feedback changed"): self.consume()
         self.assertEqual(self.calls, 1)
+
+    def test_post_spawn_metadata_communicate_and_interruption_cleanup_once(self):
+        for index, trigger in enumerate(["process", "communicate", "interrupt"]):
+            root = self.f.root / ("cleanup-" + str(index)); original = c.save
+            class Child:
+                pid, returncode = 999, -9
+                def poll(self): return None
+                def communicate(self, data, timeout):
+                    if trigger == "interrupt": raise KeyboardInterrupt("synthetic interrupted")
+                    raise OSError("synthetic communicate error")
+                def wait(self, timeout): self.wait_timeout = timeout; return self.returncode
+            child = Child()
+            def fail_receipt(path, value):
+                if trigger == "process" and Path(path).name == "process.json": raise OSError("synthetic metadata error")
+                original(path, value)
+            with patch.object(c.subprocess, "Popen", return_value=child) as popen, patch.object(c.os, "killpg") as kill, patch.object(c, "save", side_effect=fail_receipt):
+                with self.assertRaises((OSError, KeyboardInterrupt)): self.consume(c._transport, root=root)
+                self.assertEqual(popen.call_count, 1); kill.assert_called_once_with(child.pid, c.signal.SIGKILL)
+                self.assertEqual(child.wait_timeout, 5)
+                with self.assertRaises(FileNotFoundError): self.consume(c._transport, root=root)
+                self.assertEqual(popen.call_count, 1)
+            failure = c._json(next(root.glob("*/failure.json")).read_bytes())
+            self.assertTrue(failure["no_resample"])
+
+    def test_cleanup_reap_timeout_is_bounded_no_second_cleanup(self):
+        class Child:
+            pid, returncode = 555, None
+            def poll(self): return None
+            def communicate(self, data, timeout): raise subprocess.TimeoutExpired("synthetic", timeout)
+            def wait(self, timeout): raise subprocess.TimeoutExpired("bounded-reap", timeout)
+        with patch.object(c.subprocess, "Popen", return_value=Child()), patch.object(c.os, "killpg") as kill:
+            with self.assertRaisesRegex(RuntimeError, "bounded cleanup"): self.consume(c._transport)
+            kill.assert_called_once()
 
 
 if __name__ == "__main__": unittest.main()
