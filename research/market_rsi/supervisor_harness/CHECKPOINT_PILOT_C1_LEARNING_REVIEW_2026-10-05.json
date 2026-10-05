@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "review_id": "checkpoint-pilot-c1-independent-learning-20261005-v1",
+  "passed": true,
+  "verdict": "PASS",
+  "scope": "Actual C1 validity, learning novelty/deduplication, branch eligibility and observed prior-evidence reuse only; no new scientific choice or predictive/mechanism benefit",
+  "candidate_id": "InGameTemperatureDownSlopeJointOffset-v1",
+  "attempt_id": "checkpoint-c1-down-slope-joint-01",
+  "assessment_sha256": "823d389cc057f5b7cf01d12b8542a570c6c70d75ff56c202ae661981fed614e4",
+  "result_review_sha256": "753c31caf538737aeb2adca7fda2599a8f1effba3849cbf2bd63969be0d6ff15",
+  "prediction_decision": "REVERT",
+  "performance_validity": "valid",
+  "learning_credit": 2,
+  "learning_kind": "hypothesis_test",
+  "duplicate_finding": false,
+  "canonical_finding_sha256": "712adbadbf2a4fb2be7d614521cd6032f81e57a9d2c4f84343ad16ded569e44f",
+  "canonical_evidence_sha256": "2f10b6316ca5b99523e51e7ed592bdae20945cbe60731e8fe6fa9eb0d5bb868b",
+  "authority_snapshot_canonical_sha256": "f4ed2f8332da944d4ca3abeb75e4d59eecc9723689c65a82dbbaa7e917306902",
+  "physical_supporting_files": {
+    "learning_evidence_core.json": "b8e19cab349ce2069f95135b76e10368188f7f8ad07fb65cad90f2eb44c0c09d",
+    "learning_finding_identity.json": "e1f57157ffed20c3a2321fe9330b4d918cdb32cf5268b2c593785ed3f22022d6",
+    "learning_authority_snapshot.json": "26fba6466240917b411db11d0b1e9aa62656c8cc18bf8d41b26ea85ad6886fe7",
+    "learning_reuse_action.json": "8f52c1edd0a3cfa04d52599a4ca6c4a5116fd61a2cf2dbd49fba277ba53712ef"
+  },
+  "checks": [
+    "Full actual assessment and four support bodies read; project canonical digests match every assessment reference. Physical file hashes recorded separately, not confused with canonical bodies.",
+    "Evidence core exactly binds independently reviewed source/run/card/CSV/supplement/request/worker receipt/four-fit counts and all artifact hashes; no circular reference to this later learning review.",
+    "Semantically distinct conditional-down question and exact negative finding are not duplicate possession-only D5, market-only C7 or confidence-link B3 findings. Novelty is independently assessed from actual methods/results, not inferred merely from a new hash.",
+    "Pure assess_checkpoint with the three already accepted findings yields credit2/nonduplicate; original validity and REVERT unchanged. Repeating this finding with an explicitly bounded hypothetical route yields credit0, while repeated unbounded branch is rejected. No recorder instance, writer, fit or transport called.",
+    "Pure v4 parent_eligibility accepts the valid reviewed branch; this neither forces active membership nor authorizes exact-repeat/new data/provider/budget resets. C2 consumption is preserved.",
+    "Actual original Controller response ddc4bfac cited D5 possession-only negative, stopped that exact recipe and selected down-by-market interaction; implemented b915b5d9 and succeeded once cf34e62e. This verifies observed reuse of prior accepted D5 finding dec16670, not proposed-only use.",
+    "Reuse benefit correctly unmeasured with null benefit evidence; negative prediction results do not negate observable evidence use or justify a claim of improved research efficiency/transfer/mechanism superiority."
+  ],
+  "exploration_action": "branch",
+  "reused_finding_sha256": "dec166709c4a32dc1000fc90f9d00a190839d5d19b05b06e40eb4e1f5ef8cb66",
+  "reuse_status": "observed",
+  "reuse_benefit": "unmeasured",
+  "reuse_benefit_evidence_sha256": null,
+  "limits": ["Historical adaptively reused Train; no untouched OOS, market edge, research-process self-modification or matched fixed-policy comparison.", "Credit rewards one independently valid hypothesis test, not better Brier, repeated D5 credit, paper/activity counts or forced branch continuation.", "Original clock22:24:55 selection/22:39:55 deadline and shared3/12 limits unchanged. Actual next scientific decision remains Controller-owned and separately reviewed.", "No actual failed-run-to-Controller recovery demonstrated; numeric transport still requires completed real outputs. Exact serving model unknown, human/subagent implementation and review overhead retained."],
+  "reviewer_refits": 0,
+  "reviewer_account_calls": 0
+}

@@ -1,5 +1,11 @@
 # Market RSI — human progress
 
+## 2026-10-05 18:08 EDT — real C1 result and separated learning accepted; next transfer blocked before launch
+
+The new down×market candidate completed four real local fits/87 same-key forecasts: Brier0.142251175/log0.430401674, worse than C7 and market, so frozen REFUTED/REVERT remains. Independent reconstruction753c31ca passed. Separate learning565a14ef accepts2/nonduplicate for a valid negative hypothesis test; branch eligibility survives without forcing pool membership. D5 negative evidence use is observed, benefit unmeasured. Actual feedbackab6211ab and nextpacketbbda9c7e are ready.
+
+The approval reviewer blocked the next ChatGPT-account handoff twice before any process or outer reservation, despite read-only checks of prior explicit pilot approval. Supervisor requested direct exact-payload reconfirmation, did not change channel/provider or invent another Controller choice. Current1/3attempts,4/12fits,1/3completed account calls; no paid/external/protected operation. Original18:24:55selection/18:39:55deadline unchanged. See `CHECKPOINT_PILOT_C1_REPORT_2026-10-05.md` for paired scores, block results and trace. Local code/evidence acceptance is not prediction gain or matched RSI superiority.
+
 ## 2026-10-05 17:42 EDT — fresh account approval received; actual Controller selected down-dependent calibration
 
 The user's explicit “yes” approved the exact fresh account payload question (`cb50a794`); it did not supply a hypothesis or algorithm. One original, no-tools/no-retry `gpt-6.1-sol` decision completed (`ddc4bfac`, serving snapshot unknown;121898 input/1985 output tokens, USD unknown). D5's reviewed possession-only negative result led it to a different down×market-logit calibration question, `InGameTemperatureDownSlopeJointOffset-v1`, actual research parent C7, raw-market incumbent. The Controller retained two distinct global branches C7 calibration and B3 nonlinear state; no second experiment was preselected.
