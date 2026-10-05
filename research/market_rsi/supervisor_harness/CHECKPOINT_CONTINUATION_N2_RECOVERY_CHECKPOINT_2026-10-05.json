@@ -1,0 +1,28 @@
+{
+  "schema": "supervisor_operational_recovery_checkpoint_v1",
+  "recorded_utc": "2026-10-05T23:33:37.497836+00:00",
+  "axis": "H operational caller only",
+  "author": "Supervisor Root, not scientificController or autonomousR",
+  "component": "finish_same_unclaimed_N2_selection_once",
+  "original_core_launcher_sha256": "7838d65e7145e65f4310ca5e69e8fc3247e92abe3dade240dbe832a27d8cf411",
+  "failure_memo_path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01/n2_preclaim_launch_failure.json",
+  "failure_memo_sha256": "49bc28631db629a5a2db3365e0b81b76ee0f2fda6e10a844640ce89862a30631",
+  "unactivated_drafts": {
+    "n2_preclaim_resume.py": "0f3fde1536b7ea45c78f3e33922f77654a94a88d7373ab293816b43cd10a3ce3",
+    "n2_preclaim_resume_v2.py": "2260cad465d848819807c3cf6d8a166921fcb3511220a982e514516ee7d6525e"
+  },
+  "admitted_script_path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01/n2_preclaim_resume_v3.py",
+  "admitted_script_sha256": "956fdfcad2c06aed18e280e51cbcc05209795f7908e73e44aaa5b1f7690b5d7f",
+  "script_lines": 69,
+  "review_sha256": "03abf974e6b95a94dca86173da8019dcbe42bad79353277dddda95109ddc6eed",
+  "change": "No sharedcode/candidate/evaluator/permission/model/source ordata changes. Absoluteoperationalpaths, preserved unclaimedprefix, explicitadmittedcandidate/test/contractguard, exact firstclaim once.",
+  "actual_scientific_attempt": "continuation-n2-distance-slope-01 alreadyselectedsecondcandidate; no additionalcandidate/thirdcall/sameIDworkerretry",
+  "before_execution": {
+    "actual_fits": 4,
+    "N2_claims": 0,
+    "N2_fits": 0,
+    "original_account_calls": 2
+  },
+  "activation_command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONHASHSEED=0 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B '/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01/n2_preclaim_resume_v3.py' --review-path '/Users/estelle/Developer/market-rsi/research/market_rsi/supervisor_harness/CHECKPOINT_CONTINUATION_N2_PRECLAIM_RECOVERY_REVIEW_2026-10-05.json' --review-sha256 03abf974e6b95a94dca86173da8019dcbe42bad79353277dddda95109ddc6eed",
+  "claim": "Prospective reviewed recovery only; success requiresactualfirstworkerresult. Not predictiveevidence, modeltrainingfailure, autonomousresearchworkflowgain or totalcostreduction."
+}
