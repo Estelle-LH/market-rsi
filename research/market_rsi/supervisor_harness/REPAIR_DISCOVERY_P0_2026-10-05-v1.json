@@ -1,0 +1,87 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "repair-discovery-P0-20261005-v1",
+  "symptom": "Three earlier role agents ended with model-capacity errors and the earlier eight-hour window expired without a new Train run.",
+  "source_evidence": "Approved plan market-rsi-repair-discovery-20261005-01 at local commit 897c933; actual collaboration inventory on resumption reports three capacity-error agents. Process check found no matching local training child.",
+  "objective": "Verify real Controller and independent-reviewer availability before source changes or training, then use the approved P1-P4 sequence without redesign.",
+  "boundary": "Read-only P0 probes plus owned logs; no fits, candidate selection, paid provider, network acquisition, protected Dev/Final, scoring or historical record changes. No silent model-route fallback.",
+  "resolution_check": "Actual distinct role responses through the existing authorized route, honest available model identity and unchanged data/scoring boundary.",
+  "supervisor_owner": "root",
+  "execution_window": {
+    "start_utc": "2026-10-05T15:27:11Z",
+    "deadline_utc": "2026-10-05T19:27:11Z",
+    "new_selection_cutoff_utc": "2026-10-05T19:12:11Z",
+    "max_attempts": 6,
+    "max_fits": 24,
+    "max_live_candidates": 2,
+    "threads_per_candidate": 1,
+    "provider_calls": 0,
+    "provider_spend_usd": "0",
+    "start_reason": "Human explicitly said and continue your fixing; actual P0 process/service preflight begins here. Document preparation excluded."
+  },
+  "approved_sequence": "plans/MARKET_RSI_REPAIR_DISCOVERY_APPROVED_2026-10-05.json; do not rewrite that approval or expired history",
+  "steps": [
+    {
+      "id": "controller_probe",
+      "owner": "coevo_controller_20261003",
+      "depends_on": [],
+      "action": "Resume the existing Controller for one read-only availability acknowledgement and current D1 prerequisite check, not a new scientific experiment.",
+      "expected_artifact": "AGENT_LOG_REPAIR_P0_CONTROLLER_2026-10-05.md plus actual role reply",
+      "verification": "Supervisor observes an actual response, not dispatch alone; requested/reported serving identity remains truthful.",
+      "pass_condition": "Real Controller response confirms it can consume independently reviewed feedback inside the fixed boundaries.",
+      "failure_action": "Preserve capacity/service error; at most two bounded recovery steps under a new version; do not impersonate Controller or silently change model/provider.",
+      "time_bound_minutes": 5,
+      "result": {
+        "verdict": "pass",
+        "observed": "Actual Controller availability reply at15:29:41UTC; unchanged scientific recipe acknowledged, exact serving identity unknown, no fallback.",
+        "reviewer": "root observes actual role reply",
+        "evidence_path": "AGENT_LOG_REPAIR_P0_CONTROLLER_2026-10-05.md",
+        "evidence_sha256": "3b1d16192da98c06f2e682bfbff7b574174ac53a0899cca37f046792e889f9f8"
+      }
+    },
+    {
+      "id": "reviewer_probe",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [],
+      "action": "Resume independent reviewer for one read-only availability acknowledgement and execution-boundary check.",
+      "expected_artifact": "AGENT_LOG_REPAIR_P0_REVIEWER_2026-10-05.md plus actual role reply",
+      "verification": "Supervisor observes a distinct actual reviewer response without author self-certification.",
+      "pass_condition": "Real reviewer response confirms ability to verify integrated source and actual Train outputs without fitting or protected access.",
+      "failure_action": "Preserve capacity/service error; at most two bounded recovery steps under a new version; no paid fallback or waived independent review.",
+      "time_bound_minutes": 5,
+      "result": {
+        "verdict": "pass",
+        "observed": "Actual distinct reviewer availability reply; pinned runtime/source/saved-output access checked read-only, no source approval or fits.",
+        "reviewer": "root observes actual role reply",
+        "evidence_path": "AGENT_LOG_REPAIR_P0_REVIEWER_2026-10-05.md",
+        "evidence_sha256": "1df0767edd9225477d15203f656be0d6d56c501d06afb102f67f01d7b2096e95"
+      }
+    },
+    {
+      "id": "preflight",
+      "owner": "root",
+      "depends_on": [
+        "controller_probe",
+        "reviewer_probe"
+      ],
+      "action": "Reconcile replies, source/process checks and the fresh shared clock; close P0 or record the exact blocker.",
+      "expected_artifact": "HUMAN_PROGRESS.md P0 result and bounded operational envelope",
+      "verification": "Actual replies and no training claim; preserved dirty work, fixed evaluation and original zero-provider boundary.",
+      "pass_condition": "Both responses verified, no competing local training child, one non-resettable four-hour/six-attempt/24-fit window.",
+      "failure_action": "Continue unaffected in-scope diagnostics only; stop experiment dispatch if no safe real Controller/reviewer route remains after finite recovery.",
+      "time_bound_minutes": 10,
+      "result": {
+        "verdict": "pass",
+        "observed": "Both actual role responses verified within ten-minute P0; no matching local experiment child at process check; same approved fresh clock and bounds. Dirty source preserved. Model identities unknown, not authenticatedAstra.",
+        "reviewer": "root operational reconciliation; independent role reply checked separately",
+        "evidence_path": "AGENT_LOG_REPAIR_P0_REVIEWER_2026-10-05.md",
+        "evidence_sha256": "1df0767edd9225477d15203f656be0d6d56c501d06afb102f67f01d7b2096e95"
+      }
+    }
+  ],
+  "resolution": {
+    "verdict": "pass",
+    "observed": "P0 availability and boundary only. H/D1 source and live execution still need separate review.",
+    "reviewer": "independent reviewer actual runtime/source availability plus Supervisor observed responses"
+  }
+}
