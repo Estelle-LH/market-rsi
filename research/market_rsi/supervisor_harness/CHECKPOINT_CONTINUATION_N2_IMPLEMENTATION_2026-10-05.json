@@ -1,0 +1,154 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "checkpoint-continuation-n2-20261005",
+  "symptom": "Verified N1 negative led original Controller to distinct distance-dependent prediction hypothesis",
+  "source_evidence": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01/account-controller/market-rsi-learning-checkpoint-continuation-controller-n1-feedback-20261005-01/e9a256fdcae45372ef52aecdb1aba7fcf9c402c35ab77d81750e676dfeab4e90/response.json SHAdcc7607d0a6af36a1a1796475b7bdfab5337e8fc9bcfef34b68aa33c8b94e3ba",
+  "objective": "Complete last actual4-fit distance prediction experiment, independent score/learning and batchcloseout",
+  "boundary": "Fresh2/8/2; current1attempt4fits2decisions; no retries23:47:32selection00:02:32hard; residentTrain/fixedjudge/closedexternalprotectedpaidrelease",
+  "resolution_check": "Actualsame-samplescorecard accepted, learningseparate, truthfulcapstop; no R/mechanismbenefitfiction",
+  "supervisor_owner": "root",
+  "response_sha256": "dcc7607d0a6af36a1a1796475b7bdfab5337e8fc9bcfef34b68aa33c8b94e3ba",
+  "steps": [
+    {
+      "id": "decision",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [],
+      "action": "Independently verify actual original once transaction and evidence-driven next proposal",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N2_DECISION_REVIEW_2026-10-05.json",
+      "verification": "Original response/claim/process/completion/no tools/usage/citations/parent/pool/budget",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 4,
+      "result": {
+        "verdict": "pass",
+        "observed": "Actualdcc760 onceoriginaltransaction/noobservedtools/PID17163absence/e9aactualN1feedback/193196input1930output40reasoning verified",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N2_DECISION_REVIEW_2026-10-05.json",
+        "evidence_sha256": "be7cd4c83a71469c4fa79747238dcdc5b83ec860dba44aea5ba23c2dc7f9371a"
+      }
+    },
+    {
+      "id": "ops",
+      "owner": "coevo_controller_20261003",
+      "depends_on": [],
+      "action": "Mechanical exact contract and rule transcription of actual distance-to-first-down proposal; no algorithm choice",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N2_CONTRACT_2026-10-05.json",
+      "verification": "Exact original recipe; causal distance mapping identified without Train outcome analysis; reuse solver/H unchanged",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 4,
+      "result": {
+        "verdict": "pass",
+        "observed": "Rootread fullmechanical actualdistancecontractba407, direct preplayrawyards/state7 equality/goal-to-go distinction/fixedphysical10; originalrecipe preserved",
+        "reviewer": "root exact transcription check",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N2_CONTRACT_2026-10-05.json",
+        "evidence_sha256": "ba40795cc74a27011cc2043b57811c7d6f8831d63b99d8be5002f4781695437b"
+      }
+    },
+    {
+      "id": "scope",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [
+        "decision",
+        "ops"
+      ],
+      "action": "Independently admit exact contract and finite single-C scope",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N2_SCOPE_REVIEW_2026-10-05.json",
+      "verification": "Physical distance bounds/orientation, fixed recipe, unchanged task/scorer/permissions",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 3,
+      "result": {
+        "verdict": "pass",
+        "observed": "Exact original distancecontractba407/rule0bc2, causalrawyards/state7/goal-to-go semantics and unchangedsolver/H/K/permissions independently admitted",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N2_SCOPE_REVIEW_2026-10-05.json",
+        "evidence_sha256": "6e4ea4a40c84269a553b5a658b97158cb8f9b20cdb89361085c383a6151cd7f1"
+      }
+    },
+    {
+      "id": "implementation",
+      "owner": "coevo_predictor_worker_20261003",
+      "depends_on": [
+        "scope"
+      ],
+      "action": "Implement exact candidate-local source/test/log, no prior modules changed",
+      "expected_artifact": "AGENT_LOG_CHECKPOINT_CONTINUATION_N2_IMPLEMENTER_2026-10-05.md",
+      "verification": "Synthetic mathematics/physical-distance orientation/gamma0/complement/future and check-label isolation/once entry/numeric replay/failure; report actual smallness",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 7,
+      "write_paths": [
+        "research/market_rsi/experiments/nfl_ingame_temperature_distance_slope_joint_offset.py",
+        "research/market_rsi/experiments/test_nfl_ingame_temperature_distance_slope_joint_offset.py",
+        "research/market_rsi/supervisor_harness/AGENT_LOG_CHECKPOINT_CONTINUATION_N2_IMPLEMENTER_2026-10-05.md"
+      ]
+    },
+    {
+      "id": "source_review",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [
+        "implementation"
+      ],
+      "action": "Read exact source and independently test; >200lines requires explicit semantic ruling",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N2_SOURCE_REVIEW_2026-10-05.json",
+      "verification": "Old helpers/H/K/worker unchanged; exact contract/source/runtime/request guards",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 4
+    },
+    {
+      "id": "run",
+      "owner": "root",
+      "depends_on": [
+        "source_review"
+      ],
+      "action": "Commit admitted source and Root executes four actual Train fits once",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N2_EXECUTION_2026-10-05.json",
+      "verification": "Exact unchanged87same-key predictions, actualfit progress/receipt/currentbudget/deadline/source",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 3
+    },
+    {
+      "id": "result",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [
+        "run"
+      ],
+      "action": "Independently reconstruct predictions/parameters/score/paired blocks and intervals with no refit",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N2_RESULT_REVIEW_2026-10-05.json",
+      "verification": "Same judge, physical artifacts/currentGit pins, no implementation failure counted as scientific evidence",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 4
+    },
+    {
+      "id": "learning",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [
+        "result"
+      ],
+      "action": "Independently verify separate Root learning checkpoint, canonical finding and actual N1 feedback reuse",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N2_LEARNING_REVIEW_2026-10-05.json",
+      "verification": "Learning0/1/2 separate Brier/KEEP; novelty/dedup/branch evidence; observed reuse benefit unmeasured",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 3
+    },
+    {
+      "id": "feedback",
+      "owner": "root",
+      "depends_on": [
+        "learning"
+      ],
+      "action": "Accept reviewed actual feedback and save capclosed batch, no thirdinput/call",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_N2_ACCEPTANCE_2026-10-05.json",
+      "verification": "Root-only incumbent/pool/ledger; outer2/8/2 terminal consumed, no nextselection/call",
+      "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
+      "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
+      "time_bound_minutes": 3
+    }
+  ],
+  "contract_path": "research/market_rsi/supervisor_harness/CHECKPOINT_CONTINUATION_N2_CONTRACT_2026-10-05.json"
+}
