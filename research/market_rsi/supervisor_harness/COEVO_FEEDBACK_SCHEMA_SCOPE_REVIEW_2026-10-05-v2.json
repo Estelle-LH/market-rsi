@@ -1,0 +1,57 @@
+{
+  "schema": "market_rsi_independent_scope_review_v1",
+  "step_id": "P3-H-feedback-schema-service-compatibility-v2",
+  "passed": true,
+  "verdict": "PASS",
+  "scope_sha256": "505a7c92fa05512eda83d2c3953bea7b6ca37d28d912ba270e0983ee1ba8589b",
+  "scope": "Prospective implementation scope only; no source activation or model-call permission",
+  "observed_utc": "2026-10-05T16:46:00Z",
+  "actual_trigger": {
+    "events_sha256": "b738dc361b1b8bdb8a553f2b2ee283210271335d36f92ab183e94e234ec40a38",
+    "parent_consumer_source_sha256": "cd0f0a75de395aa619428d10612897a8be260ac3e28334f8b85bd42b171a9c69",
+    "http_status": 400,
+    "error_code": "invalid_json_schema",
+    "schema_error": "properties.boundary missing explicit type",
+    "exit_code": 1,
+    "observed_event_types": [
+      "thread.started",
+      "turn.started",
+      "error",
+      "turn.failed"
+    ],
+    "scientific_response_observed": false,
+    "agent_message_observed": false,
+    "tool_event_observed": false,
+    "usage_report_observed": false,
+    "process_absence": "Pending scoped independent probe; not claimed from scope alone"
+  },
+  "allowed_changes": [
+    "Add explicit supported type to each existing schema node, including const and enum nodes, consistent with existing exact values",
+    "Change consumer compiled scope identity to new frozen scope",
+    "Add structural service-shape and semantic-equivalence synthetic regression"
+  ],
+  "held_unchanged": [
+    "Existing response property names, values, required/additionalProperties rules and strict local validator",
+    "Input/review/source/evidence/parent/incumbent and outer-budget bindings",
+    "CLI requested alias, serving unknown, tool-event rejection and non-executable model text",
+    "Onceclaim/source provenance, communication/cleanup bounds, original-output recovery and no automatic retry",
+    "Predictor D1, scientific question, Train masks/folds/proper scorer/KEEP and protected permissions",
+    "Original failed call input/schema/claim/events/process/completion/failure and source history"
+  ],
+  "conditions": [
+    "Independent exact final-source diff and focused/inherited synthetic review before source admission",
+    "Fresh replacement call only under separate explicit human destination-specific and new-ID authorization; original failed7ce35a90 transaction must remain terminal",
+    "No API acceptance inferred from local schema walker; inspect actual separately authorized replacement response later",
+    "Account submission/elapsed engineering/review/coordination overhead included; no usage or total cost invented as zero"
+  ],
+  "classification": "One H operational service-schema repair, not predictor gain, researcher policy change, automatic continuation or model superiority",
+  "reviewer_resources": {
+    "real_model_calls": 0,
+    "real_train_fits": 0,
+    "optimizers": 0,
+    "source_edits": 0,
+    "network_retrievals": 0,
+    "protected_reads": 0,
+    "commits": 0
+  }
+}
