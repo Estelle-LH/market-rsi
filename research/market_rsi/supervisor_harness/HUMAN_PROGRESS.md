@@ -1,5 +1,9 @@
 # Market RSI — human progress
 
+## 2026-10-05 12:42 EDT — bounded account-packet transmission authorized
+
+The user replied `yes` to the exact question authorizing existing Train scores, research memory/history and run metadata to their existing ChatGPT account for this batch’s Controller decisions: one per reviewed feedback, no retries or paid provider. The original rejected command did not execute. This explicit destination/payload approval is saved in the existing permanent batch artifact store as `account-payload-authorization.json`; it does not reset the four-hour clock, six-attempt/24-fit limits or reopen external retrieval, Dev/Final, release or promotion. Root will use the reviewed pinned consumer once, validate the original response, and proceed to actual implementation/training rather than stop at the decision. This is a human permission intervention, not autonomous researcher improvement.
+
 ## 2026-10-05 16:36 UTC — transmission authorization blocker, no account feedback call executed
 
 Exact feedback-consumer source was independently admitted by receipt `ab513d5577de947de3967427b186645abe49134b848e6ef8bb63e5bbd9667c3e` and checkpointed at `944ea9a`. The attempted live command was rejected by automatic security review BEFORE process creation: it would transmit a large internal research packet (scores, historical memory, experiment history and metadata) to the existing ChatGPT account, and destination-specific human authorization was not established. Read-only checks confirmed no account launch-admission artifact and no once-call claim for D1 feedback `7ce35a90…10a16`. Thus there is no live scientific response or new selected descendant from this attempt. The earlier transport probe is separate historical evidence, not this scientific call. No retry, alternate route or indirect native-model handoff will bypass the rejection.
