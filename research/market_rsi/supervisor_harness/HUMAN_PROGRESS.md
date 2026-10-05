@@ -1,5 +1,9 @@
 # Market RSI — human progress
 
+## 2026-10-05 12:56 EDT — one fresh corrected-schema handoff explicitly authorized
+
+User replied `yes` to the exact fresh ID `market-rsi-repair-d1-controller-schemafix-20261005-01`, followed by training its chosen candidate within unchanged boundaries. Permanent authorization saved outside Git. Original HTTP400 transaction remains terminal; this is one explicit fresh replacement, not an automatic retry. New source is independently reviewed `d6b72f61`/receipt `576e93b4`. Same 15:27:11–19:27:11 UTC window, six selected attempts/24 fits, two selected/eight actual fits before handoff; no external/protected/provider/release expansion. This authorization is another human permission intervention, not R improvement. Existing-information experimentation only; scientific choice remains Controller-owned.
+
 ## 2026-10-05 12:52 EDT — schema repair independently admitted; replacement call not authorized yet
 
 Independent receipt `576e93b4…82450` binds source checkpoint `74688e1`, compares all 34 schema nodes and the complete production AST, and confirms exactly ten consistent type additions with all other logic/values unchanged. Its 57 distinct tests passed in 0.716 seconds. Original failure hashes and actual PID absence were independently verified. The next fresh transaction still needs the separately requested human authorization; the original claim is terminal. No new model decision, scientific candidate or fit has occurred. Gate result fields are reconciled after the observed source review, not falsely claimed as a prior ready-step check. The implementation ready-step check did pass before worker dispatch.
