@@ -122,7 +122,14 @@
       "verification": "Old helpers/H/K/worker unchanged; exact contract/source/runtime/request guards",
       "pass_condition": "Exact bounded evidence independently passes; no future execution claimed",
       "failure_action": "Preserve failure; bounded correction only, no scoring/source/data/authority relaxation or same-ID retry",
-      "time_bound_minutes": 4
+      "time_bound_minutes": 4,
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent256unique PASS19.794s/exact233source353tests/oldhelpersfixed/explicitone-Cinseparability; one4fitboundedattempt admitted",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N1_SOURCE_REVIEW_2026-10-05.json",
+        "evidence_sha256": "ffc56120622a7dcfede6ac8bb8adc8954b92b50609070e2ca94930bd175e0926"
+      }
     },
     {
       "id": "run",
