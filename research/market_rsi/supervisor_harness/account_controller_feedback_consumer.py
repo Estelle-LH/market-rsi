@@ -65,17 +65,43 @@ def _time(value):
     return moment
 
 
-def check_budget(authority, now):
+def prospective_pilot_binding():
+    """Exact user-approved pilot envelope; a copy, not authority or a default reset."""
+    return {"schema": "controller_prospective_budget_binding_v1",
+        "batch_id": "market-rsi-learning-checkpoint-pilot-20261005-01",
+        "start_utc": "2026-10-05T21:09:55Z", "selection_cutoff_utc": "2026-10-05T22:24:55Z",
+        "deadline_utc": "2026-10-05T22:39:55Z",
+        "limits": {"attempts": 3, "statistical_fits": 12, "live_candidate_processes": 2,
+            "threads_per_candidate": 1, "per_attempt_seconds": 900, "sampled_rss_bytes": 1073741824,
+            "paid_provider_calls": 0, "paid_provider_spend_usd": "0"}}
+
+
+def _prospective_binding(binding):
+    if binding is None: return None
+    # Canonical comparison rejects extra fields, coercible bools/floats and self-grants.
+    if type(binding) is not dict or _digest(binding) != _digest(prospective_pilot_binding()):
+        raise ValueError("prospective budget binding drift")
+    return _json(json.dumps(binding, allow_nan=False))
+
+
+def check_budget(authority, now, *, prospective_binding=None):
+    binding = _prospective_binding(prospective_binding)
     expected = {"attempts": 6, "statistical_fits": 24, "live_candidate_processes": 2, "threads_per_candidate": 1, "per_attempt_seconds": 900, "sampled_rss_bytes": 1073741824, "paid_provider_calls": 0, "paid_provider_spend_usd": "0"}
-    if authority["limits"] != expected or authority["deadline_utc"] != DEADLINE or authority["selection_cutoff_utc"] != CUTOFF:
+    deadline, cutoff, maximum, fit_cap = DEADLINE, CUTOFF, 6, 24
+    if binding is not None:
+        expected, deadline, cutoff = binding["limits"], binding["deadline_utc"], binding["selection_cutoff_utc"]
+        maximum, fit_cap = expected["attempts"], expected["statistical_fits"]
+        if authority.get("batch_id") != binding["batch_id"] or authority["start_utc"] != binding["start_utc"] or _digest(authority["limits"]) != _digest(expected):
+            raise ValueError("prospective outer authority changed")
+    if authority["limits"] != expected or authority["deadline_utc"] != deadline or authority["selection_cutoff_utc"] != cutoff:
         raise ValueError("outer authority changed")
     attempts = authority["attempts"]
-    if _time(now) < _time(authority["start_utc"]) or _time(now) >= _time(CUTOFF) or len(attempts) >= 6:
+    if _time(now) < _time(authority["start_utc"]) or _time(now) >= _time(cutoff) or len(attempts) >= maximum:
         raise ValueError("outer selection stop")
     if len({item["attempt_id"] for item in attempts}) != len(attempts): raise ValueError("duplicate outer attempt")
     if any(type(item["fits_reserved"]) is not int or type(item["actual_fits"]) is not int or not 0 <= item["actual_fits"] <= item["fits_reserved"] <= 4 for item in attempts):
         raise ValueError("invalid actual/reserved fits")
-    if sum(item["fits_reserved"] for item in attempts) + 4 > 24 or sum(item["status"] in {"claimed", "running", "execution_claimed", "execution_reserved"} for item in attempts) >= 2:
+    if sum(item["fits_reserved"] for item in attempts) + 4 > fit_cap or sum(item["status"] in {"claimed", "running", "execution_claimed", "execution_reserved"} for item in attempts) >= 2:
         raise ValueError("shared fit/concurrency ceiling")
 
 
@@ -98,7 +124,7 @@ def _feedback_protocol(feedback):
     return 4
 
 
-def prepare_input(bindings, batch, repo, now):
+def prepare_input(bindings, batch, repo, now, *, prospective_binding=None):
     """Called by the trusted Supervisor after review; copies real numbers, not hashes alone."""
     if set(bindings) != ROLES: raise ValueError("exact feedback file roles required")
     data = {role: _read(binding, role == "predictions") for role, binding in bindings.items()}
@@ -131,10 +157,12 @@ def prepare_input(bindings, batch, repo, now):
         original = subprocess.check_output(["git", "show", request["source_commit"] + ":" + name], cwd=repo)
         if hashlib.sha256(original).hexdigest() != expected: raise ValueError("source commit drift")
     if sha(request["python"]) != request["python_sha256"]: raise ValueError("runtime byte drift")
-    check_budget(data["authority"], now)
+    binding = _prospective_binding(prospective_binding)
+    check_budget(data["authority"], now, prospective_binding=binding)
     numeric = _compact({key: card[key] for key in NUMERIC_KEYS})
     result = {"schema": "controller_feedback_input_v1", "bindings": bindings, "feedback": feedback, "numerical": numeric,
         "supplement": _compact(supplement), "omitted_from_prompt": sorted(OMITTED), "memory": data["memory"], "history": data["history"], "pool": data["pool"], "authority": data["authority"], "overhead": data["overhead"]}
+    if binding is not None: result["prospective_budget_binding"] = binding
     _digest(result)
     return _json(json.dumps(result, allow_nan=False))
 
@@ -252,9 +280,12 @@ def _recover(directory, packet):
     return response
 
 
-def consume(packet, root, *, batch, repo, now=None, transport=None):
+def consume(packet, root, *, batch, repo, now=None, transport=None, prospective_binding=None):
     """One invocation per feedback. Recovery never calls transport a second time."""
     now = now or datetime.now(timezone.utc)
+    binding = _prospective_binding(prospective_binding)
+    if (binding is None and "prospective_budget_binding" in packet) or (binding is not None and _digest(packet.get("prospective_budget_binding")) != _digest(binding)):
+        raise ValueError("explicit prospective packet binding changed")
     root = Path(root)
     if not root.is_absolute() or root.resolve() != root: raise ValueError("call root drift")
     root.mkdir(parents=True, exist_ok=True)
@@ -265,14 +296,16 @@ def consume(packet, root, *, batch, repo, now=None, transport=None):
     with (directory / ".lock").open("a+") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         claim = {"input_sha256": _digest(packet), "schema_sha256": _digest(SCHEMA), "cli_sha256": CLI_SHA, **_identity()}
+        if binding is not None: claim["prospective_budget_binding_sha256"] = _digest(binding)
         if (directory / "claim.json").exists():
             if _json((directory / "claim.json").read_bytes()) != claim: raise ValueError("same feedback changed")
             if _json((directory / "input.json").read_bytes()) != packet or _json((directory / "schema.json").read_bytes()) != SCHEMA:
                 raise ValueError("original input/schema changed")
         else:
-            if sha(CLI) != CLI_SHA or prepare_input(packet["bindings"], batch, repo, now) != packet: raise ValueError("CLI drift/unverified numerical input")
+            if sha(CLI) != CLI_SHA or prepare_input(packet["bindings"], batch, repo, now, prospective_binding=binding) != packet: raise ValueError("CLI drift/unverified numerical input")
             save(directory / "input.json", packet); save(directory / "schema.json", SCHEMA); save(directory / "claim.json", claim)
-            try: (transport or _transport)(directory, packet, min(120., (_time(DEADLINE) - _time(now)).total_seconds()))
+            deadline = DEADLINE if binding is None else binding["deadline_utc"]
+            try: (transport or _transport)(directory, packet, min(120., (_time(deadline) - _time(now)).total_seconds()))
             except BaseException as error:
                 save(directory / "failure.json", {"error": str(error), "no_resample": True}); raise
         try: return _recover(directory, packet)
