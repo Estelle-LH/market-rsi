@@ -47,6 +47,7 @@
       "pass_condition": "Exactsource/hash tests pass; measuredsmallness or explicitinseparability review",
       "failure_action": "Preserve failingversion, boundedpre-score repair without science/guard relaxation",
       "time_bound_minutes": 10,
+      "result":{"verdict":"pass","observed":"Frozen one-C221LOC sourceb915/testda350; producer11focused and240fullrelevantPASS18.232s; Root240PASS18.148s/source3dfdec6. No realfits. Explicit >200 semantic source review pending","reviewer":"root integrated source checkpoint","evidence_path":"AGENT_LOG_CHECKPOINT_PILOT_C1_IMPLEMENTER_2026-10-05.md","evidence_sha256":"bc07cd8842c6ad380c37ba29cb663b3f669c5a4bcd32c0c3d17c5f313d617e4e"},
       "write_paths": [
         "research/market_rsi/experiments/nfl_ingame_temperature_down_slope_joint_offset.py",
         "research/market_rsi/experiments/test_nfl_ingame_temperature_down_slope_joint_offset.py",
@@ -64,7 +65,8 @@
       "verification": "Actualsource/test/contract/helper/runtime guards/frozenjudge and nofitreceipt",
       "pass_condition": "NoP0/P1, exact production/test/admitted source",
       "failure_action": "No live claim until issue resolved, preserve findings",
-      "time_bound_minutes": 6
+      "time_bound_minutes": 6,
+      "result":{"verdict":"pass","observed":"Exactb915/da350 source3dfdec6 admitted24a54cc8; independent240testsPASS17.612s and explicit221line one-C inseparability. No realfit yet","reviewer":"coevo_independent_review_20261003","evidence_path":"CHECKPOINT_PILOT_C1_SOURCE_REVIEW_2026-10-05.json","evidence_sha256":"24a54cc84421fb45dccdd0ce7838d8738a36cd8e25b446557da4ce14f93bda5c"}
     },
     {
       "id": "run",

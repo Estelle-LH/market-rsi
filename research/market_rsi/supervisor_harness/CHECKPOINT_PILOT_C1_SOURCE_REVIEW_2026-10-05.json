@@ -1,0 +1,50 @@
+{
+  "schema":"independent_exact_candidate_source_review_v1",
+  "passed":true,
+  "verdict":"EXACT_SOURCE_ADMITTED_FOR_ONE_BOUNDED_C1_ATTEMPT",
+  "reviewed_utc":"2026-10-05T21:50:36Z",
+  "source_commit":"3dfdec6acdc3aab2c16a32662e077a67d7b0be4a",
+  "comparison_parent_commit":"0afd9f411c6ad277b8b2191f5f95834594b1ed88",
+  "candidate_id":"InGameTemperatureDownSlopeJointOffset-v1",
+  "source_sha256":"b915b5d9aaa27badb2b34815939f3930dd7d4c80b32a708b19898a577fb02a0c",
+  "test_sha256":"da3501124bc8ba147bd4cbce4df4c56664c79d53af9f45e97d7ca5bdcf9ace49",
+  "contract_sha256":"e9ef31ab5ec2f171368f27965f10a1b7e6c2935da23c43f6cf0526aa9200fe8a",
+  "decision_review_sha256":"77bef53930f66e1c4ff532def1a432c07d3797e2f52455ca874b021490d63751",
+  "scope_review_sha256":"25815afe050682943c0553c2c78c15d973f9676aacceeca6513ed4bcfd212b70",
+  "archive_review_sha256":"9aaa14ca09b751a7e891dfa04aef9d23a889abd7d371c633fba21cbf9a5e9164",
+  "verification":{
+    "complete_exact221_source_and329_tests_read":true,
+    "current_and_git_exact21_source_dependency_bindings":true,
+    "only_two_new_python_paths_changed":true,
+    "existing_generic_solver_and_calculus_function_identity_exact":true,
+    "anchor_finite_integer1to4_and_frozen_onehot3to7_crosscheck":true,
+    "missing_invalid_down_rejects_whole_candidate_prefit":true,
+    "no_future_labels_other_state_or_normalizer_in_feature":true,
+    "exact_down_interaction_and_NLL_alpha16_parent_warm":true,
+    "beta_boundaryKKT_free_gamma_no_monotonicity_claim":true,
+    "fit_only_brackets_caps_stationarity_Hessian_and_objective_checks":true,
+    "primitive_source_parent_input_optimizer_state_replay_binding":true,
+    "gamma0_exactC7_zero_column_and_complement_identities":true,
+    "checklabels_do_not_change_synthetic_fit_or_replay":true,
+    "same195193plus2_87_fourfits_folds_controls_judge":true,
+    "compiled_request_source_runtime_clock_review_coverage_failclosed":true,
+    "truthful_partial_and_postoptimization_failure_no_retry_or_overwrite":true,
+    "old_scorer_H_worker_recorder_helpers_unchanged":true
+  },
+  "tests":{
+    "focused":{"tests":11,"passed":true,"seconds":2.024,"command":"env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONHASHSEED=0 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest experiments.test_nfl_ingame_temperature_down_slope_joint_offset -v"},
+    "full_relevant":{"unique_tests":240,"passed":true,"seconds":17.612,"command":"env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONHASHSEED=0 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest supervisor_harness.test_learning_checkpoint_assessment supervisor_harness.test_continuous_discovery_batch supervisor_harness.test_account_controller_feedback_consumer experiments.test_nfl_ingame_temperature_possession_only_joint_offset experiments.test_nfl_ingame_temperature_odd_confidence_joint_offset experiments.test_nfl_ingame_temperature_intercept_joint_offset experiments.test_nfl_ingame_temperature_receipt_age_slope_offset experiments.test_nfl_ingame_temperature_possession_pressure_joint_offset experiments.test_nfl_ingame_temperature_possession_pressure_entry experiments.test_nfl_ingame_candidate_evidence_adapter experiments.test_nfl_ingame_market_temperature_offset experiments.test_nfl_ingame_market_freshness_interaction_offset tests.test_minimal_probability_contract supervisor_harness.test_opened_train_discovery_worker experiments.test_nfl_ingame_temperature_down_slope_joint_offset -q"},
+    "count_note":"11 focused are included in240, not additive. Synthetic CLI executes in process with authored synthetic parent states and mocked Git checkpoint; no actual Train fit or candidate prediction preview. Actual OS worker/run proof remains separate."
+  },
+  "small_step_ruling":{
+    "changed_production_lines":221,
+    "production_modules":1,
+    "threshold200_triggered":true,
+    "explicit_inseparability_accepted":true,
+    "reason":"One bounded C component implements causal down interaction, strict anchor/onehot consistency, its prediction and primitive numerical replay, and required new immutable contract/request entry. Existing generic solver, parent loading, scorer, H callbacks and worker are reused unchanged. Splitting off entry/replay would not isolate another scientific effect, and stripping guards to hit200 would weaken validation. Threshold is an explicit review warning, not proof of safety or approval of larger harness/R changes. Target180 exceeded;221 measured."
+  },
+  "allowed_execution":{"attempts":1,"fits":4,"seconds":900,"threads":1,"sampled_rss_bytes":1073741824,"retries":0,"control_refits":0,"shared_outer_attempts":3,"shared_outer_fits":12,"selection_cutoff_utc":"2026-10-05T22:24:55Z","deadline_utc":"2026-10-05T22:39:55Z"},
+  "remaining_conditions":["Root commits this admission then binds ensuing HEAD/currentsource/request/runtime/memory/exact reviewed imports and rechecks shared accounting/cutoff before worker","Independent actual numerical result and separate learning/reuse assessment before feedback acceptance; no future PASS implied"],
+  "boundary":"Resident historical Train Discovery only; no protected/external/paid/release/promotion. Reviewer0 actualTrainfits/0realoptimizer/0accountcalls/0sourceedits. No scoring/oldrecord/authority expansion.",
+  "limits":["Trusted host/source guards and sampled RSS, not OS/network sandbox","Current full relevant suite green, broad legacy suite not claimed green","Exact serving snapshot unknown","Representation and parameter count change jointly; no pure down-data attribution, untouched OOS, predictive advantage or research-mechanism superiority yet","Human-directed checkpoint/ops engineering is H, not autonomous R evolution"]
+}
