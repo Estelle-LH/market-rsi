@@ -1,0 +1,32 @@
+{
+  "schema": "bounded_candidate_source_checkpoint_v1",
+  "recorded_utc": "2026-10-05T23:25:05.676896+00:00",
+  "candidate_id": "InGameTemperatureDistanceSlopeJointOffset-v1",
+  "original_decision_sha256": "dcc7607d0a6af36a1a1796475b7bdfab5337e8fc9bcfef34b68aa33c8b94e3ba",
+  "contract_sha256": "ba40795cc74a27011cc2043b57811c7d6f8831d63b99d8be5002f4781695437b",
+  "source_parent_commit": "f7d55f3f6722b80dac3764d07cd40908b2dc4fd5",
+  "source_sha256": "88b4f9e9114a62724ea566059e60d921af2642b9e259d9ee77155430d030f7fe",
+  "test_sha256": "93476c16ef916b48d496de8a6d5d805d8ef0378e5116e66e03fd2e9ded6e46cb",
+  "implementation_log_sha256": "c60fbccabdf0fc00e4009afd9cb1ef59119aeaf0c1cc4194c45d21b73a3737a3",
+  "scope": {
+    "axis": "C",
+    "production_lines": 221,
+    "test_lines": 355,
+    "production_modules": 1,
+    "old_modules_modified": 0,
+    "warning": "221>200 explicit independent single-component semantic admission still required"
+  },
+  "verification": {
+    "root_full_source_and_test_read": true,
+    "producer_unique_tests": 267,
+    "producer_seconds": 23.419,
+    "root_unique_tests": 267,
+    "root_seconds": 22.243,
+    "focused11_included_in267": true,
+    "failures": 0,
+    "real_Train_fits": 0,
+    "model_calls": 0
+  },
+  "fixed": "K/M/H/R/scorer/worker/recorder/oldcandidate/datasets/folds/controls/permissions; ordinarymemory changes separately",
+  "boundaries": "Actual preplay rawrequiredyards/state7; fixed10yards; exactsourceentry/provenance/causality/no checklabels/no dropout. No newdata/controlrefit/retry/fallback. HistoricalTrainDiscovery, not Rgain or forecastimprovement."
+}
