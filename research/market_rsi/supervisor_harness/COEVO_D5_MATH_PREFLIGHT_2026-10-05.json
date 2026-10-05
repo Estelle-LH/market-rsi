@@ -1,0 +1,174 @@
+{
+  "schema": "opened_train_synthetic_math_preflight_v1",
+  "checked_at_utc": "2026-10-05T18:45:14Z",
+  "status": "PASS_SYNTHETIC_MATH_ONLY",
+  "role": "Mechanical transcription and applicability check of actual account Controller-selected D5; not scientific selection",
+  "candidate_id": "InGameTemperaturePossessionOnlyJointOffset-v1",
+  "contract_sha256": "9649b501d933aef300b6d778b84560fa64aa0eac01b017a49f3da2e2941b672a",
+  "actual_decision_file_sha256": "385accf2c8da600f2c72679034a2e88f50c70dc7dace7e463264701c1d0b1dad",
+  "actual_decision_canonical_sha256": "9a10697edc0e031310965c90a53971439ebaa963cdd5a746529df13bff6bd7d1",
+  "solver_source_sha256": "c57ed002b507e219c788c256b33e0f853fc418ea41713fbfbc845bcb7782d838",
+  "frozen_state_field_source_sha256": "e61668c7e29cf4dda95f6cc315b248dbe6744a9dcc0ae0cd6077d880ca6265b7",
+  "parent_source_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+  "field": {
+    "name": "possession_is_home",
+    "STATE_FEATURE_NAMES_index": 2,
+    "values": "existing frozen finite0or1",
+    "transform": "z=2*s-1",
+    "availability": "Frozen pre-play state; historical event-clock only. No realtime/provider-local-receipt advantage claim."
+  },
+  "reused_math": {
+    "eta": "(1+beta)*l+gamma*z",
+    "F": "summed unclipped NLL+8*(beta^2+gamma^2)",
+    "gradient": "X.T@(q-y)+16*theta",
+    "hessian": "X.T@diag(q*(1-q))@X+16*I",
+    "constraints": "beta>=-1,gamma unrestricted,no intercept",
+    "brackets": "beta[-1,1+sum|fit_l|/16]; gamma[-G,G],G=1+sum|fit_z|/16",
+    "bracket_reason": "Finite binary possession implies |z|=1. Bounding each data-gradient by the sum of absolute fit-column values gives gamma endpoint derivatives<=-16 and>=16, beta upper>=16; beta lower may be KKT boundary. No check inputs enter these bounds.",
+    "orientation": "l->-l,s->1-s gives eta->-eta; jointly y->1-y preserves F/g/H. Do not claim l-only flip complement or generic monotonicity."
+  },
+  "runtime": {
+    "python": "/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python",
+    "python_sha256": "80ee2dd97bc26259d4e30853336f72ad38aa4aa0531bb196cc444d899422689d",
+    "flags": "-B -; inline synthetic-only code",
+    "environment": "PYTHONHASHSEED=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1",
+    "cwd": "/Users/estelle/Developer/market-rsi/research/market_rsi"
+  },
+  "results": {
+    "finite_difference_step": 0.00001,
+    "FD_gradient_max_abs_error": 2.525046838286471e-11,
+    "FD_Hessian_max_abs_error": 7.227285436783859e-11,
+    "cases": [
+      {
+        "name": "mixed",
+        "n": 7,
+        "theta": [
+          -0.08257090445024459,
+          0.057413392403759644
+        ],
+        "KKT": 3.8864689244633155e-11,
+        "F": 4.214473088714396,
+        "F_warm": 4.374352376909908,
+        "min_H_eigenvalue": 16.954428208045606,
+        "sweeps": 3
+      },
+      {
+        "name": "all_positive",
+        "n": 7,
+        "theta": [
+          -0.3720611826156529,
+          -0.0031106424448807957
+        ],
+        "KKT": 4.360778405043675e-11,
+        "F": 8.323631369092658,
+        "F_warm": 9.886352376909906,
+        "min_H_eigenvalue": 17.170842170399567,
+        "sweeps": 2
+      },
+      {
+        "name": "all_negative",
+        "n": 7,
+        "theta": [
+          -0.34621513117369884,
+          -0.061380739724882005
+        ],
+        "KKT": 3.196731768184691e-11,
+        "F": 7.970976219499278,
+        "F_warm": 9.366352376909907,
+        "min_H_eigenvalue": 17.148352583485057,
+        "sweeps": 2
+      },
+      {
+        "name": "zero_logits",
+        "n": 8,
+        "theta": [
+          0,
+          0.2223234712764679
+        ],
+        "KKT": 3.345634880247417e-11,
+        "F": 5.100631630643063,
+        "F_warm": 5.557977444479563,
+        "min_H_eigenvalue": 16,
+        "sweeps": 1
+      },
+      {
+        "name": "constant_collinear",
+        "n": 10,
+        "theta": [
+          -0.19870061362280467,
+          -0.1419290096482655
+        ],
+        "KKT": 1.7829071552455389e-9,
+        "F": 8.563556304527198,
+        "F_warm": 9.38865722056734,
+        "min_H_eigenvalue": 16,
+        "sweeps": 6
+      },
+      {
+        "name": "beta_boundary",
+        "n": 240,
+        "theta": [
+          -1,
+          0
+        ],
+        "KKT": 0,
+        "F": 174.35532333438687,
+        "F_warm": 1747.4757827865922,
+        "min_H_eigenvalue": 74.7760197712926,
+        "sweeps": 1
+      }
+    ],
+    "all_fit_only_bracket_endpoint_signs_pass": true,
+    "all_KKT_Fwarm_H_checks_pass": true,
+    "zero_basis_helper_gamma": 0,
+    "actual_fold_gamma_brackets": {
+      "106": [
+        -7.625,
+        7.625
+      ],
+      "132": [
+        -9.25,
+        9.25
+      ],
+      "148": [
+        -10.25,
+        10.25
+      ],
+      "176": [
+        -12,
+        12
+      ]
+    },
+    "joint_orientation_eta_maxerror": 0,
+    "probability_and_symmetric_epsilon_bounded_complement_maxerror": 2.220446049250313e-16,
+    "joint_orientation_F_g_H_maxerrors": [
+      0,
+      4.440892098500626e-16,
+      1.457167719820518e-16
+    ],
+    "unrelated_synthetic_check_mutation_identical_receipt": true,
+    "synthetic_solver_calls": 9,
+    "synthetic_math_elapsed_seconds": 0.054880292038433254,
+    "retries": 0,
+    "fallbacks": 0
+  },
+  "limitations": [
+    "Only pure unchanged generic objective/solve_joint are reused; pressure-specific state/predictor/fit code is not D5.",
+    "Actual candidate must verify source field index/name, exact binary/missing guard and same193 coverage; this math-only check does not admit its not-yet-reviewed implementation.",
+    "Zero-column is synthetic helper calculus only; actual valid possession z is always-1or+1. Gamma0 must delegate immutable C7 prediction for exact replay.",
+    "Prediction epsilon clamp and counts remain separate from stable unclipped NLL training. Beta boundary still allows nonzero gamma possession effect.",
+    "No real-fold convergence guaranteed by synthetic examples; preserve unchanged100/200 caps and truthful partial failure, no fallback/restart/tolerance relaxation."
+  ],
+  "boundaries": {
+    "real_Train_fits": 0,
+    "model_calls": 0,
+    "external_retrieval": 0,
+    "protected_reads": 0,
+    "candidate_source_edits": 0,
+    "ledger_edits": 0,
+    "commits": 0,
+    "source_result_admission": false,
+    "R_gain_claim": false,
+    "literature": "Existing locally reviewed solver/state reuse only; no new papers or literature consensus on project alpha/features/folds."
+  }
+}

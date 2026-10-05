@@ -1,0 +1,152 @@
+{
+  "schema": "opened_train_small_candidate_contract_v1",
+  "candidate_id": "InGameTemperaturePossessionOnlyJointOffset-v1",
+  "question_id": "ingame-temperature-conditional-possession-only-v1-q1",
+  "author": "Actual account Controller, requested gpt-6.1-sol, exact serving snapshot unknown",
+  "decision_file_sha256": "385accf2c8da600f2c72679034a2e88f50c70dc7dace7e463264701c1d0b1dad",
+  "decision_canonical_sha256": "9a10697edc0e031310965c90a53971439ebaa963cdd5a746529df13bff6bd7d1",
+  "decision_file": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/account-controller/market-rsi-repair-d4-controller-continuation-policyfix-20261005-01/02faff3cd86a1b213bd288766abbb59b5f15b8ec18f47dce52c670a1c0d2f275/response.json",
+  "axis": "C",
+  "component": "temperature_conditional_possession_only_predictor",
+  "allocation": "exploration",
+  "method_family": "restricted_calibration_conditional_causal_state",
+  "question": "Does pre-play possession orientation alone add useful prediction conditional on C7's market temperature? Native pressure composite weighting did not answer this first simpler representation hypothesis.",
+  "hypothesis": "Does pre-play possession orientation alone add useful prediction conditional on C7's market temperature? Pressure's composite weighting may obscure a simpler possession effect. This is an untested representation hypothesis in the supplied record; D1 and D4 provide no positive evidence for it.",
+  "trigger": "Accepted D4 worsens both C7 proper losses with1/4 parent Brier wins; actual Controller stops tanh and chooses a first possession-only causal information question. D1 negative native pressure does not refute this distinct representation.",
+  "trigger_review_sha256": "10297dae02ffb5ae1034bca74f6631b71e3023f4bfd4a45a8d8e15ce7ee8400a",
+  "feedback_sha256": "02faff3cd86a1b213bd288766abbb59b5f15b8ec18f47dce52c670a1c0d2f275",
+  "research_parent": {
+    "candidate_id": "InGameMarketTemperatureOffset-v1",
+    "runner_path": "research/market_rsi/experiments/nfl_ingame_market_temperature_offset.py",
+    "runner_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+    "controller_contract_sha256": "f0d925977ef45677a557e2be18d6ec30ac56fe6fc8e9980df6a518a48b4b132b",
+    "artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-07/runs/attempt-01",
+    "artifact_hashes": {
+      "exclusions.json": "e6b19b230318dc9daf89e6495504c93996f49b3245415a14a45144fece81fdfb",
+      "fit_progress.json": "e4a2a97ef6f158667f0454904caa2ba3bf4dcbeadb17e4d2ff82ff8002bed38a",
+      "input_receipts.json": "77e970806c4e14333d09047a353a305209a4fbb2ab8c03c0061d3ad9e53ab032",
+      "manifest.json": "7e49ff2af477d3362e22b4347fa9c0c6c7ad7648b544d6cb34297f756308f6c0",
+      "pre_score_lock.json": "2d387a00d25b0aa32c24dcd04e94c2068c33b08db5a981792832b4597e32677a",
+      "predictions.csv": "d31adca8574a908573a49bee2c8447d23062376f60a46287b75e954bc0d50fbf",
+      "predictor_states.json": "fb15ae99d79a448e59822bf14eabe4a347b75292784ed10a1fa40e865caf7ce9",
+      "scorecard.json": "a6835a0df4d2e4eee8ebde8da3b16f37f730b614a0d6a953a5db9bcdf421a07b"
+    },
+    "state_schema": "market_temperature_offset_numeric_state_v1",
+    "state_sha256_by_fold": [
+      "9e654f3d74fcd6353a176efb0b7b5cca38c6e90dea3c6d0f3debf47fadb505d2",
+      "3f0b68472d9a2ba70b9ca8db99a93a09585b3b37735c022065a89a683c0588e6",
+      "8483dfe83fb36735e89085e421b1124ef5ab039b13799f8bb08f7c4f6f78f235",
+      "e50bb267034c0b931707d9a02255e6979ab1e9c62b12addd9c8dd36b112995d5"
+    ],
+    "beta_by_fold": [
+      0.044687640807370366,
+      0.04869244933276986,
+      0.031739226027776284,
+      0.04557220791738257
+    ]
+  },
+  "comparison_incumbent": {
+    "candidate_id": "InGameWinProbabilityTrainDiagnostic-v0-raw_market",
+    "sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f"
+  },
+  "predictive_information": {
+    "feature_names": [
+      "market_logit",
+      "possession_home_sign"
+    ],
+    "transform": "s=existing frozen pre-play possession_is_home at STATE_FEATURE_NAMES[2]; require finite s exactly0 or1, z=2*s-1. No pressure weighting, scale or intercept.",
+    "availability": "Same193 resident pre-play causal state/market receipts, reject missing/invalid possession at candidate boundary with no new fetch/imputation/drop; historical event-clock evidence only, not actual real-time availability.",
+    "intercept": 0,
+    "normalization": "none; fixed binary orientation transform",
+    "ignored": "Check labels, game identifiers, future plays, terminal scores, pressure/down/distance/field position/receipt age/tanh/other state inputs",
+    "binary_field_source": "research/market_rsi/experiments/nfl_ingame_win_probability_train_diagnostic.py",
+    "binary_field_source_sha256": "e61668c7e29cf4dda95f6cc315b248dbe6744a9dcc0ae0cd6077d880ca6265b7"
+  },
+  "recipe": {
+    "eta": "(1+beta)*l+gamma*(2*possession_is_home-1)",
+    "constraints": "beta>=-1,gamma unrestricted; no intercept or added gamma constraint; joint home/away l->-l and s->1-s complement symmetry, no generic monotonicity claim",
+    "objective": "unweighted summed NLL+8*(beta^2+gamma^2)",
+    "alpha": 16,
+    "parameters": 2,
+    "optimizer": "Reuse unchanged generic D1 solve_joint(l,z,y,C7beta), cyclic beta-then-gamma coordinate bisection",
+    "initial_state": "Verified samefold C7beta/gamma0",
+    "coordinate_derivative_tolerance": 1e-10,
+    "joint_KKT_tolerance": 1e-8,
+    "max_sweeps": 100,
+    "max_coordinate_steps": 200,
+    "brackets": "Beta[-1,1+sum(abs(fit_logits))/16]; gamma[-G,G],G=1+sum(abs(fit_z))/16; verify fit-only endpoint signs, Hessian>=16 within existing1e-10 numerical tolerance and objective<=warm+1e-8; no restart/fallback/grid/tolerance relaxation",
+    "probability": "Original epsilon/policy bounding with counts; exact gamma0 delegates C7 helper; own possession-only numeric predictor/state; no pressure/age/tanh feature-specific predictor",
+    "fits": 4,
+    "control_refits": 0,
+    "automatic_retries": 0
+  },
+  "reuse_helpers": {
+    "research/market_rsi/experiments/nfl_ingame_temperature_possession_pressure_joint_offset.py": "c57ed002b507e219c788c256b33e0f853fc418ea41713fbfbc845bcb7782d838",
+    "research/market_rsi/experiments/nfl_ingame_candidate_evidence_adapter.py": "f62a5459a8e3c78bcdd7810e25291d1ef164ccc2d41f876fa37fb166f9dcc8bc",
+    "research/market_rsi/supervisor_harness/opened_train_discovery_worker.py": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360",
+    "research/market_rsi/experiments/nfl_ingame_win_probability_train_diagnostic.py": "e61668c7e29cf4dda95f6cc315b248dbe6744a9dcc0ae0cd6077d880ca6265b7"
+  },
+  "evaluation_fixed": "InGameWinProbabilityTrainDiagnostic-v0:195/42=193+2,87/20/7,fit106132148176/check26162817,22+4x5datechronology,Q3preplay/strictpriortrade/max300s/home orientation,unchanged equal-event Brier/log/calibration/10000 date-week resamples seed20260929/KEEP/scientific judge",
+  "increment_annotation": "Both aggregate proper losses beat C7 and>=3/4 parent Brier wins; never modifies incumbent KEEP",
+  "K_sha256": "c94492041d5c331a2cc31c4d6cd529984742ce200e1b9365e3fb7d07e5b1ce64",
+  "M_sha256": "32d09dd7c177b30932b9a0619b60246ba574f8989c9eac80869aff134cded58d",
+  "R_policy_reference_sha256": "5bc2d879b4030190e3a6b17ddd186379b153c112ad1a5f58f5d571c9660bccf8",
+  "allowed_production_paths": [
+    "research/market_rsi/experiments/nfl_ingame_temperature_possession_only_joint_offset.py"
+  ],
+  "allowed_test_paths": [
+    "research/market_rsi/experiments/test_nfl_ingame_temperature_possession_only_joint_offset.py"
+  ],
+  "allowed_log": "research/market_rsi/supervisor_harness/AGENT_LOG_REPAIR_D5_IMPLEMENTER_2026-10-05.md",
+  "protected": "All existing source/helpers/scorer/worker/recorder/H/R/contracts/history/data/runtime/authority and original responses",
+  "entry": "Direct candidate main uses unchanged H1 C7parent/alpha16 adapter. Explicit ownrequest/compiledcontract/helper/runtime/clock/source and admittedH review guards before Train access; use existing worker.validate, no new H module or modeltext execution",
+  "smallness": "One new predictive component/module target<=180lines; report actual. >200 changed production lines triggers explicit independent inseparability review, no mechanical compression",
+  "tests": "Synthetic derivatives/binary transformation/fit-only brackets/zero-column helper calculus/gamma0/boundary KKT; joint home/away complement lflip/sflip including beta=-1; invalid/missing/nonbinary possession rejects entire candidate without drop/imputation; no checklabel/otherstate/age/tanh dependence; strict numeric state/source/recipe replay; same195/193+2/87/fourfits/controls; partialfailure/no overwrite/no fallback; targeted+full relevant+independent source before real fit",
+  "resources": {
+    "attempts": 1,
+    "fits": 4,
+    "seconds": 900,
+    "threads": 1,
+    "sampled_rss_bytes": 1073741824,
+    "provider_calls": 0,
+    "retries": 0,
+    "start_utc": "2026-10-05T15:27:11Z",
+    "deadline_utc": "2026-10-05T19:27:11Z",
+    "selection_cutoff_utc": "2026-10-05T19:12:11Z",
+    "python": "/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python",
+    "python_sha256": "80ee2dd97bc26259d4e30853336f72ad38aa4aa0531bb196cc444d899422689d"
+  },
+  "attribution": "This tests a compressed causal state representation conditional on C7. Representation and parameter count change together. Results would concern this recipe on adaptively reused Train, without establishing prospective edge, general information usefulness or research-process superiority.",
+  "literature": "No new retrieval. Reuse actual reviewed local C7/D1 solver and past-only proper-score principles; alpha/cutoff/folds/solver are project choices, not paper consensus.",
+  "rollback": "Raw incumbent unchanged unless frozenKEEP; preserve failed/REVERT code/evidence and distinct-branch eligibility, stop exactnegative recipe without wholefamily deletion",
+  "next": "Actual final bounded prediction execution/result review and evidence preservation; original shared6-attempt/24-fit cap reached after this selected final attempt, no further Controller call or budget reset.",
+  "expected_evidence": "Four actual past-only fits and the unchanged 87 keyed predictions. Report paired C7/raw/ordinary/v0-state Brier and log loss, four blocks, calibration, event-weighted date/week intervals, and correction energy/alignment. Preserve frozen KEEP and scientific classification. A conditional parent increment requires both aggregate proper losses below C7 and at least three of four parent Brier block wins. Intervals remain descriptive under adaptive Train reuse. Retain valid negative evidence and stop only this exact recipe on refutation.",
+  "original_controller_recipe": "Non-executable scientific specification: use frozen home-token market logit l and existing pre-play possession_is_home s, validated as 0 or 1; set z=2*s-1. Fit eta=(1+beta)*l+gamma*z, beta>=-1 and gamma unrestricted, minimizing unweighted summed NLL+8*(beta^2+gamma^2). No intercept, pressure weighting, down, distance, field position, receipt age, confidence transform, normalization or additional inputs. Initialize each existing fold at verified same-fold C7 beta and gamma=0. Use the reviewed generic deterministic beta-then-gamma coordinate-bisection method with fit-only brackets beta[-1,1+sum(abs(l))/16] and gamma[-G,G], G=1+sum(abs(z))/16; verify endpoint signs. Retain derivative tolerance 1e-10, 200 coordinate steps, 100 sweeps, independent KKT<=1e-8, finite Hessian eigenvalues>=16 within existing tolerance, and objective<=warm-start objective+1e-8. No grid, restart, fallback, tolerance relaxation or control refit. Freeze and independently review derivatives, zero-column C7 equivalence, joint home/away complement symmetry, pre-play causality, check-label isolation, numeric replay and truthful partial receipts before real fits. Reject invalid or missing possession without fetching, imputing or dropping rows. Preserve 195/193+2/87, folds, chronology, probability policy and scorer. Handle candidate-local entry compatibility through the shortest directly necessary reviewed change within existing scope; preserve actual parent identity and protected infrastructure. Supervisor verifies the remaining slot, selection cutoff and deadline before launch. This proposal grants no execution authority.",
+  "original_evidence_used": [
+    {
+      "choice_consequence": "Stop the exact tanh recipe and select a causal information question rather than another confidence-basis search.",
+      "finding": "D4 completed four valid fits and 87 predictions. Relative to C7, Brier worsened by 0.00010614152216451012 and log loss by 0.00020753286465435838, with only 1/4 parent Brier wins. Independent review recorded REVERT/refute.",
+      "sha256": "10297dae02ffb5ae1034bca74f6631b71e3023f4bfd4a45a8d8e15ce7ee8400a"
+    },
+    {
+      "choice_consequence": "Remove pressure's field-position, down and distance weighting completely; test possession orientation alone with no tuning grid.",
+      "finding": "D1's native-pressure joint recipe worsened C7 Brier by 0.00024836078537357476 and log loss by 3.308166114140976e-05. This does not answer the distinct possession-only question.",
+      "sha256": "6dced80a06b5c078caa6d9f82cd28166dd717b3707a5691a28ca4c7f8b220853"
+    },
+    {
+      "choice_consequence": "Use C7 as the actual research parent while retaining raw market as comparison incumbent.",
+      "finding": "C7 improved C1 Brier by -0.003508543858601922 and log loss by -0.009974062724551248, winning all four parent blocks, but failed raw-market KEEP.",
+      "sha256": "301743d9b74cfbedda3ac210789741caae576977c8724963afb24bf053470075"
+    },
+    {
+      "choice_consequence": "Preserve the state branch and treat possession compression as a reasonable first bounded hypothesis without assuming improvement.",
+      "finding": "Supplied history reports B2–B1 Brier -0.004883726207343172 and log loss -0.015681703238797473, with 3/4 Brier wins and grouped intervals crossing zero. State value remains uncertain and representation-dependent.",
+      "sha256": "f45ca53eac01119451913a8d6b6cfc0af8bcd0ebc42178cf2875562259802e64"
+    },
+    {
+      "choice_consequence": "Allocate the remaining small scientific opportunity; Supervisor verifies accounting and clock before launch.",
+      "finding": "The supplied snapshot records five selected attempts, twenty actual fits and one remaining shared slot. H1 admission limitations require minimal explicit compatibility handling, not a restriction of scientific methods or voluntary stopping.",
+      "sha256": "ff69f13448156693edebb1d88367a560aabd25e322c094fc92f21f6481ef3f65"
+    }
+  ]
+}

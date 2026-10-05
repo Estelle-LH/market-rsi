@@ -1,0 +1,51 @@
+{
+  "schema": "market_rsi_independent_small_C_scope_review_v1",
+  "passed": true,
+  "verdict": "PASS_IMPLEMENTATION_SCOPE_ONLY",
+  "observed_utc": "2026-10-05T18:45:13Z",
+  "contract_sha256": "9649b501d933aef300b6d778b84560fa64aa0eac01b017a49f3da2e2941b672a",
+  "decision_file_sha256": "385accf2c8da600f2c72679034a2e88f50c70dc7dace7e463264701c1d0b1dad",
+  "decision_canonical_sha256": "9a10697edc0e031310965c90a53971439ebaa963cdd5a746529df13bff6bd7d1",
+  "actual_controller_review_sha256": "4637f12adad80663482740f074d8eb32fa431500aa87cf0bbd329e55db13895a",
+  "candidate_id": "InGameTemperaturePossessionOnlyJointOffset-v1",
+  "question_id": "ingame-temperature-conditional-possession-only-v1-q1",
+  "axis": "C",
+  "component": "temperature_conditional_possession_only_predictor",
+  "research_parent_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+  "feedback_trigger_review_sha256": "10297dae02ffb5ae1034bca74f6631b71e3023f4bfd4a45a8d8e15ce7ee8400a",
+  "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+  "scope_checks": [
+    "Entire frozen contract read; candidate/question/hypothesis/expected evidence/attribution/original recipe/evidence exact original response; actual parent/market incumbent correct.",
+    "Existing frozen STATE_FEATURE_NAMES[2] is possession_is_home and upstream finite exact0/1 validation; candidate must independently reject invalid/missing values, never impute/drop.",
+    "Parent8 artifact hashes/four existing states and4 compiled reuse sources read-only bound; no parent/control refit or new prediction.",
+    "z=2s−1, eta=(1+beta)l+gamma*z, beta>=−1/freegamma/nointercept/no normalization/otherfields; same alpha16 NLL/generic solver/tolerances/brackets/fit-only C7 warmstart.",
+    "One own predictive module/test/direct entry/primitive replay; H1/scorer/worker/recorder/R/source/data/history/runtime protected. No pressure-feature-specific predictor call; generic math only.",
+    "All original195/193+2/87 chronology/availability/labels/metrics/calibration/groups/KEEP/scientific judge unchanged; parent increment annotation separate."
+  ],
+  "smallness_requirement": "Target<=180 production lines; measured scope and semantic one-component review required on final bytes. >200 changed production lines triggers explicit inseparability justification, not forced compression or automatic proof of safety.",
+  "source_admission_required": [
+    "Synthetic derivative/Hessian/binary orientation/bracket/KKT/complement/zero-column calculus/exactgamma0 C7 identity tests.",
+    "Strict input/state/source/recipe/fit-check hash replay; check labels/other state/future inputs isolated; full synthetic195→193+2/87/fourfit entry and failure/no-retry/no-overwrite receipts.",
+    "Targeted/full relevant tests and exact Git frozen source/test/dependency/runtime admission before one actual four-fit attempt. No monkeypatch/helper global mutation or hidden fits."
+  ],
+  "read_only_preflight_seconds": 0.328429209,
+  "budget_observed": {
+    "selected": 6,
+    "reserved_fits": 24,
+    "actual_fits": 20,
+    "final_selected_attempt_unexecuted_fits": 4,
+    "selection_cutoff_utc": "2026-10-05T19:12:11Z",
+    "deadline_utc": "2026-10-05T19:27:11Z",
+    "per_attempt_seconds": 900,
+    "threads": 1,
+    "sampled_rss_bytes": 1073741824,
+    "provider_calls": 0,
+    "retries": 0
+  },
+  "claims": "First reasonable compressed possession information question after genuine negative feedback, not positive evidence for it. Representation/parameter count jointly differ; Discovery only, no pure-data gain or real-time/OOS/PnL/research-mechanism claim. Parent and trigger differ. H1 repair/human replacement permission not R evolution. Exact serving version unknown.",
+  "reviewer_train_fits": 0,
+  "reviewer_optimizer_calls": 0,
+  "reviewer_model_calls": 0,
+  "reviewer_source_edits": 0,
+  "actual_fit_admitted_by_this_receipt": false
+}
