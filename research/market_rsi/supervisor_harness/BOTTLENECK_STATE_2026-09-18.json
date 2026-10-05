@@ -1,12 +1,28 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-10-05T18:12:00Z",
+  "updated_utc": "2026-10-05T19:10:54Z",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
-    {"id":"opened-train-repair-discovery-20261005-01","status":"D3_real_negative_reviewed_and_consumed_D4_odd_confidence_implementation_active","plan":"research/market_rsi/supervisor_harness/REPAIR_D4_EXECUTION_2026-10-05-v1.json","result":"Original same6/24/19:27:11UTC authority;5selected20reserved16actualfits. D3fourfits87predictions independently45f5a7f9, both properlosses worse in all4parentblocks, frozenREVERT rawincumbent unchanged. Acceptedfeedback2566d785 produced actualb692b41a choice, independentlyreviewed2856d6bd, for fixedtanh confidence shape. Contract91f85ded/scope608593af/math3483ae82 only admit code; no D4Train result. Negativecredit2 retained, poolC7+B3/C2consumed remain separate from incumbent.","next":"Small D4source/test freeze and independent exactsource admission, then one realfourfit run and same87parent/raw/ordinary comparison; return reviewed feedback immediately to actualController for finalslot if before selectioncutoff. No new scorer/framework/data/fee or claim from proposal alone.","evidence":"research/market_rsi/supervisor_harness/COEVO_ACTUAL_CONTROLLER_DECISION_REVIEW_2026-10-05-v3.json","evidence_sha256":"2856d6bd823c42d375d3fa5f9a624801404f6667cbdfc0c1d985200670a98e16","provider_cost_usd":"0"},
-    {"id":"opened-train-eight-hour-20261005","status":"Controller_contract_and_minimal_reuse_adapter_preflight_active","plan":"research/market_rsi/supervisor_harness/COEVO_EIGHT_HOUR_IMPLEMENTATION_2026-10-05-v2.json","result":"Clean c979577/noactivecandidate/24GiBlocalfree verified. Threeworkers registered/dispatched. Actual reusefinding: shortscience math but immutableoldentries need small H admission/evidence adapter or>200LOCduplication. Old56bindings/runtime/scorer unchanged; preliminary65syntheticexecutions/40uniquePASS, noTrainfits. V1parallelmetadata rejectedbeforedispatch, v2correctedgroupPASS/guardunchanged.","next":"ReceiveController frozenD1 andglobal threebranches; admit one smallH adapter proposal preservingC7/K/M/R and matchedreplay plus boundedlive trial whileidle. NoH/Rgain ornewscoreclaimed. Outer64/256Supervisorcumulative, workerpilotsremain≤3/12; originaldeadline12:37:44UTC andallclosedpermissionsunchanged.","evidence":"research/market_rsi/supervisor_harness/AGENT_LOG_COEVO_RESEARCHER_2026-10-05.md","provider_cost_usd":"0"},
-    {"id":"opened-train-coevo-discovery-20261003","status":"five_hour_window_complete_all13_reviewed_caps_closed_no_live_children","plan":"research/market_rsi/supervisor_harness/RESEARCH_STATE.md","result":"Total13/52 independentlyverified,13REVERT/12REFUTED/1INCONCLUSIVE/rawincumbentunchanged. C7beatsC1bothlosses/all4blocks, butrawBrier+1.5751e-6/log-.000784696/raw2wins/marketintervalscrosszero. Finalmemoryd7bd0a67 andindependentclosurecbc9c5e7 PASS frozen. Originalwindow ended00:10:37UTC; terminal246147ec saved00:10:45UTC verifies56frozenfiles/runtime/evidence/all13PIDsabsent. Final34syntheticworker-scheduler testsPASS/noactualfit. K/M/H/R/judgefixed/provider0.","next":"Currentwindow and3prospectiveattempt/12fitcap exhausted; no furtherexecution. Next separatelybounded Controller proposal is nativeA2pressure conditionalonC7, unimplemented/unexecuted. Two globalresearchfamilies C7calibration/B3-A2causalstate retained; no oldcaprewrite/C2reset/scorerchange or implicitRgain. Formalresearch-mechanism comparison stillnotrun.","evidence":"research/market_rsi/supervisor_harness/COEVO_WINDOW_FINAL_OPERATIONAL_REVIEW_2026-10-03.json","evidence_sha256":"cbc9c5e7494fc668967d6cdc4fbf55291f184f731bb77d2d5caf028df696dbd4","provider_cost_usd":"0"},
+    {
+      "id": "opened-train-eight-hour-20261005",
+      "status": "Controller_contract_and_minimal_reuse_adapter_preflight_active",
+      "plan": "research/market_rsi/supervisor_harness/COEVO_EIGHT_HOUR_IMPLEMENTATION_2026-10-05-v2.json",
+      "result": "Clean c979577/noactivecandidate/24GiBlocalfree verified. Threeworkers registered/dispatched. Actual reusefinding: shortscience math but immutableoldentries need small H admission/evidence adapter or>200LOCduplication. Old56bindings/runtime/scorer unchanged; preliminary65syntheticexecutions/40uniquePASS, noTrainfits. V1parallelmetadata rejectedbeforedispatch, v2correctedgroupPASS/guardunchanged.",
+      "next": "ReceiveController frozenD1 andglobal threebranches; admit one smallH adapter proposal preservingC7/K/M/R and matchedreplay plus boundedlive trial whileidle. NoH/Rgain ornewscoreclaimed. Outer64/256Supervisorcumulative, workerpilotsremain\u22643/12; originaldeadline12:37:44UTC andallclosedpermissionsunchanged.",
+      "evidence": "research/market_rsi/supervisor_harness/AGENT_LOG_COEVO_RESEARCHER_2026-10-05.md",
+      "provider_cost_usd": "0"
+    },
+    {
+      "id": "opened-train-coevo-discovery-20261003",
+      "status": "five_hour_window_complete_all13_reviewed_caps_closed_no_live_children",
+      "plan": "research/market_rsi/supervisor_harness/RESEARCH_STATE.md",
+      "result": "Total13/52 independentlyverified,13REVERT/12REFUTED/1INCONCLUSIVE/rawincumbentunchanged. C7beatsC1bothlosses/all4blocks, butrawBrier+1.5751e-6/log-.000784696/raw2wins/marketintervalscrosszero. Finalmemoryd7bd0a67 andindependentclosurecbc9c5e7 PASS frozen. Originalwindow ended00:10:37UTC; terminal246147ec saved00:10:45UTC verifies56frozenfiles/runtime/evidence/all13PIDsabsent. Final34syntheticworker-scheduler testsPASS/noactualfit. K/M/H/R/judgefixed/provider0.",
+      "next": "Currentwindow and3prospectiveattempt/12fitcap exhausted; no furtherexecution. Next separatelybounded Controller proposal is nativeA2pressure conditionalonC7, unimplemented/unexecuted. Two globalresearchfamilies C7calibration/B3-A2causalstate retained; no oldcaprewrite/C2reset/scorerchange or implicitRgain. Formalresearch-mechanism comparison stillnotrun.",
+      "evidence": "research/market_rsi/supervisor_harness/COEVO_WINDOW_FINAL_OPERATIONAL_REVIEW_2026-10-03.json",
+      "evidence_sha256": "cbc9c5e7494fc668967d6cdc4fbf55291f184f731bb77d2d5caf028df696dbd4",
+      "provider_cost_usd": "0"
+    },
     {
       "id": "first-real-train-diagnostic-20260929-01",
       "status": "continuous_discovery_batch1_five_attempts_complete_incumbent_v3",
@@ -58,7 +74,9 @@
       "id": "p0-data-admission-20260918-01",
       "status": "resident_train_discovery_authorized_formal_admission_later",
       "plan": "research/market_rsi/supervisor_harness/P0_DATA_ADMISSION_ORCHESTRATION_2026-09-18.md",
-      "completed": ["gate0_exposure_inventory"],
+      "completed": [
+        "gate0_exposure_inventory"
+      ],
       "result": "v0.1.21 is published with 324 controlled files, strict parser, five-field short-choice interface, independent review and fresh zero-provider canary. Two earlier GLM responses failed formatting and remain terminal; their combined new metered cost is $0.03457161. No valid live Controller data plan, real Train catalog, public fetch, formal admission, training or sealed evaluation read yet. The no-catalog lane allows only bounded documentation investigation or non-executable proposal.",
       "next": "Use already-opened resident Train for private diagnostics now, retaining rights/provenance caveats. Formal admission remains required only before protected evaluation, promotion or publication; do not fetch or open Dev/Final.",
       "evidence": "research/market_rsi/supervisor_harness/P0_GATE1_TRUSTED_SCHEMA_REPAIR_REVIEW_2026-09-21.md",
@@ -91,7 +109,26 @@
     }
   ],
   "resolved_this_session": [
-    {"id":"opened-train-worker-binding-20261003-01","status":"resolved","plan":"research/market_rsi/supervisor_harness/COEVO_IMPLEMENTATION_2026-10-03.json","result":"Three unique real candidate attempts and twelve fits completed; feedback from a valid REVERT parent selected and executed C3. All three exact recipes REVERT; raw market remains incumbent. Independent 22-entry journal replay, child absence, unchanged K/M/H/R, hard-stop rejection and five-step operational resolution passed. Relevant Supervisor suite159 tests passes; legacy full suite remains ungreen. This resolves the trusted opened-Train worker callsite only, not arbitrary-code containment, predictive gain or research-mechanism superiority.","next":"Old pilot is terminal and not extended. Execute the separately frozen next matched HGB pair within its own3attempt/12fit/90minute cap and unchanged outer window.","evidence":"research/market_rsi/supervisor_harness/COEVO_OPERATIONAL_RESOLUTION_2026-10-03.json","evidence_sha256":"a3bc72f42616b20f80e8f265cf9e77faee6790fcf8fac96f40b40117fec6a35a","provider_cost_usd":"0"},
+    {
+      "id": "opened-train-repair-discovery-20261005-01",
+      "status": "resolved_bounded_batch_complete_caps_closed",
+      "plan": "research/market_rsi/supervisor_harness/REPAIR_D5_EXECUTION_2026-10-05-v1.json",
+      "result": "All6 actual runs/24fits complete:5 new scientific candidates plus1 heldC7 parity. D2-D5 actual choices depend on preceding accepted feedback; D5fresh385accf2 ran once and resultf09/acceptedstatefecb/feedback46248/final independent logefcba3eb verified. All5 scientific REVERT/REFUTED, raw market incumbent unchanged, global last actual poolC7+B3 and valid-negative archives retained. All12 Train/account PIDs absent, budget rejects further selection. Terminalv2 7ef60 terminology only; original8fedd/memoryeb023 preserved. Statistical child26.4902s versus13069.0136s end-to-end elapsed; human4 permission interventions and substantial AI Supervisor overhead, no autonomous R/process superiority claim.",
+      "next": "No more calls/fits under consumed6/24 or old closed windows. D5 feedback and final memory ready for a separately bounded next batch, actual next hypothesis not selected. Prioritize overhead and method diversity, then matched fixed-versus-evolving process comparison; not a promotion, release or protected-data authorization.",
+      "evidence": "research/market_rsi/supervisor_harness/AGENT_LOG_REPAIR_D5_REVIEWER_2026-10-05.md",
+      "evidence_sha256": "efcba3eb78b5c8f9113e158b110ba32c0ae2c3f3b37120b2d94f5156f419a288",
+      "provider_cost_usd": "0"
+    },
+    {
+      "id": "opened-train-worker-binding-20261003-01",
+      "status": "resolved",
+      "plan": "research/market_rsi/supervisor_harness/COEVO_IMPLEMENTATION_2026-10-03.json",
+      "result": "Three unique real candidate attempts and twelve fits completed; feedback from a valid REVERT parent selected and executed C3. All three exact recipes REVERT; raw market remains incumbent. Independent 22-entry journal replay, child absence, unchanged K/M/H/R, hard-stop rejection and five-step operational resolution passed. Relevant Supervisor suite159 tests passes; legacy full suite remains ungreen. This resolves the trusted opened-Train worker callsite only, not arbitrary-code containment, predictive gain or research-mechanism superiority.",
+      "next": "Old pilot is terminal and not extended. Execute the separately frozen next matched HGB pair within its own3attempt/12fit/90minute cap and unchanged outer window.",
+      "evidence": "research/market_rsi/supervisor_harness/COEVO_OPERATIONAL_RESOLUTION_2026-10-03.json",
+      "evidence_sha256": "a3bc72f42616b20f80e8f265cf9e77faee6790fcf8fac96f40b40117fec6a35a",
+      "provider_cost_usd": "0"
+    },
     {
       "id": "real-input-containment-static-adapter-20260929-01",
       "result": "Metadata-only inventory completed without opening protected outcomes: 2024 has adequate aggregate diagnostic coverage but no rights/provenance/materialization/admission yet; 2023 remains coverage-inadequate and opened 2025 Train is not untouched eval. The exact synthetic adapter v4 aggregate 87a32217...e9472b passed independent review at 0 P0 / 0 P1, 85/85 focused-plus-adjacent tests, 516/516 repository tests with 2 designed skips, and 11/11 added terminal mutation probes. This resolves static synthetic adapter readiness only and grants no live Docker, real data, scoring, training, provider, release or protected-split authority.",

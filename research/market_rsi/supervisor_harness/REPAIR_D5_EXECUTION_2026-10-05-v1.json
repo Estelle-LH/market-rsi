@@ -95,11 +95,18 @@
         "source_review"
       ],
       "action": "Reserve claim insharedledger then existingworker once under frozenrequest",
-      "expected_artifact": "D5worker/request/receipt/predictions/scorecard in permanentbatch/d4",
+      "expected_artifact": "D5worker/request/receipt/predictions/scorecard in permanentbatch/d5",
       "verification": "Actual4fits/same87/fivearms/unchangedscorer/source/runtime, sampledRSS/childabsence/caps",
       "pass_condition": "Realcomplete result, not yetindependent scientificadmission",
       "failure_action": "Preserve partialfailure/counts, no sameIDretry",
-      "time_bound_minutes": 15
+      "time_bound_minutes": 15,
+      "result": {
+        "verdict": "pass",
+        "observed": "Actual once-only D5 at d7d4a0b/requestf8940e0b, four fits/87samekey predictions exit0;4.486725s/142080KiB sampledRSS/PID93326 absent. Shared6selected24actualfits cap reached. FrozenREVERT/REFUTED provisional; worsebothC7losses/1parentBrierwin, no score or rule changes.",
+        "reviewer": "root actual execution observation, independent numerical admission still separate",
+        "evidence_path": "COEVO_D5_EXECUTION_OBSERVED_2026-10-05.json",
+        "evidence_sha256": "15cadcc91acff63adf8cc01575d8436468014d896489abd749ecf0f5280f0f97"
+      }
     },
     {
       "id": "result_review",
@@ -112,7 +119,14 @@
       "verification": "Keycoverage/source/time/score/4blocks/intervals/energyidentity/partialreceipts andboundary",
       "pass_condition": "Validactualscores andhonestfrozenKEEP plusseparateresearch finding",
       "failure_action": "No promotion/incumbentupdate; preserveinvalidresult",
-      "time_bound_minutes": 10
+      "time_bound_minutes": 10,
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent f09af4cb no-refit68current/runGit bindings/193strictbinarypreplay rows/fourpastFghKKTstates/87scalar/fivearms/calibration/fourblocks/all16pooledintervals/energy/purejournal/PID verified. FrozenREVERT/REFUTED; exactrecipe worsensbothC7losses/1block, intervals cross0, credit2/refute/branch not family absence. Cap6/24, no further Controllercall.",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "COEVO_D5_RESULT_REVIEW_2026-10-05.json",
+        "evidence_sha256": "f09af4cbd10c2a2acd72a02fcd659af4865c4c82fbafb4387f032c7599f881af"
+      }
     },
     {
       "id": "feedback",
@@ -121,11 +135,25 @@
         "result_review"
       ],
       "action": "Accept reviewed result/credit/memory and durable next-batch feedback; no new account call at cap",
-      "expected_artifact": "AcceptedD5feedback/input/originalnextControllerresponse",
+      "expected_artifact": "Accepted D5 feedback, final memory and terminal snapshots; independent closure in existing reviewer log, no next Controller response at cap",
       "verification": "No fabricated next choice; final6attempts24fits saved and feedback queued, all old records immutable",
       "pass_condition": "Result independently accepted and memory saved; next scientific choice only in separately budgeted next batch",
       "failure_action": "Preserveoperationalfailure, no unauthorizedretry orfabricatedchoice",
-      "time_bound_minutes": 5
+      "time_bound_minutes": 5,
+      "result": {
+        "verdict": "pass",
+        "observed": "D5 accepted once: state fecb9e06/feedback46248f57, credit2/refute/branch; final memoryeb023a54. Independent final closure verified five nine-event journals/every prefix/two pure restarts, 400 current/runGit source bindings, six same87 control masks, all12 original child PIDs absent, shared6attempts24fits and read-only budget rejection. Terminalv2 7ef60d99 only corrects operational REVERT versus scientific REFUTED; original8fedd preserved. No D5-feedback Controller claim, new fit or fabricated next choice. Raw incumbent unchanged, last actual poolC7+B3 retained.",
+        "reviewer": "coevo_independent_review_20261003 final read-only closure after actual Supervisor acceptance",
+        "evidence_path": "AGENT_LOG_REPAIR_D5_REVIEWER_2026-10-05.md",
+        "evidence_sha256": "efcba3eb78b5c8f9113e158b110ba32c0ae2c3f3b37120b2d94f5156f419a288"
+      }
     }
-  ]
+  ],
+  "resolution": {
+    "verdict": "pass",
+    "observed": "The explicitly authorized fresh replacement completed once and its actual D5 proposal completed four real fits/87 predictions, exact source/result/credit/feedback and final closure review. Five science plus one parity run total six attempts/24 fits, all valid science REVERT/REFUTED and raw incumbent unchanged; earlier feedback actually influenced D2-D5 choices. Original schema failure/unsupported stop/replacement authorizations and Supervisor overhead remain preserved. Bounded trusted opened-Train continuation and ordinary negative-memory reuse are demonstrated; autonomous R-policy evolution, zero-intervention operation, interruption of a real fit, matched-process superiority, predictive gain, untouched OOS, realtime advantage and arbitrary-code containment are not demonstrated. Stop at consumed caps; no next Controller call.",
+    "reviewer": "coevo_independent_review_20261003 final independent closure, observed 2026-10-05T19:09:08.690509Z",
+    "evidence_path": "AGENT_LOG_REPAIR_D5_REVIEWER_2026-10-05.md",
+    "evidence_sha256": "efcba3eb78b5c8f9113e158b110ba32c0ae2c3f3b37120b2d94f5156f419a288"
+  }
 }
