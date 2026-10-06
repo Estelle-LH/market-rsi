@@ -1788,3 +1788,39 @@ First real11-role consumer input preparation rejected immutablecard cost type: o
 Final241line consumer remains one reviewed-prospective H component, not R mechanism;20focused+inherited79executionsPASS1.098s/54distinct. Root54distinctPASS0.686s. Actual independently accepted D1 feedback, card, CSV, supplement, memory/history/pool, shared authority, ownership/overhead and request now pass prepare_input in0.6417s with no modelcall/no newfits. Permanent controller_input file28407eed, canonical acc8f1d2,223326bytes; all14 eligible archived/current/baseline parent records retained. Overhead has human scientific interventions0/governance addendum1, explicit Supervisor failures/hand-offs and complete batch wall—not just8.902s cumulative two workers. Scope/source independent receipt still required before actual call; no completed loop or researcher superiority claim.
 
 Additional read-only lookup: root guessed BOTTLENECK_STATE.json filename absent, rg found actual BOTTLENECK_STATE_2026-09-18.json. No state written on guessed path. This is an operational lookup issue, not another scientific candidate.
+
+## 2026-10-05 21:50 EDT — Controller capability implementation
+
+User requested `implement` after the approved enablement plan. Root coordinated
+three disjoint workers: actual runtime probe, failure adapter, independent review.
+H1 scoped evidence session is independently accepted and locally committed401a311:
+actual broker results must match completed tool events/audit before source citations
+are accepted; listing alone is insufficient; original response recovery is once-only.
+H2 native factual failure input is implemented: actual v4 failed recorder branch,
+independent stage/actual-fit review, numerical=null, no scorecard/prediction/supplement
+files, valid saved parents retained. Legacy mandatory scorecard hash is explicitly
+the same nonpredictive failure receipt, not a made-up score. Prompt distinguishes
+execution failure from scientific refutation; helper-only drift blocks recovery.
+
+Root206relevant synthetic test executions3.513s PASS/1intentional opt-in skip;
+separate final actualCLI2tests0.683s/3localhost requests PASS. Native combined
+failure+audited retrieval also passes. Exact sources/limitations are in
+CONTROLLER_ENABLEMENT_INTEGRATION_VERIFICATION_2026-10-05.json; final independent
+verdict lives in its separate review receipt, not assumed by implementation.
+
+Real account/protected/Train reads, fits, scientific provider/external requests0.
+Actual CLI catalog has two reader tools plus four native resource/input adapters;
+unapproved URI denied, approved synthetic text reached programmed next input.
+This is not a real scientific Controller or account-parity proof. Live evidence
+activation is hard blocked before claim; new field strings cannot unlock it.
+Old batch caps, scientific scores/incumbent/scorer/learning/parent rules and protected
+RESEARCH_STATE unchanged. Historical original receipts remain pinned to old source.
+
+This is user-directed H engineering, not R self-evolution or new predictive evidence.
+No per-round human hypothesis/model choice occurred; engineering trigger1,
+Supervisor repairs/handoffs logged. Runtime worker16local fixture requests/7sessions
+plus Root3/one session; model-assisted engineering cost unknown, not claimed free.
+E2B/Tinker are not new execution dependencies, but no services/history were deleted.
+Next gaps: real account runtime boundary with fresh budget, generic candidate
+implementation/dispatch and two-real-round acceptance; then same-model mechanism
+controls. Do not revive exhausted authority or call these partial repairs full autonomy.

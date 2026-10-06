@@ -1,9 +1,18 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-10-05T23:47:07.391736+00:00",
+  "updated_utc": "2026-10-06T01:50:12Z",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
+    {
+      "id": "controller-enablement-live-boundary-and-execution-20261005",
+      "status": "local_evidence_and_failure_components_implemented_account_tools_closed",
+      "plan": "research/market_rsi/supervisor_harness/CONTROLLER_ENABLEMENT_INTEGRATION_SCOPE_2026-10-05.json",
+      "result": "H1commit401a311/H2commitbc3b8bb independentlyaccepted;206relevant synthetic executions PASS1skip plus actualCLI2test3localrequests PASS; independent206/3.522s receipt a16f9098. No real model/account/fits; old scores/caps/parent rules preserved.",
+      "next": "Account evidence activation needs independent runtime parity and fresh unconsumed authority. Then generic candidate implementation/automatic dispatch and two-real-feedback acceptance, not more reader-only claims.",
+      "evidence": "research/market_rsi/supervisor_harness/CONTROLLER_ENABLEMENT_INTEGRATION_VERIFICATION_2026-10-05.json",
+      "provider_cost_usd": "0"
+    },
     {
       "id": "learning-checkpoint-continuation-20261005-01",
       "status": "closed_two_real_feedback_dependent_candidates_eightfits_two_original_decisions",

@@ -1,5 +1,26 @@
 # Market RSI — Supervisor 总路线图与当前任务
 
+## 2026-10-05 21:50 ET — Controller enablement 当前入口
+
+最新工作是用户批准的本地代码实现，不是继续已经封闭的实验批次。
+H1已独立复核并commit `401a311`：scoped evidence reader接入native consumer，
+真实broker输出/请求/完成事件/audit配对后才允许引用读取的source；不能仅凭列出的hash称已读。
+H2已接入实际失败反馈：native v4 failed branch无需伪造scorecard/predictions，
+numerical=null，明确失败不是scientific REFUTED；原success path/评分/探索资格不变。
+最终独立集成审查与hash入口：`CONTROLLER_ENABLEMENT_INTEGRATION_REVIEW_2026-10-05.json`。
+
+实际验证：Root206相关synthetic test executions PASS/1opt-in skip，另跑pinnedCLI
+2tests/3localhost请求PASS；有批准文本真实传输和未批准URI拒绝，但provider为程序化fixture，
+不是科学Controller。新的live evidence模式在创建claim前硬关闭，不能通过修改scope字段放行。
+所有旧实验分数、incumbent、预算及protected状态不动；这轮真实训练/模型调用为0。
+
+下一优先：建立独立可复核的account-runtime边界且绑定fresh未消耗预算，再连接generic候选实现/
+自动调度与真实两轮feedback acceptance；不能把已实现的局部H组件称完整autonomy。当前有效
+REVERT follow-up已存在但仍受旧eligible/消费规则限制；未在此轮偷偷改变科学规则。E2B/Tinker
+不构成新reader/failure组件依赖，没有删除服务、插件或历史证据。固定vs evolving机制对照仍未跑。
+
+下方八小时与更早“当前”小节保留为当时的历史快照，以本段、最新closeout与protected state为准。
+
 更新：2026-10-05 00:43 ET（新八小时窗口进行中）。负责人：本会话的总 Supervisor。当前入口以本节和 `RESEARCH_STATE.md` 为准；下方 October3/September29记录保留为历史，不同任务的成绩不混用。
 
 ## 2026-10-05 当前：小步八小时 Train 迭代
