@@ -87,10 +87,22 @@ def continuation_pilot_binding():
             "paid_provider_calls": 0, "paid_provider_spend_usd": "0"}}
 
 
+def ten_hour_window_binding():
+    """New ten-hour grant with a Supervisor ceiling; never resets old consumption."""
+    return {"schema": "controller_prospective_budget_binding_v1",
+        "batch_id": "market-rsi-controller-enablement-10h-20261006-01",
+        "start_utc": "2026-10-06T04:36:33Z", "selection_cutoff_utc": "2026-10-06T14:21:33Z",
+        "deadline_utc": "2026-10-06T14:36:33Z",
+        "limits": {"attempts": 12, "statistical_fits": 48, "live_candidate_processes": 2,
+            "threads_per_candidate": 1, "per_attempt_seconds": 900, "sampled_rss_bytes": 1073741824,
+            "paid_provider_calls": 0, "paid_provider_spend_usd": "0"}}
+
+
 def _prospective_binding(binding):
     if binding is None: return None
     # Canonical comparison rejects extra fields, coercible bools/floats and self-grants.
-    if type(binding) is not dict or _digest(binding) not in (_digest(prospective_pilot_binding()), _digest(continuation_pilot_binding())):
+    if type(binding) is not dict or _digest(binding) not in tuple(_digest(factory()) for factory in
+            (prospective_pilot_binding, continuation_pilot_binding, ten_hour_window_binding)):
         raise ValueError("prospective budget binding drift")
     return _json(json.dumps(binding, allow_nan=False))
 

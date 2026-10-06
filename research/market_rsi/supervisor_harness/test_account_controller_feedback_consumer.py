@@ -793,4 +793,103 @@ class ConsumerTests(unittest.TestCase):
         self.assertTrue(c._json(next(root.glob("*/failure.json")).read_bytes())["no_resample"])
 
 
+    def ten_hour(self):
+        binding = c.ten_hour_window_binding()
+        authority = {key: deepcopy(binding[key]) for key in
+                     ("batch_id", "start_utc", "selection_cutoff_utc", "deadline_utc", "limits")}
+        authority["attempts"] = []
+        self.f.write("authority", authority)
+        now = datetime(2026, 10, 6, 5, tzinfo=timezone.utc)
+        packet = c.prepare_input(self.f.bindings, self.f.batch, self.f.repo, now, prospective_binding=binding)
+        return binding, authority, packet, now
+
+    def test_ten_hour_exact_fresh_identity_ceiling_copy_and_old_defaults(self):
+        binding, authority, packet, now = self.ten_hour()
+        self.assertEqual((binding["batch_id"], binding["start_utc"], binding["selection_cutoff_utc"], binding["deadline_utc"]),
+            ("market-rsi-controller-enablement-10h-20261006-01", "2026-10-06T04:36:33Z", "2026-10-06T14:21:33Z", "2026-10-06T14:36:33Z"))
+        self.assertEqual(binding["limits"], {"attempts": 12, "statistical_fits": 48, "live_candidate_processes": 2,
+            "threads_per_candidate": 1, "per_attempt_seconds": 900, "sampled_rss_bytes": 1073741824,
+            "paid_provider_calls": 0, "paid_provider_spend_usd": "0"})
+        self.assertEqual((c.DEADLINE, c.CUTOFF), ("2026-10-05T19:27:11Z", "2026-10-05T19:12:11Z"))
+        self.assertEqual(c.prospective_pilot_binding()["limits"]["attempts"], 3)
+        self.assertEqual(c.continuation_pilot_binding()["limits"]["attempts"], 2)
+        binding["limits"]["attempts"] = 999
+        self.assertEqual(packet["prospective_budget_binding"]["limits"]["attempts"], 12)
+        self.assertEqual(c.ten_hour_window_binding()["limits"]["attempts"], 12)
+        self.assertEqual(self.calls, 0)
+
+    def test_ten_hour_rejects_self_grants_types_or_changed_window_before_call(self):
+        binding, authority, packet, now = self.ten_hour()
+        for field, value in (("attempts", True), ("attempts", 12.0), ("attempts", 13),
+                ("statistical_fits", 52), ("paid_provider_calls", 1), ("paid_provider_spend_usd", 0),
+                ("threads_per_candidate", 2), ("sampled_rss_bytes", 2147483648)):
+            changed = deepcopy(binding); changed["limits"][field] = value
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                c.check_budget(authority, now, prospective_binding=changed)
+        for field, value in (("batch_id", "other"), ("schema", "other"), ("authority_granted", True),
+                ("deadline_utc", "2026-10-06T15:36:33Z")):
+            changed = deepcopy(binding); changed[field] = value
+            with self.assertRaises(ValueError): c.check_budget(authority, now, prospective_binding=changed)
+        for other in (None, c.prospective_pilot_binding(), c.continuation_pilot_binding()):
+            with self.assertRaises(ValueError): c.check_budget(authority, now, prospective_binding=other)
+        self.assertEqual(self.calls, 0)
+
+    def test_ten_hour_twelve_forty_eight_clock_concurrency_and_consumed_failures(self):
+        binding, authority, packet, now = self.ten_hour()
+        c.check_budget(authority, binding["start_utc"], prospective_binding=binding)
+        for moment in ("2026-10-06T04:36:32Z", binding["selection_cutoff_utc"], binding["deadline_utc"]):
+            with self.assertRaisesRegex(ValueError, "selection stop"):
+                c.check_budget(authority, moment, prospective_binding=binding)
+        authority["attempts"] = [{"attempt_id": str(i), "fits_reserved": 4,
+            "actual_fits": 0, "status": "failed"} for i in range(11)]
+        c.check_budget(authority, now, prospective_binding=binding)
+        authority["attempts"].append({"attempt_id": "twelfth", "fits_reserved": 4, "actual_fits": 0, "status": "failed"})
+        with self.assertRaisesRegex(ValueError, "selection stop"):
+            c.check_budget(authority, now, prospective_binding=binding)
+        authority["attempts"] = [{"attempt_id": str(i), "fits_reserved": 4,
+            "actual_fits": 0, "status": "running"} for i in range(2)]
+        with self.assertRaisesRegex(ValueError, "concurrency"):
+            c.check_budget(authority, now, prospective_binding=binding)
+        authority["attempts"][1]["status"] = "failed"
+        c.check_budget(authority, now, prospective_binding=binding)
+        authority["attempts"][0]["actual_fits"] = True
+        with self.assertRaisesRegex(ValueError, "invalid actual/reserved"):
+            c.check_budget(authority, now, prospective_binding=binding)
+
+    def test_ten_hour_original_claim_recovery_no_cross_window_or_resample(self):
+        binding, authority, packet, now = self.ten_hour()
+        root = self.f.root / "ten-hour-calls"
+        result = c.consume(packet, root, batch=self.f.batch, repo=self.f.repo, now=now,
+            transport=self.transport, prospective_binding=binding)
+        claim = c._json(next(root.glob("*/claim.json")).read_bytes())
+        self.assertEqual(claim["prospective_budget_binding_sha256"], c._digest(binding))
+        self.assertEqual(claim["input_sha256"], c._digest(packet))
+        self.f.write("authority", {"closed": True}); self.f.source.write_bytes(b"later source")
+        self.assertEqual(c.consume(packet, root, batch=self.f.batch, repo=self.f.repo,
+            now="2026-10-06T15:00:00Z", transport=lambda *args: self.fail("no retry"),
+            prospective_binding=binding), result)
+        for other in (None, c.continuation_pilot_binding()):
+            with self.assertRaisesRegex(ValueError, "explicit prospective"):
+                c.consume(packet, root, batch=self.f.batch, repo=self.f.repo, now=now,
+                    transport=self.transport, prospective_binding=other)
+        self.assertEqual(self.calls, 1)
+
+    def test_ten_hour_keeps_source_runtime_review_and_uncertain_failure_guards(self):
+        binding, authority, packet, now = self.ten_hour()
+        original = self.f.source.read_bytes(); self.f.source.write_bytes(b"drift")
+        with self.assertRaisesRegex(ValueError, "source byte drift"):
+            c.prepare_input(self.f.bindings, self.f.batch, self.f.repo, now, prospective_binding=binding)
+        self.f.source.write_bytes(original)
+        def failed(*args):
+            self.calls += 1
+            raise RuntimeError("synthetic uncertain capacity")
+        kwargs = {"batch": self.f.batch, "repo": self.f.repo, "now": now, "prospective_binding": binding}
+        root = self.f.root / "ten-hour-failed"
+        with self.assertRaises(RuntimeError): c.consume(packet, root, transport=failed, **kwargs)
+        with self.assertRaises(FileNotFoundError): c.consume(packet, root, transport=self.transport, **kwargs)
+        self.assertEqual(self.calls, 1)
+        self.assertEqual(self.f.values["authority"], authority)
+        self.assertTrue(c._json(next(root.glob("*/failure.json")).read_bytes())["no_resample"])
+
+
 if __name__ == "__main__": unittest.main()
