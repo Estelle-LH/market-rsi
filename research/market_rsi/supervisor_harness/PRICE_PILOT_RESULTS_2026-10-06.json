@@ -1,0 +1,28 @@
+{
+  "schema":"market_rsi_price_pilot_interim_result_v1",
+  "batch_id":"market-rsi-price-pilot-20261006-01",
+  "task_id":"MarketTradeVWAPChange300sTrainDiagnostic-v1",
+  "status":"VERIFIED_BASELINE_COMPLETE_CONTROLLER_ACCOUNT_PERMISSION_PENDING",
+  "source_checkpoints":{"data":"d1c4b22","score":"3a7b18c","runner":"7b168d3b496714e5da5357c9c239862591f49cf8"},
+  "budget":{"start_utc":"2026-10-06T20:16:00Z","selection_cutoff_utc":"2026-10-06T20:56:00Z","hard_deadline_utc":"2026-10-06T21:01:00Z","max_attempts":2,"max_reserved_fits":8,"max_original_controller_decisions":1,"attempts_executed":1,"fits_reserved":4,"fits_completed":4,"controller_decisions":0,"automatic_retry":false,"deadline_does_not_reset":true},
+  "result_table":[
+    {"predictor":"B0-NoPriceChange","equal_game_mse":0.0028931083700612786,"equal_game_mae":0.0397026514573293,"predictive_correlation":null,"fits":0,"incumbent":true},
+    {"predictor":"B1-FixedHGBRegressor","equal_game_mse":0.0031516502765572,"equal_game_mae":0.04218126320636252,"predictive_correlation":0.05552465190418657,"fits":4,"incumbent":false,"decision":"REVERT","exploration_eligible":true}
+  ],
+  "b1_minus_b0":{"mse_delta":0.00025854190649592156,"relative_increase":0.08936475009764162,"observed_week_block_95pct_interval":[0.00008380709382966692,0.0004261711854291393],"better_games":25,"check_games":87,"better_folds":1,"folds":4,"better_weeks":1,"observed_weeks":7,"implied_price_out_of_range_forecasts":6},
+  "fold_mse_delta":{"check_1":0.0004812144262976671,"check_2":-0.000033367837111487626,"check_3":0.00020796816008015334,"check_4":0.00027602045252619585},
+  "coverage":{"population_games":195,"population_anchors":4485,"population_dates":42,"population_weeks":14,"check_games":87,"check_dates":20,"check_weeks":7,"check_anchors":2001,"forecasts":1356,"observed_labels":991,"unforecastable_checks":645,"forecast_missing_label_checks":365,"full_denominator_preserved":true,"week14_partial":true},
+  "active_pool":[{"branch":"B0-NoPriceChange","reason":"Current best and prediction anchor"},{"branch":"B1-FixedHGBRegressor","reason":"Valid losing nonlinear branch; method difference retained for a distinct evidence-driven followup, not identical-recipe retry"}],
+  "trajectory":[
+    {"step":"Research redirection and freeze","author":"Human research request plus AI Supervisor plan","change":"Separate continuous five-minute trade-VWAP target; old settlement and legacy tasks unchanged"},
+    {"step":"Minimal task implementation","author":"AI Supervisor and implementation/review agents","change":"Separate materializer, regression scorer and thin runner;67tests pass; no framework rebuild or autonomous R/H claim"},
+    {"step":"Prelaunch repairs","author":"AI Supervisor and independent reviewer","change":"Noncircular operation binding, exact ordinary reference equality, immutable per-attempt operations and existing native v3 singleton identity configuration; first failed admission/temp replay preserved; no fit/claim at these failures"},
+    {"step":"Real experiment","author":"Human-approved fixed ordinary reference","change":"One fresh worker, four real chronological fits and1356forecasts; independent CSV scoring verified"},
+    {"step":"Feedback and memory","author":"Supervisor journal and independent numeric review","change":"B0 incumbent retained; B1 REVERT but eligible; verified negative evidence saved locally; not yet consumed by scientific Controller"}
+  ],
+  "resources":{"worker_wall_seconds":2.6342733339988627,"sampled_peak_rss_kib":172544,"threads":1,"failed_training_attempts":0,"paid_provider_calls":0,"provider_cost_usd":"0","controller_account_calls":0,"aggregate_ai_implementation_review_cost":"unmetered","substantial_supervisor_implementation_review_overhead":true},
+  "evidence":{"root":"/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-pilot-20261006-01","manifest_sha256":"d2eece1a51302ec88661f806ed9bff6b36ffb1c902d3e87af7e5e1bfe9b2dd8b","predictions_sha256":"7c7e0b599e766985a411f1c903d3032044254b06fd6fb2c1e86f116e427b9319","scorecard_sha256":"4f651e0f7cac3844052b9cc6d5b412a35a3e1479b932bf9291fa4f30887b1df5","independent_review_sha256":"1c0c5d8c57e26bae40e1c646dcaaa27171942544d0e9593ec5a9509cc9761cf9","local_feedback_sha256":"cdc42290a0c4f418c53ffad21f5bb079e9b5365da3d2859b4e643d93e39e33f9","memory_sha256":"2a92cd65aba94cdd88e197d8a131099315f82b2d6ca4c56fc355b9091d9da499"},
+  "supported":"Real historical Train price-task baseline execution and verified negative result for this exact recipe",
+  "not_supported":["Autonomous price-task candidate cycle","Researcher or harness self-improvement","Same-budget fixed-process superiority","No information in all trade features or HGB descendants","Untouched OOS or forward confirmation","Midpoint/executable price, passive fill or trading profit"],
+  "remaining_action":"Only after explicit reply to pending exact account question, fresh input/source/operation review and still-open time/caps: one original Controller-owned choice and its one local candidate. Do not infer consent or renew expired budgets. No further framework work is a prerequisite."
+}

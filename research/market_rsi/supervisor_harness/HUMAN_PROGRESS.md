@@ -1,5 +1,26 @@
 # Market RSI — human progress
 
+## 2026-10-06 — first real five-minute trade-price baseline
+
+Separate price task `MarketTradeVWAPChange300sTrainDiagnostic-v1` implemented,
+67 relevant tests independently pass; local checkpoints d1c4b22/3a7b18c/7b168d3.
+One real fixed-reference run completed four chronological Train fits,
+1,356 forecasts and991 observed labels on87 check games; full195-game population
+retained. No-change MSE0.002893108; fixed HGB0.003151650 (+8.94%, REVERT).
+Independent direct-CSV numeric/source review confirms the negative result.
+B0 stays incumbent; HGB remains eligible for distinct exploratory descendants.
+Worker2.634s/thread1/sampled168.5MiB; implementation/review overhead is additional.
+Verified aggregate feedback and memory are saved locally. No scientific Controller
+decision/candidate or account transfer occurred; one exact transfer question is
+pending. Do not call this autonomous price optimization or co-evolution yet.
+Price/fill/profit/OOS and fixed-versus-evolving-process superiority unproven.
+Old settlement/legacy scores, rules and closed budgets unchanged; no protected,
+external, paid, release, push or promotion operation. This pilot's absolute
+selection cutoff20:56UTC and hard deadline21:01UTC remain; unused caps expire.
+See `PRICE_PILOT_RESULTS_2026-10-06.json` and permanent pilot ledger for exact
+artifacts/status; this entry does not renew old authority or repair any historical
+global-document binding.
+
 ## 2026-10-06 — new ten-hour implementation and real Discovery window
 
 04:54UTC update: source repairs are local `a7a7a2d` and `a9a22b6`, independently

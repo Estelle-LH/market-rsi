@@ -79,6 +79,7 @@
       "pass_condition": "No P0 scope/leakage/scoring defect; evidence level clearly limited",
       "failure_action": "Return explicit FAIL for narrow repair; don't mutate science or rules",
       "time_bound_minutes": 8,
+      "result":{"verdict":"pass","observed":"Independent67tests plus exact v3 admission and real four-fit prediction/metric/hash reconstruction pass; fixed HGB REVERT, account permission still separate","reviewer":"price_review_20261006","evidence_path":"PRICE_PILOT_RESULTS_2026-10-06.json","evidence_sha256":"06fc31d6638bd8967f2d1f62a1906504e5b3b26fb28300432c89e2411831285d"},
       "write_paths": []
     }
   ],
@@ -96,6 +97,7 @@
       "no_retry": true
     }
   },
+  "resolution":{"verdict":"pass","reviewer":"price_review_20261006","observed":"Missing new-task runner resolved with actual local baseline and independent numeric evidence1c0c5d8c. This does not mark autonomous Controller cycle or pending account authority resolved."},
   "interfaces": {
     "row": "dict keys row_id/game_id/game_date/game_week/anchor_s/elapsed_seconds/p_current/label/forecastable/reason/features/history; labelNone missing. Features13 ordered as plan; history tuple(relative_seconds,price,size,side_sign) within[-900,0).",
     "data_api": "materialize(source_root=SOURCE_ROOT)->(rows,metadata); chronological_folds(rows)->list[(fit_rows,check_rows)] all forecastable checkrows, fit only labelled earlier dates with label mature. FEATURE_NAMES tuple13.",
