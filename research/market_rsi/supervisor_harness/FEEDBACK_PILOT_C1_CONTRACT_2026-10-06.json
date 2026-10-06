@@ -10,7 +10,27 @@
   "changed_training_recipe": {"prediction": "sigmoid((1+beta)*market_logit+gamma*x)", "loss": "sum_binary_NLL+8*(beta^2+gamma^2)", "beta_lower_bound": -1, "intercept": 0, "initial": [0, 0], "solver": "L-BFGS-B", "maxiter": 1000, "gtol": 1e-8, "ftol": 0, "epsilon": 1e-6, "fits": 4, "automatic_retries": 0, "fallbacks": 0, "parent_warmstart": false},
   "fit_completion_requirements": {"optimizer.converged": true, "optimizer.optimization_calls_started": 1, "optimizer.optimization_calls_completed": 1, "optimizer.retry_count": 0, "optimizer.fallback_count": 0},
   "attribution": "Controller-selected hypothesis and specification; Supervisor implements mechanically and independently reviews.",
-  "accepted_reference": null,
-  "activation_status": "PENDING_SUPERVISOR_EXACT_ACCEPTED_REFERENCE_NORMALIZATION_AND_INDEPENDENT_REVIEW",
+  "accepted_reference": {
+    "reference": {
+      "schema": "market_rsi_prediction_reference_v1",
+      "candidate_id": "InGameTemperatureScoreTimeJointOffset-v1",
+      "runner": {"path": "/Users/estelle/Developer/market-rsi/research/market_rsi/experiments/nfl_ingame_score_time_joint_offset_v1.py", "sha256": "0414fcf2db6b564e4719e26f3746c1bdd1cdda216b4cf2bb82235387b5a969eb"},
+      "source_commit": "66f327336324137c79d2421a25f19cb1f89c08ad",
+      "artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-score-time-20261006-03/native/runs/score-time-fresh-03",
+      "artifact_hashes": {
+        "exclusions.json": "e6b19b230318dc9daf89e6495504c93996f49b3245415a14a45144fece81fdfb",
+        "fit_progress.json": "777bbaadb6b034631704abe09e40158c80c8391bae149b54bd2de14e45b57f07",
+        "input_receipts.json": "20707722aec0820918121e69cbeb9484721128b80777754e206479d993989c98",
+        "manifest.json": "b7f521e5b44156591870547785cb6f14d4e763bf8bf312b6cfbd81dde920fc76",
+        "pre_score_lock.json": "c8338687673cba621ae195cdddcd4872e690b3d8ee7115b2a81e9a95a44178d4",
+        "predictions.csv": "13a8f19c5c32c2bef80d89ed4d3a4d6e53ff940d78cd0567e92f63e78b93a78a",
+        "predictor_states.json": "234f22d4dc955be7a6fad3776985e917f865ddcd7da1f73f67b3dfc636b35d3e",
+        "scorecard.json": "5881ef6835276abfcafed34ccff9386c636c5c2d0ece93b9a8d7e1996f8e270f"
+      },
+      "kernel_sha256": "e61668c7e29cf4dda95f6cc315b248dbe6744a9dcc0ae0cd6077d880ca6265b7"
+    },
+    "acceptance_binding": {"path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-feedback-pilot-20261006-04/parent_acceptance_projection.json", "sha256": "85ebb8b72d07a181b55167fab76d8c0458a3e28b8e701b9018abaa5e244c748b"}
+  },
+  "activation_status": "PARENT_NORMALIZATION_INDEPENDENTLY_VERIFIED_PENDING_NATIVE_SOURCE_REVIEW",
   "boundary": "resident_train_only_fixed_scoring_no_external_no_protected_no_release"
 }

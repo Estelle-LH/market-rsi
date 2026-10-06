@@ -1,0 +1,38 @@
+{
+  "schema": "market_rsi_independent_parent_learning_role_projection_v1",
+  "reviewer": "/root/priority_review_20261006",
+  "reviewed_at_utc": "2026-10-06T18:49:47Z",
+  "passed": true,
+  "role": "Independent current addendum projecting an already completed original learning assessment; not a new historical review, experiment, score or award",
+  "candidate_id": "InGameTemperatureScoreTimeJointOffset-v1",
+  "candidate_source_sha256": "0414fcf2db6b564e4719e26f3746c1bdd1cdda216b4cf2bb82235387b5a969eb",
+  "original_source_review_sha256": "1ffdd670bfaa7a6ba0a14880da47b4a0ff318b016ba369b89aaafe74bd9743f3",
+  "original_combined_result_learning_review_sha256": "ebcbb97a00f4b427e0b5991234906a208c0e8788fa97eac99a17dd74c5a6decc",
+  "original_native_batch_sha256": "477937b8c8e6826e9963f029f31687a9c773045e3bb2d4c55681cac4fe54e106",
+  "original_closure_sha256": "4dc7702c7f7116724915ab201da04300d32023cf0e7340bc3cb2edb1cf49a591",
+  "original_R_memory_sha256": "9a6b01b98e526ff41745a6a940d32da9e0206f57d2f97225e410b3818cb091a2",
+  "learning_projection": {
+    "question_id": "score-time-v1-q1",
+    "performance_status": "valid_no_leakage",
+    "prediction_decision": "REVERT",
+    "existing_credit": 2,
+    "new_credit_awarded": 0,
+    "kind": "hypothesis_test",
+    "evidence_sha256": "5881ef6835276abfcafed34ccff9386c636c5c2d0ece93b9a8d7e1996f8e270f",
+    "finding_sha256": "62165ed9feb77b7e66e426134a45cbc7211277c3ee078646fa2f4bd62a476d79",
+    "finding": "The fixed joint score-time offset did not replace the incumbent: higher Brier than market and C7 on the unchanged87-row Discovery checks, with grouped intervals crossing zero. Valid negative evidence about the exact recipe, not proof its entire information or model class is useless.",
+    "exploration_action": "branch",
+    "exploration_reason": "No incumbent replacement; valid negative remains eligible for a distinct question under fresh authority, independently of KEEP/REVERT",
+    "followup_allowance_granted": false,
+    "old_authority_snapshot_sha256": "b22f1cfc873b772a934f332b97b70a891c8ca8a8b28348ab36ecf77699c3cc4b"
+  },
+  "independent_checks": [
+    "Original combined review bytes, actual scorecard bytes and canonical finding digest match exact pins",
+    "Original native learning checkpoint validity/credit/finding/REVERT/branch fields agree with the original independently assessed review",
+    "Original updated R-memory bytes match the already reviewed version supplied to current Controller",
+    "Existing credit is carried as provenance only; no duplicate award, new performance evidence, scientific next-algorithm choice or execution authority",
+    "This new independently authored role addendum is not a byte-copy masquerading as an additional historical independent review"
+  ],
+  "limitations": ["Historical repeated Train Discovery, not untouched OOS", "No researcher-benefit baseline or mechanism superiority", "No future data or model authority from this projection"],
+  "reviewer_actions": {"raw_train_reads": 0, "fits": 0, "account_calls": 0, "operational_writes": false, "implementation_edits": false}
+}
