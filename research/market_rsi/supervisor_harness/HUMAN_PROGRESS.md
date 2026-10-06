@@ -2012,3 +2012,63 @@ LOOP_CLOSURE_IMPLEMENTATION_REVIEW_V2_2026-10-06.json and
 AGENT_LOG_LOOP_INTEGRATION_2026-10-06.md. This was human-requested Supervisor/
 implementation-agent engineering; no human scientific hypothesis or algorithm
 choice and no new autonomous researcher-capacity result are asserted.
+
+## 2026-10-06 20:07 UTC — price/tradeability reassessment, proposal only
+
+Human requested a new price-and-tradeability direction; this is not a Controller
+self-selected task change. Inspected actual source/Git, last permanent closed04
+ledger and process names. No matching native Controller/training process observed.
+Closed ledger0e950a5e remains unchanged; no expired grant reused.
+
+Read the user-linked Optiver/Susquehanna descriptions and the full-text methods/
+limitations of Market Maker's Dilemma; these support direction/separate fill and
+markout targets, not proprietary strategy, NFL transfer or project profitability.
+Reviewed existing price-MSE scorer, horizon-screen source, in-game materializer,
+memory/feedback history and loop code. Old scores/KEEP/rules/archives untouched.
+
+Read-only zero-fit audit checks530222filtered taker trade rows from195games,
+42dates/14NFLweeks. No invalid numeric/condition/token/index/duplicate row found;
+CSV and stored/raw catalog hashes checked. Not a complete order-event feed.
+Integer-second trade times, no local-receive/publication proof, no historical BBO/
+depth or own order/fill records. Retrospective catalog bid/ask fields are NOT
+decision-time quotes. PBP/time evidence exists but historical availability remains
+unverified; omit PBP from first price-only task.
+
+First audit assertion failed because receipt token order was assumed to equal
+raw market order. Corrected only new audit helper and preserved the failure in
+its evidence:115/195receipts reorder token sets; raw selected market token0
+matches outcome_index. Five focused synthetic audit tests pass. This is a
+Supervisor implementation finding, not accepted autonomous R/H evolution.
+
+Fixed300sgrid/30s strictly-trailing same-token windows yields4485population
+anchors,2721forecastable,1848paired endpoint labels across190games. Preserve all
+195games and873future-label-missing forecasts; score conditionally, never carry
+prices/labels forward. Check folds have991rows/87games/20dates/7weeks; week14
+has1authorizedgame.60s has1903labels vs300s1848, so5minutes is not selected for
+better coverage or scores: deliberately coarser timing/less window overlap.
+
+Saved proposed MarketTradeVWAPChange300sTrainDiagnostic-v1: no-change, fixed
+ordinary HGB regression, and original Controller-selected same-information
+candidate; equal-game MSE, MAE/correlation/period diagnostics, paired whole-observed-
+week resampling. Reuse22initialdates+4x5expanding checks as Discovery, not untouched
+OOS. Initial future batch proposal45min inclusive/2attempts8fits/1original decision.
+Matched fixed/evolving researcher arms are a separately authorized follow-up,
+45min/3attempts12fits/2decisions each, including implementation/review. Both capable
+of memory and multi-branch search; C/R/H/M/K attribution and feedback dependencies
+separate. One pair is pilot evidence, not process superiority.
+
+Only new feasibility helper/tests, aggregate evidence/proposal and existing logs
+were changed. No Train fits, account Controller calls, protected reads, new market
+data, paid calls, release/push/promotion or authority change. New task entrypoint
+is planned, not implemented. First price scorecard requires fresh exact admission;
+formal prospective evaluation/trading collection do not block authorized Train
+research, but cannot be inferred from this planning request.
+
+Evidence: TRADE_PRICE_FEASIBILITY_AUDIT_2026-10-06.json;
+proposal: PRICE_PREDICTION_PILOT_PLAN_2026-10-06.json.
+
+Final five focused tests PASS; a second independently implemented timestamp-set
+occupancy calculation reproduces4485/2721/1848/190coverage in0.666s. Plan/audit
+source hashes, fold totals and unchanged closed ledger checked. This is independent
+algorithm verification by Supervisor, not a separate agent/human review. Full
+repository suite not run because existing experiment/harness code was not changed.
