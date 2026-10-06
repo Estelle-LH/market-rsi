@@ -1,0 +1,559 @@
+{
+  "schema": "price_two_real_round_delivery_v1",
+  "batch_id": "market-rsi-price-auto-loop-20261006-01",
+  "status": "TWO_REAL_FEEDBACK_DEPENDENT_ROUNDS_COMPLETED_WITH_TWO_SUPERVISOR_REPAIRS",
+  "strict_uninterrupted_zero_manual_recovery": false,
+  "start_utc": "2026-10-06T22:31:35Z",
+  "completed_utc": "2026-10-06T22:57:09Z",
+  "selection_cutoff_utc": "2026-10-06T23:11:35Z",
+  "hard_deadline_utc": "2026-10-06T23:16:35Z",
+  "elapsed_seconds": 1534,
+  "entry": {
+    "cwd": "/Users/estelle/Developer/market-rsi/research/market_rsi",
+    "command": "env PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m supervisor_harness.run_price_discovery --batch-config '/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/launch-admission-v3.json' --initial-feedback '/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/initial-feedback.json'",
+    "initial_feedback": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/initial-feedback.json",
+      "sha256": "5f551c2974c6ef65d3042e8ab35c7c154ac472395ae76d9723b4e47503800250"
+    },
+    "batch_configuration": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/launch-admission-v3.json",
+      "sha256": "150b8dc8cc9c3fa3e9c4e0d250c82a8f0a56cbdab111283f287189ed6fa217a7"
+    },
+    "complete": true,
+    "completed_rounds": 2,
+    "completed_cold_replay_seconds": 1.1308542920160107
+  },
+  "task": {
+    "task_id": "MarketTradeVWAPChange300sTrainDiagnostic-v1",
+    "target": "future trailing30s same-token trade VWAP minus current trailing30s trade VWAP at300s horizon; filtered local historical tape",
+    "primary_metric": "equal-game MSE",
+    "seed": 314159,
+    "folds": "22initial fit dates +4expanding5date checks",
+    "baselines": {
+      "no_change_mse": 0.0028931083700612786,
+      "ordinary_hgb_mse": 0.0031516502765572
+    },
+    "coverage": {
+      "checks": {
+        "forecastable_rows": 1356,
+        "population_dates": 20,
+        "population_games": 87,
+        "population_rows": 2001,
+        "population_weeks": 7,
+        "reason_counts": {
+          "NO_CURRENT_WINDOW_TRADE": 645,
+          "NO_FUTURE_WINDOW_LABEL": 365
+        },
+        "scorable_dates": 20,
+        "scorable_games": 87,
+        "scorable_rows": 991,
+        "scorable_weeks": 7,
+        "zero_label_games": []
+      },
+      "full_population": {
+        "forecastable_rows": 2721,
+        "population_dates": 42,
+        "population_games": 195,
+        "population_rows": 4485,
+        "population_weeks": 14,
+        "reason_counts": {
+          "NO_CURRENT_WINDOW_TRADE": 1764,
+          "NO_FUTURE_WINDOW_LABEL": 873
+        },
+        "scorable_dates": 42,
+        "scorable_games": 190,
+        "scorable_rows": 1848,
+        "scorable_weeks": 14,
+        "zero_label_games": [
+          "2025_03_NYJ_TB",
+          "2025_04_CAR_NE",
+          "2025_04_CHI_LV",
+          "2025_04_TEN_HOU",
+          "2025_05_TEN_ARI"
+        ]
+      }
+    },
+    "price_not_executable_quote": true,
+    "train_discovery_not_untouched_oos": true
+  },
+  "trajectory": {
+    "first_proposal": "Old ordinary HGB lost3/4blocks; Controller chose a low-capacity single-gap closed-form correction shrunk0.5.",
+    "verified_round1_feedback": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/price-round-0001-feedback.json",
+      "sha256": "1ede6b3a1485ecc0319f10a40829d08cab571e3d9ec4b563239395736e468168"
+    },
+    "second_input": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/price-round-0002-input.json",
+      "sha256": "5538f0832b54f0ad079fec27ee592e167d04988fd64c91f2602b32602ccecd1d"
+    },
+    "second_original_proposal": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/decisions/1ede6b3a1485ecc0319f10a40829d08cab571e3d9ec4b563239395736e468168/response.json",
+      "decision_sha256": "5918dea0ccc1612d3095ee9e56c002833d819cc912fad16226f581f8aac2876c",
+      "input_sha256": "8dc7adb93196f0e899759ffbf3a466cb81eea96e1856515986afe25923021c60"
+    },
+    "feedback_consequence": "B2 positive MSE delta, week uncertainty and negative correlation explicitly caused Controller to test a fit-only magnitude-conditioned two-slope recipe instead of repeating global slope.",
+    "scientific_lineage": "Both actual parents and incumbent comparators are B0. B2→B3 is feedback/source reuse, not a B2 parent-child claim.",
+    "no_per_round_human_algorithm_choice": true,
+    "no_preplanned_second_model": true
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "candidate": "B2-ShrunkSingleGap300",
+      "actual_parent": "abd0ff7ffb46fdeae87b06911462c49cf4e274f364df7cd6473b1188b1c1772a",
+      "incumbent_comparator": "abd0ff7ffb46fdeae87b06911462c49cf4e274f364df7cd6473b1188b1c1772a",
+      "source": {
+        "path": "/Users/estelle/Developer/market-rsi/research/market_rsi/experiments/price_candidates/market-rsi-price-auto-loop-20261006-01/author-r0001-64dda21a4401-admission-v2/candidate.py",
+        "sha256": "f43e68a1ee63c4a5b0fcdcdfbb5c7ef617859f00e6abe90867aab5d9d7cbe1cb"
+      },
+      "source_commit": "86dc7587b0bba8ad40197b41f99374343b747226",
+      "controller": {
+        "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/decisions/cdc42290a0c4f418c53ffad21f5bb079e9b5365da3d2859b4e643d93e39e33f9/response.json",
+        "decision_sha256": "64dda21a44014d8fef7d5d6548b63745f8ffa5ab4b190297449726cd7e196777",
+        "input_sha256": "7f1f416afc58378cd2ef7809ffc54c2597861ced1760280f6c85406f549d6eb2"
+      },
+      "predictions": {
+        "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/price-native-r0001-64dda21a4401/runs/price-attempt-r0001-64dda21a4401/predictions.csv",
+        "sha256": "698856d66e31fb927bd0e57344d5aa5fcea693b215328d9f0a7d2fba6c30c545"
+      },
+      "scorecard": {
+        "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/price-native-r0001-64dda21a4401/runs/price-attempt-r0001-64dda21a4401/scorecard.json",
+        "sha256": "81ce146bb150b1d6e2c7d5773cead5f3ea084f0542fabd39582bb45679901b18"
+      },
+      "manifest": {
+        "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/price-native-r0001-64dda21a4401/runs/price-attempt-r0001-64dda21a4401/manifest.json",
+        "sha256": "6aae6b95b59a9c9d6438a6ae0e9537383cb97f67bdedaf94cc6739680f6a0b11"
+      },
+      "comparison": {
+        "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/price-round-0001-comparison.json",
+        "sha256": "218ee8ba624ed90123680b8329ab00b4bca57ccc217ec8dc7efdb32499dc0341"
+      },
+      "feedback": {
+        "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/price-round-0001-feedback.json",
+        "sha256": "1ede6b3a1485ecc0319f10a40829d08cab571e3d9ec4b563239395736e468168"
+      },
+      "source_review_sha256": "bc25f44f9d2e0aa89def5eb0078b58e71aa0c608eb75aa640f24d4cd063f648f",
+      "result_review": {
+        "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/independent-reviews/price-result-review-ef3794b0fdb41c03b4b1/review.json",
+        "sha256": "0d3eaa3eacb4932d5167b09e5f85685f27f4264f75c3bf1f554992fcf6323279"
+      },
+      "decision": "REVERT",
+      "research_credit": 1,
+      "exploration_eligible": false,
+      "mse": 0.002896227384776703,
+      "mae": 0.0397244643666492,
+      "weighted_pearson": -0.06311165175269007,
+      "paired_vs_parent": {
+        "better_game_fraction": 0.42528735632183906,
+        "date_block_95pct_sensitivity": [
+          -9.633383633986453e-8,
+          0.0000065906154467684016
+        ],
+        "equal_game_mse_delta": 0.000003119014715424906,
+        "left": "B2-ShrunkSingleGap300",
+        "right": "B0-NoPriceChange",
+        "week_block_95pct_interval": [
+          -1.0383499757038012e-7,
+          0.000006340340268552276
+        ]
+      },
+      "per_fold": [
+        {
+          "fold": "check_1",
+          "mse": 0.0023636863006056105,
+          "delta_vs_parent": -0.0000011280045927671185
+        },
+        {
+          "fold": "check_2",
+          "mse": 0.0028438748512200954,
+          "delta_vs_parent": 0.000001124489854467236
+        },
+        {
+          "fold": "check_3",
+          "mse": 0.0033822592393070177,
+          "delta_vs_parent": 0.0000091606267495015
+        },
+        {
+          "fold": "check_4",
+          "mse": 0.00295945190233584,
+          "delta_vs_parent": 0.0000015407654703749815
+        }
+      ],
+      "worker_wall_seconds": 2.6842652919585817,
+      "sampled_peak_rss_kib": 172080,
+      "fits": 4
+    },
+    {
+      "round": 2,
+      "candidate": "B3-ShrunkMagnitudeRegimes300",
+      "actual_parent": "abd0ff7ffb46fdeae87b06911462c49cf4e274f364df7cd6473b1188b1c1772a",
+      "incumbent_comparator": "abd0ff7ffb46fdeae87b06911462c49cf4e274f364df7cd6473b1188b1c1772a",
+      "source": {
+        "path": "/Users/estelle/Developer/market-rsi/research/market_rsi/experiments/price_candidates/market-rsi-price-auto-loop-20261006-01/author-r0002-5918dea0ccc1-admission-v3/candidate.py",
+        "sha256": "b6c9fa53d048a111da0e679f34de9f7ddce8bb48384ab6a7d88cac6ee09e84f8"
+      },
+      "source_commit": "e4ce4ad670ca075e319971e5fb681e201a85e406",
+      "controller": {
+        "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/decisions/1ede6b3a1485ecc0319f10a40829d08cab571e3d9ec4b563239395736e468168/response.json",
+        "decision_sha256": "5918dea0ccc1612d3095ee9e56c002833d819cc912fad16226f581f8aac2876c",
+        "input_sha256": "8dc7adb93196f0e899759ffbf3a466cb81eea96e1856515986afe25923021c60"
+      },
+      "predictions": {
+        "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/price-native-r0002-5918dea0ccc1/runs/price-attempt-r0002-5918dea0ccc1/predictions.csv",
+        "sha256": "55e55ca41dd94dec4f0f29ec49443bbc09bb91bcc592b87615ea302e7e1a4cf5"
+      },
+      "scorecard": {
+        "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/price-native-r0002-5918dea0ccc1/runs/price-attempt-r0002-5918dea0ccc1/scorecard.json",
+        "sha256": "1e0bc3c2e3db88e74881dc4b2787c6dee8f47f544666e8f53353905a95317161"
+      },
+      "manifest": {
+        "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/price-native-r0002-5918dea0ccc1/runs/price-attempt-r0002-5918dea0ccc1/manifest.json",
+        "sha256": "90f0dbf1f594f547a9025afe97ffe56e077161118c1190a65cb6e0e1ee1ed8ff"
+      },
+      "comparison": {
+        "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/price-round-0002-comparison.json",
+        "sha256": "56bd0d6a86533f85b5d7fd5adc66b920f32e94a170c6bd3c0555d0ad399bda9a"
+      },
+      "feedback": {
+        "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/price-round-0002-feedback.json",
+        "sha256": "15ca7107e4c48a8705789cbaa31c0b730bda5a658d994d12fa9fc17890e8b225"
+      },
+      "source_review_sha256": "8632c09e58c6a4d442bfa7b31f368ea77cb7784b0ed65598d32210114fae3452",
+      "result_review": {
+        "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/independent-reviews/price-result-review-429a983c081c693ae957/review.json",
+        "sha256": "0093047ecb4014753f2ffd3e75e7a2de4d481e8f3ee2bf8d3feaf819295482d1"
+      },
+      "decision": "REVERT",
+      "research_credit": 1,
+      "exploration_eligible": false,
+      "mse": 0.002901582799324938,
+      "mae": 0.03978756749174317,
+      "weighted_pearson": -0.02588483301041503,
+      "paired_vs_parent": {
+        "better_game_fraction": 0.5172413793103449,
+        "date_block_95pct_sensitivity": [
+          -0.0000021136761861961042,
+          0.000020174910028027578
+        ],
+        "equal_game_mse_delta": 0.000008474429263659709,
+        "left": "B3-ShrunkMagnitudeRegimes300",
+        "right": "B0-NoPriceChange",
+        "week_block_95pct_interval": [
+          0.0000014280132319025741,
+          0.00001734208776476841
+        ]
+      },
+      "per_fold": [
+        {
+          "fold": "check_1",
+          "mse": 0.002367827358847993,
+          "delta_vs_parent": 0.000003013053649615193
+        },
+        {
+          "fold": "check_2",
+          "mse": 0.0028549700262090094,
+          "delta_vs_parent": 0.000012219664843381248
+        },
+        {
+          "fold": "check_3",
+          "mse": 0.0033911551447695677,
+          "delta_vs_parent": 0.000018056532212051574
+        },
+        {
+          "fold": "check_4",
+          "mse": 0.0029554310434311607,
+          "delta_vs_parent": -0.0000024800934343041474
+        }
+      ],
+      "worker_wall_seconds": 2.5743997499812394,
+      "sampled_peak_rss_kib": 172256,
+      "fits": 4
+    }
+  ],
+  "phase_timings": [
+    {
+      "round": 1,
+      "input_review_seconds": 31.07425875001354,
+      "controller_seconds": 103.08973308297573,
+      "implementation_account_seconds": 101.1477182090166,
+      "source_review_seconds": 21.669635207974352,
+      "train_worker_seconds": 2.6842652919585817,
+      "result_review_seconds": 47.76181037497008
+    },
+    {
+      "round": 2,
+      "input_review_seconds": 33.21425520797493,
+      "controller_seconds": 75.75978187494911,
+      "implementation_account_seconds": 111.5089295830112,
+      "source_review_seconds": 27.48664604203077,
+      "train_worker_seconds": 2.5743997499812394,
+      "result_review_seconds": 37.75512229197193
+    }
+  ],
+  "original_account_timings": [
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/author/author-r0001-64dda21a4401/timing.json",
+      "value": {
+        "usage": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 8206,
+          "outputTokens": 6984,
+          "reasoningOutputTokens": 5309,
+          "totalTokens": 15190
+        },
+        "wall_seconds": 101.1477182090166
+      }
+    },
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/author/author-r0002-5918dea0ccc1/timing.json",
+      "value": {
+        "usage": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 10774,
+          "outputTokens": 8375,
+          "reasoningOutputTokens": 5696,
+          "totalTokens": 19149
+        },
+        "wall_seconds": 111.5089295830112
+      }
+    },
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/input_review/price-input-review-de39b8b8ef6ad1dbb8dc/timing.json",
+      "value": {
+        "usage": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 8908,
+          "outputTokens": 1805,
+          "reasoningOutputTokens": 1552,
+          "totalTokens": 10713
+        },
+        "wall_seconds": 31.07425875001354
+      }
+    },
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/input_review/price-input-review-e8a37b77b999fa7876fd/timing.json",
+      "value": {
+        "usage": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 12063,
+          "outputTokens": 1921,
+          "reasoningOutputTokens": 1552,
+          "totalTokens": 13984
+        },
+        "wall_seconds": 33.21425520797493
+      }
+    },
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/result_review/price-result-review-429a983c081c693ae957/timing.json",
+      "value": {
+        "usage": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 11049,
+          "outputTokens": 2391,
+          "reasoningOutputTokens": 1973,
+          "totalTokens": 13440
+        },
+        "wall_seconds": 37.75512229197193
+      }
+    },
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/result_review/price-result-review-ef3794b0fdb41c03b4b1/timing.json",
+      "value": {
+        "usage": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 10919,
+          "outputTokens": 2975,
+          "reasoningOutputTokens": 2519,
+          "totalTokens": 13894
+        },
+        "wall_seconds": 47.76181037497008
+      }
+    },
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/source_review/price-source-review-661bd75faa2eeba8c471/timing.json",
+      "value": {
+        "usage": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 10076,
+          "outputTokens": 1714,
+          "reasoningOutputTokens": 1429,
+          "totalTokens": 11790
+        },
+        "wall_seconds": 27.48664604203077
+      }
+    },
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/source_review/price-source-review-fce70e900fd5861c752e/timing.json",
+      "value": {
+        "usage": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 9051,
+          "outputTokens": 1305,
+          "reasoningOutputTokens": 1034,
+          "totalTokens": 10356
+        },
+        "wall_seconds": 21.669635207974352
+      }
+    },
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/decisions/1ede6b3a1485ecc0319f10a40829d08cab571e3d9ec4b563239395736e468168/timing.json",
+      "value": {
+        "usage": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 11826,
+          "outputTokens": 5066,
+          "reasoningOutputTokens": 3106,
+          "totalTokens": 16892
+        },
+        "wall_seconds": 75.75978187494911
+      }
+    },
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/decisions/cdc42290a0c4f418c53ffad21f5bb079e9b5365da3d2859b4e643d93e39e33f9/timing.json",
+      "value": {
+        "usage": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 8680,
+          "outputTokens": 6579,
+          "reasoningOutputTokens": 4628,
+          "totalTokens": 15259
+        },
+        "wall_seconds": 103.08973308297573
+      }
+    }
+  ],
+  "resources": {
+    "original_controller_calls": 2,
+    "original_implementation_calls": 2,
+    "original_independent_review_calls": 6,
+    "total_original_account_calls": 10,
+    "attempts": 2,
+    "reserved_fits": 8,
+    "actual_completed_fits": 8,
+    "workers_max_concurrent": 1,
+    "threads_per_worker": 1,
+    "train_worker_wall_seconds": 5.258665041939821,
+    "max_sampled_rss_kib": 172256,
+    "account_usage": {
+      "inputTokens": 101552,
+      "outputTokens": 39115,
+      "reasoningOutputTokens": 28798,
+      "totalTokens": 140667,
+      "wall_seconds": 590.4678906248882
+    },
+    "output_tokens_include_reasoning": true,
+    "requested_model": "gpt-6.1-sol",
+    "serving_snapshot": "unknown",
+    "external_paid_provider_calls": 0,
+    "new_external_data_or_literature_calls": 0,
+    "incremental_paid_provider_usd": 0,
+    "total_subscription_ai_usd": "unknown",
+    "supervisor_and_helper_account_consumption": "unmetered beyond the ten role calls",
+    "native_metadata_preflight_model_calls": 0,
+    "provider_internal_retries": "unknown; no application-level original retry"
+  },
+  "interventions": {
+    "fresh_human_batch_approval": 1,
+    "roundwise_human_science_or_repair_instructions": 0,
+    "ai_supervisor_harness_repairs": 2,
+    "first_failure": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/author-r0001-64dda21a4401/failure.json",
+      "sha256": "f8d4ee6814396b8a73a89d9ece436a31dc7d05bed85c8d16e84fd52de6b1d0c7"
+    },
+    "second_failure": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/author-r0002-5918dea0ccc1/failure.json",
+      "sha256": "14afbd436c2dfbd8e4c7c9125fe8cfad13a3640ab38f1d2d7147b087e5860b9b"
+    },
+    "cause": "Two numeric AST admission false positives, not scientific or uncertain model failures",
+    "repairs": "np.all/any + test-only literal object dtype, then np.cumsum/searchsorted; original model source and scientific recipes unchanged",
+    "source_checkpoints": [
+      "ab06fdb",
+      "090ea19",
+      "828bddd",
+      "ad6c21c",
+      "86dc758",
+      "27d6dee",
+      "e4ce4ad"
+    ],
+    "original_responses_and_failed_namespaces_preserved": true,
+    "no_model_resampling": true,
+    "no_cap_refund_or_window_extension": true,
+    "fresh_local_restoration_only": true,
+    "normal_implementation_review_fit_score_feedback_handoffs_programmatic": true,
+    "manual_fault_repair_configuration_activation_and_restart_remain": true
+  },
+  "pool": {
+    "incumbent": {
+      "candidate_id": "B0-NoPriceChange",
+      "candidate_sha256": "abd0ff7ffb46fdeae87b06911462c49cf4e274f364df7cd6473b1188b1c1772a",
+      "review_sha256": "925d37814f8a9842d47fc6f2b4a3375698f811d7ce3aeaba8057e16780243e9a",
+      "scorecard_sha256": "4f651e0f7cac3844052b9cc6d5b412a35a3e1479b932bf9291fa4f30887b1df5"
+    },
+    "active_pool": [
+      {
+        "method_family": "zero-change",
+        "parent_sha256": "abd0ff7ffb46fdeae87b06911462c49cf4e274f364df7cd6473b1188b1c1772a",
+        "reason": "Retain the incumbent as prediction anchor and fixed comparator."
+      },
+      {
+        "method_family": "nonlinear-trade-history",
+        "parent_sha256": "acfbfbb53c45b0746ed71aac49f3256cb041160cd194bceef9055e0299ca7f8b",
+        "reason": "Retain for distinct descendants; negative evidence concerns the frozen HGB recipe, not its method family."
+      }
+    ],
+    "archive_candidates": [
+      "B0-NoPriceChange",
+      "B1-FixedHGBRegressor",
+      "B2-ShrunkSingleGap300",
+      "B3-ShrunkMagnitudeRegimes300"
+    ],
+    "limitation": "Credit1 B2/B3 retained with source/results/memory in archive, not currently eligible as native parents; credit2-only adapter remains unchanged."
+  },
+  "replay": {
+    "ledger_before_and_after_sha256": "67b0bcb4c3197aacfc518ecce09958febe1dca90181bb025d28ba6f1c54cc543",
+    "completed": true,
+    "new_original_calls": 0,
+    "new_fits": 0,
+    "claims_and_native_outputs_unchanged": true
+  },
+  "preservation": {
+    "frozen_data_sha256": "729997820fe1a78d834d577fa5d9d892405cbb4c208ef95cd0963ed1b178361d",
+    "frozen_scorer_sha256": "d66b6c6ba6ca466622cbf531662b8fcdf4a4d06ddcfa148c2d7f3cfa3dfb350b",
+    "frozen_runner_sha256": "acfbfbb53c45b0746ed71aac49f3256cb041160cd194bceef9055e0299ca7f8b",
+    "old_price_ledger_sha256": "97599916f13423c8dc8832f9767ebb8961dac309fb62744edfa28b37d683c6da",
+    "old_feedback04_ledger_sha256": "0e950a5e9c2c8665e1e55a5ed84f3f1582704cc1ee1ff993575b1812f7ba9c2e"
+  },
+  "tests": {
+    "final_relevant_modules": 15,
+    "passed": 287,
+    "wall_seconds": 19.524,
+    "synthetic_tests_not_scientific_closure": true
+  },
+  "independent_evidence_audit": {
+    "path": "/Users/estelle/Developer/market-rsi/research/market_rsi/supervisor_harness/PRICE_LIVE_TWO_ROUND_EVIDENCE_AUDIT_2026-10-06.json",
+    "sha256": "7a9954e7120a0113f67a8a12c73b5ded63bc7799139e5811503d58f54ba29e14"
+  },
+  "authorized_decision_journal_sync": {
+    "document_sha256": "b82a18cfa89b768542c4dbf45808a6d2695531d40a9391cf8632fafd9542ba11",
+    "head_sha256": "d645bbf7e2ecd9df81d7dfc9f73ec245817c1b4a475dc1a03bf8bb9e94a4d855",
+    "active_cycle": null,
+    "scope": "prospective authorized status revision only; existing native permanent ledger governs this closed batch"
+  },
+  "claim_limits": [
+    "Two actual feedback-linked predictor experiments and independent reviews completed, but original launch was not interruption-free.",
+    "No prediction gain versus zero-change baseline; both REVERT. Candidate2 also worse than candidate1 in aggregate.",
+    "Not autonomous researcher/harness self-modification: all H repairs are user-directed AI Supervisor engineering.",
+    "No matched-budget fixed/evolving research process comparison, researcher superiority, executable trading profit, untouched OOS, forward confirmation, release or promotion.",
+    "Protected Dev/Final, raw Train transfer, external data/literature and paid providers remain closed; no fresh authority is implied."
+  ]
+}
