@@ -269,7 +269,8 @@ class TypedActionTests(unittest.TestCase):
             response = deepcopy(original); mutate(response)
             with self.subTest(mutation=mutate), self.assertRaises(ValueError): p.validate_response(response, self.packet)
         self.packet['action_context']['available_actions'] = ['prediction']
-        with self.assertRaisesRegex(ValueError, 'enabled'): p.validate_response(original, self.packet)
+        fresh = self.response(self.packet)  # New input hash; test enablement rather than stale input.
+        with self.assertRaisesRegex(ValueError, 'enabled'): p.validate_response(fresh, self.packet)
 
     def test_failed_original_v2_is_preserved_and_never_resampled(self):
         original = self.h.response

@@ -319,3 +319,16 @@ without refreshing the synthetic response input hash, so the earlier hash guard
 correctly rejected first. Preserve this source/test snapshot before correcting
 only that fixture. No production guard or old rule needs relaxing. Mock originals
 are not account decisions/scientific evidence; modelcalls/Trainfits0.
+
+## F2a.2 — typed action transaction verified locally
+
+Parent806fe77 preserves the exact first failure. Refresh only the synthetic response
+input hash after changing enabled actions; production unchanged. The same pinned
+one-thread transaction/configuration/roles/consumer command passes115tests1.711s.
+Capacity-only R and H originals, exact schema/context review, once-only replay,
+failed-original preservation, disabled/composite/stale/protected/fake-evidence
+rejection and legacy v1 behavior pass. Fixtures are synthetic, not real account
+decisions or autonomous R/H implementation. Account calls0/residentTrainfits0.
+Default entry still emits v1; independent activation, capacity implementation,
+matched benefit and actual downstream invocation remain pending. Next bounded
+checkpoint reuses the existing input-review service for the prospective v2 scope.
