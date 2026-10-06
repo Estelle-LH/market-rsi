@@ -37,8 +37,11 @@ class PilotRuntime:
         if (transfer.get("approved") is not True or transfer.get("destination") != t.DESTINATION
                 or transfer.get("requested_model") != t.c.MODEL or transfer.get("serving_snapshot") != "unknown"
                 or transfer.get("max_input_bytes") != 32768
+                or transfer.get("payload_scope") != ["private Train-derived aggregate feedback", "research memory/history", "relevant candidate source context"]
                 or any(transfer.get(k) is not False for k in ("raw_train_transfer", "tools_enabled", "automatic_retry"))):
             raise ValueError("unchanged compact tools-closed account boundary required")
+        if grant["limits"]["sampled_rss_bytes"] != 1073741824:
+            raise ValueError("native worker cannot enforce a tighter sampled RSS grant")
 
     def admit(self, context):
         """The coordinator is not a budget ledger; recheck the actual one."""
@@ -109,6 +112,8 @@ class PilotRuntime:
                 or request["candidate_id"] != response["candidate"]["candidate_id"]
                 or selection["research_parent_sha256"] != response["candidate"]["actual_parent_sha256"]):
             raise ValueError("actual original candidate binding drift")
+        if request["max_wall_seconds"] > self.fixed_grant["limits"]["per_attempt_seconds"]:
+            raise ValueError("request exceeds exact granted per-attempt duration")
         w.validate(request, self.repo)
         with (self.root / ".pilot.lock").open("a+") as lock:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -140,9 +145,12 @@ class PilotRuntime:
                 if progress.exists():
                     fits = t._file(progress)
                     row.update(actual_fits=fits["fit_calls_entered"], valid_fits_completed=fits["fit_calls_completed"])
-                    if any(type(row[k]) is not int or not 0 <= row[k] <= 4
-                           for k in ("actual_fits", "valid_fits_completed")):
-                        raise ValueError("actual fit counters exceed declared reservation")
+                    if (any(type(row[k]) is not int for k in ("actual_fits", "valid_fits_completed"))
+                            or not 0 <= row["valid_fits_completed"] <= row["actual_fits"] <= 4
+                            or (receipt["outcome"] == "succeeded" and
+                                (row["actual_fits"], row["valid_fits_completed"]) != (4, 4))):
+                        row.update(invalid_fit_counters=fits, actual_fits=None, valid_fits_completed=None)
+                        raise ValueError("inconsistent fit counters; actual accounting uncertain")
                 elif not (native / "worker" / (request["attempt_id"] + ".process.json")).exists():
                     row.update(actual_fits=0, valid_fits_completed=0)
                 row.update(status=receipt["outcome"] if row["actual_fits"] is not None else "uncertain",

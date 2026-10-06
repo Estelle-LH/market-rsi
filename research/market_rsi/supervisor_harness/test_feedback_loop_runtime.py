@@ -76,6 +76,30 @@ class RuntimeTests(TestCase):
         self.assertFalse(self.runtime.admit(self.context()))
         self.assertEqual(self.h.calls, 1)
 
+    def restrict(self, **limits):
+        self.h.config['limits'].update(limits)
+        self.h.authorization['limits'] = deepcopy(self.h.config['limits'])
+        self.h.configuration_binding = self.h.write('configuration',self.h.config)
+        self.h.authorization_binding = self.h.write('authorization',self.h.authorization)
+        self.h.packet['authority'] = self.h.authorization
+        self.h.ledger['authorization_sha256'] = self.h.authorization_binding['sha256']
+        self.h.write('ledger',self.h.ledger); self.h.rebind_config()
+        return r.PilotRuntime(self.root,self.repo,self.h.authorization_binding,self.h.configuration_binding)
+
+    def test_tighter_wall_limit_rejected_before_attempt_or_worker(self):
+        self.runtime = self.restrict(per_attempt_seconds=1)
+        batch,req,ctx = self.native()
+        with patch.object(w.subprocess,'Popen') as launch, self.assertRaisesRegex(ValueError,'granted'):
+            self.runtime.execute(ctx)
+        self.assertFalse(launch.called)
+        self.assertEqual(t._file(self.root/'ledger.json')['attempts'],[])
+        self.assertEqual(batch.snapshot()['attempts_claimed'],0)
+
+    def test_unenforceable_tighter_rss_rejected_before_any_call(self):
+        with self.assertRaisesRegex(ValueError,'tighter sampled RSS'):
+            self.restrict(sampled_rss_bytes=1024)
+        self.assertEqual(self.h.calls,0)
+
     def test_automatic_controller_feedback_continuation(self):
         # Two actual original-transaction code paths. Scientist/fit callbacks are
         # deterministic synthetic fixtures, not claimed model authorship/Train.
@@ -161,21 +185,24 @@ class RuntimeTests(TestCase):
         return batch,req,{'outputs':{'controller':{'decision':response},'implement':{'native_name':'native'},
                                      'source_review':{'review':r.pin(review)}}}
 
-    def test_actual_native_worker_shared_reservation_completion_no_retry(self):
-        batch,req,ctx=self.native()
-        def child(*args,**kwargs):
+    def child(self,batch,req,entered=4,completed=4,returncode=0):
+        def run(*args,**kwargs):
             out=batch.root/'runs'/req['attempt_id']; out.mkdir()
             manifest={'complete':True,'model_fits':4}
             for n in ('pre_score_lock','input_receipts','exclusions','predictions','scorecard'):
                 p=out/(n+('.csv' if n=='predictions' else '.json')); p.write_text('{}')
                 manifest[n+'_sha256']=w.sha(p)
             t.c.save(out/'manifest.json',manifest)
-            t.c.save(out/'fit_progress.json',{'fit_calls_entered':4,'fit_calls_completed':4})
-            return Mock(pid=1234,wait=Mock(return_value=0),poll=Mock(return_value=0))
+            t.c.save(out/'fit_progress.json',{'fit_calls_entered':entered,'fit_calls_completed':completed})
+            return Mock(pid=1234,wait=Mock(return_value=returncode),poll=Mock(return_value=returncode))
+        return run
+
+    def test_actual_native_worker_shared_reservation_completion_no_retry(self):
+        batch,req,ctx=self.native()
         with patch.object(r,'ContinuousDiscoveryBatch',return_value=batch),\
              patch.object(w.subprocess,'check_output',return_value='synthetic-commit\n'),\
              patch.object(w,'sample_rss',return_value=128),\
-             patch.object(w.subprocess,'Popen',side_effect=child) as launch:
+             patch.object(w.subprocess,'Popen',side_effect=self.child(batch,req)) as launch:
             output=self.runtime.execute(ctx)
             self.assertEqual(output['receipt']['outcome'],'succeeded')
             self.assertEqual(launch.call_count,1)
@@ -184,6 +211,35 @@ class RuntimeTests(TestCase):
         row=t._file(self.root/'ledger.json')['attempts'][0]
         self.assertEqual(row['actual_fits'],4); self.assertEqual(row['fits_reserved'],4)
         self.assertEqual(batch.snapshot()['attempts_claimed'],1)
+
+    def counters(self,entered,completed,code):
+        batch,req,ctx=self.native()
+        with patch.object(r,'ContinuousDiscoveryBatch',return_value=batch),\
+             patch.object(w.subprocess,'check_output',return_value='synthetic-commit\n'),\
+             patch.object(w,'sample_rss',return_value=128),\
+             patch.object(w.subprocess,'Popen',side_effect=self.child(batch,req,entered,completed,code)) as launch:
+            if code == 0:
+                with self.assertRaisesRegex(ValueError,'inconsistent fit counters'):self.runtime.execute(ctx)
+            else:
+                self.assertEqual(self.runtime.execute(ctx)['receipt']['outcome'],'failed')
+            self.assertEqual(launch.call_count,1)
+        return t._file(self.root/'ledger.json')['attempts'][0]
+
+    def test_impossible_completion_counters_remain_uncertain(self):
+        row=self.counters(0,4,0)
+        self.assertEqual(row['status'],'uncertain'); self.assertIsNone(row['actual_fits'])
+        self.assertEqual(row['invalid_fit_counters']['fit_calls_completed'],4)
+        self.assertFalse(self.runtime.admit(self.context('input')))
+
+    def test_success_requires_all_reserved_fits(self):
+        row=self.counters(3,3,0)
+        self.assertEqual(row['status'],'uncertain'); self.assertIsNone(row['actual_fits'])
+
+    def test_partial_failed_fit_counts_are_preserved(self):
+        row=self.counters(2,1,1)
+        self.assertEqual(row['status'],'failed')
+        self.assertEqual((row['actual_fits'],row['valid_fits_completed']),(2,1))
+        self.assertTrue(self.runtime.admit(self.context('input')))
 
 
 if __name__ == '__main__': main()
