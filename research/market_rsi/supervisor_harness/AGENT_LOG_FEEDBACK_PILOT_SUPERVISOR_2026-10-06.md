@@ -1,0 +1,11 @@
+# Feedback-linked pilot — Supervisor operations
+
+2026-10-06T18:35:38Z: Direct exact human grant received. Start45min including repair/review, deadline19:20:38Z, selection cutoff19:15:38Z;3original decisions/3attempts/12reserved fits. Parent f0a87a1. One live training child/thread1. No rawTrain egress, paid/external/protected/release/push/promotion. Old ledgers closed. Latest reviewed feedback898178b9 and Rmemory9a6b01b9 will be first input, not older N2 history.
+
+Named H change: existing Controller transaction prospective configuration binding; Root-authorized engineering, not researcher self-evolution. Hold original scientific R3312823/Hsemantic4f2015d stable. Reuse existing once-only transport/native worker/scorer and prior reviewed mathematical operations; no new literature acquisition, method selection or paid call.
+
+Source allowlist for this H checkpoint: supervisor_harness/coevo_pilot_transaction.py; supervisor_harness/test_coevo_pilot_configuration.py plus this plan/log/independent receipts. Expected benefit: accept reviewed batch config without dated production edits while preserving exact approval/closed caps/once-only recovery. Test matched legacy success/failure/recovery and malformed/self-grant/source/config drift. Budget authority remains Root-owned permanent ledger, not model text.
+
+18:38Z: First patch rejected by auto-review for unbounded future attempts/decisions. No files/calls/fits under that patch. Replaced prospectively with hard3/3/12 and45min ceiling,1live/thread1/900s/1GiB; original default and historical source-bound artifacts unchanged. Diff60insertions14deletions in ONE operational module, below200changed-line warning; total234line module not a broad refactor. Tests26executions include repeated10 legacy cases,16distinct; wider relevant124executions PASS.
+
+18:42Z: First local input preparation failed byte check at37088 BEFORE packet/model claim. Compacted duplicate reviewed feedback in R to an exact original-reference plus interpretation and used a verbatim source prefix containing feature/objective definitions. Original complete feedback and R files remain unchanged; no Train/rawrows/paid call, no candidate attempt. First compact feedback intermediate preserved; no claimed original input overwritten.

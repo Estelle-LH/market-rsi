@@ -29,6 +29,39 @@ TIMES = {"start_utc": "2026-10-06T17:31:25Z", "selection_cutoff_utc": "2026-10-0
 ROOT = Path("/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts") / BATCH
 
 
+def _configuration(binding, root):
+    """Reviewed Supervisor input within the approved small-pilot hard ceiling."""
+    if binding is None:
+        return {"batch_id": BATCH, "root": str(ROOT), "limits": LIMITS, **TIMES}
+    value = c._read(binding)
+    fields = {"schema", "batch_id", "root", "limits", *TIMES}
+    import re
+    if (set(value) != fields or value["schema"] != "supervisor_reviewed_pilot_configuration_v1"
+            or binding["path"] != str(root / "configuration.json")
+            or value["root"] != str(root)
+            or not isinstance(value["batch_id"], str)
+            or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", value["batch_id"])
+            or root.name != value["batch_id"]):
+        raise ValueError("exact Supervisor configuration/root required")
+    limits = value["limits"]
+    if (type(limits) is not dict or set(limits) != set(LIMITS)
+            or any(type(item) is not int for item in limits.values())
+            or any(limits[key] <= 0 for key in limits if key != "paid_provider_calls")
+            or limits["candidate_attempts"] > 3 or limits["statistical_fits"] > 12
+            or limits["original_controller_decisions"] > 3
+            or limits["paid_provider_calls"] != 0 or limits["threads_per_candidate"] != 1
+            or limits["live_candidate_processes"] != 1 or limits["per_attempt_seconds"] > 900
+            or limits["sampled_rss_bytes"] > 1073741824
+            or limits["statistical_fits"] != 4 * limits["candidate_attempts"]
+            or limits["original_controller_decisions"] > limits["candidate_attempts"]):
+        raise ValueError("configuration exceeds fixed 3decision/3attempt/12fit ceiling")
+    start, cutoff, deadline = [c._time(value[key]) for key in TIMES]
+    if (not start < cutoff < deadline or (deadline - start).total_seconds() > 2700
+            or any(value[key] != c._time(value[key]).strftime("%Y-%m-%dT%H:%M:%SZ") for key in TIMES)):
+        raise ValueError("configuration requires ordered exact UTC times within45minutes")
+    return value
+
+
 def _file(path):
     path = Path(path)
     return c._read({"path": str(path), "sha256": c.sha(path)})
@@ -43,24 +76,32 @@ def _ledger(path, value):
     finally: os.close(fd)
 
 
-def _review(packet, input_binding, authorization_binding, review_binding, repo):
+def _review(packet, input_binding, authorization_binding, review_binding, repo, *, configuration_binding=None, config=None):
     review, authorization = c._read(review_binding), c._read(authorization_binding)
     expected = {"passed": True, "authorization_sha256": authorization_binding["sha256"],
         "input_sha256": input_binding["sha256"], "transaction_source_sha256": c.sha(Path(__file__).resolve()),
         "consumer_source_sha256": c.sha(Path(c.__file__).resolve()), "cli_sha256": c.CLI_SHA,
         "requested_model": c.MODEL}
+    if configuration_binding is not None:
+        expected["configuration_sha256"] = configuration_binding["sha256"]
     if any(type(review.get(key)) is not type(value) or review.get(key) != value for key, value in expected.items()):
         raise ValueError("independent input/source/operation review drift")
     transfer = authorization.get("account_transfer", {})
+    config = config or _configuration(configuration_binding, Path(authorization_binding["path"]).parent)
     if (authorization.get("schema") != "market_rsi_bounded_coevo_pilot_authorization_v1"
-            or authorization.get("batch_id") != BATCH or authorization.get("granted") is not True
-            or authorization.get("limits") != LIMITS or any(authorization.get(key) != value for key, value in TIMES.items())
+            or authorization.get("batch_id") != config["batch_id"] or authorization.get("granted") is not True
+            or c._digest(authorization.get("limits")) != c._digest(config["limits"])
+            or any(authorization.get(key) != config[key] for key in TIMES)
             or transfer.get("approved") is not True or transfer.get("destination") != DESTINATION
             or transfer.get("requested_model") != c.MODEL or transfer.get("serving_snapshot") != "unknown"
             or any(transfer.get(key) is not False for key in ("raw_train_transfer", "tools_enabled", "automatic_retry"))
             or authorization.get("closed") != {key: True for key in
                 ("Dev", "Final", "external_data", "external_literature", "paid_provider", "release", "push", "promotion")}):
         raise ValueError("exact user grant/model/destination/time/permission boundary required")
+    if configuration_binding is not None and (
+            transfer.get("max_input_bytes") != 32768 or type(transfer.get("max_input_bytes")) is not int
+            or transfer.get("payload_scope") != ["private Train-derived aggregate feedback", "research memory/history", "relevant candidate source context"]):
+        raise ValueError("exact compact payload authorization required")
     if (len(Path(input_binding["path"]).read_bytes()) > 32768 or "evidence_session" in packet
             or not {"bindings", "feedback", "memory", "history", "pool", "authority", "overhead",
                     "provided_parents", "provided_source_sha256"} <= set(packet)
@@ -124,9 +165,9 @@ def _recover(directory, packet, claim):
     return response
 
 
-def _finish(root, directory, packet, result):
+def _finish(root, directory, packet, result, *, batch_id=BATCH):
     path = root / "ledger.json"; ledger = _file(path)
-    if ledger.get("schema") != "market_rsi_coevo_pilot_ledger_v1" or ledger.get("batch_id") != BATCH:
+    if ledger.get("schema") != "market_rsi_coevo_pilot_ledger_v1" or ledger.get("batch_id") != batch_id:
         raise ValueError("original recovery ledger identity drift")
     matches = [item for item in ledger["controller_decisions"] if item["feedback_sha256"] == packet["bindings"]["feedback"]["sha256"]]
     if len(matches) != 1 or matches[0]["input_sha256"] != c._digest(packet):
@@ -140,11 +181,14 @@ def _finish(root, directory, packet, result):
     return result
 
 
-def call(root, input_binding, authorization_binding, review_binding, repo, *, transport=None):
+def call(root, input_binding, authorization_binding, review_binding, repo, *, transport=None, configuration_binding=None):
     """Hold the Supervisor global lock through one durable original transaction."""
     root = Path(root)
     if not root.is_absolute() or root.resolve() != root or not root.is_dir(): raise ValueError("permanent original pilot root required")
-    if authorization_binding["path"] != str(root / "authorization.json") or (transport is None and root != ROOT):
+    config = _configuration(configuration_binding, root)
+    if authorization_binding["path"] != str(root / "authorization.json") or (transport is None and (
+            (configuration_binding is None and root != ROOT)
+            or (configuration_binding is not None and root.parent != ROOT.parent))):
         raise ValueError("original grant and sole permanent pilot root required")
     packet = c._read(input_binding)
     key = packet["bindings"]["feedback"]["sha256"]
@@ -157,15 +201,17 @@ def call(root, input_binding, authorization_binding, review_binding, repo, *, tr
             "authorization": authorization_binding, "review": review_binding,
             "schema_sha256": c._digest(SCHEMA), "transaction_source_sha256": c.sha(Path(__file__).resolve()),
             "cli_sha256": c.CLI_SHA, **c._identity()}
-        if (directory / "claim.json").exists(): return _finish(root, directory, packet, _recover(directory, packet, claim))
-        _review(packet, input_binding, authorization_binding, review_binding, repo)
+        if configuration_binding is not None: claim["configuration_sha256"] = configuration_binding["sha256"]
+        if (directory / "claim.json").exists(): return _finish(root, directory, packet, _recover(directory, packet, claim), batch_id=config["batch_id"])
+        _review(packet, input_binding, authorization_binding, review_binding, repo,
+                configuration_binding=configuration_binding, config=config)
         now = datetime.now(timezone.utc)
-        if not c._time(TIMES["start_utc"]) <= now < c._time(TIMES["selection_cutoff_utc"]):
+        if not c._time(config["start_utc"]) <= now < c._time(config["selection_cutoff_utc"]):
             raise ValueError("pilot selection window closed or not started")
         ledger_path = root / "ledger.json"; ledger = _file(ledger_path)
         decisions = ledger.get("controller_decisions", [])
-        if (ledger.get("schema") != "market_rsi_coevo_pilot_ledger_v1" or ledger.get("batch_id") != BATCH
-                or ledger.get("status") != "open" or type(decisions) is not list or len(decisions) >= 2
+        if (ledger.get("schema") != "market_rsi_coevo_pilot_ledger_v1" or ledger.get("batch_id") != config["batch_id"]
+                or ledger.get("status") != "open" or type(decisions) is not list or len(decisions) >= config["limits"]["original_controller_decisions"]
                 or any(item.get("feedback_sha256") == key or item.get("status") == "reserved" for item in decisions)):
             raise RuntimeError("pilot cap or unresolved original reservation; no retry")
         if directory.parent.exists() and directory.parent.resolve() != directory.parent:
@@ -177,7 +223,7 @@ def call(root, input_binding, authorization_binding, review_binding, repo, *, tr
         c.save(directory / "input.json", packet); c.save(directory / "schema.json", SCHEMA); c.save(directory / "claim.json", claim)
         started = time.monotonic()
         try:
-            (transport or c._transport)(directory, packet, min(120., (c._time(TIMES["deadline_utc"]) - now).total_seconds()))
+            (transport or c._transport)(directory, packet, min(120., (c._time(config["deadline_utc"]) - now).total_seconds()))
             result = _recover(directory, packet, claim)
         except BaseException as error:
             c.save(directory / "failure.json", {"error": str(error), "no_resample": True,
@@ -185,4 +231,4 @@ def call(root, input_binding, authorization_binding, review_binding, repo, *, tr
             raise
         timing = {"wall_seconds": time.monotonic() - started, "usage": _file(directory / "ack.json")["usage"]}
         c.save(directory / "timing.json", timing)
-        return _finish(root, directory, packet, result)
+        return _finish(root, directory, packet, result, batch_id=config["batch_id"])
