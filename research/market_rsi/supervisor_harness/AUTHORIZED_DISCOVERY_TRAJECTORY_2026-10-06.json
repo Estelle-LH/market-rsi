@@ -15,11 +15,12 @@
   "scoring_scope": "Repeatedly viewed chronological Train Discovery, not untouched OOS or independent confirmation",
   "incumbent": "raw decision-time market; Brier0.14195252900323282/logloss0.4296707847132428",
   "events": [
-    {"at_utc":"2026-10-06T15:04:53Z","kind":"bootstrap","author":"AI Supervisor Root","input_sha256":"408c33a20a220868a26218a7fa0ebdbe4714954500615212340ec9586e9287f3","source_commit":"fd579e3","axis":"H","meaning":"Human-directed fresh authorized envelope; no scientific choice, model call, fit, prediction improvement or self-evolution"}
+    {"at_utc":"2026-10-06T15:04:53Z","kind":"bootstrap","author":"AI Supervisor Root","input_sha256":"408c33a20a220868a26218a7fa0ebdbe4714954500615212340ec9586e9287f3","source_commit":"fd579e3","axis":"H","meaning":"Human-directed fresh authorized envelope; no scientific choice, model call, fit, prediction improvement or self-evolution"},
+    {"at_utc":"2026-10-06T15:09:27Z","kind":"original_controller_decision","author":"Account gpt-6.1-sol Controller, exact serving snapshot unknown","call_id":"market-rsi-authorized-controller-after-n2-20261006-01","original_response_sha256":"81b709cb7de860743b1b7e4137bec770e6597e81ea87792e1c4f554013657753","decision_canonical_sha256":"81aa089f8e54393d045e33a710cc3941b5c8a7b77695e6c8318d2faa0e72ee98","axis":"C","candidate":"InGameTemperatureUncertaintyWeightedPossessionJointOffset-v1","actual_parent":"C7 market temperature calibration","comparator":"Raw decision-time market incumbent, separate","feedback_dependency":"N2 distance-slope and D5 constant-possession worsened parent; test whether an uncertainty-weighted possession interaction behaves differently, rather than repeat either exact recipe","actual_global_active_pool":[{"parent":"C7","route":"possession_effect_conditional_on_market_uncertainty","reason":"Distinct first interaction after reviewed negatives"},{"parent":"B3","route":"nonlinear_causal_state_representation","reason":"Method diversity/unresolved state representation; no second experiment preselected"}],"training_completed":false,"input_tokens":232137,"output_tokens":2033,"cached_input_tokens":0,"meaning":"Actual scientific choice and ordinary accumulated-memory use; no new prediction score or demonstrated researcher-policy advantage"}
   ],
   "actual_completed_experiments": 0,
   "actual_fit_calls": 0,
-  "actual_original_controller_decisions": 0,
+  "actual_original_controller_decisions": 1,
   "paid_provider_calls": 0,
   "claim_boundary": "Functional feedback continuation, useful memory reuse, prediction improvement and fixed-process superiority are separate claims; none inferred from engineering/preflight alone"
 }

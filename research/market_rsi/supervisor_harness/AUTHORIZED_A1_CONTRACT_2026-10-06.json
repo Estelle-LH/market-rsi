@@ -1,0 +1,18 @@
+{
+  "schema": "controller_candidate_contract_v1",
+  "decision_sha256": "81aa089f8e54393d045e33a710cc3941b5c8a7b77695e6c8318d2faa0e72ee98",
+  "candidate_id": "InGameTemperatureUncertaintyWeightedPossessionJointOffset-v1",
+  "question_id": "ingame-temperature-uncertainty-weighted-possession-v1-q1",
+  "hypothesis": "Does an uncertainty-weighted possession offset improve predictions conditional on C7? Possession may warrant a larger probability correction near even market odds and a smaller correction when the market already assigns an extreme probability. The supplied negative constant-possession and distance-slope results do not answer this interaction question.",
+  "recipe": "Non-executable scientific specification: use only frozen home-token market probability p, its existing logit l, and frozen pre-play binary possession_is_home h. Define s=2h-1, w=4p(1-p), and z=s*w. The fixed uncertainty weight has no fitted scale or searched threshold. Fit eta=(1+beta)*l+gamma*z, beta>=-1 and gamma unrestricted, minimizing unweighted summed NLL+8*(beta^2+gamma^2). No intercept or further predictive columns. This differs from D5's constant possession basis, D1's field-position/down/distance pressure composite, D4's market-only tanh basis, and N2's distance-by-market slope. Joint token relabeling changes p to 1-p and s to -s, so eta changes sign; monotonicity is not claimed. Initialize each existing fold with verified same-fold C7 beta and gamma=0. Reuse the reviewed deterministic beta-then-gamma coordinate-bisection method, with fit-only brackets beta[-1,1+sum(abs(l))/16] and gamma[-G,G], G=1+sum(abs(z))/16, checking endpoint derivative signs. Preserve derivative tolerance 1e-10, 200 coordinate steps, 100 sweeps, independent KKT<=1e-8, finite Hessian eigenvalues>=16 within existing numerical tolerance, and objective<=warm-start objective+1e-8. No grid, restart, fallback, control refit or tolerance relaxation. Before real fits, freeze and independently review candidate-local source, derivatives, binary possession semantics and causal anchors, probability/logit consistency, fit-only brackets, zero-column C7 equivalence, gamma-zero replay, complement symmetry, check-label isolation and truthful partial receipts. Missing or inconsistent resident inputs invalidate this candidate without fetching, imputation or row removal. Preserve population195, materialized193 plus two fixed exclusions,87 checks,four folds,chronology,probability policy and evaluator. Use an admitted candidate-local extension; no protected infrastructure or R modification is prescribed. Supervisor reconciles uncertain prior intents and verifies current accounting, cutoff and deadline before launch. This proposal grants no execution, transfer or changed authority.",
+  "expected_evidence": "Four actual strict-past fits and the unchanged 87 keyed predictions. Report paired C7/raw/ordinary/v0-state Brier and log loss, four blocks, calibration, existing event-weighted date/week intervals, and correction energy/alignment. Preserve frozen scorer, scientific classification and KEEP. Retain the descriptive parent-increment annotation requiring both proper losses below C7 and at least three parent Brier block wins. No gain is assumed; intervals remain descriptive under adaptive Train reuse.",
+  "actual_parent_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+  "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+  "resources": {
+    "fits": 4,
+    "provider_calls": 0,
+    "rss_bytes": 1073741824,
+    "seconds": 900,
+    "threads": 1
+  }
+}

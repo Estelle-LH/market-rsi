@@ -1,0 +1,9 @@
+{
+  "schema": "market_rsi_predeclared_research_question_v1",
+  "question_id": "ingame-temperature-uncertainty-weighted-possession-v1-q1",
+  "hypothesis": "Does an uncertainty-weighted possession offset improve predictions conditional on C7? Possession may warrant a larger probability correction near even market odds and a smaller correction when the market already assigns an extreme probability. The supplied negative constant-possession and distance-slope results do not answer this interaction question.",
+  "descriptive_parent_increment_rule": "Candidate Brier and log loss below locked C7 parent and at least3/4 parent Brier block wins",
+  "predictor_judge": "Unchanged original scorer and KEEP; this descriptive question does not alter incumbent threshold",
+  "learning": "Independent valid nonduplicate hypothesis test may earn credit2 even REVERT; exact recipe failure is not family refutation; exploration distinct from incumbent",
+  "authority": "No permission or transfer granted; actual fresh batch caps/clocks and protected boundary unchanged"
+}

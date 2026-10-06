@@ -1,0 +1,85 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "market-rsi-authorized-a1-20261006-01",
+  "parent_commit": "60bfe0a",
+  "source_evidence": "Actual completed original market-rsi-authorized-controller-after-n2-20261006-01 response81b709cb/canonical81aa089f; reviewed N2 feedback be23c4f2 led to uncertainty-weighted possession recipe. No preselected algorithm.",
+  "symptom": "First actual new Controller proposal requires candidate-local executable implementation and independent review before real fits.",
+  "objective": "Implement exactly original uncertainty-weighted possession recipe; complete four residentTrain fits/87predictions and return independently verified result/learning to Controller.",
+  "boundary": "Existing frozen InGameWinProbabilityTrainDiagnostic-v0 Train Discovery;195 denominator/193 rows/87checks/fourfold/scorer/KEEP fixed; originalthreeattempt/12fit/3decisionbatch ends16:34:53Z. No protected/external/paid/release/push/promotion or rawrowtransfer.",
+  "supervisor_owner": "root",
+  "resolution_check": "Actual source-admitted once-only training, independently reconstructed predictions and unchanged scores, accepted feedback usable for next original choice.",
+  "change_contract": {
+    "axis": "C",
+    "component": "One possession uncertainty-weighting basis; reused two-parameter fit and adapter",
+    "author": "Original account Controller gpt-6.1-sol; implementation delegated",
+    "allowed_write_paths": [
+      "research/market_rsi/experiments/nfl_ingame_temperature_uncertainty_possession_joint_offset.py",
+      "research/market_rsi/experiments/test_nfl_ingame_temperature_uncertainty_possession_joint_offset.py"
+    ],
+    "protected": "All existing source/helpers/worker/scorer/KEEP/boundaries unchanged",
+    "size": "One new candidate module +one test; numerical/scientific change one fixed basis; if mechanically reused runner exceeds200lines report measured size, no shared refactor",
+    "test_plan": "Synthetic exact features/symmetry/causal/invalids/check-label isolation/zero-gamma/optimizer/replay plus relevant existing suite; independent source/result/learning",
+    "resource_ceiling": "15min implementation target; max4real fits900s/thread1/1GiB oneonce attempt; global clocksfixed",
+    "rollback": "Preserve failed version/results; do not retry same scientific attempt or change scorer"
+  },
+  "steps": [
+    {
+      "id": "contract",
+      "owner": "root",
+      "action": "Freeze exact10fieldoriginalcontract, separateexecutionmetadata and predeclaredresearchrule",
+      "depends_on": [],
+      "expected_artifact": "AUTHORIZED_A1_CONTRACT_2026-10-06.json",
+      "verification": "Consumer recovered complete original once call; response/source/feedback/control exact; semanticreviewbeforetraining",
+      "pass_condition": "Exact original choice preserved, no newauthority or simulatedresults",
+      "failure_action": "Preservefailurestopbeforefits",
+      "time_bound_minutes": 3,
+      "result": {
+        "verdict": "pass",
+        "observed": "Actual complete original decision81aa089f; exact10fieldcontractf75ed7a5 frozen; parentC7/rawincumbent separate",
+        "reviewer": "Root originalresponse preservation",
+        "evidence_path": "AUTHORIZED_A1_CONTRACT_2026-10-06.json",
+        "evidence_sha256": "f75ed7a512589991c2179bcdf9b07e1df7b10e4febd3c6cfa50508510be41f6c"
+      }
+    },
+    {
+      "id": "implement",
+      "owner": "window_handoff_worker",
+      "action": "Implement only exact candidate/testfrom frozenoriginalrecipe; no scientificreselection/admission/realTrainfits",
+      "depends_on": [
+        "contract"
+      ],
+      "expected_artifact": "AGENT_LOG_AUTHORIZED_A1_IMPLEMENTER_2026-10-06.md",
+      "verification": "Onecandidate/testonly, syntheticchecksand unchanged dependencies",
+      "pass_condition": "Source/test hash frozen, measuredsize, validsynthetic numerical/causalchecks",
+      "failure_action": "Boundednewversionrepairandreturnexactfailure; noharnesschanges",
+      "time_bound_minutes": 15
+    },
+    {
+      "id": "review",
+      "owner": "window_independent_reviewer",
+      "action": "Independently inspect choice/candidate/source/ops, verify exact committed request/selection/contract semanticreview; later numeric/learning/payloadreviews in same scopedrole",
+      "depends_on": [
+        "contract"
+      ],
+      "expected_artifact": "AUTHORIZED_A1_SOURCE_REVIEW_2026-10-06.json",
+      "verification": "Exact13fieldreviewbindscurrentrequest/source/originalresponse; no raw/protected/paid/externalfit",
+      "pass_condition": "Semantic/sourceadmissionPASS noP0P1 beforefits",
+      "failure_action": "Returnconcreteissuewithoutchangingcandidate/choice/judge",
+      "time_bound_minutes": 15
+    },
+    {
+      "id": "run",
+      "owner": "root",
+      "action": "Sole serialoriginalnativeadmission andfourrealpastfits; independentresultand separatelearningreviewthenfeedback",
+      "depends_on": [
+        "implement",
+        "review"
+      ],
+      "expected_artifact": "AUTHORIZED_A1_RESULT_REVIEW_2026-10-06.json",
+      "verification": "Actualprogress4/4,87keyedpredictions/unchanged195controls/scores,parentcomparisonsandlineage,globalcountonce",
+      "pass_condition": "Validactualexperimentandsignedreviewedfeedback, ortruthfulcountedfailure",
+      "failure_action": "FactualfailurefeedbacktoController; noretrywithoutfreshoriginalchoice",
+      "time_bound_minutes": 20
+    }
+  ]
+}
