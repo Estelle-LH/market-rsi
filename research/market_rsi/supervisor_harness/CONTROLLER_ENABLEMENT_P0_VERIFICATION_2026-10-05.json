@@ -1,0 +1,20 @@
+{
+  "schema": "market_controller_enablement_verification_v1",
+  "checkpoint": "controller-enablement-p0-evidence-tools-20261005-01",
+  "verdict": "PASS_TESTS_NOT_LIVE_ACTIVATION",
+  "author": "root",
+  "change_axis": "H",
+  "proposal_origin": "User-directed Supervisor engineering, not autonomous researcher evolution",
+  "parent_commit": "938f6960471167b6dc0d21093c240873b3ccfbc4",
+  "production": {"path": "controller_research_evidence_tools.py", "lines": 284, "sha256": "01980b4117b5242a16728bc60392623a5efd13dd48e0390ebf29fd810404f7c4"},
+  "tests": {"path": "test_controller_research_evidence_tools.py", "sha256": "84cb98d6b43fe3c6e13b16fd6dd43ebb6d974a4790ed3b33611e7beb9da056d8", "new_test_count": 33, "combined_test_executions": 172, "first_root_seconds": 2.219, "post_ready_gate_root_seconds": 2.229, "exit_code": 0,
+    "cwd": "/Users/estelle/Developer/market-rsi/research/market_rsi",
+    "command": "/Users/estelle/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -B -m unittest supervisor_harness.test_controller_research_evidence_tools supervisor_harness.test_account_controller_feedback_consumer supervisor_harness.test_opened_train_discovery_worker supervisor_harness.test_continuous_discovery_batch supervisor_harness.test_continuous_discovery_branch_retention supervisor_harness.test_continuous_discovery_small_steps supervisor_harness.test_learning_checkpoint_assessment",
+    "scope": "Synthetic fixtures and local protocol subprocess only; inherited unittest classes can cause repeated executions, so 172 is not a unique-test claim."},
+  "protected_source": {"tracked_python_count_before_new_files": 1039, "before_sha256": "995611b2da6322d070c0f6c16ddf0b4149b5f691b72778f32844d204a1c84c80", "after_sha256": "995611b2da6322d070c0f6c16ddf0b4149b5f691b72778f32844d204a1c84c80", "method": "SHA256 of sorted compact JSON mapping git-ls-files research/market_rsi Python paths to file SHA256, captured before adding new files to Git", "claim": "Previously tracked Python bytes unchanged; not a complete kernel/model/raw-data runtime identity"},
+  "verified": ["Approved-ID listing and bounded Unicode pagination", "Exact policy/source hashes and payload approval required", "Unlisted/model-supplied paths and symlink traversal denied", "Nonregular/oversized/non-UTF8 sources denied", "Cumulative tool-call and serialized tool-payload limits including denials", "Thread serialization and durable audit before prepared response", "Audit failure terminal; used audit path cannot silently restart", "Strict JSON and local newline JSON-RPC roundtrip"],
+  "smallness": {"warning_triggered": true, "root_assessment": "One inseparable evidence-reader component: admission, descriptor reads, shared budgets, durable audit and transport. Acceptable to submit for explicit independent review; no claim under 200 lines.", "independent_verdict": "Recorded separately in CONTROLLER_ENABLEMENT_P0_INDEPENDENT_REVIEW_2026-10-05.json"},
+  "resources": {"actual_train_reads": 0, "statistical_fits": 0, "live_controller_transport_calls": 0, "paid_provider_calls": 0, "external_data_or_literature_requests": 0, "releases_or_promotions": 0, "root_test_wall_seconds_sum": 4.448, "total_model_and_engineering_cost": "unknown; supervising chat and helper usage not measured by runner"},
+  "limits": ["Standalone and unactivated; account consumer retains original behavior", "Manifest classification requires trusted Supervisor content review", "Tool-payload byte cap excludes MCP metadata/framing", "Prepared-response audit does not confirm consumer delivery", "This broker does not disable CLI built-ins or sandbox arbitrary code", "Fresh audit path prevents silent reset but is not interruption recovery", "No live Controller capability, unattended continuation, research-process improvement or prediction gain demonstrated"],
+  "next_checkpoint": "Separately bind the consumer to this broker, verify the effective tool catalog and enforce other-channel denial before live access; preserve existing exhausted budgets and payload permissions."
+}
