@@ -176,6 +176,42 @@ class EntryTests(TestCase):
         with self.assertRaisesRegex(ValueError, "exact certain-prefix"):
             entry.completed_prefix(self.f.runtime, binding)
 
+    def test_completed_round2_restoration_is_context_bound_not_a_role_retry(self):
+        live = entry.LivePriceServices(self.f.runtime, self.f.base, author=self.f.author,
+            reviewer=self.f.reviewer, callback_sources={key: self.f.callback_binding
+                                                     for key in ("author", "reviewer")})
+        live.recovery_binding = self.f.h.f.write("round2-recovery-pin", {"synthetic": True})
+        live.recovery_directory = "price-loop-admission-v3"
+        (self.f.root / live.recovery_directory).mkdir()
+        context = {"round_index": 2, "seed": self.f.seed, "previous_result": self.f.seed,
+                   "previous_feedback_sha256": entry.r.t.c._digest(self.f.seed), "outputs": {}}
+        saved = {"context_sha256": entry.r.t.c._digest(context), "output": {"known_original": True}}
+        live.restored_stages = {(2, "input"): saved}
+        reviews = len(self.f.reviews)
+        self.assertEqual(live.handlers()["input"](context), saved["output"])
+        self.assertEqual(len(self.f.reviews), reviews)
+        bad = deepcopy(context)
+        bad["previous_feedback_sha256"] = "f" * 64
+        live.recovery_directory = "price-loop-admission-v3-drift-fixture"
+        (self.f.root / live.recovery_directory).mkdir()
+        with self.assertRaisesRegex(ValueError, "restoration context"):
+            live.handlers()["input"](bad)
+        live.recovery_directory = "price-loop-admission-v3"
+        live.recovered_seed_sha256 = entry.r.t.c._digest(self.f.seed)
+        def inspect_admission(root, handlers, *, admit, **kwargs):
+            self.assertEqual(root.name, "price-loop-admission-v3")
+            self.assertTrue(admit({**context, "stage": "input"}))
+            self.assertFalse(admit({**context, "stage": "execute"}))
+            return {"status": "synthetic-inspection-only"}
+        with patch.object(live.runtime, "admit", return_value=False), \
+                patch.object(entry.s.loop, "run", side_effect=inspect_admission):
+            live.run(self.f.seed, max_rounds=2)
+
+    def test_round2_prefix_rejects_wrong_schema_before_any_replay(self):
+        binding = self.f.h.f.write("round2-wrong-schema", {"schema": "not-a-grant"})
+        with self.assertRaisesRegex(ValueError, "exact completed round2"):
+            entry.completed_round2_prefix(self.f.runtime, binding)
+
 
 if __name__ == "__main__":
     main()

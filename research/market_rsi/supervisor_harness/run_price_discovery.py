@@ -31,7 +31,7 @@ class LivePriceServices(s.PriceLoopServices):
         def timed(stage, callback):
             def handle(context):
                 started = time.monotonic()
-                directory = "price-loop-admission-v2" if getattr(self, "recovery_binding", None) else "price-loop"
+                directory = getattr(self, "recovery_directory", "price-loop-admission-v2" if getattr(self, "recovery_binding", None) else "price-loop")
                 path = self.runtime.root / directory / f"round-{context['round_index']:04d}-{stage}.timing.json"
                 try:
                     output = callback(context)
@@ -48,14 +48,32 @@ class LivePriceServices(s.PriceLoopServices):
             def restored(context, *, output=output, original=original):
                 return output if context["round_index"] == 1 else original(context)
             handlers[stage] = restored
+        for stage in s.loop.STAGES:
+            original = handlers[stage]
+            def restored_round(context, *, stage=stage, original=original):
+                saved = getattr(self, "restored_stages", {}).get((context["round_index"], stage))
+                if saved is None:
+                    return original(context)
+                if r.t.c._digest(context) != saved["context_sha256"]:
+                    raise ValueError("completed restoration context drift")
+                return saved["output"]
+            handlers[stage] = restored_round
         return {stage: timed(stage, callback) for stage, callback in handlers.items()}
 
     def run(self, seed, *, max_rounds):
         if getattr(self, "recovery_binding", None):
             if max_rounds != 2 or r.t.c._digest(seed) != self.recovered_seed_sha256:
                 raise ValueError("original recovered seed/two-round bound drift")
-            return s.loop.run(self.runtime.root / "price-loop-admission-v2", self.handlers(),
-                seed=seed, admit=self.runtime.admit, max_rounds=2, handler_identity=self.identity)
+            def admit(context):
+                saved = getattr(self, "restored_stages", {}).get((context["round_index"], context["stage"]))
+                if saved is not None:
+                    plain = {k: v for k, v in context.items() if k != "stage"}
+                    if r.t.c._digest(plain) != saved["context_sha256"]:
+                        raise ValueError("completed restoration admission drift")
+                    return True  # Only verified completed artifacts; never a new role or fit.
+                return self.runtime.admit(context)
+            return s.loop.run(self.runtime.root / getattr(self, "recovery_directory", "price-loop-admission-v2"), self.handlers(),
+                seed=seed, admit=admit, max_rounds=2, handler_identity=self.identity)
         return super().run(seed, max_rounds=max_rounds)
 
 
@@ -139,6 +157,82 @@ def completed_prefix(runtime, binding):
     return outputs, manifest["seed_sha256"], value["original_author_recovery"]
 
 
+def completed_round2_prefix(runtime, binding):
+    """Restore a certain completed C1/C2 prefix, never retry its failed admission."""
+    from supervisor_harness import price_account_roles as roles
+    from supervisor_harness import price_candidate_author as author
+    value = r.t.c._read(binding)
+    if (binding["path"] != str(runtime.root / "completed-round2-prefix-recovery.json")
+            or set(value) != {"schema", "authorization", "original_manifest", "original_failed_stage",
+                              "original_author_recovery", "previous_recovery", "review"}
+            or value["schema"] != "price_certain_completed_round2_prefix_recovery_v1"
+            or value["authorization"] != runtime.authority):
+        raise ValueError("exact completed round2 recovery required")
+    review = r.t.c._read(value["review"])
+    if (review.get("passed") is not True or review.get("entry_source_sha256") != r.w.sha(__file__)
+            or review.get("author_source_sha256") != r.w.sha(author.__file__)
+            or review.get("no_new_model_call") is not True):
+        raise ValueError("independent exact round2 recovery source review required")
+    old = runtime.root / "price-loop-admission-v2"
+    manifest = s.loop._read_pair(old / "manifest.json")
+    if (value["original_manifest"] != r.pin(old / "manifest.json") or manifest["max_rounds"] != 2
+            or value["original_failed_stage"]["path"] != str(old / "round-0002-implement.failed.json")
+            or value["previous_recovery"]["path"] != str(runtime.root / "completed-prefix-recovery.json")):
+        raise ValueError("original round2 prefix identity drift")
+    r.t.c._read(value["previous_recovery"])
+    if any(v.get("completed_prefix_recovery") != value["previous_recovery"] for v in manifest["handler_identity"].values()):
+        raise ValueError("round1 recovery history drift")
+    ledger = r.t._file(runtime.root / "ledger.json")
+    if (len(ledger["controller_decisions"]) != 2 or any(d["status"] != "completed" for d in ledger["controller_decisions"])
+            or any(a["status"] in {"reserved", "uncertain"} for a in ledger["attempts"])
+            or len(ledger["attempts"]) != 1 and not (runtime.root / "price-loop-admission-v3/manifest.json").exists()):
+        raise ValueError("only certain round2 pre-source failure is recoverable")
+    restored, previous, seed = {}, manifest["seed"], manifest["seed"]
+    for index, stages in ((1, s.loop.STAGES), (2, ("input", "controller"))):
+        outputs = {}
+        for stage in stages:
+            done = s.loop._read_pair(old / f"round-{index:04d}-{stage}.done.json")
+            claim_path = old / f"round-{index:04d}-{stage}.claim.json"
+            context = {"round_index": index, "seed": seed, "previous_result": previous,
+                "previous_feedback_sha256": r.t.c._digest(previous), "outputs": outputs}
+            expected = {"round_index": index, "stage": stage, "context_sha256": r.t.c._digest(context),
+                "manifest_sha256": value["original_manifest"]["sha256"], "previous_feedback_sha256": r.t.c._digest(previous)}
+            if (r.t._file(claim_path) != expected or done["claim_sha256"] != r.w.sha(claim_path)
+                    or done["output_sha256"] != r.t.c._digest(done["output"])):
+                raise ValueError("original completed round2 prefix binding drift")
+            s.loop._artifacts(done["output"])
+            restored[index, stage] = {"context_sha256": r.t.c._digest(context), "output": done["output"]}
+            outputs[stage] = done["output"]
+        prepared = outputs["input"]
+        packet = r.t.c._read(prepared["input"])
+        r.t._review(packet, prepared["input"], runtime.authority, prepared["review"], runtime.repo,
+            configuration_binding=runtime.configuration, config=runtime.config)
+        directory = Path(outputs["controller"]["directory"])
+        if directory != runtime.root / "decisions" / packet["bindings"]["feedback"]["sha256"]:
+            raise ValueError("original Controller path drift")
+        decision = r.t._recover(directory, packet, r.t._file(directory / "claim.json"), roles.transport_contract())
+        if decision != outputs["controller"]["decision"] or not any(d.get("decision_sha256") == r.t.c._digest(decision) and d.get("input_sha256") == r.t.c._digest(packet) for d in ledger["controller_decisions"]):
+            raise ValueError("original Controller completion/accounting drift")
+        if index == 1:
+            previous = outputs["reconcile"]
+            if not any(a.get("reconciled_feedback_sha256") == previous["feedback"]["sha256"] and a.get("status") == "succeeded" for a in ledger["attempts"]):
+                raise ValueError("original accepted first-round accounting drift")
+    failed = r.t.c._read(value["original_failed_stage"])
+    failed_claim = old / "round-0002-implement.claim.json"
+    context["outputs"] = outputs
+    if (failed.get("retry_allowed") is not False or failed["claim_sha256"] != r.w.sha(failed_claim)
+            or r.t._file(failed_claim)["context_sha256"] != r.t.c._digest(context)):
+        raise ValueError("original failed round2 admission drift")
+    recovered = r.t.c._read(value["original_author_recovery"])
+    ident = "author-r0002-" + r.t.c._digest(decision)[:12]
+    directory = runtime.root / "role_calls/author" / ident
+    original = roles._recover(directory, r.t._file(directory / "claim.json"), r.t._file(directory / "schema.json"))
+    if (recovered["original_author_id"] != ident or recovered["original_decision_sha256"] != r.t.c._digest(decision)
+            or recovered["review"] != value["review"] or original["response"]["decision_sha256"] != r.t.c._digest(decision)):
+        raise ValueError("original round2 author drift")
+    return restored, manifest["seed_sha256"], value["original_author_recovery"]
+
+
 class PricePilotRuntime(r.PilotRuntime):
     """Only the real text-only Controller transport differs from old pilots."""
     def controller(self, context):
@@ -192,8 +286,14 @@ def build(batch_configuration):
             raise ValueError("real service module differs from pinned source")
     runtime = PricePilotRuntime(root, repo, config["authorization"], config["configuration"])
     account = roles.AccountRoles(root, config["role_authorization"])
-    prefix, seed_hash, author_recovery = (completed_prefix(runtime, config["recovery"])
-        if "recovery" in config else ({}, None, None))
+    round2 = "recovery" in config and r.t.c._read(config["recovery"]).get("schema") == "price_certain_completed_round2_prefix_recovery_v1"
+    if round2:
+        restored, seed_hash, author_recovery = completed_round2_prefix(runtime, config["recovery"])
+        prefix = {}
+    else:
+        prefix, seed_hash, author_recovery = (completed_prefix(runtime, config["recovery"])
+            if "recovery" in config else ({}, None, None))
+        restored = {}
     author = CandidateAuthor(runtime, config["source_files"], config["role_authorization"],
         completed_author_recovery=author_recovery)
     reviewer = IndependentPriceReviewer(runtime, account.call,
@@ -202,6 +302,8 @@ def build(batch_configuration):
         reviewer=reviewer.review, callback_sources={key: config["service_sources"][key]
                                                     for key in ("author", "reviewer")})
     service.completed_prefix, service.recovered_seed_sha256 = prefix, seed_hash
+    service.restored_stages = restored
+    service.recovery_directory = "price-loop-admission-v3" if round2 else "price-loop-admission-v2"
     service.recovery_binding = config.get("recovery")
     return config, service, account
 

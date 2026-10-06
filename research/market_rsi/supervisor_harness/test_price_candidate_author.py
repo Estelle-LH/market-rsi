@@ -97,6 +97,14 @@ class SourceGuardTests(TestCase):
         self.assertEqual(a.validate_source(response['candidate_source'])['ast_nodes'], 422)
         self.assertEqual(a.validate_source(response['test_source'], is_test=True)['ast_nodes'], 813)
 
+    def test_actual_preserved_round2_completed_author_response_ast(self):
+        path = Path('/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/author/author-r0002-5918dea0ccc1/response.json')
+        if not path.exists(): self.skipTest('immutable local completed-author evidence not installed')
+        self.assertEqual(a.h.w.sha(path), '329a34d10076a2eb40bad763bad95bb813bd9a5ed6f23c3c0f9f3f6d54caf2cd')
+        response = json.loads(path.read_text())
+        self.assertEqual(a.validate_source(response['candidate_source'])['ast_nodes'], 608)
+        self.assertEqual(a.validate_source(response['test_source'], is_test=True)['ast_nodes'], 1266)
+
 
 class AuthorServiceTests(TestCase):
     def setUp(self):
@@ -189,8 +197,9 @@ class AuthorServiceTests(TestCase):
 
 
 class CompletedAuthorRecoveryTests(AuthorServiceTests):
-    def recovery_fixture(self):
-        self.original_id = "author-r0001-" + self.digest[:12]
+    def recovery_fixture(self, *, round_index=1):
+        self.ctx['round_index'] = round_index
+        self.original_id = f"author-r{round_index:04d}-" + self.digest[:12]
         role = self.root / "role_calls/author" / self.original_id
         role.mkdir(parents=True)
         original = self.transport
@@ -212,9 +221,9 @@ class CompletedAuthorRecoveryTests(AuthorServiceTests):
         a.h.w.save(self.root / "independent-admission-review.json", {"passed": True,
             "author_source_sha256": a.h.w.sha(a.__file__), "original_failure_sha256": failure["sha256"],
             "original_completion_sha256": completion["sha256"], "original_decision_sha256": self.digest})
-        recovery = {"schema": "price_completed_author_admission_recovery_v1", "round_index": 1,
+        recovery = {"schema": "price_completed_author_admission_recovery_v1", "round_index": round_index,
             "original_decision_sha256": self.digest, "original_author_id": self.original_id,
-            "fresh_local_id": self.original_id + "-admission-v2", "original_failure": failure,
+            "fresh_local_id": self.original_id + {1: '-admission-v2', 2: '-admission-v3'}[round_index], "original_failure": failure,
             "original_input": a.h.r.pin(role / "input.json"), "original_response": a.h.r.pin(role / "response.json"),
             "original_completion": completion, "review": a.h.r.pin(self.root / "independent-admission-review.json")}
         a.h.w.save(self.root / "admission-recovery.json", recovery)
@@ -231,6 +240,22 @@ class CompletedAuthorRecoveryTests(AuthorServiceTests):
         failure_before = Path(recovery["original_failure"]["path"]).read_bytes()
         authored = self.author.author(self.ctx)
         self.assertIn(self.original_id + "-admission-v2", authored["candidate_binding"]["path"])
+        self.assertEqual(len(self.calls), 1)
+        self.assertEqual(Path(recovery["original_failure"]["path"]).read_bytes(), failure_before)
+        receipt = json.loads((Path(authored["candidate_binding"]["path"]).parent / "author_receipt.json").read_text())
+        self.assertEqual(receipt["role_call"]["call_id"], self.original_id)
+        with self.assertRaises(FileExistsError): self.author.author(self.ctx)
+        self.assertEqual(len(self.calls), 1)
+
+    def test_round2_completed_recovery_is_distinct_and_rejects_wrong_round(self):
+        recovery = self.recovery_fixture(round_index=2)
+        failure_before = Path(recovery["original_failure"]["path"]).read_bytes()
+        source = self.repo / "research/market_rsi/experiments/price_candidates" / self.runtime.fixed_grant["batch_id"] / self.original_id
+        with self.assertRaises(ValueError):
+            a._completed_recovery(self.runtime, self.author.recovery, self.digest, self.original_id, source, round_index=1)
+        authored = self.author.author(self.ctx)
+        self.assertIn('author-r0002-', authored['candidate_binding']['path'])
+        self.assertIn('-admission-v3', authored['candidate_binding']['path'])
         self.assertEqual(len(self.calls), 1)
         self.assertEqual(Path(recovery["original_failure"]["path"]).read_bytes(), failure_before)
         receipt = json.loads((Path(authored["candidate_binding"]["path"]).parent / "author_receipt.json").read_text())

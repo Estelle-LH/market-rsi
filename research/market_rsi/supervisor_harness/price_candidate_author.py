@@ -25,7 +25,7 @@ METHODS = {"fit", "predict", "transform", "fit_transform", "reshape", "ravel", "
 NP = {"array", "asarray", "zeros", "ones", "full", "full_like", "zeros_like", "ones_like", "empty", "empty_like", "arange",
     "linspace", "column_stack", "hstack", "vstack", "stack", "concatenate", "clip", "sqrt", "log", "log1p", "exp",
     "abs", "sign", "maximum", "minimum", "where", "isfinite", "nan_to_num", "sum", "mean", "median", "std", "var",
-    "min", "max", "all", "any", "dot", "einsum", "quantile", "percentile", "unique", "argsort", "argmax", "argmin", "average",
+    "min", "max", "all", "any", "cumsum", "searchsorted", "dot", "einsum", "quantile", "percentile", "unique", "argsort", "argmax", "argmin", "average",
     "power", "square", "tanh", "multiply", "divide", "float64", "int64", "pi", "inf", "nan", "linalg", "testing"}
 BUILTINS = {"len", "range", "enumerate", "zip", "float", "int", "min", "max", "sum", "abs", "list", "tuple",
     "dict", "sorted", "all", "any", "ValueError", "RuntimeError", "AssertionError"}
@@ -122,11 +122,11 @@ def _schema(decision):
         "candidate_source": text, "test_source": text, "implementation_notes": text})
 
 
-def _completed_recovery(runtime, binding, digest, original_id, source):
+def _completed_recovery(runtime, binding, digest, original_id, source, *, round_index=1):
     h._binding(binding)
     value = h.t.c._read(binding)
-    if set(value) != {"schema", "round_index", "original_decision_sha256", "original_author_id", "fresh_local_id", "original_failure", "original_input", "original_response", "original_completion", "review"} or value["schema"] != "price_completed_author_admission_recovery_v1" or type(value["round_index"]) is not int or value["round_index"] != 1 or value["original_decision_sha256"] != digest or value["original_author_id"] != original_id or value["fresh_local_id"] != original_id + "-admission-v2":
-        raise ValueError("exact reviewed round1 completed-author recovery required")
+    if set(value) != {"schema", "round_index", "original_decision_sha256", "original_author_id", "fresh_local_id", "original_failure", "original_input", "original_response", "original_completion", "review"} or value["schema"] != "price_completed_author_admission_recovery_v1" or type(round_index) is not int or round_index not in (1, 2) or type(value["round_index"]) is not int or value["round_index"] != round_index or value["original_decision_sha256"] != digest or value["original_author_id"] != original_id or value["fresh_local_id"] != original_id + {1: "-admission-v2", 2: "-admission-v3"}[round_index]:
+        raise ValueError("exact reviewed original-round completed-author recovery required")
     role = runtime.root / "role_calls/author" / original_id
     for key, path in {"original_failure": runtime.root / original_id / "failure.json", "original_input": role / "input.json", "original_response": role / "response.json", "original_completion": role / "completion.json"}.items():
         if h._binding(value[key]) != path:
@@ -169,8 +169,8 @@ class CandidateAuthor:
         ident = f"author-r{ctx['round_index']:04d}-{digest[:12]}"
         original_id, recovered_packet = ident, None
         original_source = self.runtime.repo / "research/market_rsi/experiments/price_candidates" / self.runtime.fixed_grant["batch_id"] / ident
-        if self.recovery is not None and ctx["round_index"] == 1:
-            ident, recovered_packet = _completed_recovery(self.runtime, self.recovery, digest, ident, original_source)
+        if self.recovery is not None and h.t.c._read(self.recovery).get("round_index") == ctx["round_index"]:
+            ident, recovered_packet = _completed_recovery(self.runtime, self.recovery, digest, ident, original_source, round_index=ctx["round_index"])
         directory = self.runtime.root / ident
         source = self.runtime.repo / "research/market_rsi/experiments/price_candidates" / self.runtime.fixed_grant["batch_id"] / ident
         if directory.exists():
