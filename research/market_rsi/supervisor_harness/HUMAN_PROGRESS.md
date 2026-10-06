@@ -1953,3 +1953,26 @@ closed, not a performance failure. Evidence:WINDOW_10H_CLOSEOUT_2026-10-06.json
 and immutable permanent window_deadline_terminal.json. Next: a separately
 bounded future window with explicit account payload consent and fresh exact
 input/operation review; this expired window cannot be resumed or reset.
+
+## 2026-10-06 17:02 UTC — source checkpoint and co-evolution pilot redirect
+
+Four separately versioned H components are independently reviewed: accepted
+comparison-only parent loader4f13fb9, production preflight2d0b0e5,
+versioned candidate entrya5ede88, and fresh native handoffcc5937f. Root's combined
+154 relevant synthetic/import-only tests passed in18.796s. Archived nonlinear
+and valid negative parents can reach synthetic four-fit/87-row fixed scoring;
+matched legacy scores remain identical. Failed prerequisites stop before native
+selection and completed/uncertain originals are not retried. This is engineering
+capacity evidence, not real Train gain or autonomous researcher improvement.
+
+The user explicitly redirects from indefinite gap repair to one agent-proposed,
+tested, versioned cycle demonstrating both R(researcher capacity) and H(harness
+capacity), with downstream effects separated. Full global scheduler work is
+deferred before assignment. These instructions are a human intervention, not R
+self-evolution. Do not force a stale/unnecessary researcher rewrite or call a
+predictor-only change co-evolution. A new bounded45min/2candidate/8fit/2original
+Controller pilot question is pending, including exact private compact
+Train-derived payload and signed-in account destination. Prior batch caps stay
+closed; no new account calls, real fits, predictions or live ledger changes in
+this repair turn. A supervised pilot does not require all remaining gaps closed
+and cannot establish same-budget fixed-versus-evolving superiority.

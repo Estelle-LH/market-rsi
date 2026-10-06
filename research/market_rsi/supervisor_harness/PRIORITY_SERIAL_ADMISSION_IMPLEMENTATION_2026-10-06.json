@@ -1,0 +1,16 @@
+{
+  "schema":"supervisor_bottleneck_plan_v1",
+  "id":"priority-serial-admission-20261006-v1",
+  "status":"deferred_before_assignment_by_user_pilot_redirect",
+  "supervisor_owner":"root",
+  "symptom":"Current global admission occurs before preflight and is bound to one frozen private batch script",
+  "source_evidence":"Read-only actual serial_native_launch_v3.py plus frozen P2 preflight and reviewed142-line v2 handoff; exact new source contract in PRIORITY_SERIAL_ADMISSION_CONTRACT_2026-10-06-v1.json",
+  "objective":"Reuse original native execution with preflight-first global serial budget accounting, no new scheduler service or model selection",
+  "boundary":"Synthetic sources/processes only, no real data/fits/model/account/network/release/live ledger writes; all old decisions/caps/pool/scorer unchanged",
+  "deferred_reason":"User requests one complete agent-proposed/tested/versioned R+H cycle with downstream effect; full serial scheduler gap is nonblocking for supervised pilot. No module/test implementation begun.",
+  "resolution_check":"Frozen small module and targeted aggregate/failure/recovery tests independently reviewed",
+  "steps":[
+    {"id":"implement","owner":"priority_serial_admission_20261006","depends_on":[],"action":"Implement one preflight-first serial admission module and tests under exact contract; append only own log","expected_artifact":"AGENT_LOG_PRIORITY_SERIAL_ADMISSION_2026-10-06.md","verification":"Global lock spans prerequisites/original dispatch/accounting; actual native/test fixtures, no grants or scientific decisions","pass_condition":"Focused tests PASS, exact scope and no unknown fit-count assumptions","failure_action":"Preserve failed evidence; report concrete bounded correction, no new infrastructure","time_bound_minutes":25},
+    {"id":"review","owner":"priority_review_20261006","depends_on":["implement"],"action":"Independent frozen source and synthetic integration review","expected_artifact":"PRIORITY_SERIAL_ADMISSION_REVIEW_2026-10-06.json","verification":"No protected diff/permission widening; shared reservations and uncertainty fences intact","pass_condition":"No P0/P1 in declared global admission boundary; remaining loop gaps explicit","failure_action":"Return concrete finding and regression test","time_bound_minutes":15}
+  ]
+}

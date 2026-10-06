@@ -1,0 +1,21 @@
+{
+  "schema":"market_rsi_small_change_contract_v1",
+  "id":"priority-serial-admission-20261006-v1",
+  "parent_commit":"2d0b0e5",
+  "axis":"H",
+  "component":"Preflight-first global serial admission across existing native subledgers",
+  "author":"User-directed AI Supervisor and bounded implementer",
+  "allowed_write_paths":["research/market_rsi/supervisor_harness/serial_candidate_admission.py","research/market_rsi/supervisor_harness/test_serial_candidate_admission.py","research/market_rsi/supervisor_harness/AGENT_LOG_PRIORITY_SERIAL_ADMISSION_2026-10-06.md"],
+  "trigger":"Frozen private serial_native_launch_v3 records a global attempt before native prerequisite checking; v2 handoff alone does not protect the global reservation.",
+  "interfaces":"launch(root, native_batch, selection, request_binding, review_binding, contract_binding, decision_directory, authority_binding, repo, *, parent_check, prospective_binding=None); reconcile(root, ledger). One global .authority.lock held through original worker terminal and accounting. Existing exact reviewed authority and native subledger required; no grant or algorithm choice.",
+  "expected_effect":"Rejected preflight creates no global admission or attempt. Durable intents count once, retain reservations, and unknown originals block new launch. Completed receipts plus exact fit progress reconcile without new execution.",
+  "protected":"No edits to old private operation scripts or terminal caps; legacy native/worker/scorer/consumer unchanged. Global research pool2–3 is not reduced to a singleton execution queue. No pool or Controller decision invention.",
+  "K":"c94492041d5c331a2cc31c4d6cd529984742ce200e1b9365e3fb7d07e5b1ce64",
+  "M":"0b8373494be4e8401d9bec1de1057ee95fd8fe39f039cd45b65828ce9c44d313",
+  "C_R":"unchanged",
+  "size":"One production module <=200 new lines; split or explicit independent inseparability review if exceeded",
+  "test_plan":"Real synthetic committed Git/native recorder; preflight before global intent, same-ID no retry, global aggregate across subledgers, unknown actual fits block, source/authority drift, lock held through terminal and reconciliation; inherited native cap remains12fits.",
+  "resource_ceiling":"25min implementation; synthetic/mock candidate processes only, no Train reads/fits/account/paid/network/live ledger writes",
+  "rollback":"Leave new entry unused; no operation/history rewind",
+  "requested_evidence_level":"L2 synthetic replay; no unattended scientific loop claim"
+}
