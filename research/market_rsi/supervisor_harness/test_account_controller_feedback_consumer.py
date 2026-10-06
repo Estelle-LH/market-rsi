@@ -892,4 +892,74 @@ class ConsumerTests(unittest.TestCase):
         self.assertTrue(c._json(next(root.glob("*/failure.json")).read_bytes())["no_resample"])
 
 
+    def fresh_authorized(self):
+        binding = c.fresh_three_attempt_binding("2026-10-06T15:00:00Z")
+        authority = {key: deepcopy(binding[key]) for key in
+                     ("batch_id", "start_utc", "selection_cutoff_utc", "deadline_utc", "limits")}
+        authority["attempts"] = []
+        self.f.write("authority", authority)
+        now = datetime(2026, 10, 6, 15, 1, tzinfo=timezone.utc)
+        packet = c.prepare_input(self.f.bindings, self.f.batch, self.f.repo, now,
+                                 prospective_binding=binding)
+        return binding, authority, packet, now
+
+    def test_fresh_authorized_fixed_caps_and_once_frozen_ready_time(self):
+        binding, authority, packet, now = self.fresh_authorized()
+        self.assertEqual(binding["batch_id"], "market-rsi-authorized-discovery-20261006-01")
+        self.assertEqual((binding["selection_cutoff_utc"], binding["deadline_utc"]),
+                         ("2026-10-06T16:15:00Z", "2026-10-06T16:30:00Z"))
+        self.assertEqual(binding["limits"], c.prospective_pilot_binding()["limits"])
+        self.assertEqual(packet["prospective_budget_binding"], binding)
+        self.assertEqual(c.ten_hour_window_binding()["limits"]["attempts"], 12)
+        self.assertEqual(c.continuation_pilot_binding()["limits"]["attempts"], 2)
+        for bad in (True, "2026-10-05T15:00:00Z", "2026-10-06T14:51:59Z",
+                    "2026-10-06T15:00:00+00:00", "2026-10-06T15:00:00.001Z"):
+            with self.assertRaises(ValueError): c.fresh_three_attempt_binding(bad)
+        self.assertEqual(self.calls, 0)
+
+    def test_fresh_authorized_mutation_or_clock_reset_never_admitted(self):
+        binding, authority, packet, now = self.fresh_authorized()
+        for field, value in (("attempts", 4), ("attempts", True), ("attempts", 3.0),
+                ("statistical_fits", 16), ("threads_per_candidate", 2), ("paid_provider_calls", 1)):
+            changed = deepcopy(binding); changed["limits"][field] = value
+            with self.assertRaises(ValueError): c.check_budget(authority, now, prospective_binding=changed)
+        for field, value in (("batch_id", "other"), ("schema", "other"),
+                ("deadline_utc", "2026-10-06T16:31:00Z"), ("authority_granted", True)):
+            changed = deepcopy(binding); changed[field] = value
+            with self.assertRaises(ValueError): c.check_budget(authority, now, prospective_binding=changed)
+        with self.assertRaises(ValueError):
+            c.check_budget(authority, now, prospective_binding=c.fresh_three_attempt_binding("2026-10-06T15:01:00Z"))
+        for other in (None, c.ten_hour_window_binding(), c.continuation_pilot_binding()):
+            with self.assertRaises(ValueError): c.check_budget(authority, now, prospective_binding=other)
+        self.assertEqual(self.calls, 0)
+
+    def test_fresh_authorized_failures_count_and_cutoff_concurrency_stay_fixed(self):
+        binding, authority, packet, now = self.fresh_authorized()
+        for moment in ("2026-10-06T14:59:59Z", binding["selection_cutoff_utc"], binding["deadline_utc"]):
+            with self.assertRaises(ValueError): c.check_budget(authority, moment, prospective_binding=binding)
+        authority["attempts"] = [{"attempt_id": str(i), "fits_reserved": 4,
+                                 "actual_fits": 0, "status": "failed"} for i in range(2)]
+        c.check_budget(authority, now, prospective_binding=binding)
+        authority["attempts"].append({"attempt_id": "third", "fits_reserved": 4,
+                                    "actual_fits": 0, "status": "failed"})
+        with self.assertRaises(ValueError): c.check_budget(authority, now, prospective_binding=binding)
+        authority["attempts"] = authority["attempts"][:2]
+        for item in authority["attempts"]: item["status"] = "running"
+        with self.assertRaises(ValueError): c.check_budget(authority, now, prospective_binding=binding)
+
+    def test_fresh_authorized_original_once_recovery_cannot_change_clock(self):
+        binding, authority, packet, now = self.fresh_authorized()
+        root = self.f.root / "fresh-authorized-original"
+        result = c.consume(packet, root, batch=self.f.batch, repo=self.f.repo, now=now,
+                           transport=self.transport, prospective_binding=binding)
+        self.f.write("authority", {"closed": True}); self.f.source.write_bytes(b"later source")
+        self.assertEqual(c.consume(packet, root, batch=self.f.batch, repo=self.f.repo,
+            now="2026-10-07T00:00:00Z", transport=lambda *args: self.fail("no retry"),
+            prospective_binding=binding), result)
+        changed = c.fresh_three_attempt_binding("2026-10-06T15:01:00Z")
+        with self.assertRaisesRegex(ValueError, "explicit prospective"):
+            c.consume(packet, root, batch=self.f.batch, repo=self.f.repo, now=now,
+                      transport=self.transport, prospective_binding=changed)
+        self.assertEqual(self.calls, 1)
+
 if __name__ == "__main__": unittest.main()

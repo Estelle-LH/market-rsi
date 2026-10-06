@@ -1,7 +1,7 @@
 """Once-only reviewed score or factual failure feedback; no model text is executed."""
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import fcntl
 import hashlib
 import json
@@ -98,11 +98,31 @@ def ten_hour_window_binding():
             "paid_provider_calls": 0, "paid_provider_spend_usd": "0"}}
 
 
+def fresh_three_attempt_binding(start_utc):
+    """One explicitly consented batch; Root freezes ready time once, not a grant."""
+    if type(start_utc) is not str:
+        raise ValueError("exact fresh ready time required")
+    start = _time(start_utc)
+    if (start_utc != start.strftime("%Y-%m-%dT%H:%M:%SZ")
+            or start.date().isoformat() != "2026-10-06"
+            or start < _time("2026-10-06T14:52:00Z")):
+        raise ValueError("fresh ready time outside explicit consent")
+    binding = prospective_pilot_binding()
+    binding.update(batch_id="market-rsi-authorized-discovery-20261006-01",
+        start_utc=start_utc,
+        selection_cutoff_utc=(start + timedelta(minutes=75)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        deadline_utc=(start + timedelta(minutes=90)).strftime("%Y-%m-%dT%H:%M:%SZ"))
+    return binding
+
+
 def _prospective_binding(binding):
     if binding is None: return None
     # Canonical comparison rejects extra fields, coercible bools/floats and self-grants.
-    if type(binding) is not dict or _digest(binding) not in tuple(_digest(factory()) for factory in
-            (prospective_pilot_binding, continuation_pilot_binding, ten_hour_window_binding)):
+    allowed = [factory() for factory in
+               (prospective_pilot_binding, continuation_pilot_binding, ten_hour_window_binding)]
+    if type(binding) is dict and binding.get("batch_id") == "market-rsi-authorized-discovery-20261006-01":
+        allowed.append(fresh_three_attempt_binding(binding.get("start_utc")))
+    if type(binding) is not dict or _digest(binding) not in tuple(_digest(item) for item in allowed):
         raise ValueError("prospective budget binding drift")
     return _json(json.dumps(binding, allow_nan=False))
 
