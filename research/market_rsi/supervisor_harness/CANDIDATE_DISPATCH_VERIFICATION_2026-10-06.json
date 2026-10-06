@@ -1,0 +1,49 @@
+{
+  "schema": "market_reviewed_candidate_dispatch_verification_v1",
+  "checkpoint": "reviewed-candidate-dispatch-20261006-01",
+  "parent_commit": "484ab30",
+  "verified_at_utc": "2026-10-06T04:26:40Z",
+  "status": "ROOT_PASS_EXECUTION_ONLY_PENDING_INDEPENDENT_REVIEW",
+  "change_axis": "H",
+  "authorship": "User-directed Supervisor repair, delegated implementation, independent reviewer; not autonomous C or R improvement",
+  "sources": {
+    "reviewed_candidate_dispatch.py": "172bb56467bb0a241c34f20949da7453133ed9861a50fe34fd1af531703eb02c",
+    "test_reviewed_candidate_dispatch.py": "468b80365e532e3c03d9502f8700d8cada64c3bc4d4079106874c8a00ea32c5e"
+  },
+  "protected_sources": {
+    "account_controller_feedback_consumer.py": "81c38bf354426543252e5df19e1f78ad9de5b1c7b7e46ae3a72b6e4d4c52868b",
+    "controller_evidence_session.py": "bfa4844e47ef0f54c2bdce85ff3223e02b72febde8f2b1aadc978f607b5bde0f",
+    "opened_train_discovery_worker.py": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360",
+    "continuous_discovery_batch.py": "3d0c0508cda74948119da9bd353cb326dd35b9ed8bcf9e42fb35b9862fee8183",
+    "learning_checkpoint_assessment.py": "a53d348a9b3c09306bb7bf24e4960ee3233eb955b82733612c11277d02219926",
+    "RESEARCH_STATE.md": "c019f21087654eacc042eae4746003fed818edd5804603feeff3cea1e4e6743c"
+  },
+  "verification": {
+    "cwd": "/Users/estelle/Developer/market-rsi/research/market_rsi",
+    "command": "bundled-python3 -B -m unittest supervisor_harness.test_reviewed_candidate_dispatch supervisor_harness.test_controller_research_evidence_tools supervisor_harness.test_controller_evidence_session supervisor_harness.test_controller_failure_feedback supervisor_harness.test_controller_account_runtime_catalog supervisor_harness.test_account_controller_feedback_consumer supervisor_harness.test_opened_train_discovery_worker supervisor_harness.test_continuous_discovery_batch supervisor_harness.test_continuous_discovery_branch_retention supervisor_harness.test_continuous_discovery_small_steps supervisor_harness.test_learning_checkpoint_assessment supervisor_harness.test_bottleneck_gate",
+    "test_executions": 229,
+    "skipped": 1,
+    "seconds": 4.284,
+    "exit_code": 0,
+    "count_note": "Relevant complete synthetic suites, not entire repository or unique-test count; possible inherited repeat executions.",
+    "focused_implementer": {"executions": 23, "seconds": 0.760, "exit_code": 0},
+    "gate": "First integration-ready check correctly rejected a concurrent implementer log clarification hash. No production source changed. Root reconciled the final log SHA and gate passed before repeated final229execution run.",
+    "earlier_root_smoke_seconds": 4.438
+  },
+  "observed_benefit": [
+    "Original native consumer decision recovery -> reviewed pinned request -> actual native recorder and worker fixture, including a valid negative parent and non-menu sibling module.",
+    "Same-ID concurrent dispatch launches once; distinct IDs overlap within native two-slot ceiling.",
+    "A completed success or factual failed native receipt reconciles terminal state after interruption without current HEAD, reopened authority or relaunch; uncertain claims stop.",
+    "Local admission lock conservatively accounts consumed four-fit reservations absent from stale outer snapshots; actual fit counts are not invented. One remaining slot cannot launch two fresh IDs."
+  ],
+  "limits": [
+    "Subprocess and clocks are scripted synthetic fixtures. No real candidate training or model decision this checkpoint.",
+    "Supervisor-trusted review, code admission and selected branch are inputs. Helper does not author candidate code, semantically compile recipe-to-module, verify research-question/hypothesis correspondence or choose next pool.",
+    "Native receipt does not commit original manifest bytes. Coordinated predictions plus manifest rewrite can pass internal consistency recovery. Recovery proves original execution receipt/terminal consistency, not authenticated original prediction replay; independent output/metric review remains mandatory, metrics_independently_reviewed=False.",
+    "Outer cross-batch ledger synchronization remains Supervisor-owned. Local reservation fence is not a new global ledger or authority grant.",
+    "Account evidence activation remains hard blocked; existing evidence EOF/order defects are preserved for a separate repair checkpoint.",
+    "Scorer, historical KEEP/REVERT, incumbent, data, model, learning/parent rules and closed batch caps unchanged. No full unattended scientific loop or prediction/research-process gain established."
+  ],
+  "size": {"new_production_modules": 1, "production_lines": 206, "inseparability_review": "Required explicitly in final independent receipt; one native handoff boundary, not line count as safety proof"},
+  "resources": {"real_controller_calls": 0, "paid_provider_calls": 0, "fits": 0, "real_train_reads": 0, "protected_reads": 0, "external_scientific_requests": 0, "max_parallel_agents_including_root": 3, "root_test_seconds": 8.722, "all_agent_tokens_cpu_and_usd": "unmetered, not zero"}
+}
