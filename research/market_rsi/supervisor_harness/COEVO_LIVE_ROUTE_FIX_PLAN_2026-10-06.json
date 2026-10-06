@@ -33,6 +33,26 @@
       "rollback": "New source checkpoint reverting only F1; old batch accounting/history never rewound"
     },
     {
+      "id": "F1b-authorized-input-budget",
+      "depends_on": ["F1-process-feedback"],
+      "status": "implementing_local_only",
+      "component": "batch-authorized account input bytes",
+      "trigger": "Human: the permanent32KiB restriction is too tight for accumulated research context.",
+      "change": "Read positive integer max_input_bytes from the original bound grant per destination role. Remove permanent equality-to32768 and matching payload checks. Validate full rendered wire prompts before original reservations and native process launch. No live grant rewrite or transfer.",
+      "checkpoint_split": [
+        "coevo_pilot_transaction.py and price_account_roles.py: shared limit and exact transaction/native wire checks",
+        "feedback_loop_runtime.py and price_loop_services.py: initialization and Controller packet",
+        "price_candidate_author.py and price_independent_review.py: implementation and review contexts",
+        "run_price_discovery.py: official entry preflight and integrated verification"
+      ],
+      "test_paths": ["test_coevo_pilot_transaction.py", "test_price_account_roles.py", "test_feedback_loop_runtime.py", "test_price_loop_services.py", "test_price_candidate_author.py", "test_price_independent_review.py", "test_run_price_discovery.py"],
+      "acceptance": "Synthetic64KiB/256KiB authorization permits larger context; old32KiB and missing/invalid explicit modern limits still reject excess before a claim/process. Ordinary restart/no-retry/tool/data/cap boundaries unchanged.",
+      "legacy": "Only the configuration-less historical Controller contract retains its old32KiB default; modern grants require an explicit bound value.",
+      "fixed": "K/M/C/R, old author source-output limit, task/scorer, call/fit/time/fee/data/tools limits, closed ledgers and all old grants",
+      "attribution": "User-directed Supervisor H input-budget repair, not researcher self-evolution.",
+      "rollback": "Revert only the relevant source checkpoints; never rewrite grant, ledger or consumed history"
+    },
+    {
       "id": "F2-typed-actions-and-review",
       "depends_on": ["F1-process-feedback"],
       "status": "queued",

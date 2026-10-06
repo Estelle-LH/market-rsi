@@ -29,6 +29,21 @@ TIMES = {"start_utc": "2026-10-06T17:31:25Z", "selection_cutoff_utc": "2026-10-0
 ROOT = Path("/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts") / BATCH
 
 
+def input_limit(authorization, section="account_transfer", *, legacy=False):
+    """Original grant's byte ceiling, not a permanent research context limit."""
+    if section not in {"account_transfer", "account_roles"}:
+        raise ValueError("exact input destination section required")
+    boundary = authorization.get(section)
+    if type(boundary) is not dict:
+        raise ValueError("explicit input destination boundary required")
+    value = boundary.get("max_input_bytes")
+    if legacy and section == "account_transfer" and "max_input_bytes" not in boundary:
+        return 32768  # Configuration-less historical contract only; never a modern default.
+    if type(value) is not int or value <= 0:
+        raise ValueError("explicit positive integer max_input_bytes required")
+    return value
+
+
 def _configuration(binding, root):
     """Reviewed Supervisor input within the approved small-pilot hard ceiling."""
     if binding is None:
@@ -98,11 +113,11 @@ def _review(packet, input_binding, authorization_binding, review_binding, repo, 
             or authorization.get("closed") != {key: True for key in
                 ("Dev", "Final", "external_data", "external_literature", "paid_provider", "release", "push", "promotion")}):
         raise ValueError("exact user grant/model/destination/time/permission boundary required")
+    limit = input_limit(authorization, legacy=configuration_binding is None)
     if configuration_binding is not None and (
-            transfer.get("max_input_bytes") != 32768 or type(transfer.get("max_input_bytes")) is not int
-            or transfer.get("payload_scope") != ["private Train-derived aggregate feedback", "research memory/history", "relevant candidate source context"]):
+            transfer.get("payload_scope") != ["private Train-derived aggregate feedback", "research memory/history", "relevant candidate source context"]):
         raise ValueError("exact compact payload authorization required")
-    if (len(Path(input_binding["path"]).read_bytes()) > 32768 or "evidence_session" in packet
+    if (len(Path(input_binding["path"]).read_bytes()) > limit or "evidence_session" in packet
             or not {"bindings", "feedback", "memory", "history", "pool", "authority", "overhead",
                     "provided_parents", "provided_source_sha256"} <= set(packet)
             or type(packet["provided_parents"]) is not list or not packet["provided_parents"]
@@ -218,9 +233,9 @@ def call(root, input_binding, authorization_binding, review_binding, repo, *, tr
                 or c._read(review_binding).get("controller_transport") != transport_contract):
             raise ValueError("exact independently reviewed original transport contract required")
         c._read(transport_contract["source"], True)
-        roles._grant(root, authorization_binding)
-        if len(roles._prompt(packet, controller=True).encode("utf-8")) > roles.MAX_BYTES:
-            raise ValueError("full Controller prompt exceeds32KiB before original reservation")
+        grant = roles._grant(root, authorization_binding)
+        if len(roles._prompt(packet, controller=True).encode("utf-8")) > input_limit(grant):
+            raise ValueError("full Controller prompt exceeds authorized input byte budget before original reservation")
     key = packet["bindings"]["feedback"]["sha256"]
     if type(key) is not str or len(key) != 64 or c._hashes(key) != {key}: raise ValueError("exact feedback hash required")
     directory = root / "decisions" / key

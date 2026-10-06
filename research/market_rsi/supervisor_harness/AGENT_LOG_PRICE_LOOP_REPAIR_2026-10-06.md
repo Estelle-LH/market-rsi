@@ -167,3 +167,35 @@ actual selected-capacity invocation/version recovery, known-failure continuation
 and integrated real downstream evidence. Pre-author failure continuation is not
 fixed by F1. Next change must remain bounded; no synthetic pass is called a real
 co-evolution cycle. Unrelated dirty other-owner work remains unstaged.
+
+## F1b.1 — prospective authorization-bound input bytes
+
+Human said32KiB was too tight. Parentd9c9ea6; frozen F1b in the existing item-wise
+plan names four small source checkpoints, not another governance service. Root
+reuses the existing grant/input/native-role checks; no new scientific method,
+account/data acquisition or model choice. Named H component: account input byte
+policy. K/M/C/R, fit/call/time/tool/data limits and old grants/ledgers unchanged.
+First write scope coevo_pilot_transaction.py + price_account_roles.py and their
+two existing tests (45changed production lines total). Shared input_limit reads
+an explicit positive integer from the original grant, per Controller/other-role
+destination; no new universal upper bound. Only configuration-less historical
+Controller contracts retain the original32KiB default. Modern/role missing,
+bool/string/float/nonpositive budgets reject, not silently default or expand.
+
+Native wire launch now rechecks bound original claim/grant and full rendered
+UTF-8 prompt before process. Original role reservation likewise checks the
+rendered envelope. Synthetic64KiB inert-native-RPC and256KiB Controller/role
+tests pass with >32KiB context and completed replay/no second original. Old32KiB
+still denies excess preclaim. Actual accountcalls0; native subprocess is an
+inert local stdin/stdout fixture with no network/account/backend.
+
+Exact verification in canonical research cwd:
+```sh
+env PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest supervisor_harness.test_coevo_pilot_transaction supervisor_harness.test_price_account_roles -q
+```
+38PASS1.135s. No failed test in this chunk. Local incomplete integration snapshot:
+runtime/packet/author/reviewer/official preflight still have old checks until the
+next declared chunks; do not activate/launch this partial checkpoint. No new
+batch or grant generated. Source author Root, independent/live review pending;
+not autonomous capacity improvement. Existing user/other-owner dirty files remain
+excluded from checkpoint. Rollback only local source, never operational history.

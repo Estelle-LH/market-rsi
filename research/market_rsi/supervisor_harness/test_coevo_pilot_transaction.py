@@ -129,6 +129,24 @@ class PilotTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "compact reviewed"): self.call()
         self.assertEqual(self.calls, 0)
 
+    def test_explicit_larger_controller_budget_and_original_replay(self):
+        self.authorization['account_transfer']['max_input_bytes'] = 262144
+        self.authorization_binding = self.write('authorization', self.authorization)
+        self.packet['authority'] = self.authorization
+        self.packet['memory'] = 'synthetic aggregate memory ' + 'x' * 40000
+        self.rebind()
+        first = self.call(); second = self.call()
+        self.assertEqual(first, second); self.assertEqual(self.calls, 1)
+        self.assertEqual(len(p._file(self.root / 'ledger.json')['controller_decisions']), 1)
+
+    def test_input_budget_requires_positive_integer_and_modern_explicit_value(self):
+        for value in (None, True, 0, -1, '65536', 65536.):
+            grant = {'account_transfer': {'max_input_bytes': value}}
+            with self.subTest(value=value), self.assertRaises(ValueError): p.input_limit(grant)
+        with self.assertRaises(ValueError): p.input_limit({'account_transfer': {}})
+        self.assertEqual(p.input_limit({'account_transfer': {}}, legacy=True), 32768)
+        self.assertEqual(p.input_limit({'account_transfer': {'max_input_bytes': 65536}}), 65536)
+
     def test_wrong_destination_tools_or_original_window_denied(self):
         original = deepcopy(self.authorization)
         for key, value in (("destination", "different account"), ("tools_enabled", True),

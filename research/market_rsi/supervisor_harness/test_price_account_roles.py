@@ -118,8 +118,36 @@ class RoleTests(unittest.TestCase):
         self.assertEqual(self.calls, 1)
 
     def test_limits_precede_claim(self):
-        with self.assertRaisesRegex(ValueError, "32KiB"): self.call(packet={"synthetic": "x" * 32768})
+        with self.assertRaisesRegex(ValueError, "input byte budget"): self.call(packet={"synthetic": "x" * 32768})
         self.assertFalse((self.root / "role_calls").exists()); self.assertEqual(self.calls, 0)
+
+    def test_larger_authorized_context_passes_native_wire_and_completed_replay(self):
+        self.grant['account_roles']['max_input_bytes'] = 65536; self.bind_grant()
+        packet = {'synthetic_memory': 'x' * 40000}
+        with self.native_fixture():
+            first = self.call(packet=packet, transport=p._transport)
+        second = self.call(packet=packet)
+        self.assertEqual(first, second)
+        self.assertEqual(self.calls, 0)  # Inert RPC fixture, not an account call.
+        self.assertEqual(len(list((self.root / 'role_calls').glob('*/*/claim.json'))), 1)
+
+    def test_256k_grant_and_exact_limit_not_global_default(self):
+        self.grant['account_roles']['max_input_bytes'] = 262144; self.bind_grant()
+        self.call(packet={'synthetic_memory': 'x' * 150000})
+        self.assertEqual(self.calls, 1)
+        with self.assertRaisesRegex(ValueError, 'input byte budget'):
+            self.call(role_id='oversized', packet={'synthetic_memory': 'x' * 262144})
+        self.assertEqual(self.calls, 1)
+        self.assertFalse((self.root / 'role_calls/author/oversized').exists())
+
+    def test_missing_and_invalid_explicit_budget_precedes_claim(self):
+        for value in (None, True, 0, -1, '65536', 65536.):
+            self.grant['account_roles']['max_input_bytes'] = value; self.bind_grant()
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'max_input_bytes'):
+                self.call()
+        del self.grant['account_roles']['max_input_bytes']; self.bind_grant()
+        with self.assertRaisesRegex(ValueError, 'max_input_bytes'): self.call()
+        self.assertFalse((self.root / 'role_calls').exists())
 
     def test_missing_role_authority_precedes_claim(self):
         self.grant["account_roles"]["approved"] = False; self.bind_grant()

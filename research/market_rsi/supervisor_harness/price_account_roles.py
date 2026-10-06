@@ -10,10 +10,10 @@ import subprocess
 import time
 
 from supervisor_harness import account_controller_feedback_consumer as c
+from supervisor_harness.coevo_pilot_transaction import input_limit
 
 ROLES = {"author", "input_review", "source_review", "result_review"}
 DESTINATION = "User's signed-in Codex account author and independent reviewer via the existing pinned local CodexCLI"
-MAX_BYTES = 32768
 DISABLED = ("shell_tool", "unified_exec", "shell_snapshot", "apps", "plugins", "remote_plugin",
     "browser_use", "browser_use_external", "computer_use", "in_app_browser", "multi_agent",
     "multi_agent_v2", "goals", "view_image", "sleep_tool", "code_mode", "code_mode_host",
@@ -27,13 +27,13 @@ def _grant(root, binding):
         raise ValueError("exact permanent batch grant required")
     grant = c._read(binding)
     account, roles = grant.get("account_transfer", {}), grant.get("account_roles", {})
+    input_limit(grant, "account_roles")
     caps = roles.get("caps", {})
     if (grant.get("granted") is not True or grant.get("batch_id") != root.name
             or grant.get("schema") != "market_rsi_bounded_coevo_pilot_authorization_v1"
             or account.get("requested_model") != c.MODEL or account.get("serving_snapshot") != "unknown"
             or roles.get("approved") is not True or roles.get("destination") != DESTINATION
             or roles.get("requested_model") != c.MODEL or roles.get("serving_snapshot") != "unknown"
-            or roles.get("max_input_bytes") != MAX_BYTES or type(roles.get("max_input_bytes")) is not int
             or roles.get("max_call_seconds") != 120 or type(roles.get("max_call_seconds")) is not int
             or set(caps) != ROLES or any(type(n) is not int or not 0 < n <= 2 for n in caps.values())
             or any(roles.get(key) is not False for key in ("raw_train_transfer", "tools_enabled", "automatic_retry"))
@@ -124,7 +124,16 @@ def native_transport(directory, packet, timeout, *, controller=False, preflight_
     if c.sha(c.CLI) != c.CLI_SHA: raise ValueError("pinned CLI drift")
     source = c.sha(Path(__file__).resolve()); started = time.monotonic()
     prompt = _prompt(packet, controller)
-    if not preflight_only and len(prompt.encode("utf-8")) > MAX_BYTES: raise ValueError("full account prompt exceeds32KiB")
+    if not preflight_only:
+        claim = c._json((directory / "claim.json").read_bytes())
+        binding = claim["authorization"]
+        grant = _grant(Path(binding["path"]).parent, binding)
+        if (claim["input_sha256"] != c._digest(packet)
+                or controller and packet.get("authority") != grant):
+            raise ValueError("native input differs from original claim/grant")
+        limit = input_limit(grant, "account_transfer" if controller else "account_roles")
+        if len(prompt.encode("utf-8")) > limit:
+            raise ValueError("full account prompt exceeds authorized input byte budget before process")
     child, usage, response, final, selector = None, None, None, False, None
     contract = transport_contract()
     try:
@@ -304,7 +313,8 @@ def role_call(role, packet, schema, *, root, grant_binding, role_id, timeout_sec
     if type(timeout_seconds) not in (int, float) or not 0 < timeout_seconds <= grant["account_roles"]["max_call_seconds"]:
         raise ValueError("bounded role timeout required")
     envelope = {"role": role, "role_id": role_id, "payload": packet, "requested_model": c.MODEL, "serving_snapshot": "unknown"}
-    if len(_prompt(envelope).encode("utf-8")) > MAX_BYTES: raise ValueError("role input exceeds32KiB")
+    if len(_prompt(envelope).encode("utf-8")) > input_limit(grant, "account_roles"):
+        raise ValueError("role input exceeds authorized input byte budget")
     json.dumps(schema, allow_nan=False)
     source = c.sha(Path(__file__).resolve())
     claim = {"role": role, "role_id": role_id, "input_sha256": c._digest(envelope), "schema_sha256": c._digest(schema),
