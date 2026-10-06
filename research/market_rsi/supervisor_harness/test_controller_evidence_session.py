@@ -60,7 +60,8 @@ class SessionTests(unittest.TestCase):
         events = [event, {"type": "item.completed", "item": {"type": "agent_message", "text": json.dumps(response)}},
                   {"type": "turn.completed", "usage": {"input_tokens": 10, "output_tokens": 5}}]
         c.save(directory / "process.json", {"pid": 123, "command": c._command(directory, self.session),
-            "cli_sha256": c.CLI_SHA, "input_sha256": c._digest(packet), **c._identity(self.session)})
+            "cli_sha256": c.CLI_SHA, "input_sha256": c._digest(packet),
+            **c._identity(self.session, packet["schema"] == "controller_failure_feedback_input_v1")})
         c.save(directory / "response.json", response)
         (directory / "events.jsonl").write_text("\n".join(json.dumps(v) for v in events))
         (directory / "stderr").write_bytes(b"")
@@ -68,7 +69,8 @@ class SessionTests(unittest.TestCase):
 
     def seal(self, directory):
         names = ["process.json", "events.jsonl", "stderr", "schema.json", "input.json", "response.json", "evidence-audit.jsonl"]
-        (directory / "completion.json").write_bytes(broker.encode({"exit_code": 0, "timed_out": False, **c._identity(self.session),
+        failure_input = c._json((directory / "input.json").read_bytes())["schema"] == "controller_failure_feedback_input_v1"
+        (directory / "completion.json").write_bytes(broker.encode({"exit_code": 0, "timed_out": False, **c._identity(self.session, failure_input),
             "hashes": {name: c.sha(directory / name) for name in names}}))
 
     def consume(self, transport=None):
@@ -181,6 +183,21 @@ class SessionTests(unittest.TestCase):
         with patch.object(c, "sha", side_effect=lambda p: "f" * 64 if Path(p).resolve() == Path(e.__file__).resolve() else original(p)):
             with self.assertRaisesRegex(ValueError, "same feedback changed"): self.consume()
         self.assertEqual(self.calls, 1)
+
+    def test_factual_native_failure_with_audited_evidence_recovery(self):
+        from supervisor_harness import test_controller_failure_feedback as failed
+        with TemporaryDirectory() as temp:
+            self.f = failed.Fixture(temp)
+            self.root = self.f.root / "calls"; self.directory = self.root / self.f.bindings["feedback"]["sha256"]
+            self.policy["audit_path"] = str(self.directory / "evidence-audit.jsonl")
+            self.session["policy"] = self.bind("policy", self.policy)
+            self.session["runtime_attestation"] = self.bind("proof", self.proof)
+            with patch.object(c, "CLI", self.f.cli), patch.object(c, "CLI_SHA", c.sha(self.f.cli)):
+                self.packet = self.prepare()
+                self.assertIsNone(self.packet["numerical"])
+                self.assertEqual(self.consume()["actual_parent_sha256"], self.f.good)
+                self.assertEqual(self.calls, 1)
+                self.assertFalse(any(self.f.root.glob("*.csv")))
 
 
 if __name__ == "__main__": unittest.main()
