@@ -146,7 +146,7 @@ def handoff(batch, selection, request_binding, review_binding, contract_binding,
                         or any(item["attempt_id"] == attempt for item in authority["attempts"])):
                     raise ValueError("permission expansion or already reserved outer attempt")
                 w.validate(request, repo)
-                batch.select_controller_pool([selection], now=now)
+                batch.select_controller_pool([selection])
             c.save(path, record)
         dispatch_review = {key: review[key] for key in d.REVIEW_FIELDS}
         review_path = directory / (attempt + ".dispatch-review.json")

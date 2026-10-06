@@ -88,6 +88,24 @@ class HandoffTests(unittest.TestCase):
         self.assertEqual(record["source_review"], self.review_binding)
         self.assertIn("derivative adapter", record["dispatch_review_role"])
 
+    def test_native_selection_owns_clock_not_supervisor_supplied_test_timestamp(self):
+        original = self.batch.select_controller_pool
+        def strict_native(selections, *, now=None):
+            if now is not None:
+                raise RuntimeError("production native clock rejects supplied time")
+            return original(selections)
+        with patch.object(self.batch, "select_controller_pool", side_effect=strict_native) as selected, \
+                patch.object(w.subprocess, "Popen", side_effect=self.f.completed_child):
+            receipt = self.invoke()
+        self.assertEqual(receipt["outcome"], "succeeded")
+        selected.assert_called_once_with([self.selection])
+
+    def test_closed_supervisor_budget_still_rejects_before_native_own_clock(self):
+        with patch.object(self.batch, "select_controller_pool") as selected, \
+                patch.object(w.subprocess, "Popen") as launch, self.assertRaises(ValueError):
+            self.invoke(now=c.CUTOFF)
+        selected.assert_not_called(); launch.assert_not_called()
+
     def test_completed_recovery_no_reselection_no_head_no_authority_no_spawn(self):
         with patch.object(w.subprocess, "Popen", side_effect=self.f.completed_child): first = self.invoke()
         self.f.f.write("authority", {"closed": True})

@@ -1,0 +1,16 @@
+{
+  "schema": "market_rsi_supervisor_clock_repair_source_v1",
+  "axis": "H",
+  "author": "AI Supervisor",
+  "source_commit_before_repair": "4a3a462daac269034980a0ac116c6820ac6a1734",
+  "production_source": {"path": "continuous_candidate_handoff.py", "sha256": "8f38a98acb28a31439fda3961017d5d4f05f0ead55f4570f60abf30033fe64c5"},
+  "tests": {"path": "test_continuous_candidate_handoff.py", "sha256": "a1f881200c668b718c7a460688c5ec03dbab65524ff7f07ded8ca68e6e8cbd61"},
+  "diff": "One production line: native select_controller_pool receives no caller-supplied now. Native recorder owns its trusted production clock; outer budget/cutoff checks remain unchanged. Two focused regression tests added.",
+  "root_test_results": [
+    {"scope": "focused handoff tests", "tests": 23, "passed": 23, "elapsed_seconds": 0.805},
+    {"scope": "related execution regression suite", "tests": 269, "passed": 268, "skipped": 1, "elapsed_seconds": 5.476, "skip": "existing opt-in execution test"}
+  ],
+  "limitations": "Tests use synthetic/mocked execution fixtures. They are not actual training results or proof of end-to-end production execution. Fresh native execution still required.",
+  "immutable_boundaries": "Original failed admission and native journal retained. No candidate algorithm, scoring, data geometry, permissions, Controller transport, worker or deadline changed. Failed attempt remains consumed with four reserved fits, actual fits independently proved zero.",
+  "claims": {"researcher_self_evolution": false, "prediction_improvement": false, "controller_scientific_change": false}
+}
