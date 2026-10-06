@@ -1,0 +1,104 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "price-pilot-implementation-20261006-01",
+  "symptom": "Approved new price task has no training entrypoint; binary scorer is not compatible",
+  "source_evidence": "PRICE_PREDICTION_PILOT_PLAN_2026-10-06.json at0311244; zero-fit feasibility audit; closed04ledger unchanged",
+  "objective": "Implement minimum fixed-data/regression route and obtain first local baseline; candidate only with exact Controller grant",
+  "boundary": "Opened195game Train only; no account workaround/protected/newdata/paid/release/push; oldscore/kernel/history untouched",
+  "resolution_check": "Independent integrated source tests and source-specific materialization then independently reconstructed scorecard",
+  "supervisor_owner": "root",
+  "start_source_commit": "0311244",
+  "parallel_work": {
+    "base_source_sha256": "5a21107ac1a2f349ae52dd99281274f020a1d8186e8f80b31ffc3df9cc13a874",
+    "worker_step_ids": [
+      "data",
+      "score"
+    ],
+    "integration_step_id": "integrate",
+    "review_step_id": "review"
+  },
+  "steps": [
+    {
+      "id": "data",
+      "owner": "price_data_20261006",
+      "action": "Implement frozen300s/30s rows and synthetic boundary tests",
+      "depends_on": [],
+      "expected_artifact": "AGENT_LOG_PRICE_DATA_2026-10-06.md",
+      "verification": "Focused synthetic tests; frozen interface/source and no old code changes",
+      "pass_condition": "Exact task contract implemented, tests pass, only declared files edited",
+      "failure_action": "Preserve first failure, report smallest repair to Root",
+      "time_bound_minutes": 12,
+      "result": {"verdict":"pass","observed":"9 synthetic data tests pass;179line isolated materializer; no old source changed","reviewer":"root and independent price_review_20261006","evidence_path":"AGENT_LOG_PRICE_DATA_2026-10-06.md","evidence_sha256":"13ca90a9d0b1d8cf277e9bef506df961bc56a34d673dff47d19e09f7cde50578"},
+      "write_paths": [
+        "research/market_rsi/experiments/nfl_ingame_price_data.py",
+        "research/market_rsi/experiments/test_nfl_ingame_price_data.py",
+        "research/market_rsi/supervisor_harness/AGENT_LOG_PRICE_DATA_2026-10-06.md"
+      ]
+    },
+    {
+      "id": "score",
+      "owner": "price_score_20261006",
+      "action": "Implement equal-game metrics and paired observed-week resampling",
+      "depends_on": [],
+      "expected_artifact": "AGENT_LOG_PRICE_SCORE_2026-10-06.md",
+      "verification": "Focused synthetic tests; frozen interface/source and no old code changes",
+      "pass_condition": "Exact task contract implemented, tests pass, only declared files edited",
+      "failure_action": "Preserve first failure, report smallest repair to Root",
+      "time_bound_minutes": 12,
+      "result": {"verdict":"pass","observed":"14 scorer tests pass;game equal primary and week resampling; initial fixture failure preserved","reviewer":"root and independent price_review_20261006","evidence_path":"AGENT_LOG_PRICE_SCORE_2026-10-06.md","evidence_sha256":"81340698f46a91df06cd8642314b0695971b5d0d4b84c81b6366afa9f021d0f4"},
+      "write_paths": [
+        "research/market_rsi/experiments/nfl_ingame_price_score.py",
+        "research/market_rsi/experiments/test_nfl_ingame_price_score.py",
+        "research/market_rsi/supervisor_harness/AGENT_LOG_PRICE_SCORE_2026-10-06.md"
+      ]
+    },
+    {
+      "id": "integrate",
+      "owner": "root",
+      "action": "Integrate thin runner, cross-tests, data-only materialization, source checkpoint",
+      "depends_on": [
+        "data",
+        "score"
+      ],
+      "expected_artifact": "AGENT_LOG_PRICE_PILOT_SUPERVISOR_2026-10-06.md",
+      "verification": "Exact file diff and tests; source hashes; no new old-scorer edits",
+      "pass_condition": "Locked data/metric protocol executable on common rows",
+      "failure_action": "Preserve failure and repair within total deadline; no fits before review",
+      "time_bound_minutes": 10
+      ,"result":{"verdict":"pass","observed":"67 tests and exact real data-only geometry match; no fits yet","reviewer":"root","evidence_path":"PRICE_PILOT_INTEGRATION_RECEIPT_2026-10-06.json","evidence_sha256":"62e881cf8159f653a5067291a96a8178ff69e9edd56f64f17785fe718e963da2"}
+    },
+    {
+      "id": "review",
+      "owner": "price_review_20261006",
+      "action": "Read-only final integrated source review and independent result reconstruction",
+      "depends_on": [
+        "integrate"
+      ],
+      "expected_artifact": "AGENT_LOG_PRICE_REVIEW_2026-10-06.md",
+      "verification": "Independent tests, endpoint/weights/splits/leakage/common-mask check and result recomputation",
+      "pass_condition": "No P0 scope/leakage/scoring defect; evidence level clearly limited",
+      "failure_action": "Return explicit FAIL for narrow repair; don't mutate science or rules",
+      "time_bound_minutes": 8,
+      "write_paths": []
+    }
+  ],
+  "small_steps": {
+    "classification": "New separately named task K and human-requested H implementation; not autonomous C/R evolution.",
+    "fixed_task": "300spricechange/30sVWAP/tokenraw0/900scommoninformation/22+4x5dates/primarygameMSE",
+    "warning": "Split materializer, scorer and runner into separate source checkpoints; independent inseparability/scope review if any module exceeds200lines.",
+    "budget": {
+      "start_utc": "2026-10-06T20:16:00Z",
+      "deadline_utc": "2026-10-06T21:01:00Z",
+      "fits": 8,
+      "attempts": 2,
+      "original_controller_decisions": 1,
+      "worker_threads": 1,
+      "no_retry": true
+    }
+  },
+  "interfaces": {
+    "row": "dict keys row_id/game_id/game_date/game_week/anchor_s/elapsed_seconds/p_current/label/forecastable/reason/features/history; labelNone missing. Features13 ordered as plan; history tuple(relative_seconds,price,size,side_sign) within[-900,0).",
+    "data_api": "materialize(source_root=SOURCE_ROOT)->(rows,metadata); chronological_folds(rows)->list[(fit_rows,check_rows)] all forecastable checkrows, fit only labelled earlier dates with label mature. FEATURE_NAMES tuple13.",
+    "score_api": "score(rows, predictions: dict{name: dict{row_id:float}}, draws=2000, seed=314159)->dict; predictions exactly all forecastable check IDs, score common label-observed checks only; rows includes full population metadata."
+  }
+}
