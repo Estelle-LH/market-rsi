@@ -1976,3 +1976,39 @@ Train-derived payload and signed-in account destination. Prior batch caps stay
 closed; no new account calls, real fits, predictions or live ledger changes in
 this repair turn. A supervised pilot does not require all remaining gaps closed
 and cannot establish same-budget fixed-versus-evolving superiority.
+
+## 2026-10-06 19:54 UTC — loop-closing code implemented and independently checked
+
+Implemented four small, separately checkpointed components: once-only feedback
+stage coordinator, adapter to the existing original transaction/native worker and
+sole budget ledger, separate predictor/researcher/harness/memory identities, and
+idle reviewed R/H version selection through the existing native micro journal.
+No scorer, old scores, KEEP/REVERT, incumbent, pool or history changed.
+
+An actual synthetic two-round test executes a negative candidate, separately
+tests/accepts R then H, restores the registry/journal and uses both accepted
+versions in the next callbacks. R avoids a repeated failure; H keeps parent/cause
+in feedback. This is a synthetic plumbing/behavior test, not agent-scientific
+authorship, a real Train gain or research-process superiority.
+
+First independent review found three real defects despite green tests: stale
+activation evidence, ignored tighter resource grants and impossible fit counters.
+Failed review is preserved. Narrow fixes c56c4b2/620e612 correct each, plus actual
+rollback evidence.224relevant tests PASS6.537s; reviewer independently48focused
+PASS0.880s and adversarial probes. Final verdict PASS_CODE_ONLY; existing native
+contract, transport, worker and scorer unchanged. Full repository suite not run.
+
+Zero new Controller-account calls, residentTrain fits, protected reads, paid or
+external operations. Closedpilot04 ledger remains unchanged. Trusted input,
+implementation, independent review and reconciliation services still have to be
+registered for a live unattended route; callback support is not a deployed
+science service. A fresh exact live pilot/window/account/source admission is
+needed; old exhausted/expired caps are not renewed. Literature/tools and matched
+fixed/evolving-process experiments remain bounded future work, not claimed gains.
+
+Detailed source trajectory, first FAIL, correction tests and final PASS:
+LOOP_CLOSURE_IMPLEMENTATION_RESULT_V2_2026-10-06.json,
+LOOP_CLOSURE_IMPLEMENTATION_REVIEW_V2_2026-10-06.json and
+AGENT_LOG_LOOP_INTEGRATION_2026-10-06.md. This was human-requested Supervisor/
+implementation-agent engineering; no human scientific hypothesis or algorithm
+choice and no new autonomous researcher-capacity result are asserted.
