@@ -1,5 +1,17 @@
 # Market RSI — Supervisor 总路线图与当前任务
 
+## 2026-10-06 10:36 ET — 十小时窗口已结束；本批零新实验
+
+原截止14:36:33UTC生效；14:36:44UTC核验到期并通过app删除本窗口heartbeat。
+14:37:23UTC实际相关process查询无匹配；唯一永久ledger仍是0calls/0attempts/0fits，
+private Train摘要/history/memory到account Controller的明确授权未收到。没有重试、
+绕路、扩大权限或重置旧cap。`WINDOW_10H_CLOSEOUT_2026-10-06.json`保存实际结论。
+本窗口未完成自主实验闭环，也没有新预测或R收益；两个小H修复a7a7a2d/a9a22b6及
+独立263tests/1skip、Root串行记账7tests/matched2→7证据保留。旧raw-market incumbent、
+C7/B3两条活跃研究路线和全部archive保持不变，不伪造新Controller选池或反馈。
+下一次真实account科学执行需要新的有界窗口、明确payload/destination consent和fresh
+exact review。此expired窗口不能因迟到回复自动复活；现在不新增替代实验的框架工作。
+
 ## 2026-10-06 00:51 ET — 新十小时入口，修复后直接跑真实反馈候选
 
 04:54UTC actual update：第一account Controller launch被auto-review在process之前拒绝。

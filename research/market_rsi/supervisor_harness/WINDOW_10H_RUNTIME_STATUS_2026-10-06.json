@@ -4,7 +4,12 @@
   "start_utc": "2026-10-06T04:36:33Z",
   "selection_cutoff_utc": "2026-10-06T14:21:33Z",
   "deadline_utc": "2026-10-06T14:36:33Z",
-  "status": "Local fixes complete; first account Controller launch rejected beforeprocess for missing explicit sensitive payload/destination authorization",
+  "status": "CLOSED at original hard deadline: payload consent never arrived; zero new Controller calls, candidate attempts or fits",
+  "closed_effective_utc": "2026-10-06T14:36:33Z",
+  "deadline_observed_utc": "2026-10-06T14:36:44Z",
+  "final_process_check_utc": "2026-10-06T14:37:23Z",
+  "closeout": "WINDOW_10H_CLOSEOUT_2026-10-06.json",
+  "heartbeat": "market-rsi-bounded-10-hour-discovery deleted through Codex app; unrelated automations unchanged",
   "local_checkpoints": {"exact_binding": "a7a7a2d", "source_native_handoff": "a9a22b6"},
   "serial_operation": "106line Rootops/currentcce12776; missing measuredfitprogress nowunknown/block, exactsuccesscounts required. Root/independent7PASS; matchedbaseline2PASS/5FAIL->7PASS; privatepermanentbaseline/source/tests retained. No realactivation; separate WINDOW_10H_SERIAL_OPERATION_REVIEW_2026-10-06.json.",
   "source_review_sha256": "47f59f2489a8d15e13be2d7379f7df196a8b85f9a72de263dc19aeb227652c77",
@@ -24,5 +29,5 @@
   "protected_reads": 0,
   "source_data_new_acquisition": 0,
   "claim": "Two small human-directed H repairs with independently verified synthetic effect; no new predictive or R benefit, no actual feedbackiteration afterN2 yet.",
-  "resume": "After explicit reply, bind fresh approval/operation/input without resetting old counters/clock, independently review and execute original freshdecision then actual candidate. No auto-retry of rejected or uncertain operations; no repeatedapprovalrequests or extra harness project while pending."
+  "resume": "This window is expired and cannot resume. Future account Controller work needs a new bounded window, explicit payload/destination consent and fresh exact approval/input/operation review. Keep rejected launch, original clock, old consumed caps and all history unchanged; no automatic retry or indirect workaround."
 }

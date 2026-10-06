@@ -1917,3 +1917,39 @@ E2B/Tinker are not new execution dependencies, but no services/history were dele
 Next gaps: real account runtime boundary with fresh budget, generic candidate
 implementation/dispatch and two-real-round acceptance; then same-model mechanism
 controls. Do not revive exhausted authority or call these partial repairs full autonomy.
+
+## 2026-10-06 10:36 EDT — Ten-hour window closed; zero new scientific experiments
+
+Goal was repaired execution followed by real feedback-dependent Train candidates.
+The original window04:36:33–14:36:33UTC has expired; the window heartbeat was
+deleted through the app after deadline observation14:36:44UTC. Final actual
+process query14:37:23UTC found no window Controller/training process.
+
+Actual result:0new account calls,0candidate attempts,0fits,0new predictions.
+The first launch was rejected beforeprocess because private Train-derived
+feedback/history/memory transfer to the signed-in account lacked explicit
+payload/destination consent. One permission question stayed unanswered; no
+same-ID retry, alternative-model/agent workaround or further substitute harness
+work was performed while pending. Already-authorized local Train research was
+not revoked; the missing permission was account transfer.
+
+Preserved engineering: exact-window bindinga7a7a2d and reviewed source/native
+handoffa9a22b6; earlier Root/independent263 relevant test executionsPASS with
+one opt-in skip, plus serial bookkeeping7PASS and matched baseline2PASS/5FAIL
+to7PASS. These are prior verified human-directed H improvements, not new
+prediction evidence or autonomous researcher evolution. No tests were rerun
+merely for deadline closure. Full10h is elapsed allocation, not active compute;
+scientific worker time0, paid provider$0, AI engineering cost unmetered.
+
+Raw-market incumbent historicalBrier/log0.1419525290/0.4296707847, C7calibration
+and B3nonlinear-state research pool, archive and closedprior2/8/2 remain unchanged.
+No new KEEP/REVERT, Controller pool selection, feedback reuse or scientific
+negative result was manufactured. Dev/Final/external/paid/release/promotion
+stayed closed. New predictive gains, autonomousRchanges and same-budget fixed
+versus evolving superiority are unsupported.
+
+Outcome: experimental objective NOT achieved; permission-blocked and deadline
+closed, not a performance failure. Evidence:WINDOW_10H_CLOSEOUT_2026-10-06.json
+and immutable permanent window_deadline_terminal.json. Next: a separately
+bounded future window with explicit account payload consent and fresh exact
+input/operation review; this expired window cannot be resumed or reset.

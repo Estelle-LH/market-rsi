@@ -1,16 +1,16 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-10-06T05:01:00Z",
+  "updated_utc": "2026-10-06T14:37:23Z",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
     {
       "id": "controller-enablement-live-boundary-and-execution-20261005",
-      "status": "fresh_10h_fixes_reviewed_actual_Controller_rejected_beforeprocess_explicit_payload_consent_pending",
+      "status": "ten_hour_window_closed_deadline_permission_blocked_zero_new_experiments",
       "plan": "research/market_rsi/supervisor_harness/WINDOW_10H_EXECUTION_2026-10-06.json",
       "result": "Fresh Hbindinga7a7a2d and handoffa9a22b6 independently263PASS/1skip; N2inputc6d8exactreplay and6archiveproofs preserved. Necessary Root serialops106linescce12776 fixed reviewerP1missingfitsfalsezero; matched2to7PASS/7, independent7PASS. First actual Controllerlaunch auto-review rejected BEFOREprocess; newcalls/attempts/fits0. Source review cannot confer sensitiveegress consent.",
-      "next": "One explicit window-wide reviewedTrain feedback/history/memory/provenance to signed-in Codex account Controller consent pending; no rerun/indirect workaround/repeatedquestion. Deadline14:36:33/cutoff14:21:33UTC and Supervisor12/48/12 unchanged; old2/8/2closed. After explicit reply freshbind approval/input/operation and actualscience. Accountevidencetools/protected/external/paid/release remainclosed. No newharnesswork to substitute for experiments.",
-      "evidence": "research/market_rsi/supervisor_harness/WINDOW_10H_RUNTIME_STATUS_2026-10-06.json",
+      "next": "Original ten-hour window expired14:36:33UTC without payload consent; heartbeat deleted, calls/attempts/fits0, no active window process. Preserve H fixes and old closed2/8/2. Future account science needs a separately bounded window plus explicit private payload/destination consent and fresh exact review; no revival, retry, indirect workaround or more substitute harness work.",
+      "evidence": "research/market_rsi/supervisor_harness/WINDOW_10H_CLOSEOUT_2026-10-06.json",
       "provider_cost_usd": "0"
     },
     {
