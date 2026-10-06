@@ -298,6 +298,25 @@ class PriceServiceTests(TestCase):
         self.assertEqual(replay, result)
         self.assertEqual(launches, 0)
 
+    def test_large_aggregate_context_uses_exact_controller_grant(self):
+        grant = deepcopy(self.runtime.fixed_grant)
+        grant['account_transfer']['max_input_bytes'] = 262144
+        self.runtime.authority = self.h.f.write('authorization', grant)
+        self.runtime.fixed_grant = grant
+        self.seed['source_context'] = self.h.f.write('large-synthetic-source-context',
+            {'source': 'synthetic context, no data rows: ' + 'x' * 40000})
+        ctx = {'round_index': 1, 'previous_result': self.seed}
+        packet = self.service().prepare_packet(ctx)
+        size = len((json.dumps(packet, sort_keys=True, indent=2) + '\n').encode())
+        self.assertGreater(size, 32768); self.assertLess(size, 262144)
+        grant['account_transfer']['max_input_bytes'] = 32768
+        self.runtime.authority = self.h.f.write('authorization', grant)
+        self.runtime.fixed_grant = grant
+        with self.assertRaisesRegex(ValueError, 'input byte budget'):
+            self.service().prepare_packet(ctx)
+        self.assertEqual(t._file(self.root / 'ledger.json')['attempts'], [])
+        self.assertEqual(self.h.f.calls, self.calls_before)
+
     def test_measured_timings_are_bound_to_previous_round_and_not_recounted(self):
         path = self.root / 'price-loop' / 'round-0001-implement.timing.json'
         path.parent.mkdir()

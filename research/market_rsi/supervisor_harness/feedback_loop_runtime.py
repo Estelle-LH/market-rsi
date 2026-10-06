@@ -34,9 +34,9 @@ class PilotRuntime:
                     ("Dev", "Final", "external_data", "external_literature", "paid_provider", "release", "push", "promotion")}):
             raise ValueError("exact unchanged bounded grant required")
         transfer = grant.get("account_transfer", {})
+        t.input_limit(grant)
         if (transfer.get("approved") is not True or transfer.get("destination") != t.DESTINATION
                 or transfer.get("requested_model") != t.c.MODEL or transfer.get("serving_snapshot") != "unknown"
-                or transfer.get("max_input_bytes") != 32768
                 or transfer.get("payload_scope") != ["private Train-derived aggregate feedback", "research memory/history", "relevant candidate source context"]
                 or any(transfer.get(k) is not False for k in ("raw_train_transfer", "tools_enabled", "automatic_retry"))):
             raise ValueError("unchanged compact tools-closed account boundary required")

@@ -199,3 +199,21 @@ next declared chunks; do not activate/launch this partial checkpoint. No new
 batch or grant generated. Source author Root, independent/live review pending;
 not autonomous capacity improvement. Existing user/other-owner dirty files remain
 excluded from checkpoint. Rollback only local source, never operational history.
+
+## F1b.2 — runtime and Controller packet use the same approved limit
+
+Parentdbe0bf3; second declared source scope feedback_loop_runtime.py and
+price_loop_services.py plus their existing tests. PilotRuntime now accepts the
+explicit positive integer grant rather than equality-to32768. Packet construction
+reads that exact Controller limit. This is a policy connection, not another gate,
+new grant, budget service or model context assertion. Synthetic modern64/256KiB
+initialization and >32KiB aggregate context pass; changing the disposable fixture
+back to32KiB correctly rejects the same context. Missing/invalid modern limits
+reject pre-initialization and no call/attempt is created.
+
+Exact pinned one-thread command as above with modules
+supervisor_harness.test_feedback_loop_runtime and
+supervisor_harness.test_price_loop_services:33PASS11.499s. Root-run local tests;
+actual modelcalls0/residentTrainfits0, no old ledger/grant writes. Scope production
+diff two replacements and one helper call; remaining author/reviewer/official-entry
+checks await the next declared chunks. Partial snapshot still not live activation.

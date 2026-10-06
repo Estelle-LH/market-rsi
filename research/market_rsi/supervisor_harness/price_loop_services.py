@@ -217,8 +217,8 @@ class PriceLoopServices:
                 "implementation_capabilities": capability}}
         if packet["feedback"]["comparison_incumbent_sha256"] != pool["incumbent"]["candidate_sha256"]:
             raise ValueError("feedback comparison incumbent drift")
-        if len((json.dumps(packet, sort_keys=True, indent=2, allow_nan=False) + "\n").encode("utf-8")) > 32768:
-            raise ValueError("compact aggregate input exceeds authorized 32KiB")
+        if len((json.dumps(packet, sort_keys=True, indent=2, allow_nan=False) + "\n").encode("utf-8")) > t.input_limit(self.runtime.fixed_grant):
+            raise ValueError("aggregate input exceeds authorized input byte budget")
         return packet
 
     def input(self, ctx):

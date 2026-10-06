@@ -67,6 +67,27 @@ class RuntimeTests(TestCase):
         with self.assertRaises(ValueError):
             r.PilotRuntime(self.root, self.repo, bad, self.h.configuration_binding)
 
+    def test_larger_explicit_context_budget_is_not_a_runtime_ceiling(self):
+        for size in (65536, 262144):
+            grant = deepcopy(self.h.authorization)
+            grant['account_transfer']['max_input_bytes'] = size
+            binding = self.h.write('authorization', grant)
+            runtime = r.PilotRuntime(self.root, self.repo, binding, self.h.configuration_binding)
+            self.assertEqual(t.input_limit(runtime.fixed_grant), size)
+        self.assertEqual(t._file(self.root / 'ledger.json')['attempts'], [])
+
+    def test_missing_or_invalid_modern_context_budget_rejected_before_initialization(self):
+        for value in (None, True, 0, -1, '65536', 65536.):
+            grant = deepcopy(self.h.authorization)
+            grant['account_transfer']['max_input_bytes'] = value
+            binding = self.h.write('authorization', grant)
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'max_input_bytes'):
+                r.PilotRuntime(self.root, self.repo, binding, self.h.configuration_binding)
+        grant = deepcopy(self.h.authorization); del grant['account_transfer']['max_input_bytes']
+        binding = self.h.write('authorization', grant)
+        with self.assertRaisesRegex(ValueError, 'max_input_bytes'):
+            r.PilotRuntime(self.root, self.repo, binding, self.h.configuration_binding)
+
     def test_original_failure_remains_reserved_no_retry(self):
         def failed(*args):
             self.h.calls += 1
