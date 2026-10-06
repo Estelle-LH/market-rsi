@@ -132,9 +132,16 @@ def verify_events(session, directory, events):
     audit = broker.read_file(policy["audit_path"], 4_194_304)
     receipts = [broker.strict_json(line) for line in audit.splitlines()]
     completed, ids, observed, seen = [], set(), set(), set()
-    for event in events:
+    # The last completed agent message is the final decision; earlier notes
+    # remain allowed. No observation delivered afterwards can support it.
+    decision_at = max((i for i, event in enumerate(events) if event.get("type") == "item.completed"
+                       and event.get("item", {}).get("type") == "agent_message"), default=len(events))
+    terminal_at = next((i for i, event in enumerate(events) if event.get("type") == "turn.completed"), len(events))
+    for position, event in enumerate(events):
         item = event.get("item", {})
         if item.get("type") != "mcp_tool_call": continue
+        if position > min(decision_at, terminal_at):
+            raise ValueError("tool observation after final decision or terminal turn")
         if item.get("server") != SERVER or item.get("tool") not in TOOLS:
             raise ValueError("unapproved tool event")
         if type(item.get("id")) is not str or not item["id"]:
@@ -168,7 +175,9 @@ def verify_events(session, directory, events):
             record = records.get(value.get("evidence_id"))
             if record is None or value.get("sha256") != record["sha256"] or receipt.get("evidence_id") != record["id"]:
                 raise ValueError("retrieved source identity drift")
-            seen.add(record["sha256"])
+            if type(value.get("text")) is not str:
+                raise ValueError("retrieved source text missing")
+            if value["text"]: seen.add(record["sha256"])
     if len(receipts) > policy["limits"]["tool_calls"] or total > policy["limits"]["output_bytes"]:
         raise ValueError("evidence session budget drift")
     return seen
