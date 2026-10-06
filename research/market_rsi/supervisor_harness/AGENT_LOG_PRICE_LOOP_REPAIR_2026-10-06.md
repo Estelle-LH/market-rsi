@@ -106,3 +106,64 @@ Root final15-module287relevant testsPASS19.524s and independent127/31regressions
 Manual attribution: human fresh whole-batch approval1, per-round human hypothesis/implementation/continuation directives0. AI Supervisor performed two local H fixes, independent reviews/configuration activation and recovery relaunches; those interventions must not be hidden as self-evolution or an interruption-free first launch. Normal Controller→author→review→fits→score→feedback→next decision handoffs are programmatic; broad implementation failure/repair/activation still requires Supervisor. Current active globalpool B0zero anchor +B1method-diverse nonlinear route; all B0/B1/B2/B3 archive retained. Credit1 native-parent reuse remains a reported gap, not retroactively relaxed to finish this batch.
 
 Source/result local checkpoints preserved; no push/release/promotion. Frozen data72999782/scorerd66b6c6b/runneracfbfbb5 and oldpriceledger97599916/old04ledger0e950a5e match originalbytes after closure. Authorized permanent global decision journal was idle and received one prospective revision, head d645bbf7/documentb82a18cf; it synchronizes status, not a claim that the old canary journal manages this native worker. No historical cap reopened. Remaining claims unsupported: prediction edge overzero, autonomous R/H capacity improvement, fixed-process superiority, profitability, untouched OOS and forward confirmation. No further scientific work in this closed batch.
+
+## 19:10–19:22 NY — F1 process feedback, local source checkpoint
+
+Human requested an item-wise plan and implementation. Parent source ac6238a;
+ordered plan c2d63ef freezes six bounded items and excludes new account science.
+Root is implementer; no new delegated/account review role was called. Existing
+research-progress skill and current activation/driver/accounting/source records
+were read; this reuses already-researched operations, not a new method or literature
+search. One named H component changed: Controller process observations in
+price_loop_services.py, with test_price_loop_services.py as the only executable
+test change. Final source diff106 changed lines, below the200-line warning.
+
+Persisted history now contains bounded factual timings with exact file/hash/batch/
+round bindings and independently reviewed execution outcome/accounting; absent
+timings are null, never measured zero. Input overhead contains a source-pinned
+numeric-author capability descriptor and configured R/H pair. The explicit
+capacity_hooks_resolved=false prevents hash-only configuration being represented
+as actual R/H use. Unreviewed error text, stderr, raw rows and prediction rows are
+not added. Reconcile walltime is not available while writing the record and is
+explicitly excluded; Controller/author overhead may still be unknown. This is
+observability, not measured efficiency or researcher improvement.
+
+First local run:19 tests in9.945s,18pass/1error. The three-round synthetic fixture
+exceeded32768bytes before its next role/reservation because old process snapshots
+were recursively duplicated. Preserve this failure; it was not a scientific
+failure or evidence that records must remain small. The uncommitted failure
+snapshot has no separate Git hash; do not invent exact failed-source replay.
+Correction retains full old history via its immutable previous binding and omits
+only the duplicated prior process_feedback from the current projection. Old
+scientific history/memory is unchanged. Focused rerun19PASS10.723s; final inherited
+run78PASS17.664s after numeric-author source dependency and failed-worker assertions.
+Exact command (canonical research cwd):
+
+```sh
+env PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest supervisor_harness.test_price_loop_services supervisor_harness.test_price_loop_handoff supervisor_harness.test_price_independent_review supervisor_harness.test_run_price_discovery supervisor_harness.test_feedback_linked_loop -q
+```
+
+Fixtures verify unknown versus zero, exact timer provenance and tamper/symlink
+rejection, no-score failure continuation, REVERT/KEEP, completed replay and unchanged
+once-only accounting. Mocked account/worker outputs are not actual fits or scientific
+evidence. Tests run by Root, not independently; L1 local engineering, independent
+source/integration review pending. Actual new accountcalls0, residentTrainfits0,
+rawTrainreads0, external/paid/protected/release/push/promotion0. No old grant/cap or
+ledger was reopened. At23:22:27UTC, protectedSHA256: data729997820fe1a78d834d577fa5d9d892405cbb4c208ef95cd0963ed1b178361d;
+runneracfbfbb53c45b0746ed71aac49f3256cb041160cd194bceef9055e0299ca7f8b;
+scorerd66b6c6ba6ca466622cbf531662b8fcdf4a4d06ddcfa148c2d7f3cfa3dfb350b;
+closedpriceledger67b0bcb4c3197aacfc518ecce09958febe1dca90181bb025d28ba6f1c54cc543.
+
+Human then questioned why32KiB was an issue. Root corrected the explanation:
+record growth itself is fine;32KiB was the closed pilot's explicit per-input
+egress grant, not model capacity, a scientific threshold or a universal research
+limit. Its several hardcoded checks require a prospective authorization-bound
+limit, including rendered prompt overhead, not a larger silent/retroactive grant.
+This change is placed with input/action review, not used to stall local research
+wiring or delete useful history. No new payload transfer occurs now.
+
+Remaining: typed R/H action routing, distinct implementation/benefit review,
+actual selected-capacity invocation/version recovery, known-failure continuation
+and integrated real downstream evidence. Pre-author failure continuation is not
+fixed by F1. Next change must remain bounded; no synthetic pass is called a real
+co-evolution cycle. Unrelated dirty other-owner work remains unstaged.

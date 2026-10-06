@@ -13,12 +13,22 @@
       "id": "F1-process-feedback",
       "depends_on": [],
       "component": "price Controller process observations",
-      "status": "ready",
+      "status": "implemented_local_tests_pass_independent_review_pending",
       "paths": ["research/market_rsi/supervisor_harness/price_loop_services.py", "research/market_rsi/supervisor_harness/test_price_loop_services.py"],
       "change": "Persist compact timing evidence, actual execution accounting, configured R/H pair and fixed implementation capability descriptor in the existing history/overhead. Missing measurements stay unknown. Do not transfer raw rows, stderr or unreviewed error text.",
       "acceptance": "Next synthetic Controller input contains the previous observed stages and independently reviewed failure outcome, while identical rows/scoring, byte cap, no-retry and replay remain unchanged.",
       "not_claimed": "Pre-author implementation failure continuation remains F5; this item does not activate R/H or prove capacity benefit.",
       "verification": ["stage timing provenance and invalid/symlink timing rejection", "unknown versus zero", "failed worker is invalid prediction evidence", "two-round continuation, KEEP, restart, cap, byte and boundary regressions"],
+      "actual_result": {
+        "first_regression": "19 tests: 18 passed, one three-round synthetic input exceeded the previous batch's 32768-byte transfer limit; not a scientific failure or model context limit.",
+        "correction": "Do not recursively duplicate prior process_feedback snapshots in current input. Full previous histories remain immutable through existing bindings; scientific history/memory remains unchanged.",
+        "focused_after_correction": "19 tests passed in 10.723 seconds.",
+        "inherited_final": "78 services/handoff/reviewer/official-entry/driver tests passed in 17.664 seconds on pinned ds-py312 Python with one-thread environment.",
+        "new_account_calls": 0,
+        "resident_train_fits": 0,
+        "protected_price_sources_and_closed_ledger": "SHA256 unchanged; see existing repair worklog",
+        "evidence_level": "L1 local engineering only; no live activation or independent acceptance"
+      },
       "time_bound_minutes": 25,
       "rollback": "New source checkpoint reverting only F1; old batch accounting/history never rewound"
     },
@@ -28,6 +38,7 @@
       "status": "queued",
       "paths": ["research/market_rsi/supervisor_harness/coevo_pilot_transaction.py", "research/market_rsi/supervisor_harness/account_controller_feedback_consumer.py", "research/market_rsi/supervisor_harness/price_independent_review.py", "relevant existing tests"],
       "change": "Add a prospective versioned C/R/research-H action contract and matched input review. Preserve the old v1 path. Stop forcing every decision to be a prediction recipe; do not force R/H mutations either.",
+      "payload_policy_correction": "32768 bytes is an old explicit per-input transfer grant, not a scientific restriction or permanent Controller capacity limit. Bind the future effective limit to the exact batch authorization, checking full rendered prompts; never rewrite old grants. Larger authorized inputs and local histories are legitimate. Avoid making input-size optimization another research prerequisite.",
       "acceptance": "Typed capacity proposals cite current evidence and exact parent/scope/test/downstream use; malformed/protected/authority-changing proposals fail before role calls or fit reservations.",
       "checkpoint_split": "Protocol/prompt and reviewer changes are separate bounded checkpoints; no broad all-files change."
     },

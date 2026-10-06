@@ -1,5 +1,26 @@
 # Market RSI — human progress
 
+## 2026-10-06 19:22 NY — first item-wise co-evolution wiring repair
+
+F1 now sends factual process observations and numeric implementation capabilities
+in the next Controller input: bound stage timings, reserved/actual fits, reviewed
+execution outcome and the configured R/H pair. Missing measurements remain unknown;
+configured capacities are explicitly not claimed to be resolved or used. Full old
+histories remain immutable. The initial three-round fixture exceeded the old batch's
+32KiB transfer grant because repeated timing snapshots were duplicated; the compact
+projection removes that duplication, not scientific findings or failure evidence.
+Growing records are not a scientific problem or a model context limit. A future
+larger input budget must come from that batch's actual authorization, not a permanent
+hardcoded research restriction or a retroactive change to the closed batch.
+
+Local 78-test services/handoff/reviewer/entry/driver regression passed in17.664s;
+no account call, resident Train fit or protected-source/closed-ledger change.
+This is user-directed Supervisor H engineering at L1, not an autonomous R/H
+improvement. Independent integration review and real downstream capacity use remain
+pending. The six-item executable plan is COEVO_LIVE_ROUTE_FIX_PLAN_2026-10-06.json;
+plan checkpoint c2d63ef. Next bounded source item is prospective action/review routing,
+not a new harness or a renewed scientific batch.
+
 ## 2026-10-06 — price pilot closed without a Controller continuation
 
 User `yes` approved the pending exact compact account transfer, but the original

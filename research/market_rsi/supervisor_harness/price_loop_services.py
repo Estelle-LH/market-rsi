@@ -8,6 +8,7 @@ import csv
 import fcntl
 import inspect
 import json
+import math
 from pathlib import Path
 
 from experiments import nfl_ingame_price_score as scoring
@@ -19,6 +20,61 @@ ROLES = {"feedback", "memory", "history", "pool", "source_context"}
 AUTHORED = {"candidate_binding", "source_commit", "files", "method_family"}
 RECORD = {"candidate_id", "candidate_sha256", "manifest", "model_column", "review", "native_parent"}
 BASE = h.FIELDS - AUTHORED - {"native_name", "attempt_id", "memory_binding", "initial_incumbent", "archived_parents"}
+TIMED_STAGES = loop.STAGES[:-1]  # Reconcile timing is not complete while it writes history.
+
+
+def _timing(binding):
+    value = t.c._read(binding)
+    if (set(value) != ({"wall_seconds", "completed"} if value.get("completed") is True
+                      else {"wall_seconds", "completed", "error_type"})
+            or type(value.get("completed")) is not bool
+            or type(value.get("wall_seconds")) not in {int, float}
+            or not math.isfinite(value["wall_seconds"]) or value["wall_seconds"] < 0
+            or (not value["completed"] and (type(value.get("error_type")) is not str
+                or not value["error_type"].isidentifier() or len(value["error_type"]) > 128))):
+        raise ValueError("bounded factual stage timing required")
+    return value
+
+
+def _process_evidence(value):
+    """Recheck immutable measurements; unavailable is never measured zero."""
+    if value is None:
+        return None
+    if (type(value) is not dict or set(value) != {"schema", "round_index", "source_batch_root",
+            "stages", "execution", "result_review", "reconcile_timing_included"}
+            or value["schema"] != "price_process_feedback_v1"
+            or type(value["round_index"]) is not int or value["round_index"] < 1
+            or value["reconcile_timing_included"] is not False
+            or set(value["stages"]) != set(TIMED_STAGES)):
+        raise ValueError("exact prior process feedback required")
+    root = Path(value["source_batch_root"])
+    if not root.is_absolute() or root.resolve() != root or root.parent != t.ROOT.parent:
+        raise ValueError("process evidence must belong to a permanent batch root")
+    for stage, observation in value["stages"].items():
+        if type(observation) is not dict or set(observation) != {"measurement", "evidence"}:
+            raise ValueError("exact stage observation required")
+        binding = observation["evidence"]
+        if binding is None:
+            if observation["measurement"] is not None:
+                raise ValueError("measurement without timing evidence")
+            continue
+        path = Path(binding["path"])
+        if (path.parent.parent != root or path.parent.name not in
+                {"price-loop", "price-loop-admission-v2", "price-loop-admission-v3"}
+                or path.name != f"round-{value['round_index']:04d}-{stage}.timing.json"):
+            raise ValueError("stage timing provenance drift")
+        h._binding(binding)
+        if _timing(binding) != observation["measurement"]:
+            raise ValueError("stage timing snapshot drift")
+    review = t.c._read(value["result_review"])
+    execution = value["execution"]
+    if (set(execution) != {"outcome", "fits_reserved", "actual_fits", "valid_fits_completed",
+            "worker_wall_seconds", "sampled_peak_rss_kib", "performance_evidence"}
+            or review.get("passed") is not True or review.get("execution_outcome") != execution["outcome"]
+            or execution["performance_evidence"] != (review.get("manifest") is not None)
+            or execution["outcome"] != "succeeded" and execution["performance_evidence"]):
+        raise ValueError("process observation must bind independently reviewed execution")
+    return value
 
 
 def _evidence(record):
@@ -136,6 +192,14 @@ class PriceLoopServices:
         if any(records[p["parent_sha256"]]["native_parent"] is None for p in active):
             raise ValueError("active branch needs original reviewed continuation provenance before starting")
         ledger = t._file(self.runtime.root / "ledger.json")
+        process = _process_evidence(data["history"].get("process_feedback"))
+        from supervisor_harness import price_candidate_author as numeric_author
+        capability = {"schema": "price_numeric_capability_snapshot_v1",
+            "source": r.pin(numeric_author.__file__),
+            "imports": {key: sorted(symbols) if symbols is not None else "numeric module"
+                        for key, symbols in numeric_author.IMPORTS.items()},
+            "numpy_attributes": sorted(numeric_author.NP),
+            "limit": "Static admission snapshot, not arbitrary-code containment or extra authority"}
         packet = {"schema": "controller_price_feedback_input_v1", "bindings": bindings,
             **{key: data[key] for key in ("feedback", "memory", "history", "source_context")},
             "pool": {"incumbent": pool["incumbent"], "active_pool": active,
@@ -145,7 +209,12 @@ class PriceLoopServices:
             "provided_source_sha256": list(dict.fromkeys([*eligible, *(b["sha256"] for b in bindings.values())])),
             "overhead": {"attempts_consumed": len(ledger["attempts"]),
                 "fits_reserved": sum(a["fits_reserved"] for a in ledger["attempts"]),
-                "original_decisions_consumed": len(ledger["controller_decisions"])}}
+                "original_decisions_consumed": len(ledger["controller_decisions"]),
+                "last_process_feedback_sha256": t.c._digest(process) if process is not None else None,
+                "process_feedback_location": "history.process_feedback" if process is not None else None,
+                "configured_research_pair": self.base["identity_configuration"]["pair"],
+                "capacity_hooks_resolved": False,  # F4 must supply actual invocation evidence, not this config.
+                "implementation_capabilities": capability}}
         if packet["feedback"]["comparison_incumbent_sha256"] != pool["incumbent"]["candidate_sha256"]:
             raise ValueError("feedback comparison incumbent drift")
         if len((json.dumps(packet, sort_keys=True, indent=2, allow_nan=False) + "\n").encode("utf-8")) > 32768:
@@ -185,6 +254,31 @@ class PriceLoopServices:
     def source_review(self, ctx):
         prepared = ctx["outputs"]["implement"]
         return h.finalize(self.runtime, prepared, self.reviewer("source", prepared))
+
+    def process_feedback(self, ctx, attempt, result):
+        directory = getattr(self, "recovery_directory", "price-loop")
+        if directory not in {"price-loop", "price-loop-admission-v2", "price-loop-admission-v3"}:
+            raise ValueError("known timing namespace required")
+        stages = {}
+        for stage in TIMED_STAGES:
+            path = self.runtime.root / directory / f"round-{ctx['round_index']:04d}-{stage}.timing.json"
+            if path.is_symlink() or path.resolve() != path:
+                raise ValueError("stage timing symlink/path drift")
+            if path.exists():
+                if not path.is_file() or path.stat().st_size > 1024:
+                    raise ValueError("small stage timing file required")
+                binding = r.pin(path)
+                stages[stage] = {"measurement": _timing(binding), "evidence": binding}
+            else:
+                stages[stage] = {"measurement": None, "evidence": None}
+        observation = {"schema": "price_process_feedback_v1", "round_index": ctx["round_index"],
+            "source_batch_root": str(self.runtime.root), "stages": stages,
+            "execution": {"outcome": result["execution_outcome"],
+                **{key: attempt.get(key) for key in ("fits_reserved", "actual_fits", "valid_fits_completed",
+                                                    "worker_wall_seconds", "sampled_peak_rss_kib")},
+                "performance_evidence": result["manifest"] is not None},
+            "result_review": result["review"], "reconcile_timing_included": False}
+        return _process_evidence(observation)
 
     def result_review(self, ctx):
         prepared, receipt = ctx["outputs"]["implement"], ctx["outputs"]["execute"]["receipt"]
@@ -281,7 +375,11 @@ class PriceLoopServices:
         memory = {"previous": bindings["memory"], "prior": data["memory"],
             "verified_finding": entry, "controller_memory_additions": choice["memory_additions"],
             "stopped_exact_recipes": choice["stopped_exact_recipes"]}
-        history = {"previous": bindings["history"], "prior": data["history"], "last_experiment": entry}
+        # Keep full prior bytes via the immutable previous binding, but do not
+        # duplicate every old timing snapshot in the next compact account input.
+        history = {"previous": bindings["history"],
+            "prior": {key: value for key, value in data["history"].items() if key != "process_feedback"},
+            "last_experiment": entry}
         spec = t.c._read(prepared["specification"])
         source = {"previous": bindings["source_context"], "candidate_sha256": result["candidate_sha256"],
             "source_commit": spec["source_commit"], "candidate_source": h._binding(spec["candidate_binding"]).read_text()}
@@ -293,6 +391,7 @@ class PriceLoopServices:
             attempt = next(a for a in ledger["attempts"] if a["attempt_id"] == selection["attempt_id"])
             if attempt["status"] != result["execution_outcome"] or "reconciled_feedback_sha256" in attempt:
                 raise ValueError("attempt accounting drift or already reconciled; no retry")
+            history["process_feedback"] = self.process_feedback(ctx, attempt, result)
             bundle = {key: self._save(ctx, key, value) for key, value in
                 (("feedback", feedback), ("memory", memory), ("history", history), ("pool", pool), ("source_context", source))}
             attempt.update(reconciled_feedback_sha256=bundle["feedback"]["sha256"], result_review_sha256=result["review"]["sha256"])
@@ -309,8 +408,9 @@ class PriceLoopServices:
         from experiments import nfl_ingame_price_data as price_data
         from experiments import nfl_ingame_price_change_train_diagnostic as price_runner
         from data_scientist_harness import co_evolution_loop as micro
+        from supervisor_harness import price_candidate_author as numeric_author
         files = [r.pin(path) for path in (__file__, h.__file__, r.__file__, t.__file__, t.c.__file__, w.__file__,
-            h.b.__file__, scoring.__file__, price_data.__file__, price_runner.__file__, micro.__file__)]
+            h.b.__file__, scoring.__file__, price_data.__file__, price_runner.__file__, micro.__file__, numeric_author.__file__)]
         for binding in self.callbacks.values():
             h._binding(binding)
         return {stage: {"source_dependencies": files + list(self.callbacks.values()), "fixed_base": self.base,

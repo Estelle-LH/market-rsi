@@ -276,6 +276,60 @@ class PriceServiceTests(TestCase):
         self.assertFalse(self.runtime.admit({'stage': 'input'}))
         self.assertEqual(result['completed_rounds'], 1)
 
+    def test_next_input_carries_actual_accounting_capabilities_and_unknown_timings(self):
+        result, _ = self.run_service()
+        first, second = self.choice_packets
+        self.assertIsNone(first['overhead']['last_process_feedback_sha256'])
+        observed = second['history']['process_feedback']
+        self.assertEqual(second['overhead']['last_process_feedback_sha256'], t.c._digest(observed))
+        self.assertEqual(observed['execution']['actual_fits'], 4)  # Fixture progress, not actual ML fits.
+        self.assertEqual(observed['execution']['fits_reserved'], 4)
+        self.assertTrue(observed['execution']['performance_evidence'])
+        self.assertFalse(observed['reconcile_timing_included'])
+        self.assertTrue(all(item == {'measurement': None, 'evidence': None}
+                            for item in observed['stages'].values()))
+        capabilities = second['overhead']['implementation_capabilities']
+        self.assertIn('cumsum', capabilities['numpy_attributes'])
+        self.assertIn('searchsorted', capabilities['numpy_attributes'])
+        self.assertFalse(second['overhead']['capacity_hooks_resolved'])
+        self.assertEqual(second['overhead']['configured_research_pair'], self.base['identity_configuration']['pair'])
+        self.assertNotIn('stdout', json.dumps(observed))
+        replay, launches = self.run_service()
+        self.assertEqual(replay, result)
+        self.assertEqual(launches, 0)
+
+    def test_measured_timings_are_bound_to_previous_round_and_not_recounted(self):
+        path = self.root / 'price-loop' / 'round-0001-implement.timing.json'
+        path.parent.mkdir()
+        w.save(path, {'wall_seconds': 7.5, 'completed': True})
+        self.run_service()
+        previous = self.choice_packets[1]['history']['process_feedback']
+        stage = previous['stages']['implement']
+        self.assertEqual(stage['measurement']['wall_seconds'], 7.5)
+        self.assertEqual(stage['evidence'], runtime_module.pin(path))
+        self.assertIsNone(previous['stages']['controller']['measurement'])
+        changed_root = deepcopy(previous); changed_root['source_batch_root'] = str(self.root / 'different-root')
+        with self.assertRaises(ValueError): services._process_evidence(changed_root)
+        path.write_text(json.dumps({'wall_seconds': 1., 'completed': True}))
+        with self.assertRaises(ValueError): services._process_evidence(previous)
+
+    def test_missing_and_malformed_timing_differ_and_do_not_approve_feedback(self):
+        path = self.root / 'price-loop' / 'round-0001-implement.timing.json'
+        path.parent.mkdir()
+        w.save(path, {'wall_seconds': True, 'completed': True})
+        with self.assertRaises(loop.LoopHalted): self.run_service(rounds=1)
+        self.assertFalse((self.root / 'price-round-0001-history.json').exists())
+        self.assertEqual(len(t._file(self.root / 'ledger.json')['attempts']), 1)
+        self.assertFalse(t._file(self.root / 'price-loop/round-0001-reconcile.failed.json')['retry_allowed'])
+
+    def test_timing_symlink_is_not_followed(self):
+        path = self.root / 'price-loop' / 'round-0001-implement.timing.json'
+        path.parent.mkdir()
+        original = self.h.f.write('timing-target', {'wall_seconds': 2., 'completed': True})
+        path.symlink_to(original['path'])
+        with self.assertRaises(loop.LoopHalted): self.run_service(rounds=1)
+        self.assertFalse((self.root / 'price-round-0001-history.json').exists())
+
     def test_reviewer_failure_preserves_closed_stage_no_duplicate_original_or_worker(self):
         original = self.reviewer
         def bad_review(stage, material):
@@ -484,6 +538,10 @@ class PriceServiceTests(TestCase):
         self.assertIsNone(first_result['comparison'])
         self.assertFalse(first_result['exploration_eligible'])
         self.assertNotIn('equal_game_mse', first_result)
+        process = self.choice_packets[1]['history']['process_feedback']
+        self.assertEqual(process['execution']['outcome'], 'failed')
+        self.assertEqual(process['execution']['actual_fits'], 0)
+        self.assertFalse(process['execution']['performance_evidence'])
         pool = t.c._read(result['result']['pool'])
         failed_record = next(record for record in pool['archive'] if record['candidate_id'] == 'C1-synthetic-negative')
         self.assertIsNone(failed_record['manifest'])
