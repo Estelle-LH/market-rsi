@@ -131,7 +131,9 @@ class AuthorServiceTests(TestCase):
         self.ctx = {"round_index": 1, "previous_result": previous, "outputs": {"controller": {"decision": self.decision}}}
         self.calls = []
         self.call = Mock(side_effect=self.transport)
-        self.author = a.CandidateAuthor(self.runtime, {"fixed.py": a.h.w.sha(self.fixed)}, {"synthetic": True}, role_call=self.call)
+        a.h.w.save(self.root / 'synthetic-role-grant.json', {'account_roles': {'max_input_bytes': 32768}})
+        self.author = a.CandidateAuthor(self.runtime, {"fixed.py": a.h.w.sha(self.fixed)},
+            a.h.r.pin(self.root / 'synthetic-role-grant.json'), role_call=self.call)
 
     def transport(self, role, packet, schema, **keywords):
         self.calls.append((role, deepcopy(packet), keywords))
@@ -160,6 +162,22 @@ class AuthorServiceTests(TestCase):
         with self.assertRaises(FileExistsError):
             self.author.author(self.ctx)
         self.assertEqual(len(self.calls), 1)
+
+    def test_author_larger_context_is_supported_by_its_bound_role_budget(self):
+        a.h.w.save(self.root / 'larger-role-grant.json', {'account_roles': {'max_input_bytes': 262144}})
+        self.author.grant = a.h.r.pin(self.root / 'larger-role-grant.json')
+        a.h.w.save(self.root / 'large-memory.json', {'synthetic_memory': 'x' * 40000})
+        self.ctx['previous_result']['memory'] = a.h.r.pin(self.root / 'large-memory.json')
+        authored = self.author.author(self.ctx)
+        self.assertTrue(Path(authored['candidate_binding']['path']).exists())
+        self.assertGreater(len(json.dumps(self.calls[0][1]).encode()), 32768)
+        self.assertEqual(len(self.calls), 1)  # Mock role, no actual model.
+
+    def test_author_old_32k_budget_rejects_large_context_without_role_call(self):
+        a.h.w.save(self.root / 'large-memory.json', {'synthetic_memory': 'x' * 40000})
+        self.ctx['previous_result']['memory'] = a.h.r.pin(self.root / 'large-memory.json')
+        with self.assertRaisesRegex(ValueError, 'input byte budget'): self.author.author(self.ctx)
+        self.assertFalse(self.call.called)
 
     def test_unsafe_original_response_preserved_failure_never_imported_or_retried(self):
         original = self.transport

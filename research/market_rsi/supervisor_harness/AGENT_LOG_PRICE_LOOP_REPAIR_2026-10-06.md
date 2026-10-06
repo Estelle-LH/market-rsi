@@ -217,3 +217,23 @@ supervisor_harness.test_price_loop_services:33PASS11.499s. Root-run local tests;
 actual modelcalls0/residentTrainfits0, no old ledger/grant writes. Scope production
 diff two replacements and one helper call; remaining author/reviewer/official-entry
 checks await the next declared chunks. Partial snapshot still not live activation.
+
+## F1b.3 — author and independent reviewer no longer impose32KiB globally
+
+Parentde8eff0; source scope price_candidate_author.py and
+price_independent_review.py, five checks/replacements, with their existing tests.
+Author input uses its bound role grant; independent input review checks the bound
+Controller budget, and its own outbound review context checks the distinct bound
+reviewer budget. Existing role transport still validates the fully rendered wire
+prompt before account claim/process. Model output/code-size and AST restrictions,
+separate-review identity, scorer/fit/data/tool/time/call boundaries are unchanged.
+
+Tests now supply immutable explicit synthetic role-budget bindings rather than
+an untyped mock grant or implicit limit. >32KiB implementation and review context
+passes when the relevant synthetic role grant is256KiB; identical larger context
+under32KiB is rejected without a role call. Exact pinned one-thread command as
+above, modules supervisor_harness.test_price_candidate_author and
+supervisor_harness.test_price_independent_review:38PASS4.892s. No failed test in
+this chunk, actual accountcalls/Trainfits0. Old actual author-source artifacts are
+read-only AST fixtures, not new Train or account use. Root performed testing,
+independent acceptance pending. Entry preflight is the last declared connection.

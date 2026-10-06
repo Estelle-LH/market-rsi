@@ -54,7 +54,8 @@ class IndependentReviewTests(TestCase):
         self.runtime = self.s.runtime
         self.calls = []
         self.transport = Mock(side_effect=self.synthetic_role)
-        self.reviewer = review.IndependentPriceReviewer(self.runtime, self.transport)
+        role_grant = self.s.h.f.write('synthetic-review-grant', {'account_roles': {'max_input_bytes': 32768}})
+        self.reviewer = review.IndependentPriceReviewer(self.runtime, self.transport, role_grant_binding=role_grant)
 
     def synthetic_role(self, role, packet, schema, **kwargs):
         self.calls.append((role, deepcopy(packet), kwargs))
@@ -113,6 +114,25 @@ class IndependentReviewTests(TestCase):
             self.runtime.authority, binding, self.runtime.repo, configuration_binding=self.runtime.configuration,
             config=self.runtime.config), receipt)
         with self.assertRaises(FileExistsError): self.reviewer.review('input', material)
+        self.assertEqual(len(self.calls), 1)
+
+    def test_larger_input_review_uses_distinct_bound_controller_and_role_limits(self):
+        material = self.input_material()
+        packet = review.t.c._read(material['input'])
+        grant = deepcopy(self.runtime.fixed_grant)
+        grant['account_transfer']['max_input_bytes'] = 262144
+        self.runtime.authority = self.s.h.f.write('authorization', grant)
+        self.runtime.fixed_grant = grant
+        material['authorization'] = self.runtime.authority; packet['authority'] = grant
+        packet['memory']['synthetic_extra_context'] = 'x' * 40000
+        packet['bindings']['memory'] = self.s.h.f.write('large-review-memory', packet['memory'])
+        material['input'] = self.s.h.f.write('large-review-input', packet)
+        self.reviewer.grant = self.s.h.f.write('large-review-grant', {'account_roles': {'max_input_bytes': 262144}})
+        self.reviewer.review('input', material)
+        self.assertEqual(len(self.calls), 1)
+        self.assertGreater(len(Path(material['input']['path']).read_bytes()), 32768)
+        self.reviewer.grant = self.s.h.f.write('old-size-review-grant', {'account_roles': {'max_input_bytes': 32768}})
+        with self.assertRaisesRegex(ValueError, 'input byte budget'): self.reviewer.review('input', material)
         self.assertEqual(len(self.calls), 1)
 
     def test_formal_native_contract_requires_actual_ack_before_account_review(self):

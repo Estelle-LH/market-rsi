@@ -81,7 +81,7 @@ class IndependentPriceReviewer:
         for binding in material.values():
             h._binding(binding)
         packet = t.c._read(material["input"])
-        if (len(Path(material["input"]["path"]).read_bytes()) > 32768
+        if (len(Path(material["input"]["path"]).read_bytes()) > t.input_limit(self.runtime.fixed_grant)
                 or packet.get("authority") != self.runtime.fixed_grant
                 or packet.get("schema") != "controller_price_feedback_input_v1"
                 or set(packet) != {"schema", "bindings", "feedback", "memory", "history", "source_context", "pool",
@@ -287,8 +287,8 @@ class IndependentPriceReviewer:
             "question": "Independently PASS or REJECT the supplied material. Judge consistency, leakage, boundary and evidence; do not author source or choose the next candidate.",
             "trusted_checks": checks, "material": account,
             "limitations": "Repeated historical Train Discovery; no untouched OOS, executable fills/profit or researcher superiority. Research credit is evidence quality, never added to MSE. Failed execution is not scientific refutation."}
-        if len((json.dumps(packet, sort_keys=True, indent=2, allow_nan=False) + "\n").encode()) > 32768:
-            raise ValueError("review payload exceeds exact approved 32KiB before account call")
+        if len((json.dumps(packet, sort_keys=True, indent=2, allow_nan=False) + "\n").encode()) > t.input_limit(t.c._read(self.grant), "account_roles"):
+            raise ValueError("review payload exceeds authorized input byte budget before account call")
         role_id = "price-" + stage + "-review-" + t.c._digest(packet)[:20]
         directory = self.runtime.root / "independent-reviews" / role_id
         if directory.exists():

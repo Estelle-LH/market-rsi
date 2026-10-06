@@ -183,8 +183,8 @@ class CandidateAuthor:
                 "context": {k: h.t.c._read(ctx["previous_result"][k]) for k in ("feedback", "memory", "source_context")},
                 "instructions": "Implement the exact original recipe, no scientific substitution. Return plain source strings, no commands; combinedsource/test<=12KiB, concise notes. fit_predict(x,y,weights,xc,history,check_history,*,seed) sees only past13features/history<=900s and fitlabels; return finite 1Dlen(xc) changes. Frozen300s target/scorer/folds unchanged. One bounded model fit per invocation, n_jobs=1; no inner CV/refits. Imports limited to NumPy/math and numeric sklearn classes. No file/network/process/dynamic execution. Test code imports from candidate import fit_predict, defines test_candidate() using synthetic13feature arrays/history, and executes only under __name__ == '__main__'. No decorators/classes/fixtures/rawTrain. Synthetic tests are not scientific fits.",
                 "allowed_imports": {k: sorted(v) if v is not None else "numeric module" for k, v in IMPORTS.items()}}
-            if len(json.dumps(packet, sort_keys=True, allow_nan=False).encode()) > 32768:
-                raise ValueError("author compact context exceeds32KiB")
+            if len(json.dumps(packet, sort_keys=True, allow_nan=False).encode()) > h.t.input_limit(h.t.c._read(self.grant), "account_roles"):
+                raise ValueError("author context exceeds authorized input byte budget")
             if recovered_packet is not None:
                 if packet != recovered_packet:
                     raise ValueError("completed author input changed; no replay or retry")
