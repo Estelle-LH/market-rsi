@@ -165,4 +165,131 @@ class PilotTests(unittest.TestCase):
         self.assertEqual(self.calls, 0)
 
 
+class TypedActionTests(unittest.TestCase):
+    """Actual once-only transaction, synthetic decisions only; no source/fits."""
+    def setUp(self):
+        from supervisor_harness.test_coevo_pilot_configuration import ConfigurationTests
+        self.h = ConfigurationTests(); self.h.setUp(); self.addCleanup(self.h.doCleanups)
+        self.legacy = deepcopy(self.h.packet)
+        self.packet = self.h.packet
+        self.packet['schema'] = 'controller_price_feedback_input_v2'
+        self.packet['action_context'] = {'schema': 'price_controller_action_context_v1',
+            'available_actions': ['prediction', 'researcher', 'harness', 'request_closed_authority'],
+            'identity_configuration': {'pair': {'harness_sha256': 'b' * 64, 'researcher_sha256': 'c' * 64},
+                'fixed_context': {'model_sha256': '1' * 64, 'data_scope_sha256': '2' * 64,
+                    'evaluation_sha256': '3' * 64, 'authority_sha256': self.h.authorization_binding['sha256'],
+                    'resource_policy_sha256': self.h.configuration_binding['sha256']},
+                'allowed_write_paths': {'researcher': ['research_capacities/r1.py', 'research_capacities/r2.py'],
+                    'harness': ['research_capacities/h1.py', 'research_capacities/h2.py']},
+                'protected_paths': ['experiments/nfl_ingame_price_score.py', 'supervisor_harness/paid_budget.py'],
+                'reviewer_id': 'synthetic-independent-reviewer'}}
+        self.action = 'researcher'
+        self.h.response = self.response
+        self.bind()
+
+    def bind(self):
+        self.h.rebind_config()
+        self.h.review.update(action_context_sha256=c._digest(self.packet['action_context']),
+            decision_schema_sha256=c._digest(p.SCHEMA_V2))
+        self.h.review_binding = self.h.write('operation-review', self.h.review)
+
+    def response(self, packet):
+        candidate = self.h.f.decision(packet) if self.action == 'prediction' else None
+        capacity = None
+        if self.action in {'researcher', 'harness'}:
+            config = packet['action_context']['identity_configuration']
+            capacity = {'change_id': 'SYNTHETIC-policy-v2', 'axis': self.action,
+                'component': 'research_policy' if self.action == 'researcher' else 'feedback_delivery',
+                'parent_pair_sha256': c._digest(config['pair']),
+                'problem': 'Synthetic repeated finding; not actual research evidence.',
+                'proposal': 'Keep a verified negative lesson available to the next decision.',
+                'expected_effect': 'Avoid repeating this exact synthetic failed hypothesis.',
+                'matched_test': 'Compare parent/new behavior on identical supplied aggregate cases.',
+                'downstream_use': 'Next input/decision; proposal alone is not activation.',
+                'write_paths': [config['allowed_write_paths'][self.action][-1]],
+                'evidence_used': [{'sha256': packet['bindings']['feedback']['sha256'],
+                    'finding': 'synthetic finding', 'choice_consequence': 'test a memory policy'}],
+                'resources': {'fits': 0, 'seconds': 30, 'threads': 1, 'rss_bytes': 1073741824, 'provider_calls': 0}}
+        return {'schema': 'controller_coevolution_action_v2', 'input_sha256': c._digest(packet),
+            'feedback_sha256': packet['bindings']['feedback']['sha256'], 'requested_model': c.MODEL,
+            'serving_snapshot': 'unknown', 'action': self.action, 'candidate': candidate, 'capacity': capacity,
+            'authority_request': 'Specific additional data permission would be required; not granted.'
+                if self.action == 'request_closed_authority' else None,
+            'attribution': 'Synthetic fixture decision, not live authorship or implemented capacity.'}
+
+    def test_researcher_only_original_and_replay_need_no_dummy_candidate(self):
+        first = self.h.call(); second = self.h.call()
+        self.assertEqual(first, second); self.assertEqual(self.h.calls, 1)
+        self.assertIsNone(first['candidate'])
+        self.assertEqual(first['capacity']['resources']['fits'], 0)
+        ledger = p._file(self.h.root / 'ledger.json')
+        self.assertEqual(len(ledger['controller_decisions']), 1); self.assertEqual(ledger['attempts'], [])
+        directory = next((self.h.root / 'decisions').iterdir())
+        self.assertEqual(p._file(directory / 'schema.json'), p.SCHEMA_V2)
+        self.assertEqual(p._file(directory / 'claim.json')['schema_sha256'], c._digest(p.SCHEMA_V2))
+
+    def test_harness_only_and_prediction_are_distinct_valid_operations(self):
+        for action in ('harness', 'prediction', 'request_closed_authority'):
+            self.action = action
+            response = self.response(self.packet)
+            self.assertEqual(p.validate_response(response, self.packet), response)
+        self.action = 'harness'
+        self.assertEqual(self.h.call()['capacity']['axis'], 'harness')
+        self.assertEqual(self.h.calls, 1)
+
+    def test_unreviewed_v2_context_and_schema_deny_before_original_claim(self):
+        for field in ('action_context_sha256', 'decision_schema_sha256'):
+            self.bind(); self.h.review.pop(field)
+            self.h.review_binding = self.h.write('operation-review', self.h.review)
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, 'review drift'): self.h.call()
+        self.assertEqual(self.h.calls, 0)
+        self.assertFalse((self.h.root / 'decisions').exists())
+
+    def test_protected_context_and_authority_drift_deny_before_original(self):
+        config = self.packet['action_context']['identity_configuration']
+        config['allowed_write_paths']['researcher'] = ['experiments/nfl_ingame_price_score.py']
+        self.bind()
+        with self.assertRaisesRegex(ValueError, 'protected'): self.h.call()
+        config['allowed_write_paths']['researcher'] = ['research_capacities/r2.py']
+        config['fixed_context']['authority_sha256'] = 'f' * 64; self.bind()
+        with self.assertRaisesRegex(ValueError, 'authority/resource'): self.h.call()
+        self.assertEqual(self.h.calls, 0)
+
+    def test_composite_stale_scope_fake_evidence_and_numeric_resources_rejected(self):
+        original = self.response(self.packet)
+        mutations = [lambda v: v.update(candidate=self.h.f.decision(self.packet)),
+            lambda v: v['capacity'].update(parent_pair_sha256='f' * 64),
+            lambda v: v['capacity'].update(write_paths=['../kernel.py']),
+            lambda v: v['capacity'].update(write_paths=['experiments/nfl_ingame_price_score.py']),
+            lambda v: v['capacity']['evidence_used'][0].update(sha256='f' * 64),
+            lambda v: v['capacity']['resources'].update(seconds=True),
+            lambda v: v['capacity']['resources'].update(fits=4),
+            lambda v: v['capacity'].update(extra='unrecognized scope')]
+        for mutate in mutations:
+            response = deepcopy(original); mutate(response)
+            with self.subTest(mutation=mutate), self.assertRaises(ValueError): p.validate_response(response, self.packet)
+        self.packet['action_context']['available_actions'] = ['prediction']
+        with self.assertRaisesRegex(ValueError, 'enabled'): p.validate_response(original, self.packet)
+
+    def test_failed_original_v2_is_preserved_and_never_resampled(self):
+        original = self.h.response
+        def invalid(packet):
+            response = original(packet); response['capacity']['resources']['fits'] = 4; return response
+        self.h.response = invalid
+        with self.assertRaises(ValueError): self.h.call()
+        with self.assertRaises(ValueError): self.h.call()
+        self.assertEqual(self.h.calls, 1)
+        self.assertEqual(p._file(self.h.root / 'ledger.json')['controller_decisions'][0]['status'], 'reserved')
+
+    def test_prompt_opt_in_and_legacy_schema_are_separate(self):
+        modern = c._prompt(self.packet); legacy = c._prompt(self.legacy)
+        self.assertIn('Do not force an R/H mutation', modern)
+        self.assertIn('only the field for your selected action is non-null', modern)
+        self.assertIn('small actual prediction hypothesis', legacy)
+        self.assertNotIn('controller_coevolution_action_v2', legacy)
+        self.assertIs(p.response_schema(self.legacy), p.SCHEMA)
+        drift = deepcopy(self.legacy); drift['action_context'] = self.packet['action_context']
+        with self.assertRaisesRegex(ValueError, 'explicit v2'): p.response_schema(drift)
+
+
 if __name__ == "__main__": unittest.main()

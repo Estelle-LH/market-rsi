@@ -64,12 +64,22 @@
     {
       "id": "F2-typed-actions-and-review",
       "depends_on": ["F1-process-feedback"],
-      "status": "queued",
+      "status": "implementing_versioned_transaction_then_input_review",
       "paths": ["research/market_rsi/supervisor_harness/coevo_pilot_transaction.py", "research/market_rsi/supervisor_harness/account_controller_feedback_consumer.py", "research/market_rsi/supervisor_harness/price_independent_review.py", "relevant existing tests"],
       "change": "Add a prospective versioned C/R/research-H action contract and matched input review. Preserve the old v1 path. Stop forcing every decision to be a prediction recipe; do not force R/H mutations either.",
       "payload_policy_correction": "32768 bytes is an old explicit per-input transfer grant, not a scientific restriction or permanent Controller capacity limit. Bind the future effective limit to the exact batch authorization, checking full rendered prompts; never rewrite old grants. Larger authorized inputs and local histories are legitimate. Avoid making input-size optimization another research prerequisite.",
       "acceptance": "Typed capacity proposals cite current evidence and exact parent/scope/test/downstream use; malformed/protected/authority-changing proposals fail before role calls or fit reservations.",
       "checkpoint_split": "Protocol/prompt and reviewer changes are separate bounded checkpoints; no broad all-files change."
+      ,"current_substep": {
+        "id": "F2a-versioned-action-transaction",
+        "parent": "e4be9ec",
+        "component": "original Controller action protocol",
+        "paths": ["coevo_pilot_transaction.py", "account_controller_feedback_consumer.py", "test_coevo_pilot_transaction.py"],
+        "change": "Prospective v2 action with one prediction, one R/research-H proposal or explicit closed-authority request. No dummy prediction/forced capacity change. Keep v1 response/prompt/claim schemas unchanged. Require exact independently reviewed action context and schema binding before a v2 account reservation.",
+        "effect": "Synthetic actual transaction can preserve a capacity-only original proposal and replay it without a fake candidate or new call; protected/stale/scope/field/parent/evidence drift still rejects.",
+        "not_yet": "Default real entry remains v1 until F3/F4 adapter, accounting and activation are integrated; no claim that this protocol checkpoint runs R/H source.",
+        "ceiling": "Two production modules and about200 changed lines; split if exceeded. Local tests only, no account/Train operations."
+      }
     },
     {
       "id": "F3-capacity-implementation-and-benefit",

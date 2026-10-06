@@ -291,3 +291,31 @@ and originalauthorization141da82a309f246abf5cd947dd69eb10e55e8783fac7ce3825b609f
 unchanged. No actual raw Train/prediction row egress or payload limit extension
 in an old batch. Scope completed locally, independent activation still pending;
 next mainline fix is typed R/H routing, not input-size governance or another plan.
+
+## F2a.1 — typed original action, first test snapshot
+
+Parente4be9ec; human continued the ordered fixes. Root re-read current source,
+memory/state, capacity identity/activation/micro protocol and actual process list;
+no Python/price worker active. Existing research-progress skill used to keep
+proposal/engineering/adoption/live-benefit evidence distinct. No new scientific
+method/literature retrieval; reuse existing action/micro-context/scope/checkpoint
+and original-transaction contracts. Current write scope: coevo_pilot_transaction.py
+and account_controller_feedback_consumer.py, plus existing transaction test and
+plan/worklog. Production delta131lines across2modules, below the200-line warning.
+
+Prospective opt-in input/response v2 separates prediction, researcher, research-side
+harness and a specific closed-authority request. Exactly one payload is non-null;
+R/H may not need a dummy prediction or forced mutation. Exact parent pair/scope/
+component/evidence/resources required; old v1 schema/prompt behavior preserved.
+The original reservation/recovery now binds the selected schema, and a v2 claim
+requires exact independent context/schema review and unchanged authority/resource
+identity. Capacity fits0 is proposal metadata, not a free trial/expanded quota.
+Actual downstream implementation/accounting remains F3/F4 and default entry v1.
+
+First pinned one-thread focused command (transaction/configuration/roles/consumer):
+115tests1.713s,114PASS/1FAIL. All composite/stale/path/protected/fake-evidence/resource
+rejections passed; the final disabled-action assertion mutated the input context
+without refreshing the synthetic response input hash, so the earlier hash guard
+correctly rejected first. Preserve this source/test snapshot before correcting
+only that fixture. No production guard or old rule needs relaxing. Mock originals
+are not account decisions/scientific evidence; modelcalls/Trainfits0.

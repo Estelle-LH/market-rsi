@@ -284,6 +284,16 @@ def _terminate(child):
 
 
 def _prompt(packet):
+    if packet.get("schema") == "controller_price_feedback_input_v2":
+        return ("No tools, file/data/network/credentials access or authority changes. Use supplied verified feedback, process observations, history and memory. "
+            "Choose one enabled action: an actual prediction hypothesis, one researcher policy/memory/workflow change, one research-side harness/tool change, "
+            "or a genuinely necessary request for closed authority. Methods remain open. Do not force an R/H mutation or attach a dummy prediction to it. "
+            "A capacity proposal must cite observed evidence, exact parent pair/write scope, a matched test of its named benefit and concrete downstream use. "
+            "Do not modify protected evaluator/data/permissions/budget/trusted Supervisor. Configuration is not proof that capacities were used; "
+            "a proposal is not implemented/tested/accepted evidence. Prior negative scores are not stop reasons. Supervisor owns stopping and resource accounting. "
+            "Return exact controller_coevolution_action_v2 JSON; only the field for your selected action is non-null. "
+            "Copy binding values verbatim: input_sha256=" + _digest(packet) + " feedback_sha256=" + packet["bindings"]["feedback"]["sha256"]
+            + "\n" + json.dumps(packet, allow_nan=False))
     prompt = "No tools, file/data/network/credentials access or authority changes. Use only this verified numerical evidence and prior memory. Return one non-executable evidence-cited scientific next decision; no invented results or preselected model. Within the still-open budget, propose a reasonable distinct small actual prediction hypothesis even without prior improvement; reasonable first small hypotheses do not require prior gains. Negative scores or implementation overhead are not reasons to stop; Supervisor owns allowed stop conditions. Methods remain open, with no forced R modification or scoring change. Use request_closed_authority only for a specific genuinely necessary next operation outside the fixed task/data/permission boundary, not a disguised voluntary stop; a request grants no authority.\nCopy these binding values verbatim; do not calculate hashes: input_sha256=" + _digest(packet) + " feedback_sha256=" + packet["bindings"]["feedback"]["sha256"] + "\n" + json.dumps(packet, allow_nan=False)
     if packet.get("schema") == "controller_failure_feedback_input_v1":
         prompt = prompt.replace("Use only this verified numerical evidence and prior memory.",

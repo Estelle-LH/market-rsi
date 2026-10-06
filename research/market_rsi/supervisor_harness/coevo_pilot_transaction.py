@@ -19,6 +19,23 @@ SCHEMA = c._object({"schema": {"type": "string", "const": "controller_coevolutio
     "serving_snapshot": {"type": "string", "const": "unknown"},
     "researcher_change": CHANGE, "harness_change": CHANGE, "candidate": c.SCHEMA,
     "attribution": c.TEXT})
+CAPACITY = c._object({"change_id": c.TEXT, "axis": {"type": "string", "enum": ["researcher", "harness"]},
+    "component": c.TEXT, "parent_pair_sha256": c.TEXT, "problem": c.TEXT, "proposal": c.TEXT,
+    "expected_effect": c.TEXT, "matched_test": c.TEXT, "downstream_use": c.TEXT,
+    "write_paths": {"type": "array", "items": c.TEXT, "minItems": 1},
+    "evidence_used": {"type": "array", "items": c.EVIDENCE, "minItems": 1},
+    "resources": c._object({"fits": {"type": "integer", "const": 0},
+        "seconds": {"type": "integer", "minimum": 1, "maximum": 900},
+        "threads": {"type": "integer", "const": 1}, "rss_bytes": {"type": "integer", "const": 1073741824},
+        "provider_calls": {"type": "integer", "const": 0}})})
+SCHEMA_V2 = c._object({"schema": {"type": "string", "const": "controller_coevolution_action_v2"},
+    "input_sha256": c.TEXT, "feedback_sha256": c.TEXT,
+    "requested_model": {"type": "string", "const": c.MODEL},
+    "serving_snapshot": {"type": "string", "const": "unknown"},
+    "action": {"type": "string", "enum": ["prediction", "researcher", "harness", "request_closed_authority"]},
+    "candidate": {"anyOf": [c.SCHEMA, {"type": "null"}]},
+    "capacity": {"anyOf": [CAPACITY, {"type": "null"}]},
+    "authority_request": {"anyOf": [c.TEXT, {"type": "null"}]}, "attribution": c.TEXT})
 BATCH = "market-rsi-coevo-pilot-20261006-01"
 DESTINATION = "User's signed-in Codex account Controller via the existing pinned local CodexCLI"
 LIMITS = {"candidate_attempts": 2, "statistical_fits": 8, "original_controller_decisions": 2,
@@ -42,6 +59,78 @@ def input_limit(authorization, section="account_transfer", *, legacy=False):
     if type(value) is not int or value <= 0:
         raise ValueError("explicit positive integer max_input_bytes required")
     return value
+
+
+def action_context(packet):
+    """Supervisor-supplied scope; metadata is not activation or authority."""
+    from data_scientist_harness import co_evolution_loop as micro
+    value = packet.get("action_context")
+    if (type(value) is not dict or set(value) != {"schema", "identity_configuration", "available_actions"}
+            or value["schema"] != "price_controller_action_context_v1"
+            or type(value["available_actions"]) is not list or not value["available_actions"]
+            or len(set(value["available_actions"])) != len(value["available_actions"])
+            or not set(value["available_actions"]) <= set(SCHEMA_V2["properties"]["action"]["enum"])):
+        raise ValueError("exact enabled action context required")
+    micro.initialize_micro_evolution(value["identity_configuration"])
+    return value
+
+
+def response_schema(packet):
+    if packet.get("schema") == "controller_price_feedback_input_v2":
+        action_context(packet)
+        return SCHEMA_V2
+    if "action_context" in packet:
+        raise ValueError("capacity action context requires explicit v2 input")
+    return SCHEMA
+
+
+def validate_response(response, packet):
+    schema = response_schema(packet)
+    c._validate(response, schema)
+    if (response["input_sha256"] != c._digest(packet)
+            or response["feedback_sha256"] != packet["bindings"]["feedback"]["sha256"]):
+        raise ValueError("response input/feedback binding drift")
+    parents = set(packet["provided_parents"])
+    hashes = {item["sha256"] for item in packet["bindings"].values()} | c._hashes(packet["memory"]) | c._hashes(packet["history"]) | set(packet["provided_source_sha256"])
+    candidate = response["candidate"]
+    if schema is SCHEMA_V2:
+        context = action_context(packet)
+        if response["action"] not in context["available_actions"]:
+            raise ValueError("action is not implemented/enabled for this input")
+        hashes |= c._hashes(context) | c._hashes(packet["overhead"])
+        action, capacity, request = response["action"], response["capacity"], response["authority_request"]
+        if ((candidate is not None) != (action == "prediction")
+                or (capacity is not None) != (action in {"researcher", "harness"})
+                or (request is not None) != (action == "request_closed_authority")):
+            raise ValueError("one typed action required; no dummy candidate or composite")
+        if request is not None:
+            c._validate(request, c.TEXT)  # Proposal only; does not grant permission.
+        if capacity is not None:
+            from data_scientist_harness import co_evolution_loop as micro
+            c._validate(capacity, CAPACITY)
+            config = context["identity_configuration"]
+            micro._text(capacity["change_id"], "capacity change ID")
+            micro._paths(capacity["write_paths"])
+            seconds = capacity["resources"]["seconds"]
+            if (capacity["axis"] != action or capacity["component"] not in micro.MICRO_COMPONENTS[action]
+                    or capacity["parent_pair_sha256"] != c._digest(config["pair"])
+                    or not set(capacity["write_paths"]) <= set(config["allowed_write_paths"][action])
+                    or type(seconds) is not int or not 0 < seconds <= packet["authority"]["limits"]["per_attempt_seconds"]
+                    or any(item["sha256"] not in hashes for item in capacity["evidence_used"])):
+                raise ValueError("capacity parent/scope/component/evidence/resource drift")
+    if candidate is not None:
+        c._validate(candidate, c.SCHEMA)
+        if (candidate["input_sha256"] != c._digest(packet)
+                or candidate["feedback_sha256"] != packet["bindings"]["feedback"]["sha256"]
+                or schema is SCHEMA_V2 and candidate["action"] != "propose_candidate"
+                or candidate["actual_parent_sha256"] not in parents
+                or candidate["comparison_incumbent_sha256"] != packet["feedback"]["comparison_incumbent_sha256"]
+                or any(item["sha256"] not in hashes for item in candidate["evidence_used"])
+                or any(item["parent_sha256"] not in parents for item in candidate["active_pool"])
+                or len({item["method_family"] for item in candidate["active_pool"]}) < 2
+                or len({item["parent_sha256"] for item in candidate["active_pool"]}) != len(candidate["active_pool"])):
+            raise ValueError("unprovided candidate/evidence/parent or comparator drift")
+    return response
 
 
 def _configuration(binding, root):
@@ -99,6 +188,13 @@ def _review(packet, input_binding, authorization_binding, review_binding, repo, 
         "requested_model": c.MODEL}
     if configuration_binding is not None:
         expected["configuration_sha256"] = configuration_binding["sha256"]
+    if response_schema(packet) is SCHEMA_V2:
+        context = action_context(packet)
+        expected.update(action_context_sha256=c._digest(context), decision_schema_sha256=c._digest(SCHEMA_V2))
+        fixed = context["identity_configuration"]["fixed_context"]
+        if (configuration_binding is None or fixed["authority_sha256"] != authorization_binding["sha256"]
+                or fixed["resource_policy_sha256"] != configuration_binding["sha256"]):
+            raise ValueError("reviewed action context authority/resource drift")
     if any(type(review.get(key)) is not type(value) or review.get(key) != value for key, value in expected.items()):
         raise ValueError("independent input/source/operation review drift")
     transfer = authorization.get("account_transfer", {})
@@ -135,7 +231,8 @@ def _review(packet, input_binding, authorization_binding, review_binding, repo, 
 
 
 def _recover(directory, packet, claim, transport_contract=None):
-    if _file(directory / "claim.json") != claim or _file(directory / "input.json") != packet or _file(directory / "schema.json") != SCHEMA:
+    schema = response_schema(packet)
+    if _file(directory / "claim.json") != claim or _file(directory / "input.json") != packet or _file(directory / "schema.json") != schema:
         raise ValueError("original transaction claim/input/schema drift")
     completion = _file(directory / "completion.json")
     names = {"process.json", "events.jsonl", "stderr", "schema.json", "input.json", "response.json"}
@@ -163,7 +260,7 @@ def _recover(directory, packet, claim, transport_contract=None):
                 or result.get("model") != c.MODEL or result.get("instructionSources") != []):
             raise ValueError("original native environment policy was not acknowledged")
         from supervisor_harness import price_account_roles as roles
-        roles._verify_native(directory, transport_contract, packet, SCHEMA)
+        roles._verify_native(directory, transport_contract, packet, schema)
     completed, message, usage = False, None, None
     for line in (directory / "events.jsonl").read_text().splitlines():
         event = c._json(line)
@@ -172,21 +269,8 @@ def _recover(directory, packet, claim, transport_contract=None):
             raise ValueError("tools or failed/unknown event observed; no executable proposal")
         if event.get("type") == "item.completed" and event["item"].get("type") == "agent_message": message = c._json(event["item"]["text"])
         if event.get("type") == "turn.completed": completed, usage = True, event.get("usage")
-    response = _file(directory / "response.json"); c._validate(response, SCHEMA)
+    response = _file(directory / "response.json"); validate_response(response, packet)
     if not completed or message != response: raise ValueError("original completed final response differs")
-    candidate = response["candidate"]
-    for decision in (response, candidate):
-        if decision["input_sha256"] != c._digest(packet) or decision["feedback_sha256"] != packet["bindings"]["feedback"]["sha256"]:
-            raise ValueError("response input/feedback binding drift")
-    parents = set(packet["provided_parents"])
-    hashes = {item["sha256"] for item in packet["bindings"].values()} | c._hashes(packet["memory"]) | c._hashes(packet["history"]) | set(packet["provided_source_sha256"])
-    if (candidate["actual_parent_sha256"] not in parents
-            or candidate["comparison_incumbent_sha256"] != packet["feedback"]["comparison_incumbent_sha256"]
-            or any(item["sha256"] not in hashes for item in candidate["evidence_used"])
-            or any(item["parent_sha256"] not in parents for item in candidate["active_pool"])
-            or len({item["method_family"] for item in candidate["active_pool"]}) < 2
-            or len({item["parent_sha256"] for item in candidate["active_pool"]}) != len(candidate["active_pool"])):
-        raise ValueError("unprovided candidate/evidence/parent or comparator drift")
     ack = {"decision_sha256": c._digest(response), "completion_sha256": c.sha(directory / "completion.json"),
            "usage": usage, "serving_snapshot": "unknown", "provider_calls": 0, "nonexecutable": True}
     if (directory / "ack.json").exists():
@@ -222,6 +306,7 @@ def call(root, input_binding, authorization_binding, review_binding, repo, *, tr
             or (configuration_binding is not None and root.parent != ROOT.parent))):
         raise ValueError("original grant and sole permanent pilot root required")
     packet = c._read(input_binding)
+    schema = response_schema(packet)
     if transport_contract is not None:
         import inspect
         from supervisor_harness import price_account_roles as roles
@@ -244,7 +329,7 @@ def call(root, input_binding, authorization_binding, review_binding, repo, *, tr
         fcntl.flock(lock, fcntl.LOCK_EX)
         claim = {"input_sha256": c._digest(packet), "input_binding": input_binding,
             "authorization": authorization_binding, "review": review_binding,
-            "schema_sha256": c._digest(SCHEMA), "transaction_source_sha256": c.sha(Path(__file__).resolve()),
+            "schema_sha256": c._digest(schema), "transaction_source_sha256": c.sha(Path(__file__).resolve()),
             "cli_sha256": c.CLI_SHA, **c._identity()}
         if configuration_binding is not None: claim["configuration_sha256"] = configuration_binding["sha256"]
         if transport_contract is not None: claim["controller_transport"] = transport_contract
@@ -266,7 +351,7 @@ def call(root, input_binding, authorization_binding, review_binding, repo, *, tr
         if directory.resolve() != directory: raise ValueError("original transaction directory symlink")
         reservation = {"feedback_sha256": key, "input_sha256": c._digest(packet), "status": "reserved"}
         decisions.append(reservation); _ledger(ledger_path, ledger)
-        c.save(directory / "input.json", packet); c.save(directory / "schema.json", SCHEMA); c.save(directory / "claim.json", claim)
+        c.save(directory / "input.json", packet); c.save(directory / "schema.json", schema); c.save(directory / "claim.json", claim)
         started = time.monotonic()
         try:
             (transport or c._transport)(directory, packet, min(120., (c._time(config["deadline_utc"]) - now).total_seconds()))
