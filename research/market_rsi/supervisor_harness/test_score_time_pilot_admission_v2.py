@@ -34,7 +34,7 @@ class AdmissionTests(unittest.TestCase):
             self.skipTest('exact post-commit request not yet prepared')
         native = admission.ROOT / 'native'
         snapshot = ContinuousDiscoveryBatch(native).snapshot()
-        request = admission.load(native / 'prepared_request.json')
+        request = admission.load(native / 'ready_request.json')
         self.assertEqual(snapshot['attempts_claimed'], 0)
         self.assertFalse(snapshot['branches'])
         with tempfile.TemporaryDirectory() as directory:
@@ -54,7 +54,10 @@ class AdmissionTests(unittest.TestCase):
             request = {**request, 'memory': str(root / 'activation_memory.json')}
             batch.select_controller_pool([admission.load(native / 'selection.json')])
 
+            real_popen = worker.subprocess.Popen
             def synthetic_child(*args, **kwargs):
+                if args[0][0] == 'git':
+                    return real_popen(*args, **kwargs)
                 output = root / 'runs' / request['attempt_id']
                 # Constructor only relaxes temporary fixture paths, not admission predicates.
                 with patch.object(admission.entry, 'ContinuousDiscoveryBatch',
@@ -74,12 +77,16 @@ class AdmissionTests(unittest.TestCase):
                     patch.object(worker, 'sample_rss', return_value=128):
                 receipt = worker.execute(batch, request, admission.REPO)
             self.assertEqual(receipt['outcome'], 'succeeded')
-            launch.assert_called_once()
+            self.assertEqual(sum(call.args[0][0] == request['python'] for call in launch.call_args_list), 1)
             self.assertEqual(batch.snapshot()['attempts_claimed'], 1)
-            with patch.object(worker.subprocess, 'Popen') as retry:
+            def forbid_retry(*args, **kwargs):
+                if args[0][0] == 'git':
+                    return real_popen(*args, **kwargs)
+                raise AssertionError('candidate retry attempted')
+            with patch.object(worker.subprocess, 'Popen', side_effect=forbid_retry) as retry:
                 with self.assertRaisesRegex(RuntimeError, 'already claimed'):
                     worker.execute(batch, request, admission.REPO)
-                retry.assert_not_called()
+                self.assertFalse(any(call.args[0][0] == request['python'] for call in retry.call_args_list))
         self.assertEqual(ContinuousDiscoveryBatch(native).snapshot(), snapshot)
 
 

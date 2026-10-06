@@ -33,3 +33,10 @@ Corrected targeted suite43tests PASS1.747s with one exact post-commit rehearsal
 not yet run. New production scope175lines/two modules; scientific candidate
 and old worker untouched. This is a pre-launch fixture repair, no candidate
 attempt or real fit. Full prepared admission and independent review pending.
+
+18:15 UTC — exact rehearsal found a test-only mocking seam: replacing global
+Popen also intercepted Git provenance checks. Correct fixture delegates Git
+to actual Popen while only the training child is mocked. No worker/Train was
+launched and native real batch remains unselected/unclaimed. Preserve initial
+prepared request; freeze a new ready request against the corrected local source
+checkpoint. No source, grant or outcome guard is removed.

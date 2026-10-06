@@ -90,12 +90,21 @@ def prepare():
         'configured_evolution': True, 'fits': 0, 'claims': 0, 'selected': False}))
 
 
-def execute(review_path):
+def freeze_ready_request():
     native = ROOT / 'native'
     request = load(native / 'prepared_request.json')
+    request['source_commit'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=REPO, text=True).strip()
+    request['files'] = {name: w.sha(REPO / name) for name in request['files']}
+    w.validate(request, REPO)
+    w.save(native / 'ready_request.json', request)
+
+
+def execute(review_path):
+    native = ROOT / 'native'
+    request = load(native / 'ready_request.json')
     review = load(review_path)
     assert review['passed'] is True and review['authorization_sha256'] == entry.AUTH_SHA
-    assert review['request_sha256'] == w.sha(native / 'prepared_request.json')
+    assert review['request_sha256'] == w.sha(native / 'ready_request.json')
     with (ROOT / '.trial.lock').open('a+') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         ledger = load(ROOT / 'ledger.json')
