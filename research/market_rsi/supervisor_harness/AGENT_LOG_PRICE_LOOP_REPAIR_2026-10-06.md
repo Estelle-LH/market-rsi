@@ -384,6 +384,30 @@ annotations cannot invoke policy/test behavior; fixture coverage included in fin
 focused verification below. No old scientific source/grant/scoring change,
 accountcalls0/Trainfits0. This admission component is not the author/review/activation
 service; next same work block implements the original-bound author adapter.
-Final same34testsPASS2.119s, including annotation regressions; numeric timing
-below will be corrected if the actual captured command differs. Local fixtures
+Final same34testsPASS2.197s, including annotation regressions. Local fixtures
 only; no actual capability authored by a model or adopted by the live entry.
+
+Correction in this next checkpoint: the previous log's2.119s was a reporting
+typo, not another execution; captured final output was2.197s. Earlier checkpoint
+469d663 remains preserved without amend.
+
+## F3a.2 — original-bound capacity author, first full fixture result
+
+Parent469d663; new thin price_capacity_services.py155lines and its focused test.
+Reuse saved original completion/native proof validation, original ledger, exact
+input review, capacity manifest, bound account role transport, fresh sibling paths
+and local Git. Only an explicit capacity-implementation opt-in in the same original
+grant permits author calls; no old price grant is enlarged. Pure source/test are
+stored without import or self-signature; parent remains unchanged. All inherited
+files must be checkpointed; failed/uncertain author is preserved with no retry or
+fit evidence. Author input follows destination-specific byte limit. Existing
+implementation/account role and source/output size ceilings remain fixed.
+
+First focused services/source command19tests1.334s,17PASS/2ERROR. Both failing
+large-context fixtures left the Controller grant at old32KiB, so the earlier
+original-input guard rejected before the distinct author stage they intended to
+exercise. No author callback/model/Train run occurred in those two failures.
+Preserve exact source/test snapshot before setting only the synthetic Controller
+grant to256KiB; then vary author grant independently. No production guard/cap
+change. Accountcalls0/residentTrainfits0. New service not installed in real entry;
+independent source/matched-benefit review and activation remain pending.
