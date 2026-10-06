@@ -422,3 +422,24 @@ old parent bytes, exact original decision, different R/H paths and no import;
 closed/foreign/drift/unsafe/uncertain cases reject or retain failure without retry.
 Large-author input succeeds only with its bound limit; old32KiB fails before the
 author wrapper/callback. No real model or Train fit; default real entry still v1.
+
+## F3b.1 — capacity independent source review, first integrated failure
+
+Parent38de6f7; existing price_independent_review.py104changed production lines,
+new focused capacity-review tests and fresh-only author fixture paths. Reuse source
+review role and test executor, not a new approval service. Recheck actual original
+Controller and separate author completion, exact scope/source/Git, fixed one-axis
+manifest, then distinct independent verdict before generated test. Extend only
+the proposed axis with new immutable sources; retain all parent bytes. Proposed
+capacity test time is bounded by its original seconds and batch deadline.
+
+First focused review/service/source/inherited reviewer41tests5.631s,36PASS/2FAIL/
+3ERROR. Negative fixtures mocked subprocess.Popen globally, accidentally blocking
+required Git provenance checks; a tamper fixture tried exclusive-save over an
+existing claim. Positive genuine synthetic test launched a pinned Python child,
+but execution sandbox denied /bin/ps RSS sampling. This exposed missing guaranteed
+child reap on sampler exception in the reused test executor (ResourceWarning pid
+40712). Preserve exact failure snapshot, correct fixture scope/tamper, and add
+bounded kill/reap on diagnostic exception, without bypassing RSS/resource evidence
+or reviewer denial. No actual account call/Train fits; no independent live verdict
+or capacity benefit/activation claim. Source not installed in official entry.

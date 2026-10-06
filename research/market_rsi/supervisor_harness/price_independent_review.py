@@ -157,6 +157,8 @@ class IndependentPriceReviewer:
         return expected, account, checks
 
     def _source(self, material):
+        if material.get("kind") == "capacity":
+            return self._capacity_source(material)
         for key in ("request", "selection", "operation_core", "specification", "response"):
             h._binding(material[key])
         if (material["authorization"] != self.runtime.authority
@@ -222,6 +224,83 @@ class IndependentPriceReviewer:
             "request_binding": material["request"], "operation_core": core, "selection": selection}
         return expected, account, checks
 
+    def _capacity_source(self, material):
+        from supervisor_harness import price_capacity_services as cs
+        from supervisor_harness import price_account_roles as roles
+        if (set(material) != {"kind", "author_receipt", "source", "test", "source_commit", "files"}
+                or self.grant != self.runtime.authority
+                or self.runtime.fixed_grant.get("account_roles", {}).get("capacity_changes_approved") is not True):
+            raise ValueError("exact authorized capacity implementation required")
+        receipt = t.c._read(material["author_receipt"])
+        if (receipt.get("schema") != "price_capacity_author_receipt_v1"
+                or receipt.get("authorization") != self.runtime.authority or receipt.get("configuration") != self.runtime.configuration
+                or receipt.get("source") != material["source"] or receipt.get("test") != material["test"]
+                or receipt.get("generated_tests_executed") is not False or receipt.get("activation_performed") is not False
+                or receipt.get("awaiting_independent_source_review") is not True):
+            raise ValueError("capacity author provenance/source drift")
+        packet = t.c._read(receipt["original_input"])
+        decision = t._file(self.runtime.root / "decisions" / packet["bindings"]["feedback"]["sha256"] / "response.json")
+        ctx = {"outputs": {"input": {"input": receipt["original_input"], "review": receipt["original_review"],
+            "authorization": self.runtime.authority, "configuration": self.runtime.configuration}, "controller": {"decision": decision}}}
+        before, entries = receipt["parent_identity"], receipt["parent_entrypoints"]
+        cs.original(self.runtime, ctx, before, entries)
+        axis = {"researcher": "R", "harness": "H"}[decision["action"]]
+        if receipt.get("axis") != axis or receipt.get("original_decision_sha256") != t.c._digest(decision):
+            raise ValueError("capacity receipt differs from actual original")
+        source, test = h._binding(material["source"]), h._binding(material["test"])
+        names = [str(path.relative_to(self.runtime.repo)) for path in (source, test)]
+        if (set(names) != set(decision["capacity"]["write_paths"]) or len(set(names)) != 2
+                or any(material["files"].get(name) != w.sha(self.runtime.repo / name) for name in names)):
+            raise ValueError("capacity code delta differs from original approved paths")
+        for name, token in material["files"].items():
+            cs.identity.path(name); h._binding({"path": str(self.runtime.repo / name), "sha256": token})
+            if cs.hashlib.sha256(subprocess.check_output(["git", "show", material["source_commit"] + ":" + name],
+                    cwd=self.runtime.repo)).hexdigest() != token:
+                raise ValueError("capacity source checkpoint bytes differ")
+        if any(material["files"].get(name) != token for component in before["components"].values()
+                for name, token in component["sources"].items()):
+            raise ValueError("inherited capacity manifest missing/drifted")
+        if subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=self.runtime.repo, text=True).strip() != material["source_commit"]:
+            raise ValueError("capacity source checkpoint is not current source")
+        checks = {"capacity_ast": cs.guard.validate_source(source.read_text()),
+            "capacity_test_ast": cs.guard.validate_source(test.read_text(), is_test=True, module_name=source.stem),
+            "exact_original_and_scope": True, "capacity_activation_performed": False, "raw_rows_transferred": False}
+        author = receipt["role_call"]
+        directory = self.runtime.root / "role_calls/author" / author["call_id"]
+        if directory.resolve() != directory:
+            raise ValueError("capacity author role directory symlink")
+        claim = t._file(directory / "claim.json")
+        if (claim.get("authorization") != self.runtime.authority or claim.get("role") != "author"
+                or claim.get("role_id") != author["call_id"]
+                or claim.get("schema_sha256") != t.c._digest(t._file(directory / "schema.json"))):
+            raise ValueError("capacity original author claim drift")
+        replayed = roles._recover(directory, claim, t._file(directory / "schema.json"))
+        if any(author.get(key) != value for key, value in replayed.items() if key != "response"):
+            raise ValueError("capacity receipt differs from actual separate author completion")
+        author_input, response = t.c._read(author["input_binding"]), replayed["response"]
+        body = t._file(Path(material["author_receipt"]["path"]).parent / "input.json")
+        if (author_input.get("payload") != body or body.get("original_controller_decision") != decision
+                or response.get("decision_sha256") != t.c._digest(decision)
+                or response.get("source_path") != names[0] or response.get("test_path") != names[1]
+                or response.get("capacity_source") != source.read_text() or response.get("test_source") != test.read_text()):
+            raise ValueError("capacity source does not match original separate author output")
+        after = cs.deepcopy(before)
+        after["components"][axis]["sources"].update({name: material["files"][name] for name in names})
+        after = cs.identity.manifest(kernel=after["components"]["K"], model=after["model"], predictor=after["components"]["C"],
+            harness=after["components"]["H"], researcher=after["components"]["R"], memory=after["memory_sha256"], runtime=after["runtime"])
+        if cs.identity.change_axis(before, after) != axis:
+            raise ValueError("capacity implementation changes more than its one declared axis")
+        entries = {**entries, axis: names[0]}
+        expected = {"authorization_sha256": self.runtime.authority["sha256"], "implementation_sha256": t.c._digest(material),
+            "original_decision_sha256": t.c._digest(decision), "identity_sha256": t.c._digest(after), "entrypoints": entries,
+            "reviewer_id": packet["action_context"]["identity_configuration"]["reviewer_id"],
+            "proposer_id": "controller-" + t.c._digest(decision)[:20]}
+        account = {"candidate_source": source.read_text(), "candidate_test_source": test.read_text(),
+            "authored_by_call_id": author["call_id"], "original_controller_response": decision,
+            "before_identity": before, "after_identity": after, "entrypoints": entries, "source_commit": material["source_commit"],
+            "author_receipt": material["author_receipt"], "claim_boundary": "Static source/smoke review only; no matched benefit or activation"}
+        return expected, account, checks
+
     def _result(self, material):
         choice = material["original_candidate_proposal"]
         expected = {key: material[key] for key in ("candidate_sha256", "execution_outcome", "manifest", "comparison",
@@ -262,9 +341,22 @@ class IndependentPriceReviewer:
             "full_population_retained": True}
 
     def _tests(self, material, directory):
-        spec = t.c._read(material["specification"])
-        candidate = h._binding(spec["candidate_binding"])
-        test = candidate.parent / "test_candidate.py"
+        wall_limit = 30
+        if material.get("kind") == "capacity":
+            spec = {"candidate_binding": material["source"], "files": material["files"],
+                "python_binding": t.c._read(material["author_receipt"])["parent_identity"]["runtime"]["python"]}
+            candidate, test = h._binding(material["source"]), h._binding(material["test"])
+            receipt = t.c._read(material["author_receipt"])
+            packet = t.c._read(receipt["original_input"])
+            decision = t._file(self.runtime.root / "decisions" / packet["bindings"]["feedback"]["sha256"] / "response.json")
+            wall_limit = min(wall_limit, decision["capacity"]["resources"]["seconds"],
+                (t.c._time(self.runtime.fixed_grant["deadline_utc"]) - t.datetime.now(t.timezone.utc)).total_seconds())
+            if wall_limit <= 0:
+                raise ValueError("capacity test window already closed; no launch")
+        else:
+            spec = t.c._read(material["specification"])
+            candidate = h._binding(spec["candidate_binding"])
+            test = candidate.parent / "test_candidate.py"
         if spec["files"].get(str(test.relative_to(self.runtime.repo))) != w.sha(test):
             raise ValueError("reviewed synthetic test drift before import/execution")
         python, _ = h._python_launch(spec["python_binding"])
@@ -278,9 +370,9 @@ class IndependentPriceReviewer:
             peak, stopped = 0, None
             while child.poll() is None:
                 peak = max(peak, 1024 * w.sample_rss(child))
-                if time.monotonic() - start > 30 or peak > self.runtime.fixed_grant["limits"]["sampled_rss_bytes"]:
+                if time.monotonic() - start > wall_limit or peak > self.runtime.fixed_grant["limits"]["sampled_rss_bytes"]:
                     import signal
-                    stopped = "timeout" if time.monotonic() - start > 30 else "sampled_rss_cap"
+                    stopped = "timeout" if time.monotonic() - start > wall_limit else "sampled_rss_cap"
                     os.killpg(child.pid, signal.SIGKILL)
                     break
                 if sum((directory / name).stat().st_size for name in ("candidate-test.stdout", "candidate-test.stderr")) > 1048576:
@@ -290,7 +382,7 @@ class IndependentPriceReviewer:
             status = child.wait(timeout=5)
         receipt = {"command": command, "exit_code": status, "stop_reason": stopped,
             "wall_seconds": time.monotonic() - start, "sampled_peak_rss_bytes": peak,
-            "source": spec["candidate_binding"], "test": r.pin(candidate.parent / "test_candidate.py"),
+            "source": spec["candidate_binding"], "test": r.pin(test),
             "stdout": r.pin(directory / "candidate-test.stdout"), "stderr": r.pin(directory / "candidate-test.stderr"),
             "synthetic_inputs_only": True, "train_fits": 0, "arbitrary_code_containment_claim": False}
         w.save(directory / "candidate-test.json", receipt)

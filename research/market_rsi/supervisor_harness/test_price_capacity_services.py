@@ -54,7 +54,7 @@ class CapacityAuthorTests(TestCase):
         self.fixture.bind()
         def response(packet):
             value = self.fixture.response(packet)
-            value['capacity']['write_paths'] = packet['action_context']['identity_configuration']['allowed_write_paths'][axis]
+            value['capacity']['write_paths'] = packet['action_context']['identity_configuration']['allowed_write_paths'][axis][-2:]
             return value
         self.h.response = response
         decision = self.h.call()
