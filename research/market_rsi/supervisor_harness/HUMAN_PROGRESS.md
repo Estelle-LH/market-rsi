@@ -1,5 +1,44 @@
 # Market RSI — human progress
 
+## 2026-10-06 — new ten-hour implementation and real Discovery window
+
+04:54UTC update: source repairs are local `a7a7a2d` and `a9a22b6`, independently
+48 targeted and263 relevant test executionsPASS/1opt-in skip. Eleven-roleN2 input
+reproduced; archivecopy preserves sixparents/consumedC2 with sixthN2proof admitted.
+First actual account launch was rejected BEFOREprocess by auto-review: ten-hour
+message did not explicitly name private Train-derived payload/destination. Root's
+renewal interpretation was insufficient; source review cannot grant consent.
+One explicit same-account reviewedpayload question is pending. No new account
+call/candidate/fit consumed, no bypass/indirect transfer. Deadline unchanged.
+Do not describe this as a real scientific loop or predictive improvement yet.
+Exact current state: `WINDOW_10H_RUNTIME_STATUS_2026-10-06.json`.
+
+User granted ten hours and experiments after fixes. New window begins04:36:33UTC
+and ends14:36:33UTC (10:36:33a.m.NewYork); new-selection cutoff14:21:33UTC.
+Supervisor conservatively allocates12attempts/48fits/12original scientific
+Controller decisions; initial segment3/12. These are Supervisor ceilings, not
+quoted user numeric approval or renewal of old consumedcaps. PriorN2 results,
+memory, two-family selection and2/8/2 consumption remain immutable.
+
+Small repairs are an exact fresh envelope and reviewed source/decision-to-native
+handoff, separate H checkpoints. Bound source code authoring and independent
+metric/learning reviews remain. No scorer/KEEP/data/protected/model/tool changes.
+Global scientific activepool2–3 is distinct from per-attempt native execution
+subledgers(max1,v4,final-singleton-v1), all sharing one exact globalID/clock.
+Root holds sole outerbudgetlock through each short training completion and
+reconciles durable claims before any nextlaunch; max2training is a ceiling,
+not a claim of paralleltraining. Implementation and reviews can overlap.
+
+Actual N2 feedback will drive the first original scientific decision, and each
+accepted new result the next. At this entry no new real calls or fits have run.
+ResidentTrain boundaries hold; external acquisition/literature, paidprovider,
+Dev/Final, publishing and promotion remain closed. Account evidencetool runtime
+parity remains unverified/closed. Human-directed H repairs and AI Supervisor
+coordination are not autonomous R evolution or same-budget researcher gains.
+Bounded15-minute heartbeat `market-rsi-bounded-10-hour-discovery` continues only
+within the same deadline/counters, never duplicates an active Supervisor, and
+is removed at closeout. Unchanged healthy state stays quiet.
+
 ## 2026-10-06 — native candidate handoff and evidence semantics repaired
 
 Two separate user-directed H checkpoints, not prediction or researcher-policy

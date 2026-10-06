@@ -1,5 +1,33 @@
 # Market RSI — Supervisor 总路线图与当前任务
 
+## 2026-10-06 00:51 ET — 新十小时入口，修复后直接跑真实反馈候选
+
+04:54UTC actual update：第一account Controller launch被auto-review在process之前拒绝。
+十小时指令没有explicit指定privateTrain-derived payload/destination；Supervisor此前
+interpretation不能当egress consent。一个window-wide审批问题已提出，真实call/attempt/
+fit仍0，不改deadline/旧cap，不通过其他tool/model/agent绕过。Actualsource固定checkpoint
+`a7a7a2d`/`a9a22b6`；review47f59f24证明source/input，不提供数据传输权限。
+等待中只补直接必要Root串行budget operations（106linecce12776）：独立发现并修复missing
+fit_progress误计0的问题，缺失计数现在None/unknown并阻止新launch；Root与独立7testsPASS，
+matchedbefore2PASS5FAIL→after7PASS，native路径另有263PASS。没有新真实科学结果或R收益。
+最新入口 `WINDOW_10H_RUNTIME_STATUS_2026-10-06.json`，直到明确reply才freshbind并执行。
+
+用户新授权十小时；04:36:33–14:36:33UTC，selection cutoff14:21:33。
+旧N2/2候选8fits2decisions封闭且不修改。Supervisor保守配置12attempts/48fits/
+12originaldecisions（首段3/12），不是用户逐轮指定科学方案，也不是旧cap重置。
+新fresh binding本地a7a7a2d，独立48testsPASS；新161line source-to-native handoff
+Root263相关synthetic executionsPASS/1skip，稳定独立集成审查正在完成。
+实际N2负反馈输入c6d8f498已经11roles/75sourcepins独立重现；尚未调用新Controller或fit。
+下一步立即原Controller选择→delegated代码/独立source review→真实四fold预测→独立结果/
+learning review→反馈回Controller，不预排算法名单。负分不是停批理由。
+
+Native每attempt执行账本max1/v4/final-singleton共享globalID/clock；不是global2–3
+科学探索池。Root唯一outerlock保持到短训练完成并同步真实fit计数，中断先核对durable
+claims，无不确定自动重试；暂不声称parallel训练，实现/审查可并行。现有scorer/KEEP/
+K/M/数据权限不改。Accounttools仍关闭；新数据文献/DevFinal/paid/release/promotion关闭。
+Human-directed H工程、AI Supervisor协调、C预测变化、memory reuse和R机制证据分开。
+Bounded15min heartbeat保同一deadline/counters，收尾删除，健康无变化不打扰。
+
 ## 2026-10-06 00:33 ET — 当前入口：执行 handoff 已修，仍不等于科学全自动
 
 用户要求继续实现。两个独立H组件已完成针对性、完整相关synthetic suites与独立复核：

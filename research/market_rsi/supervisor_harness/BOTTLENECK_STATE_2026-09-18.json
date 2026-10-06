@@ -1,16 +1,16 @@
 {
   "schema": "market_supervisor_bottleneck_state_v1",
-  "updated_utc": "2026-10-06T04:33:00Z",
+  "updated_utc": "2026-10-06T05:01:00Z",
   "owner": "outer Codex Supervisor",
   "scope": "operational bottleneck tracking; not a replacement for protected RESEARCH_STATE.md or its append-only journal",
   "active": [
     {
       "id": "controller-enablement-live-boundary-and-execution-20261005",
-      "status": "reviewed_native_dispatch_and_evidence_semantics_implemented_account_tools_closed",
-      "plan": "research/market_rsi/supervisor_harness/CONTROLLER_EVIDENCE_OBSERVATION_SCOPE_2026-10-06.json",
-      "result": "Earlier H1/H2 preserved. New native execution-only dispatcher local10965ae independently229PASS/1skip receipt23cccdbf; existing evidence helper11additions/2removals fixes actual EOF/late-read counterexamples, external15matrix12to15PASS and independent237PASS/1skip. No new real model/account/fits or C/R benefit; scores/caps/parent rules fixed.",
-      "next": "Fresh<=90min/3attempts12fits/3once-only same-account payload approval pending, no activated budget. Account evidence tools require independent runtime parity and remain hard closed. Actual code authoring/recipe-question-source admission/next-round selection remain caller-owned; verify feedback-dependent real continuation and measure residual coordination. Dispatch receipt is not original prediction provenance or metric review.",
-      "evidence": "research/market_rsi/supervisor_harness/CONTROLLER_EVIDENCE_OBSERVATION_VERIFICATION_2026-10-06.json",
+      "status": "fresh_10h_fixes_reviewed_actual_Controller_rejected_beforeprocess_explicit_payload_consent_pending",
+      "plan": "research/market_rsi/supervisor_harness/WINDOW_10H_EXECUTION_2026-10-06.json",
+      "result": "Fresh Hbindinga7a7a2d and handoffa9a22b6 independently263PASS/1skip; N2inputc6d8exactreplay and6archiveproofs preserved. Necessary Root serialops106linescce12776 fixed reviewerP1missingfitsfalsezero; matched2to7PASS/7, independent7PASS. First actual Controllerlaunch auto-review rejected BEFOREprocess; newcalls/attempts/fits0. Source review cannot confer sensitiveegress consent.",
+      "next": "One explicit window-wide reviewedTrain feedback/history/memory/provenance to signed-in Codex account Controller consent pending; no rerun/indirect workaround/repeatedquestion. Deadline14:36:33/cutoff14:21:33UTC and Supervisor12/48/12 unchanged; old2/8/2closed. After explicit reply freshbind approval/input/operation and actualscience. Accountevidencetools/protected/external/paid/release remainclosed. No newharnesswork to substitute for experiments.",
+      "evidence": "research/market_rsi/supervisor_harness/WINDOW_10H_RUNTIME_STATUS_2026-10-06.json",
       "provider_cost_usd": "0"
     },
     {
