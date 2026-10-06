@@ -1,5 +1,24 @@
 # Market RSI — human progress
 
+## 2026-10-06 — price pilot closed without a Controller continuation
+
+User `yes` approved the pending exact compact account transfer, but the original
+20:56UTC selection cutoff passed before independent input review finished.
+The queued command exited without an original call/reservation, account transfer,
+candidate or extra fits. Root closed at20:56:46UTC,40min47s inclusive:
+1actual attempt/4completed fits/0Controller decisions. Original45min/2attempt/
+8fit limits and all previous histories remain unchanged; unused capacity expired.
+No-change MSE0.002893108 versus fixed HGB0.003151650 (+8.94%) remains the only
+price experiment. B0 incumbent and valid negative B1 branch retained. The
+prediction experiment ran, but the autonomous price feedback loop did not.
+This is an execution/coordination timing failure, not scientific evidence against
+the next method. Frozen code, feedback and memory are ready for a separately
+bounded continuation; input review after cutoff does not grant later authority.
+See `PRICE_PILOT_CLOSEOUT_2026-10-06.json` and the append-only Supervisor log.
+Independent20:58UTC input review confirms the static payload/source checks but
+correctly refuses late admission. Hard runtime tool disable remains unverified;
+prompt restrictions and post-response checks must not be described as containment.
+
 ## 2026-10-06 — first real five-minute trade-price baseline
 
 Separate price task `MarketTradeVWAPChange300sTrainDiagnostic-v1` implemented,
