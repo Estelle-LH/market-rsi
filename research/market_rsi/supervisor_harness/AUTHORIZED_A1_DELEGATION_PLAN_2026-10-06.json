@@ -52,7 +52,8 @@
       "verification": "Onecandidate/testonly, syntheticchecksand unchanged dependencies",
       "pass_condition": "Source/test hash frozen, measuredsize, validsynthetic numerical/causalchecks",
       "failure_action": "Boundednewversionrepairandreturnexactfailure; noharnesschanges",
-      "time_bound_minutes": 15
+      "time_bound_minutes": 15,
+      "result": {"verdict":"pass","observed":"Exact Controller basis source d55075fb/tests1e93dc3e frozen;10focusedPASS1.614s/62related executionsPASS12.061s; synthetic full entry only, not realTrain","reviewer":"Root measured source and independently corroborated reviewer10/44 tests; mandatory>200 one-candidate inseparability recorded","evidence_path":"AGENT_LOG_AUTHORIZED_A1_IMPLEMENTER_2026-10-06.md","evidence_sha256":"41f2bd8ec2648a30c37f5817bac9562a9acd163f0aa460487e90c2bdd47f1d75"}
     },
     {
       "id": "review",
@@ -63,6 +64,7 @@
       ],
       "expected_artifact": "AUTHORIZED_A1_SOURCE_REVIEW_2026-10-06.json",
       "verification": "Exact13fieldreviewbindscurrentrequest/source/originalresponse; no raw/protected/paid/externalfit",
+      "result": {"verdict":"pass","observed":"Exact13field source admission44c26580;83current+runGit pins HEAD4a3a462, original/science/spec/selection/request/globalauthority exact; independent10/44tests PASS and>200 inseparability checked","reviewer":"window_independent_reviewer","evidence_path":"AUTHORIZED_A1_SOURCE_REVIEW_2026-10-06.json","evidence_sha256":"44c265806d905a3c4d0cf18b72394dc8eb7f781cc9bd6774522b762fce6f3804"},
       "pass_condition": "Semantic/sourceadmissionPASS noP0P1 beforefits",
       "failure_action": "Returnconcreteissuewithoutchangingcandidate/choice/judge",
       "time_bound_minutes": 15
@@ -79,7 +81,8 @@
       "verification": "Actualprogress4/4,87keyedpredictions/unchanged195controls/scores,parentcomparisonsandlineage,globalcountonce",
       "pass_condition": "Validactualexperimentandsignedreviewedfeedback, ortruthfulcountedfailure",
       "failure_action": "FactualfailurefeedbacktoController; noretrywithoutfreshoriginalchoice",
-      "time_bound_minutes": 20
+      "time_bound_minutes": 20,
+      "result": {"verdict":"pass","observed":"One original Controller recipe completed four real fits/87 predictions on third fresh reviewed source identity after two independently proved pre-worker failures; all3 attempts/12 reservations consumed. Independent result2287 and learningec7f accepted, feedbacke2fe persisted and independently replayed; raw incumbent unchanged/REVERT/credit2/archive branch eligibility. No second within-batch Controller decision or trained descendant.","reviewer":"window_independent_reviewer; Root actual run and acceptance","evidence_path":"AUTHORIZED_A1_RESULT_REVIEW_2026-10-06.json","evidence_sha256":"2287ab64f217f2cc46338527bfb42d7cbd4463cdeeed6a640d40c5b02be5e8ea"}
     }
   ]
 }

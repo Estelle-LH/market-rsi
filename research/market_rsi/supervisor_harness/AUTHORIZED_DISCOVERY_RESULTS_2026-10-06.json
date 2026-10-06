@@ -1,0 +1,316 @@
+{
+  "schema": "market_rsi_authorized_discovery_batch_results_v1",
+  "batch_id": "market-rsi-authorized-discovery-20261006-01",
+  "terminal_observed_utc": "2026-10-06T15:54:47Z",
+  "status": "closed_at_attempt_cap",
+  "stop_reason": "Three consumed admissions and twelve retained fit reservations. Stop is budget exhaustion, not the negative score or the later clock deadline.",
+  "original_window": {
+    "start_utc": "2026-10-06T15:04:53Z",
+    "selection_cutoff_utc": "2026-10-06T16:19:53Z",
+    "deadline_utc": "2026-10-06T16:34:53Z",
+    "attempt_limit": 3,
+    "fit_reservation_limit": 12,
+    "original_controller_decision_limit": 3
+  },
+  "actual": {
+    "consumed_attempts": 3,
+    "unique_scientific_candidates": 1,
+    "valid_completed_experiments": 1,
+    "preworker_execution_failures": 2,
+    "actual_fit_calls": 4,
+    "retained_fit_reservations": 12,
+    "original_controller_decisions": 1,
+    "original_sampler_retries": 0,
+    "completed_within_batch_feedback_descendants": 0,
+    "paid_provider_calls": 0
+  },
+  "controller": {
+    "requested_model": "gpt-6.1-sol",
+    "serving_snapshot": "unknown",
+    "call_id": "market-rsi-authorized-controller-after-n2-20261006-01",
+    "response_sha256": "81b709cb7de860743b1b7e4137bec770e6597e81ea87792e1c4f554013657753",
+    "input_tokens": 232137,
+    "output_tokens": 2033,
+    "reasoning_output_tokens": 65,
+    "cached_input_tokens": 0,
+    "signed_in_account_monetary_cost": "unmetered; no claim of zero total account cost"
+  },
+  "task": {
+    "id": "InGameWinProbabilityTrainDiagnostic-v0",
+    "scope": "Repeatedly used historical Train Discovery; not untouched OOS, prospective or live evidence",
+    "source_population_events": 195,
+    "source_schedule_dates": 42,
+    "materialized_events": 193,
+    "materialization_coverage": 0.9897435897435898,
+    "explicit_exclusions": 2,
+    "exclusion_codes": [
+      "unresolved_outcome",
+      "market_trade_too_stale"
+    ],
+    "check_events": 87,
+    "check_schedule_dates": 20,
+    "check_weeks": 7,
+    "fit_events_by_fold": [
+      106,
+      132,
+      148,
+      176
+    ],
+    "check_events_by_fold": [
+      26,
+      16,
+      28,
+      17
+    ],
+    "sampling": "Frozen first Q3 pre-play clock <=08:00; preceding market trade <=300 seconds; home outcome/token orientation",
+    "folds": "22 initial fit dates, four five-date expanding checks",
+    "primary_metric": "Equal-event Brier, numerically equal to probability MSE for this binary task",
+    "secondary": "Log loss, descriptive calibration, paired date and week block intervals",
+    "uncertainty": "10,000 whole-date or whole-week resamples, seed 20260929; recompute event-equal scores for each resample",
+    "time_limitation": "Historical event timestamps do not prove actual real-time data availability"
+  },
+  "candidate": {
+    "id": "InGameTemperatureUncertaintyWeightedPossessionJointOffset-v1",
+    "actual_parent": "InGameMarketTemperatureOffset-v1 (C7)",
+    "parent_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+    "comparison_incumbent": "Raw decision-time market; not the research parent",
+    "incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+    "author": "Original account Controller; delegated implementation, Supervisor coordination and independent review",
+    "change_axis": "C",
+    "formula": "z=(2*home_possession-1)*4*p*(1-p); eta=(1+beta)*logit(p)+gamma*z, beta>=-1. Fixed unweighted NLL+8*(beta^2+gamma^2), no intercept, grid, restart or fallback.",
+    "source_sha256": "d55075fb9465ac3331e061ce32bfa2a0de50172555e6a65b625f95d20bafe813",
+    "execution_source_commit": "2c1e06bad95f2bc17584047509fdee1e4b2fdd85",
+    "hypothesis": "Prior N2 distance-slope and D5 constant-possession failures suggested testing whether possession attenuated by market uncertainty differs, rather than repeating either recipe."
+  },
+  "scorecard": [
+    {
+      "arm": "raw_market_incumbent",
+      "brier_probability_mse": 0.14195252900323282,
+      "log_loss": 0.4296707847132428
+    },
+    {
+      "arm": "C7_actual_parent",
+      "brier_probability_mse": 0.14195410408172784,
+      "log_loss": 0.4288860887954059
+    },
+    {
+      "arm": "ordinary_market_only_reference",
+      "brier_probability_mse": 0.14548231253271718,
+      "log_loss": 0.43992197245621956
+    },
+    {
+      "arm": "new_candidate",
+      "brier_probability_mse": 0.14323704682805932,
+      "log_loss": 0.43110344923742705
+    }
+  ],
+  "paired_delta": {
+    "candidate_minus_market": {
+      "brier": 0.0012845178248264977,
+      "log_loss": 0.001432664524184224
+    },
+    "candidate_minus_parent": {
+      "brier": 0.001282942746331478,
+      "log_loss": 0.0022173604420211435
+    },
+    "candidate_minus_ordinary": {
+      "brier": -0.002245265704657856,
+      "log_loss": -0.008818523218792507
+    },
+    "interpretation": "Lower is better; new candidate is worse than market and actual parent, better than ordinary reference."
+  },
+  "fold_deltas": [
+    {
+      "fold": 1,
+      "events": 26,
+      "brier_minus_parent": -0.00010311831420491135,
+      "log_loss_minus_parent": -0.0019091237304870168,
+      "brier_minus_market": 0.000298728446430932
+    },
+    {
+      "fold": 2,
+      "events": 16,
+      "brier_minus_parent": 0.0029048482070670456,
+      "log_loss_minus_parent": 0.00612970550318559,
+      "brier_minus_market": 0.003815674495765198
+    },
+    {
+      "fold": 3,
+      "events": 28,
+      "brier_minus_parent": 0.00003162474321322106,
+      "log_loss_minus_parent": -0.00032397799495387236,
+      "brier_minus_market": -0.0004065575470083571
+    },
+    {
+      "fold": 4,
+      "events": 17,
+      "brier_minus_parent": 0.003937295939830804,
+      "log_loss_minus_parent": 0.009031980662132177,
+      "brier_minus_market": 0.0031952312080407996
+    }
+  ],
+  "uncertainty_95": {
+    "candidate_minus_parent_brier_by_date": [
+      -0.0012905891003567563,
+      0.0041454960004595155
+    ],
+    "candidate_minus_parent_brier_by_week": [
+      -0.0011628395852790775,
+      0.0034518284736190425
+    ],
+    "candidate_minus_market_brier_by_date": [
+      -0.0013927303694710861,
+      0.0038554939331337935
+    ],
+    "candidate_minus_market_brier_by_week": [
+      -0.0013218822406780005,
+      0.0034670724315521467
+    ],
+    "interpretation": "Intervals cross zero; no independently confirmed harm or edge. The fixed recipe failed its predictive decision, not the entire possession/PBP information class."
+  },
+  "interpretation": {
+    "prediction_decision": "REVERT",
+    "frozen_scientific_annotation": "REFUTED",
+    "native_research_outcome": "inconclusive",
+    "incumbent_updated": false,
+    "reason": "Only one of four parent and market Brier blocks wins. Aggregate Brier and log loss worsen versus both. Optimization converges and training objective improves, so this is a valid negative candidate result, not an optimizer failure.",
+    "correction_energy": 0.0003715601656534428,
+    "correction_signed_alignment": 0.0009113825806780364,
+    "calibration": {
+      "intercept": -0.0007416147350184366,
+      "slope": 1.0135302996967213,
+      "scope": "Descriptive saved-prediction calibration, not an independently selected new model"
+    }
+  },
+  "attempts": [
+    {
+      "id": "authorized-a1-uncertainty-possession-01",
+      "source_commit": "4a3a462daac269034980a0ac116c6820ac6a1734",
+      "outcome": "failed_before_native_selection",
+      "actual_fits": 0,
+      "reserved_fits": 4,
+      "review_sha256": "7af9101e3165e15da643cf03140c6c15289ef45fff69e3019bff90794bb377da",
+      "failure": "Production recorder rejected caller-supplied test-only time. No selection, claim or worker.",
+      "repair": "H: one production call uses the native recorder clock; fresh version/identity, not an original retry."
+    },
+    {
+      "id": "authorized-a1-uncertainty-possession-r1-01",
+      "source_commit": "b29a7b1652cadfd192200135787ca0969cef1247",
+      "outcome": "failed_before_native_worker",
+      "actual_fits": 0,
+      "reserved_fits": 4,
+      "review_sha256": "32875c15b818e0d34f882521988e121008c2c67970de9467158c3610c33c5a7a",
+      "failure": "Selection committed, interpreter alias rejected by canonical verification before worker claim/spawn.",
+      "repair": "H: canonicalize only interpreter byte verification, preserve invocation alias/virtualenv. Independent diagnostic rejected physical-target execution because it loses sklearn."
+    },
+    {
+      "id": "authorized-a1-uncertainty-possession-r2-01",
+      "source_commit": "2c1e06bad95f2bc17584047509fdee1e4b2fdd85",
+      "admitted_at_utc": "2026-10-06T15:42:36.776853+00:00",
+      "outcome": "succeeded",
+      "actual_fits": 4,
+      "reserved_fits": 4,
+      "predictions": 87,
+      "worker_wall_seconds": 4.428886124980636,
+      "sampled_peak_rss_kib": 138928,
+      "review_sha256": "2287ab64f217f2cc46338527bfb42d7cbd4463cdeeed6a640d40c5b02be5e8ea"
+    }
+  ],
+  "research_memory": {
+    "independently_verified_credit": 2,
+    "credit_reason": "One distinct valid negative hypothesis test; no credit for imports, code volume, H repair or predictive improvement",
+    "finding_sha256": "b42e5387eb6202a48c59b00edffa02cc040eb61bdab3ec5db435d700103cc51b",
+    "accepted_finding_count": 7,
+    "exploration_status": "Do not update incumbent; retain archive eligibility for materially distinct descendants. No automatic active membership or exact-recipe repeat.",
+    "previous_feedback_reuse": "Observed N2/D5 evidence affected original candidate choice; benefit unmeasured",
+    "accepted_feedback_path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-authorized-discovery-20261006-01/a1r2/feedback-authorized-a1-uncertainty-possession-r2-01.json",
+    "accepted_feedback_sha256": "e2fe66617d694cf72bd46a67ce8578165dfc6f6b5ea05d71a4f59711168d443a",
+    "next_choice": "Not made: exhausted global cap, zero recommended next slots and authority_granted=false. Feedback is saved, not represented as delivered to a subsequent Controller.",
+    "pool": [
+      {
+        "parent": "C7",
+        "route": "uncertainty-conditioned possession",
+        "reason": "Last actual Controller selection: concrete interaction hypothesis"
+      },
+      {
+        "parent": "B3",
+        "route": "nonlinear causal-state HGB",
+        "reason": "Last actual Controller selection: methodological diversity/unresolved representation"
+      }
+    ],
+    "pool_scope": "Last actual globally selected two-route pool. No post-A1 Controller pool reselection; no fabricated third branch. New A1 is archive eligible."
+  },
+  "resource_accounting": {
+    "parallel_training_peak": 1,
+    "allowed_parallel_peak": 2,
+    "threads_per_candidate": 1,
+    "actual_training_seconds": 4.428886124980636,
+    "first_failed_admission_seconds": 0.419709958,
+    "second_failed_admission_seconds": 0.472788,
+    "sampled_peak_rss_kib": 138928,
+    "scope": "Per-worker peak; not a measured whole-system CPU/RAM total",
+    "rss_limit": "1 GiB by polling, not OS-hard isolation",
+    "network_isolation_enforced": false,
+    "feedback_verification_utc": "2026-10-06T15:53:22.338202Z",
+    "elapsed_seconds_start_to_feedback_verification": 2909.338202,
+    "elapsed_seconds_start_to_terminal_observation": 2994,
+    "process_cost": "Training is ~4.43s; implementation, repairs, reviews and account coordination dominate ~48.5min through persisted-feedback verification. Full CPU and dollar cost unmetered."
+  },
+  "intervention": {
+    "human_round_guidance_after_authorize": 0,
+    "ai_supervisor_intervention": "Substantial coordination and two reviewed production repairs plus execution-metadata adaptation. Not fully unattended science execution.",
+    "hypothesis_supplier": "Account Controller",
+    "implementation": "Delegated AI implementer",
+    "implementation_repairs": "AI Supervisor with delegated operations/implementation and independent reviewer",
+    "continuation_decision": "Same original scientific recipe, fresh source-specific attempts after proved preworker failures; batch stopped under Supervisor cap",
+    "researcher_process_self_modification": false
+  },
+  "claims": {
+    "supported": [
+      "One actual Controller-selected feedback-dependent candidate implemented, trained and independently scored",
+      "Distinct negative finding retained and accepted for future branch exploration",
+      "Production execution repaired on the registered path; failure evidence and old histories preserved"
+    ],
+    "not_supported": [
+      "A second within-batch feedback-dependent trained descendant",
+      "Reliable fully unattended multi-round autonomy",
+      "Prediction improvement over market or C7",
+      "Causal benefit of memory reuse or transfer",
+      "Researcher workflow self-modification (R)",
+      "Superiority over equal-budget fixed-process research",
+      "Untouched OOS, prospective/live advantage, monetizable PnL or promotion"
+    ]
+  },
+  "validation": {
+    "source_review_sha256": "47058d7b9cb7781b9e0159c35c42e9ff029f0272b79d4fa0a637b9ced7ba6aa4",
+    "result_review_sha256": "2287ab64f217f2cc46338527bfb42d7cbd4463cdeeed6a640d40c5b02be5e8ea",
+    "learning_review_sha256": "ec7f844acb23326db9e4918de32c8f982cf5f13ed0182af650b1a9189bd459d2",
+    "reviewer_log_sha256": "670cfbfb790c8405f918ef16eccf78017e740f9ce9d6e23a6490773a2c8ccd31",
+    "persisted_acceptance_independently_verified": true,
+    "reviewer_refits": 0,
+    "coverage_gap": "Pre-run source/ops PASS and synthetic suites missed both production integration seams; they were not end-to-end success.",
+    "timestamp_caveat": "Result receipt reviewed_utc 15:47 is an approximate rounded metadata error; exact original bytes preserved. Use global admissions, Root clock observations and final reviewer-log clock for ordering/elapsed calculations."
+  },
+  "boundaries": {
+    "protected_dev_final_opened": false,
+    "external_fetch": false,
+    "new_literature_retrieval": false,
+    "paid_provider": false,
+    "raw_row_account_transfer": false,
+    "push_release_promotion": false,
+    "old_closed_windows_reopened": false,
+    "authority_ledger_sha256": "88c983e5770b80272f7aa890db9cb9cb79258e60c0dafd309e18a625c4be1c2f",
+    "scorer_or_old_decisions_changed": false
+  },
+  "evidence": {
+    "run_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-authorized-discovery-20261006-01/a1r2/runs/authorized-a1-uncertainty-possession-r2-01",
+    "scorecard_sha256": "95bac1fa340a26a6e802cd094c21b13a177981506f7d717974b39788e89d5c78",
+    "predictions_sha256": "3284176c82f0ab64b5b2dc96c39f056ef151d77bf18a6e1242cc2654dc8d95f2",
+    "predictor_states_sha256": "9770cdc46d2df9e63df2a6d4c3165917c09aa126ea255b32b092cee8f571eaa6",
+    "accepted_manifest_sha256": "250304332a7e7969c54540ad55a5902082ac0dc8a0c633506f5fa40a9c235601",
+    "postaccept_snapshot_file_sha256": "7dbf9012230281b39bff423005f93a0a02a1e02c46799bec7763eaf7df5c58c2",
+    "worker_receipt_sha256": "277b915a21cad0aef56675dccb6b497ae97c23dccf64ed91f5796a50adfae98d",
+    "supplement_sha256": "375af5e7a7e3fb199c7881ff1ae81a2caef33ce75947c9ade631ca69b890b109"
+  },
+  "next_batch_recommendation": "Use accepted A1 feedback for a fresh Controller scientific choice, without Supervisor preselecting an algorithm. Exercise native production clock/runtime-alias preflight before spending candidate admission slots. Keep failed attempts and old rules unchanged; any new batch needs its own authorization/budget and exact input review."
+}

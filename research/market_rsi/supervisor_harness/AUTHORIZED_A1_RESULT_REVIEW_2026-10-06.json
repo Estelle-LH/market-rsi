@@ -1,0 +1,190 @@
+{
+  "schema": "market_rsi_independent_candidate_result_review_v1",
+  "passed": true,
+  "reviewed_utc": "2026-10-06T15:47:00Z",
+  "batch_id": "market-rsi-authorized-discovery-20261006-01",
+  "attempt_id": "authorized-a1-uncertainty-possession-r2-01",
+  "candidate_id": "InGameTemperatureUncertaintyWeightedPossessionJointOffset-v1",
+  "source_commit": "2c1e06bad95f2bc17584047509fdee1e4b2fdd85",
+  "source_review_sha256": "47058d7b9cb7781b9e0159c35c42e9ff029f0272b79d4fa0a637b9ced7ba6aa4",
+  "request_sha256": "653f76e09fc0c78e48d50823fe0ca78ed168cc6441da074933bb6efc5b8b3aa5",
+  "scorecard_sha256": "95bac1fa340a26a6e802cd094c21b13a177981506f7d717974b39788e89d5c78",
+  "predictions_sha256": "3284176c82f0ab64b5b2dc96c39f056ef151d77bf18a6e1242cc2654dc8d95f2",
+  "supplement_sha256": "375af5e7a7e3fb199c7881ff1ae81a2caef33ce75947c9ade631ca69b890b109",
+  "manifest_sha256": "7585da41080a39ff41fa0e24eb79222922d57fb8bd6097abb1fd7810c23be62e",
+  "scientific_decision": "REFUTED",
+  "operational_decision": "REVERT",
+  "decision_scope": "Unchanged project predictive decision for this frozen candidate and repeatedly used historical Train Discovery checks; not a class-wide information refutation.",
+  "population": {
+    "source_events": 195,
+    "source_dates": 42,
+    "materialized_events": 193,
+    "explicit_exclusions": 2,
+    "check_events": 87,
+    "check_dates": 20,
+    "check_weeks": 7,
+    "fit_events": [
+      106,
+      132,
+      148,
+      176
+    ],
+    "check_events_by_fold": [
+      26,
+      16,
+      28,
+      17
+    ]
+  },
+  "aggregate": {
+    "raw_market": {
+      "brier": 0.14195252900323282,
+      "log_loss": 0.4296707847132428
+    },
+    "research_parent_C7": {
+      "brier": 0.14195410408172784,
+      "log_loss": 0.4288860887954059
+    },
+    "ordinary_reference": {
+      "brier": 0.14548231253271718,
+      "log_loss": 0.43992197245621956
+    },
+    "candidate": {
+      "brier": 0.14323704682805932,
+      "log_loss": 0.43110344923742705
+    }
+  },
+  "candidate_minus_market": {
+    "brier": 0.0012845178248264977,
+    "log_loss": 0.001432664524184224
+  },
+  "candidate_minus_research_parent": {
+    "brier": 0.001282942746331478,
+    "log_loss": 0.0022173604420211435
+  },
+  "parent_brier_fold_deltas": [
+    -0.00010311831420491135,
+    0.0029048482070670456,
+    0.00003162474321322106,
+    0.003937295939830804
+  ],
+  "market_brier_fold_deltas": [
+    0.000298728446430932,
+    0.003815674495765198,
+    -0.0004065575470083571,
+    0.0031952312080407996
+  ],
+  "parent_brier_fold_wins": 1,
+  "market_brier_fold_wins": 1,
+  "parent_correction_energy": 0.0003715601656534428,
+  "parent_correction_signed_alignment": 0.0009113825806780364,
+  "parent_delta_brier_intervals_95": {
+    "date": [
+      -0.0012905891003567563,
+      0.0041454960004595155
+    ],
+    "week": [
+      -0.0011628395852790775,
+      0.0034518284736190425
+    ]
+  },
+  "market_delta_brier_intervals_95": {
+    "date": [
+      -0.0013927303694710861,
+      0.0038554939331337935
+    ],
+    "week": [
+      -0.0013218822406780005,
+      0.0034670724315521467
+    ]
+  },
+  "optimizer": {
+    "beta": [
+      0.043982440581946516,
+      0.048514807082378264,
+      0.03175149832394752,
+      0.046413160628882
+    ],
+    "gamma": [
+      0.1420784600197011,
+      0.15033793873023826,
+      0.12367290296279304,
+      0.1200936333633788
+    ],
+    "KKT": [
+      1.062287369180126e-9,
+      7.928568912518585e-11,
+      4.813749399090739e-11,
+      2.7219012599388748e-9
+    ],
+    "hessian_min_eigenvalue": [
+      25.7617159675083,
+      27.487245148916323,
+      29.124790726000747,
+      32.25877063192606
+    ],
+    "fit_objective_improved_over_frozen_parent_warmstart": true
+  },
+  "independent_checks": {
+    "frozen_source_and_PBP_receipts_exact": true,
+    "materialization_and_exclusion_denominator_exact": true,
+    "preplay_orientation_and_features_exact": true,
+    "strict_prior_folds_and_label_availability": true,
+    "saved_states_and_fit_inputs_exact": true,
+    "optimizer_objective_gradient_hessian_KKT_recomputed_without_fitting": true,
+    "all_87_predictions_replayed_exactly": true,
+    "same_row_frozen_controls_and_parent_replay_exact": true,
+    "equal_event_metrics_and_calibration_exact": true,
+    "complete_date_and_week_resampling_recomputed_exactly": true,
+    "twenty_date_diagnostics_exact": true,
+    "unchanged_KEEP_conditions_exact": true,
+    "supplement_projection_exact": true,
+    "worker_alias_request_command_runtime_memory_and_output_hashes_exact": true,
+    "native_journal_terminal_replay_exact": true
+  },
+  "resources": {
+    "actual_model_fits": 4,
+    "control_refits": 0,
+    "independent_review_refits": 0,
+    "worker_wall_seconds": 4.428886124980636,
+    "sampled_peak_rss_kib": 138928,
+    "rss_limit_kib": 1048576,
+    "rss_enforcement": "one-second polling; not OS-hard isolation",
+    "network_isolation_enforced": false,
+    "paid_provider_calls": 0,
+    "provider_spend_usd": "0",
+    "batch_attempts_consumed": 3,
+    "batch_fits_reserved": 12,
+    "batch_actual_fits": [
+      0,
+      0,
+      4
+    ],
+    "batch_original_account_calls": 1,
+    "automatic_retries": 0
+  },
+  "worker_receipt_sha256": "277b915a21cad0aef56675dccb6b497ae97c23dccf64ed91f5796a50adfae98d",
+  "worker_process_sha256": "aed67d7df47891dd7ab1794124c49656238f4ecdc9db74c6687db82471de2385",
+  "native_snapshot_sha256": "980a77b4ddc9bd07c07466182b18998c6a1ab5d74c02e0d63ad84e49969208ef",
+  "native_journal_hashes": {
+    "00000001.json": "0b3cf196a8ceffea7f522e03f60a6ad3277f25ebf71b78b0d7db36440a5981ff",
+    "00000002.json": "5ac28c91e1b62858471a8c9096650d713832383942da018e464451161e59cee7",
+    "00000003.json": "095ee40edfb731b9f2abb9dbbc2cb1c515f61278e4d59a4a29af7f36b7f64fac",
+    "00000004.json": "cd08801f92a10006d0dff6cbe5e12f40d603e9ba0aa65ebb9732e1e7c55b389e",
+    "00000005.json": "5d24a5f2a5451d709184dcc593013a6eaefe0e5589df2bd31bfdbb490c5cb085",
+    "00000006.json": "4f6884b3d5086da0f3594d4d0938cc19bded36248338acf79962343c4866d19c"
+  },
+  "authority_at_result_review_sha256": "88c983e5770b80272f7aa890db9cb9cb79258e60c0dafd309e18a625c4be1c2f",
+  "review_method": "Read-only frozen Train rematerialization and state/prediction/scorer replay with candidate.solve_joint patched to throw if called; no training or source/ledger mutation.",
+  "limitations": [
+    "Historical event-time diagnostic; does not establish actual live data availability.",
+    "Repeatedly viewed Train checks are Discovery, not untouched OOS.",
+    "Ordinary reference was not independently selected as a strong baseline.",
+    "This candidate loses to raw market and C7 on aggregate Brier and log loss; uncertainty intervals cross zero.",
+    "New basis plus fitted parameter does not isolate all PBP information from model effects.",
+    "One successful scientific candidate after two H integration failures is not multiple successful autonomous iterations.",
+    "AI Supervisor repairs are H execution corrections, not Controller research-process self-evolution.",
+    "No fixed-versus-evolving equal-budget comparison, prospective confirmation, PnL or promotion claim.",
+    "Batch stopped by consumed attempt/reservation cap, not negative score; reservations and both failures remain preserved."
+  ]
+}
