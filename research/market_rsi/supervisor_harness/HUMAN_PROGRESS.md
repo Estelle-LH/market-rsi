@@ -1,5 +1,59 @@
 # Market RSI — human progress
 
+## 2026-10-06 — native candidate handoff and evidence semantics repaired
+
+Two separate user-directed H checkpoints, not prediction or researcher-policy
+changes. First, parent `484ab30` -> local `10965ae`: new reviewed native dispatcher
+(`172bb564`) connects an original verified Controller decision and independently
+admitted request to the existing worker, preserves actual parent versus incumbent,
+permits two distinct IDs to overlap, fences duplicate launches and recovers a
+completed execution receipt after interruption without reopening expired budgets.
+Stale outer snapshots cannot reuse locally consumed four-fit reservations; outer
+cross-batch synchronization remains Supervisor-owned. Root229 executions passed
+4.284s/one opt-in skip; independent229 passed4.516s. Independent receipt
+`CANDIDATE_DISPATCH_INDEPENDENT_REVIEW_2026-10-06.json` (`23cccdbf`) explicitly
+accepts the206-line single-component exception. Initial native process/type and
+stale-snapshot gaps were repaired before source freeze; fixture errors are retained
+in the implementer log, not counted as scientific refutations.
+
+Second, parent `10965ae` -> local `85d0dc4`: existing evidence verifier changes only11 additions/2
+removals. Root reproduced three actual broker/native-consumer counterexamples:
+empty EOF-only source citation, read after final decision, read after terminal.
+External matched matrix improved12/15 to15/15; all permissive controls remain
+valid (provided-memory citation with EOF, intermediate JSON note, informative
+read followed by EOF). Eight new focused tests and237 relevant executions passed
+4.836s/one opt-in skip; independent237 passed4.713s and external15 passed0.648s.
+The separate scope/verification/review files preserve exact identities, commands,
+failure outcomes and limits; earlier frozen review receipts are not rewritten.
+Machine trajectory: `CONTROLLER_ENABLEMENT_TRAJECTORY_2026-10-06.jsonl`; same two
+H steps and outcomes as this human view, with separate K/M/C/H/R identities.
+
+Observed H benefits are native execution handoff/receipt reconciliation and
+correct source-citation/order admission in synthetic matched traces (at most L2).
+No new real model/account call, Train/protected read, training fit, provider,
+scientific external acquisition, release or promotion occurred. Tests script
+model/subprocess/clock behavior but use native consumer/broker/recorder/worker
+code; they do not prove unattended scientific execution. Original scoring,
+KEEP/REVERT, incumbent, candidate code, researcher eligibility and exhausted
+batch ledgers remain unchanged. This work does not establish C or R gains.
+
+Two material limits remain explicit: dispatch recovery is original execution
+receipt reconciliation, not authenticated original prediction replay (the worker
+receipt does not commit the original manifest); independent output/metric review
+is still mandatory. Reviewed code authoring, recipe/question-to-source semantics
+and next-round pool selection remain caller-owned, not automatically solved by
+the helper. Account evidence tools remain hard-blocked pending runtime parity;
+nonempty delivery does not prove whole-document reading, truth or learning.
+Plain-text intermediate commentary is not yet supported by the native consumer.
+
+Root supplied boundary repairs and coordination; delegated implementer and
+independent reviewer did engineering, not scientific candidate selection. User
+said continue, not a new algorithm. Tokens/CPU/full AI cost are unmetered, not
+zero. Exact test/resource timings are in each verification and worker log.
+Current next step is the actual code-authoring/scheduling handoff plus a fresh
+bounded real feedback pilot; one async3-attempt/12-fit/90-minute account-payload
+question is pending, not an activated window or extension of any old batch.
+
 ## 2026-10-05 — first scoped Controller evidence-tool checkpoint independently verified
 
 Following the approved priorities saved in documentation checkpoint `709bb38`, completed one user-directed H component under `CONTROLLER_ENABLEMENT_P0_TOOL_READ_SCOPE_2026-10-05.json`, originating from production parent `938f696`. New production file `controller_research_evidence_tools.py` (SHA `01980b4117b5242a16728bc60392623a5efd13dd48e0390ebf29fd810404f7c4`) and test file `test_controller_research_evidence_tools.py` (SHA `84cb98d6b43fe3c6e13b16fd6dd43ebb6d974a4790ed3b33611e7beb9da056d8`) provide approved-ID UTF-8 evidence retrieval, hash-bound policy/source, no-symlink descriptor reads, shared serialized-payload/call limits and durable audit before a prepared response. No model-controlled path or execution command exists. This is an unactivated sidecar, not removal of the current consumer's tool prohibition.

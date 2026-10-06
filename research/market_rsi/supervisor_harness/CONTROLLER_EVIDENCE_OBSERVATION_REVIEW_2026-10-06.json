@@ -1,0 +1,93 @@
+{
+  "schema": "market_controller_evidence_observation_independent_review_v1",
+  "checkpoint": "controller-evidence-observation-semantics-20261006-01",
+  "reviewer": "/root/candidate_dispatch_reviewer",
+  "reviewed_at_utc": "2026-10-06T04:32:49Z",
+  "client_date": "2026-10-06",
+  "parent_commit": "10965ae",
+  "verdict": "PASS_SCOPED_SYNTHETIC_OBSERVATION_SEMANTICS",
+  "passed": true,
+  "root_verification_sha256": "4183c507fb3b435eb3620e90ef7bb92fc4be4e1ca6e3aae7fb74b5949f9ae6af",
+  "source_sha256": {
+    "helper_before": "bfa4844e47ef0f54c2bdce85ff3223e02b72febde8f2b1aadc978f607b5bde0f",
+    "helper_after": "3b7c27c4458ca835e394b436c84b81d5a41f79c2edf0a5a6fb68b02c5a59ac4d",
+    "test_controller_evidence_observation_order.py": "45d53f0328cde9c702461b2f32f5ff6c3b559167bb5246c8c45887a460428854"
+  },
+  "protected_sha256": {
+    "account_controller_feedback_consumer.py": "81c38bf354426543252e5df19e1f78ad9de5b1c7b7e46ae3a72b6e4d4c52868b",
+    "controller_research_evidence_tools.py": "01980b4117b5242a16728bc60392623a5efd13dd48e0390ebf29fd810404f7c4",
+    "reviewed_candidate_dispatch.py": "172bb56467bb0a241c34f20949da7453133ed9861a50fe34fd1af531703eb02c",
+    "opened_train_discovery_worker.py": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360",
+    "continuous_discovery_batch.py": "3d0c0508cda74948119da9bd353cb326dd35b9ed8bcf9e42fb35b9862fee8183",
+    "learning_checkpoint_assessment.py": "a53d348a9b3c09306bb7bf24e4960ee3233eb955b82733612c11277d02219926",
+    "RESEARCH_STATE.md": "c019f21087654eacc042eae4746003fed818edd5804603feeff3cea1e4e6743c"
+  },
+  "prior_review_preserved": {
+    "dispatcher_receipt_sha256": "23cccdbf3ac0f2204dbfb4d24937b68dc663464353ab487feb4a7825945dd602",
+    "dispatcher_review_log_sha256": "c2b1d8bb71bb98df9cbfe6040a49c596cf232a91d046910b65e433c60b0c0aa0",
+    "old_integration_receipts_edited": false
+  },
+  "independent_verification": {
+    "python": "/Users/estelle/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "cwd": "/Users/estelle/Developer/market-rsi",
+    "environment": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "research/market_rsi"},
+    "command": "python3 -m unittest supervisor_harness.test_controller_evidence_observation_order supervisor_harness.test_reviewed_candidate_dispatch supervisor_harness.test_controller_research_evidence_tools supervisor_harness.test_controller_evidence_session supervisor_harness.test_controller_failure_feedback supervisor_harness.test_controller_account_runtime_catalog supervisor_harness.test_account_controller_feedback_consumer supervisor_harness.test_opened_train_discovery_worker supervisor_harness.test_continuous_discovery_batch supervisor_harness.test_continuous_discovery_branch_retention supervisor_harness.test_continuous_discovery_small_steps supervisor_harness.test_learning_checkpoint_assessment supervisor_harness.test_bottleneck_gate",
+    "test_executions": 237,
+    "skipped": 1,
+    "seconds": 4.713,
+    "exit_code": 0,
+    "counts_are_unique": false,
+    "actual_cli_probe_rerun": false,
+    "ready_review_gate": "PASS independently rerun",
+    "protected_git_diff_against_10965ae": "empty",
+    "source_hashes_rechecked_after_tests": true,
+    "matched_verifier_only_replay": {
+      "baseline": "git show10965ae helper compiled in memory; only verify_events substituted; same actual broker/native consumer and synthetic fixture",
+      "invalid_three_before": {"executions": 3, "failures": 3, "errors": 0, "meaning": "empty EOF-only new citation and two late reads incorrectly admitted"},
+      "invalid_three_after": {"executions": 3, "failures": 0, "errors": 0},
+      "permissive_four_before": {"executions": 4, "failures": 0, "errors": 0},
+      "permissive_four_after": {"executions": 4, "failures": 0, "errors": 0},
+      "old_model_receipts_reinterpreted": false
+    },
+    "independent_external_matrix": {
+      "source_sha256": "10e392317c5bf62f057f660dbc0b3491ff9c0daec4f9315600b17f52cde0e999",
+      "path": "/Users/estelle/.codex/worktrees/3c5e/self-evolving-v18-local/research/controller_behavior_acceptance_20261006/test_integrated_behavior.py",
+      "entry": "Read full module; importlib non-main execution; assign native consumer/broker/fixtures; run EvidenceExpectations and FailureExpectations with RecordingResult; no report file write",
+      "executions": 15,
+      "passed": 15,
+      "errors": 0,
+      "seconds": 0.6480399589636363,
+      "source_snapshot_stable": true,
+      "case_status": {"E01": "PASS", "E02": "PASS", "E03": "PASS", "E04": "PASS", "E05": "PASS", "E06": "PASS", "E07": "PASS", "E08": "PASS", "E09": "PASS", "E10": "PASS", "F01": "PASS", "F02": "PASS", "F03": "PASS", "F04": "PASS", "F05": "PASS"}
+    }
+  },
+  "scope_review": {
+    "axis": "H",
+    "authorship": "Human-directed Supervisor implementation prompted by independently verified counterexamples; not autonomous C/R modification",
+    "production_modules_changed": 1,
+    "production_additions": 11,
+    "production_removals": 2,
+    "inseparability_exception_required": false,
+    "actual_benefit": "Newly read source must have successful nonempty string delivery before actual final agent decision and first terminal. The3previously admitted invalid traces are now rejected while4permissive controls remain accepted.",
+    "source_claim_recovery": "Unchanged consumer dynamically binds helper source in fresh original claim/process/completion. Prior source-bound receipts are not silently upgraded.",
+    "account_activation": "Hard-closed before original claim; unchanged",
+    "tool_catalog_reader_profile_scoring_permissions": "unchanged"
+  },
+  "unresolved_in_narrow_verifier_boundary": [],
+  "limits": [
+    "Nonempty delivery establishes citation eligibility, not complete reading, relevance, semantic truth, useful discovery or actual model learning.",
+    "Final boundary is the last completed agent message, which native consumer requires to equal saved response. JSON intermediate notes remain allowed; plain-text intermediate commentary remains unsupported by current consumer.",
+    "No stricter all-event terminal grammar, old-account historical replay or new account/runtime effective-channel parity is established. Actual CLI/socket probe deliberately skipped.",
+    "No live account/data/provider/Train operation, full automatic scientific continuation, prediction gain or research-process improvement demonstrated.",
+    "Existing independent output/metric review and exhausted budget boundaries remain unchanged; this receipt grants no activation or scientific authority."
+  ],
+  "reviewer_resources": {
+    "production_edits": 0,
+    "real_data_reads": 0,
+    "fits": 0,
+    "account_model_provider_calls": 0,
+    "network_calls": 0,
+    "commits": 0,
+    "AI_cost": "unmetered/unknown, not claimed zero"
+  }
+}

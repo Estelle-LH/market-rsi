@@ -1,5 +1,26 @@
 # Market RSI — Supervisor 总路线图与当前任务
 
+## 2026-10-06 00:33 ET — 当前入口：执行 handoff 已修，仍不等于科学全自动
+
+用户要求继续实现。两个独立H组件已完成针对性、完整相关synthetic suites与独立复核：
+`10965ae` 新增reviewed native candidate dispatcher；原decision/request/review/实际parent/
+incumbent配对后执行既有worker。same-ID不重复spawn，distinct-ID可并行，完成的receipt可
+中断恢复；stale outer snapshot不能重复使用本地已消费reserved attempts/fits。独立229PASS。
+第二组件仅修existing evidence verifier（11+、2-）：空EOF不能成为新source阅读证据，final
+decision/terminal之后的tool不能倒填反馈；合法intermediate JSON note、已提供memory引用、
+有效read之后EOF仍可用。外部matched15cases从12PASS/3FAIL到15PASS，独立237相关PASS。
+
+这是human-directed H工程，最高synthetic L2；没有新真实训练/科学Controller调用、C/R收益、
+评分门槛或protected数据变化。旧scores/caps/receipts保留。恢复只证明原execution receipt，
+不证明原prediction字节；独立output/metric review仍必需。代码作者、recipe/question-source
+语义、下一轮pool/scheduler仍未全自动接通。Live account evidence tools仍硬关闭。
+
+下一条主线：在fresh有限预算中检验真实feedback-dependent continuation，透明记录代码实现/
+review/启动仍需多少Supervisor协调；未完成接口不能称autonomy。一个fresh<=90min/3候选/
+12fits/3once-only account decisions及原Train反馈payload问题已异步提出，尚未放行。不是逐轮
+要求用户选算法，也不重开旧窗口。E2B/Tinker不是新组件依赖，固定vs evolving机制仍未检验。
+精确入口为新两套scope、verification与独立review；本段替代下方历史“当前”段落。
+
 ## 2026-10-05 21:50 ET — Controller enablement 当前入口
 
 最新工作是用户批准的本地代码实现，不是继续已经封闭的实验批次。
