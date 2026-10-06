@@ -1,5 +1,18 @@
 # Market RSI — human progress
 
+## 2026-10-06 19:41 NY — typed R/H decisions and input review wired locally
+
+Prospective v2 allows one prediction, one researcher-policy or one research-tool
+change without a fake prediction candidate or forced R/H rewrite. Original response,
+scope, parent version, evidence and resource bindings survive once-only replay.
+The existing separate input reviewer now binds this exact protocol/context and
+keeps generated changes in versioned research-side sources, not trusted kernel.
+Legacy official entry and all old experiments retain v1. Local334-test price-path
+regression passes; account calls and resident Train fits0. Protocol first fixture
+failure preserved806fe77, correction2888e30. This is Supervisor engineering, not
+co-evolution completed. F3 source/benefit implementation-review and F4 actual
+accepted-version invocation/accounting remain next; activation not yet enabled.
+
 ## 2026-10-06 19:30 NY — fixed32KiB research-context restriction removed
 
 All modern price-loop stages now use the explicit per-destination max_input_bytes

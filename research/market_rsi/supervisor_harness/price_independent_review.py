@@ -81,11 +81,15 @@ class IndependentPriceReviewer:
         for binding in material.values():
             h._binding(binding)
         packet = t.c._read(material["input"])
+        fields = {"schema", "bindings", "feedback", "memory", "history", "source_context", "pool",
+                  "authority", "provided_parents", "provided_source_sha256", "overhead"}
+        typed = packet.get("schema") == "controller_price_feedback_input_v2"
+        if typed:
+            fields.add("action_context")
         if (len(Path(material["input"]["path"]).read_bytes()) > t.input_limit(self.runtime.fixed_grant)
                 or packet.get("authority") != self.runtime.fixed_grant
-                or packet.get("schema") != "controller_price_feedback_input_v1"
-                or set(packet) != {"schema", "bindings", "feedback", "memory", "history", "source_context", "pool",
-                    "authority", "provided_parents", "provided_source_sha256", "overhead"}
+                or packet.get("schema") not in {"controller_price_feedback_input_v1", "controller_price_feedback_input_v2"}
+                or set(packet) != fields
                 or set(packet.get("bindings", {})) != services.ROLES):
             raise ValueError("compact tools-closed aggregate input required")
         if (type(packet["provided_parents"]) is not list or not packet["provided_parents"]
@@ -112,6 +116,21 @@ class IndependentPriceReviewer:
             "requested_model": t.c.MODEL, "configuration_sha256": self.runtime.configuration["sha256"]}
         account = {"bound_controller_input": packet}
         checks = {"aggregate_bindings_checked": True, "unchanged_authority": True, "raw_rows_transferred": False}
+        if typed:
+            context = t.action_context(packet)
+            fixed = context["identity_configuration"]["fixed_context"]
+            if (packet["source_context"].get("controller_action_context") != context
+                    or fixed["authority_sha256"] != self.runtime.authority["sha256"]
+                    or fixed["resource_policy_sha256"] != self.runtime.configuration["sha256"]):
+                raise ValueError("typed action scope differs from bound Supervisor context/authority")
+            # Versioned research-side sources only, never mutable trusted runner/kernel.
+            namespace = "research/market_rsi/research_capacities/" + self.runtime.fixed_grant["batch_id"] + "/"
+            if any(not name.startswith(namespace) for names in
+                    context["identity_configuration"]["allowed_write_paths"].values() for name in names):
+                raise ValueError("typed capacity scope must use this batch's versioned research namespace")
+            expected.update(action_context_sha256=t.c._digest(context), decision_schema_sha256=t.c._digest(t.SCHEMA_V2))
+            account["reviewed_decision_schema"] = t.SCHEMA_V2
+            checks.update(typed_scope_and_schema_bound=True, capacity_execution_authorized=False)
         if self.runtime.fixed_grant.get("account_roles", {}).get("approved") is True:
             from supervisor_harness import price_account_roles as roles
             contract = roles.transport_contract()

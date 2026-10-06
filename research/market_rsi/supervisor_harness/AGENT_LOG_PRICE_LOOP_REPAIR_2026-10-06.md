@@ -332,3 +332,35 @@ decisions or autonomous R/H implementation. Account calls0/residentTrainfits0.
 Default entry still emits v1; independent activation, capacity implementation,
 matched benefit and actual downstream invocation remain pending. Next bounded
 checkpoint reuses the existing input-review service for the prospective v2 scope.
+
+## F2b — existing independent input review supports prospective typed actions
+
+Parent2888e30; one production module price_independent_review.py,25changed lines.
+Keep the existing separate reviewer transport, once-only role accounting and saved
+verdict. V2 requires an exact saved Supervisor action context, unchanged authority/
+resource identity, canonical batch-versioned research-source paths and exact schema/
+context hashes. Versioned source copies prevent changes to trusted driver/scorer/
+kernel; this is a write boundary, not a scientific method menu. No new gate, ledger
+or approval service. Input review explicitly does not authorize capacity execution.
+Default official entry remains v1. No raw data or per-sample predictions added.
+
+Focused reviewer/transaction/configuration54PASS3.240s. Inherited16-module price
+path334PASS23.833s using the same pinned one-thread command as F1b.4b with the same
+modules: negative/KEEP continuation, once-only failed-original/replay, metadata,
+native tools-closed checks, source/test drift, frozen score and all prior caps.
+New fixtures additionally bind a typed input to the original transaction validator
+and reject unbound context, authority/resource drift, trusted/foreign/protected
+writes, composite action and context smuggled into v1 before any role call.
+Separate account callback is mocked in these fixtures: no actual independent model
+approval or autonomous R/H source/benefit claim. Root-run verification only.
+Existing capacity identity/activation/feedback integration/semantic fixtures and
+micro-evolution regression38PASS0.849s. Real native journals/selected-version replay
+operate on temporary synthetic modules; they are not live price hooks or actual
+researcher-generated improvements.
+
+At23:41:33UTC/19:41NY frozen price data/runner/scorer and last closed ledger/grant
+hashes exactly match F1b entries. No new model call, raw Train read/fit, external/
+paid/protected/release/push/promotion operation; provider spend0, Supervisor account
+cost unmetered. Preserve all old scientific results and unrelated dirty work.
+Next is F3 capacity implementation and matched benefit, followed by F4 actual
+accepted-version hooks; those are not delivered by this protocol/input checkpoint.

@@ -102,6 +102,61 @@ class IndependentReviewTests(TestCase):
             'binary': review.r.pin(Path('/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12'))})
         return h.prepare()
 
+    def typed_input_material(self):
+        material = self.input_material()
+        packet = review.t.c._read(material['input'])
+        identity = deepcopy(self.s.base['identity_configuration'])
+        namespace = 'research/market_rsi/research_capacities/' + self.runtime.fixed_grant['batch_id'] + '/'
+        identity['allowed_write_paths'] = {'researcher': [namespace + 'r1.py', namespace + 'r2.py'],
+            'harness': [namespace + 'h1.py', namespace + 'h2.py']}
+        context = {'schema': 'price_controller_action_context_v1', 'identity_configuration': identity,
+            'available_actions': ['prediction', 'researcher', 'harness', 'request_closed_authority']}
+        packet.update(schema='controller_price_feedback_input_v2', action_context=context)
+        packet['source_context']['controller_action_context'] = deepcopy(context)
+        packet['bindings']['source_context'] = self.s.h.f.write('typed-source-context', packet['source_context'])
+        material['input'] = self.s.h.f.write('typed-controller-input', packet)
+        return material
+
+    def test_typed_input_review_binds_original_schema_scope_before_reservation(self):
+        material = self.typed_input_material()
+        binding = self.reviewer.review('input', material)
+        packet = review.t.c._read(material['input'])
+        receipt = review.t._review(packet, material['input'], self.runtime.authority, binding, self.runtime.repo,
+            configuration_binding=self.runtime.configuration, config=self.runtime.config)
+        self.assertEqual(receipt['action_context_sha256'], review.t.c._digest(packet['action_context']))
+        self.assertEqual(receipt['decision_schema_sha256'], review.t.c._digest(review.t.SCHEMA_V2))
+        self.assertEqual(self.calls[0][1]['material']['reviewed_decision_schema'], review.t.SCHEMA_V2)
+        self.assertFalse(self.calls[0][1]['trusted_checks']['capacity_execution_authorized'])
+        self.assertEqual(review.t._file(self.runtime.root / 'ledger.json')['attempts'], [])
+        with self.assertRaises(FileExistsError): self.reviewer.review('input', material)
+        self.assertEqual(len(self.calls), 1)
+
+    def test_typed_unbound_scope_or_permission_drift_rejected_before_role(self):
+        original = self.typed_input_material()
+        for field in ('unbound', 'authority', 'resources', 'kernel', 'foreign_batch', 'protected', 'composite'):
+            packet = deepcopy(review.t.c._read(original['input']))
+            config = packet['action_context']['identity_configuration']
+            if field == 'unbound': packet['action_context']['available_actions'] = ['prediction']
+            elif field == 'authority': config['fixed_context']['authority_sha256'] = 'f' * 64
+            elif field == 'resources': config['fixed_context']['resource_policy_sha256'] = 'f' * 64
+            elif field == 'kernel': config['allowed_write_paths']['researcher'] = ['supervisor_harness/run_price_discovery.py']
+            elif field == 'foreign_batch': config['allowed_write_paths']['researcher'] = ['research/market_rsi/research_capacities/OTHER/r2.py']
+            elif field == 'protected': config['allowed_write_paths']['researcher'] = ['experiments/nfl_ingame_price_score.py']
+            else: packet['action_context']['available_actions'] = ['composite']
+            if field != 'unbound':
+                packet['source_context']['controller_action_context'] = deepcopy(packet['action_context'])
+                packet['bindings']['source_context'] = self.s.h.f.write('typed-bad-source-' + field, packet['source_context'])
+            material = {**original, 'input': self.s.h.f.write('typed-bad-input-' + field, packet)}
+            with self.subTest(field=field), self.assertRaises(ValueError): self.reviewer.review('input', material)
+        self.assertEqual(len(self.calls), 0)
+
+    def test_legacy_input_does_not_accept_capacity_context(self):
+        material = self.typed_input_material()
+        packet = review.t.c._read(material['input']); packet['schema'] = 'controller_price_feedback_input_v1'
+        material['input'] = self.s.h.f.write('legacy-extra-capacity-context', packet)
+        with self.assertRaises(ValueError): self.reviewer.review('input', material)
+        self.assertEqual(len(self.calls), 0)
+
     def test_actual_callback_input_binds_separate_role_and_exact_operation(self):
         material = self.input_material()
         binding = self.reviewer.review('input', material)
