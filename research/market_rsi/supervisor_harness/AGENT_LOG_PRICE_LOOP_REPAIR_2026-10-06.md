@@ -411,3 +411,14 @@ Preserve exact source/test snapshot before setting only the synthetic Controller
 grant to256KiB; then vary author grant independently. No production guard/cap
 change. Accountcalls0/residentTrainfits0. New service not installed in real entry;
 independent source/matched-benefit review and activation remain pending.
+
+## F3a.3 — capacity author fixture correction verified
+
+Parent0791027 preserves the first19-test failure. Correction is one synthetic
+grant line: Controller256KiB, author independently32KiB or256KiB. Production
+unchanged. Source/service plus inherited candidate-author/independent reviewer
+regression60PASS6.976s. Actual temporary Git commits preserve generated source,
+old parent bytes, exact original decision, different R/H paths and no import;
+closed/foreign/drift/unsafe/uncertain cases reject or retain failure without retry.
+Large-author input succeeds only with its bound limit; old32KiB fails before the
+author wrapper/callback. No real model or Train fit; default real entry still v1.

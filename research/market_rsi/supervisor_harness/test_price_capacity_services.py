@@ -38,6 +38,7 @@ class CapacityAuthorTests(TestCase):
         config['pair'] = s.activation.pair(self.before); config['fixed_context']['model_sha256'] = self.before['M']
         config['allowed_write_paths'] = {kind: [self.before_paths[axis], self.namespace + name + '/capacity.py',
             self.namespace + name + '/test_capacity.py'] for kind, axis, name in (('researcher', 'R', 'r2'), ('harness', 'H', 'h2'))}
+        self.h.authorization['account_transfer']['max_input_bytes'] = 262144
         self.h.authorization['account_roles'] = {'capacity_changes_approved': True, 'max_input_bytes': 262144}
         self.calls = []; self.transport = Mock(side_effect=self.role)
 
