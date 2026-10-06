@@ -1,0 +1,57 @@
+{
+  "awaiting_independent_source_review": true,
+  "candidate": {
+    "path": "/Users/estelle/Developer/market-rsi/research/market_rsi/experiments/price_candidates/market-rsi-price-auto-loop-20261006-01/author-r0001-64dda21a4401-admission-v2/candidate.py",
+    "sha256": "f43e68a1ee63c4a5b0fcdcdfbb5c7ef617859f00e6abe90867aab5d9d7cbe1cb"
+  },
+  "candidate_id": "B2-ShrunkSingleGap300",
+  "checks": {
+    "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/author-r0001-64dda21a4401-admission-v2/checks.json",
+    "sha256": "2fac1132d038ac72c7fa621ce88241d31d8d7892fcdcc78893209697e616a091"
+  },
+  "completed_author_recovery": {
+    "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/completed-author-recovery.json",
+    "sha256": "a63e82c4d855f4e83d26aafd156170ab65f9dd42f2f9472e02f8236fe1ecd2d9"
+  },
+  "generated_tests_executed": false,
+  "implementation_notes": "Uses only feature index 1, normalized supplied weights, and one closed-form coefficient beta=C/(2S), or zero when S=0. None/nonfinite gaps become zero without dropping rows. No intercept, clipping, tuning, parallel-worker API, or history use. Invalid labels/weights and nonfinite arithmetic raise rather than substitute another recipe. Source and synthetic tests are supplied only; neither was executed.",
+  "method_family": "shrunk-single-feature-linear",
+  "original_decision_sha256": "64dda21a44014d8fef7d5d6548b63745f8ffa5ab4b190297449726cd7e196777",
+  "role_call": {
+    "account_cost": "unmetered",
+    "call_id": "author-r0001-64dda21a4401",
+    "completion_binding": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/author/author-r0001-64dda21a4401/completion.json",
+      "sha256": "e1ea75489c5b26204fd2ae4773dee7eb9f948c4fcad15408541c12d22d677880"
+    },
+    "input_binding": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/author/author-r0001-64dda21a4401/input.json",
+      "sha256": "188ed3833748070bb20739bca04368ea52679bb7916ff424d51481f0aed6f9cb"
+    },
+    "paid_provider_calls": 0,
+    "paid_provider_dollar_cost": 0,
+    "process_binding": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/author/author-r0001-64dda21a4401/process.json",
+      "sha256": "f2206ec6cf8968a3454342444148d051fd748889b1d0ef3c29501c7c2a188c68"
+    },
+    "response_binding": {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/author/author-r0001-64dda21a4401/response.json",
+      "sha256": "9c4a41d8495ebfd4a4739d1c682192e1d97ff7da3f52a6b2d600e1858f8ad2a5"
+    },
+    "serving_snapshot": "unknown",
+    "total_dollar_cost": "unknown",
+    "usage": {
+      "cacheWriteInputTokens": 0,
+      "cachedInputTokens": 0,
+      "inputTokens": 8206,
+      "outputTokens": 6984,
+      "reasoningOutputTokens": 5309,
+      "totalTokens": 15190
+    }
+  },
+  "schema": "price_candidate_author_receipt_v1",
+  "test": {
+    "path": "/Users/estelle/Developer/market-rsi/research/market_rsi/experiments/price_candidates/market-rsi-price-auto-loop-20261006-01/author-r0001-64dda21a4401-admission-v2/test_candidate.py",
+    "sha256": "7c45f8f45d25c15a1135b3fefbdebb58825b95ac69c09e3c29c02d4da3476505"
+  }
+}
