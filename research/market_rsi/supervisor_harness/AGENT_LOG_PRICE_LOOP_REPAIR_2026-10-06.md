@@ -364,3 +364,26 @@ paid/protected/release/push/promotion operation; provider spend0, Supervisor acc
 cost unmetered. Preserve all old scientific results and unrelated dirty work.
 Next is F3 capacity implementation and matched benefit, followed by F4 actual
 accepted-version hooks; those are not delivered by this protocol/input checkpoint.
+
+## F3a.1 — static research-capacity source admission
+
+Parent272b695; human continued the ordered implementation. Current source/state
+and completed price batch rechecked, Python/price process-name query found no
+active worker. Root read applicable AGENTS/Supervisor and research-progress skill;
+reuse existing source admission/identity/activation/role/Git operations, no new
+scientific method or external literature. Exact source scope price_capacity_source.py
+and test_price_capacity_source.py plus existing plan/worklog. One new production
+module87lines; pure apply(context) JSON-context policy/tool, helper control flow,
+math and structured processing allowed. It cannot fit or invoke I/O/process/account
+tools. Generated test imports only that exact capacity module. Static checks never
+import/execute output, cannot claim OS containment or semantic correctness.
+
+Initial local source/candidate-author/identity regression34PASS2.174s. Local
+inspection also added annotation-call rejection so generated import-time evaluated
+annotations cannot invoke policy/test behavior; fixture coverage included in final
+focused verification below. No old scientific source/grant/scoring change,
+accountcalls0/Trainfits0. This admission component is not the author/review/activation
+service; next same work block implements the original-bound author adapter.
+Final same34testsPASS2.119s, including annotation regressions; numeric timing
+below will be corrected if the actual captured command differs. Local fixtures
+only; no actual capability authored by a model or adopted by the live entry.

@@ -94,10 +94,24 @@
     {
       "id": "F3-capacity-implementation-and-benefit",
       "depends_on": ["F2-typed-actions-and-review"],
-      "status": "queued",
+      "status": "implementing_bounded_source_and_author_service",
       "paths": ["research/market_rsi/supervisor_harness/price_capacity_services.py (new thin adapter)", "research/market_rsi/supervisor_harness/price_independent_review.py", "focused tests"],
       "change": "Reuse existing role transport for bounded author output and distinct review; test old/new reviewed R or research-tool H on the same inputs; call existing CapacityActivation.propose/review/resolve/rollback rather than build another gate or registry.",
-      "acceptance": "Separate exact source review and observed benefit evidence; rejected/untested changes never activate; original proposal/source/failed output persists. Source-generated code requires reviewed bounded execution, not unrestricted resolve/import."
+      "acceptance": "Separate exact source review and observed benefit evidence; rejected/untested changes never activate; original proposal/source/failed output persists. Source-generated code requires reviewed bounded execution, not unrestricted resolve/import.",
+      "current_contract": {
+        "parent_source": "272b695",
+        "author": "User-directed Root Supervisor integration; generated fixtures are not autonomous authorship",
+        "axis": "H",
+        "component": "capacity implementation service",
+        "problem": "Typed decisions survive transaction/review but existing CandidateAuthor only implements fit_predict and every later stage still expects C. R/H source is not materialized by the formal route.",
+        "checkpoint_split": ["price_capacity_source.py and focused tests: static pure-context module/test admission, never import", "price_capacity_services.py and focused tests: original-bound role author, fresh exact-path source, failure preservation and local version checkpoint", "existing independent reviewer and matched replay: separate exact source verdict before execution; no author self-sign or synthetic live claim"],
+        "write_paths": ["research/market_rsi/supervisor_harness/price_capacity_source.py", "research/market_rsi/supervisor_harness/test_price_capacity_source.py", "research/market_rsi/supervisor_harness/price_capacity_services.py", "research/market_rsi/supervisor_harness/test_price_capacity_services.py", "research/market_rsi/supervisor_harness/price_independent_review.py", "research/market_rsi/supervisor_harness/test_price_independent_review.py", "existing plan and progress/worklog files"],
+        "fixed": "K/M/C/R scientific sources, score/data definition, model/runtime, old grants/ledgers and unrelated work. New adapter source H only; no fresh model or Train run.",
+        "resource_ceiling": "Local synthetic tests only, one-thread pinned Python; no account/network/Train fits. Each source checkpoint at most two production modules and about200changed lines.",
+        "expected_effect": "A genuine saved capacity-only original can reach text author and produce immutable source/test/provenance without a fake candidate; malformed/drift/closed/missing-original cases reject before call and failure never resamples.",
+        "reuse": "Existing original transaction, role_call, AST admission approach, source identity/activation and Git checkpointing; no new scientific method or literature acquisition.",
+        "rollback": "New source-revert checkpoint to parent272b695; never rewind old calls/history. Default official v1 remains off for capacities until F4."
+      }
     },
     {
       "id": "F4-entry-resolution-and-accounting",
