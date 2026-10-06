@@ -180,7 +180,8 @@ def dispatch(batch, request_binding, review_binding, decision_directory, authori
         if request["max_fits"] > decision["resources"]["fits"] or request["max_wall_seconds"] > decision["resources"]["seconds"]:
             raise ValueError("reviewed request exceeds original decision resources")
         for name in ("python", "memory"):
-            c._read({"path": request[name], "sha256": request[name + "_sha256"]}, True)
+            verification_path = str(Path(request[name]).resolve(strict=True)) if name == "python" else request[name]
+            c._read({"path": verification_path, "sha256": request[name + "_sha256"]}, True)
         w.validate(request, repo)
         # Short local fence: stale outer snapshots cannot reuse consumed slots.
         # This accounts reservations only; it does not invent measured fits.

@@ -1,0 +1,108 @@
+{
+  "actual_fits": 0,
+  "actual_fits_proof": "Original synchronous trace stops at dispatcher runtime canonical-file read before dispatch record and w.execute. Independently reproduced exact alias rejection; three-entry journal selects only, has no native claim, worker or run; handoff references and lock-only dispatch preserved. Zero from verified control flow plus transaction evidence, not missing progress alone.",
+  "attempt_consumed": true,
+  "attempt_id": "authorized-a1-uncertainty-possession-r1-01",
+  "batch_id": "market-rsi-authorized-discovery-20261006-01",
+  "batch_snapshot": {
+    "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-authorized-discovery-20261006-01/a1r1/batch.json",
+    "sha256": "ed8faac6fc801105ae1bb0b61b3db4c5e807f11c81a71fe7b8598d4cf71d2f35"
+  },
+  "boundary": "No provider calls, actual fits, protected/external access, source/Git or ledger mutations by reviewer.",
+  "dispatch_directory_names": [
+    "authorized-a1-uncertainty-possession-r1-01.lock"
+  ],
+  "error_identity": {
+    "message": "file hash/path drift",
+    "type": "ValueError"
+  },
+  "fits_reserved_retained": 4,
+  "handoff": [
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-authorized-discovery-20261006-01/a1r1/handoff/authorized-a1-uncertainty-possession-r1-01.dispatch-review.json",
+      "sha256": "6d5d8cd0aba6d055a91d197e61bfef0f5a7acf9fe397c689d309c74f038d1448"
+    },
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-authorized-discovery-20261006-01/a1r1/handoff/authorized-a1-uncertainty-possession-r1-01.json",
+      "sha256": "3b6a8c2f21f6770a5448cc905402f6314addca2bf6627e9a70138c24d379ca43"
+    }
+  ],
+  "handoff_hashes": {
+    "authorized-a1-uncertainty-possession-r1-01.dispatch-review.json": "6d5d8cd0aba6d055a91d197e61bfef0f5a7acf9fe397c689d309c74f038d1448",
+    "authorized-a1-uncertainty-possession-r1-01.json": "3b6a8c2f21f6770a5448cc905402f6314addca2bf6627e9a70138c24d379ca43"
+  },
+  "intent": {
+    "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-authorized-discovery-20261006-01/global_admissions/authorized-a1-uncertainty-possession-r1-01.json",
+    "sha256": "aa5b32a3bda11c33dcdaa89d135e7e3ef1e636597a3f24707ce5561bad3ef7bd"
+  },
+  "native_journal": [
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-authorized-discovery-20261006-01/a1r1/journal/00000001.json",
+      "sha256": "0b3cf196a8ceffea7f522e03f60a6ad3277f25ebf71b78b0d7db36440a5981ff"
+    },
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-authorized-discovery-20261006-01/a1r1/journal/00000002.json",
+      "sha256": "5781519ac2f28894bf7eb736f8b1a3caa316613556257e665c932712cd03068f"
+    },
+    {
+      "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-authorized-discovery-20261006-01/a1r1/journal/00000003.json",
+      "sha256": "819d9010788a27059445274791f94af0074d9556efa474153bdf380aaa9047d9"
+    }
+  ],
+  "native_journal_hashes": {
+    "00000001.json": "0b3cf196a8ceffea7f522e03f60a6ad3277f25ebf71b78b0d7db36440a5981ff",
+    "00000002.json": "5781519ac2f28894bf7eb736f8b1a3caa316613556257e665c932712cd03068f",
+    "00000003.json": "819d9010788a27059445274791f94af0074d9556efa474153bdf380aaa9047d9"
+  },
+  "native_selection_present": true,
+  "native_snapshot_sha256": "ed8faac6fc801105ae1bb0b61b3db4c5e807f11c81a71fe7b8598d4cf71d2f35",
+  "native_state_sha256": "86ee0acf45756d3d10552f3bbb98054e74aa408bf6320e211e552b8cfd0732ad",
+  "no_dispatch_record": true,
+  "no_native_claim": true,
+  "no_run_output": true,
+  "no_worker_request_or_receipt": true,
+  "no_worker_started": true,
+  "original_failure_sha256": "1d331359fa5f88600f71387649b7b22d25802c9915793d5a3faed082d0c38707",
+  "original_intent_sha256": "aa5b32a3bda11c33dcdaa89d135e7e3ef1e636597a3f24707ce5561bad3ef7bd",
+  "original_operation_sha256": "957de15b7068f5face89d916b01c7925eb71f839f6d2351e34da91d39a1b22ab",
+  "original_source_review_sha256": "aeaef14608e20ee12a0d74a45d3eced38af937925e39f66650dd4e6ee3333e10",
+  "passed": true,
+  "preserves_reservation": 4,
+  "process_inventory_available": false,
+  "process_inventory_limitation": "Sandbox blocks ps; no OS-global process claim. Reviewed native workflow never reaches worker spawn.",
+  "repair_attribution": "AI Supervisor H integration failure, not scientific evidence, predictor failure or R evolution",
+  "request": {
+    "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-authorized-discovery-20261006-01/a1r1/prepared_request.json",
+    "sha256": "2a3162e3d26b5097bc36648ceea2354470945f49a911982a7f1dd4c5bd9bc50e"
+  },
+  "request_sha256": "2a3162e3d26b5097bc36648ceea2354470945f49a911982a7f1dd4c5bd9bc50e",
+  "reviewed_utc": "2026-10-06T15:36:46.764481+00:00",
+  "reviewer_ledger_writes": 0,
+  "root_failure": {
+    "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-authorized-discovery-20261006-01/a1r1/root_predispatch_failure.json",
+    "sha256": "1d331359fa5f88600f71387649b7b22d25802c9915793d5a3faed082d0c38707"
+  },
+  "runtime": {
+    "alias_versions": {
+      "numpy": "1.26.4",
+      "scipy": "1.14.0",
+      "sklearn": "1.6.1"
+    },
+    "alias_virtualenv_prefix": "/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01",
+    "binary_sha256": "80ee2dd97bc26259d4e30853336f72ad38aa4aa0531bb196cc444d899422689d",
+    "canonical_target": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+    "direct_canonical_invocation_changes_prefix": true,
+    "direct_canonical_sklearn_import": "ModuleNotFoundError",
+    "identical_bytes": true,
+    "invocation_alias": "/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python"
+  },
+  "same_id_retry_allowed": false,
+  "schema": "market_rsi_independent_predispatch_failure_review_v1",
+  "selection_file_sha256": "65c188c4b95ff3e356dca44773bb8bbd904028397de736735ba92783657901d1",
+  "source_commit": "b29a7b1652cadfd192200135787ca0969cef1247",
+  "alias_cli_preflight": {
+    "passed": true,
+    "wall_seconds": 0.331946417,
+    "environment": "Exact clean worker environment, actual working directory and alias; --help only, no Train read or fits."
+  }
+}

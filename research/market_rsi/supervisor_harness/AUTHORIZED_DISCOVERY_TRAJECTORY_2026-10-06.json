@@ -34,6 +34,20 @@
     "automatic_retry": false,
     "fresh_identity_requires_new_source_admission": true
   },
+  "second_execution_recovery": {
+    "original_attempt_id":"authorized-a1-uncertainty-possession-r1-01",
+    "intent_sha256":"aa5b32a3bda11c33dcdaa89d135e7e3ef1e636597a3f24707ce5561bad3ef7bd",
+    "original_source_commit":"b29a7b1652cadfd192200135787ca0969cef1247",
+    "failure":"Native selection committed; strict dispatcher rejected interpreter symlink verification before worker claim/spawn",
+    "attempt_consumed":true,"fits_reserved_retained":4,"actual_fits_independently_proved":0,
+    "proof_sha256":"32875c15b818e0d34f882521988e121008c2c67970de9467158c3610c33c5a7a",
+    "repair_axis":"H","repair_author":"AI Supervisor technical repair; delegated implementation/operations and independent review",
+    "change":"Only interpreter byte-verification resolves canonical target; request and worker command preserve original alias/virtualenv M. General strict read and candidate/scorer unchanged.",
+    "rejected_proposal":"Canonical execution path would lose virtualenv/sklearn despite same binary hash; read-only diagnostic rejected it before any execution or candidate changes.",
+    "scientific_effect":"None; no predictive evidence from either pre-worker failure",
+    "automatic_retry":false,"first_two_attempts_total_reserved_fits":8,
+    "remaining_attempt_slots":1,"fresh_identity_requires_new_source_admission":true
+  },
   "actual_completed_experiments": 0,
   "actual_fit_calls": 0,
   "actual_original_controller_decisions": 1,

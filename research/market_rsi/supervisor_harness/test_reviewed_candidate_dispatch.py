@@ -259,10 +259,10 @@ class DispatchTests(unittest.TestCase):
                 launch.assert_not_called()
         self.assertEqual(self.batch.snapshot()["attempts_claimed"], 0)
 
-    def test_runtime_source_and_dispatch_symlinks_fail_before_spawn(self):
+    def test_memory_and_dispatch_symlinks_fail_before_spawn(self):
         original = deepcopy(self.request)
-        link = self.f.root / "python-link"; link.symlink_to(self.f.python)
-        self.write_request({**original, "python": str(link)})
+        link = self.f.root / "memory-link"; link.symlink_to(self.request["memory"])
+        self.write_request({**original, "memory": str(link)})
         with patch.object(w.subprocess, "Popen") as launch:
             with self.assertRaisesRegex(ValueError, "path drift"): self.invoke()
             launch.assert_not_called()
@@ -275,6 +275,40 @@ class DispatchTests(unittest.TestCase):
             with self.assertRaises(OSError): self.invoke()
             launch.assert_not_called()
         self.assertFalse((outside / "lock").exists())
+
+    def test_reviewed_interpreter_alias_verifies_target_but_executes_original_alias(self):
+        link = self.f.root / "python-link"; link.symlink_to(self.f.python)
+        self.write_request({**self.request, "python": str(link)})
+        with patch.object(w.subprocess, "Popen", side_effect=self.completed_child) as launch:
+            receipt = self.invoke()
+        launch.assert_called_once()
+        self.assertEqual(launch.call_args.args[0][0], str(link))
+        self.assertEqual(receipt["command"][0], str(link))
+        self.assertEqual(json.loads((self.batch.root / "worker/a.request.json").read_text())["python"], str(link))
+        self.assertEqual(self.request["python"], str(self.f.python))
+        self.assertEqual(receipt["outcome"], "succeeded")
+        # General evidence-file reads remain strict; only dispatcher verification resolves Python.
+        with self.assertRaisesRegex(ValueError, "hash/path drift"):
+            c._read({"path": str(link), "sha256": self.request["python_sha256"]}, True)
+
+    def test_interpreter_alias_changed_target_bytes_rejected_before_claim_or_spawn(self):
+        link = self.f.root / "python-link"; link.symlink_to(self.f.python)
+        self.write_request({**self.request, "python": str(link)})
+        self.f.python.write_bytes(b"different interpreter bytes")
+        with patch.object(w.subprocess, "Popen") as launch:
+            with self.assertRaisesRegex(ValueError, "hash/path drift"): self.invoke()
+            launch.assert_not_called()
+        self.assertEqual(self.batch.snapshot()["attempts_claimed"], 0)
+        self.assertFalse((self.batch.root / "dispatch/a.json").exists())
+
+    def test_interpreter_alias_missing_target_rejected_before_claim_or_spawn(self):
+        link = self.f.root / "python-link"; link.symlink_to(self.f.root / "missing-python")
+        self.write_request({**self.request, "python": str(link)})
+        with patch.object(w.subprocess, "Popen") as launch:
+            with self.assertRaises(FileNotFoundError): self.invoke()
+            launch.assert_not_called()
+        self.assertEqual(self.batch.snapshot()["attempts_claimed"], 0)
+        self.assertFalse((self.batch.root / "dispatch/a.json").exists())
 
     def test_receipt_and_log_drift_fail_closed_on_restart(self):
         with patch.object(w.subprocess, "Popen", side_effect=self.completed_child): self.invoke()

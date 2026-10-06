@@ -1,0 +1,14 @@
+{
+ "schema":"market_rsi_supervisor_runtime_repair_source_v1","axis":"H","author":"AI Supervisor",
+ "source_commit_before_repair":"b29a7b1652cadfd192200135787ca0969cef1247",
+ "production_source":{"path":"reviewed_candidate_dispatch.py","sha256":"fc235c6bc18655163cd15be087588187f2f9b8f1996c6de00b96758bbd35a9f0"},
+ "tests":{"path":"test_reviewed_candidate_dispatch.py","sha256":"e7252a07c734412b0b71313f674108647bc7b198cfb0add6133218467297e527"},
+ "diff":"Two added/one removed production lines. Resolve Python verification binding only. Request and worker command retain frozen alias and virtualenv prefix. Memory and general strict read remain canonical; altered bytes and missing target reject before claim/spawn.",
+ "root_test_results":{"tests":59,"passed":59,"elapsed_seconds":3.324,"scope":"26dispatch+23handoff+10candidate; synthetic and mocked execution, not real Train results"},
+ "root_complete_execution_regression":{"tests":197,"passed":197,"elapsed_seconds":3.917,"modules":"continuous_discovery_small_steps/account_controller_feedback_consumer/continuous_discovery_branch_retention/continuous_discovery_batch/continuous_candidate_handoff/opened_train_discovery_worker/reviewed_candidate_dispatch/learning_checkpoint_assessment","limitation":"Complete selected execution modules only, not all legacy repo tests or live execution"},
+ "runtime_evidence":"Independent exact clean worker environment alias --help passed0.331946417s. Alias Python3.12.3/numpy1.26.4/scipy1.14.0/sklearn1.6.1; physical binary sameSHA but direct invocation loses virtualenv/sklearn. Initial canonical-command proposal rejected before execution.",
+ "candidate_source_unchanged":"d55075fb9465ac3331e061ce32bfa2a0de50172555e6a65b625f95d20bafe813",
+ "candidate_tests_unchanged":"1e93dc3e60021f9c4a3cb336e021cb387bc051b3abdfbe0380e580c869caf80a",
+ "boundaries":"Original attempts1+2 remain consumed with8reservedfits, each actual0 only under independent proof. Final fresh attempt allowed only after exact H/operations/source admission. No guard relaxation, science/score/data/M/permission/budget/deadline change or original retry.",
+ "limitations":"No actual training/score yet. H technical repair is not researcher self-evolution or prediction improvement. Mocked source tests do not prove whole production loop."
+}
