@@ -103,7 +103,8 @@ class PriceLoopServices:
             h._binding(binding)
         return bundle, {key: t.c._read(binding) for key, binding in bundle.items()}
 
-    def input(self, ctx):
+    def prepare_packet(self, ctx):
+        """Pure full-path input validation before any account call/reservation."""
         bindings, data = self._bundle(ctx)
         pool = data["pool"]
         records = {item["candidate_sha256"]: item for item in pool["archive"]}
@@ -149,6 +150,10 @@ class PriceLoopServices:
             raise ValueError("feedback comparison incumbent drift")
         if len((json.dumps(packet, sort_keys=True, indent=2, allow_nan=False) + "\n").encode("utf-8")) > 32768:
             raise ValueError("compact aggregate input exceeds authorized 32KiB")
+        return packet
+
+    def input(self, ctx):
+        packet = self.prepare_packet(ctx)
         binding = self._save(ctx, "input", packet)
         review = self.reviewer("input", {"input": binding, "authorization": self.runtime.authority,
             "configuration": self.runtime.configuration})

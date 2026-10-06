@@ -119,21 +119,36 @@ def _review(packet, input_binding, authorization_binding, review_binding, repo, 
     return review
 
 
-def _recover(directory, packet, claim):
+def _recover(directory, packet, claim, transport_contract=None):
     if _file(directory / "claim.json") != claim or _file(directory / "input.json") != packet or _file(directory / "schema.json") != SCHEMA:
         raise ValueError("original transaction claim/input/schema drift")
     completion = _file(directory / "completion.json")
     names = {"process.json", "events.jsonl", "stderr", "schema.json", "input.json", "response.json"}
+    if transport_contract is not None:
+        names |= {"native-events.jsonl", "runtime-policy.json"}
+        if completion.get("transport_contract") != transport_contract:
+            raise ValueError("original native transport completion drift")
     if completion.get("exit_code") != 0 or completion.get("timed_out") is not False or set(completion.get("hashes", {})) != names:
         raise RuntimeError("original incomplete/failed transaction; no resample")
     for key, value in c._identity().items():
         if completion.get(key) != value: raise ValueError("completion source provenance drift")
     for name, digest in completion["hashes"].items(): c._read({"path": str(directory / name), "sha256": digest}, True)
     process = _file(directory / "process.json")
-    expected = {"command": c._command(directory), "cli_sha256": c.CLI_SHA,
+    expected = {"command": transport_contract["command"] if transport_contract else c._command(directory), "cli_sha256": c.CLI_SHA,
                 "input_sha256": c._digest(packet), **c._identity()}
     if any(process.get(key) != value for key, value in expected.items()) or type(process.get("pid")) is not int or process["pid"] <= 0:
         raise ValueError("original process identity drift")
+    if transport_contract is not None:
+        policy = _file(directory / "runtime-policy.json")
+        result = policy.get("thread_start_result", {})
+        if (process.get("transport_contract") != transport_contract
+                or policy.get("contract") != transport_contract
+                or policy.get("environment_acknowledged") is not True
+                or result.get("thread", {}).get("environments") != []
+                or result.get("model") != c.MODEL or result.get("instructionSources") != []):
+            raise ValueError("original native environment policy was not acknowledged")
+        from supervisor_harness import price_account_roles as roles
+        roles._verify_native(directory, transport_contract, packet, SCHEMA)
     completed, message, usage = False, None, None
     for line in (directory / "events.jsonl").read_text().splitlines():
         event = c._json(line)
@@ -181,7 +196,8 @@ def _finish(root, directory, packet, result, *, batch_id=BATCH):
     return result
 
 
-def call(root, input_binding, authorization_binding, review_binding, repo, *, transport=None, configuration_binding=None):
+def call(root, input_binding, authorization_binding, review_binding, repo, *, transport=None, configuration_binding=None,
+         transport_contract=None):
     """Hold the Supervisor global lock through one durable original transaction."""
     root = Path(root)
     if not root.is_absolute() or root.resolve() != root or not root.is_dir(): raise ValueError("permanent original pilot root required")
@@ -191,6 +207,20 @@ def call(root, input_binding, authorization_binding, review_binding, repo, *, tr
             or (configuration_binding is not None and root.parent != ROOT.parent))):
         raise ValueError("original grant and sole permanent pilot root required")
     packet = c._read(input_binding)
+    if transport_contract is not None:
+        import inspect
+        from supervisor_harness import price_account_roles as roles
+        if (type(transport_contract) is not dict or transport_contract != roles.transport_contract()
+                or transport is None
+                or Path(inspect.getsourcefile(transport)).resolve() != Path(roles.__file__).resolve()
+                or transport_contract["source"]["path"] != str(Path(roles.__file__).resolve())
+                or transport_contract["command"] != roles.native_command(None)
+                or c._read(review_binding).get("controller_transport") != transport_contract):
+            raise ValueError("exact independently reviewed original transport contract required")
+        c._read(transport_contract["source"], True)
+        roles._grant(root, authorization_binding)
+        if len(roles._prompt(packet, controller=True).encode("utf-8")) > roles.MAX_BYTES:
+            raise ValueError("full Controller prompt exceeds32KiB before original reservation")
     key = packet["bindings"]["feedback"]["sha256"]
     if type(key) is not str or len(key) != 64 or c._hashes(key) != {key}: raise ValueError("exact feedback hash required")
     directory = root / "decisions" / key
@@ -202,7 +232,8 @@ def call(root, input_binding, authorization_binding, review_binding, repo, *, tr
             "schema_sha256": c._digest(SCHEMA), "transaction_source_sha256": c.sha(Path(__file__).resolve()),
             "cli_sha256": c.CLI_SHA, **c._identity()}
         if configuration_binding is not None: claim["configuration_sha256"] = configuration_binding["sha256"]
-        if (directory / "claim.json").exists(): return _finish(root, directory, packet, _recover(directory, packet, claim), batch_id=config["batch_id"])
+        if transport_contract is not None: claim["controller_transport"] = transport_contract
+        if (directory / "claim.json").exists(): return _finish(root, directory, packet, _recover(directory, packet, claim, transport_contract), batch_id=config["batch_id"])
         _review(packet, input_binding, authorization_binding, review_binding, repo,
                 configuration_binding=configuration_binding, config=config)
         now = datetime.now(timezone.utc)
@@ -224,7 +255,7 @@ def call(root, input_binding, authorization_binding, review_binding, repo, *, tr
         started = time.monotonic()
         try:
             (transport or c._transport)(directory, packet, min(120., (c._time(config["deadline_utc"]) - now).total_seconds()))
-            result = _recover(directory, packet, claim)
+            result = _recover(directory, packet, claim, transport_contract)
         except BaseException as error:
             c.save(directory / "failure.json", {"error": str(error), "no_resample": True,
                                                 "wall_seconds": time.monotonic() - started})
