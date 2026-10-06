@@ -113,7 +113,10 @@ class EntryTests(TestCase):
         packet = self.service.prepare_packet({'round_index': 1, 'previous_result': self.f.seed})
         from supervisor_harness import price_account_roles as roles
         rendered = len(roles._prompt(packet, controller=True).encode('utf-8'))
-        with patch.object(entry.r.t, 'input_limit', return_value=rendered - 1):
+        # Packet-construction denial is covered separately. Isolate the wire
+        # check here without making the earlier guard share a mocked ceiling.
+        with patch.object(self.service, 'prepare_packet', return_value=packet), \
+                patch.object(entry.r.t, 'input_limit', return_value=rendered - 1):
             with self.assertRaisesRegex(ValueError, 'before account preflight'):
                 self.execute(preflight=True)
         self.assertEqual(self.account.preflight.call_count, 0)

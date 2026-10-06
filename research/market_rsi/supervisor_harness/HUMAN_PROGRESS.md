@@ -1,5 +1,20 @@
 # Market RSI — human progress
 
+## 2026-10-06 19:30 NY — fixed32KiB research-context restriction removed
+
+All modern price-loop stages now use the explicit per-destination max_input_bytes
+in the bound batch authorization, including the actual rendered Controller/role
+prompts. They no longer require the number32768. Local64KiB/256KiB tests cover
+larger aggregate context, implementation, review and inert-native wire/replay;
+324 relevant regressions pass. Old32KiB grants stay unchanged and enforced.
+No larger live grant, account transfer, fresh batch or Train fit was created.
+This is human-requested Supervisor H engineering, not measured researcher gain.
+One test-isolation failure is preserved at8e86d57; the correction changes only its
+fixture. Frozen task/scorer, old closed ledger and authorization are unchanged.
+Source chunks dbe0bf3/de8eff0/2ecb912/8e86d57; detailed verification in the existing
+repair worklog. Continue typed R/H routing next; input-size tuning is not a new
+research prerequisite. Independent prospective activation review remains pending.
+
 ## 2026-10-06 19:22 NY — first item-wise co-evolution wiring repair
 
 F1 now sends factual process observations and numeric implementation capabilities

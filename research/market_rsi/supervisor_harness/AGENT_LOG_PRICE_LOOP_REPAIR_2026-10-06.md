@@ -253,3 +253,41 @@ grant, cap or payload truncation will be loosened to pass that test. Next test
 isolates the actual rendered-prompt check with the same synthetic packet; prior
 runtime/packet tests independently exercise construction/budget denial. Snapshot
 still local/incomplete and not live-activated.
+
+## F1b.4b — integrated local verification complete
+
+Parent8e86d57 preserves the exact first entry-test failure. Correction only isolates
+that unit's rendered-prompt guard with the same constructed synthetic packet;
+the earlier packet budget checks are exercised separately. No production check
+was bypassed or loosened for the test. Final16-module regression324PASS24.150s:
+
+```sh
+env PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest supervisor_harness.test_price_loop_services supervisor_harness.test_price_loop_handoff supervisor_harness.test_price_account_roles supervisor_harness.test_price_candidate_author supervisor_harness.test_price_independent_review supervisor_harness.test_run_price_discovery supervisor_harness.test_coevo_pilot_transaction supervisor_harness.test_coevo_pilot_configuration supervisor_harness.test_account_controller_feedback_consumer supervisor_harness.test_feedback_loop_runtime supervisor_harness.test_feedback_linked_loop supervisor_harness.test_continuous_discovery_batch supervisor_harness.test_opened_train_discovery_worker experiments.test_nfl_ingame_price_data experiments.test_nfl_ingame_price_change_train_diagnostic experiments.test_nfl_ingame_price_score -q
+```
+
+Expected benefit within scope: modern authorized larger input is no longer rejected
+by a universal32KiB constant anywhere in the live price path. Actual local evidence:
+64KiB inert-native wire/replay,256KiB transaction/role/author/reviewer/entry inputs,
+missing/invalid budgets, old32KiB rejection, full-prompt pre-backend checks and
+KEEP/REVERT/failure/no-retry/cap/restoration regressions pass. This proves local
+engineering behavior, not actual larger account delivery, useful memory retrieval,
+better researcher judgment or co-evolution benefit. Root-run tests; no independent
+final review/activation claimed. No permanent256KiB default was created; the exact
+future grant determines the effective value per role. The only remaining32768
+literal is the configuration-less historical Controller compatibility contract.
+
+Total production delta fromd9c9ea6:47insertions/21deletions over7modules, divided
+into four predeclared source chunks dbe0bf3/de8eff0/2ecb912/8e86d57. Source changes
+are human-requested Supervisor H; K/M/C/R unchanged. Old output/code-size, call,
+fit/time/fee/tool/data permissions unchanged. Local resource accounting:324
+regression test executions24.150s (not324scientific trials); modelcalls0,
+residentTrainfits0, acquisition/paid/protected/release/push/promotion0. USD provider
+spend0; Supervisor subscription cost unmetered. Test files and temporary synthetic
+artifacts are not permanent scientific batch outputs.
+
+At23:30:42UTC/19:30NY protected source hashes match earlier entries; permanent
+closed price ledger67b0bcb4c3197aacfc518ecce09958febe1dca90181bb025d28ba6f1c54cc543
+and originalauthorization141da82a309f246abf5cd947dd69eb10e55e8783fac7ce3825b609fedce47d30
+unchanged. No actual raw Train/prediction row egress or payload limit extension
+in an old batch. Scope completed locally, independent activation still pending;
+next mainline fix is typed R/H routing, not input-size governance or another plan.

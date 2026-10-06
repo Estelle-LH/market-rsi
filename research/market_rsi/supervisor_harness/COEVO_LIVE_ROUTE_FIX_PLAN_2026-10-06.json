@@ -35,7 +35,7 @@
     {
       "id": "F1b-authorized-input-budget",
       "depends_on": ["F1-process-feedback"],
-      "status": "implementing_local_only",
+      "status": "implemented_integrated_local_tests_pass_independent_activation_pending",
       "component": "batch-authorized account input bytes",
       "trigger": "Human: the permanent32KiB restriction is too tight for accumulated research context.",
       "change": "Read positive integer max_input_bytes from the original bound grant per destination role. Remove permanent equality-to32768 and matching payload checks. Validate full rendered wire prompts before original reservations and native process launch. No live grant rewrite or transfer.",
@@ -47,6 +47,15 @@
       ],
       "test_paths": ["test_coevo_pilot_transaction.py", "test_price_account_roles.py", "test_feedback_loop_runtime.py", "test_price_loop_services.py", "test_price_candidate_author.py", "test_price_independent_review.py", "test_run_price_discovery.py"],
       "acceptance": "Synthetic64KiB/256KiB authorization permits larger context; old32KiB and missing/invalid explicit modern limits still reject excess before a claim/process. Ordinary restart/no-retry/tool/data/cap boundaries unchanged.",
+      "actual_result": {
+        "source_checkpoints": ["dbe0bf3", "de8eff0", "2ecb912", "8e86d57"],
+        "first_entry_test_failure": "13 tests,12passed/1failed in3.918s: test mocked shared ceiling so earlier packet guard rejected before the intended wire guard; failure checkpoint8e86d57 retained.",
+        "correction": "Isolate only the rendered-prompt guard in its unit fixture; no production guard/grant/limit relaxed to pass.",
+        "integrated_verification": "324 tests across16 existing price/transaction/native/runtime/driver/batch/worker/scorer modules passed in24.150s; no new actual account calls or resident Train fits.",
+        "production_diff": "47 insertions/21 deletions over7 modules, split into the four declared bounded components/checkpoints.",
+        "scope": "Local code supports explicit larger authorized inputs end-to-end. No new larger live grant/default/batch was generated or activated.",
+        "remaining": "Independent final activation review and any new real-batch authorization are not supplied by these local tests; no improved memory/research-effect claim."
+      },
       "legacy": "Only the configuration-less historical Controller contract retains its old32KiB default; modern grants require an explicit bound value.",
       "fixed": "K/M/C/R, old author source-output limit, task/scorer, call/fit/time/fee/data/tools limits, closed ledgers and all old grants",
       "attribution": "User-directed Supervisor H input-budget repair, not researcher self-evolution.",
