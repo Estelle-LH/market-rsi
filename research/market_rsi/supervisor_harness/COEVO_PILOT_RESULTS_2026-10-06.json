@@ -1,0 +1,154 @@
+{
+  "schema": "market_rsi_coevolution_pilot_result_v1",
+  "batch_id": "market-rsi-coevo-pilot-20261006-01",
+  "status": "closed_at_attempt_cap",
+  "milestone_achieved": false,
+  "outcome": "Original Controller-proposed R/H/C changes were implemented, synthetically tested and separately versioned. Both native candidate admissions failed before process launch. No complete real feedback-driven co-evolution cycle occurred.",
+  "start_utc": "2026-10-06T17:31:25Z",
+  "closed_at_utc": "2026-10-06T18:04:34.280362+00:00",
+  "elapsed_wall_seconds": 1989.280362,
+  "selection_cutoff_utc": "2026-10-06T18:11:25Z",
+  "hard_deadline_utc": "2026-10-06T18:16:25Z",
+  "permanent_artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-pilot-20261006-01",
+  "authorization_sha256": "8aca216300e0c47bffbe7f8e6959a4aba80cddd250066949654d90875d5ec057",
+  "closed_ledger_sha256": "e92bc5dbdd7e1413a4f414f078ee41bdb1f1dbc9ce7d7564082d138a93521f3d",
+  "independent_terminal_review": {
+    "path": "COEVO_PILOT_RESULT_REVIEW_2026-10-06.json",
+    "sha256": "f947c0254459a5224a750a3ba01e4cb10da2fe55145ecbcdf0b31be2f44a5412",
+    "passed_means": "Terminal failure and accounting verified, not scientific milestone achieved"
+  },
+  "controller": {
+    "requested_model": "gpt-6.1-sol",
+    "serving_snapshot": "unknown",
+    "completed_original_decisions": 1,
+    "unused_decision_allowance": 1,
+    "automatic_retries": 0,
+    "input_tokens": 22347,
+    "output_tokens": 2193,
+    "reasoning_output_tokens": 96,
+    "transport_and_validation_wall_seconds": 65.8676415,
+    "original_response_sha256": "6cd0f99fdf1defae84793122ad01080b45cc2266744c21fc04abe8f25f7304b9",
+    "input_sha256": "b88e948b22e365d8092fff12f55012993b93e1da8c90cfb0422005777ce2cb6d",
+    "feedback_sha256": "9491dbd045a610a46da5bd297b7ac971b8c195b0cb63b8e98f0f940aa9509ba1",
+    "decision_sha256": "9f909cf39d2d04d6772b4a5c797ec2a808b5f19b94d18c2d1d9b0cc9d8efc331",
+    "citation_reconciliation": "Original helper omitted a provided nested evidence hash. Independently accepted the exact preserved response without changing source, citation, scientific choice or resampling; automatic helper validation did not pass.",
+    "acceptance_receipt_sha256": "400ea5557f4b6d5a2fd7a75d29138f289c9b83baa3897e8d9d21b78e3621246d"
+  },
+  "trajectory": [
+    {
+      "step": 1,
+      "layer": "scientific selection",
+      "author": "Original signed-in account Controller",
+      "evidence": "Previously completed uncertainty-weighted possession recipe worsened Brier by 0.0012845178248264977 against market and won only one of four blocks; C7 remained near market on Brier with lower log loss.",
+      "effect": "Stop repeating that exact recipe, retain negative findings, use C7 as research parent and propose a distinct bounded score-by-remaining-time interaction. This is a feedback-dependent proposal from historical results, not an executed descendant in this batch.",
+      "actual_parent_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+      "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f"
+    },
+    {
+      "step": 2,
+      "layer": "researcher R",
+      "proposal_author": "Original account Controller",
+      "implementation_author": "Bounded AI implementer",
+      "version": "hypothesis_differentiation_ledger_v1",
+      "commit": "3312823",
+      "production_lines": 75,
+      "source_sha256": "0f80e0f118c6a5d768e09415204a3752f3b8b702d9cb9952aafd633b8f51cfb6",
+      "change": "Structured scientific recipe, closest evaluated recipe, explicit difference, falsifier and parent/comparator identities; preserve valid REVERT branches and reject exact declared repeats.",
+      "tested_effect": "Synthetic record/identity/repeat/feedback checks pass. No matched same-model decision-quality superiority established.",
+      "downstream_effect": "Entry persisted before training admission, but after implementation. No actual result was appended and no second Controller decision consumed it; accumulation benefit remains untested."
+    },
+    {
+      "step": 3,
+      "layer": "harness H",
+      "proposal_author": "Original account Controller",
+      "implementation_author": "Bounded AI implementer",
+      "version": "derived_feature_semantic_contract_v1",
+      "commit": "4f2015d",
+      "production_lines": 39,
+      "source_sha256": "d2608ec99e15b19e83a2f88254914669a99b12161bf14a9ecb4d8e92f809fde4",
+      "change": "Independent numeric fixtures check the new feature's sign, units, formula, clipping and invalid inputs before fitting.",
+      "tested_effect": "Actual old finite-vector guard accepts three designated sign/unit/formula mutations; new semantic contract rejects all three and accepts the correct builder. This is a narrow matched H capability increment, not a complete old-versus-new harness comparison.",
+      "downstream_effect": "Integrated before fitting in C and exercised in synthetic four-fold/replay tests; semantic failure produces zero optimizer calls. Real candidate use did not occur because no worker launched."
+    },
+    {
+      "step": 4,
+      "layer": "predictor C",
+      "proposal_author": "Original account Controller",
+      "implementation_author": "Bounded AI implementer",
+      "candidate_id": "InGameTemperatureScoreTimeJointOffset-v1",
+      "commit": "928733c9a1772c4115e62dfa05e804ce81d9190a",
+      "production_lines": 147,
+      "source_sha256": "0414fcf2db6b564e4719e26f3746c1bdd1cdda216b4cf2bb82235387b5a969eb",
+      "change": "x=clip(home_score_diff_pre/14,-1,1)*(1-clip(regulation_seconds_remaining/3600,0,1)); eta=(1+beta)*market_logit+gamma*x; beta>=-1; summed binary NLL+8*(beta^2+gamma^2); one deterministic optimizer per frozen fold.",
+      "tested_effect": "Candidate and immutable H1 regression checks pass on synthetic fixtures, including four folds, 87 checks, analytic gradient, orientation, label isolation and primitive exact replay.",
+      "real_result": null,
+      "scientific_KEEP_REVERT": "Not assigned: no real predictions or valid performance evidence"
+    },
+    {
+      "step": 5,
+      "layer": "Supervisor native admission",
+      "attempt_id": "coevo-score-time-01",
+      "fits_reserved": 4,
+      "actual_fits": 0,
+      "status": "failed_preworker",
+      "error": "resource max_cost_usd must be in [0, 0.05]",
+      "cause": "Supervisor supplied string zero rather than numeric zero; independent source/operation review missed this predicate.",
+      "effect_on_next_action": "Bounded metadata-only repair used a fresh second ID; same candidate, parent, source, scorer, protocol and original scientific decision. This was Supervisor recovery, not research evolution."
+    },
+    {
+      "step": 6,
+      "layer": "Supervisor native admission",
+      "attempt_id": "coevo-score-time-repaired-02",
+      "fits_reserved": 4,
+      "actual_fits": 0,
+      "status": "failed_preprocess",
+      "error": "runtime pair binding requires configured evolution",
+      "cause": "Supervisor supplied runtime-pair binding without initializing native micro_evolution; reviews did not exercise full admission path.",
+      "evidence": "Native journal contains only initialization, pool selection and implementation readiness; zero claims, null claim_id, no process/receipt/stdout/stderr/runs/predictions. Saved request alone is not launch evidence.",
+      "effect_on_next_action": "Stop at actual cap, independently reconcile known zero-fit failure, retain eight reservations and all original records. No third attempt, refund, reset or engineering-only extra model call."
+    }
+  ],
+  "global_accounting": {
+    "candidate_admissions_consumed": 2,
+    "fit_reservations_consumed": 8,
+    "training_processes_started": 0,
+    "real_fits": 0,
+    "valid_experiments": 0,
+    "new_predictions_or_scores": 0,
+    "within_batch_feedback_descendants": 0,
+    "paid_provider_calls": 0,
+    "external_data_or_literature_calls": 0,
+    "protected_Dev_Final_accesses": 0,
+    "raw_Train_transfer": false,
+    "release_push_or_promotion": false,
+    "training_CPU_RAM_consumption": "None: no worker process launched; synthetic testing and implementation/review overhead occurred.",
+    "cash_cost": "No paid provider invoked; signed-in account token usage recorded above, cash equivalent not established."
+  },
+  "research_pool": {
+    "incumbent": "Raw market unchanged",
+    "controller_selected_branches": [
+      {"branch": "C7 regularized market-logit offset", "reason": "Distinct bounded score-time hypothesis with explicit prior negative recipe avoidance", "parent_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085"},
+      {"branch": "B3 nonlinear causal-state HGB", "reason": "Methodological diversity and unresolved representation hypothesis", "parent_sha256": "376b34c656e5a70666e8863b507f518675858011c3da6530cf592a0e192957fe"}
+    ],
+    "selection_capacity": "Two selected; no forced third branch and no performance-based change from this failed batch",
+    "archive": "Original response, R/H/C sources, preparation errors, both failed admissions and independent reviews retained; earlier closed batch caps/history unchanged."
+  },
+  "interpretation": {
+    "autonomous_proposal": "Demonstrated from supplied historical aggregate feedback",
+    "tested_versioned_R_H_changes": "Demonstrated as bounded engineering artifacts",
+    "complete_autonomous_real_experiment_cycle": "Not demonstrated",
+    "historical_Train_predictive_improvement": "Unknown for new candidate",
+    "researcher_capacity_gain": "Not yet demonstrated through subsequent decisions/reuse",
+    "harness_capacity_gain": "Narrow synthetic semantic mutation detection demonstrated; live experiment effect untested",
+    "same_budget_evolving_vs_fixed_process_superiority": "Not tested",
+    "manual_intervention": "AI Supervisor original-response receipt reconciliation, preparation/environment repairs, metadata repair and closure; not human scientific hypothesis replacement and not Controller self-improvement",
+    "unsupported_claims": ["New data benefit", "Untouched OOS", "Real-time advantage", "Prospective edge", "Prediction promotion", "Completed co-evolution milestone"]
+  },
+  "next_minimal_execution": {
+    "blocking_defect": "Initialize and verify the existing native evolution/runtime-pair state before candidate admission; no large harness redesign required.",
+    "not_yet_fixed": true,
+    "prelaunch_evidence_required": "Exercise the full native admission path without Train, using correct numeric metadata and configured evolution; demonstrate native claim/process readiness rather than isolated source tests.",
+    "fresh_authority_required": "One new candidate attempt/four-fit allocation for the already-versioned score-time recipe, with exact fresh deadline/ID and existing data/fee boundaries; current cap remains closed.",
+    "desired_downstream_evidence": "Real predictions and independent paired scoring, R feedback update, then authorized next original Controller choice explicitly using the actual result; do not label admission repair as scientific feedback or researcher evolution."
+  }
+}

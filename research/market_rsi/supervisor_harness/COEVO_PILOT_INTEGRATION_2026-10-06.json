@@ -1,0 +1,22 @@
+{
+  "schema":"market_rsi_actual_controller_coevo_pilot_integration_v1",
+  "passed":true,
+  "actual_model_proposal_sha256":"6cd0f99fdf1defae84793122ad01080b45cc2266744c21fc04abe8f25f7304b9",
+  "original_acceptance_sha256":"400ea5557f4b6d5a2fd7a75d29138f289c9b83baa3897e8d9d21b78e3621246d",
+  "source_commit":"928733c9a1772c4115e62dfa05e804ce81d9190a",
+  "versions":{"R":{"commit":"3312823","production_lines":75,"sha256":"0f80e0f118c6a5d768e09415204a3752f3b8b702d9cb9952aafd633b8f51cfb6"},"H":{"commit":"4f2015d","production_lines":39,"sha256":"d2608ec99e15b19e83a2f88254914669a99b12161bf14a9ecb4d8e92f809fde4"},"C":{"commit":"928733c","production_lines":147,"sha256":"0414fcf2db6b564e4719e26f3746c1bdd1cdda216b4cf2bb82235387b5a969eb"}},
+  "permanent_root":"/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-pilot-20261006-01",
+  "candidate_native_root":"candidate01",
+  "request_sha256":"ba076761ca12975f9f6551f558d3156e5a630c522887173779242e05525ca1a5",
+  "binding_sha256":"e3dc9549fda5fd82803e3b672ea8c371072a9d14f69030e953545391cc1d9046",
+  "persisted_R_entry_sha256":"b7efb403301a3899e644063e26b28247dd570a4c691475f45ddcf40835d52c52",
+  "real_fits_so_far":0,
+  "prepared_not_selected_or_claimed":true,
+  "H_use":"Candidate prepare_features invokes independent19numeric/6invalid fixture validator beforefit; exactHsource included in binding dependencies and native request",
+  "R_use":"Actualstructuredentry persisted beforecandidate; exactsource/memory bound, reviewedfeedback willcreateversion2and beprovided to secondoriginalController",
+  "matched_H_evidence":"Actual old finite-vector guard accepts3designatedwrongsemanticbuilders; newH rejects3; correctbuilderpassesboth. No claim about entire oldharness/humanreview orforecastgain",
+  "matched_R_evidence":"Current corrected memory-only same-model quality baseline unmeasured. Structured record/signature/negative reuse demonstrated, not researcher-superiority",
+  "Root_failures_preserved":["Citation projection mismatch independently reconciled originalresponse without resampling","Reconciliation command first wrong acceptancefield stoppedbeforewrite, then fixed","Preparationv1 compactpool field error beforeinitialization","Preparationv2 import-star private_digest NameError afterinitializationonly; no selection/claim/fits","FirstRootsynthetictestcommand lackedthreadenv; corrected18PASS"],
+  "claim":"Agent proposed R/H/C; Supervisor implements/coordinationsource and execution. One historical Discovery trajectory cannot establish self-evolution superiority, prospective edge, economicalpha, hard toolcontainment, or independent OOS",
+  "next":"Independent frozen integrated source/operation review; Rootsoleglobalpilotlock through worker/accounting, max2attempts/8fits and harddeadline18:16:25UTC"
+}

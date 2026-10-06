@@ -1,0 +1,80 @@
+{
+  "schema": "market_rsi_coevo_pilot_source_operation_review_v1",
+  "review_id": "coevo-pilot-source-operation-20261006-01",
+  "reviewer": "/root/priority_review_20261006",
+  "reviewed_at_utc": "2026-10-06T17:53:54Z",
+  "passed": true,
+  "unresolved_p0_p1_in_declared_scope": [],
+  "source_commit": "928733c9a1772c4115e62dfa05e804ce81d9190a",
+  "authorization_sha256": "8aca216300e0c47bffbe7f8e6959a4aba80cddd250066949654d90875d5ec057",
+  "original_proposal_sha256": "6cd0f99fdf1defae84793122ad01080b45cc2266744c21fc04abe8f25f7304b9",
+  "original_acceptance_sha256": "400ea5557f4b6d5a2fd7a75d29138f289c9b83baa3897e8d9d21b78e3621246d",
+  "integration_sha256": "6daa176727ae1d2ec633bf8c679cd1944c63b9de462e3e31e37db3b1dbe3fa9e",
+  "candidate_id": "InGameTemperatureScoreTimeJointOffset-v1",
+  "attempt_id": "coevo-score-time-01",
+  "candidate_native_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-pilot-20261006-01/candidate01",
+  "prepared_request_sha256": "ba076761ca12975f9f6551f558d3156e5a630c522887173779242e05525ca1a5",
+  "binding_sha256": "e3dc9549fda5fd82803e3b672ea8c371072a9d14f69030e953545391cc1d9046",
+  "candidate_contract_sha256": "8c4f3f3997772b38d1c30201a8f0830153e0c736c1e855f73b639bb688349bbe",
+  "activation_memory_sha256": "d98367fd05fe047dd65e684362cd168ef25ea0b4843d0adc9207cee5e6990723",
+  "persisted_R_entry_sha256": "b7efb403301a3899e644063e26b28247dd570a4c691475f45ddcf40835d52c52",
+  "Root_execute_source": {
+    "path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-pilot-20261006-01/execute_candidate_01.py",
+    "sha256": "c41625a1996fe701700bd05ee6f5f6a1cdd49e3adc09380a1d0573aecff068a4",
+    "read_in_full": true,
+    "checks": "Exact independent receipt and prepared request; validated immutable worker bindings; sole permanent global lock through native selection, worker completion and accounting; max2 attempts/max8 retained fit reservations; no active/uncertain/same-ID retry; unchanged one-shot worker",
+    "attribution": "Supervisor execution coordination, not Controller self-evolution"
+  },
+  "separate_versions": {
+    "R": {"commit": "33128234d45ad35eac87ae650a25727b25cf26fa", "source_sha256": "0f80e0f118c6a5d768e09415204a3752f3b8b702d9cb9952aafd633b8f51cfb6", "production_lines": 75, "version": "hypothesis_differentiation_ledger_v1"},
+    "H": {"commit": "4f2015d0ddd83c4fdaf0ec1f3c2006e8591e3fdc", "source_sha256": "d2608ec99e15b19e83a2f88254914669a99b12161bf14a9ecb4d8e92f809fde4", "production_lines": 39, "version": "derived_feature_semantic_contract_v1"},
+    "C": {"commit": "928733c9a1772c4115e62dfa05e804ce81d9190a", "source_sha256": "0414fcf2db6b564e4719e26f3746c1bdd1cdda216b4cf2bb82235387b5a969eb", "production_lines": 147}
+  },
+  "attribution": "R/H/C design proposals came from preserved original account Controller. Bounded workers implemented them; Root supplied coordination, factual schema projection and execution recovery. Do not attribute Supervisor bootstrap/repairs to researcher evolution.",
+  "scientific_correspondence": {
+    "actual_research_parent_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+    "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+    "recipe": "x=clip(preplay_home_score_difference/14,-1,1)*(1-clip(regulation_seconds_remaining/3600,0,1)); eta=(1+beta)*logit(clip(p,1e-6,1-1e-6))+gamma*x; beta>=-1; summed unweighted NLL+8*(beta^2+gamma^2)",
+    "fits": "Four fixed expanding fits, zero initialization, one deterministic L-BFGS-B per fold, maxiter1000, gtol1e-8, ftol0, no tuning/restart/fallback/parent warm start",
+    "causality": "Existing trusted market and frozen pre-play score/time only; fit labels restricted to prior training rows; poisoned check labels do not change predictions; no future play, terminal score or new exclusions",
+    "replay": "Primitive coefficient/formula/clipping/source/fold/matrix state and exact probability replay",
+    "judge": "Original H1/scorer/probability policy/KEEP/paired population/folds/grouped uncertainty unchanged; KKT remains diagnostic, not a new gate"
+  },
+  "independent_verification": {
+    "full_R_H_C_source_and_tests_read": true,
+    "source_and_test_hashes_match_frozen": true,
+    "targeted_synthetic_tests": {"executions": 18, "seconds": 1.243, "exit_code": 0, "capacity_tests": 11, "candidate_tests": 7},
+    "synthetic_downstream": "Actual inherited H1 four synthetic fits and87 scored rows; injected semantic disagreement blocks all fits; exact replay, derivative and home-token orientation checks pass",
+    "worker_validate_without_execute": "PASS",
+    "legacy_validate_binding_without_run": "PASS under pinned alias/thread1",
+    "committed_request_source_files_checked": 87,
+    "dependency_files_checked": 16,
+    "original_R_H_C_contract_objects_exact": true,
+    "H_source_in_dependency_and_worker_pins": true,
+    "R_entry_exact_in_activation_memory": true,
+    "prepare_v1_v2_v3_read": true,
+    "prepare_v3_sha256": "ad31823ae0d885ede0ee9fe711195cdc6cd9408538d556262569fb93ed2455f7",
+    "prior_original_reconciliation": "Exact independent acceptance and completed same reserved entry; helper failure preserved; zero new calls/refunds",
+    "reviewer_command_failure": "First read-only binding validation omitted required thread environment and failed before fitting; bounded corrected thread1 invocation passed. Not a scientific candidate attempt.",
+    "git_diff_check": "PASS"
+  },
+  "learning_evidence": {
+    "H": "Three designated sign/unit/equation mutations pass actual old finite-vector guard and fail new independent19-point semantic oracle; correct builder passes both, six invalid-input guards checked. Narrow matched feature-guard evidence, not every old harness/human review or all-input proof.",
+    "R": "Structured declared-spec repeat/difference and parent/incumbent/negative-vs-invalid records tested. Actual pretrial entry persisted. Same-model corrected memory-only baseline not run; measured decision-quality/speed benefit unestablished.",
+    "R_timing": "Original immutable question/recipe preceded implementation; structured entry was instantiated during preparation after code implementation and before real training. Do not claim the new structured ledger guided the already completed first implementation.",
+    "remaining_downstream_gate": "Actual H use must appear in real input receipts/state; reviewed result must update R entry and actually enter the second original Controller input/decision before claiming subsequent accumulation/use."
+  },
+  "fixed_boundary": {
+    "scope": "Opened resident Train only; historical in-game Discovery",
+    "population": "195 events,193 materialized plus2 coded exclusions,87 paired checks on20 dates/7 weeks",
+    "fit_counts": [106, 132, 148, 176],
+    "check_counts": [26, 16, 28, 17],
+    "scoring": "Equal-event Brier equals binary probability MSE; existing log loss/calibration/date-week grouped intervals; no price-change MSE task",
+    "old_closed_cap_sha256": "7cc8b35de698d59b51d7927c2a35f321fce5f31923aa917679bcf4abb00d41ef",
+    "old_caps_ids_results_failures_reservations": "unchanged",
+    "closed": ["Protected Dev/Final", "External data/literature", "Paid providers", "Account tools", "Release/push/promotion", "Automatic retry or uncertain rerun"]
+  },
+  "operation_scope": "Root may execute this exact fresh first candidate once under the existing explicit pilot grant and lock. Receipt creates no extra attempt, fit, account, data or publication authority.",
+  "not_claimed": ["Real Train predictive improvement before results", "Demonstrated R decision-quality superiority", "Researcher autonomy free of Supervisor implementation/repair", "Fixed-process superiority", "Untouched OOS, real-time advantage, prospective edge, trading alpha or hard tool containment"],
+  "reviewer_actions": {"real_train_reads_or_fits": 0, "account_calls": 0, "live_ledger_writes": false, "implementation_edits": false}
+}
