@@ -1,0 +1,36 @@
+{
+  "schema": "controller_candidate_contract_v1",
+  "decision_sha256": "6bb916bf2ed96eed4f442c491dc0a81670269591fca985f67347e2f47119f272",
+  "candidate_id": "InGameTemperatureShortYardagePossessionJointOffset-v1",
+  "question_id": "fresh04-c2-q1",
+  "research_parent": {"candidate_id": "InGameTemperatureCloseScorePossessionJointOffset-v1", "runner_sha256": "8f0c13ee50eb19533c4861a8e62fcdb7d0ebbca7ddf89bb8cd38a43b81b7f6f7"},
+  "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+  "fixed_predictive_information": {"feature_names": ["market_logit", "short_yardage_possession_interaction"], "causal_inputs": ["market_probability", "possession_is_home", "yards_to_go"]},
+  "formula": "(2*possession_is_home-1)*(1-clip(yards_to_go/20,0,1))",
+  "changed_training_recipe": {"prediction": "sigmoid((1+beta)*market_logit+gamma*x)", "loss": "sum_binary_NLL+8*(beta^2+gamma^2)", "beta_lower_bound": -1, "intercept": 0, "initial": [0, 0], "solver": "L-BFGS-B", "maxiter": 1000, "gtol": 1e-8, "ftol": 0, "epsilon": 1e-6, "fits": 4, "automatic_retries": 0, "fallbacks": 0, "parent_warmstart": false},
+  "fit_completion_requirements": {"optimizer.converged": true, "optimizer.optimization_calls_started": 1, "optimizer.optimization_calls_completed": 1, "optimizer.retry_count": 0, "optimizer.fallback_count": 0},
+  "attribution": "Original Controller feedback-selected hypothesis; implementer mechanically realizes exact recipe, C-specific checks, unchanged R/H/scorer.",
+  "accepted_reference": {
+    "reference": {
+      "schema": "market_rsi_prediction_reference_v1",
+      "candidate_id": "InGameTemperatureCloseScorePossessionJointOffset-v1",
+      "runner": {"path": "/Users/estelle/Developer/market-rsi/research/market_rsi/experiments/nfl_ingame_close_score_possession_offset_v1.py", "sha256": "8f0c13ee50eb19533c4861a8e62fcdb7d0ebbca7ddf89bb8cd38a43b81b7f6f7"},
+      "source_commit": "50236bfa6163fa47edcb710ba07b13dabaebc9f1",
+      "artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-feedback-pilot-20261006-04/native-c1r2/runs/feedback-fresh-04-c1",
+      "artifact_hashes": {
+        "exclusions.json": "e6b19b230318dc9daf89e6495504c93996f49b3245415a14a45144fece81fdfb",
+        "fit_progress.json": "5615b989ae60d626146480985c7b31ab059b5ddc859dad569fc21088c05f252d",
+        "input_receipts.json": "db39b5a67f5e4efe520c9171a540b1b0eae42d3a4d8f2dc71781ec4b7d3561d0",
+        "manifest.json": "526fb88db97de765be3c554663798520b2b06a74eae23cde0f021f69b69aa68e",
+        "pre_score_lock.json": "5556f39e5cd8e2937bfdf23420c4d9136c74994379fb90ba26877680e4841f79",
+        "predictions.csv": "ed3799d3a202a979666bd4e0b4b8cf1fa33de4af04e0219b1ac06bd211bd1fa5",
+        "predictor_states.json": "f82b28f88260086a0caadfd0c8833d235bf93296632139c175b31fab33d686f1",
+        "scorecard.json": "a4f45aa151d4a1b13a14a61f9e9f61ac2ad01ccd18d07ecb77f696a162274de4"
+      },
+      "kernel_sha256": "e61668c7e29cf4dda95f6cc315b248dbe6744a9dcc0ae0cd6077d880ca6265b7"
+    },
+    "acceptance_binding": {"path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-feedback-pilot-20261006-04/parent_acceptance_c1draft.json", "sha256": "b2aa98d7feb67a296194aa502d6b7e4154771443544b715511615bf681b0a37e"}
+  },
+  "activation_status": "PARENT_NORMALIZATION_INDEPENDENTLY_VERIFIED_PENDING_NATIVE_SOURCE_REVIEW",
+  "boundary": "resident_train_only_fixed_scoring_no_external_no_protected_no_release"
+}

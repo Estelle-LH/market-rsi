@@ -1,0 +1,39 @@
+{
+  "schema": "market_rsi_independent_parent_learning_role_projection_v1",
+  "reviewer": "/root/priority_review_20261006",
+  "passed": true,
+  "role": "Independent current role addendum to an already completed combined original result/learning review; not another historical experiment or duplicated award",
+  "candidate_id": "InGameTemperatureCloseScorePossessionJointOffset-v1",
+  "candidate_source_sha256": "8f0c13ee50eb19533c4861a8e62fcdb7d0ebbca7ddf89bb8cd38a43b81b7f6f7",
+  "original_source_review_sha256": "ed2051a5cb6c150d0cf00c9c2dbf96026c9cd37bb2f73ad5122a9b994522341d",
+  "original_combined_result_learning_review_sha256": "5dbe4035491c93757ff04918d97baa6ddab7eac7180d794ad7ede0b2a15c3b22",
+  "original_native_batch_sha256": "20ef970e380d623b19c485d464e36af1d84f1faf736798c49eb87b13e55d53de",
+  "original_reconciliation_sha256": "1c23e2a8fe7e9f9b93072734dbba48f18a6d788401aa9f3b05aad44ce955755f",
+  "original_R_memory_sha256": "27a17d00166fb0b02c6ff3ad0daddeaa12003bb96794249611b6444687bb2892",
+  "learning_projection": {
+    "question_id": "fresh04-c1-q1",
+    "performance_status": "valid_no_leakage",
+    "prediction_decision": "REVERT",
+    "existing_credit": 2,
+    "new_credit_awarded": 0,
+    "kind": "hypothesis_test",
+    "evidence_sha256": "a4f45aa151d4a1b13a14a61f9e9f61ac2ad01ccd18d07ecb77f696a162274de4",
+    "finding_sha256": "360d0f2f267f566ca35893aeade3d4cb757682e8808d1b2f5b33eea78a689708",
+    "finding": "Fixed close-score-weighted possession candidate worsens aggregate Brier/log loss versus market and actual score-time parent on unchanged87 Discovery rows; all four market Brier deltas positive, parent improvement onlyfold2. Grouped intervals cross zero. Valid recipe-specific negative, not proof possession information or its whole model class is ineffective.",
+    "exploration_action": "branch",
+    "exploration_reason": "Does not replace incumbent; remains eligible for a distinct hypothesis, independently of REVERT",
+    "followup_allowance_granted": false,
+    "old_authority_snapshot_sha256": "d7ff6d39de17495de8bedc2d191838630c9d57bc362c9da2b5318ab62879f6d0"
+  },
+  "independent_checks": [
+    "Original source/combined result review and exact actual scorecard/artifact pins remain unchanged",
+    "Canonical finding digest recomputed; native learning checkpoint has valid/no-leakage/credit2/finding360d/REVERT/branch matching original assessment",
+    "Root factual reconciliation and updated memory carry the same existing assessment; no new performance evidence or duplicate credit",
+    "Genuine original02 claim binds immutable input805508 and review297324; completion hashes verify exit0/no timeout and only thread/turn/agent-message events. No observed tool events or retry",
+    "Original02 decision6bb916bf cites actual compact negativef40ae863 and memory27a17d; proposes short-yardage possession descendant from valid-REVERT C1 parent8f0c13ee, with R/H explicit reuse",
+    "This addendum is independently authored current role projection, not a copied file masquerading as a third historical review"
+  ],
+  "limitations": ["Historical repeated Train Discovery, not OOS", "No new credit or execution permission from projection", "Evidence reuse does not establish researcher/process superiority"],
+  "reviewer_actions": {"raw_train_reads": 0, "fits": 0, "account_calls": 0, "operational_writes": false, "implementation_edits": false},
+  "immutable": true
+}
