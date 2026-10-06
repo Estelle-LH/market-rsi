@@ -1,0 +1,71 @@
+{
+  "schema": "market_rsi_itemwise_local_repair_plan_v1",
+  "id": "coevo-live-route-local-fix-20261006-01",
+  "start_source_commit": "ac6238a2901811e17bb8627c9985b666e6605f7c",
+  "owner": "root",
+  "authorization": "Human requested planning and item-wise implementation; local code and synthetic tests only. No new account decision, model role, Train experiment or batch is authorized by this repair plan.",
+  "attribution": "User-directed Supervisor H engineering, not agent-originated R/H evolution.",
+  "observed_problem": "The real price entry completes C experiments but does not execute R/H proposals. Operational failures and timings are not supplied as usable Controller evidence; accepted capacity versions are not resolved by the live entry.",
+  "research_reuse": "Reuse the existing seven-stage driver, once-only account roles, native worker, frozen five-minute task/scorer, independent reviewer, capacity identity/activation and journals. No new scientific method, literature retrieval or data acquisition.",
+  "protected": ["old batch roots and ledgers", "existing results and KEEP/REVERT", "raw resident Train", "Dev/Final", "frozen price task and scorer", "account transport tool isolation", "fees, data permissions and hard caps", "unrelated dirty user/other-owner files"],
+  "items": [
+    {
+      "id": "F1-process-feedback",
+      "depends_on": [],
+      "component": "price Controller process observations",
+      "status": "ready",
+      "paths": ["research/market_rsi/supervisor_harness/price_loop_services.py", "research/market_rsi/supervisor_harness/test_price_loop_services.py"],
+      "change": "Persist compact timing evidence, actual execution accounting, configured R/H pair and fixed implementation capability descriptor in the existing history/overhead. Missing measurements stay unknown. Do not transfer raw rows, stderr or unreviewed error text.",
+      "acceptance": "Next synthetic Controller input contains the previous observed stages and independently reviewed failure outcome, while identical rows/scoring, byte cap, no-retry and replay remain unchanged.",
+      "not_claimed": "Pre-author implementation failure continuation remains F5; this item does not activate R/H or prove capacity benefit.",
+      "verification": ["stage timing provenance and invalid/symlink timing rejection", "unknown versus zero", "failed worker is invalid prediction evidence", "two-round continuation, KEEP, restart, cap, byte and boundary regressions"],
+      "time_bound_minutes": 25,
+      "rollback": "New source checkpoint reverting only F1; old batch accounting/history never rewound"
+    },
+    {
+      "id": "F2-typed-actions-and-review",
+      "depends_on": ["F1-process-feedback"],
+      "status": "queued",
+      "paths": ["research/market_rsi/supervisor_harness/coevo_pilot_transaction.py", "research/market_rsi/supervisor_harness/account_controller_feedback_consumer.py", "research/market_rsi/supervisor_harness/price_independent_review.py", "relevant existing tests"],
+      "change": "Add a prospective versioned C/R/research-H action contract and matched input review. Preserve the old v1 path. Stop forcing every decision to be a prediction recipe; do not force R/H mutations either.",
+      "acceptance": "Typed capacity proposals cite current evidence and exact parent/scope/test/downstream use; malformed/protected/authority-changing proposals fail before role calls or fit reservations.",
+      "checkpoint_split": "Protocol/prompt and reviewer changes are separate bounded checkpoints; no broad all-files change."
+    },
+    {
+      "id": "F3-capacity-implementation-and-benefit",
+      "depends_on": ["F2-typed-actions-and-review"],
+      "status": "queued",
+      "paths": ["research/market_rsi/supervisor_harness/price_capacity_services.py (new thin adapter)", "research/market_rsi/supervisor_harness/price_independent_review.py", "focused tests"],
+      "change": "Reuse existing role transport for bounded author output and distinct review; test old/new reviewed R or research-tool H on the same inputs; call existing CapacityActivation.propose/review/resolve/rollback rather than build another gate or registry.",
+      "acceptance": "Separate exact source review and observed benefit evidence; rejected/untested changes never activate; original proposal/source/failed output persists. Source-generated code requires reviewed bounded execution, not unrestricted resolve/import."
+    },
+    {
+      "id": "F4-entry-resolution-and-accounting",
+      "depends_on": ["F3-capacity-implementation-and-benefit"],
+      "status": "queued",
+      "paths": ["research/market_rsi/supervisor_harness/run_price_discovery.py", "research/market_rsi/supervisor_harness/price_loop_services.py", "research/market_rsi/supervisor_harness/price_loop_handoff.py", "research/market_rsi/supervisor_harness/feedback_loop_runtime.py", "relevant existing tests"],
+      "change": "Install the real capacity adapter in build/preflight; dispatch typed operations through existing stages. Resolve and invoke accepted R/H versions at named downstream hooks and bind their pair to native requests. Check operation-specific authorized resource consumption without new ledger, silent free operations or enlarged caps.",
+      "acceptance": "Actual hook invocation and source/output bindings, not hash-only metadata; persistent selected versions survive restart; trusted kernel/driver/permission drift still rejects.",
+      "checkpoint_split": "Dispatch, quota binding and downstream hook use are separate bounded checkpoints."
+    },
+    {
+      "id": "F5-known-failure-learning",
+      "depends_on": ["F4-entry-resolution-and-accounting"],
+      "status": "queued",
+      "paths": ["research/market_rsi/supervisor_harness/run_price_discovery.py", "research/market_rsi/supervisor_harness/price_loop_services.py", "focused tests"],
+      "change": "Reviewed certain failures become evidence for a new original Controller decision and fresh action, never retry the old operation. Preserve the generic driver's uncertain-claim stop. Reuse applicable failure receipt validation rather than fabricate worker receipts for pre-author failures.",
+      "acceptance": "Valid negative, known implementation failure, rejected capacity, interrupted/uncertain execution, restoration and cap exhaustion have distinct transitions and preserved accounting."
+    },
+    {
+      "id": "F6-integrated-closure",
+      "depends_on": ["F5-known-failure-learning"],
+      "status": "queued",
+      "change": "Verify one official-entry vertical path and exact protected-source diff. Independently review the integrated snapshot before prospective activation. Only a fresh applicable whole-role experiment grant may launch live Controller/author/reviewer calls and Train fits.",
+      "acceptance": "Synthetic engineering path first; then a separately authorized real proposal/test/version/downstream-use trace. Report engineering pass separately from real co-evolution and matched-budget superiority.",
+      "live_status": "not_authorized_by_this_plan"
+    }
+  ],
+  "deferred_not_blocking": ["credit1 archived-parent consumption policy", "matched-budget multi-trajectory research-process superiority", "external exploration", "profitability and prospective independent confirmation"],
+  "work_rules": "One bounded component and exact write scope per source checkpoint; over two production modules or about 200 changed lines requires splitting or explicit independent inseparability review. Preserve all meaningful failures and source/result checkpoints. No parallel mutation of shared source; no subagents dispatched in this plan.",
+  "completion": "This plan is not delivery. Item results must contain actually run commands/tests and explicit remaining limitations; no synthetic test is called a real scientific cycle."
+}
