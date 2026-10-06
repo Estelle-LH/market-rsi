@@ -167,6 +167,32 @@ class HandoffTests(TestCase):
         with self.assertRaisesRegex(ValueError, 'candidate missing'): h.prepare(self.runtime, self.response, spec)
         self.no_native()
 
+    def test_virtualenv_launch_symlink_preserved_without_relaxing_other_bindings(self):
+        launch = self.root / 'reviewed-venv-python'
+        launch.symlink_to(self.f.f.python)
+        self.spec['python_binding'] = {'launch_path': str(launch), 'binary': r.pin(self.f.f.python)}
+        prepared = self.prepare()
+        request = h.t.c._read(prepared['request'])
+        self.assertEqual(request['python'], str(launch))
+        self.assertEqual(request['python_sha256'], h.w.sha(self.f.f.python))
+        with self.assertRaisesRegex(ValueError, 'canonical bound file'):
+            h._binding({'path': str(launch), 'sha256': request['python_sha256']})
+        other = self.root / 'different-python-same-bytes'
+        other.write_bytes(self.f.f.python.read_bytes())
+        launch.unlink(); launch.symlink_to(other)
+        with self.assertRaisesRegex(ValueError, 'launch target drift'):
+            h.finalize(self.runtime, prepared, self.review(prepared))
+
+    def test_virtualenv_launch_noncanonical_parent_or_binary_rejected(self):
+        for binding in ({'launch_path': '../python', 'binary': r.pin(self.f.f.python)},
+                        {'launch_path': str(self.f.f.python), 'binary': {**r.pin(self.f.f.python), 'sha256': 'e' * 64}},
+                        {'launch_path': str(self.f.f.python), 'binary': r.pin(self.f.f.python), 'extra': True}):
+            with self.subTest(binding=binding), self.assertRaises(ValueError): h._python_launch(binding)
+        parent = self.root / 'linked-parent'; parent.symlink_to(self.repo, target_is_directory=True)
+        launch = parent / 'python'
+        with self.assertRaisesRegex(ValueError, 'launch target drift'):
+            h._python_launch({'launch_path': str(launch), 'binary': r.pin(self.f.f.python)})
+
     def test_frozen_task_and_fixed_authority_resource_evaluation_identity(self):
         for key in ('authority_sha256', 'resource_policy_sha256', 'evaluation_sha256'):
             spec = deepcopy(self.spec); spec['identity_configuration']['fixed_context'][key] = 'f' * 64

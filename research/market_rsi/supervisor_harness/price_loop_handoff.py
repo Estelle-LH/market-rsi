@@ -27,6 +27,21 @@ def _binding(value):
     return path
 
 
+def _python_launch(value):
+    """Bind binary bytes while preserving a reviewed virtualenv launch path."""
+    if type(value) is dict and set(value) == {"path", "sha256"}:
+        return str(_binding(value)), value["sha256"]
+    if type(value) is not dict or set(value) != {"launch_path", "binary"} or type(value["launch_path"]) is not str:
+        raise ValueError("exact virtualenv launch and canonical binary binding required")
+    binary = _binding(value["binary"])
+    path = Path(value["launch_path"])
+    if (not path.is_absolute() or ".." in path.parts or str(path) != value["launch_path"]
+            or path.parent.resolve() != path.parent or path.resolve() != binary
+            or w.sha(path) != value["binary"]["sha256"]):
+        raise ValueError("reviewed virtualenv launch target drift")
+    return str(path), value["binary"]["sha256"]
+
+
 def _native(runtime, name):
     b._identifier(name, "native name")
     path = runtime.root / name
@@ -71,8 +86,9 @@ def _validate(runtime, response, spec):
             or choice["actual_parent_sha256"] not in
                 {incumbent["candidate_sha256"], *(p["candidate_sha256"] for p in archived)}):
         raise ValueError("actual parent eligibility or comparison incumbent drift")
-    for role in ("candidate_binding", "python_binding", "memory_binding", "plan_binding", "ordinary_reference_binding"):
+    for role in ("candidate_binding", "memory_binding", "plan_binding", "ordinary_reference_binding"):
         _binding(spec[role])
+    python, python_sha = _python_launch(spec["python_binding"])
     plan = t.c._read(spec["plan_binding"])
     reference = t.c._read(spec["ordinary_reference_binding"])
     if (plan.get("task_id") != TASK or plan.get("horizon_choice", {}).get("seconds") != 300
@@ -93,7 +109,7 @@ def _validate(runtime, response, spec):
         "candidate": spec["candidate_binding"], "ordinary_reference": spec["ordinary_reference_binding"]}
     request = {"attempt_id": spec["attempt_id"], "candidate_id": choice["candidate_id"],
         "module": MODULE, "source_commit": spec["source_commit"], "files": spec["files"],
-        "python": spec["python_binding"]["path"], "python_sha256": spec["python_binding"]["sha256"],
+        "python": python, "python_sha256": python_sha,
         "memory": spec["memory_binding"]["path"], "memory_sha256": spec["memory_binding"]["sha256"],
         "runtime_pair_sha256": micro_pair_hash(identity), "spec_sha256": operation_commitment(core),
         "max_fits": 4, "max_wall_seconds": spec["max_wall_seconds"]}
