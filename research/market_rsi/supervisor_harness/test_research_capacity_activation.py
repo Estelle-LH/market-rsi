@@ -119,7 +119,11 @@ class CapacityActivationTests(unittest.TestCase):
                 outputs[name] = {"before": old.deliver(feedback), "after": new.deliver(feedback),
                     "benefit": old.deliver(feedback) != feedback and new.deliver(feedback) == feedback}
         self.assertTrue(all(output["benefit"] for output in outputs.values()))
-        evidence = self.artifact({"fixtures": outputs, "synthetic": True, "evidence_level": "L2"})
+        evidence = self.artifact({"fixtures": outputs, "synthetic": True, "evidence_level": "L2",
+            "binding": {"proposal_sha256":pending["record_sha256"], "before_identity_sha256":digest(before),
+                "after_identity_sha256":digest(after), "tested_pair_sha256":digest(pending["pair"]),
+                "anchor_pair_sha256":digest(state["micro_evolution"]["anchor_pair"])},
+            "checks":{name:True for name in micro.MICRO_CHECKS}})
         measured = self.artifact({"proposal_sha256": pending["record_sha256"],
             "before_identity_sha256": digest(before), "after_identity_sha256": digest(after) if not drift else sha("wrong"),
             "benefit_observed": benefit, "effect": pending["behavior_change"], "matched_outputs_sha256": evidence["sha256"]})
@@ -146,8 +150,10 @@ class CapacityActivationTests(unittest.TestCase):
         module = self.restore().resolve("H", expected_pair_sha256=digest(activation.pair(h_new)))
         self.assertEqual(module.deliver({"score": .5, "parent_id": "p"}), {"score": .5, "parent_id": "p"})
         state = self.batch.snapshot()
-        rollback = self.artifact({"reviewer_id": "independent-auditor", "reason": "Replay rollback",
-            "evidence_sha256": sha("actual-rollback-replay")})
+        replay = self.artifact({"passed":True, "from_pair":state["micro_evolution"]["active_pair"],
+            "to_pair":state["micro_evolution"]["previous_pair"], "before_state_sha256":state["state_sha256"]})
+        rollback = self.artifact({"receipt":{"reviewer_id": "independent-auditor", "reason": "Replay rollback",
+            "evidence_sha256":replay["sha256"]}, "evidence":replay})
         self.adapter.rollback(rollback, expected_state_sha256=state["state_sha256"])
         restored = self.restore().resolve("H", expected_pair_sha256=digest(activation.pair(r_new)))
         self.assertEqual(restored.deliver({"score": .5, "parent_id": "p"}), {"score": .5})
@@ -168,6 +174,46 @@ class CapacityActivationTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 self.adapter.review(receipt, expected_state_sha256=self.batch.snapshot()["state_sha256"])
             self.assertEqual(self.batch.snapshot()["micro_evolution"]["active_pair"], activation.pair(old))
+
+    def test_unrelated_check_evidence_and_unread_matched_output_cannot_accept(self):
+        old, after = self.propose("R")
+        for field in ("proposal_sha256", "before_identity_sha256", "after_identity_sha256",
+                      "tested_pair_sha256", "anchor_pair_sha256", "matched_outputs_sha256"):
+            original = self.review_receipt(old, after)
+            envelope = json.loads(Path(original["path"]).read_text())
+            token = envelope["review"]["benefit_evidence_sha256"]
+            benefit = json.loads(Path(envelope["evidence"][token]).read_text())
+            if field == "matched_outputs_sha256":
+                benefit[field] = sha("not-read-or-present")
+            else:
+                source = next(iter(envelope["review"]["checks"].values()))["evidence_sha256"]
+                evidence = json.loads(Path(envelope["evidence"][source]).read_text())
+                evidence["binding"][field] = sha("wrong-identity")
+                bad = self.artifact(evidence)
+                envelope["evidence"][bad["sha256"]] = bad["path"]
+                for check in envelope["review"]["checks"].values():
+                    check["evidence_sha256"] = bad["sha256"]
+                benefit["matched_outputs_sha256"] = bad["sha256"]
+            bad = self.artifact(benefit)
+            envelope["evidence"][bad["sha256"]] = bad["path"]
+            envelope["review"]["benefit_evidence_sha256"] = bad["sha256"]
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                self.adapter.review(self.artifact(envelope), expected_state_sha256=self.batch.snapshot()["state_sha256"])
+            self.assertEqual(self.batch.snapshot()["micro_evolution"]["active_pair"], activation.pair(old))
+
+    def test_rollback_requires_exact_actual_evidence(self):
+        old, after = self.propose("R")
+        self.adapter.review(self.review_receipt(old, after), expected_state_sha256=self.batch.snapshot()["state_sha256"])
+        state = self.batch.snapshot()
+        evidence = self.artifact({"passed":True, "from_pair":activation.pair(old),
+            "to_pair":activation.pair(old), "before_state_sha256":state["state_sha256"]})
+        value = {"receipt":{"reviewer_id":"independent-auditor", "reason":"wrong from-pair",
+            "evidence_sha256":evidence["sha256"]}, "evidence":evidence}
+        with self.assertRaises(ValueError):
+            self.adapter.rollback(self.artifact(value), expected_state_sha256=state["state_sha256"])
+        with self.assertRaises(ValueError):
+            self.adapter.rollback(self.artifact(value["receipt"]), expected_state_sha256=state["state_sha256"])
+        self.assertEqual(self.batch.snapshot()["micro_evolution"]["active_pair"], activation.pair(after))
 
     def test_drift_stale_snapshot_pair_and_active_execution_block(self):
         old, after = self.propose("R")

@@ -146,14 +146,22 @@ class CapacityActivation:
         if review["decision"] == "accept":
             after = self._version(pending["pair"])["manifest"]
             before = self._selected(state)["manifest"]
-            for check in review["checks"].values():
-                _read({"path": envelope["evidence"][check["evidence_sha256"]],
-                       "sha256": check["evidence_sha256"]})
+            binding = {"proposal_sha256": pending["record_sha256"],
+                "before_identity_sha256": digest(before), "after_identity_sha256": digest(after),
+                "tested_pair_sha256": digest(pending["pair"]),
+                "anchor_pair_sha256": digest(state["micro_evolution"]["anchor_pair"])}
+            for name, check in review["checks"].items():
+                evidence = json.loads(_read({"path": envelope["evidence"][check["evidence_sha256"]],
+                                            "sha256": check["evidence_sha256"]}))
+                if evidence.get("binding") != binding or evidence.get("checks", {}).get(name) is not True:
+                    raise ValueError("compatibility evidence does not bind tested proposal/source pair")
             token = review["benefit_evidence_sha256"]
             benefit = json.loads(_read({"path": envelope["evidence"][token], "sha256": token}))
             if (benefit.get("proposal_sha256") != pending["record_sha256"]
                     or benefit.get("before_identity_sha256") != digest(before)
                     or benefit.get("after_identity_sha256") != digest(after)
+                    or benefit.get("matched_outputs_sha256") not in
+                        {check["evidence_sha256"] for check in review["checks"].values()}
                     or benefit.get("effect") != pending["behavior_change"]
                     or benefit.get("benefit_observed") is not True):
                 raise ValueError("measured benefit does not bind exact before/after proposal")
@@ -166,7 +174,16 @@ class CapacityActivation:
         if previous is None:
             raise ValueError("no accepted previous version")
         self._version(previous)
-        value = json.loads(_read(receipt))
+        envelope = json.loads(_read(receipt))
+        if set(envelope) != {"receipt", "evidence"}:
+            raise ValueError("rollback requires native receipt and actual evidence binding")
+        value = envelope["receipt"]
+        evidence = json.loads(_read(envelope["evidence"]))
+        if (value["evidence_sha256"] != envelope["evidence"]["sha256"]
+                or evidence.get("from_pair") != state["micro_evolution"]["active_pair"]
+                or evidence.get("to_pair") != previous or evidence.get("before_state_sha256") != expected_state_sha256
+                or evidence.get("passed") is not True):
+            raise ValueError("rollback evidence does not bind exact state and from/to versions")
         return self.batch.record_micro_evolution("rollback", value,
                     expected_state_sha256=expected_state_sha256)
 
