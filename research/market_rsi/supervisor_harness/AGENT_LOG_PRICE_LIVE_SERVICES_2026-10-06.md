@@ -42,3 +42,34 @@ Source-review owner advised to show full request binding/files digest+count to
 the model after locally checking full source map, not duplicate140filehashes in
 the compact account packet. These are H integration safeguards, not scientific
 experiment results or evidence that the real two-round goal has completed.
+
+## Completed original author response: bounded admission child
+
+2026-10-06 22:39UTC: Root reports actualoriginal author completed in fresh
+`market-rsi-price-auto-loop-20261006-01`; roleid
+`author-r0001-64dda21a4401`, responseSHA
+`9c4a41d8495ebfd4a4739d1c682192e1d97ff7da3f52a6b2d600e1858f8ad2a5`.
+Originalresponse chooses B2-ShrunkSingleGap300 and implements its exact closed
+form. Before source creation/import/reservation, author guard rejected benign
+np.all/np.any reducers; synthetic test additionally needs literalobject dtype
+for None arrays. This is an H admission defect, not failed science. Preserved
+original failure and completed role response are not replaced or resampled.
+
+Root requests one bounded admission-v2 child: admit those numericreducers, and
+literalobject NAME only for synthetic NumPyconstructor dtype. Generalobject(),
+productionobject dtype, dynamicexecution/files/network remain prohibited.
+Optional completed_author_recovery must bind exact originalround1/decision,
+rootfailure/input/response/completion and separate source-review commitments.
+Sourcecreation uses a fresh -admission-v2 id; accountroleid/payload stayexact,
+so the unchanged transport verifies completed replay without another modelturn.
+Missing/uncertain completion, otherfailure, drift, existingoldsource, wrong
+round/digest or stale source-review fails before replay. Normalround2 uses no
+recovery. The old loop/failure and all consumedcalls/caps remain unchanged.
+
+Actual verification18/18 PASS1.475s: includes preserved realresponse AST
+regression422candidate/813testnodes, exact Gitblobversion fixtures, recovery
+without secondsampling and missing-completion/differentdecision rejection.
+No actual generatedcandidate imported or trained by this agent. Finalchild
+sourceSHA8195536f1b9c5a481b45fd5a319ef5e1137f314cabdb38a2a70ea488299884b8;
+testsSHAde80edf7c2ab89461c39d78ad59743c4266824b76e9ca0415d836cf9b625a860.
+Root owns checkpoint, independentadmissionreview and actual resumedentry.

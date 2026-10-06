@@ -22,10 +22,10 @@ FORBIDDEN = {"open", "eval", "exec", "compile", "getattr", "setattr", "delattr",
     "vars", "dir", "input", "help", "breakpoint", "memoryview", "type", "object", "super"}
 METHODS = {"fit", "predict", "transform", "fit_transform", "reshape", "ravel", "flatten", "copy", "astype",
     "sum", "mean", "std", "var", "min", "max", "clip", "all", "any", "tolist", "dot", "transpose"}
-NP = {"array", "asarray", "zeros", "ones", "full", "zeros_like", "ones_like", "empty", "empty_like", "arange",
+NP = {"array", "asarray", "zeros", "ones", "full", "full_like", "zeros_like", "ones_like", "empty", "empty_like", "arange",
     "linspace", "column_stack", "hstack", "vstack", "stack", "concatenate", "clip", "sqrt", "log", "log1p", "exp",
     "abs", "sign", "maximum", "minimum", "where", "isfinite", "nan_to_num", "sum", "mean", "median", "std", "var",
-    "min", "max", "dot", "einsum", "quantile", "percentile", "unique", "argsort", "argmax", "argmin", "average",
+    "min", "max", "all", "any", "dot", "einsum", "quantile", "percentile", "unique", "argsort", "argmax", "argmin", "average",
     "power", "square", "tanh", "multiply", "divide", "float64", "int64", "pi", "inf", "nan", "linalg", "testing"}
 BUILTINS = {"len", "range", "enumerate", "zip", "float", "int", "min", "max", "sum", "abs", "list", "tuple",
     "dict", "sorted", "all", "any", "ValueError", "RuntimeError", "AssertionError"}
@@ -40,10 +40,14 @@ def validate_source(source, *, is_test=False):
     if len(nodes) > 3000:
         raise ValueError("bounded AST required")
     aliases, functions = {}, {n.name for n in nodes if isinstance(n, ast.FunctionDef)}
+    object_dtypes = {id(k.value) for n in nodes if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+        and isinstance(n.func.value, ast.Name) and n.func.value.id in {i.asname or i.name for node in nodes if isinstance(node, ast.Import) for i in node.names if i.name == "numpy"}
+        and n.func.attr in {"array", "asarray", "full", "full_like", "zeros", "ones"}
+        for k in n.keywords if is_test and k.arg == "dtype" and isinstance(k.value, ast.Name) and k.value.id == "object"}
     for node in nodes:
         if isinstance(node, (ast.ClassDef, ast.AsyncFunctionDef, ast.Await, ast.Global, ast.Nonlocal, ast.With, ast.Delete)):
             raise ValueError("classes/async/global/nonlocal/context/delete not admitted")
-        if isinstance(node, ast.Name) and (node.id in FORBIDDEN or "__" in node.id and node.id != "__name__"):
+        if isinstance(node, ast.Name) and (node.id in FORBIDDEN and id(node) not in object_dtypes or "__" in node.id and node.id != "__name__"):
             raise ValueError("dynamic execution or private names not admitted")
         if isinstance(node, ast.Attribute) and (node.attr.startswith("_") or node.attr in FORBIDDEN):
             raise ValueError("private/dynamic attributes not admitted")
@@ -118,10 +122,29 @@ def _schema(decision):
         "candidate_source": text, "test_source": text, "implementation_notes": text})
 
 
+def _completed_recovery(runtime, binding, digest, original_id, source):
+    h._binding(binding)
+    value = h.t.c._read(binding)
+    if set(value) != {"schema", "round_index", "original_decision_sha256", "original_author_id", "fresh_local_id", "original_failure", "original_input", "original_response", "original_completion", "review"} or value["schema"] != "price_completed_author_admission_recovery_v1" or type(value["round_index"]) is not int or value["round_index"] != 1 or value["original_decision_sha256"] != digest or value["original_author_id"] != original_id or value["fresh_local_id"] != original_id + "-admission-v2":
+        raise ValueError("exact reviewed round1 completed-author recovery required")
+    role = runtime.root / "role_calls/author" / original_id
+    for key, path in {"original_failure": runtime.root / original_id / "failure.json", "original_input": role / "input.json", "original_response": role / "response.json", "original_completion": role / "completion.json"}.items():
+        if h._binding(value[key]) != path:
+            raise ValueError("recovery escaped original author evidence")
+    failure, completion = h.t.c._read(value["original_failure"]), h.t.c._read(value["original_completion"])
+    if source.exists() or (runtime.root / original_id / "implementation.json").exists() or failure != {"stage": "implementation", "original_decision_sha256": digest, "error": "ValueError: non-numeric NumPy call", "retry_allowed": False, "scientific_evidence": False} or completion.get("exit_code") != 0 or completion.get("timed_out") is not False or completion.get("hashes", {}).get("response.json") != value["original_response"]["sha256"]:
+        raise ValueError("only completed pre-source admission failure recoverable")
+    h._binding(value["review"])
+    review = h.t.c._read(value["review"])
+    if any(type(review.get(k)) is not type(v) or review.get(k) != v for k, v in {"passed": True, "author_source_sha256": h.w.sha(__file__), "original_failure_sha256": value["original_failure"]["sha256"], "original_completion_sha256": value["original_completion"]["sha256"], "original_decision_sha256": digest}.items()):
+        raise ValueError("independent exact admission repair review required")
+    return value["fresh_local_id"], h.t.c._read(value["original_input"])["payload"]
+
+
 class CandidateAuthor:
-    def __init__(self, runtime, source_files, role_grant_binding, *, timeout_seconds=120, role_call=None):
+    def __init__(self, runtime, source_files, role_grant_binding, *, timeout_seconds=120, role_call=None, completed_author_recovery=None):
         self.runtime, self.files, self.grant, self.timeout = runtime, source_files, role_grant_binding, timeout_seconds
-        self.call = role_call
+        self.call, self.recovery = role_call, completed_author_recovery
 
     def author(self, ctx):
         decision = ctx["outputs"]["controller"]["decision"]
@@ -144,6 +167,10 @@ class CandidateAuthor:
             if hashlib.sha256(subprocess.check_output(["git", "show", "HEAD:" + relative], cwd=self.runtime.repo)).hexdigest() != expected:
                 raise ValueError("inherited source not checkpointed before author call")
         ident = f"author-r{ctx['round_index']:04d}-{digest[:12]}"
+        original_id, recovered_packet = ident, None
+        original_source = self.runtime.repo / "research/market_rsi/experiments/price_candidates" / self.runtime.fixed_grant["batch_id"] / ident
+        if self.recovery is not None and ctx["round_index"] == 1:
+            ident, recovered_packet = _completed_recovery(self.runtime, self.recovery, digest, ident, original_source)
         directory = self.runtime.root / ident
         source = self.runtime.repo / "research/market_rsi/experiments/price_candidates" / self.runtime.fixed_grant["batch_id"] / ident
         if directory.exists():
@@ -158,12 +185,16 @@ class CandidateAuthor:
                 "allowed_imports": {k: sorted(v) if v is not None else "numeric module" for k, v in IMPORTS.items()}}
             if len(json.dumps(packet, sort_keys=True, allow_nan=False).encode()) > 32768:
                 raise ValueError("author compact context exceeds32KiB")
+            if recovered_packet is not None:
+                if packet != recovered_packet:
+                    raise ValueError("completed author input changed; no replay or retry")
+                packet = recovered_packet
             call = self.call
             if call is None:
                 from supervisor_harness.price_account_roles import role_call
                 call = role_call
             result = call("author", packet, _schema(decision), root=self.runtime.root,
-                grant_binding=self.grant, role_id=ident, timeout_seconds=self.timeout)
+                grant_binding=self.grant, role_id=original_id, timeout_seconds=self.timeout)
             response = result["response"]; h.t.c._validate(response, _schema(decision))
             if len((response["candidate_source"] + response["test_source"]).encode()) > 12288:
                 raise ValueError("combined candidate/test must fit bounded source review payload")
@@ -180,7 +211,8 @@ class CandidateAuthor:
                 "candidate": h.r.pin(source / "candidate.py"), "test": h.r.pin(source / "test_candidate.py"),
                 "role_call": {k: v for k, v in result.items() if k != "response"},
                 "checks": h.r.pin(directory / "checks.json"), "implementation_notes": response["implementation_notes"],
-                "generated_tests_executed": False, "awaiting_independent_source_review": True}
+                "generated_tests_executed": False, "awaiting_independent_source_review": True,
+                "completed_author_recovery": self.recovery if recovered_packet is not None else None}
             h.w.save(source / "author_receipt.json", receipt)
             paths = [str((source / name).relative_to(self.runtime.repo)) for name in ("candidate.py", "test_candidate.py", "author_receipt.json")]
             if subprocess.check_output(["git", "diff", "--cached", "--name-only"], cwd=self.runtime.repo, text=True).strip():

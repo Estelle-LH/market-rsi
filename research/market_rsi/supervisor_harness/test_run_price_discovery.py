@@ -147,6 +147,35 @@ class EntryTests(TestCase):
             with self.assertRaisesRegex(ValueError, "exact two-round"):
                 entry.build(bad)
 
+    def test_known_prefix_callbacks_restore_once_into_fresh_timing_namespace(self):
+        live = entry.LivePriceServices(self.f.runtime, self.f.base, author=self.f.author,
+            reviewer=self.f.reviewer, callback_sources={key: self.f.callback_binding
+                                                     for key in ("author", "reviewer")})
+        live.recovery_binding = self.f.h.f.write("synthetic-recovery-pin", {"synthetic": True})
+        live.completed_prefix = {"input": {"known_completed_original": True}}
+        old = self.f.root / "price-loop"
+        old.mkdir()
+        old_time = self.f.h.f.write("old-timing-proof", {"immutable": True})
+        fresh = self.f.root / "price-loop-admission-v2"
+        fresh.mkdir()
+        context = {"round_index": 1, "seed": self.f.seed, "previous_result": self.f.seed,
+                   "previous_feedback_sha256": entry.r.t.c._digest(self.f.seed), "outputs": {}}
+        review_count = len(self.f.reviews)
+        output = live.handlers()["input"](context)
+        self.assertEqual(output, live.completed_prefix["input"])
+        self.assertEqual(len(self.f.reviews), review_count)
+        self.assertTrue((fresh / "round-0001-input.timing.json").exists())
+        self.assertEqual(entry.r.t.c._read(old_time), {"immutable": True})
+        context["round_index"] = 2
+        output = live.handlers()["input"](context)
+        self.assertIn("input", output)  # Normal second-round reviewer is not bypassed.
+        self.assertEqual(len(self.f.reviews), review_count + 1)
+
+    def test_certain_prefix_rejects_unreviewed_or_wrong_schema_before_replay(self):
+        binding = self.f.h.f.write("unreviewed-prefix", {"schema": "not-a-grant"})
+        with self.assertRaisesRegex(ValueError, "exact certain-prefix"):
+            entry.completed_prefix(self.f.runtime, binding)
+
 
 if __name__ == "__main__":
     main()
