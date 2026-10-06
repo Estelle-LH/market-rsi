@@ -8,6 +8,7 @@
   "boundary": "Synthetic engineering tests only in this work wave; no models/account transport, Train/Dev/Final reads, fits, external retrieval, paid calls, releases, pushes, promotion or live ledger edits. Existing scorer, frozen experiment sources, old decisions and consumed caps unchanged.",
   "supervisor_owner": "root",
   "resolution_check": "Integrated synthetic success/failure/restart/history tests plus independent exact-source review; no claim of live autonomy or new scientific results.",
+  "resolution":{"verdict":"pass","reviewer":"priority_review_20261006","observed":"Independent receipt9194e53e accepts the four versionedHsource components with exacthashes, no unresolvedP0/P1 within declaredscope. This resolves source-wave readiness only; globalcontinuation/R+Hpilot/liveoutcomes remain untested. Initial resolve CLI rejected missing resolution field; metadata corrected without source change."},
   "parallel_work": {
     "base_source_sha256": "6a4b26b9f19b7a7aba5d8ef34c6522410eca121832094f88bfef429da708a1d8",
     "worker_step_ids": ["parent_reference", "preflight"],
