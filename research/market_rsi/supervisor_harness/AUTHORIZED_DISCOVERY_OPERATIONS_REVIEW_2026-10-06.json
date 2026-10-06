@@ -1,0 +1,59 @@
+{
+  "schema": "market_rsi_authorized_discovery_operations_review_v1",
+  "reviewer": "fresh_batch_reviewer (existing window_independent_reviewer agent)",
+  "recorded_utc": "2026-10-06T15:03:59Z",
+  "passed": true,
+  "scope": "Source, reused operations and explicit-consent readiness only; final first-input admission remains separate",
+  "plan": "AUTHORIZED_DISCOVERY_EXECUTION_2026-10-06.json",
+  "ready_gate_review_independently_passed": true,
+  "parent_commit": "5f4f709",
+  "current_source_commit": "fd579e3bddfaaf2b4a4eb9f53058e0e16cad1d6b",
+  "change_axis": "H: human-directed exact fresh-batch envelope, not autonomous researcher-policy evolution",
+  "source_pins": {
+    "consumer": "981caaea2ad7c6fe74cba8af2a6988adeef12d1e594ac0d243949e424182ee7b",
+    "consumer_tests": "6ac104e0759a2eac53832745265110d6478fcbb5e41ba397a380cac8a423a809",
+    "prepare_batch": "077e060071e48fab232bd4025d5da5c391b73bf58323f10a2c914875b2e29d72",
+    "account_launch": "125145467c6f248f6456f31e3b1a17bc38f9ce5059127cc02526629c1cb52e23",
+    "serial_native_launch": "c19ca90f60fe83da98bffff9f834970cc79390fb2661242d9680f1804ac3a195",
+    "explicit_human_approval": "19b98b4d785cdaf2c04ff3cd4ac4d19b8e5715e62d5f6113bf65af8776930064",
+    "archive": "ca8b3d28afbb2fa13c8f4811e39223a378ada24780dc9af3405b2f77a0697559",
+    "protected_state": "c019f21087654eacc042eae4746003fed818edd5804603feeff3cea1e4e6743c"
+  },
+  "source_diff": {"production_modules": 1, "additions": 23, "removals": 3, "component": "One named fresh_three_attempt_binding, fixed90min/75mincutoff/3attempt12fit2children1thread900s1GiB/paid0; canonical ready UTC second frozen once by Root"},
+  "explicit_consent": {
+    "batch_id": "market-rsi-authorized-discovery-20261006-01",
+    "source": "Root supplies direct human authorize reply to full preceding fresh-batch and private signed-in account payload proposal; exact approval file independently read/pinned",
+    "fresh_minutes": 90, "candidate_attempts": 3, "statistical_fits": 12, "original_Controller_decisions": 3,
+    "destination": "Same signed-in Codex account Controller, requested gpt-6.1-sol; serving snapshot unknown",
+    "payload": "Reviewed aggregate Train scores/feedback/research history/memory/source provenance only",
+    "raw_transfer_Dev_Final_external_paid_release_promotion": "Closed",
+    "old_inferred_ten_hour_consent_reused": false,
+    "prior_windows_caps_claims_and_failed_launch_retried": false
+  },
+  "independent_verification": {
+    "relevant_suite_executions": 267, "seconds": 5.337, "skipped": 1, "passed": true,
+    "count_boundary": "Complete relevant suite executions, not asserted unique tests or whole-repository result; opt-in live-runtime test skipped",
+    "inherited_serial_bookkeeping_tests": 7, "serial_seconds": 0.014, "serial_passed": true,
+    "serial_test_boundary": "Rebound in memory to new operation; native constructor and receipt mocked, no actual native-worker or fitting proof",
+    "prepare_preflight_read_only": true, "original_current_and_run_Git_source_pins": 75,
+    "original_archived_parents_and_source_proofs": 6, "C2_followups_remaining": 0,
+    "protected_K_source_pins": 8,
+    "actual_CLI_and_training_binary_pins": "Checked by read-only preflight; CLI6b582e88 and Python80ee2dd9",
+    "account_and_serial_help_import": "PASS with pinned training Python, no calls/fits",
+    "full_training_runtime_tree_recrawled": false,
+    "original_N2_memory_raw_row_audit": "No raw-row-like dictionaries or lists60+ found in388193-byte original memory; final actual packet must still be separately reviewed"
+  },
+  "operations_checks": [
+    "Explicit immutable approval/current consumer and actual packet reproduction required; evidence tools remain closed",
+    "Original call reservation capped3 under one shared lock with call-ID/feedback deduplication; failures preserved and no automatic retry",
+    "Native source handoff still requires independent semantic contract/request/source/selection admission; no algorithm menu or recipe-text execution",
+    "Global serial lock and durable intent reconciliation preserve once-only reservation; missing fit_progress is UNKNOWN, not invented zero; uncertain originals block another admission",
+    "Local max1/v4 execution subledger is distinct from Controller global2–3-family exploration pool; old K/scoring/KEEP and consumed allowances unchanged"
+  ],
+  "actual_clock_and_input": "Not frozen yet.15:00:00 is test-only preflight clock; no first-call admission until separate exact ready-clock input review",
+  "unresolved_P0_P1_in_reviewed_operations_boundary": [],
+  "claim_boundary": "No actual experiment, prediction gain, research-capacity gain, arbitrary-code/network isolation, distributed scheduler or complete autonomous science loop proven by this review",
+  "remaining_trusted_actions": "Root freezes one readiness start/cutoff/deadline and immutable original N2 input; reviewer independently reproduces and admits exact payload before first account call. Each later candidate source/results/learning remains independently reviewed",
+  "log_snapshot_sha256_at_operations_review": "ed14c3b4f9d509d4b8abe53a63512350e119164788d2eb696daaa911fdd4a778",
+  "resource_use": {"real_model_calls": 0, "actual_fits": 0, "raw_Train_reads": 0, "protected_reads": 0, "external_calls": 0, "paid_provider_usd": "0", "source_Git_authority_and_old_root_writes": 0}
+}

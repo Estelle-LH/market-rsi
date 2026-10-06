@@ -1,0 +1,25 @@
+{
+  "schema": "market_rsi_actual_discovery_trajectory_v1",
+  "batch_id": "market-rsi-authorized-discovery-20261006-01",
+  "human_authorization": "authorize: fresh90min/3candidate12fit3originaldecision batch and reviewed aggregate/history/memory/provenance to same signed-in Codex account gpt-6.1-sol",
+  "start_utc": "2026-10-06T15:04:53Z",
+  "selection_cutoff_utc": "2026-10-06T16:19:53Z",
+  "deadline_utc": "2026-10-06T16:34:53Z",
+  "requested_controller_model": "gpt-6.1-sol",
+  "serving_snapshot": "unknown",
+  "task": "InGameWinProbabilityTrainDiagnostic-v0",
+  "population": 195,
+  "check_events": 87,
+  "check_dates": 20,
+  "check_weeks": 7,
+  "scoring_scope": "Repeatedly viewed chronological Train Discovery, not untouched OOS or independent confirmation",
+  "incumbent": "raw decision-time market; Brier0.14195252900323282/logloss0.4296707847132428",
+  "events": [
+    {"at_utc":"2026-10-06T15:04:53Z","kind":"bootstrap","author":"AI Supervisor Root","input_sha256":"408c33a20a220868a26218a7fa0ebdbe4714954500615212340ec9586e9287f3","source_commit":"fd579e3","axis":"H","meaning":"Human-directed fresh authorized envelope; no scientific choice, model call, fit, prediction improvement or self-evolution"}
+  ],
+  "actual_completed_experiments": 0,
+  "actual_fit_calls": 0,
+  "actual_original_controller_decisions": 0,
+  "paid_provider_calls": 0,
+  "claim_boundary": "Functional feedback continuation, useful memory reuse, prediction improvement and fixed-process superiority are separate claims; none inferred from engineering/preflight alone"
+}
