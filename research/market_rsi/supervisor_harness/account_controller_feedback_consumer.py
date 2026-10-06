@@ -135,7 +135,7 @@ def _feedback_protocol(feedback):
     return 4
 
 
-def prepare_input(bindings, batch, repo, now, *, prospective_binding=None):
+def prepare_input(bindings, batch, repo, now, *, prospective_binding=None, evidence_session=None):
     """Called by the trusted Supervisor after review; copies real numbers, not hashes alone."""
     if set(bindings) != ROLES: raise ValueError("exact feedback file roles required")
     data = {role: _read(binding, role == "predictions") for role, binding in bindings.items()}
@@ -174,6 +174,10 @@ def prepare_input(bindings, batch, repo, now, *, prospective_binding=None):
     result = {"schema": "controller_feedback_input_v1", "bindings": bindings, "feedback": feedback, "numerical": numeric,
         "supplement": _compact(supplement), "omitted_from_prompt": sorted(OMITTED), "memory": data["memory"], "history": data["history"], "pool": data["pool"], "authority": data["authority"], "overhead": data["overhead"]}
     if binding is not None: result["prospective_budget_binding"] = binding
+    if evidence_session is not None:
+        from supervisor_harness import controller_evidence_session as evidence
+        evidence.validate(evidence_session)
+        result["evidence_session"] = evidence_session
     _digest(result)
     return _json(json.dumps(result, allow_nan=False))
 
@@ -206,12 +210,20 @@ def _validate(value, schema):
     if schema.get("type") == "string" and (type(value) is not str or not value.strip()): raise ValueError("nonempty response string")
 
 
-def _command(directory):
-    return [str(CLI), "exec", "--ephemeral", "--ignore-user-config", "--skip-git-repo-check", "--sandbox", "read-only", "--cd", str(directory), "--model", MODEL, "--json", "--output-schema", str(directory / "schema.json"), "--output-last-message", str(directory / "response.json"), "-"]
+def _command(directory, evidence_session=None):
+    command = [str(CLI), "exec", "--ephemeral", "--ignore-user-config", "--skip-git-repo-check", "--sandbox", "read-only", "--cd", str(directory), "--model", MODEL, "--json", "--output-schema", str(directory / "schema.json"), "--output-last-message", str(directory / "response.json")]
+    if evidence_session is not None:
+        from supervisor_harness import controller_evidence_session as evidence
+        command += ["--ignore-rules"] + evidence.config_overrides(evidence_session, directory)
+    return command + ["-"]
 
 
-def _identity():
-    return {"consumer_source_sha256": sha(Path(__file__).resolve()), "scope_sha256": SCOPE_SHA}
+def _identity(evidence_session=None):
+    result = {"consumer_source_sha256": sha(Path(__file__).resolve()), "scope_sha256": SCOPE_SHA}
+    if evidence_session is not None:
+        from supervisor_harness import controller_evidence_session as evidence
+        result["evidence_session_source_sha256"] = sha(Path(evidence.__file__).resolve())
+    return result
 
 
 def _hashes(value):
@@ -231,45 +243,60 @@ def _terminate(child):
 def _transport(directory, packet, timeout):
     if sha(CLI) != CLI_SHA: raise ValueError("CLI source drift")
     prompt = "No tools, file/data/network/credentials access or authority changes. Use only this verified numerical evidence and prior memory. Return one non-executable evidence-cited scientific next decision; no invented results or preselected model. Within the still-open budget, propose a reasonable distinct small actual prediction hypothesis even without prior improvement; reasonable first small hypotheses do not require prior gains. Negative scores or implementation overhead are not reasons to stop; Supervisor owns allowed stop conditions. Methods remain open, with no forced R modification or scoring change. Use request_closed_authority only for a specific genuinely necessary next operation outside the fixed task/data/permission boundary, not a disguised voluntary stop; a request grants no authority.\nCopy these binding values verbatim; do not calculate hashes: input_sha256=" + _digest(packet) + " feedback_sha256=" + packet["bindings"]["feedback"]["sha256"] + "\n" + json.dumps(packet, allow_nan=False)
-    command = _command(directory)
+    session = packet.get("evidence_session")
+    if session is not None:
+        from supervisor_harness import controller_evidence_session as evidence
+        policy = evidence.validate(session, directory, account=True)
+        catalog = [{k: r[k] for k in ("id", "kind", "sha256")} for r in policy["evidence"]]
+        prompt = prompt.replace("No tools, file/data/network/credentials access or authority changes.", "Use only controller_evidence.list_evidence/read_evidence for Supervisor-approved IDs; no other file/data/network/credential access or authority changes. Catalog: " + json.dumps(catalog))
+    command = _command(directory, session)
     child, cleanup_attempted = None, False
     try:
         with (directory / "events.jsonl").open("xb") as stdout, (directory / "stderr").open("xb") as stderr:
             child = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=stdout, stderr=stderr, start_new_session=True)
-            save(directory / "process.json", {"pid": child.pid, "command": command, "cli_sha256": CLI_SHA, "input_sha256": _digest(packet), **_identity()})
+            save(directory / "process.json", {"pid": child.pid, "command": command, "cli_sha256": CLI_SHA, "input_sha256": _digest(packet), **_identity(session)})
             timed_out = False
             try: child.communicate(prompt.encode(), timeout=timeout)
             except subprocess.TimeoutExpired:
                 timed_out = True; cleanup_attempted = True; _terminate(child)
             stdout.flush(); os.fsync(stdout.fileno()); stderr.flush(); os.fsync(stderr.fileno())
         names = ["process.json", "events.jsonl", "stderr", "schema.json", "input.json"]
+        if session is not None: names.append("evidence-audit.jsonl")
         if (directory / "response.json").exists(): names.append("response.json")
-        save(directory / "completion.json", {"exit_code": child.returncode, "timed_out": timed_out, "hashes": {name: sha(directory / name) for name in names}, **_identity()})
+        save(directory / "completion.json", {"exit_code": child.returncode, "timed_out": timed_out, "hashes": {name: sha(directory / name) for name in names}, **_identity(session)})
     except BaseException:
         if child is not None and not cleanup_attempted: _terminate(child)
         raise
 
 
 def _recover(directory, packet):
+    session = packet.get("evidence_session")
     completion = _json((directory / "completion.json").read_bytes())
-    if any(completion.get(key) != value for key, value in _identity().items()): raise ValueError("consumer completion provenance drift")
+    if any(completion.get(key) != value for key, value in _identity(session).items()): raise ValueError("consumer completion provenance drift")
     required = {"process.json", "events.jsonl", "stderr", "schema.json", "input.json", "response.json"}
+    if session is not None: required.add("evidence-audit.jsonl")
     if completion["exit_code"] != 0 or completion["timed_out"] is not False or set(completion["hashes"]) != required:
         raise RuntimeError("original process incomplete/failed; do not resample")
     for name, digest in completion["hashes"].items(): _read({"path": str(directory / name), "sha256": digest}, True)
     process = _json((directory / "process.json").read_bytes())
-    if any(process.get(key) != value for key, value in _identity().items()): raise ValueError("consumer process provenance drift")
-    if process["cli_sha256"] != CLI_SHA or process["input_sha256"] != _digest(packet) or process["command"] != _command(directory): raise ValueError("original process identity drift")
+    if any(process.get(key) != value for key, value in _identity(session).items()): raise ValueError("consumer process provenance drift")
+    if process["cli_sha256"] != CLI_SHA or process["input_sha256"] != _digest(packet) or process["command"] != _command(directory, session): raise ValueError("original process identity drift")
     usage, completed, message = None, False, None
+    events = []
     for line in (directory / "events.jsonl").read_text().splitlines():
         event = _json(line)
-        if event.get("type") not in {"thread.started", "turn.started", "item.started", "item.updated", "item.completed", "turn.completed"} or ("item" in event and event["item"].get("type") not in {"agent_message", "reasoning"}):
+        events.append(event)
+        allowed_items = {"agent_message", "reasoning"} | ({"mcp_tool_call"} if session is not None else set())
+        if event.get("type") not in {"thread.started", "turn.started", "item.started", "item.updated", "item.completed", "turn.completed"} or ("item" in event and event["item"].get("type") not in allowed_items):
             raise ValueError("observed tool/failed event; not scientific refutation")
         if event.get("type") == "item.completed" and event["item"].get("type") == "agent_message": message = _json(event["item"]["text"])
         if event.get("type") == "turn.completed": usage, completed = event.get("usage"), True
     response = _json((directory / "response.json").read_bytes()); _validate(response, SCHEMA)
     if not completed or message != response: raise ValueError("original final message/completion missing or differs")
     hashes = {item["sha256"] for item in packet["bindings"].values()} | _hashes(packet["memory"]) | _hashes(packet["history"])
+    if session is not None:
+        from supervisor_harness import controller_evidence_session as evidence
+        hashes |= evidence.verify_events(session, directory, events)
     ranked = packet["feedback"]["next_pool_selection_hint"]["ranked_research_parents"]
     if _feedback_protocol(packet["feedback"]) == 4:
         parents = {item["candidate_sha256"] for item in ranked if parent_eligibility(item, 4)}
@@ -291,9 +318,14 @@ def _recover(directory, packet):
     return response
 
 
-def consume(packet, root, *, batch, repo, now=None, transport=None, prospective_binding=None):
+def consume(packet, root, *, batch, repo, now=None, transport=None, prospective_binding=None, evidence_session=None):
     """One invocation per feedback. Recovery never calls transport a second time."""
     now = now or datetime.now(timezone.utc)
+    if (evidence_session is None) != (packet.get("evidence_session") is None) or (evidence_session is not None and _digest(evidence_session) != _digest(packet["evidence_session"])):
+        raise ValueError("explicit evidence session binding changed")
+    if evidence_session is not None and transport is None:
+        from supervisor_harness import controller_evidence_session as evidence
+        evidence.validate(evidence_session, account=True)
     binding = _prospective_binding(prospective_binding)
     if (binding is None and "prospective_budget_binding" in packet) or (binding is not None and _digest(packet.get("prospective_budget_binding")) != _digest(binding)):
         raise ValueError("explicit prospective packet binding changed")
@@ -306,14 +338,14 @@ def consume(packet, root, *, batch, repo, now=None, transport=None, prospective_
     if directory.resolve() != directory: raise ValueError("call directory symlink")
     with (directory / ".lock").open("a+") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
-        claim = {"input_sha256": _digest(packet), "schema_sha256": _digest(SCHEMA), "cli_sha256": CLI_SHA, **_identity()}
+        claim = {"input_sha256": _digest(packet), "schema_sha256": _digest(SCHEMA), "cli_sha256": CLI_SHA, **_identity(evidence_session)}
         if binding is not None: claim["prospective_budget_binding_sha256"] = _digest(binding)
         if (directory / "claim.json").exists():
             if _json((directory / "claim.json").read_bytes()) != claim: raise ValueError("same feedback changed")
             if _json((directory / "input.json").read_bytes()) != packet or _json((directory / "schema.json").read_bytes()) != SCHEMA:
                 raise ValueError("original input/schema changed")
         else:
-            if sha(CLI) != CLI_SHA or prepare_input(packet["bindings"], batch, repo, now, prospective_binding=binding) != packet: raise ValueError("CLI drift/unverified numerical input")
+            if sha(CLI) != CLI_SHA or prepare_input(packet["bindings"], batch, repo, now, prospective_binding=binding, evidence_session=evidence_session) != packet: raise ValueError("CLI drift/unverified numerical input")
             save(directory / "input.json", packet); save(directory / "schema.json", SCHEMA); save(directory / "claim.json", claim)
             deadline = DEADLINE if binding is None else binding["deadline_utc"]
             try: (transport or _transport)(directory, packet, min(120., (_time(deadline) - _time(now)).total_seconds()))
