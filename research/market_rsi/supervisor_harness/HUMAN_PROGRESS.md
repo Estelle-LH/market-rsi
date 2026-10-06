@@ -1,5 +1,13 @@
 # Market RSI — human progress
 
+## 2026-10-05 — Controller enablement priorities added to approved Word plan
+
+User instructed “add this to the doc. start.” Appended prospective P0–P4 priorities to `plans/MARKET_RSI_REPAIR_DISCOVERY_APPROVED_2026-10-05.docx`, retaining the 105 historical paragraphs and three tables from source `938f696`. A front-page note and current addendum distinguish historical approvals from renewed budgets. The reproducible helper is `plans/append_controller_enablement_priorities_20261005.py`. All 12 final pages were visually checked; final pages 1–10 were pixel-identical to the already inspected render, and final pages 11–12 were inspected again after moving the execution section to its own page. No QA images or raw data are committed.
+
+Immediate order is scoped Controller capabilities, then unattended feedback-dependent real experiments; memory/recovery and matched research-process comparisons follow. E2B stays retired and Tinker optional, not a mainline prerequisite. Binary settlement Brier is MSE under the same weighting; future-price MSE remains a different task. Research eligibility, learning credit and incumbent replacement remain separate. The source check confirms v4 already allows one justified zero-credit REVERT follow-up; this plan does not claim that capability was absent or redo its historical repair.
+
+This is user-directed planning/documentation, not an autonomous R change, prediction gain or fresh account-payload/batch authorization. Earlier closed 2-candidate/8-fit/2-decision results and clocks remain unchanged. Implementation starts with one unactivated evidence-reading component and synthetic tests; consumer integration and effective tool-access verification remain the next executable checkpoint. No training, paid provider, protected-data access, external scientific acquisition, release or promotion is performed by this document checkpoint.
+
 ## 2026-10-05 18:36 EDT — fresh two-candidate continuation explicitly approved
 
 User “approve” answered the combined fresh-window and same-account reviewedresearch-payload question. Newprospective batch `market-rsi-learning-checkpoint-continuation-20261005-01` is bounded at18:32:32–20:02:32NewYork, selection19:47:32, atmosttwo newcandidates/eightfits/two once-onlyaccountdecisions/max2live/thread1. Oldpilot1candidate/4fits/1decision andclosedselectioncutoff remain unchanged; the freshcap allocates its unused2/8/2, not a C1rerun or an implicit oldclock reset. Freshapprovalcf673127 is persisted locally outsideGit.
