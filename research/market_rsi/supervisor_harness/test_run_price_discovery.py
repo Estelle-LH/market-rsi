@@ -93,6 +93,33 @@ class EntryTests(TestCase):
         self.assertEqual(self.f.h.f.calls, calls)
         self.assertEqual(entry.r.w.sha(self.f.root / "ledger.json"), before)
 
+    def test_official_entry_accepts_larger_bound_context_without_scientific_calls(self):
+        grant = deepcopy(self.f.runtime.fixed_grant)
+        grant['account_transfer']['max_input_bytes'] = 262144
+        self.f.runtime.authority = self.f.h.f.write('authorization', grant)
+        self.f.runtime.fixed_grant = grant
+        self.config['base_spec']['identity_configuration']['fixed_context']['authority_sha256'] = self.f.runtime.authority['sha256']
+        self.f.seed['source_context'] = self.f.h.f.write('larger-entry-context', {'synthetic': 'x' * 40000})
+        self.seed_binding = self.f.h.f.write('larger-entry-seed', self.f.seed)
+        result, children = self.execute(preflight=True)
+        self.assertGreater(result['input_bytes'], 32768)
+        self.assertEqual(result['authorized_input_bytes'], 262144)
+        self.assertEqual(children, 0)
+        self.assertEqual(self.f.h.f.calls, self.f.calls_before)
+        self.assertEqual(result['scientific_reservations'], 0)
+        self.assertEqual(result['model_calls'], 0)
+
+    def test_full_rendered_prompt_not_only_packet_is_checked_before_backend(self):
+        packet = self.service.prepare_packet({'round_index': 1, 'previous_result': self.f.seed})
+        from supervisor_harness import price_account_roles as roles
+        rendered = len(roles._prompt(packet, controller=True).encode('utf-8'))
+        with patch.object(entry.r.t, 'input_limit', return_value=rendered - 1):
+            with self.assertRaisesRegex(ValueError, 'before account preflight'):
+                self.execute(preflight=True)
+        self.assertEqual(self.account.preflight.call_count, 0)
+        self.assertEqual(self.f.h.f.calls, self.f.calls_before)
+        self.assertEqual(entry.r.t._file(self.f.root / 'ledger.json')['attempts'], [])
+
     def test_parent_or_native_fixed_identity_drift_precedes_original_call(self):
         original = deepcopy(self.config["base_spec"]["identity_configuration"])
         self.config["base_spec"]["identity_configuration"]["fixed_context"]["evaluation_sha256"] = "e" * 64

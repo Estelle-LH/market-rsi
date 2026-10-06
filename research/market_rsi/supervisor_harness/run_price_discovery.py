@@ -321,8 +321,9 @@ def preflight(batch_configuration, initial_feedback):
                "previous_feedback_sha256": r.t.c._digest(seed), "outputs": {}}
     packet = service.prepare_packet(context)
     prompt_bytes = len(roles._prompt(packet, controller=True).encode("utf-8"))
-    if prompt_bytes > roles.MAX_BYTES:
-        raise ValueError("full Controller prompt exceeds32KiB before account preflight")
+    input_limit = r.t.input_limit(service.runtime.fixed_grant)
+    if prompt_bytes > input_limit:
+        raise ValueError("full Controller prompt exceeds authorized input byte budget before account preflight")
     base = config["base_spec"]
     if type(base) is not dict or set(base) != s.BASE:
         raise ValueError("exact frozen base specification required")
@@ -361,7 +362,7 @@ def preflight(batch_configuration, initial_feedback):
     if policy.get("operational_ready") is not True:
         raise ValueError("actual runtime text-only policy not verified before science")
     return {"passed": True, "task": s.h.TASK, "source_commit": head, "runtime_policy": policy,
-            "python_launch": launch, "input_bytes": prompt_bytes,
+            "python_launch": launch, "input_bytes": prompt_bytes, "authorized_input_bytes": input_limit,
             "parent_branches": len(packet["pool"]["active_pool"]),
             "handler_identity_sha256": r.t.c._digest(identity_bindings),
             "batch_configuration": batch_configuration, "initial_feedback": initial_feedback,

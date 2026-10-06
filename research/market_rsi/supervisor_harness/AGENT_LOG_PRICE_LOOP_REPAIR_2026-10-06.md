@@ -237,3 +237,19 @@ supervisor_harness.test_price_independent_review:38PASS4.892s. No failed test in
 this chunk, actual accountcalls/Trainfits0. Old actual author-source artifacts are
 read-only AST fixtures, not new Train or account use. Root performed testing,
 independent acceptance pending. Entry preflight is the last declared connection.
+
+## F1b.4a — official-entry connection; failed narrow test fixture retained
+
+Parent2ecb912; source scope run_price_discovery.py + its existing test. Official
+preflight compares the fully rendered Controller prompt with the bound grant,
+not a module constant, and reports both actual and authorized input bytes. Large
+synthetic input preflight succeeds without model/worker/reservation. First focused
+entry run13tests3.918s:12PASS/1FAIL. The new wire-boundary test mocked the shared
+limit globally, so the earlier aggregate-packet check rejected before the wire
+check; the assertion expected the later error string. This is a test-isolation
+mistake, not a fail-open guard, account invocation or scientific failure. Failed
+source/test snapshot is checkpointed before the fixture correction. No guard,
+grant, cap or payload truncation will be loosened to pass that test. Next test
+isolates the actual rendered-prompt check with the same synthetic packet; prior
+runtime/packet tests independently exercise construction/budget denial. Snapshot
+still local/incomplete and not live-activated.
