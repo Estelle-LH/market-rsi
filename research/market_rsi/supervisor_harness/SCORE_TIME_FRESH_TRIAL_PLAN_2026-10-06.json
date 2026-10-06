@@ -1,0 +1,14 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "score-time-fresh-native-admission-v2",
+  "supervisor_owner": "root",
+  "symptom": "Previous native admission supplied runtime pair without initialized micro_evolution and consumed its old cap without fits.",
+  "source_evidence": "COEVO_PILOT_RESULT_REVIEW_2026-10-06.json f947c025; exact fresh human yes, authority b22f1cfc",
+  "objective": "Use existing configured evolution and fresh authority entry, complete no-Train admission rehearsal, then one unchanged Controller score-time recipe actual run.",
+  "boundary": "One fresh attempt/four fits, no new Controller call, deadline18:26:12UTC; old caps remain closed; scorer/C/R/Hsemantic sources and resident Train boundary unchanged.",
+  "resolution_check": "Actual admitted four-fit predictions and independent result; zero real fits must not count as resolution.",
+  "steps": [
+    {"id":"prepare","owner":"root","depends_on":[],"action":"Freeze small native authority/init correction, prepare exact source/runtime/request and complete no-Train rehearsal","expected_artifact":"AGENT_LOG_SCORE_TIME_FRESH_TRIAL_2026-10-06.md","verification":"Focused regressions and actual native selection/claim/child-entry predicate with mocked child, restart and no retry","pass_condition":"Exact rehearsal and targeted regressions pass with scientific callbacks unchanged","failure_action":"One bounded operational repair before actual admission, retain evidence","time_bound_minutes":5},
+    {"id":"review","owner":"score_time_fresh_review_20261006","depends_on":["prepare"],"action":"Independent exact grant/source/prepared request/full admission rehearsal then actual result review","write_paths":["research/market_rsi/supervisor_harness/AGENT_LOG_SCORE_TIME_FRESH_REVIEW_2026-10-06.md","research/market_rsi/supervisor_harness/SCORE_TIME_FRESH_SOURCE_REVIEW_2026-10-06.json","research/market_rsi/supervisor_harness/SCORE_TIME_FRESH_RESULT_REVIEW_2026-10-06.json"],"expected_artifact":"SCORE_TIME_FRESH_SOURCE_REVIEW_2026-10-06.json","verification":"No protected/paid/account/new-science changes; actual configured pair; exact fresh authority; complete prelaunch path; reconstruct predictions if available","pass_condition":"No unresolved blocker for declared one-run scope; performance separately reviewed after run","failure_action":"Return exact finding, preserve result, no new authority/retry","time_bound_minutes":4}
+  ]
+}
