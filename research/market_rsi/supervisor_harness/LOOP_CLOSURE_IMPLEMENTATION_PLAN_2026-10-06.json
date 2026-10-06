@@ -1,0 +1,116 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "loop-closure-code-only-20261006-v1",
+  "supervisor_owner": "root",
+  "symptom": "Reviewed scientific decisions still need manual handoffs; capacity identities include prediction or memory artifacts; R/H activation lacks a complete tested caller.",
+  "source_evidence": "AGENT_LOG_FEEDBACK_PILOT_SUPERVISOR_2026-10-06.md and actual closed04 ledger; source parent3212806a7bdb3c6d2b459fec6a0730729d504600",
+  "objective": "Connect existing once-only stages and small-change contract, separate identities, demonstrate automatic synthetic continuation and measured capability activation without renewing any closed science budget.",
+  "boundary": "Code implementation and synthetic/local replay only. No Controller account calls, rawTrain transfer, real Train fits, Dev/Final, network, paid provider, release, push or promotion. Existing scorer/ledger/transport/micro-contract unchanged.",
+  "resolution_check": "Automatic synthetic two-round feedback dependency, idle independently reviewed R/H version activation and downstream identity use, failure/restart/closed-budget tests; live science and fixed-process superiority explicitly untested.",
+  "parallel_work": {
+    "base_source_sha256": "7938797433f23d9de9d28a705d8580a54e2ad5b85826e0ce8467eca129ef7bc3",
+    "worker_step_ids": [
+      "driver",
+      "capacity"
+    ],
+    "integration_step_id": "integration",
+    "review_step_id": "review"
+  },
+  "scope_refinement": {
+    "reason": "Keep this change small: reuse existing32KiB packet validation and record the matched-process experiment as still unrun rather than add another serializer/comparison harness. Existing trusted stage callbacks must be registered; live scientific continuation requires fresh authority.",
+    "affects_historical_scoring": false,
+    "fresh_science_authority": false
+  },
+  "steps": [
+    {
+      "id": "driver",
+      "owner": "loop_driver_20261006",
+      "depends_on": [],
+      "action": "Implement compact once-only feedback loop coordinator with trusted injected stages, durable completion/uncertain state, no model command execution or budget authority",
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/feedback_linked_loop.py",
+        "research/market_rsi/supervisor_harness/test_feedback_linked_loop.py",
+        "research/market_rsi/supervisor_harness/AGENT_LOG_LOOP_DRIVER_2026-10-06.md"
+      ],
+      "expected_artifact": "AGENT_LOG_LOOP_DRIVER_2026-10-06.md",
+      "verification": "Synthetic real functions for two-round feedback-linked continuation, preserved failed/uncertain stages, resume completed only, caps/deadline, no new authority",
+      "pass_condition": "Focused tests pass and production code<=200changed lines or explicit splitreview",
+      "failure_action": "Preserve failed check, narrow fresh code correction, no live launch",
+      "time_bound_minutes": 25,
+      "result": {
+        "verdict": "pass",
+        "observed": "169-line trusted coordinator;20focused tests pass, failure/uncertain/restart/closed admission checked. Local source01e01be.",
+        "reviewer": "root",
+        "evidence_path": "AGENT_LOG_LOOP_DRIVER_2026-10-06.md",
+        "evidence_sha256": "6dd046e4f6b6706c629a9ae9e69f5677e3ae3da5a80eba9c26eb7039f03672aa"
+      }
+    },
+    {
+      "id": "capacity",
+      "owner": "loop_capacity_20261006",
+      "depends_on": [],
+      "action": "Implement separate K/M/C/H/R identities plus memory and idle activation adapter around existing micro-evolution journal; separate source checkpoints",
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/research_capacity_identity.py",
+        "research/market_rsi/supervisor_harness/test_research_capacity_identity.py",
+        "research/market_rsi/supervisor_harness/research_capacity_activation.py",
+        "research/market_rsi/supervisor_harness/test_research_capacity_activation.py",
+        "research/market_rsi/supervisor_harness/AGENT_LOG_LOOP_CAPACITY_2026-10-06.md"
+      ],
+      "expected_artifact": "AGENT_LOG_LOOP_CAPACITY_2026-10-06.md",
+      "verification": "Prediction/memory cannot mutate H/R identity; activation exact files/reviews/benefit/idle, old histories intact; real selected version rechecked before downstream use",
+      "pass_condition": "Focused tests pass; each production module<=200lines and identity/activation separate checkpoints",
+      "failure_action": "No protected changes, preserve unused proposal; narrow fix",
+      "time_bound_minutes": 25,
+      "result": {
+        "verdict": "pass",
+        "observed": "113-line identity and195-line activation separately checkpointed29dc5ed/6ec0c85;14focused plus30inherited tests PASS. L1/L2synthetic only.",
+        "reviewer": "root",
+        "evidence_path": "AGENT_LOG_LOOP_CAPACITY_2026-10-06.md",
+        "evidence_sha256": "ee738217060fbff0771de77e987e321dcb6a0f16e5000e4ecd6d899784c61f7d"
+      }
+    },
+    {
+      "id": "integration",
+      "owner": "root",
+      "depends_on": [
+        "driver",
+        "capacity"
+      ],
+      "action": "Wire production handlers to existing original Controller transaction/native worker/shared accounting and register trusted callbacks; integrated synthetic R/H activation/next-step use; reuse existing packet cap and explicitly leave matched-process scientific evaluation unrun.",
+      "expected_artifact": "LOOP_CLOSURE_IMPLEMENTATION_RESULT_2026-10-06.json",
+      "verification": "Integrated tests invoke unchanged production boundaries via synthetic transport/workers; caps/no retries/closed scopes and downstream R/H identity checks",
+      "pass_condition": "Whole relevant suite passes and source/result checkpoints separate; no engineering achievement called research success",
+      "failure_action": "Return boundary failures to implementers; no scope expansion",
+      "time_bound_minutes": 20,
+      "result": {
+        "verdict": "pass",
+        "observed": "Actual source-connected synthetic activation/continuation and unchanged production transaction/worker boundary tests.217 relevant tests PASS; no live science. Source dd49fae.",
+        "reviewer": "root",
+        "evidence_path": "LOOP_CLOSURE_IMPLEMENTATION_RESULT_2026-10-06.json",
+        "evidence_sha256": "6b807535700eea9207f96a95b7a4d9f0a2bdaf1538a6fe653ea378eddae64463"
+      }
+    },
+    {
+      "id": "review",
+      "owner": "loop_review_20261006",
+      "depends_on": [
+        "integration"
+      ],
+      "write_paths": [],
+      "action": "Read-only independent integrated source/test/claim review",
+      "expected_artifact": "LOOP_CLOSURE_IMPLEMENTATION_REVIEW_2026-10-06.json",
+      "verification": "Review fixed source snapshot, compatibility, failure paths, automatic continuation/activation claims and unchanged scorer/oldclosedcaps",
+      "pass_condition": "No unresolved changed-boundary defect; report exact remaining live gaps",
+      "failure_action": "Narrow regression and focused review; do not demand unrelated harness rebuild",
+      "time_bound_minutes": 12,
+      "result": {
+        "verdict": "fail",
+        "observed": "41focused pass but three independently reproduced changed-boundary defects on dd49fae; narrow repairs require a new source/review snapshot.",
+        "reviewer": "loop_review_20261006",
+        "evidence_path": "LOOP_CLOSURE_IMPLEMENTATION_REVIEW_2026-10-06.json",
+        "evidence_sha256": "1b224277e4629ff64f37aea77e18403dab500333224988d7eaab3e3dd75d9619"
+      }
+    }
+  ]
+}
