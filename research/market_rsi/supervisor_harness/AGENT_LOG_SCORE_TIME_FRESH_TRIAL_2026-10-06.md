@@ -40,3 +40,50 @@ to actual Popen while only the training child is mocked. No worker/Train was
 launched and native real batch remains unselected/unclaimed. Preserve initial
 prepared request; freeze a new ready request against the corrected local source
 checkpoint. No source, grant or outcome guard is removed.
+
+18:16:21 UTC — exact post-commit native admission + child-entry check + terminal
+restart/no-retry rehearsal and targeted inherited tests54/54 PASS1.888s, zero
+real fits. Pre-run source66f3273; original C/R/H semantic sources unchanged.
+Real native batch remains zero branches/zero claims. Independent exact review
+is next; no live attempt reserved. Permission-denied sandbox lock inspection
+was rerun with approved local filesystem escalation, not a scientific retry.
+
+18:18:40–18:18:45 UTC — exact independent source review1ffdd670 accepted the
+full path. Root alone reserved one attempt/four fits under fresh global lock.
+Actual process exit0, four converged single optimizer calls,87 predictions;
+worker wall4.43348133s/samplepeak142144KiB, thread1. No automatic retry, fallback,
+control refit, Controller call or paid provider. Frozen source66f3273 and all90
+pins unchanged; old pilot still closed at original consumed cap.
+
+18:21:32–18:24:08 UTC — independent result review ebcbb97a rematerialized
+195->193+two exact exclusions, checked87 rows/labels/times/folds/controls/C7,
+replayed all87 probabilities, explicit equation max2.22e-16 and all five scores,
+calibration/reliability/fourfold/grouped10000-draw intervals and original judge.
+No optimizer/fit by reviewer. All four actual states use penalty8; legacy shared
+card alpha16 label retained and annotated. Fold1 KKT6.99e-8 is diagnostic under
+unchanged solver-success gate, not a retrospectively tightened failure rule.
+
+Actual new Brier/log0.14207819118069467/0.4291379026551911 vs market
+0.14195252900323282/0.4296707847132428 and C7
+0.14195410408172784/0.4288860887954059. REVERT/legacyREFUTED unchanged; intervals
+cross zero, so this is no demonstrated parent/market-Brier gain, not proof all
+score-time information lacks value. MarketBrier blockwins2/4, parent1/4; last
+block dominates added parent loss. Ordinary reference remains ordinary.
+
+At18:24:08.906790UTC Root reconciled existing native result review and separate
+learning checkpoint, independentcredit2 for this exact valid hypothesis test,
+canonical finding62165ed9. No credit to earlier invalid admissions; credit does
+not change Brier, incumbent or authority. Valid negative stays eligible for a
+distinct research branch, not updated best. Existing native feedback packet and
+R structured reviewed memory9a6b01b9 saved locally; no Controller received them.
+Fresh ledger closed d9a7361e/native final474e1c73; one attempt/four actualfits,
+all caps retained. Closure elapsed12m56.906790s includes repair/review overhead.
+
+Observed co-evolution connection: agent-proposed H actually used by original
+agent-proposed C in real training, then R ledger records reviewed feedback.
+Missing connection: a later original Controller decision using that new memory,
+and a resulting tested change. Not a completed multi-step R/H co-evolution or
+same-budget superiority. The user-authorized recovery explicitly excludes that
+new call. Prospective45min/three-candidate/twelve-fit/three-decision narrow pilot
+is a proposal only; one task/data/horizon/judge fixed, methods Controller-owned,
+one active question plus one alternate. Other targets/strategies remain backlog.
