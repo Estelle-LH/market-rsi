@@ -1231,3 +1231,38 @@ Own reviewer index row markeddone; preexisting unrelateddirty index remains
 unstaged, with all other unrelateduser/agent changes preserved. Only these
 local repair/status/review records enter the final checkpoint, no artifact/
 ledger/private scientific output/push/release. New science authority pending.
+
+## 2026-10-07 21:05 UTC — direct human fresh02 co-evolution launch instruction
+
+Human "try again co-evo closing loop" directly replies to the already-pending
+fresh20261007-02 whole-batch scope, after bc70adf repaired-chain status. Record
+as direct human approval, not a structured reply or old-cap renewal. Scope45min
+after preparation;2original Controller/2authors/6reviews,2attempts8fits,
+serial/thread1/900s/1GiB sampled, allrole300s clippeddeadline; <=256KiB compact
+private aggregates/history/memory/relevant source to signed-in gpt-6.1-sol,
+snapshotunknown, tools actuallyclosed. No rawrows, retries/refunds, paidprovider,
+acquisition/literature,DevFinal,release/push/promotion. Exact freshgrant review
+and runtimepolicy required; a rejection is preserved, not workedaround.
+Freeze existing core sourcebc70adf. New only batch-specific prepare_pilot.py
+reuses reviewed oldpreparer and identical committed bootstrapR/H projections;
+new ID/writepaths/directreplybinding and Controller+allauthor300 allowances.
+No prediction/scorer/kernel/framework change, no Controller science selected by
+Supervisor. Check0call before preparation; independent exactops/source review
+then formal entry. Acceptance: genuine agent RorH proposal, versioned matched
+trial/review, actual firstfeedback consumed by second originalController and
+its actual pricecandidate run/score. A rejectedcapacity still informs next
+decision but is not improvement. BothR/H gain cannot be claimed from one axis.
+All old ledger hashes and frozen300stask remain fixed. Existing journal idle,
+sole nativepilotledger owns scientificcaps. No empiricalproof inferredfrom
+the 433/81local repair tests; no newtimer/accountcalls/fits yet.
+
+New02preparer875fce4de80841d590a95d1945be3b8bfb561e706cca9f945da8c89924beb360
+zero-call checkPASS27committed sourcepins. Exact command needs
+PYTHONPATH=/Users/estelle/Developer/market-rsi/research/market_rsi; first direct
+script omitted that and failed import beforecheck/root,0calls/fits. Corrected
+only invocation, no source patch; known invocation failure preserved. Existing
+journal replayidle6d805801/doc48f89637, old3ledgersdc63bcea/4fd6b6ca/67b0bcb4
+rehashedunchanged. Narrow pscheck found one unrelatedPython HTTPserver for an
+unrelated website (exact35698/35697); leftuntouched, no MarketRSI Pythonworker
+orSupervisor. No science clock/root yet. Fresh source/ops helperreview ongoing,
+no privatepayloads/read/calls/science delegated. Core9fd2f7f staysfixed.
