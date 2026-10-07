@@ -1314,3 +1314,96 @@ preparedimmutablegrant/launch/seed/capacitynative state remainunchanged. Earlier
 rejectionbeforeprocess preserved,0claims/calls/fits. Fresh exactrealoperation
 review may now admit sameformalentry; this is newauthority evidence, not an
 indirect workaround or retry of a started original. No selection/scoring change.
+
+Actual formalentrysession23717: native no-environment policy PASS, bootstrap
+R/H invoked, first inputreview40a793b2 PASS42.701565s with terminal/usage.
+OriginalController admitted21:13:17.281023UTC at explicit300s, completed175.846103s
+with native turn/completed/unchanged responseccb926f2. It proposed genuine
+R1-VerifiedRecipeEvidenceIndex: reconcile pending prose with verified outcomes,
+index candidate/comparator provenance, distinguish operational failure from
+science, and test retrieval against a competent exhaustive reference. Proposal
+only; no implementation/benefit/adoption. Formalentry exits1 at Controller
+responseadmission ValueError; roundfailed/timing/source/process preserved.
+
+Read-only exact checks: input/feedback/axis/writepaths/resource valid; component
+freetext not one of instructions/memory_policy/research_policy; parentpair
+returned exact R/H component references, not opaque composite digestfa407cdb
+(digest absent from fully rendered prompt); allowedcomponentlabels not all
+present. Two cited supplied hook/failure receipts are outside hidden validator
+whitelist. Native complete response schema passes, semantic validator correctly
+fails. This is interface disclosure failure, not timeout, science refutation or
+evidence that R proposal helps. OriginalC22509input/8521output(reasoning6911
+included), inputreview24088/2158(reasoning1848).2nativeoriginalscompleted,
+0acceptedC/author/attempts/fits/newpredictions. Exact PIDs51668/50909 gone.
+No response normalization, changedvalidator, modelrepeat or neworiginal attempt.
+
+Exact fresh02terminalops preserve native response/completion/rejectedclaim,
+verify bothprocessesgone and all oldledger hashes, retain originalreservation
+snapshot then mark countedoriginal completed_rejected and batchclosed_failed.
+No caprefund/unusedcapacityrenewal. Prospective smallestfix only v2prompt:
+display copyable pairdigest, componentlabels and exact existing citation
+whitelist; validator/schema/scorer/data/permissions remain unchanged. Tests must
+prove display matches unchangedvalidator and rejectedmetadata stillrejects.
+This will be Supervisor H repair, not implementation/adoption of agent R1.
+
+Exactcloseout sourcefirstreview found incomplete terminal proof: manualhashloop
+didnotrequire native8hash/process fields or actual turncompleted. Corrected
+onlythisspecificopshelper to reuse existing t._recover checks, permit ONLY
+its expectedsemantic rejection, then explicitly verify onecompletedturn and
+unchangedfinalresponse; bind originalclaim/ledgerinput/authority/config/transport.
+Reviewer failure preserved; no helperexecuted beforecorrection,0newcalls/fits.
+
+Final exacthelper3968824c independent PASS_SOURCE_ONLY, checkpoint4b37bef.
+Root then actually executed once with originalcore unchanged: terminalguards
+PASS; closed02 at21:24:37.584619UTC,887.584619s window wall. closeout879406cf,
+ledger0c77f78d,2nativeoriginalscompleted/1Cchargedrejected,0acceptedC/authors/
+attempts/fits/predictions. Originalresponse/claim/caps preserved, no refund,
+resample, reopenedclock or oldledger changes. Newprompt repair starts AFTER
+terminal reconciliation so it cannot rewrite original receipt verification.
+
+Prospective prompt-only metadata disclosure added in oneproductionmodule and
+existing transactiontestmodule: exactexistingpairdigest/componentlabels/citation
+eligibility, no schema/validator/authority/scorer edits. First local80test run
+0.621s:79pass/1FAIL in newlegacybytehash assertion. Root incorrectly pinned a
+whole fixture prompt containing ephemeral temporarypath/sourcebinding hashes;
+that hash is not stable across fixture setups. Preserve this engineering test
+failure, then narrow the constant-guidance pin plus dynamicpacket/binding checks.
+No nativecall/training was launched by these tests. This is Supervisorrepair,
+not implementation of the original agent R1 or proven co-evolution.
+
+Corrected only the unstable fixture assertion: pin the constant legacy-guidance
+prefix (unchanged in diff against4b37bef), verify actual current binding values
+and serialized packet suffix. No production behavior changed by correction.
+80focused transaction/consumer tests PASS0.601s; full inherited24module437test
+suite and independent source-only metadata review running. Journal snapshot
+d2b8d50b / decision6c0d55ef idle before this factual terminal status revision.
+One snapshot inspection omitted --snapshot and exited usage2 before mutation;
+corrected inspection then PASS. No accountcall/fit or quota change.
+
+First full24module run actually enumerated441tests,34.761s:8errors under sandbox,
+including /bin/ps PermissionError in real child RSS checks and capacity-hook
+failure cascades. Preserve this outcome rather than calling the run PASS or
+patching instrumentation to bypass it. Rerun SAME local synthetic/inert suite
+with process inspection allowed; no account call/Train fit in these fixtures.
+Earlier437 estimate was not the actual enumeration; inherited fixture reuse
+counts may overlap. Corrected fixture assertion is the only new test repair.
+An attempted log append matched "correct inspection" not "corrected" and
+apply_patch rejected with no file changes; corrected append follows here.
+
+Same24module suite with permitted childprocessinspection:441tests PASS49.134s,
+session95851exit0. Expected invalid fixed.py Gitfixture stderr is not a failure.
+Independent metadatareview PASS_CODE_ONLY80tests0.594s, source7f145abe0898a6c7904e96d3dd5893ad5d461a3844311d82b2a57f1ad5ae43e8,
+test998a37dbc51ca1322fa9e84d1e8609818285d277e421c42df06f91e68c5508f7,
+reviewlog9fa0bf10037d6c27d4a82adb8456dfe4b231f323c94e995a633183b6601b5a37.
+Root read-only rendered exactpreviouspacket under newprompt:56970bytes<=262144,
+exactpaircopyable/alllabelsvisible/26eligiblehashes; no artifact/response change,
+accountcalls0/fits0. Validator83718b1b/micro24842f81 and all old task/runtime
+permissions unchanged. Protectedrunneracfbfbb5/scorerd66b6c6b pinned unchanged.
+This is integrated engineering evidence, not originalR1adoption or realclosure.
+
+One combined explicit fresh03 accountpayload/destination/same2C2author6review/
+2attempt8fits/45min/300s question sent only AFTER local repair/independentreview
+and completed fullregression. New03clock not started, no grant/pilot artifacts,
+no old02retry/unusedcaprenewal. If approved, prepare exactnewscope then run
+existingentry capacity-to-prediction actualfeedbacktest; if not, stopscience.
+Do not repeat the question or invent additional infrastructure while pending.

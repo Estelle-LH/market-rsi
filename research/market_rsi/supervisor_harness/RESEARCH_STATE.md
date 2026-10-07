@@ -1,3 +1,61 @@
+# Current Market RSI decision — 2026-10-07 fresh02 NOT COMPLETE, rejected original closed
+
+The explicitly approved fresh02 formal entry actually ran. Runtime tools-closed
+preflight passed; the independent input review completed PASS in42.701565s.
+The genuine gpt-6.1-sol Controller completed in175.846103s (snapshotunknown),
+proposing R1-VerifiedRecipeEvidenceIndex: reconcile verified outcomes with stale
+memory, distinguish implementation failures from scientific evidence, and test
+provenance retrieval before downstream use. This remains an unaccepted proposal,
+not an implemented/tested/adopted researcher improvement.
+
+First blocking stage: Controller semantic response admission. Exact rejection:
+`capacity parent/scope/component/evidence/resource drift`. Root checked the
+original rendered input: required composite parent digest and accepted component
+labels were not explicitly supplied; two cited supplied receipts were outside
+the existing citation eligibility set. The original was not rewritten, accepted
+post hoc, resampled or refunded. This was an interface failure, not a scientific
+negative result or a timeout.
+
+Source-reviewed exact terminal helper4b37bef ran once before the prompt changed.
+02closed_failed_no_retry at21:24:37.584619UTC:2account originals completed,
+1Controller charged/rejected,0accepted decisions/authors/attempts/reserved or
+entered fits/new predictions/scorecards. Window wall887.584619s, no extension;
+known account totals46597input/10679output tokens (57276total, reasoning already
+included). Subscription USD and Supervisor/review-helper cost are unmetered/
+unknown; paid-provider calls0. Closeout879406cf12041a196d29a90112ab58d549960395e701c6199ec0fd5c320d69e1,
+ledger0c77f78d3b4338e46b0acdc6619de06b401998b647ceee497a13e8f30ecf060f.
+Original authority, deadline, response, all prior closed caps/ledgers, frozen
+price task/scorer, B0incumbent and globalB0/B1 research pool remain unchanged.
+No downstream capacity effect or fixed-process superiority demonstrated.
+
+Prospective repair51b69a8 changes ONLY v2Controller prompt: display copyable exact
+parent digest, accepted layer labels and unchanged eligible evidence hashes.
+No validator/schema/scorer/data/permission change. First synthetic80test run
+had one unstable whole-fixture hash assertion; failure preserved, test corrected
+to fixed instruction text plus actual dynamic binding/packet checks.80focused
+tests now PASS0.601s; exact same full24module regression enumerated441tests and
+PASS49.134s with process inspection permitted. Initial sandbox run8errors/
+34.761s is preserved; no instrumentation bypass. Independent source-only review
+PASS_CODE_ONLY,80tests0.594s, source7f145abe/test998a37db, review9fa0bf10.
+Local read-only render of the original packet under the prospective prompt is
+56970bytes, with exactpair/allcomponentlabels and26eligiblecitationhashes
+visible; no packet/response/artifact change or nativecall. Source checkpoints
+51b69a8 and fixture correctionb6d14ce. This Supervisor interface repair is not
+the agent's R1 implementation and these tests are not a real scientific cycle.
+No further scientific calls in closed02; unused caps do not renew it. Any new
+actual pilot requires a fresh explicitly authorized scope and fresh reviewed
+input/source bindings. Do not turn remaining gaps into a new harness project.
+
+One combined fresh03 whole-pilot payload/destination question is now pending:
+same2C/2author/6review/2attempt8fit45min ceilings, clock starts only after local
+preparation/preflight under new approval; no new batch/artifacts/clock launched
+and no reopening of02. No further account work while pending, no repeatquestion
+or unrelated harness expansion. Next actual cycle is capacity proposal/test
+followed by a prediction candidate using its verifiedfeedback, not preselected
+models or post-hoc reinterpretation of the rejected original.
+
+## Earlier consent and launch history — preserved unchanged below
+
 # Current Market RSI decision — 2026-10-07 fresh02 explicit consent received, launch
 
 Actual structured human reply request_user_input_async/call_e761ff73225149c6ba49c87869cd33f7/0:
