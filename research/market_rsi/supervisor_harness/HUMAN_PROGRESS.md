@@ -2780,3 +2780,43 @@ Use `$market-rsi-repo-hygiene` when asking an agent working in this checkout for
 repo cleanup; integrate the branch with the canonical owner before claiming the
 active Supervisor has adopted it. Instruction/runtime activation remains a
 separate integration action.
+
+## 2026-10-07 — Authorized cleanup-branch publication
+
+User explicitly requested pushing and inspecting the GitHub presentation.
+Starting local source `7e023369e89d1bf3dea0e138a89cb86363983fe1`, clean branch
+`codex/market-rsi-cleanup-20261007`, remote
+`https://github.com/Estelle-LH/market-rsi.git` (public). Publish only this new
+branch, with no force, tags, merge, release or active Supervisor modification.
+Remote main at inspection: `6978e08947992173fb6b29cb260fc1c4e0320618`.
+The cleanup branch includes242commits not reachable from remote main, including
+prior research checkpoints; it is not a24-commit cleanup-only diff. User was
+informed before publication. Local canonical Supervisor has newer concurrent
+source/dirty registry work and is excluded from this push/integration.
+
+Read-only prepublication checks: correct remote/branch, clean candidate tree,
+no tracked `.env`, runtime/artifact/budget authority directories or key files,
+no `.github` push workflow in this source. Targeted scan of1,405new-history
+blobs (including Word XML) found no API/GitHub/AWS-key/private-key patterns or
+excluded operational paths. This is not a complete secret audit. Net cleanup
+diff whitespace checks pass; remote-main comparison reports inherited research
+whitespace findings, preserved rather than rewriting bound historical source.
+Prior22developer/64smoke/369price results remain tied to unchanged executables.
+
+Next: commit this publication scope, push exact HEAD only to
+`refs/heads/codex/market-rsi-cleanup-20261007`, verify the remote SHA and unchanged
+main, then inspect GitHub root/README/guide/skill rendering. Publication outcome
+pending here. Local log archive stays local; earlier source checkpoints preserve
+recovery history. Git publication does not activate code or prove research gains.
+
+Publication attempt was BLOCKED by automatic approval review before the
+combined commit/push command executed. No remote branch, tag, push or merge was
+created, and that planned commit was not made. The reviewer requires explicit
+human approval for the242inherited unpublished research commits and public
+destination; approval to push cleanup alone did not establish that broader
+publication authority. The targeted credential scan cannot establish that the
+research history is suitable for public disclosure. Do not retry through another
+tool or indirect route. Preserve this status in a local documentation checkpoint
+only, open the current README locally for review, and ask the user to choose
+full-history public publication or preparation of a narrowly scoped alternative.
+Existing core, active Supervisor, remote main and local archive remain unchanged.
