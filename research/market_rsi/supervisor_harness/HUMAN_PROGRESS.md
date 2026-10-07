@@ -3086,3 +3086,34 @@ records remain pending rather than extending this publication indefinitely.
 Final pre-push checks: whitespace, clean staged scope, exact source/state
 comparison, full PR comparison inventory, public destination and no duplicate
 PR. Push/PR outcome will be recorded separately; remote main remains untouched.
+
+Public source checkpoint ecc257e831760a54bd5ac3b5f0d89977f16259e3 pushed
+successfully to only codex/market-rsi-cleanup-20261007; remote main remains
+6978e08947992173fb6b29cb260fc1c4e0320618, no tags/force/main push. Draft PR2
+created and attached: https://github.com/Estelle-LH/market-rsi/pull/2,
+OPEN/draft/base main/exact head verified. Published root README blob
+6d0ddcede9f75d3d1e2079c130572abde31f105e exists. First README API read had
+unquoted ?ref shell-glob failure; corrected read succeeded without mutation.
+Incremental history scan68blobs (including DOCX XML), no credential-pattern or
+excluded operational-path hits; earlier full1405blob scan still scoped and
+not a complete confidentiality audit. Supervisor close recheck stillc966660,
+same seven dirty/untracked records untouched. No later committed work omitted.
+
+GitHub PR mergeability initially CONFLICTING. Read-only merge-tree diagnostic
+finds18add/add conflicts (seven native modules/eleven tests), and no other
+tree change compared with current HEAD. Public main commitfdb36e6 explicitly
+exported224source/test files from local b5a2e70546b9d7cde4cbbf1f01f7818f6941e9e9
+with public main as its only parent. Verified all18conflicting main blobs equal
+that original b5a2e705 source exactly; b5a2e705 is an ancestor of this branch.
+Therefore main contains no unincorporated competing source in this boundary;
+conflicts arise from the deliberate source-only history discontinuity.
+
+Bounded integration plan: preserve a checkpoint for this finding, merge exact
+public main6978e08 as a second parent using the current tested source tree
+(-s ours) only because the complete tree diagnostic and18exact blob comparisons
+above prove no unrelated main changes would be discarded. No source file
+replacement, scorer/configuration/runtime change or history rewrite. Allow only
+this progress record beyond the existing identical tree. Verify unchanged full
+tree before result entry, main ancestry/whitespace and clean source, then push
+this merge to the PR branch and verify GitHub mergeability. This is branch
+integration, not merging/deploying main or modifying the active Supervisor.
