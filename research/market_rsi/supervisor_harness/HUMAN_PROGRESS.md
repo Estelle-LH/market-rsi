@@ -1,5 +1,24 @@
 # Market RSI — human progress
 
+## 2026-10-07 14:15 NY — verified pipeline source pushed
+
+Published eight pipeline source/test files to public branch
+market-rsi-pipeline-integration-20261007 at47ea0fc. Exact clean code-only export
+passed369relevant tests54.592s. Its sole parent is already-publicmain6978e089;
+private research history, reports, data and approvals remain local. Remote SHA
+verified; main/tags unchanged, no PR or merge performed. Current dirty user work
+preserved. The temporary clean export is recoverable from this Git commit.
+
+This publishes the connected implementation, not new research evidence.
+Current priority is one real reviewed R/H change, measured benefit and actual
+next-step use; only the predictor loop has prior live evidence. Fresh pilot
+approval remains pending. General known pre-author failure continuation,
+credit1 archived-branch eligibility and hard arbitrary-code containment remain
+limitations, not reasons to keep rebuilding before a bounded pilot. Later:
+matched-budget process comparison, then a separately defined equities earnings
+task with point-in-time data. No new live account calls, Train fits or protected
+data access occurred in this publication block.
+
 ## 2026-10-06 22:10 NY — full production-service route verified locally
 
 Fresh-entry testing found and fixed two concrete integration blockers: timing

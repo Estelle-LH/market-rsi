@@ -896,3 +896,36 @@ No new live scientific cycle occurred. Freeze engineering here; next real test
 needs one fresh complete-role grant and source/input/operation admission, not
 more unrelated repairs. Only existing plan/progress/log and independent review
 artifact are checkpointed; unrelated dirty index/history changes remain local.
+
+2026-10-07T18:15:50UTC /14:15NewYork source-only publication after human request
+"can we push to code base, what are the missing pieces here". Canonical private
+source remainsc81cbdc; origin/main independently confirmed6978e089 before/after.
+Exported exactly eight changed source/test files from that source into a clean
+detached checkout of public main: price_candidate_author.py,
+price_capacity_loop.py, price_loop_handoff.py, run_price_discovery.py and their
+four existing test modules. All are underresearch/market_rsi/supervisor_harness.
+Excluded private report/JSON/JSONL/doc/approval history and the two unrelated
+document-building Python scripts. Byte equality againstc81cbdc, all eight AST
+parses, credential-pattern/literal and known-private-score scansPASS/no matches;
+full staged scope/diff and whitespace inspected. No private source ancestry.
+
+Exact public checkout24-module regression369PASS54.592s using the same pinned
+Python/one-thread command listed above; inert model stdio/fabricated prediction
+outputs and temporary Git/hook/smoke children only. Deliberate bad fixed.py
+message remains an expected negative test. Initial git restore failed before
+copying due index.lock permission; approved local metadata escalation completed
+the identical eight-file copy, not a source repair. No actual account or Train
+calls/fits, provider spend, protected evaluation or new data acquisition.
+
+Public source commit47ea0fc50ca6a9629d1994a49a2f5d216fd4508f, sole parent
+6978e08947992173fb6b29cb260fc1c4e0320618; c81cbdc is NOT its ancestor.
+`git push --no-follow-tags origin refs/heads/market-rsi-pipeline-integration-20261007:refs/heads/market-rsi-pipeline-integration-20261007`
+succeeded; git ls-remote verifies exact branch SHA and unchangedmain. No PR,
+merge, tag/release, force push, original history rewrite or unrelated dirty
+work uploaded. Engineering/source publication is not live co-evolution.
+Fresh pilot approval previously requested remains pending, no window opened.
+Next priorities: real reviewed R/H adoption/downstream-use pilot; known
+pre-author failure continuation and credit1 archived-parent eligibility;
+separate same-budget fixed/evolving evidence; equities earnings target and
+point-in-time data adapter afterwards. Hard arbitrary-code containment and
+OS-hard resource isolation are not established by static guard/sampledRSS.
