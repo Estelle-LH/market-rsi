@@ -42,7 +42,6 @@ Launching requires a separately authorized, fresh bound batch and feedback;
 cleanup tests do not activate a run. No package installation is required.
 The old `python3 -B tools/check.py ...` command remains supported.
 
-For future cleanup, use the repository skill
-[`$market-rsi-repo-hygiene`](.agents/skills/market-rsi-repo-hygiene/SKILL.md).
-[AGENTS.md](AGENTS.md) routes maintenance tasks to it; runtime research policy
-and scientific evaluation remain unchanged.
+[AGENTS.md](AGENTS.md) records shared maintenance and branch-naming guidance.
+Local agent configuration under `.agents/` is ignored; runtime research policy
+and scientific evaluation remain versioned with the core.

@@ -1,11 +1,22 @@
 # Market RSI repository guidance
 
+## Git and local configuration
+
+Use descriptive branch names without the `codex/` prefix or other agent/tool
+branding. Honor any exact branch name requested by the user.
+
+Keep `.agents/` local and ignored by Git. Shared repository guidance belongs in
+this `AGENTS.md`; reusable code and scientific harness policy remain versioned.
+
+## Maintenance
+
 For requested repository cleanup, layout changes or maintenance refactoring,
-read and use the local
-[market-rsi-repo-hygiene skill](.agents/skills/market-rsi-repo-hygiene/SKILL.md).
-It preserves the working core, bound source paths and replayable checkpoints
-while organizing the developer interface. It does not trigger routine cleanup
-during scientific research or add a runtime admission gate.
+use the local `market-rsi-repo-hygiene` skill if available at
+`.agents/skills/market-rsi-repo-hygiene/SKILL.md`. Otherwise follow the development
+guide: preserve core behavior, source bindings and replayable checkpoints;
+inspect the exact changed scope and run relevant regressions. Maintenance
+guidance does not trigger routine cleanup during scientific research or add a
+runtime admission gate.
 
 Read [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for the current layout and checks.
 The root `market_rsi/` package is a developer interface; source-bound core
