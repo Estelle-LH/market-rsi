@@ -995,3 +995,42 @@ is idle status synchronization, not native executor; no published/profit/OOS/
 co-evolution/fixed-process superiority claim.
 Independent source-only helper review registered separately; no private Train
 feedback transfer, account role call or scientific selection delegated to it.
+
+## 2026-10-07 reviewer-completion timeout child — frozen local contract
+
+Parent1db89c9; trigger actual closeout87a586a7, native120.10682s timeout
+despite schema-valid partialPASS/no terminal receipt. AuthorSupervisor at
+human "继续", H only, component bounded account-review completion wait.
+Reuse existing native stdio/once-only/grant/deadline machinery and independent
+review; no new science/literature/source acquisition. Alternatives: accepting
+partialPASS rejected(no completion); automaticretry rejected; relaxing global
+deadline rejected. Prospective explicitly authorized per-role time map is the
+smallest useful change: legacy grants stay120, author<=120, reviews<=300;
+caller reads exact grant, effective wait clipped to refreshed deadline after
+metadata proof, no claim if selection closed. Bind requested/allowed wait in
+original claim; completion semantics unchanged. Observable expected benefit:
+synthetic late terminal receipt can complete within larger explicit review
+allowance; same old allowance still fails, partial/uncertain stays unusable.
+Exact production allowlist price_account_roles.py + price_independent_review.py;
+tests only matching test_price_account_roles.py/test_price_independent_review.py.
+Fixed K/data/scorer/target/folds, Mmodel/runtime, Cpredictor, Rbaseline/memory/
+selection, tools/data/fees/attempt caps; old failed grant/claims/ledger immutable.
+Matched tests: legacy/success, latecomplete vs timeout, uncertain failure,
+completed coldreplay, invalid grants and after-probe deadline/selection clip.
+Local tests/review only until fresh pending20261007-01wholebatch human reply.
+New scientific timer not opened; no account call/fit. Earn at most engineering
+L1/L2, not autonomous capacity or predictive gain. Rollback1db89c9 source only,
+never reset operational history. Root implements; source-only independent helper
+review follows frozen diff and owns its new log, no private data/role call.
+
+Structured whole-batch approval now received: call_McgTKX5H5sbgMuxk8xmOvLdi
+question0, answer "批准上述新批次", exact fresh20261007-01 scope. Reviewer300s,
+Controller/author120s,45min after preparation,2Controller+2author+6reviews,
+2attempts/8fits, serial/thread1/900s/1GiB sampled,256KiB compact private
+aggregates/history/source, signed-in gpt-6.1-sol(snapshotunknown), no raw rows,
+retry, paid provider, acquisition, DevFinal or publication. No timer/call/fit yet.
+Focused50synthetic/inert-native tests PASS4.364s. Before first test invocation,
+removed an unnecessary recursive digest mock from the new reviewer fixture;
+not a real run failure. Real stdio fixture emits complete-looking JSON before
+terminal; late terminal passes with prospective300 allowance, partial-only
+times out and blocks retry. Refreshed metadata admission and deadline tested.

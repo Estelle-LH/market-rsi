@@ -21,6 +21,22 @@ DISABLED = ("shell_tool", "unified_exec", "shell_snapshot", "apps", "plugins", "
     "workspace_dependencies", "unbounded_connection_retries")
 
 
+def call_limits(roles):
+    """Legacy120 remains exact; longer reviews need an explicit bound grant."""
+    maximum = roles.get("max_call_seconds")
+    limits = roles.get("call_seconds")
+    if limits is None and "call_seconds" not in roles:
+        if type(maximum) is not int or maximum != 120:
+            raise ValueError("legacy role timeout must remain120")
+        return {role: 120 for role in ROLES}
+    if (type(limits) is not dict or set(limits) != ROLES
+            or any(type(value) is not int or not 0 < value <= (120 if role == "author" else 300)
+                   for role, value in limits.items())
+            or type(maximum) is not int or maximum != max(limits.values())):
+        raise ValueError("explicit bounded per-role timeouts required")
+    return dict(limits)
+
+
 def _grant(root, binding):
     if (not root.is_absolute() or root.resolve() != root or not root.is_dir()
             or binding.get("path") != str(root / "authorization.json")):
@@ -28,13 +44,13 @@ def _grant(root, binding):
     grant = c._read(binding)
     account, roles = grant.get("account_transfer", {}), grant.get("account_roles", {})
     input_limit(grant, "account_roles")
+    call_limits(roles)
     caps = roles.get("caps", {})
     if (grant.get("granted") is not True or grant.get("batch_id") != root.name
             or grant.get("schema") != "market_rsi_bounded_coevo_pilot_authorization_v1"
             or account.get("requested_model") != c.MODEL or account.get("serving_snapshot") != "unknown"
             or roles.get("approved") is not True or roles.get("destination") != DESTINATION
             or roles.get("requested_model") != c.MODEL or roles.get("serving_snapshot") != "unknown"
-            or roles.get("max_call_seconds") != 120 or type(roles.get("max_call_seconds")) is not int
             or set(caps) != ROLES or any(type(n) is not int or not 0 < n <= 2 for n in caps.values())
             or any(roles.get(key) is not False for key in ("raw_train_transfer", "tools_enabled", "automatic_retry"))
             or grant.get("closed") != {key: True for key in
@@ -310,7 +326,8 @@ def role_call(role, packet, schema, *, root, grant_binding, role_id, timeout_sec
     root = Path(root); grant = _grant(root, grant_binding)
     if role not in ROLES or not isinstance(role_id, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", role_id):
         raise ValueError("exact bounded role/operation ID required")
-    if type(timeout_seconds) not in (int, float) or not 0 < timeout_seconds <= grant["account_roles"]["max_call_seconds"]:
+    allowed_timeout = call_limits(grant["account_roles"])[role]
+    if type(timeout_seconds) not in (int, float) or not 0 < timeout_seconds <= allowed_timeout:
         raise ValueError("bounded role timeout required")
     envelope = {"role": role, "role_id": role_id, "payload": packet, "requested_model": c.MODEL, "serving_snapshot": "unknown"}
     if len(_prompt(envelope).encode("utf-8")) > input_limit(grant, "account_roles"):
@@ -318,7 +335,8 @@ def role_call(role, packet, schema, *, root, grant_binding, role_id, timeout_sec
     json.dumps(schema, allow_nan=False)
     source = c.sha(Path(__file__).resolve())
     claim = {"role": role, "role_id": role_id, "input_sha256": c._digest(envelope), "schema_sha256": c._digest(schema),
-        "authorization": grant_binding, "source_sha256": source, "cli_sha256": c.CLI_SHA}
+        "authorization": grant_binding, "source_sha256": source, "cli_sha256": c.CLI_SHA,
+        "requested_timeout_seconds": timeout_seconds, "allowed_timeout_seconds": allowed_timeout}
     calls = root / "role_calls"
     if calls.exists() and calls.resolve() != calls: raise ValueError("role directory symlink")
     calls.mkdir(exist_ok=True)
@@ -337,13 +355,23 @@ def role_call(role, packet, schema, *, root, grant_binding, role_id, timeout_sec
         proof = (_test_policy or (lambda: native_preflight(root, grant_binding)))()
         if proof.get("operational_ready") is not True:
             raise RuntimeError("runtime tools-closed enforcement unverified; no role reservation or account call")
+        now = datetime.now(timezone.utc)  # Metadata verification used actual window time.
+        if not c._time(grant["start_utc"]) <= now < c._time(grant["selection_cutoff_utc"]):
+            raise ValueError("fresh role selection window closed after runtime verification")
+        effective_timeout = min(timeout_seconds, (c._time(grant["deadline_utc"]) - now).total_seconds())
         directory.mkdir(parents=True, exist_ok=False)
         if directory.resolve() != directory: raise ValueError("role operation directory symlink")
         c.save(directory / "policy.json", proof); c.save(directory / "input.json", envelope)
         c.save(directory / "schema.json", schema); c.save(directory / "claim.json", claim)
+        c.save(directory / "timeout.json", {"requested_seconds": timeout_seconds,
+            "allowed_seconds": allowed_timeout, "effective_seconds": effective_timeout,
+            "deadline_utc": grant["deadline_utc"], "admitted_at_utc": now.isoformat()})
         started = time.monotonic()
         try:
-            (_test_transport or _transport)(directory, envelope, min(timeout_seconds, (c._time(grant["deadline_utc"]) - now).total_seconds()))
+            remaining = (c._time(grant["deadline_utc"]) - datetime.now(timezone.utc)).total_seconds()
+            if remaining <= 0:
+                raise TimeoutError("batch deadline reached before original role process")
+            (_test_transport or _transport)(directory, envelope, min(effective_timeout, remaining))
             result = _recover(directory, claim, schema)
             c.save(directory / "timing.json", {"wall_seconds": time.monotonic() - started, "usage": result["usage"]})
             return result

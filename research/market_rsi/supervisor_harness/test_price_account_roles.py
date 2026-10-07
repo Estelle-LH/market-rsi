@@ -16,7 +16,7 @@ RESPONSE = {"schema": "synthetic_role_v1", "answer": "synthetic fixture; not a m
 # Real subprocess/stdio exercise, but this inert child is not Codex and performs
 # no network/account call. The production Popen is replaced only inside tests.
 RPC_FIXTURE = r'''
-import json, sys
+import json, sys, time
 settings = json.loads(sys.argv[1])
 def emit(message):
     print(json.dumps(message), flush=True)
@@ -32,6 +32,10 @@ for line in sys.stdin:
     elif method == "turn/start":
         emit({"id": 2, "result": {"turn": {"id": "synthetic-turn"}}})
         emit({"method": "turn/started", "params": {"turn": {"id": "synthetic-turn"}}})
+        emit({"method": "item/agentMessage/delta", "params": {"delta": json.dumps(settings["response"])}})
+        if settings.get("partial_only"):
+            continue
+        time.sleep(settings.get("completion_delay", 0))
         emit({"method": "item/completed", "params": {"item": {"type": "agentMessage", "phase": "final",
             "text": json.dumps(settings["response"])}}})
         emit({"method": "thread/tokenUsage/updated", "params": {"tokenUsage": {"last": {"input_tokens": 7, "output_tokens": 3}}}})
@@ -89,10 +93,77 @@ class RoleTests(unittest.TestCase):
         p.c.save(directory / "completion.json", {"exit_code": 0, "timed_out": False,
             "source_sha256": p.c.sha(Path(p.__file__).resolve()), "transport_contract": p.transport_contract(), "hashes": {name: p.c.sha(directory / name) for name in names}})
 
-    def call(self, role="author", role_id="original-1", packet=None, transport=None, policy=None):
+    def call(self, role="author", role_id="original-1", packet=None, transport=None, policy=None, timeout_seconds=120):
         return p.role_call(role, packet or {"synthetic": True}, SCHEMA, root=self.root,
             grant_binding=self.binding, role_id=role_id, _test_transport=transport or self.transport,
-            _test_policy=policy or (lambda: {"synthetic": True, "operational_ready": True}))
+            _test_policy=policy or (lambda: {"synthetic": True, "operational_ready": True}), timeout_seconds=timeout_seconds)
+
+    def explicit_review_grant(self):
+        self.grant['account_roles'].update(max_call_seconds=300,
+            call_seconds={role: 120 if role == 'author' else 300 for role in p.ROLES})
+        self.bind_grant()
+
+    def test_explicit_review_wait_and_legacy_ceiling(self):
+        with self.assertRaisesRegex(ValueError, 'bounded role timeout'):
+            self.call(role='input_review', timeout_seconds=300)
+        self.assertFalse((self.root / 'role_calls').exists())
+        self.explicit_review_grant(); observed = []
+        def late_completion(directory, packet, timeout):
+            observed.append(timeout)
+            if timeout < 180:  # Virtual latency; no real account or180s sleep.
+                raise subprocess.TimeoutExpired('inert late terminal receipt', timeout)
+            self.transport(directory, packet, timeout)
+        first = self.call(role='input_review', timeout_seconds=300, transport=late_completion)
+        self.assertEqual(observed, [300]); self.assertEqual(self.calls, 1)
+        self.assertEqual(first, self.call(role='input_review', timeout_seconds=300))
+        self.assertEqual(self.calls, 1)
+        with self.assertRaisesRegex(ValueError, 'claim drift'):
+            self.call(role='input_review', timeout_seconds=120)
+        with self.assertRaisesRegex(ValueError, 'bounded role timeout'):
+            self.call(timeout_seconds=300)
+
+    def test_invalid_review_time_grants_fail_before_claim(self):
+        self.explicit_review_grant()
+        valid = json.loads(json.dumps(self.grant['account_roles']))
+        for value in [None, {}, {'input_review': 300},
+                      {**valid['call_seconds'], 'author': 121},
+                      {**valid['call_seconds'], 'source_review': 301},
+                      {**valid['call_seconds'], 'input_review': True}]:
+            self.grant['account_roles'] = {**valid, 'call_seconds': value}; self.bind_grant()
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'timeouts'):
+                self.call(role='input_review', timeout_seconds=300)
+        self.grant['account_roles'] = {k: v for k, v in valid.items() if k != 'call_seconds'}; self.bind_grant()
+        with self.assertRaisesRegex(ValueError, 'legacy role timeout'): self.call()
+        self.assertEqual(self.calls, 0); self.assertFalse((self.root / 'role_calls').exists())
+
+    def test_wait_clipped_to_deadline_after_runtime_probe(self):
+        self.explicit_review_grant()
+        deadline = p.c._time(self.grant['deadline_utc'])
+        before = deadline - timedelta(seconds=400)
+        after = deadline - timedelta(seconds=350)
+        # The cutoff is300s beforedeadline; metadata consumes50s of a400s remainder.
+        self.grant['account_roles']['call_seconds']['input_review'] = 300; self.bind_grant()
+        observed = []
+        def record(directory, packet, timeout):
+            observed.append(timeout); self.transport(directory, packet, timeout)
+        # Set an explicit early selection cutoff closer todeadline in this disposable fixture.
+        self.grant['selection_cutoff_utc'] = (deadline-timedelta(seconds=1)).strftime('%Y-%m-%dT%H:%M:%SZ')
+        self.bind_grant(); after = deadline-timedelta(seconds=40)
+        with patch.object(p, 'datetime') as clock:
+            clock.now.side_effect = [before, after, after]
+            self.call(role='input_review', timeout_seconds=300, transport=record)
+        self.assertEqual(observed, [40]); self.assertEqual(self.calls, 1)
+        value = p.c._json((self.root/'role_calls/input_review/original-1/timeout.json').read_bytes())
+        self.assertEqual(value['effective_seconds'], 40)
+
+    def test_runtime_probe_crosses_selection_cutoff_without_role_claim(self):
+        cutoff = p.c._time(self.grant['selection_cutoff_utc'])
+        with patch.object(p, 'datetime') as clock:
+            clock.now.side_effect = [cutoff-timedelta(seconds=1), cutoff+timedelta(seconds=1)]
+            with self.assertRaisesRegex(ValueError, 'closed after runtime'):
+                self.call()
+        self.assertEqual(self.calls, 0)
+        self.assertFalse(list((self.root/'role_calls').glob('*/*/claim.json')))
 
     def test_complete_replay_no_resample(self):
         a = self.call(); b = self.call()
@@ -235,10 +306,10 @@ class RoleTests(unittest.TestCase):
             with self.assertRaises(ValueError): p._validate(value, {"type": "integer", "minimum": 0, "maximum": 2})
         p._validate(2, {"type": "integer", "minimum": 0, "maximum": 2})
 
-    def native_fixture(self, *, environments=None, status="completed", model=None):
+    def native_fixture(self, *, environments=None, status="completed", model=None, completion_delay=0, partial_only=False):
         original_popen = subprocess.Popen
         settings = {"model": model or p.c.MODEL, "environments": [] if environments is None else environments,
-            "status": status, "response": RESPONSE}
+            "status": status, "response": RESPONSE, "completion_delay": completion_delay, "partial_only": partial_only}
         def launch(command, **kwargs):
             self.assertEqual(command, p.native_command(None))
             return original_popen([sys.executable, "-u", "-c", RPC_FIXTURE, json.dumps(settings)], **kwargs)
@@ -257,6 +328,28 @@ class RoleTests(unittest.TestCase):
         self.assertGreater(process["pid"], 0)
         self.assertEqual(completion["exit_code"], 0)
         self.assertIsInstance(completion["process_exit_code"], int)
+
+    def test_review_grant_reaches_real_stdio_and_waits_for_delayed_terminal(self):
+        self.explicit_review_grant()
+        with self.native_fixture(completion_delay=.08):
+            first = self.call(role='input_review', timeout_seconds=300, transport=p._transport)
+        self.assertEqual(first, self.call(role='input_review', timeout_seconds=300))
+        self.assertEqual(first['usage'], {'input_tokens': 7, 'output_tokens': 3})
+        directory = Path(first['completion_binding']['path']).parent
+        self.assertEqual(p.c._json((directory/'claim.json').read_bytes())['allowed_timeout_seconds'], 300)
+        self.assertIn('turn/completed', (directory/'native-events.jsonl').read_text())
+
+    def test_schema_valid_partial_json_still_not_completed_or_retryable(self):
+        self.explicit_review_grant()
+        with self.native_fixture(partial_only=True):
+            with self.assertRaises(subprocess.TimeoutExpired):
+                self.call(role='input_review', timeout_seconds=.1, transport=p._transport)
+        directory = self.root/'role_calls/input_review/original-1'
+        self.assertTrue((directory/'failure.json').exists())
+        self.assertFalse((directory/'completion.json').exists())
+        self.assertIn('item/agentMessage/delta', (directory/'native-events.jsonl').read_text())
+        with self.assertRaisesRegex(RuntimeError, 'uncertain'):
+            self.call(role='input_review', role_id='another-original', timeout_seconds=300)
 
     def test_native_ack_failure_never_sends_model_turn(self):
         for settings in [{"environments": [{"id": "forbidden"}]}, {"model": "wrong-model"}]:
