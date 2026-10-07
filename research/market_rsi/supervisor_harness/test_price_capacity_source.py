@@ -6,6 +6,8 @@ from supervisor_harness import price_capacity_source as s
 
 SOURCE = """def apply(context):
     lessons = context.get('history', [])
+    if isinstance(lessons, dict):
+        lessons = [lessons.get('last_experiment', {})]
     negative = [x for x in lessons if x.get('decision') == 'REVERT']
     return {'negative_count': len(negative), 'remaining_questions': [x.get('question') for x in negative]}
 """

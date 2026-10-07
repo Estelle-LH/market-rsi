@@ -47,7 +47,8 @@ def prepare(runtime, implementation, static_review, reviewer, adapter):
         expected_state_sha256=state["state_sha256"])
     pending = adapter.batch.snapshot()["micro_evolution"]["pending"]
     request = {"implementation": implementation, "source_review": static_review, "decision": decision,
-        "cases": cases, "before": before, "after": after, "entrypoints": account["entrypoints"],
+        "cases": cases, "downstream_context": {key: packet[key] for key in ("feedback", "memory", "history", "pool")},
+        "before": before, "after": after, "entrypoints": account["entrypoints"],
         "binding": {"proposal_sha256": pending["record_sha256"], "before_identity_sha256": t.c._digest(before),
             "after_identity_sha256": t.c._digest(after), "tested_pair_sha256": t.c._digest(pending["pair"]),
             "anchor_pair_sha256": t.c._digest(state["micro_evolution"]["anchor_pair"])}}
@@ -85,6 +86,7 @@ def execute(runtime, prepared, adapter):
     try:
         for name, context in sorted(request["cases"].items()):
             for phase in ("before", "after"): call(name + "-" + phase, phase, context)
+        for phase in ("before", "after"): call("current_input-" + phase, phase, request["downstream_context"])
         checks.update(success_replay=True, failure_feedback=True, historical_replay=True)
         checks["restart"] = all(call("cold-restart-" + phase, phase, request["cases"]["restart"])
             == outputs["restart-" + phase]["output"] for phase in ("before", "after"))
@@ -115,11 +117,13 @@ def result_material(runtime, material, reviewer):
     request, evidence = t.c._read(material["request"]), t.c._read(material["measurement"])
     account = source_scope(runtime, request["implementation"], request["source_review"], reviewer)
     author = t.c._read(request["implementation"]["author_receipt"])
-    original_cases = t.c._read(author["original_input"])["source_context"]["capacity_replay_cases"]
+    original_packet = t.c._read(author["original_input"])
+    original_cases = original_packet["source_context"]["capacity_replay_cases"]
     if (account["before_identity"] != request["before"] or account["after_identity"] != request["after"]
             or account["original_controller_response"] != request["decision"]
             or evidence.get("request") != material["request"] or evidence.get("binding") != request["binding"]
             or request["cases"] != original_cases or evidence.get("cases_sha256") != t.c._digest(original_cases)
+            or request["downstream_context"] != {key: original_packet[key] for key in ("feedback", "memory", "history", "pool")}
             or material["execution_outcome"] != ("succeeded" if evidence["error_type"] is None else "failed")):
         raise ValueError("measured replay/source/original binding drift")
     for name, output in evidence["outputs"].items():
@@ -132,7 +136,8 @@ def result_material(runtime, material, reviewer):
         source = request["implementation"]["source"] if phase == "after" else {
             "path": str(runtime.repo / entries[{"researcher": "R", "harness": "H"}[request["decision"]["action"]]]),
             "sha256": request["before"]["components"][{"researcher": "R", "harness": "H"}[request["decision"]["action"]]]["sources"][entries[{"researcher": "R", "harness": "H"}[request["decision"]["action"]]]]}
-        if (call_input["context"] != request["cases"][case] or receipt["source"] != source
+        context = request["downstream_context"] if case == "current_input" else request["cases"][case]
+        if (call_input["context"] != context or receipt["source"] != source
                 or receipt["succeeded"] != output["succeeded"] or receipt["process_reaped"] is not True
                 or receipt["python"] != request["before"]["runtime"]["python"]
                 or call_input["adapter"] != replay.pin(Path(replay.__file__).resolve())
@@ -141,7 +146,7 @@ def result_material(runtime, material, reviewer):
             raise ValueError("actual measured child differs from submitted output")
     if all(evidence["checks"].values()):
         required = {name + "-" + phase for name in CASES for phase in ("before", "after")} | {
-            "cold-restart-before", "cold-restart-after", "rollback-before"}
+            "current_input-before", "current_input-after", "cold-restart-before", "cold-restart-after", "rollback-before"}
         outputs = evidence["outputs"]
         if (set(outputs) != required or any(not output["succeeded"] for output in outputs.values())
                 or any(outputs["cold-restart-" + phase]["output"] != outputs["restart-" + phase]["output"]

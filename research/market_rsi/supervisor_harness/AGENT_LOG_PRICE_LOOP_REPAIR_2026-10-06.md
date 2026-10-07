@@ -569,3 +569,12 @@ history=object. Four hand-chosen replay contexts alone could miss a downstream
 type error. Preserve this result; add the original real packet frame to matched
 before/after replay and author context, rather than mutate runtime history or
 weaken acceptance. This is execution compatibility, not a scientific rejection.
+
+Downstream-frame repair, parent4a5e7c2: author sees the exact actual hook-frame
+shape; matched execution adds parent/new calls on that frozen original frame,
+and independent result material verifies it against the saved input. This
+prevents activation on self-selected cases alone. Synthetic fixture source now
+explicitly supports both history-object/frame and test-list inputs; no live
+candidate or original was repaired in place.30PASS11.084s across hook, trial,
+author and source tests. Actual selected output is saved in the next source
+binding and parent/pool/scorer remain untouched. Official installation pending.

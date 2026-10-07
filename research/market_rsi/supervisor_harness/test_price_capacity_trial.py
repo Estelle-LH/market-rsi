@@ -35,7 +35,7 @@ class TrialTests(TestCase):
     def test_actual_matched_outputs_and_replay_not_activation(self):
         prepared = self.prepare(); measured = trial.execute(self.runtime, prepared, self.adapter)
         evidence = trial.t.c._read(measured['measurement'])
-        self.assertTrue(all(evidence['checks'].values())); self.assertEqual(len(evidence['outputs']), 11)
+        self.assertTrue(all(evidence['checks'].values())); self.assertEqual(len(evidence['outputs']), 13)
         self.assertEqual(evidence['outputs']['failure-before']['output'], {})
         self.assertEqual(evidence['outputs']['failure-after']['output']['remaining_questions'], ['failure'])
         expected, account, checks = trial.result_material(self.runtime, measured, self.f.reviewer)
