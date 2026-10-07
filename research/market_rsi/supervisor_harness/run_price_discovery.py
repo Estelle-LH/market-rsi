@@ -315,7 +315,7 @@ def build(batch_configuration):
         service.capacity = price_capacity_loop.PriceCapacityLoop(service, config["capacity_configuration"], capacity_author, reviewer)
     service.completed_prefix, service.recovered_seed_sha256 = prefix, seed_hash
     service.restored_stages = restored
-    service.recovery_directory = "price-loop-admission-v3" if round2 else "price-loop-admission-v2"
+    service.recovery_directory = "price-loop-admission-v3" if round2 else "price-loop-admission-v2" if "recovery" in config else "price-loop"
     service.recovery_binding = config.get("recovery")
     return config, service, account
 

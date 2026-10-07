@@ -800,3 +800,18 @@ recovery keeps its old namespace. No new directory workaround, permission,
 source/score/grant change or original retry. Test backend uses inert stdio,
 not Codex; zero live account science and actual Train fits. Next same-entry
 test uses a fresh disposable fixture, not the failed operational ID.
+
+F6b second actual-service test1ERROR1.899s: fresh timing repair works; the first
+capacity original, author/source/test, thirteen matched trials and result review
+complete and select the proposed version. The next Controller sees actual new
+hook output, but its remaining_questions is empty: capacity reconciliation
+buried the latest last_experiment under history.prior. The tested pre-transition
+frame and actual post-transition interface therefore disagree. Preserve this
+source/outcome before repair; do not change the proposed synthetic hook or
+pretend its downstream evidence succeeded. F6b2 H contract, only
+price_capacity_loop.py plus existing test/log: carry the existing scientific
+last_experiment field into the new history projection while recording the
+capacity change separately and preserving all original bytes. No score,
+incumbent, credit, raw data, fixed identities, budget or call changes. Expected
+effect: actual selected hook can consume the same last scientific finding in
+round two and native C handoff retains that pair. Zero live calls/Train fits.
