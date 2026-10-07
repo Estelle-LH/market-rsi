@@ -1,10 +1,28 @@
 # Market RSI：预测研究
 
-**架构入口：**先读 [Market RSI 系统架构](ARCHITECTURE.md)。它区分当前已经运行的 Supervisor/Controller 路径、尚未准入的 Researcher/Data 路径和最终预测实验，并给出状态机、信任边界、代码地图与持久化布局。
+## 当前代码入口（2026-10-07）
 
-**当前研究问题：**在未见的未来比赛上，能否把 NFL prediction-market 价格变化预测得比一个充分调过的强时序基线更准？本项目只比较预测准确度；其他项目的交易收益、研究代理能力和训练分数都不是这里的 benchmark。先看 [Prediction benchmark v0](PREDICTION_BENCHMARK_V0_2026-09-16.md)和[强基线选拔研究](STRONG_FORECAST_BASELINES_2026-09-16.md)：零变化/Ridge是参考线，正式对手须在开放 Train 上公平选拔、冻结。配套 [开发版评分器](prediction_benchmark_v0/score.py)目前只用合成数据验证；它没有打开封存集，也不是新模型成绩。
+当前开发主线是反馈驱动的价格研究管道，并接入小步 R/H 共演化提案、
+审查和激活机制。代码地图和明确的合成测试入口见
+[开发指南](../../DEVELOPMENT.md)。生产入口是
+[`supervisor_harness/run_price_discovery.py`](supervisor_harness/run_price_discovery.py)，
+连接研究角色、候选实现、源码审查、执行、结果审查和反馈回传。
 
-目前 2025 年的 163 场 Train 已开放、旧 50 场 Route-Dev 已经用过一次，40 场 Final 仍封存；赛程元数据表明 Final 只跨 11 个比赛日，按当前规则最多算 pilot。2024 年来源扩展还只是 [数据 screen](NFL_2024_DATA_EXPANSION_SCREEN_2026-09-16.md)，并未进入正式训练。现有的 30 秒 Train-only 方法分数不能直接填到 60 秒新 benchmark 榜单。历史 play 时间也不是实时接收时间，因此离线预测与未来的实时预测分开报告。
+现有价格任务预测同一 token 的五分钟交易 VWAP 变化；它使用历史交易数据，
+不能直接代表可成交报价或交易收益。R/H 钩子已经完成源码接入和合成回归测试，
+真实共演化效果仍需后续实验验证。Equities/earnings 数据适配是下一步计划。
+实时研究状态见 [Supervisor 决策状态](supervisor_harness/RESEARCH_STATE.md)。
+
+下面保留各阶段的设计和实验记录。带日期的协议、模型名称、授权和评分结果
+按其原始实验解释；新一轮运行以其明确绑定的配置和授权为准。
+
+## 历史预测设计（2026-09-16）
+
+**当时的架构入口：**[Market RSI 系统架构](ARCHITECTURE.md)。它记录当时的 Supervisor/Controller 路径、尚未准入的 Researcher/Data 路径和最终预测实验，并给出状态机、信任边界、代码地图与持久化布局。
+
+**当时的研究问题：**在未见的未来比赛上，能否把 NFL prediction-market 价格变化预测得比一个充分调过的强时序基线更准？这一协议只比较预测准确度；其他项目的交易收益、研究代理能力和训练分数都不是这里的 benchmark。先看 [Prediction benchmark v0](PREDICTION_BENCHMARK_V0_2026-09-16.md)和[强基线选拔研究](STRONG_FORECAST_BASELINES_2026-09-16.md)：零变化/Ridge是参考线，正式对手须在开放 Train 上公平选拔、冻结。配套 [开发版评分器](prediction_benchmark_v0/score.py)当时只用合成数据验证；它没有打开封存集，也不是新模型成绩。
+
+当时 2025 年的 163 场 Train 已开放、旧 50 场 Route-Dev 已经用过一次，40 场 Final 仍封存；赛程元数据表明 Final 只跨 11 个比赛日，按该协议最多算 pilot。2024 年来源扩展还只是 [数据 screen](NFL_2024_DATA_EXPANSION_SCREEN_2026-09-16.md)，并未进入正式训练。当时的 30 秒 Train-only 方法分数不能直接填到 60 秒新 benchmark 榜单。历史 play 时间也不是实时接收时间，因此离线预测与未来的实时预测分开报告。
 
 ## 历史研究代理记录（非当前预测 benchmark）
 

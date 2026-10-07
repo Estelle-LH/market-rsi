@@ -2247,3 +2247,41 @@ occupancy calculation reproduces4485/2721/1848/190coverage in0.666s. Plan/audit
 source hashes, fold totals and unchanged closed ledger checked. This is independent
 algorithm verification by Supervisor, not a separate agent/human review. Full
 repository suite not run because existing experiment/harness code was not changed.
+
+## 2026-10-07 — bounded developer-entry cleanup (human-directed, pending verification)
+
+Observed problem: the root README has no current pipeline map, the project
+README leads with the September 16 setup, and its advertised test command does
+not exercise the current price/co-evolution services. This pass changes one
+component: developer navigation and the explicit synthetic regression entry.
+Expected effect: a developer can identify the current services and run a named
+regression suite without constructing a live research batch.
+
+Parent and rollback source: `7b6da3527eb5b77c4692adc8d8051006cbf3e063`.
+Author: human-requested Codex cleanup; axis H/developer tooling, not autonomous
+R/H evolution. Isolated branch `codex/market-rsi-cleanup-20261007`; the shared
+Supervisor checkout and its uncommitted work are not changed.
+
+Exact allowed files: `README.md`, `DEVELOPMENT.md`, `tools/check.py`,
+`tools/tests/test_check.py`, `research/market_rsi/README.md`, and this progress
+file. Protected: every production service, evaluator, candidate, dataset,
+runtime/dependency specification, source pin, immutable experiment record,
+authority and budget file. K/M/C and operational H/R remain at the parent
+source identities; no new scientific identity or activated runtime is claimed.
+
+Reuse: the already-implemented production-entry and synthetic service tests;
+this introduces no new scientific method or changed data assumption requiring
+literature research. Planned checks: new test-wrapper unit tests, an explicit
+small smoke suite, the existing 24-module price/capacity regression set, and
+`git diff --check`. Test ceiling: one run per suite, at most five minutes each,
+single numerical-library thread; no Train fits, account calls, downloads,
+installation, push, deployment or live launch. Synthetic test runtime: existing
+Python 3.12.3; research model/data/memory manifests and live receipts: N/A.
+
+Initial verification: `git diff --check` passes. With the existing Python
+3.12.3 runtime, `python -B -m unittest discover -s tools/tests -v` passes all
+eight new wrapper tests (0.001s reported test time). These test explicit module
+selection, list-only behavior, interpreter/cwd/environment handling, failure
+status, timeout and invalid-suite rejection; subprocess execution is mocked.
+Inherited smoke/price suites remain pending. Next step: checkpoint this source,
+run the selected inherited suites, and append their measured results.
