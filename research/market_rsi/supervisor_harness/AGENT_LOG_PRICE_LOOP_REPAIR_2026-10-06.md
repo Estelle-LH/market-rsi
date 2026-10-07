@@ -522,3 +522,17 @@ No rawTrain/model input, calls, fits, live grant or registry activation. Parent
 891e02e; new module/test and this log only. Source is recoverable; real pilot
 and independent final activation not established. Actual process check found
 no Market RSI training/entry worker; only the read-only check itself matched.
+
+F3c(b) measured adapter: source verdict and successful exact smoke required
+before proposing to existing CapacityActivation. Four supplied JSON contexts
+must already be frozen inside the original Controller input; no post-result
+oracle or substituted science. Eleven separate child calls cover paired four
+contexts, two cold restarts and parent re-use after the shadow. The unchanged
+axis and protected manifests are rechecked. Requests/outputs bind actual
+child/source/runtime; positive compatibility requires the full replay set.
+These are function replay checks, not full-driver crash recovery or scientific
+benefit. Benefit is deliberately not self-certified and selected pair remains
+the parent. Rejected capacity/result routing is the next bounded substep.
+Initial4PASS3.095s on pinned one-thread Python (test_price_capacity_trial);
+synthetic account roles and temporary real Git/native journal, actual pure
+Python processes; no new account originals or Train fits. Final recheck below.

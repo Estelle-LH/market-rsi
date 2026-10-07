@@ -42,13 +42,14 @@ class CapacityAuthorTests(TestCase):
         self.h.authorization['account_roles'] = {'capacity_changes_approved': True, 'max_input_bytes': 262144}
         self.calls = []; self.transport = Mock(side_effect=self.role)
 
-    def start(self, *, axis='researcher', history=None, limit=262144):
+    def start(self, *, axis='researcher', history=None, limit=262144, replay_cases=None):
         self.fixture.action = axis
         self.h.authorization['account_roles']['max_input_bytes'] = limit
         self.h.authorization_binding = self.h.write('authorization', self.h.authorization)
         self.packet['authority'] = self.h.authorization
         self.packet['action_context']['identity_configuration']['fixed_context']['authority_sha256'] = self.h.authorization_binding['sha256']
         self.packet['source_context'] = {'capacity_identity': self.before, 'capacity_entrypoints': self.entrypoints}
+        if replay_cases is not None: self.packet['source_context']['capacity_replay_cases'] = replay_cases
         self.packet['bindings']['source_context'] = self.h.write('capacity-source-context', self.packet['source_context'])
         if history is not None: self.packet['history'] = history
         self.fixture.bind()
