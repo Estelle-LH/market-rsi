@@ -2969,3 +2969,14 @@ this chat; no separate raw-output artifact/hash is claimed. No live model call,
 real Train fit, operational ledger change, active-checkout activation, merge to
 remote main, public push or release. Public research-history approval remains
 pending. Recheck Supervisor once more if publishing later, since it is active.
+
+Final canonical-check correction after result checkpoint `1264844`: Supervisor
+advanced to `bc70adf02008fa3edebcf99ea9deb35b3eccc3a8` while the result entry was
+being written. Its one new commit is documentation/evidence only: new call-chain
+review log, repair log, human intervention/progress and state; no executable,
+configuration or task changes. The earlier no-later-commit observation applies
+only to its preceding check, not this newer tip. Extend import scope to the
+new call-chain review and human intervention files; merge this exact committed
+tip too, preserve both progress histories and confirm production bytes stay
+identical to verified `811ccc4`. Prior389regressions remain applicable if that
+comparison passes. Publication hold and ownership of dirty records stay fixed.
