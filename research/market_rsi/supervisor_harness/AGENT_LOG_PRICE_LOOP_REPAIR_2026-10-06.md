@@ -815,3 +815,16 @@ capacity change separately and preserving all original bytes. No score,
 incumbent, credit, raw data, fixed identities, budget or call changes. Expected
 effect: actual selected hook can consume the same last scientific finding in
 round two and native C handoff retains that pair. Zero live calls/Train fits.
+
+F6b third full actual-service testPASS3.152s. One formal entry constructs and
+executes genuine adapters: input review/original -> capacity author -> separate
+source verdict/real smoke -> thirteen measured parent/new trials -> separate
+benefit verdict/native selection -> actual selected hook in the next original
+input -> C author/reviewer/worker/scorer/reconcile. Ten inert native-stdio role
+responses, one synthetic worker, global attempts[0,4]reservedfits. Actual local
+Git/source binding, saved native wire, smoke and hook children; no actual account
+or Train fitting. Pair matches downstream native request, and cold replay makes
+zero new role/worker calls with unchanged ledger. This is an engineering path
+proof, not agent-originated scientific or capability improvement. Checkpoint
+the two-line history projection before extending the same fixture across
+no-benefit rejection, KEEP, known worker failure and uncertain-author stop.

@@ -184,6 +184,8 @@ class PriceCapacityLoop:
             memory = {"previous": previous["memory"], "prior": data["memory"], "verified_capacity_finding": entry}
             history = {"previous": previous["history"], "prior": {k: v for k, v in data["history"].items() if k != "process_feedback"},
                 "last_capacity_change": entry}
+            if "last_experiment" in data["history"]:
+                history["last_experiment"] = data["history"]["last_experiment"]
             history["process_feedback"] = self.service.process_feedback(ctx, row, {"execution_outcome": row["status"],
                 "manifest": None, "review": result["review"]})
             source = {**data["source_context"], "previous": previous["source_context"],
