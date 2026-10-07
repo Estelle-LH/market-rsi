@@ -48,17 +48,50 @@ def load(segment):
     selected = None
     if segment > 1:
         prior = t.ROOT.parent / SEGMENTS[segment - 2]
-        if t._file(prior / 'ledger.json')['status'] != 'closed_at_attempt_cap':
-            raise ValueError('Prior segment must be certainly complete, not uncertain or retried')
-        manifest = entry.s.loop._read_pair(prior / 'price-loop/manifest.json')
-        if manifest['max_rounds'] != 2: raise ValueError('Original two-round scope drift')
-        seed = entry.s.loop._read_pair(prior / 'price-loop/round-0002-reconcile.done.json')['output']
-        entry.s.loop._artifacts(seed)
-        previous_config, previous_service, _ = entry.build(r.pin(prior / 'launch.json'))
-        if previous_service.identity() != manifest['handler_identity']:
-            raise ValueError('Prior completed source/handler drift')
-        selected = previous_service.capacity.validate()
-        data = {key: t.c._read(binding) for key, binding in seed.items()}
+        ledger = t._file(prior / 'ledger.json')
+        if ledger['status'] == 'closed_at_attempt_cap':
+            manifest = entry.s.loop._read_pair(prior / 'price-loop/manifest.json')
+            if manifest['max_rounds'] != 2: raise ValueError('Original two-round scope drift')
+            seed = entry.s.loop._read_pair(prior / 'price-loop/round-0002-reconcile.done.json')['output']
+            entry.s.loop._artifacts(seed)
+            previous_config, previous_service, _ = entry.build(r.pin(prior / 'launch.json'))
+            if previous_service.identity() != manifest['handler_identity']:
+                raise ValueError('Prior completed source/handler drift')
+            selected = previous_service.capacity.validate()
+            data = {key: t.c._read(binding) for key, binding in seed.items()}
+        elif segment == 2 and ledger['status'] == 'closed_failed_no_retry':
+            # Exact known s01 pre-source rejection, not replay/resampling of its
+            # calls. A new original Controller must consume the failure evidence.
+            closeout = t.c._read(ledger['closeout'])
+            if (closeout.get('schema') != 'market_rsi_exact_pre_source_failure_closeout_v1'
+                    or closeout['batch_id'] != SEGMENTS[0] or closeout['retry_allowed'] is not False
+                    or closeout['quota_refund'] is not False or closeout['original_processes_gone'] is not True
+                    or closeout['candidate_attempts'] != 0 or closeout['fits_reserved'] != 0
+                    or closeout['account_originals_started'] != 3 or closeout['account_originals_completed'] != 3
+                    or closeout['performance_evidence'] is not False or closeout['capacity_gain'] is not False
+                    or ledger['attempts'] or len(ledger['controller_decisions']) != 1
+                    or ledger['controller_decisions'][0]['status'] != 'completed'
+                    or closeout['original_controller_decision_sha256'] != ledger['controller_decisions'][0]['decision_sha256']):
+                raise ValueError('Not the exact certain charged s01 pre-source failure')
+            for binding in closeout['evidence'] + [closeout['failure'], closeout['original_ledger']]:
+                t.c._read(binding)
+            seed = t.c._read(closeout['initial_feedback'])
+            entry.s.loop._artifacts(seed)
+            data = {key: t.c._read(binding) for key, binding in seed.items()}
+            selected = closeout['selected_capacity']
+            identity.validate(selected['manifest'])
+            finding = {'closeout': ledger['closeout'], 'execution_outcome': 'pre_source_admission_failed',
+                'proposal': closeout['proposal'],
+                'reason': closeout['reason'], 'original_controller_decision_sha256': closeout['original_controller_decision_sha256'],
+                'performance_evidence': False, 'capacity_gain': False, 'originals_consumed': 3,
+                'attempts_entered': 0, 'fits_entered': 0, 'same_ID_retry': False,
+                'next': 'Fresh original decision in next finite slot. Do not replay unchanged rejected source/test. '
+                    'Use failure to simplify or change the next proposed capacity; no scientific conclusion from failure.'}
+            for key in ('feedback', 'memory', 'history'):
+                data[key] = {**data[key], 'last_operational_failure': finding}
+            data['_known_failure_continuation'] = True
+        else:
+            raise ValueError('Prior segment must be certainly complete or exact reviewed s01 failure; no uncertain continuation')
         for component in selected['manifest']['components'].values():
             for name, token in component['sources'].items():
                 if committed(name) != token: raise ValueError('Inherited selected source drift')
@@ -95,6 +128,8 @@ def prepare(segment, approval):
     root.mkdir()
     def save(name, value):
         path = root / (name + '.json'); r.w.save(path, value); return r.pin(path)
+    if data.pop('_known_failure_continuation', False):
+        seed = {**seed, **{key: save('inherited-' + key, data[key]) for key in ('feedback', 'memory', 'history')}}
     authority = save('authorization', grant)
     configuration = save('configuration', {'schema': 'supervisor_reviewed_pilot_configuration_v1',
         'batch_id': batch, 'root': str(root), 'limits': limits, **times})
