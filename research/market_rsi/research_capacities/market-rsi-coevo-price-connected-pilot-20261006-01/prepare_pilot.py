@@ -30,7 +30,7 @@ def check():
         raise ValueError('Old batch must stay closed')
     sources = {name: r.w.sha(REPO / name) for name in launch['source_files']}
     extra = ['price_capacity_services', 'price_capacity_loop', 'price_capacity_trial',
-             'price_capacity_replay', 'price_capacity_source', 'price_capacity_review',
+             'price_capacity_replay', 'price_capacity_source',
              'research_capacity_identity', 'research_capacity_activation']
     sources.update({f'research/market_rsi/supervisor_harness/{name}.py':
         r.w.sha(REPO / f'research/market_rsi/supervisor_harness/{name}.py') for name in extra})

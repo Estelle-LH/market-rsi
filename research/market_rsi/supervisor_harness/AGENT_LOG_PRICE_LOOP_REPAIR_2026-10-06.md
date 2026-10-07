@@ -947,5 +947,14 @@ Batch-specific preparer reuses completed B3 feedback/archive/unchanged scoring,
 fresh grant and sole empty ledger. Existing production pipeline unmodified.
 Controller chooses small R/H change and matched benefit, then downstream
 predictor from actual feedback; rejection allowed, adoption not scientific gain.
+
+Preparation checks caught two zero-call failures: direct script launch requires
+PYTHONPATH=research/market_rsi; source list contained nonexistent
+price_capacity_review.py (actual review is existing price_independent_review).
+Independent helper corroborated the latter; removed only nonexistent binding.
+Existing journal replays idle headd645bbf7/docb82a18cf, whereas current committed
+canonical document hashes c7112517; snapshot rejects unsynchronized bytes.
+Use the authorized prospective decision revision, preserve full historical text
+and journal chain; do not reset/reinitialize or claim native worker enforcement.
 Independent source-only helper review registered separately; no private Train
 feedback transfer, account role call or scientific selection delegated to it.
