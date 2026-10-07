@@ -97,3 +97,87 @@ class PriceCapacityLoop:
         return {"configuration": self.binding, "source_dependencies": [r.pin(path) for path in
             (__file__, trial.__file__, replay.__file__, trial.cs.__file__, trial.cs.guard.__file__,
              trial.cs.activation.__file__, trial.cs.identity.__file__)]}
+
+    def implement(self, ctx):
+        selected = self.validate()
+        return self.author.author(ctx, selected["manifest"], selected["entrypoints"])
+
+    def source_review(self, ctx):
+        material = ctx["outputs"]["implement"]
+        binding = self.reviewer.review("source", material)
+        return trial.prepare(self.runtime, material, binding, self.reviewer, self.adapter)
+
+    def execute(self, ctx):
+        prepared = ctx["outputs"]["source_review"]
+        request = t.c._read(prepared["request"]); decision = request["decision"]
+        attempt = "capacity-" + t.c._digest(decision)[:20]
+        with (self.runtime.root / ".pilot.lock").open("a+") as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            if not self.runtime.admit({**ctx, "stage": "execute"}): raise RuntimeError("capacity execution admission closed")
+            ledger = t._file(self.runtime.root / "ledger.json")
+            if (any(row["attempt_id"] == attempt for row in ledger["attempts"])
+                    or not any(row.get("decision_sha256") == t.c._digest(decision) and row["status"] == "completed"
+                        for row in ledger["controller_decisions"])):
+                raise ValueError("capacity attempt already consumed or original missing")
+            row = {"attempt_id": attempt, "candidate_id": decision["capacity"]["change_id"], "kind": "capacity",
+                "fits_reserved": 0, "actual_fits": 0, "valid_fits_completed": 0, "status": "reserved", "no_retry": True,
+                "controller_decision_sha256": t.c._digest(decision), "request": prepared["request"],
+                "source_commit": request["implementation"]["source_commit"], "source_review_sha256": request["source_review"]["sha256"]}
+            ledger["attempts"].append(row); t._ledger(self.runtime.root / "ledger.json", ledger)
+            try:
+                result = trial.execute(self.runtime, prepared, self.adapter)
+                evidence = t.c._read(result["measurement"])
+                measurements = [t.c._read(value["receipt"]) for value in evidence["outputs"].values()]
+                peaks = [value["sampled_peak_rss_bytes"] for value in measurements if value["sampled_peak_rss_bytes"] is not None]
+                row.update(status=result["execution_outcome"], measurement=result["measurement"],
+                    worker_wall_seconds=evidence["wall_seconds"], sampled_peak_rss_kib=max(peaks) / 1024 if peaks else None)
+                return result
+            except BaseException as error:
+                # No refund/retry: an incomplete durable operation needs inspection.
+                row.update(status="uncertain", error_type=type(error).__name__)
+                raise
+            finally:
+                row["accounted_at_utc"] = t.datetime.now(t.timezone.utc).isoformat()
+                if len(ledger["attempts"]) >= self.runtime.fixed_grant["limits"]["candidate_attempts"]:
+                    ledger["status"] = "closed_at_attempt_cap"
+                t._ledger(self.runtime.root / "ledger.json", ledger)
+
+    def result_review(self, ctx):
+        material = ctx["outputs"]["execute"]
+        return {"kind": "capacity_result", "material": material, "review": self.reviewer.review("result", material)}
+
+    def reconcile(self, ctx):
+        result = ctx["outputs"]["result_review"]; material = result["material"]
+        request, review = t.c._read(material["request"]), t.c._read(result["review"])
+        if (review.get("authorization_sha256") != self.runtime.authority["sha256"]
+                or review.get("request") != material["request"] or review.get("measurement") != material["measurement"]):
+            raise ValueError("independent capacity result binding drift")
+        previous = ctx["previous_result"]; data = {key: t.c._read(value) for key, value in previous.items()}
+        attempt_id = "capacity-" + t.c._digest(request["decision"])[:20]
+        with (self.runtime.root / ".pilot.lock").open("a+") as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            if not self.runtime.admit({"stage": "reconcile"}): raise RuntimeError("capacity finishing admission closed")
+            ledger = t._file(self.runtime.root / "ledger.json")
+            row = next(row for row in ledger["attempts"] if row["attempt_id"] == attempt_id)
+            if row["status"] != material["execution_outcome"] or "reconciled_feedback_sha256" in row:
+                raise ValueError("capacity accounting drift or already reconciled")
+            self.adapter.review(review["capacity_activation_review"], expected_state_sha256=self.adapter.batch.snapshot()["state_sha256"])
+            selected = self.validate()
+            entry = {"axis": request["decision"]["action"], "change_id": request["decision"]["capacity"]["change_id"],
+                "controller_decision_sha256": t.c._digest(request["decision"]), "source_commit": request["implementation"]["source_commit"],
+                "before_pair": trial.cs.activation.pair(request["before"]), "selected_pair": trial.cs.activation.pair(selected["manifest"]),
+                "capacity_decision": review["capacity_decision"], "finding": review["finding"], "measurement": material["measurement"],
+                "review": result["review"], "execution_outcome": material["execution_outcome"], "prediction_decision": "UNCHANGED"}
+            feedback = {**data["feedback"], **entry, "decision": "UNCHANGED", "task_id": trial.cs.h.TASK}
+            memory = {"previous": previous["memory"], "prior": data["memory"], "verified_capacity_finding": entry}
+            history = {"previous": previous["history"], "prior": {k: v for k, v in data["history"].items() if k != "process_feedback"},
+                "last_capacity_change": entry}
+            history["process_feedback"] = self.service.process_feedback(ctx, row, {"execution_outcome": row["status"],
+                "manifest": None, "review": result["review"]})
+            source = {**data["source_context"], "previous": previous["source_context"],
+                "capacity_identity": selected["manifest"], "capacity_entrypoints": selected["entrypoints"]}
+            bundle = {key: self.service._save(ctx, key, value) for key, value in
+                (("feedback", feedback), ("memory", memory), ("history", history), ("pool", data["pool"]), ("source_context", source))}
+            row.update(reconciled_feedback_sha256=bundle["feedback"]["sha256"], result_review_sha256=result["review"]["sha256"])
+            t._ledger(self.runtime.root / "ledger.json", ledger)
+            return bundle

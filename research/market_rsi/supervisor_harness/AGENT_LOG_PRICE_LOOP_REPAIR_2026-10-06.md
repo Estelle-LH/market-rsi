@@ -578,3 +578,31 @@ explicitly supports both history-object/frame and test-list inputs; no live
 candidate or original was repaired in place.30PASS11.084s across hook, trial,
 author and source tests. Actual selected output is saved in the next source
 binding and parent/pool/scorer remain untouched. Official installation pending.
+
+F4b dispatch/accounting preservation, parentc08ef57: existing loop services now
+route typed R/H implementation/source review/execution/result/reconciliation
+to the capacity adapter. The sole global ledger counts one capacity attempt
+and zero fits; known bounded failures remain consumed and unknown failures
+remain uncertain with no retry/refund. Independent rejection is retained as
+process evidence, not prediction evidence. Reconciliation updates the native
+selected pair and feedback/memory/history without changing predictor or pool.
+Official-entry installation and typed prediction author/handoff compatibility
+are still pending: this is a local partial integration checkpoint, not a live
+cycle, final independent acceptance or demonstrated co-evolution.
+
+Pinned one-thread command: `-B -m unittest
+supervisor_harness.test_price_capacity_loop
+supervisor_harness.test_price_loop_services
+supervisor_harness.test_price_independent_review -q` with the Python/runtime
+and thread environment specified above. Initial42PASS17.161s; pre-checkpoint
+recheck42PASS16.889s. Synthetic account roles; actual bounded pure-Python children
+and temporary native journals. No new account calls, Train fits, live grants,
+old-ledger changes or protected data access. Checkpoint scope: capacity loop,
+existing loop services, capacity loop test, and this existing worklog only.
+
+User requested remote push. Read-only remote verification found the existing
+origin `https://github.com/Estelle-LH/market-rsi.git` is PUBLIC, the current
+branch is not yet remote, and its unpublished history contains Train-derived
+result reports and internal run/approval logs. No push, visibility change or
+history rewrite performed. Preserve the local checkpoint; clarify publication
+scope before transferring that private-derived history to a public destination.

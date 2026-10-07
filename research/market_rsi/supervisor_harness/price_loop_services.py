@@ -68,9 +68,14 @@ def _process_evidence(value):
             raise ValueError("stage timing snapshot drift")
     review = t.c._read(value["result_review"])
     execution = value["execution"]
+    reviewed = review.get("passed") is True
+    if review.get("capacity_decision") == "reject" and review.get("verdict") == "REJECT":
+        envelope = t.c._read(review["capacity_activation_review"])
+        reviewed = (envelope["review"]["decision"] == "reject" and review.get("account_role") == "result_review"
+            and review.get("manifest") is None and review.get("measurement") is not None)
     if (set(execution) != {"outcome", "fits_reserved", "actual_fits", "valid_fits_completed",
             "worker_wall_seconds", "sampled_peak_rss_kib", "performance_evidence"}
-            or review.get("passed") is not True or review.get("execution_outcome") != execution["outcome"]
+            or not reviewed or review.get("execution_outcome") != execution["outcome"]
             or execution["performance_evidence"] != (review.get("manifest") is not None)
             or execution["outcome"] != "succeeded" and execution["performance_evidence"]):
         raise ValueError("process observation must bind independently reviewed execution")
@@ -219,10 +224,12 @@ class PriceLoopServices:
             raise ValueError("feedback comparison incumbent drift")
         if len((json.dumps(packet, sort_keys=True, indent=2, allow_nan=False) + "\n").encode("utf-8")) > t.input_limit(self.runtime.fixed_grant):
             raise ValueError("aggregate input exceeds authorized input byte budget")
+        if getattr(self, "capacity", None): packet = self.capacity.packet(ctx, packet)
         return packet
 
     def input(self, ctx):
         packet = self.prepare_packet(ctx)
+        if getattr(self, "capacity", None): packet = self.capacity.packet(ctx, packet, invoke=True)
         binding = self._save(ctx, "input", packet)
         review = self.reviewer("input", {"input": binding, "authorization": self.runtime.authority,
             "configuration": self.runtime.configuration})
@@ -234,6 +241,9 @@ class PriceLoopServices:
     def implement(self, ctx):
         _, data = self._bundle(ctx)
         choice = ctx["outputs"]["controller"]["decision"]
+        if choice.get("schema") == "controller_coevolution_action_v2" and choice["action"] in {"researcher", "harness"}:
+            if not getattr(self, "capacity", None): raise ValueError("capacity action route not installed")
+            return self.capacity.implement(ctx)
         if choice["candidate"]["action"] != "propose_candidate":
             raise ValueError("closed authority request is not an implementation instruction")
         authored = self.author(ctx)
@@ -247,12 +257,16 @@ class PriceLoopServices:
         parents = [item["native_parent"] for item in data["pool"]["archive"]
             if item["candidate_sha256"] == actual_parent and actual_parent != incumbent["candidate_sha256"]
             and item["native_parent"] is not None]
-        return h.prepare(self.runtime, choice, {**self.base, **authored, "native_name": "price-native-" + suffix,
+        base = self.base
+        if getattr(self, "capacity", None):
+            base = {**base, "identity_configuration": t.action_context(t.c._read(ctx["outputs"]["input"]["input"]))["identity_configuration"]}
+        return h.prepare(self.runtime, choice, {**base, **authored, "native_name": "price-native-" + suffix,
             "attempt_id": "price-attempt-" + suffix, "memory_binding": ctx["previous_result"]["memory"],
             "initial_incumbent": incumbent, "archived_parents": parents})
 
     def source_review(self, ctx):
         prepared = ctx["outputs"]["implement"]
+        if prepared.get("kind") == "capacity": return self.capacity.source_review(ctx)
         return h.finalize(self.runtime, prepared, self.reviewer("source", prepared))
 
     def process_feedback(self, ctx, attempt, result):
@@ -281,6 +295,7 @@ class PriceLoopServices:
         return _process_evidence(observation)
 
     def result_review(self, ctx):
+        if ctx["outputs"]["implement"].get("kind") == "capacity": return self.capacity.result_review(ctx)
         prepared, receipt = ctx["outputs"]["implement"], ctx["outputs"]["execute"]["receipt"]
         spec = t.c._read(prepared["specification"])
         _, data = self._bundle(ctx)
@@ -332,6 +347,7 @@ class PriceLoopServices:
         return {**result, "review": binding}
 
     def reconcile(self, ctx):
+        if ctx["outputs"]["implement"].get("kind") == "capacity": return self.capacity.reconcile(ctx)
         bindings, data = self._bundle(ctx)
         result = ctx["outputs"]["result_review"]
         choice = ctx["outputs"]["controller"]["decision"]["candidate"]
@@ -400,8 +416,13 @@ class PriceLoopServices:
         return bundle
 
     def handlers(self):
-        return self.runtime.handlers(**{key: getattr(self, key) for key in
+        handlers = self.runtime.handlers(**{key: getattr(self, key) for key in
             ("input", "implement", "source_review", "result_review", "reconcile")})
+        if getattr(self, "capacity", None):
+            def execute(ctx):
+                return self.capacity.execute(ctx) if ctx["outputs"]["implement"].get("kind") == "capacity" else self.runtime.execute(ctx)
+            handlers["execute"] = execute
+        return handlers
 
     def identity(self):
         h._python_launch(self.base["python_binding"])
@@ -413,9 +434,12 @@ class PriceLoopServices:
             h.b.__file__, scoring.__file__, price_data.__file__, price_runner.__file__, micro.__file__, numeric_author.__file__)]
         for binding in self.callbacks.values():
             h._binding(binding)
-        return {stage: {"source_dependencies": files + list(self.callbacks.values()), "fixed_base": self.base,
+        result = {stage: {"source_dependencies": files + list(self.callbacks.values()), "fixed_base": self.base,
                         "authority": self.runtime.authority, "configuration": self.runtime.configuration}
                 for stage in loop.STAGES}
+        if getattr(self, "capacity", None):
+            for value in result.values(): value["capacity_service"] = self.capacity.identity()
+        return result
 
     def run(self, seed, *, max_rounds):
         if max_rounds > self.runtime.fixed_grant["limits"]["original_controller_decisions"]:

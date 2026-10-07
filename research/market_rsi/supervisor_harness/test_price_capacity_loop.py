@@ -49,5 +49,38 @@ class HookTests(TestCase):
         self.assertFalse(child.called); self.assertFalse(packet['overhead']['capacity_hooks_resolved'])
         self.assertEqual(packet['schema'], 'controller_price_feedback_input_v2')
 
+    def test_capacity_execute_uses_global_attempt_and_zero_fits_not_free_operation(self):
+        prepared = self.f.prepare()
+        ctx = {'outputs': {'source_review': prepared}, 'round_index': 1}
+        result = self.hooks.execute(ctx)
+        ledger = fixtures.trial.t._file(self.f.runtime.root / 'ledger.json')
+        self.assertEqual(len(ledger['attempts']), 1)
+        self.assertEqual(ledger['attempts'][0]['fits_reserved'], 0)
+        self.assertEqual(ledger['attempts'][0]['actual_fits'], 0)
+        self.assertEqual(ledger['attempts'][0]['status'], 'succeeded')
+        self.assertEqual(ledger['attempts'][0]['measurement'], result['measurement'])
+        with self.assertRaises(ValueError): self.hooks.execute(ctx)
+
+    def test_known_capacity_failure_is_accounted_and_no_refund(self):
+        from unittest.mock import patch
+        prepared = self.f.prepare()
+        ordinary = fixtures.trial.replay.invoke
+        def bounded(*args, **kwargs):
+            kwargs['seconds'] = .00001
+            return ordinary(*args, **kwargs)
+        with patch.object(fixtures.trial.replay, 'invoke', side_effect=bounded):
+            result = self.hooks.execute({'outputs': {'source_review': prepared}})
+        ledger = fixtures.trial.t._file(self.f.runtime.root / 'ledger.json')
+        self.assertEqual(result['execution_outcome'], 'failed')
+        self.assertEqual(len(ledger['attempts']), 1); self.assertEqual(ledger['attempts'][0]['status'], 'failed')
+
+    def test_uncertain_capacity_execution_remains_reserved_history_not_retried(self):
+        from unittest.mock import patch
+        prepared = self.f.prepare()
+        with patch.object(fixtures.trial, 'execute', side_effect=RuntimeError('synthetic uncertain')):
+            with self.assertRaises(RuntimeError): self.hooks.execute({'outputs': {'source_review': prepared}})
+        ledger = fixtures.trial.t._file(self.f.runtime.root / 'ledger.json')
+        self.assertEqual(ledger['attempts'][0]['status'], 'uncertain'); self.assertEqual(len(ledger['attempts']), 1)
+
 
 if __name__ == '__main__': main()
