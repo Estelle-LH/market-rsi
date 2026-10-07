@@ -741,3 +741,23 @@ test failed. Preserve this command-error/source checkpoint, then correct only
 the module name and rerun. The expected deliberate bad-Git-checkpoint diagnostic
 was also printed by a negative test, not a scientific execution failure.
 Scorer, closed ledger and old grant match their recorded SHA256 exactly.
+
+F4e corrected24-module regression363PASS41.877s on pinned one-thread Python.
+Modules: formal entry, capacity loop/trial/replay/review/author/source, price
+services/handoff/author/reviewer/account roles, runtime/driver/transaction/
+configuration, capacity identity/activation, native batch/worker, frozen price
+runner/data/scorer and micro-evolution. Engineered test choices/account reviews
+and workers remain synthetic; real bounded hook subprocesses are used where
+named. No new scientific account calls or actual Train fits. Production diff
+in this final substep is one result-claim line; remaining changes are existing
+test/plan/progress/worklog only. git diff --check passes for owned changes.
+Frozen runner acfbfbb53c45b0746ed71aac49f3256cb041160cd194bceef9055e0299ca7f8b;
+scorer d66b6c6ba6ca466622cbf531662b8fcdf4a4d06ddcfa148c2d7f3cfa3dfb350b;
+closed ledger67b0bcb4c3197aacfc518ecce09958febe1dca90181bb025d28ba6f1c54cc543;
+old grant141da82a309f246abf5cd947dd69eb10e55e8783fac7ce3825b609fedce47d30.
+Current source is local/private branch market-rsi-coevolution-checkpoint-20261001;
+these new fixes have NOT been added to public main. Next live integration needs
+independent snapshot review and a fresh whole-role grant; no old batch renewal.
+General pre-author failure continuation and research-process superiority are
+not made prerequisites for a success-path pilot. Equities target/data adapter
+comes afterwards, separately named and authorized; no earnings data acquisition.

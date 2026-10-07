@@ -88,13 +88,13 @@
         "production_scope": "Protocol131changed lines across2modules; input review25changed lines in1module. Separate checkpoints, old entry remains v1.",
         "new_account_calls": 0,
         "resident_train_fits": 0,
-        "still_missing": "Capacity source implementation, separate source/benefit review, actual accepted-version invocation and operation accounting in the formal entry. Independent integrated acceptance and fresh applicable live grant remain pending."
+        "still_missing_at_protocol_checkpoint": "Capacity source implementation, separate source/benefit review, actual accepted-version invocation and operation accounting in the formal entry. Independent integrated acceptance and fresh applicable live grant remain pending."
       }
     },
     {
       "id": "F3-capacity-implementation-and-benefit",
       "depends_on": ["F2-typed-actions-and-review"],
-      "status": "source_author_and_independent_source_review_local_pass_matched_benefit_pending",
+      "status": "source_review_matched_trial_result_verdict_and_selection_connected_local_only",
       "paths": ["research/market_rsi/supervisor_harness/price_capacity_services.py (new thin adapter)", "research/market_rsi/supervisor_harness/price_independent_review.py", "focused tests"],
       "change": "Reuse existing role transport for bounded author output and distinct review; test old/new reviewed R or research-tool H on the same inputs; call existing CapacityActivation.propose/review/resolve/rollback rather than build another gate or registry.",
       "acceptance": "Separate exact source review and observed benefit evidence; rejected/untested changes never activate; original proposal/source/failed output persists. Source-generated code requires reviewed bounded execution, not unrestricted resolve/import.",
@@ -123,33 +123,44 @@
         "protected": "Five-minute data/runner/scorer and last real closed ledger/grant SHA256 unchanged; source integration and synthetic local tests only.",
         "account_calls": 0,
         "resident_train_fits": 0,
-        "pending": "Predeclared matched parent/new benefit evidence, capacity proposal/acceptance through existing registry, official-entry hook dispatch and actual downstream version use. No live independent review, R/H capability improvement or completed co-evolution claim."
+        "pending_at_source_review_checkpoint": "Predeclared matched parent/new benefit evidence, capacity proposal/acceptance through existing registry, official-entry hook dispatch and actual downstream version use. No live independent review, R/H capability improvement or completed co-evolution claim.",
+        "current_implementation": "Existing native capacity registry now receives reviewed proposals, thirteen matched parent/new/repeat/rollback/current-input child calls, and a distinct benefit verdict. Accepted versions supply actual pure-hook outputs; no-benefit and rejected versions preserve the parent. Account authors/reviewers remain synthetic in engineering tests; no fresh live capability gain is claimed.",
+        "later_source_checkpoints": ["dbd07d3", "ffcbebe", "59558e4", "4a5e7c2", "c08ef57", "b5a2e70"]
       }
     },
     {
       "id": "F4-entry-resolution-and-accounting",
       "depends_on": ["F3-capacity-implementation-and-benefit"],
-      "status": "queued",
+      "status": "opt_in_formal_entry_typed_handoff_and_hooks_connected_local_verification",
       "paths": ["research/market_rsi/supervisor_harness/run_price_discovery.py", "research/market_rsi/supervisor_harness/price_loop_services.py", "research/market_rsi/supervisor_harness/price_loop_handoff.py", "research/market_rsi/supervisor_harness/feedback_loop_runtime.py", "relevant existing tests"],
       "change": "Install the real capacity adapter in build/preflight; dispatch typed operations through existing stages. Resolve and invoke accepted R/H versions at named downstream hooks and bind their pair to native requests. Check operation-specific authorized resource consumption without new ledger, silent free operations or enlarged caps.",
       "acceptance": "Actual hook invocation and source/output bindings, not hash-only metadata; persistent selected versions survive restart; trusted kernel/driver/permission drift still rejects.",
-      "checkpoint_split": "Dispatch, quota binding and downstream hook use are separate bounded checkpoints."
+      "checkpoint_split": "Dispatch, quota binding and downstream hook use are separate bounded checkpoints.",
+      "current_result": {
+        "checkpoints": ["ad81f3a", "1acfef1", "995eeed", "973bd18", "30393af", "a454143"],
+        "typed_handoff": "Saved actual v2 prediction input/output is replayed; author receives the actual hook-bearing context and native request keeps that original's selected R/H pair. Focused45PASS3.466s.",
+        "formal_entry": "Opt-in price_discovery_launch_v2 installs actual capacity author/reviewer/adapter; default v1 and old recovery remain unchanged. Baseline/configuration drift rejects before native initialization. Focused22PASS8.315s.",
+        "vertical_engineering_check": "Same formal entry receives first-round verified REVERT in second-round actual pure-hook output, preserves the pair in native predictor preparation, and replays without extra calls/workers. Controller, author and training callbacks in this check are synthetic. Focused1PASS1.570s.",
+        "global_accounting": "Capacity trial consumes one global attempt with zero fits; predictor still reserves four. Sole global ledger and no-retry/uncertain stop remain. Conservative four-fit admission is not a blocker under the existing configuration requiring statistical_fits=4*candidate_attempts; no quota relaxation needed for this pilot.",
+        "remaining": "Integrated independent activation review and a fresh whole-role grant before any new real account/capacity/predictor experiment. Engineering tests do not replace those requirements."
+      }
     },
     {
       "id": "F5-known-failure-learning",
       "depends_on": ["F4-entry-resolution-and-accounting"],
-      "status": "queued",
+      "status": "deferred_general_pre_author_failure_continuation_not_prerequisite_for_success_path_pilot",
       "paths": ["research/market_rsi/supervisor_harness/run_price_discovery.py", "research/market_rsi/supervisor_harness/price_loop_services.py", "focused tests"],
       "change": "Reviewed certain failures become evidence for a new original Controller decision and fresh action, never retry the old operation. Preserve the generic driver's uncertain-claim stop. Reuse applicable failure receipt validation rather than fabricate worker receipts for pre-author failures.",
       "acceptance": "Valid negative, known implementation failure, rejected capacity, interrupted/uncertain execution, restoration and cap exhaustion have distinct transitions and preserved accounting."
     },
     {
       "id": "F6-integrated-closure",
-      "depends_on": ["F5-known-failure-learning"],
-      "status": "queued",
+      "depends_on": ["F4-entry-resolution-and-accounting"],
+      "status": "typed_vertical_engineering_path_verified_live_cycle_not_run",
       "change": "Verify one official-entry vertical path and exact protected-source diff. Independently review the integrated snapshot before prospective activation. Only a fresh applicable whole-role experiment grant may launch live Controller/author/reviewer calls and Train fits.",
       "acceptance": "Synthetic engineering path first; then a separately authorized real proposal/test/version/downstream-use trace. Report engineering pass separately from real co-evolution and matched-budget superiority.",
-      "live_status": "not_authorized_by_this_plan"
+      "live_status": "not_authorized_by_this_plan",
+      "priority": "Connect and independently review the existing entry, then demonstrate a bounded real feedback-linked cycle. Do not require all F5 or deferred research gaps to be eliminated first. Afterwards adapt authorized data to equities earnings; target meaning remains pending and no new data acquisition is authorized."
     }
   ],
   "deferred_not_blocking": ["credit1 archived-parent consumption policy", "matched-budget multi-trajectory research-process superiority", "external exploration", "profitability and prospective independent confirmation"],

@@ -1,5 +1,30 @@
 # Market RSI — human progress
 
+## 2026-10-06 21:46 NY — pipeline first, equities afterwards
+
+The same formal price entry now supports opt-in v2 with actual capacity author,
+independent reviewer, matched trial and selected-version hooks. Default v1 and
+all closed experiments remain unchanged. Typed predictor implementation uses
+the actual saved Controller packet, including hook outputs; the worker's native
+pair must match that original. Source checkpoints1acfef1/30393af/a454143 include
+preserved failed fixture/verification-command checkpoints rather than overwrites.
+
+Corrected24-module regression363PASS41.877s. A two-round engineering check feeds
+verified REVERT into real pure-hook outputs in the next Controller packet and
+keeps the selected pair in native predictor preparation; restart makes no new
+calls/workers. Its Controller/author/training are synthetic. Actual production
+service construction is separately verified. No new real account calls or Train
+fits; frozen runner/scorer and closed ledger/grant SHA256 unchanged. These fixes
+are local, not yet on public main. Integrated independent review and a freshly
+authorized live capacity-to-prediction cycle are still pending. Do not claim
+new co-evolution from these engineering tests or make every remaining failure
+path/general research gap a prerequisite for running that bounded pilot.
+
+Next priority: verify the connected live path, then add a separate equities
+earnings task using the same pipeline. Price reaction versus EPS/surprise is a
+pending user choice. No new data acquisition, protected evaluation opening,
+new spending, old-rule change or framework rebuild is authorized here.
+
 ## 2026-10-06 20:00 NY — capacity implementation and source-review path connected locally
 
 R/H originals can now reach a real text-only implementation adapter, generate fresh
