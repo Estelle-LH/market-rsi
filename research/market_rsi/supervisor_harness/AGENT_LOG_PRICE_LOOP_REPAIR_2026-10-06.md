@@ -1314,3 +1314,41 @@ preparedimmutablegrant/launch/seed/capacitynative state remainunchanged. Earlier
 rejectionbeforeprocess preserved,0claims/calls/fits. Fresh exactrealoperation
 review may now admit sameformalentry; this is newauthority evidence, not an
 indirect workaround or retry of a started original. No selection/scoring change.
+
+Actual formalentrysession23717: native no-environment policy PASS, bootstrap
+R/H invoked, first inputreview40a793b2 PASS42.701565s with terminal/usage.
+OriginalController admitted21:13:17.281023UTC at explicit300s, completed175.846103s
+with native turn/completed/unchanged responseccb926f2. It proposed genuine
+R1-VerifiedRecipeEvidenceIndex: reconcile pending prose with verified outcomes,
+index candidate/comparator provenance, distinguish operational failure from
+science, and test retrieval against a competent exhaustive reference. Proposal
+only; no implementation/benefit/adoption. Formalentry exits1 at Controller
+responseadmission ValueError; roundfailed/timing/source/process preserved.
+
+Read-only exact checks: input/feedback/axis/writepaths/resource valid; component
+freetext not one of instructions/memory_policy/research_policy; parentpair
+returned exact R/H component references, not opaque composite digestfa407cdb
+(digest absent from fully rendered prompt); allowedcomponentlabels not all
+present. Two cited supplied hook/failure receipts are outside hidden validator
+whitelist. Native complete response schema passes, semantic validator correctly
+fails. This is interface disclosure failure, not timeout, science refutation or
+evidence that R proposal helps. OriginalC22509input/8521output(reasoning6911
+included), inputreview24088/2158(reasoning1848).2nativeoriginalscompleted,
+0acceptedC/author/attempts/fits/newpredictions. Exact PIDs51668/50909 gone.
+No response normalization, changedvalidator, modelrepeat or neworiginal attempt.
+
+Exact fresh02terminalops preserve native response/completion/rejectedclaim,
+verify bothprocessesgone and all oldledger hashes, retain originalreservation
+snapshot then mark countedoriginal completed_rejected and batchclosed_failed.
+No caprefund/unusedcapacityrenewal. Prospective smallestfix only v2prompt:
+display copyable pairdigest, componentlabels and exact existing citation
+whitelist; validator/schema/scorer/data/permissions remain unchanged. Tests must
+prove display matches unchangedvalidator and rejectedmetadata stillrejects.
+This will be Supervisor H repair, not implementation/adoption of agent R1.
+
+Exactcloseout sourcefirstreview found incomplete terminal proof: manualhashloop
+didnotrequire native8hash/process fields or actual turncompleted. Corrected
+onlythisspecificopshelper to reuse existing t._recover checks, permit ONLY
+its expectedsemantic rejection, then explicitly verify onecompletedturn and
+unchangedfinalresponse; bind originalclaim/ledgerinput/authority/config/transport.
+Reviewer failure preserved; no helperexecuted beforecorrection,0newcalls/fits.
