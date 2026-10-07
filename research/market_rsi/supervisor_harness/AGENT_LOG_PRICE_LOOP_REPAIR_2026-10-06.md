@@ -929,3 +929,23 @@ pre-author failure continuation and credit1 archived-parent eligibility;
 separate same-budget fixed/evolving evidence; equities earnings target and
 point-in-time data adapter afterwards. Hard arbitrary-code containment and
 OS-hard resource isolation are not established by static guard/sampledRSS.
+
+## 2026-10-07 connected pilot — direct human "try now"
+
+Preparation contract: exact fresh market-rsi-coevo-price-connected-pilot-20261006-01,
+45min after prep, 2Controller+2author+6independent originals, 2attempts/8fits,
+serial/thread1/900s/1GiB sampled; <=256KiB private aggregate/history/source to
+signed-in gpt-6.1-sol(snapshotunknown), actual tools closed, no raw transfer/
+retry/new acquisition/paid/DevFinal/publication/promotion. Direct reply to
+pending whole-batch request, NOT a structured question reply or old authority.
+Bootstrap only: two actual versioned pure apply(context) R/H projections of
+supplied latest factual evidence, no invented scientific choice or gain.
+Both AST guard and synthetic REVERT/context smoke PASS; no scientific window,
+account original or Train fit. First apply_patch failed creating nonexistent
+parent; created exact directory and applied new sources, no data/cap changed.
+Batch-specific preparer reuses completed B3 feedback/archive/unchanged scoring,
+fresh grant and sole empty ledger. Existing production pipeline unmodified.
+Controller chooses small R/H change and matched benefit, then downstream
+predictor from actual feedback; rejection allowed, adoption not scientific gain.
+Independent source-only helper review registered separately; no private Train
+feedback transfer, account role call or scientific selection delegated to it.
