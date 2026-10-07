@@ -2285,3 +2285,24 @@ selection, list-only behavior, interpreter/cwd/environment handling, failure
 status, timeout and invalid-suite rejection; subprocess execution is mocked.
 Inherited smoke/price suites remain pending. Next step: checkpoint this source,
 run the selected inherited suites, and append their measured results.
+
+### Verification checkpoint — source `940f42fe730de631017f81e6683e83373fac1b8a`
+
+Commands used the existing
+`/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python`
+with `-B` and `PYTHONDONTWRITEBYTECODE=1`:
+
+- From `/private/tmp`, the absolute `tools/check.py --suite smoke` command:
+  64 tests PASS, 0.615s. This also verifies checkout-independent working directory.
+- From the isolated checkout, `tools/check.py --suite price`: 369 tests ran in
+  38.900s, FAILED (8 failures, 22 errors), exit 1. The host sandbox denies
+  `/bin/ps`, which the inherited synthetic child/RSS tests require. Several
+  later role fixtures also fail; these are not yet independently diagnosed.
+  Preserve this failure rather than skipping assertions or claiming a green run.
+
+No production module or selected test was modified. Add the observed host
+requirement to the developer guide. One additional run of the identical price
+selection with explicit host permission is planned to distinguish environmental
+denial from source defects; it stays within the same five-minute ceiling and
+synthetic-only scope. The original one-run test plan is amended for this measured
+environmental failure only, with no automatic retry behavior in the check tool.

@@ -10,7 +10,10 @@ Use Python 3.12 with the existing CPU environment described by
 [`requirements-cpu.txt`](research/market_rsi/data_scientist_harness/requirements-cpu.txt).
 The check runner uses its own interpreter; it never installs or upgrades packages.
 Some inherited integration tests use host-specific runtime paths, so the full
-suite currently targets the existing development machine.
+suite currently targets the existing development machine. They also invoke
+`/bin/ps` to measure test-child RSS. A sandbox that denies process inspection
+cannot run these checks faithfully; the runner does not elevate permissions or
+skip the measurements. Start with `smoke` in restricted environments.
 
 From the repository root:
 
