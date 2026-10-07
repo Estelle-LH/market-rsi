@@ -391,5 +391,152 @@ class EntryTests(TestCase):
             entry.completed_round2_prefix(self.f.runtime, binding)
 
 
+class ProductionEntryTests(TestCase):
+    """Actual services; only account processes/training outputs are inert fixtures."""
+    def test_capacity_then_predictor_actual_services_native_wire_and_cold_replay(self):
+        from contextlib import ExitStack
+        import json
+        import subprocess
+        import sys
+        from types import SimpleNamespace
+        from supervisor_harness import price_account_roles as roles
+        from supervisor_harness import price_candidate_author as author
+        from supervisor_harness import price_independent_review as review
+        from supervisor_harness import price_capacity_services as capacities
+        from supervisor_harness import price_capacity_loop as hooks
+        from supervisor_harness import research_capacity_identity as identity
+        from supervisor_harness import research_capacity_activation as activation
+        from supervisor_harness.test_price_account_roles import RPC_FIXTURE
+        from supervisor_harness.test_price_capacity_source import SOURCE, TEST
+        from supervisor_harness.test_coevo_pilot_transaction import TypedActionTests
+        self.f = fixtures.PriceServiceTests(); self.addCleanup(self.f.doCleanups); self.f.setUp()
+        root, repo = self.f.root, self.f.h.repo
+        native_transport, sampler = roles.native_transport, entry.r.w.sample_rss
+        calls, workers, wire_response = [], [], [None]
+        with ExitStack() as stack:
+            stack.enter_context(patch.object(subprocess, 'check_output', REAL_CHECK_OUTPUT))
+            stack.enter_context(patch.object(roles, 'datetime', handoff_fixtures.Clock))
+            stack.enter_context(patch.object(entry.r, 'ContinuousDiscoveryBatch', side_effect=self.f.h.batch))
+            stack.enter_context(patch.object(entry.r.w, 'datetime', handoff_fixtures.Clock))
+            grant = deepcopy(self.f.runtime.fixed_grant)
+            config = deepcopy(self.f.runtime.config)
+            config['limits'].update(candidate_attempts=2, statistical_fits=8, original_controller_decisions=2)
+            config_binding = self.f.h.f.write('configuration', config)
+            grant['limits'] = config['limits']; grant['account_transfer']['max_input_bytes'] = 262144
+            grant['account_roles'] = {'approved': True, 'capacity_changes_approved': True,
+                'destination': roles.DESTINATION, 'requested_model': entry.r.t.c.MODEL,
+                'serving_snapshot': 'unknown', 'max_input_bytes': 262144, 'max_call_seconds': 120,
+                'caps': {name: 2 for name in roles.ROLES}, 'raw_train_transfer': False,
+                'tools_enabled': False, 'automatic_retry': False}
+            authority = self.f.h.f.write('authorization', grant)
+            ledger = entry.r.t._file(root / 'ledger.json')
+            # Reset disposable setup fixture originals only, never operational history.
+            ledger.update(authorization_sha256=authority['sha256'], controller_decisions=[], attempts=[])
+            entry.r.t._ledger(root / 'ledger.json', ledger)
+            namespace = 'research/market_rsi/research_capacities/' + grant['batch_id'] + '/'
+            names = {'K': 'synthetic-kernel.py', 'C': 'synthetic-predictor.py',
+                     'R': namespace + 'r1/capacity.py', 'H': namespace + 'h1/capacity.py'}
+            for axis, name in names.items():
+                path = repo / name; path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('def apply(context):\n    return {}\n' if axis in {'R', 'H'} else '# inert anchor\n')
+            bindings = {axis: {'sources': {name: entry.r.w.sha(repo / name)}, 'configuration_sha256': 'f' * 64}
+                        for axis, name in names.items()}
+            python = entry.r.pin('/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12')
+            before = identity.manifest(kernel=bindings['K'], predictor=bindings['C'], researcher=bindings['R'],
+                harness=bindings['H'], memory='e' * 64, runtime={'python': python, 'dependencies': {}},
+                model={'requested_model': entry.r.t.c.MODEL, 'serving_snapshot': 'unknown', 'serving_snapshot_verified': False})
+            base = deepcopy(self.f.base); base['python_binding'] = python
+            base['identity_configuration']['pair'] = activation.pair(before)
+            base['identity_configuration']['fixed_context'].update(authority_sha256=authority['sha256'],
+                resource_policy_sha256=config_binding['sha256'], model_sha256=before['M'])
+            base['identity_configuration']['allowed_write_paths'] = {axis: [namespace + name + '/capacity.py',
+                namespace + name + '/test_capacity.py'] for axis, name in (('researcher', 'r2'), ('harness', 'h2'))}
+            cap = self.f.h.f.write('capacity-configuration', {'schema': 'price_capacity_loop_configuration_v1',
+                'baseline': before, 'entrypoints': {axis: names[axis] for axis in ('H', 'R')}, 'hook_seconds': 2,
+                'replay_cases': {name: {'history': [{'decision': 'REVERT', 'question': name}]} for name in hooks.trial.CASES}})
+            self.f.seed['history'] = self.f.h.f.write('native-seed-history', {
+                'last_experiment': {'decision': 'REVERT', 'question': 'synthetic baseline mismatch'}})
+            runner = str(self.f.h.runner.relative_to(repo))
+            modules = {'author': author, 'reviewer': review, 'roles': roles, 'entry': entry,
+                       'capacity_author': capacities, 'capacity_loop': hooks}
+            launch = self.f.h.f.write('native-launch', {'schema': 'price_discovery_launch_v2',
+                'repo': str(repo), 'root': str(root), 'authorization': authority, 'configuration': config_binding,
+                'role_authorization': authority, 'base_spec': base, 'source_files': {runner: entry.r.w.sha(self.f.h.runner)},
+                'service_sources': {name: entry.r.pin(module.__file__) for name, module in modules.items()},
+                'capacity_configuration': cap, 'max_rounds': 2})
+            seed = self.f.h.f.write('native-initial-feedback', self.f.seed)
+            for command in (['git', 'init', '-q'], ['git', 'config', 'user.name', 'SyntheticFixture'],
+                    ['git', 'config', 'user.email', 'fixture@invalid.test'], ['git', 'add', '--', runner, *names.values()],
+                    ['git', 'commit', '-qm', 'synthetic actual-entry baseline']):
+                subprocess.run(command, cwd=repo, check=True, capture_output=True)
+
+            def response(packet, controller):
+                if controller:
+                    calls.append(('controller', deepcopy(packet)))
+                    if len([row for row in calls if row[0] == 'controller']) == 1:
+                        value = TypedActionTests.response(SimpleNamespace(action='harness'), packet)
+                        value['capacity']['write_paths'] = packet['action_context']['identity_configuration']['allowed_write_paths']['harness']
+                        return value
+                    output = packet['source_context']['capacity_hook_outputs']['actual_invocations']['H']['output']
+                    self.assertEqual(output['remaining_questions'], ['synthetic baseline mismatch'])
+                    self.assertEqual(packet['feedback']['capacity_decision'], 'accept')
+                    old = self.f.response(packet)
+                    old['candidate']['hypothesis'] = 'Synthetic descendant uses the verified hook finding; no real scientific authorship.'
+                    old['candidate']['evidence_used'][0]['choice_consequence'] = 'Verified capacity output caused this fixture descendant.'
+                    return {key: old[key] for key in ('input_sha256', 'feedback_sha256', 'requested_model',
+                        'serving_snapshot', 'candidate', 'attribution')} | {'schema': 'controller_coevolution_action_v2',
+                        'action': 'prediction', 'capacity': None, 'authority_request': None}
+                role, body = packet['role'], packet['payload']; calls.append((role, deepcopy(body)))
+                if role == 'author':
+                    decision = body['original_controller_decision']
+                    if decision['action'] == 'harness':
+                        return {'decision_sha256': entry.r.t.c._digest(decision), 'change_id': decision['capacity']['change_id'],
+                            'source_path': namespace + 'h2/capacity.py', 'test_path': namespace + 'h2/test_capacity.py',
+                            'capacity_source': SOURCE, 'test_source': TEST, 'implementation_notes': 'Synthetic native-wire fixture only.'}
+                    return {'decision_sha256': entry.r.t.c._digest(decision), 'candidate_id': decision['candidate']['candidate_id'],
+                        'method_family': 'synthetic-constant', 'implementation_notes': 'No actual model or Train fitting.',
+                        'candidate_source': 'def fit_predict(x,y,weights,xc,history,check_history,*,seed):\n    return [0.04 for row in xc]\n',
+                        'test_source': "from candidate import fit_predict\ndef test_candidate():\n    assert fit_predict([],[],[],[[],[]],[],[],seed=314159) == [0.04,0.04]\nif __name__ == '__main__':\n    test_candidate()\n"}
+                stage = body['stage']
+                value = {'schema': 'market_rsi_independent_price_verdict_v1', 'input_sha256': entry.r.t.c._digest(body),
+                    'stage': stage, 'verdict': 'PASS', 'finding': 'Synthetic separate native role, not empirical reviewer approval.',
+                    'evidence': ['Bound original and measured fixtures'], 'research_credit': 0,
+                    'research_outcome': 'not_applicable', 'route_action': 'not_applicable'}
+                if stage == 'result' and 'measurement' in body['material']:
+                    value.update(benefit_observed=True, compatibility_checks={key: True for key in body['trusted_checks']})
+                elif stage == 'result': value.update(research_credit=2, research_outcome='refute', route_action='branch')
+                return value
+
+            def transport(directory, packet, timeout, *, controller=False, preflight_only=False):
+                wire_response[0] = {} if preflight_only else response(packet, controller)
+                return native_transport(directory, packet, timeout, controller=controller, preflight_only=preflight_only)
+            def process(command, **kwargs):
+                if command == roles.native_command(None):
+                    settings = {'model': entry.r.t.c.MODEL, 'environments': [], 'status': 'completed', 'response': wire_response[0]}
+                    return REAL_POPEN([sys.executable, '-u', '-c', RPC_FIXTURE, json.dumps(settings)], **kwargs)
+                if '--output' in command:
+                    output = Path(command[command.index('--output') + 1]); workers.append(output)
+                    request = entry.r.t._file(output.parent.parent / 'ready_request.json')
+                    fixtures.write_result(output, self.f.rows, {'B0-NoPriceChange': 0., 'B1-FixedHGBRegressor': .2,
+                        request['candidate_id']: .04}, request['candidate_id'], source=request['source_commit'])
+                    return Mock(pid=1234, wait=Mock(return_value=0), poll=Mock(return_value=0))
+                return REAL_POPEN(command, **kwargs)
+            stack.enter_context(patch.object(roles, 'native_transport', side_effect=transport))
+            stack.enter_context(patch.object(subprocess, 'Popen', side_effect=process))
+            stack.enter_context(patch.object(entry.r.w, 'sample_rss', side_effect=lambda pid: 128 if pid == 1234 else sampler(pid)))
+            result = entry.run(launch, seed)
+            self.assertTrue(result['complete']); self.assertEqual(len(calls), 10); self.assertEqual(len(workers), 1)
+            actual = entry.r.t._file(root / 'ledger.json')
+            self.assertEqual([row['fits_reserved'] for row in actual['attempts']], [0, 4])
+            self.assertEqual([row['status'] for row in actual['attempts']], ['succeeded', 'succeeded'])
+            pair = entry.r.t._file(root / 'price-capacity-native/batch.json')['micro_evolution']['active_pair']
+            native = next(root.glob('price-native-r0002-*/batch.json'))
+            self.assertEqual(entry.r.t._file(native)['micro_evolution']['active_pair'], pair)
+            ledger_hash, count = entry.r.w.sha(root / 'ledger.json'), len(calls)
+            self.assertTrue(entry.run(launch, seed)['complete'])
+            self.assertEqual(len(calls), count); self.assertEqual(len(workers), 1)
+            self.assertEqual(entry.r.w.sha(root / 'ledger.json'), ledger_hash)
+
+
 if __name__ == "__main__":
     main()

@@ -788,3 +788,15 @@ the pre-account HEAD/file check. Completed replay remains intact. One production
 module changed; local fixture tests only, no original account or Train call.
 Checkpoint before F6b actual-service vertical test; first meaningful test/source
 failures will remain separate history, not silently overwritten.
+
+F6b first actual-service/inert-backend vertical test1ERROR0.486s. Real input
+review completed, then fresh LivePriceServices wrote timing to recovery-only
+price-loop-admission-v2, which the normal driver never creates. build assigned
+recovery_directory even without a recovery grant; prior mock-build tests hid
+this fresh-entry defect. Preserve the failed test checkpoint before repair.
+F6b1 H contract: only run_price_discovery.py timing-namespace assignment plus
+existing test/log. A fresh launch must use price-loop; reviewed v2/v3 historical
+recovery keeps its old namespace. No new directory workaround, permission,
+source/score/grant change or original retry. Test backend uses inert stdio,
+not Codex; zero live account science and actual Train fits. Next same-entry
+test uses a fresh disposable fixture, not the failed operational ID.
