@@ -483,3 +483,42 @@ Supervisor H integration, L1 only, not agent-originated R/H improvement. No new
 live batch or larger grant. Remaining F3 step is matched parent/new benefit;
 F4 must still install the capacity service, accepted-version hooks and quota-aware
 dispatch in the formal entry. Do not call this local service path a live pilot.
+# F3c started — measured capacity replay, parent891e02e
+
+User requested execution of the four-step continuation. Root owns integration.
+Observed blocker: capacity source review runs a smoke test but result review
+only accepts prediction material; no measured parent/new effect reaches the
+existing activation registry. Reuse the existing pure `apply(context)` API,
+source identity, account review, and native micro journal. No literature/new
+data/method claim; this is user-directed H engineering, not agent evolution.
+
+Small checkpoint contracts (separate commits): (a) bounded pure-context child
+execution in `price_capacity_replay.py` plus its tests; (b) frozen same-input
+replay and independent benefit/result routing in capacity services/reviewer
+plus tests; (c) existing activation/downstream use and official-entry dispatch,
+split again if two production modules/about200changed lines are exceeded.
+Fixed K/M/C/R scientific sources, price data/scorer/folds, old grants/ledgers,
+tool isolation, original accounting, unrelated dirty files. Local synthetic
+inputs only until a fresh whole-role grant; zero new account calls/Train fits.
+Expected immediate evidence: actual separate bounded processes execute parent
+and proposed modules on identical supplied JSON; immutable outputs distinguish
+measured effect from source/smoke success. Missing/failing/uncertain evidence
+cannot activate; no automatic retry. Reject/no-benefit stays recorded and does
+not imply a scientific refutation. Rollback source uses a new commit, never
+rewinds operational history. Local verification and live readiness are separate.
+
+F3c(a) result: new bounded child runs pure-context `apply` outside Supervisor,
+with empty credential environment, isolated Python startup, source/runtime
+bindings, output/time/sampled-RSS ceilings and finally kill/reap. Actual local
+synthetic child success, division error, infinite loop, diagnostic denial and
+same-directory no-retry tested. Unavailable RSS is null, not measured zero.
+Command (research cwd): `env PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 '/Users/estelle/Library/Application
+Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest
+supervisor_harness.test_price_capacity_replay
+supervisor_harness.test_price_capacity_source -q`. Initial9PASS0.232s;
+source checkpoint includes the null-sampling correction, reverified below.
+No rawTrain/model input, calls, fits, live grant or registry activation. Parent
+891e02e; new module/test and this log only. Source is recoverable; real pilot
+and independent final activation not established. Actual process check found
+no Market RSI training/entry worker; only the read-only check itself matched.
