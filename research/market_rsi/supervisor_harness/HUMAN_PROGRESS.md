@@ -1,5 +1,26 @@
 # Market RSI — human progress
 
+## 2026-10-07 17:29 NY — 对应输入修复完成，真实循环仍未完成
+
+- 仅修改既有v2prompt的12行，明确提供父版本hash、组件标签和原有证据白名单；validator、schema、冻结评分器和数据权限不变。
+- 完整本地441项回归通过49.13秒；独立80项通过0.594秒并给出PASS_CODE_ONLY。最初测试fixture失败和sandbox进程检查失败均留档。
+- 原真实输入的本地只读render验证通过：56970bytes、26个既有可引用hash，无调用或训练；没有修改/接收旧Controller原件。
+- checkpoint51b69a8 / b6d14ce；现有入口不变。不称这些本地测试为自主R/H收益。
+- 已一次性请求fresh03整批授权，用修复后的入口做“agent提出R或研究侧H修改→独立匹配测试→真实价格候选使用反馈”。未启动新窗口，不重复追问或新增无关框架。
+
+## 2026-10-07 17:24 NY — fresh02真实运行，NOT COMPLETE
+
+- 真实独立输入审核PASS，42.70秒；真实Controller完成，175.85秒，没有再次超时。
+- 它自主提出R1-VerifiedRecipeEvidenceIndex研究记忆/证据索引改进，但在实现前被语义校验拒绝；不是训练负结果。
+- 根因是输入契约未清楚给出校验器要求的父版本组合hash、组件标签及可引用证据hash；保留原决定，未重写、重采样或放宽校验。
+- 本批2次账户original完成；0候选实现、0拟合、0新预测，第二轮没有发生。887.58秒含权限等待、执行和终结核验；57276已知账户token，订阅美元未知，paidprovider0。
+- exact closeout879406cf / ledger0c77f78d 已永久保存；旧额度、价格任务与评分器、B0最佳及B0/B1探索池不变，无重试、返还或延长。
+- 仅对下一次输入做12行prompt修复，显示现有元数据契约；80项本地针对性测试通过，独立审查及完整回归进行中。这是Supervisor修复，不是已经成功的自主R/H演化。
+
+原始证据在永久artifacts/market-rsi-coevo-price-connected-pilot-20261007-02；
+正式入口仍run_price_discovery。新实际pilot需新整批授权，不能重开本ID。
+这次仍未证明co-evolution、预测改善或同预算研究流程优势。
+
 ## 2026-10-07 17:10 NY — fresh02 launch rejected before process
 
 Fresh02 preparation/checks and independent source review completed; fixed
