@@ -720,3 +720,24 @@ capacity-only originals without a dummy predictor. Default v1 remains intact.
 This is connected engineering verification, not a newly completed live batch.
 Next verify capacity-to-prediction feedback through the same formal entry;
 do not acquire equities data or consume an expired scientific authorization.
+
+F4e same-entry engineering check: actual pure R/H subprocess hooks transform
+round-two input using round-one verified REVERT, and typed saved-original replay
+binds the identical selected pair to the native predictor request. Account
+choices, implementation callbacks and training children are explicitly synthetic;
+the separate construction check uses actual production service classes. One
+focused integrated test PASS1.570s, including zero-new-call/zero-worker restart.
+This does not supply live account science or agent-originated improvement.
+Existing formal-entry result claim now describes pipeline execution without
+assuming every optional v2 action is predictor-only or claiming capability gain.
+Next run existing price/native/worker/scorer/capacity regressions. No fresh batch
+is launched, no raw Train/equities data is read or acquired, and all closed
+ledgers/grants and frozen price scoring stay unchanged.
+
+F4e first broad command359test entries:358PASS/1loaderERROR42.273s. Supervisor
+typed non-existent experiments.test_nfl_ingame_price_runner instead of the
+existing experiments.test_nfl_ingame_price_change_train_diagnostic. No executed
+test failed. Preserve this command-error/source checkpoint, then correct only
+the module name and rerun. The expected deliberate bad-Git-checkpoint diagnostic
+was also printed by a negative test, not a scientific execution failure.
+Scorer, closed ledger and old grant match their recorded SHA256 exactly.

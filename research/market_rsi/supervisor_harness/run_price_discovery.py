@@ -391,7 +391,7 @@ def run(batch_configuration, initial_feedback, *, preflight_only=False):
         result = service.run(r.t.c._read(initial_feedback), max_rounds=config["max_rounds"])
     return {"preflight": receipt, "loop": result, "wall_seconds": time.monotonic() - started,
             "complete": result.get("status") == "completed" and result.get("completed_rounds") == 2,
-            "claim": "Historical Train autonomous predictor iteration only; not R/H evolution or profit"}
+            "claim": "Pipeline execution only; prediction and capacity effects require their saved evidence. Not profit or research-process superiority"}
 
 
 def main():

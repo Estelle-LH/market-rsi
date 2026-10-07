@@ -10,6 +10,7 @@ from supervisor_harness import test_price_loop_handoff as handoff_fixtures
 from supervisor_harness.continuous_discovery_batch import ContinuousDiscoveryBatch as RealBatch
 
 REAL_CHECK_OUTPUT = entry.r.t.c.subprocess.check_output
+REAL_POPEN = entry.r.w.subprocess.Popen
 
 
 class EntryTests(TestCase):
@@ -42,13 +43,18 @@ class EntryTests(TestCase):
         mocked.start()
         self.addCleanup(mocked.stop)
 
-    def execute(self, *, preflight=False):
+    def execute(self, *, preflight=False, real_auxiliary=False):
+        def child(*args, **kwargs):
+            if real_auxiliary and '--output' not in args[0]:
+                return REAL_POPEN(*args, **kwargs)
+            return self.f.child(*args, **kwargs)
         with patch.object(entry.r, "ContinuousDiscoveryBatch", side_effect=self.f.h.batch), \
                 patch.object(entry.r.w, "datetime", handoff_fixtures.Clock), \
                 patch.object(entry.r.w, "sample_rss", return_value=128), \
-                patch.object(entry.r.w.subprocess, "Popen", side_effect=self.f.child) as children:
+                patch.object(entry.r.w.subprocess, "Popen", side_effect=child) as children:
             result = entry.run(self.config_binding, self.seed_binding, preflight_only=preflight)
-        return result, children.call_count
+        count = sum('--output' in call.args[0] for call in children.call_args_list) if real_auxiliary else children.call_count
+        return result, count
 
     def test_same_entry_two_negative_rounds_feedback_parent_and_cold_replay(self):
         result, children = self.execute()
@@ -86,6 +92,68 @@ class EntryTests(TestCase):
         self.assertEqual(first["decision"], "UNCHANGED")
         self.assertEqual(first["research_credit"], 0)
         self.assertIsNone(first["comparison"])
+
+    def test_typed_two_round_entry_consumes_real_hooks_and_keeps_native_pair_on_replay(self):
+        """Account/worker remain synthetic; hooks and typed original replay are real."""
+        from supervisor_harness import price_capacity_loop as capacity
+        from supervisor_harness import research_capacity_identity as identity
+        from supervisor_harness import research_capacity_activation as activation
+        repo, runtime = self.f.h.repo, self.f.runtime
+        grant = deepcopy(runtime.fixed_grant)
+        grant['account_transfer']['max_input_bytes'] = 262144
+        grant['account_roles'] = {'capacity_changes_approved': True, 'max_input_bytes': 262144}
+        runtime.authority = self.f.h.f.write('authorization', grant); runtime.fixed_grant = grant
+        ledger = entry.r.t._file(runtime.root / 'ledger.json')
+        ledger['authorization_sha256'] = runtime.authority['sha256']; entry.r.t._ledger(runtime.root / 'ledger.json', ledger)
+        names = {'K': 'synthetic-kernel.py', 'C': 'synthetic-predictor.py',
+                 'R': 'synthetic-researcher.py', 'H': 'synthetic-harness.py'}
+        hook = "def apply(context):\n    return {'previous_decision': context.get('feedback', {}).get('decision', 'unscored')}\n"
+        for axis, name in names.items():
+            (repo / name).write_text(hook if axis in {'R', 'H'} else '# inert identity source\n')
+        bindings = {axis: {'sources': {name: entry.r.w.sha(repo / name)}, 'configuration_sha256': 'f' * 64}
+                    for axis, name in names.items()}
+        python = entry.r.pin('/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12')
+        before = identity.manifest(kernel=bindings['K'], predictor=bindings['C'], researcher=bindings['R'],
+            harness=bindings['H'], memory='e' * 64, runtime={'python': python, 'dependencies': {}},
+            model={'requested_model': entry.r.t.c.MODEL, 'serving_snapshot': 'unknown', 'serving_snapshot_verified': False})
+        config = self.f.base['identity_configuration']
+        config['pair'] = activation.pair(before)
+        config['fixed_context'].update(authority_sha256=runtime.authority['sha256'], model_sha256=before['M'])
+        self.f.base['python_binding'] = python
+        binding = self.f.h.f.write('capacity-configuration', {'schema': 'price_capacity_loop_configuration_v1',
+            'baseline': before, 'entrypoints': {axis: names[axis] for axis in ('H', 'R')},
+            'replay_cases': {name: {} for name in capacity.trial.CASES}, 'hook_seconds': 2})
+        self.service.capacity = capacity.PriceCapacityLoop(self.service, binding, Mock(), Mock())
+        ordinary_response, ordinary_review = self.f.response, self.f.reviewer
+        def response(packet):
+            old = ordinary_response(packet)
+            return {key: old[key] for key in ('input_sha256', 'feedback_sha256', 'requested_model',
+                'serving_snapshot', 'candidate', 'attribution')} | {'schema': 'controller_coevolution_action_v2',
+                'action': 'prediction', 'capacity': None, 'authority_request': None}
+        def review(stage, material):
+            bound = ordinary_review(stage, material)
+            if stage != 'input': return bound
+            value = entry.r.t.c._read(bound); packet = entry.r.t.c._read(material['input'])
+            value.update(action_context_sha256=entry.r.t.c._digest(packet['action_context']),
+                         decision_schema_sha256=entry.r.t.c._digest(entry.r.t.SCHEMA_V2))
+            return self.f.h.f.write('typed-entry-review-' + str(len(self.f.reviews)), value)
+        self.f.h.f.response = response; self.service.reviewer = review
+        self.service.callbacks['reviewer'] = entry.r.pin(__file__)
+        self.service.base = self.f.base
+        result, workers = self.execute(real_auxiliary=True)
+        self.assertTrue(result['complete']); self.assertEqual(workers, 2)
+        self.assertEqual(len(self.f.choice_packets), 2)
+        second = self.f.choice_packets[1]
+        self.assertEqual(second['feedback']['decision'], 'REVERT')
+        proof = second['source_context']['capacity_hook_outputs']
+        self.assertEqual(proof['actual_invocations']['R']['output']['previous_decision'], 'REVERT')
+        self.assertEqual(proof['selected_pair'], second['action_context']['identity_configuration']['pair'])
+        native = next(runtime.root.glob('price-native-r0002-*/batch.json'))
+        self.assertEqual(entry.r.t._file(native)['micro_evolution']['active_pair'], proof['selected_pair'])
+        calls = self.f.h.f.calls
+        again, workers = self.execute(real_auxiliary=True)
+        self.assertTrue(again['complete']); self.assertEqual(workers, 0)
+        self.assertEqual(calls, self.f.h.f.calls)
 
     def test_preflight_only_has_no_original_calls_workers_or_reservations(self):
         before = entry.r.w.sha(self.f.root / "ledger.json")
