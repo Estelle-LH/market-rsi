@@ -1063,3 +1063,35 @@ R/H baselinehooks PASS; first independent inputreview admitted19:56:43.041216
 requested/allowed/effective300s. No initialC/author/attempt/fit; not completedyet.
 Oldfailedledger4fd6b6ca/oldpriceledger67b0bcb4/runneracfbfbb5/scorerd66b6c6b
 rehashed unchanged beforelaunch. No further engineering changes duringlivecall.
+
+### Fresh20261007-01 actual terminal — NOT COMPLETE
+
+First independentinputreview completed native terminal/schema/verdictPASS,
+97.62515799998s,24087input/1900output(reasoning1552included)tokens. Original
+Controller follows genuine accepted inputreview; native PID31088, one turn/start,
+reasoning items only,0agentMessage/0turncompleted/0finalusage. It timedout
+120.106299417035s, driverstage120.208745s, exact round1.controller.failed
+TimeoutExpired/no_retry. Formalentrysession89060 exited1. No newCdecision,
+author/candidate/test/sourcecommit/trainingreservation/fit/prediction/scorecard
+or secondround; no agent R/H modification or downstreameffect to report.
+Actualreview limit300 did not authorize widening fixedController120; no retry,
+partial adoption, replacement decision or quota refund attempted.
+
+Exact-process ps31088 verifiedgone; terminal source4a81782 usesexistingentry+
+pilotlocks, originalcompletedreview recovery and existingledger saver. Validated
+both original processesgone, onlyone roleclaim, exactlyone unresolvedController
+reservation/zeroattempts, oldledgers4fd6b6ca/67b0bcb4 unchanged, native0toolRPC/
+0completedturn. Preserved ledger-before-terminal, all claim/wire/failure/evidence.
+Closed20:06:47.235457UTC,634.235457s sinceactivation inclusive terminalwork;
+not extended beyond original20:41:13. Closeoutc0e14d056d48e552942fa7d543ecae70929030e4a9298268f279e8ddbf14368b;
+ledgerdc63bcea7ff6225387d5461b4e81f21a686fb0082ac3fe31e3ae39329eb1ec51
+closed_failed_no_retry keepscountedreserved original; no unusedcaprenewal.
+2accountoriginalsstarted/1complete, C1started0complete, author0/attempt0/
+fits0/newforecast0; knownreviewusageabove, Controller/totaltokensunknown,
+subscriptionUSDunknown, paidprovider0, helper/Supervisor overheadunmetered.
+Rbaseline actualwall.0340355s/17.334272MBsampled; H.0542845s/18.808832MB;
+these are bootstrap hooks, not autonomous capacity gain. B0/B1pool/B0best and
+fulloldarchive unchanged. No per-roundhuman science decision; user-directed
+Supervisor timeoutrepair/prepfix/sourcechecks/terminaloperations disclosed.
+Concrete remainingboundary: newconfigurableController waiting requires fresh
+prospective allowance, not relabeling this failed original or redesigningscoring.

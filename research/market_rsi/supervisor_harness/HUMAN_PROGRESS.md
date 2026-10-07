@@ -1,5 +1,18 @@
 # Market RSI — human progress
 
+## 2026-10-07 16:06 NY — fresh connected pilot NOT COMPLETE
+
+- 真实独立输入审核PASS并有原生完成回执，97.625s；不是模拟审核。
+- 下一阶段Controller120.106s超时，只有reasoning事件，没有候选决定或完成回执；首个阻断是Controller等待限时。
+- 2次账户original启动/1次完成；0实现、0候选尝试、0拟合、0新预测或scorecard；第二轮未发生。
+- 20:06:47UTC关闭，634.235s含执行及终结核验/记账；没有延长原窗口、自动重试或退还额度。已核验原进程退出。
+- 审核已知token24087input/1900output；Controller和总token/订阅美元未知，paidprovider0。不是已证实的co-evolution。
+- 永久closeoutc0e14d05/ledgerdc63bcea绑定全部原始证据；旧两批账本、runner/scorer和B0/B1池保持原样。
+
+正式启动命令在既有AGENT_LOG_PRICE_LOOP_REPAIR_2026-10-06.md。剩余具体阻断：
+本次仅审核等待可到300s，Controller仍120s；下一次需要新的prospective授权和
+相应Controller等待配置，不得重跑本ID。未把工程完成替代真实循环验收。
+
 ## 2026-10-07 15:57 NY — fresh connected pilot running
 
 Independent source review50f30633 passed; official entry started exact new

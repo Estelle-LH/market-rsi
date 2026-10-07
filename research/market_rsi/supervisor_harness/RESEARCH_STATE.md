@@ -1,3 +1,33 @@
+# Current Market RSI decision — 2026-10-07 fresh connected pilot NOT COMPLETE
+
+Actual fresh20261007-01 terminal closed20:06:47.235457UTC,634.235457s from
+19:56:13activation; original20:36:13cutoff/20:41:13deadline not extended.
+First genuine independent inputreview PASS with completed native receipt,
+97.625158s,24087input/1900output tokens(reasoning1552included). Original Controller
+then timed out120.106299s before agentMessage or turn/completed; only reasoning
+items observed, no partial candidate/decision available. Exact PID31088 gone;
+entrysession89060 exit1, round1.controller.failed/TimeoutExpired/no_retry retained.
+No automatic retry/refund/reopening. Two original account calls started/one
+completed; Controller1started/0completed,author0,attempt0,fit0,prediction0.
+First blocking stage is Controller completion wait, not candidate science,
+scoring, feature evidence or implementation service. Actual Controller wait is
+still120s by unchanged authorization; native review300s repair cannot enlarge it.
+
+Permanent closeoutc0e14d056d48e552942fa7d543ecae70929030e4a9298268f279e8ddbf14368b
+at /Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-price-connected-pilot-20261007-01/closeout.json;
+ledgerdc63bcea7ff6225387d5461b4e81f21a686fb0082ac3fe31e3ae39329eb1ec51
+closed_failed_no_retry retains its counted unresolved original reservation;
+ledger-before-terminal immutable copy retained. Exact grant/launch/seed, review
+completion, Controller wire/failure/claim and hook receipts bound. Total tokens
+and subscriptionUSDunknown (Controller final usage absent), paidprovider0.
+No accepted autonomous R/H proposal, matched improvement or downstream effect.
+B0 incumbent/B0+B1pool and all old results unchanged; no new co-evolution,
+prediction/profit/OOS/process-superiority evidence. Supervisor timeout/prep/
+terminal accounting work is engineering, not autonomous R/H. New original run
+requires fresh authority; no hidden continuation using unused old caps.
+
+## Fresh pilot preparation/running snapshot — preserved below
+
 # Current Market RSI decision — 2026-10-07 fresh connected pilot RUNNING
 
 Structured human approval call_McgTKX5H5sbgMuxk8xmOvLdi question0,
