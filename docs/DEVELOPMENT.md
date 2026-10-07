@@ -18,9 +18,9 @@ skip the measurements. Start with `smoke` in restricted environments.
 From the repository root:
 
 ```sh
-python3 -B tools/check.py --suite smoke
-python3 -B tools/check.py --suite price
-python3 -B tools/check.py --suite price --list
+python3 -B -m market_rsi check --suite smoke
+python3 -B -m market_rsi check --suite price
+python3 -B -m market_rsi check --suite price --list
 python3 -B -m unittest discover -s tests -v
 ```
 
@@ -29,6 +29,12 @@ python3 -B -m unittest discover -s tests -v
 regression set. `--list` prints the exact selection without importing or running
 tests. The runner resolves the project directory from its own path, so an
 absolute script path works from another working directory.
+
+Suite selection lives in `configs/checks.json`; implementation lives in
+`market_rsi/checks.py`. The old `tools/check.py` is a compatibility script with
+the same options. Run module commands from the checkout root; from another cwd,
+use the absolute compatibility-script path or explicitly set `PYTHONPATH` to
+this checkout. This is a source-checkout package, not an installed distribution.
 
 Each suite has a five-minute subprocess timeout, disables bytecode writes and
 sets numerical-library thread counts to one. It returns the test process's exit
@@ -74,23 +80,28 @@ quotes or PnL.
 
 ### Repository layout
 
-The layout follows the separation of responsibilities in the reference
-[RSIBench-Data repository](https://github.com/evolvent-ai/RSIBench-Data/tree/4c807610243e7b481d382c5ed360c71c79a22f61).
-Its runner, backend, benchmark profiles, docs, tests and tools are distinct;
-generated sessions live under ignored `artifacts/runs/`. Selected baseline
-diagnostics are committed under its benchmarks. We adopt the separation, not
-its Tinker/E2B runtime or benchmark tasks.
+The layout adopts package/config/task/test separation from
+[OpenEvolve](https://github.com/algorithmicsuperintelligence/openevolve/tree/9196d8763300d1e46cc8b48cb0dc987966db3d48),
+and source/generated-output separation from
+[RSIBench-Data](https://github.com/evolvent-ai/RSIBench-Data/tree/4c807610243e7b481d382c5ed360c71c79a22f61).
+These references guide organization; their runtime backends, research policies
+and benchmark tasks are not adopted. Keep failed/rejected source and evidence
+in append-only history rather than resetting discarded experiment commits.
 
 Current checkout layout:
 
 ```text
-README.md                     Project summary and main entry
-docs/DEVELOPMENT.md            Current code map, checks and migration boundaries
-tools/check.py                Developer check command
-tests/                        Developer-command and fixture-cleanup regressions
-research/market_rsi/           Existing production modules and bound evidence
+market_rsi/                   Importable developer interface
+  checks.py                   Existing check implementation
+  cli.py                      Check command and thin native price delegate
+configs/checks.json           Exact development-suite selections
+benchmarks/nfl_price/          Current task/source index; no run authority
+tests/                        Developer-command, layout and cleanup regressions
+tools/check.py                Compatible old check script
+docs/DEVELOPMENT.md            Code map, checks and migration boundaries
+research/market_rsi/           Existing core source and bound evidence, unchanged
   supervisor_harness/         Loop, roles, review, execution and state
-  experiments/                Current data adapters, prediction recipes and scorer
+  experiments/                Existing task implementation and candidate history
   data_scientist_harness/      Existing co-evolution controls and research tooling
 ```
 
@@ -100,23 +111,36 @@ the layout does not redirect existing runs or move live accounting. Closed
 historical logs are mapped by the
 [local archive manifest](../research/market_rsi/LOCAL_LOG_ARCHIVE_2026-10-07.json).
 
-Target source organization, to migrate one verified boundary at a time:
+Target source organization, to migrate one verified boundary at a time. This
+refines the earlier separate top-level runner/backend proposal into one package:
 
-| Reference responsibility | Current Market RSI implementation | Eventual destination |
+| Responsibility | Current Market RSI implementation | Eventual destination |
 | --- | --- | --- |
-| Session runner | `supervisor_harness/run_price_discovery.py` and durable loop modules | `runner/` |
-| Service implementations | Account roles, candidate author, review and worker adapters | `backend/` |
+| Session runner | `supervisor_harness/run_price_discovery.py` and durable loop modules | `market_rsi/loop/` |
+| Service implementations | Account roles, candidate author, review and worker adapters | `market_rsi/roles/`, `market_rsi/services/` |
+| Research history | Existing durable journal and feedback modules | `market_rsi/history/` |
 | Task definitions and evaluation | `experiments/nfl_ingame_price_data.py` and price diagnostic/scorer | `benchmarks/` |
 | Documentation | Current development guide and curated operating instructions | `docs/` |
 | Regression tests | Root developer tests and existing colocated `test_*.py` modules | `tests/` |
 | Developer utilities | `tools/check.py` | `tools/` |
 
-Only developer documentation and its two regression modules have moved in this
-pass. Production imports, command paths, source-hashed manifests, task/scorer
-and machine-referenced records stay at their existing locations. Migrating
-runner/backend/benchmarks requires an import/reference inventory, cold replay
-tests and fresh prospective source bindings; preserve old run identities.
-Earnings remains a planned task adapter, not an implemented benchmark profile.
+Developer checks have moved into the package; their options, suite order and
+process behavior stay fixed. The package's `price` command delegates to
+`python -B -m supervisor_harness.run_price_discovery` using the current
+interpreter and the original project cwd. It makes caller-relative config and
+feedback names absolute before changing cwd, without resolving symlinks, and
+does not add defaults, retries, permissions or accounting. Native preflight
+remains authoritative. This command has mocked launch tests only; no live
+launch through the new wrapper has been authorized or tested.
+
+Production imports, command paths, source-hashed manifests, task/scorer and
+machine-referenced records remain at their existing locations. Native preflight
+checks literal source paths, rejects symlink paths and binds committed bytes;
+directory aliases would break that contract. Moving core modules requires a
+separate import/reference inventory, cold replay tests and new prospective
+bindings. The original historical source and outcomes must remain recoverable.
+No duplicate core implementation or symlink facade has been added.
+Earnings remains planned, with no implemented profile.
 
 - Production code and its `test_*.py` modules often share directories. The named
   suites above make the current regression scope explicit.

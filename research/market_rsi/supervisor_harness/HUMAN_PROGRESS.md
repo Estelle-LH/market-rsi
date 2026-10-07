@@ -2638,3 +2638,20 @@ references and all native Python bytes; root, smoke and full price regressions.
 Use existing Python3.12, five-minute suite bound, no empirical/model budget.
 Model/data/memory manifests and empirical replay are not applicable. Preserve
 failed checks as results. Tests pending at this planning checkpoint.
+
+Initial candidate check: existing Python3.12.3, from the isolated checkout,
+`python -B -m unittest discover -s tests -v` ran21tests in0.178s and FAILED with
+10nested fixture subtest errors. The new package shadowed the existing
+`research/market_rsi/market_rsi.py`; native imports of `market_rsi.digest` failed
+when developer and native fixtures shared a process. No native source changed,
+and no live launch/data/fit occurred. Preserve this failed source as a local
+checkpoint; do not activate it. CLI unit and profile checks passed, but that
+does not make the candidate acceptable. An earlier combined move/add patch
+was rejected by the patch tool before edits; splitting its operations succeeded.
+
+Next bounded repair within the same declared paths: forward the existing
+legacy module API from package `__init__` without copying helpers, changing
+their source paths or injecting native directories into global `sys.path`.
+Add root/legacy import compatibility checks and inspect the unchanged module
+before importing it. Re-run all root and relevant native regressions. This
+repair is developer compatibility only, not scientific or R/H improvement.

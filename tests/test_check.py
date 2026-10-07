@@ -8,7 +8,7 @@ import sys
 import unittest
 from unittest import mock
 
-from tools import check
+from market_rsi import checks as check
 
 
 class CheckRunnerTests(unittest.TestCase):
