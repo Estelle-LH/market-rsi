@@ -2354,3 +2354,31 @@ sandbox-run failures have the same cause.
 Implementation: move child cleanup registration before setup in those ten call
 sites across the declared nine price-test files. No production source or test
 assertion is relaxed. Post-fix verification is pending at this source checkpoint.
+
+### Final cleanup verification — source `ce80f5cf20ec0793dd85a530dd92c70a6a290c41`
+
+- Existing Python 3.12.3, `PYTHONDONTWRITEBYTECODE=1`, from the isolated root:
+  `python -B -m unittest discover -s tools/tests -v`: 10 tests PASS, 0.558s,
+  including the ten previously failing child-setup subcases.
+- Same interpreter, `python -B tools/check.py --suite price`, with explicit host
+  process-inspection permission: all 369 inherited tests PASS, 58.523s. The
+  expected invalid-source Git diagnostic is unchanged; final process exit 0.
+- `git diff 7b6da3527eb5b77c4692adc8d8051006cbf3e063 --check`: PASS. The total
+  changed path set is exactly the union of the two declared allowlists (16
+  paths). Production services, evaluators, dependency pins, research candidates,
+  raw data, live ledgers and immutable experiment records are unchanged.
+
+Outcome: clearer current/historical navigation, one explicit synthetic test
+entry, and measured elimination of ten nested-fixture patch leaks. This is
+developer-only L1 evidence. The restricted sandbox still cannot satisfy the
+inherited RSS checks; that host limitation was documented, not bypassed in code.
+No full-legacy-suite, live autonomy, forecast gain or co-evolution claim.
+
+Checkpoint history retains the initial source, sandbox failure, host baseline,
+pre-fix red regression, test-only fix and measured green result. The canonical
+Supervisor checkout advanced independently during this work and was not edited
+or committed by this cleanup. All commits stay on the isolated local branch;
+no push, merge, experiment launch or runtime activation. Next: integration owner
+reviews these source-only changes, then chooses one recovery/scheduler boundary
+for the next bounded cleanup; defer historical file moves until references and
+source commitments are audited.
