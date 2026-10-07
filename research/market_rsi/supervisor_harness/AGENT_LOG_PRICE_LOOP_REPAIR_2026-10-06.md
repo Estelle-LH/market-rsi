@@ -965,5 +965,33 @@ checks; corrected by running the existing full module, no production repair.
 Prospective authorized decision revision retains old canonical history and
 idle permanent journal. Fresh preparation/metadata probe/live entry follow;
 helper not scientific reviewer and costs unmetered, no gain asserted.
+
+### Actual connected pilot terminal — NOT COMPLETE
+
+Fresh rootmarket-rsi-coevo-price-connected-pilot-20261006-01;
+launch2f298973/seed4317d2ba/grantfa9f13e4. Clock18:50:37–19:35:37UTC/
+cutoff19:30:37, no extension. Actual formal command from research/market_rsi:
+`env PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m supervisor_harness.run_price_discovery --batch-config '/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-price-connected-pilot-20261006-01/launch.json' --initial-feedback '/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-price-connected-pilot-20261006-01/initial-feedback.json'`
+Operation admitted, no egress rejection. Real runtime metadata-policy probe
+PASS(no turn/model/privatepayload), baseline H/R hooks2PASS .036035/.037632s,
+peaks18.68/19.58MB, fits0. First original inputreview120.106820s timeout,
+stage120.314011s. Input86,256pretty-JSON bytes,1turn/start/0toolRPC.
+Streamed1363-byte PASS JSON schema-valid but no final native completion/usage;
+diagnostic only, not an accepted independent verdict. Process11453 gone,
+formal session exit1, round1.input.failed/TimeoutExpired/no_retry preserved.
+Controller0/author0/attempt0/fits0/newprediction0. No cap refund/reopening.
+Closed18:58:08.771760UTC451.77176s fromactivation, ledger4fd6b6ca,
+closeout87a586a753d8f356f354625bfd7f8619b7f68099c2add19de820483e98815d70
+in permanent root binds all wire/failure/timing/policy/hook evidence.
+1accountoriginal started/0completed, requestedgpt-6.1-sol(snapshotunknown),
+token/subscriptionUSDunknown, paidproviders0, helperoverheadunmetered.
+Two pre-window Supervisor source/command repairs and bad testselector failure
+preserved; no per-round human science instruction. B0 incumbent/B0B1pool/
+all4archive unchanged. Existing scorer/data/runner and closed history frozen.
+Concrete next work: prospectively configurable native-review completion wait
+within batch deadline, not another evaluation redesign. Cannot revive this
+failed original or call missing R/H-to-C effect complete. Decision journal
+is idle status synchronization, not native executor; no published/profit/OOS/
+co-evolution/fixed-process superiority claim.
 Independent source-only helper review registered separately; no private Train
 feedback transfer, account role call or scientific selection delegated to it.

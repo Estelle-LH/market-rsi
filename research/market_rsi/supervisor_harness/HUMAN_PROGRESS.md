@@ -1,5 +1,13 @@
 # Market RSI — human progress
 
+## 2026-10-07 14:58 NY — connected pilot 实际尝试，未完成
+
+- 正式 v2 入口和真实账户工具关闭预检通过；两个初始 R/H hook 实际执行。
+- 第一个独立输入审核已调用，但120秒内缺少原生完成回执，被限时终止；流式 PASS JSON 仅用于诊断，不能当成已完成审核。
+- 本次1次审核调用、0次 Controller、0候选/0拟合；没有新分数或 co-evolution 证据。不自动重试、不退款、不重开旧批次。
+- 451.77176秒后关闭；原有 B0/B1 活跃池、B0 最佳和全部历史结果不变。tokens/订阅美元成本未知，付费 provider0。
+- 永久证据：artifacts/market-rsi-coevo-price-connected-pilot-20261006-01/closeout.json，SHA87a586a7；完整启动命令和失败在现有 price-loop worklog。下一项明确阻断是审核原生完成等待限时，不是数据或评分器。
+
 ## 2026-10-07 14:15 NY — verified pipeline source pushed
 
 Published eight pipeline source/test files to public branch
