@@ -1,0 +1,421 @@
+"""Once-only reviewed score or factual failure feedback; no model text is executed."""
+from __future__ import annotations
+
+from datetime import datetime, timedelta, timezone
+import fcntl
+import hashlib
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+
+from supervisor_harness.opened_train_discovery_worker import save as _save, sha
+from supervisor_harness.continuous_discovery_batch import _digest
+from supervisor_harness.learning_checkpoint_assessment import (
+    EVIDENCE_SCHEMA_V4, parent_eligibility, validate_saved_checkpoint,
+)
+
+CLI = Path("/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex")
+CLI_SHA = "6b582e8813ce7e8ed4c52814ee5cf230dba647bf2292df747a4003f2657ef201"
+MODEL = "gpt-6.1-sol"
+SCOPE_SHA = "63b2746021625c40198815439fcde4e6fe0b9f878f86ed05a3b6249bec248f58"
+CLEANUP_SECONDS = 5
+DEADLINE, CUTOFF = "2026-10-05T19:27:11Z", "2026-10-05T19:12:11Z"
+ROLES = {"feedback", "review", "scorecard", "predictions", "supplement", "memory", "history", "pool", "authority", "overhead", "request"}
+FLAGS = {"external_fetch": False, "paid_provider": False, "route_dev_opened": False, "sealed_final_opened": False, "promotion_authorized": False}
+NUMERIC_KEYS = ("aggregate", "folds", "paired_grouped_evidence", "source_denominator", "correction_diagnostics")
+OMITTED = {"reliability_table", "by_schedule_date", "per_schedule_date_correction_diagnostics", "trainer"}
+
+
+def _compact(value):
+    if isinstance(value, dict): return {key: _compact(item) for key, item in value.items() if key not in OMITTED}
+    if isinstance(value, list): return [_compact(item) for item in value]
+    return value
+
+
+def save(path, value):
+    _save(path, value)
+    descriptor = os.open(Path(path).parent, os.O_RDONLY)
+    try: os.fsync(descriptor)
+    finally: os.close(descriptor)
+
+
+def _json(data):
+    def pairs(items):
+        result = dict(items)
+        if len(result) != len(items): raise ValueError("duplicate JSON keys")
+        return result
+    result = json.loads(data, object_pairs_hook=pairs, parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite JSON")))
+    json.dumps(result, allow_nan=False)
+    return result
+
+
+def _read(binding, binary=False):
+    if set(binding) != {"path", "sha256"}: raise ValueError("exact file binding required")
+    path = Path(binding["path"])
+    if not path.is_absolute() or path.resolve() != path or not path.is_file() or sha(path) != binding["sha256"]:
+        raise ValueError("file hash/path drift")
+    return path.read_bytes() if binary else _json(path.read_bytes())
+
+
+def _time(value):
+    moment = datetime.fromisoformat(value.replace("Z", "+00:00")) if isinstance(value, str) else value
+    if moment.tzinfo is None: raise ValueError("timezone required")
+    return moment
+
+
+def prospective_pilot_binding():
+    """Exact user-approved pilot envelope; a copy, not authority or a default reset."""
+    return {"schema": "controller_prospective_budget_binding_v1",
+        "batch_id": "market-rsi-learning-checkpoint-pilot-20261005-01",
+        "start_utc": "2026-10-05T21:09:55Z", "selection_cutoff_utc": "2026-10-05T22:24:55Z",
+        "deadline_utc": "2026-10-05T22:39:55Z",
+        "limits": {"attempts": 3, "statistical_fits": 12, "live_candidate_processes": 2,
+            "threads_per_candidate": 1, "per_attempt_seconds": 900, "sampled_rss_bytes": 1073741824,
+            "paid_provider_calls": 0, "paid_provider_spend_usd": "0"}}
+
+
+def continuation_pilot_binding():
+    """Exact separately approved continuation; never reopens either old window."""
+    return {"schema": "controller_prospective_budget_binding_v1",
+        "batch_id": "market-rsi-learning-checkpoint-continuation-20261005-01",
+        "start_utc": "2026-10-05T22:32:32Z", "selection_cutoff_utc": "2026-10-05T23:47:32Z",
+        "deadline_utc": "2026-10-06T00:02:32Z",
+        "limits": {"attempts": 2, "statistical_fits": 8, "live_candidate_processes": 2,
+            "threads_per_candidate": 1, "per_attempt_seconds": 900, "sampled_rss_bytes": 1073741824,
+            "paid_provider_calls": 0, "paid_provider_spend_usd": "0"}}
+
+
+def ten_hour_window_binding():
+    """New ten-hour grant with a Supervisor ceiling; never resets old consumption."""
+    return {"schema": "controller_prospective_budget_binding_v1",
+        "batch_id": "market-rsi-controller-enablement-10h-20261006-01",
+        "start_utc": "2026-10-06T04:36:33Z", "selection_cutoff_utc": "2026-10-06T14:21:33Z",
+        "deadline_utc": "2026-10-06T14:36:33Z",
+        "limits": {"attempts": 12, "statistical_fits": 48, "live_candidate_processes": 2,
+            "threads_per_candidate": 1, "per_attempt_seconds": 900, "sampled_rss_bytes": 1073741824,
+            "paid_provider_calls": 0, "paid_provider_spend_usd": "0"}}
+
+
+def fresh_three_attempt_binding(start_utc):
+    """One explicitly consented batch; Root freezes ready time once, not a grant."""
+    if type(start_utc) is not str:
+        raise ValueError("exact fresh ready time required")
+    start = _time(start_utc)
+    if (start_utc != start.strftime("%Y-%m-%dT%H:%M:%SZ")
+            or start.date().isoformat() != "2026-10-06"
+            or start < _time("2026-10-06T14:52:00Z")):
+        raise ValueError("fresh ready time outside explicit consent")
+    binding = prospective_pilot_binding()
+    binding.update(batch_id="market-rsi-authorized-discovery-20261006-01",
+        start_utc=start_utc,
+        selection_cutoff_utc=(start + timedelta(minutes=75)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        deadline_utc=(start + timedelta(minutes=90)).strftime("%Y-%m-%dT%H:%M:%SZ"))
+    return binding
+
+
+def _prospective_binding(binding):
+    if binding is None: return None
+    # Canonical comparison rejects extra fields, coercible bools/floats and self-grants.
+    allowed = [factory() for factory in
+               (prospective_pilot_binding, continuation_pilot_binding, ten_hour_window_binding)]
+    if type(binding) is dict and binding.get("batch_id") == "market-rsi-authorized-discovery-20261006-01":
+        allowed.append(fresh_three_attempt_binding(binding.get("start_utc")))
+    if type(binding) is not dict or _digest(binding) not in tuple(_digest(item) for item in allowed):
+        raise ValueError("prospective budget binding drift")
+    return _json(json.dumps(binding, allow_nan=False))
+
+
+def check_budget(authority, now, *, prospective_binding=None):
+    binding = _prospective_binding(prospective_binding)
+    expected = {"attempts": 6, "statistical_fits": 24, "live_candidate_processes": 2, "threads_per_candidate": 1, "per_attempt_seconds": 900, "sampled_rss_bytes": 1073741824, "paid_provider_calls": 0, "paid_provider_spend_usd": "0"}
+    deadline, cutoff, maximum, fit_cap = DEADLINE, CUTOFF, 6, 24
+    if binding is not None:
+        expected, deadline, cutoff = binding["limits"], binding["deadline_utc"], binding["selection_cutoff_utc"]
+        maximum, fit_cap = expected["attempts"], expected["statistical_fits"]
+        if authority.get("batch_id") != binding["batch_id"] or authority["start_utc"] != binding["start_utc"] or _digest(authority["limits"]) != _digest(expected):
+            raise ValueError("prospective outer authority changed")
+    if authority["limits"] != expected or authority["deadline_utc"] != deadline or authority["selection_cutoff_utc"] != cutoff:
+        raise ValueError("outer authority changed")
+    attempts = authority["attempts"]
+    if _time(now) < _time(authority["start_utc"]) or _time(now) >= _time(cutoff) or len(attempts) >= maximum:
+        raise ValueError("outer selection stop")
+    if len({item["attempt_id"] for item in attempts}) != len(attempts): raise ValueError("duplicate outer attempt")
+    if any(type(item["fits_reserved"]) is not int or type(item["actual_fits"]) is not int or not 0 <= item["actual_fits"] <= item["fits_reserved"] <= 4 for item in attempts):
+        raise ValueError("invalid actual/reserved fits")
+    if sum(item["fits_reserved"] for item in attempts) + 4 > fit_cap or sum(item["status"] in {"claimed", "running", "execution_claimed", "execution_reserved"} for item in attempts) >= 2:
+        raise ValueError("shared fit/concurrency ceiling")
+
+
+def _feedback_protocol(feedback):
+    """Validate opt-in evidence; legacy packets keep their original predicates."""
+    if feedback.get("schema") != EVIDENCE_SCHEMA_V4:
+        if "protocol_version" in feedback or "learning_checkpoint" in feedback:
+            raise ValueError("learning checkpoint requires explicit v4 feedback")
+        return 3
+    if type(feedback.get("protocol_version")) is not int or feedback["protocol_version"] != 4:
+        raise ValueError("learning feedback protocol changed")
+    assessment = validate_saved_checkpoint(feedback.get("learning_checkpoint"), {
+        "review_decision": feedback["review_decision"], "review_sha256": feedback["review_sha256"],
+        "execution_outcome": feedback["execution_outcome"], "independently_reviewed": feedback["independently_reviewed"],
+        "question_digest_sha256": feedback["research_credit"]["question_digest_sha256"],
+    })
+    if (type(feedback["research_credit"]["value"]) is not int
+            or feedback["research_credit"]["value"] != assessment["learning"]["credit"]):
+        raise ValueError("learning feedback credit projection changed")
+    return 4
+
+
+def prepare_input(bindings, batch, repo, now, *, prospective_binding=None, evidence_session=None):
+    """Called by the trusted Supervisor after review; copies real numbers, not hashes alone."""
+    from supervisor_harness import controller_failure_feedback as failure
+    if set(bindings) == failure.FAILED_ROLES:
+        result = failure.prepare_input(bindings, batch, repo, now, prospective_binding=prospective_binding)
+        if evidence_session is not None:
+            from supervisor_harness import controller_evidence_session as evidence
+            evidence.validate(evidence_session)
+            result["evidence_session"] = evidence_session
+        return result
+    if set(bindings) != ROLES: raise ValueError("exact feedback file roles required")
+    data = {role: _read(binding, role == "predictions") for role, binding in bindings.items()}
+    feedback, review, card, supplement, request = [data[name] for name in ("feedback", "review", "scorecard", "supplement", "request")]
+    branch = next(item for item in batch.snapshot()["branches"] if item["attempt_id"] == feedback["attempt_id"])
+    if (branch["stage"] != "controller_feedback_ready" or branch["feedback_packet"] != feedback or branch["feedback_packet_sha256"] != _digest(feedback)
+            or feedback["independently_reviewed"] is not True or review["passed"] is not True
+            or feedback["review_sha256"] != bindings["review"]["sha256"] or feedback["scorecard_sha256"] != bindings["scorecard"]["sha256"]
+            or review["candidate_id"] != feedback["candidate_id"] or card["task_id"] != feedback["candidate_id"]
+            or review["supplement_sha256"] != bindings["supplement"]["sha256"]
+            or supplement["scorecard_sha256"] != bindings["scorecard"]["sha256"] or supplement["predictions_sha256"] != bindings["predictions"]["sha256"]
+            or card["research_parent_sha256"] != feedback["research_parent_sha256"] or supplement["actual_parent_source_sha256"] != feedback["research_parent_sha256"]):
+        raise ValueError("feedback/review/parent/supplement admission drift")
+    _feedback_protocol(feedback)
+    if any(card.get(key) is not value for key, value in FLAGS.items()): raise ValueError("protected permission flag changed")
+    if card.get("historical_event_clock_only") is not True or type(card.get("provider_cost_usd")) is not str or card["provider_cost_usd"] != "0": raise ValueError("historical/cost flag changed")
+    if card["source_denominator"] != {"events": 195, "dates": 42, "materialized_events": 193, "excluded_events": 2, "check_events": 87, "check_dates": 20, "check_game_weeks": 7}:
+        raise ValueError("frozen population changed")
+    if [fold["fit_events"] for fold in card["folds"]] != [106, 132, 148, 176] or [fold["check_events"] for fold in card["folds"]] != [26, 16, 28, 17]:
+        raise ValueError("chronological check geometry changed")
+    runner = "research/market_rsi/" + request["module"].replace(".", "/") + ".py"
+    if (review["source_commit"] != request["source_commit"] or request["memory_sha256"] != bindings["memory"]["sha256"]
+            or request["candidate_id"] != feedback["candidate_id"] or request["attempt_id"] != feedback["attempt_id"]
+            or request["files"].get(runner) != feedback["runner_sha256"]):
+        raise ValueError("source/memory binding changed")
+    for name, expected in request["files"].items():
+        path = Path(repo) / name
+        if Path(name).is_absolute() or ".." in Path(name).parts or path.resolve() != path or sha(path) != expected:
+            raise ValueError("source byte drift")
+        original = subprocess.check_output(["git", "show", request["source_commit"] + ":" + name], cwd=repo)
+        if hashlib.sha256(original).hexdigest() != expected: raise ValueError("source commit drift")
+    if sha(request["python"]) != request["python_sha256"]: raise ValueError("runtime byte drift")
+    binding = _prospective_binding(prospective_binding)
+    check_budget(data["authority"], now, prospective_binding=binding)
+    numeric = _compact({key: card[key] for key in NUMERIC_KEYS})
+    result = {"schema": "controller_feedback_input_v1", "bindings": bindings, "feedback": feedback, "numerical": numeric,
+        "supplement": _compact(supplement), "omitted_from_prompt": sorted(OMITTED), "memory": data["memory"], "history": data["history"], "pool": data["pool"], "authority": data["authority"], "overhead": data["overhead"]}
+    if binding is not None: result["prospective_budget_binding"] = binding
+    if evidence_session is not None:
+        from supervisor_harness import controller_evidence_session as evidence
+        evidence.validate(evidence_session)
+        result["evidence_session"] = evidence_session
+    _digest(result)
+    return _json(json.dumps(result, allow_nan=False))
+
+
+def _object(properties):
+    return {"type": "object", "properties": properties, "required": list(properties), "additionalProperties": False}
+
+
+TEXT = {"type": "string", "minLength": 1}
+EVIDENCE = _object({"sha256": TEXT, "finding": TEXT, "choice_consequence": TEXT})
+BRANCH = _object({"parent_sha256": TEXT, "method_family": TEXT, "reason": TEXT})
+SCHEMA = _object({"schema": {"type": "string", "const": "controller_next_decision_v1"}, "input_sha256": TEXT, "feedback_sha256": TEXT,
+    "requested_model": {"type": "string", "const": MODEL}, "serving_snapshot": {"type": "string", "const": "unknown"}, "action": {"type": "string", "enum": ["propose_candidate", "request_closed_authority"]},
+    "candidate_id": TEXT, "question_id": TEXT, "actual_parent_sha256": TEXT, "comparison_incumbent_sha256": TEXT, "hypothesis": TEXT, "recipe": TEXT, "expected_evidence": TEXT,
+    "evidence_used": {"type": "array", "items": EVIDENCE, "minItems": 1}, "active_pool": {"type": "array", "items": BRANCH, "minItems": 2, "maxItems": 3},
+    "memory_additions": TEXT, "stopped_exact_recipes": TEXT, "attribution": TEXT,
+    "resources": _object({"fits": {"type": "integer", "const": 4}, "seconds": {"type": "integer", "const": 900}, "threads": {"type": "integer", "const": 1}, "rss_bytes": {"type": "integer", "const": 1073741824}, "provider_calls": {"type": "integer", "const": 0}}),
+    "boundary": {"type": "string", "const": "resident_train_only_fixed_scoring_no_external_no_protected_no_release"}})
+
+
+def _validate(value, schema):
+    if "const" in schema and (type(value) != type(schema["const"]) or value != schema["const"]): raise ValueError("response constant drift")
+    if "enum" in schema and value not in schema["enum"]: raise ValueError("response enum drift")
+    if schema.get("type") == "object":
+        if type(value) is not dict or set(value) != set(schema["required"]): raise ValueError("strict response fields")
+        for key, child in schema["properties"].items(): _validate(value[key], child)
+    if schema.get("type") == "array":
+        if type(value) is not list or not schema.get("minItems", 0) <= len(value) <= schema.get("maxItems", len(value)): raise ValueError("response array bounds")
+        for item in value: _validate(item, schema["items"])
+    if schema.get("type") == "string" and (type(value) is not str or not value.strip()): raise ValueError("nonempty response string")
+
+
+def _command(directory, evidence_session=None):
+    command = [str(CLI), "exec", "--ephemeral", "--ignore-user-config", "--skip-git-repo-check", "--sandbox", "read-only", "--cd", str(directory), "--model", MODEL, "--json", "--output-schema", str(directory / "schema.json"), "--output-last-message", str(directory / "response.json")]
+    if evidence_session is not None:
+        from supervisor_harness import controller_evidence_session as evidence
+        command += ["--ignore-rules"] + evidence.config_overrides(evidence_session, directory)
+    return command + ["-"]
+
+
+def _identity(evidence_session=None, failure_input=False):
+    result = {"consumer_source_sha256": sha(Path(__file__).resolve()), "scope_sha256": SCOPE_SHA}
+    if evidence_session is not None:
+        from supervisor_harness import controller_evidence_session as evidence
+        result["evidence_session_source_sha256"] = sha(Path(evidence.__file__).resolve())
+    if failure_input:
+        from supervisor_harness import controller_failure_feedback as failure
+        result["failure_adapter_source_sha256"] = sha(Path(failure.__file__).resolve())
+    return result
+
+
+def _hashes(value):
+    if isinstance(value, dict): return set().union(*(_hashes(item) for item in value.values())) if value else set()
+    if isinstance(value, list): return set().union(*(_hashes(item) for item in value)) if value else set()
+    return {value} if type(value) is str and len(value) == 64 and all(char in "0123456789abcdef" for char in value) else set()
+
+
+def _terminate(child):
+    if child.poll() is None:
+        try: os.killpg(child.pid, signal.SIGKILL)
+        except ProcessLookupError: pass
+    try: child.wait(timeout=CLEANUP_SECONDS)
+    except subprocess.TimeoutExpired as error: raise RuntimeError("fresh child unreaped after bounded cleanup; no retry") from error
+
+
+def _prompt(packet):
+    if packet.get("schema") == "controller_price_feedback_input_v2":
+        return ("No tools, file/data/network/credentials access or authority changes. Use supplied verified feedback, process observations, history and memory. "
+            "Choose one enabled action: an actual prediction hypothesis, one researcher policy/memory/workflow change, one research-side harness/tool change, "
+            "or a genuinely necessary request for closed authority. Methods remain open. Do not force an R/H mutation or attach a dummy prediction to it. "
+            "A capacity proposal must cite observed evidence, exact parent pair/write scope, a matched test of its named benefit and concrete downstream use. "
+            "Do not modify protected evaluator/data/permissions/budget/trusted Supervisor. Configuration is not proof that capacities were used; "
+            "a proposal is not implemented/tested/accepted evidence. Prior negative scores are not stop reasons. Supervisor owns stopping and resource accounting. "
+            "Return exact controller_coevolution_action_v2 JSON; only the field for your selected action is non-null. "
+            "Copy binding values verbatim: input_sha256=" + _digest(packet) + " feedback_sha256=" + packet["bindings"]["feedback"]["sha256"]
+            + "\n" + json.dumps(packet, allow_nan=False))
+    prompt = "No tools, file/data/network/credentials access or authority changes. Use only this verified numerical evidence and prior memory. Return one non-executable evidence-cited scientific next decision; no invented results or preselected model. Within the still-open budget, propose a reasonable distinct small actual prediction hypothesis even without prior improvement; reasonable first small hypotheses do not require prior gains. Negative scores or implementation overhead are not reasons to stop; Supervisor owns allowed stop conditions. Methods remain open, with no forced R modification or scoring change. Use request_closed_authority only for a specific genuinely necessary next operation outside the fixed task/data/permission boundary, not a disguised voluntary stop; a request grants no authority.\nCopy these binding values verbatim; do not calculate hashes: input_sha256=" + _digest(packet) + " feedback_sha256=" + packet["bindings"]["feedback"]["sha256"] + "\n" + json.dumps(packet, allow_nan=False)
+    if packet.get("schema") == "controller_failure_feedback_input_v1":
+        prompt = prompt.replace("Use only this verified numerical evidence and prior memory.",
+            "Use only this independently reviewed factual execution failure and prior memory. No valid prediction scores are supplied; execution failure is not scientific refutation. Decide a bounded repair or distinct next hypothesis without inventing results.")
+    return prompt
+
+
+def _transport(directory, packet, timeout):
+    if sha(CLI) != CLI_SHA: raise ValueError("CLI source drift")
+    prompt = _prompt(packet)
+    session = packet.get("evidence_session")
+    failure_input = packet.get("schema") == "controller_failure_feedback_input_v1"
+    if session is not None:
+        from supervisor_harness import controller_evidence_session as evidence
+        policy = evidence.validate(session, directory, account=True)
+        catalog = [{k: r[k] for k in ("id", "kind", "sha256")} for r in policy["evidence"]]
+        prompt = prompt.replace("No tools, file/data/network/credentials access or authority changes.", "Use only controller_evidence.list_evidence/read_evidence for Supervisor-approved IDs; no other file/data/network/credential access or authority changes. Catalog: " + json.dumps(catalog))
+    command = _command(directory, session)
+    child, cleanup_attempted = None, False
+    try:
+        with (directory / "events.jsonl").open("xb") as stdout, (directory / "stderr").open("xb") as stderr:
+            child = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=stdout, stderr=stderr, start_new_session=True)
+            save(directory / "process.json", {"pid": child.pid, "command": command, "cli_sha256": CLI_SHA, "input_sha256": _digest(packet), **_identity(session, failure_input)})
+            timed_out = False
+            try: child.communicate(prompt.encode(), timeout=timeout)
+            except subprocess.TimeoutExpired:
+                timed_out = True; cleanup_attempted = True; _terminate(child)
+            stdout.flush(); os.fsync(stdout.fileno()); stderr.flush(); os.fsync(stderr.fileno())
+        names = ["process.json", "events.jsonl", "stderr", "schema.json", "input.json"]
+        if session is not None: names.append("evidence-audit.jsonl")
+        if (directory / "response.json").exists(): names.append("response.json")
+        save(directory / "completion.json", {"exit_code": child.returncode, "timed_out": timed_out, "hashes": {name: sha(directory / name) for name in names}, **_identity(session, failure_input)})
+    except BaseException:
+        if child is not None and not cleanup_attempted: _terminate(child)
+        raise
+
+
+def _recover(directory, packet):
+    session = packet.get("evidence_session")
+    failure_input = packet.get("schema") == "controller_failure_feedback_input_v1"
+    completion = _json((directory / "completion.json").read_bytes())
+    if any(completion.get(key) != value for key, value in _identity(session, failure_input).items()): raise ValueError("consumer completion provenance drift")
+    required = {"process.json", "events.jsonl", "stderr", "schema.json", "input.json", "response.json"}
+    if session is not None: required.add("evidence-audit.jsonl")
+    if completion["exit_code"] != 0 or completion["timed_out"] is not False or set(completion["hashes"]) != required:
+        raise RuntimeError("original process incomplete/failed; do not resample")
+    for name, digest in completion["hashes"].items(): _read({"path": str(directory / name), "sha256": digest}, True)
+    process = _json((directory / "process.json").read_bytes())
+    if any(process.get(key) != value for key, value in _identity(session, failure_input).items()): raise ValueError("consumer process provenance drift")
+    if process["cli_sha256"] != CLI_SHA or process["input_sha256"] != _digest(packet) or process["command"] != _command(directory, session): raise ValueError("original process identity drift")
+    usage, completed, message = None, False, None
+    events = []
+    for line in (directory / "events.jsonl").read_text().splitlines():
+        event = _json(line)
+        events.append(event)
+        allowed_items = {"agent_message", "reasoning"} | ({"mcp_tool_call"} if session is not None else set())
+        if event.get("type") not in {"thread.started", "turn.started", "item.started", "item.updated", "item.completed", "turn.completed"} or ("item" in event and event["item"].get("type") not in allowed_items):
+            raise ValueError("observed tool/failed event; not scientific refutation")
+        if event.get("type") == "item.completed" and event["item"].get("type") == "agent_message": message = _json(event["item"]["text"])
+        if event.get("type") == "turn.completed": usage, completed = event.get("usage"), True
+    response = _json((directory / "response.json").read_bytes()); _validate(response, SCHEMA)
+    if not completed or message != response: raise ValueError("original final message/completion missing or differs")
+    hashes = {item["sha256"] for item in packet["bindings"].values()} | _hashes(packet["memory"]) | _hashes(packet["history"])
+    if session is not None:
+        from supervisor_harness import controller_evidence_session as evidence
+        hashes |= evidence.verify_events(session, directory, events)
+    ranked = packet["feedback"]["next_pool_selection_hint"]["ranked_research_parents"]
+    if _feedback_protocol(packet["feedback"]) == 4:
+        parents = {item["candidate_sha256"] for item in ranked if parent_eligibility(item, 4)}
+    else:
+        parents = {item["candidate_sha256"] for item in ranked if
+            (item["research_credit"] == 2 and (item["research_outcome"], item["route_action"]) in {("support", "continue"), ("refute", "branch")})
+            or (item["research_credit"] == 1 and item["research_outcome"] == "inconclusive" and item["route_action"] == "bounded_followup" and item["followups_remaining"] == 1)
+            or (item["research_credit"] == 0 and item["research_outcome"] == "baseline" and item["route_action"] == "batch_start")}
+    parents.discard(packet["pool"].get("C2_consumed", {}).get("source_sha256"))
+    if response["input_sha256"] != _digest(packet) or response["feedback_sha256"] != packet["bindings"]["feedback"]["sha256"] or response["comparison_incumbent_sha256"] != packet["feedback"]["comparison_incumbent_sha256"]:
+        raise ValueError("response input/control binding drift")
+    if response["actual_parent_sha256"] not in parents or any(item["sha256"] not in hashes for item in response["evidence_used"]): raise ValueError("unprovided evidence/parent")
+    if (len({item["method_family"] for item in response["active_pool"]}) < 2 or len({item["parent_sha256"] for item in response["active_pool"]}) != len(response["active_pool"])
+            or any(item["parent_sha256"] not in parents for item in response["active_pool"])): raise ValueError("global pool diversity/eligibility")
+    ack = {"input_sha256": _digest(packet), "feedback_sha256": packet["bindings"]["feedback"]["sha256"], "decision_sha256": _digest(response), "completion_sha256": sha(directory / "completion.json"), "usage": usage, "serving_snapshot": "unknown", "provider_calls": 0}
+    if (directory / "ack.json").exists():
+        if _json((directory / "ack.json").read_bytes()) != ack: raise ValueError("acknowledgement drift")
+    else: save(directory / "ack.json", ack)
+    return response
+
+
+def consume(packet, root, *, batch, repo, now=None, transport=None, prospective_binding=None, evidence_session=None):
+    """One invocation per feedback. Recovery never calls transport a second time."""
+    now = now or datetime.now(timezone.utc)
+    if (evidence_session is None) != (packet.get("evidence_session") is None) or (evidence_session is not None and _digest(evidence_session) != _digest(packet["evidence_session"])):
+        raise ValueError("explicit evidence session binding changed")
+    if evidence_session is not None and transport is None:
+        from supervisor_harness import controller_evidence_session as evidence
+        evidence.validate(evidence_session, account=True)
+    binding = _prospective_binding(prospective_binding)
+    if (binding is None and "prospective_budget_binding" in packet) or (binding is not None and _digest(packet.get("prospective_budget_binding")) != _digest(binding)):
+        raise ValueError("explicit prospective packet binding changed")
+    root = Path(root)
+    if not root.is_absolute() or root.resolve() != root: raise ValueError("call root drift")
+    root.mkdir(parents=True, exist_ok=True)
+    key = packet["bindings"]["feedback"]["sha256"]
+    if len(key) != 64 or any(char not in "0123456789abcdef" for char in key): raise ValueError("feedback digest required")
+    directory = root / key; directory.mkdir(exist_ok=True)
+    if directory.resolve() != directory: raise ValueError("call directory symlink")
+    with (directory / ".lock").open("a+") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        claim = {"input_sha256": _digest(packet), "schema_sha256": _digest(SCHEMA), "cli_sha256": CLI_SHA,
+                 **_identity(evidence_session, packet.get("schema") == "controller_failure_feedback_input_v1")}
+        if binding is not None: claim["prospective_budget_binding_sha256"] = _digest(binding)
+        if (directory / "claim.json").exists():
+            if _json((directory / "claim.json").read_bytes()) != claim: raise ValueError("same feedback changed")
+            if _json((directory / "input.json").read_bytes()) != packet or _json((directory / "schema.json").read_bytes()) != SCHEMA:
+                raise ValueError("original input/schema changed")
+        else:
+            if sha(CLI) != CLI_SHA or prepare_input(packet["bindings"], batch, repo, now, prospective_binding=binding, evidence_session=evidence_session) != packet: raise ValueError("CLI drift/unverified numerical input")
+            save(directory / "input.json", packet); save(directory / "schema.json", SCHEMA); save(directory / "claim.json", claim)
+            deadline = DEADLINE if binding is None else binding["deadline_utc"]
+            try: (transport or _transport)(directory, packet, min(120., (_time(deadline) - _time(now)).total_seconds()))
+            except BaseException as error:
+                save(directory / "failure.json", {"error": str(error), "no_resample": True}); raise
+        try: return _recover(directory, packet)
+        except Exception as error:
+            if not (directory / "failure.json").exists(): save(directory / "failure.json", {"error": str(error), "no_resample": True})
+            raise
