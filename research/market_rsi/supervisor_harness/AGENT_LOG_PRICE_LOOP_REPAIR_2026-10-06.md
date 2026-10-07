@@ -828,3 +828,16 @@ zero new role/worker calls with unchanged ledger. This is an engineering path
 proof, not agent-originated scientific or capability improvement. Checkpoint
 the two-line history projection before extending the same fixture across
 no-benefit rejection, KEEP, known worker failure and uncertain-author stop.
+
+F6b five-path actual-service engineering matrix5PASS12.932s. The same formal
+entry now covers accepted H -> negative predictor -> cold replay, rejected H ->
+predictor with the parent pair retained, predictor KEEP/incumbent replacement,
+known worker failure/zero valid evidence followed by replay, and uncertain
+author failure with the original claim retained and no second call or refund.
+All model stdio and prediction rows are explicitly inert/synthetic; actual
+production service wiring, generated local source/tests, temporary Git,
+native journals, thirteen matched hook children and frozen rescoring execute.
+No scientific account call, resident Train fitting or live independent model
+approval occurred. Checkpoint this matrix before independent integrated review
+and broad regression. General pre-author certain-failure continuation remains
+deferred; a valid negative or a rejected capacity is not an automatic stop.

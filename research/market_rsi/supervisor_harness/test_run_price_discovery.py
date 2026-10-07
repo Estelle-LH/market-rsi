@@ -394,6 +394,21 @@ class EntryTests(TestCase):
 class ProductionEntryTests(TestCase):
     """Actual services; only account processes/training outputs are inert fixtures."""
     def test_capacity_then_predictor_actual_services_native_wire_and_cold_replay(self):
+        self.actual_path()
+
+    def test_no_benefit_preserves_parent_and_continues_to_predictor(self):
+        self.actual_path(benefit=False)
+
+    def test_keep_updates_incumbent_through_actual_services(self):
+        self.actual_path(amplitude=.003)
+
+    def test_known_worker_failure_preserves_invalid_feedback_and_replays(self):
+        self.actual_path(failed_worker=True)
+
+    def test_uncertain_author_stops_with_original_claim_and_no_retry(self):
+        self.actual_path(uncertain_author=True)
+
+    def actual_path(self, *, benefit=True, amplitude=.04, failed_worker=False, uncertain_author=False):
         from contextlib import ExitStack
         import json
         import subprocess
@@ -478,9 +493,10 @@ class ProductionEntryTests(TestCase):
                         value['capacity']['write_paths'] = packet['action_context']['identity_configuration']['allowed_write_paths']['harness']
                         return value
                     output = packet['source_context']['capacity_hook_outputs']['actual_invocations']['H']['output']
-                    self.assertEqual(output['remaining_questions'], ['synthetic baseline mismatch'])
-                    self.assertEqual(packet['feedback']['capacity_decision'], 'accept')
+                    self.assertEqual(output.get('remaining_questions', []), ['synthetic baseline mismatch'] if benefit else [])
+                    self.assertEqual(packet['feedback']['capacity_decision'], 'accept' if benefit else 'reject')
                     old = self.f.response(packet)
+                    old['candidate']['recipe'] = f'Synthetic constant amplitude {amplitude:g}; controlled fixture only.'
                     old['candidate']['hypothesis'] = 'Synthetic descendant uses the verified hook finding; no real scientific authorship.'
                     old['candidate']['evidence_used'][0]['choice_consequence'] = 'Verified capacity output caused this fixture descendant.'
                     return {key: old[key] for key in ('input_sha256', 'feedback_sha256', 'requested_model',
@@ -495,16 +511,19 @@ class ProductionEntryTests(TestCase):
                             'capacity_source': SOURCE, 'test_source': TEST, 'implementation_notes': 'Synthetic native-wire fixture only.'}
                     return {'decision_sha256': entry.r.t.c._digest(decision), 'candidate_id': decision['candidate']['candidate_id'],
                         'method_family': 'synthetic-constant', 'implementation_notes': 'No actual model or Train fitting.',
-                        'candidate_source': 'def fit_predict(x,y,weights,xc,history,check_history,*,seed):\n    return [0.04 for row in xc]\n',
-                        'test_source': "from candidate import fit_predict\ndef test_candidate():\n    assert fit_predict([],[],[],[[],[]],[],[],seed=314159) == [0.04,0.04]\nif __name__ == '__main__':\n    test_candidate()\n"}
+                        'candidate_source': f'def fit_predict(x,y,weights,xc,history,check_history,*,seed):\n    return [{amplitude:g} for row in xc]\n',
+                        'test_source': f"from candidate import fit_predict\ndef test_candidate():\n    assert fit_predict([],[],[],[[],[]],[],[],seed=314159) == [{amplitude:g},{amplitude:g}]\nif __name__ == '__main__':\n    test_candidate()\n"}
                 stage = body['stage']
                 value = {'schema': 'market_rsi_independent_price_verdict_v1', 'input_sha256': entry.r.t.c._digest(body),
                     'stage': stage, 'verdict': 'PASS', 'finding': 'Synthetic separate native role, not empirical reviewer approval.',
                     'evidence': ['Bound original and measured fixtures'], 'research_credit': 0,
                     'research_outcome': 'not_applicable', 'route_action': 'not_applicable'}
                 if stage == 'result' and 'measurement' in body['material']:
-                    value.update(benefit_observed=True, compatibility_checks={key: True for key in body['trusted_checks']})
-                elif stage == 'result': value.update(research_credit=2, research_outcome='refute', route_action='branch')
+                    value.update(benefit_observed=benefit, compatibility_checks={key: True for key in body['trusted_checks']})
+                elif stage == 'result' and body['material']['outcome'] == 'succeeded':
+                    keep = body['material']['metrics']['decision'] == 'KEEP'
+                    value.update(research_credit=2, research_outcome='support' if keep else 'refute',
+                                 route_action='continue' if keep else 'branch')
                 return value
 
             def transport(directory, packet, timeout, *, controller=False, preflight_only=False):
@@ -512,24 +531,44 @@ class ProductionEntryTests(TestCase):
                 return native_transport(directory, packet, timeout, controller=controller, preflight_only=preflight_only)
             def process(command, **kwargs):
                 if command == roles.native_command(None):
-                    settings = {'model': entry.r.t.c.MODEL, 'environments': [], 'status': 'completed', 'response': wire_response[0]}
+                    interrupted = uncertain_author and calls and calls[-1][0] == 'author'
+                    settings = {'model': entry.r.t.c.MODEL, 'environments': [],
+                        'status': 'failed' if interrupted else 'completed', 'response': wire_response[0]}
                     return REAL_POPEN([sys.executable, '-u', '-c', RPC_FIXTURE, json.dumps(settings)], **kwargs)
                 if '--output' in command:
                     output = Path(command[command.index('--output') + 1]); workers.append(output)
                     request = entry.r.t._file(output.parent.parent / 'ready_request.json')
+                    if failed_worker:
+                        output.mkdir(parents=True)
+                        entry.r.w.save(output / 'fit_progress.json', {'fit_calls_entered': 0, 'fit_calls_completed': 0})
+                        return Mock(pid=1234, wait=Mock(return_value=1), poll=Mock(return_value=1))
                     fixtures.write_result(output, self.f.rows, {'B0-NoPriceChange': 0., 'B1-FixedHGBRegressor': .2,
-                        request['candidate_id']: .04}, request['candidate_id'], source=request['source_commit'])
+                        request['candidate_id']: amplitude}, request['candidate_id'], source=request['source_commit'])
                     return Mock(pid=1234, wait=Mock(return_value=0), poll=Mock(return_value=0))
                 return REAL_POPEN(command, **kwargs)
             stack.enter_context(patch.object(roles, 'native_transport', side_effect=transport))
             stack.enter_context(patch.object(subprocess, 'Popen', side_effect=process))
             stack.enter_context(patch.object(entry.r.w, 'sample_rss', side_effect=lambda pid: 128 if pid == 1234 else sampler(pid)))
+            if uncertain_author:
+                with self.assertRaises(entry.s.loop.LoopHalted): entry.run(launch, seed)
+                count = len(calls)
+                role = next((root / 'role_calls/author').iterdir())
+                self.assertTrue((role / 'claim.json').exists()); self.assertTrue((role / 'failure.json').exists())
+                self.assertFalse((role / 'completion.json').exists()); self.assertFalse(workers)
+                self.assertEqual(entry.r.t._file(root / 'ledger.json')['attempts'], [])
+                with self.assertRaises(entry.s.loop.LoopHalted): entry.run(launch, seed)
+                self.assertEqual(len(calls), count)
+                return
             result = entry.run(launch, seed)
             self.assertTrue(result['complete']); self.assertEqual(len(calls), 10); self.assertEqual(len(workers), 1)
             actual = entry.r.t._file(root / 'ledger.json')
             self.assertEqual([row['fits_reserved'] for row in actual['attempts']], [0, 4])
-            self.assertEqual([row['status'] for row in actual['attempts']], ['succeeded', 'succeeded'])
+            self.assertEqual([row['status'] for row in actual['attempts']], ['succeeded', 'failed' if failed_worker else 'succeeded'])
+            feedback = entry.r.t.c._read(result['loop']['result']['feedback'])
+            self.assertEqual(feedback['decision'], 'UNCHANGED' if failed_worker else 'KEEP' if amplitude == .003 else 'REVERT')
+            self.assertEqual(feedback['research_credit'], 0 if failed_worker else 2)
             pair = entry.r.t._file(root / 'price-capacity-native/batch.json')['micro_evolution']['active_pair']
+            self.assertEqual(pair == activation.pair(before), not benefit)
             native = next(root.glob('price-native-r0002-*/batch.json'))
             self.assertEqual(entry.r.t._file(native)['micro_evolution']['active_pair'], pair)
             ledger_hash, count = entry.r.w.sha(root / 'ledger.json'), len(calls)
