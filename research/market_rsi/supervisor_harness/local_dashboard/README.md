@@ -14,6 +14,10 @@ remains. The supervisor updates the index when the task completes or blocks.
 The dashboard discovers registered entries without another code change. An
 absent log is shown as absent, never inferred from agent activity.
 
+The current index excludes historical entries moved to the private local
+archive. Use [the archive manifest](../../LOCAL_LOG_ARCHIVE_2026-10-07.json)
+for their original paths/hashes and the preserved full `index-snapshot.json`.
+
 These logs are curated work records, not private reasoning, uncaptured tool
 events or model trajectories. Do not put credentials, raw private data or
 protected evaluation material into a log. New diagnostic code is not a live

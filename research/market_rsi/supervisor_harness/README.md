@@ -25,3 +25,7 @@ support reviewed R/H proposals and activation.
 Dated canary, E2B and GLM designs describe their original experiments; their
 records are preserved alongside the current services. Execution authority comes
 from the explicitly bound batch configuration, not from a README example.
+
+Closed logs archived outside Git are mapped by the
+[local archive manifest](../LOCAL_LOG_ARCHIVE_2026-10-07.json). Their original
+dashboard entries are preserved in the archive's `index-snapshot.json`.

@@ -23,3 +23,7 @@ and trading value require separate experiment evidence.
 Dated designs, protocols and results remain in their original files. The earlier
 [architecture description](ARCHITECTURE.md) and [prototype research protocol](RESEARCH_PROTOCOL.md)
 are historical references; use the development guide for the current code path.
+
+Closed historical logs moved to a private local archive are listed in the
+[archive manifest](LOCAL_LOG_ARCHIVE_2026-10-07.json), with original paths and
+SHA256 hashes. Active/recent logs and machine-referenced records stay in place.

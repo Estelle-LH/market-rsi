@@ -605,5 +605,14 @@
   "schema": "market_rsi_local_log_archive_v1",
   "source_branch": "codex/market-rsi-cleanup-20261007",
   "source_commit": "36f301b4130e2b65f89833c1d05395bc82db03a5",
-  "state": "planned"
+  "state": "archived_pending_regression",
+  "verification": {
+    "archive_log_sha256": "107/107 verified",
+    "original_index_sha256": "verified",
+    "retained_python_files": 1118,
+    "retained_index_records": "139 unchanged",
+    "archived_index_entries": 49,
+    "dashboard_retained_view_sha256": "7ac38e0a05068f5446f3b21379f498ff88db4b6ffcfba96650964dcf10417526",
+    "regressions": "pending"
+  }
 }
