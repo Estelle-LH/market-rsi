@@ -1137,3 +1137,13 @@ supervisor_harness.test_coevo_pilot_transaction -q` from canonicalresearchcwd.
 Virtual180scompletion proves300 reachesControllertransport; realinertstdio
 author300 waitsfor terminal receipt and replayswithoutnewcalls. Cutoff/deadline
 failures preserveexpectedpreclaimorchargedreserved outcomes, no refund/retry.
+
+CheckpointA finalfocused58PASS2.031s after duplicateimport cleanup, f1be520.
+CheckpointB officialentry passes author allowance to BOTH CandidateAuthor and
+CapacityAuthor. First23tests22.634s:22PASS/1fixtureerror, not a production fault.
+New pure-construction test wrote authorization at explicit-wait-authorization
+instead of requiredroot/authorization.json; originalroot guard correctly fails
+before any model/metadatacall. Preserve this snapshot before correctingfixture.
+Six actual-service nativewire paths include all-ten-call explicit300 progression
+and legacy120, negative/KEEP/knownfailure/uncertain/coldreplay. All account/worker
+scientificoutputs remain synthetic; real local pure-hook children only.

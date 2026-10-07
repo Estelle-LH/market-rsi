@@ -254,10 +254,18 @@ class EntryTests(TestCase):
                 entry.build(self.f.h.f.write('foreign-role-binding', foreign))
             _, actual, account = entry.build(launch)
             self.assertIsInstance(actual, entry.LivePriceServices)
+            self.assertEqual(actual.author.__self__.timeout, 120)
             self.assertIsInstance(account, roles.AccountRoles)
             sources = actual.identity()["controller"]["source_dependencies"]
             self.assertIn(entry.r.pin(entry.__file__), sources)
             self.assertIn(entry.r.pin(roles.__file__), sources)
+            grant['account_roles'].update(max_call_seconds=300,
+                call_seconds={key: 300 for key in roles.ROLES})
+            grant['account_transfer']['max_call_seconds'] = 300
+            binding = self.f.h.f.write('explicit-wait-authorization', grant)
+            config.update(authorization=binding, role_authorization=binding)
+            _, longer, _ = entry.build(self.f.h.f.write('explicit-wait-construction', config))
+            self.assertEqual(longer.author.__self__.timeout, 300)
             config["max_rounds"] = True
             bad = self.f.h.f.write("bad-launch-fields", config)
             with self.assertRaisesRegex(ValueError, "exact two-round"):
@@ -304,9 +312,11 @@ class EntryTests(TestCase):
         grant = deepcopy(fixture.f.runtime.fixed_grant)
         grant['account_roles'] = {'approved': True, 'capacity_changes_approved': True,
             'destination': roles.DESTINATION, 'requested_model': entry.r.t.c.MODEL,
-            'serving_snapshot': 'unknown', 'max_input_bytes': 262144, 'max_call_seconds': 120,
+            'serving_snapshot': 'unknown', 'max_input_bytes': 262144, 'max_call_seconds': 300,
+            'call_seconds': {key: 300 for key in roles.ROLES},
             'caps': {key: 2 for key in roles.ROLES}, 'raw_train_transfer': False,
             'tools_enabled': False, 'automatic_retry': False}
+        grant['account_transfer']['max_call_seconds'] = 300
         authority = original.h.write('authorization', grant)
         ledger = entry.r.t._file(root / 'ledger.json')
         ledger['authorization_sha256'] = authority['sha256']; entry.r.t._ledger(root / 'ledger.json', ledger)
@@ -329,6 +339,8 @@ class EntryTests(TestCase):
             _, actual, account = entry.build(launch)
         self.assertIsInstance(actual.capacity, capacity_loop.PriceCapacityLoop)
         self.assertIsInstance(actual.capacity.author, capacity_author.CapacityAuthor)
+        self.assertEqual(actual.author.__self__.timeout, 300)
+        self.assertEqual(actual.capacity.author.timeout, 300)
         self.assertIsInstance(actual.capacity.reviewer, reviewer.IndependentPriceReviewer)
         self.assertIn('capacity_service', actual.identity()['controller'])
         self.assertTrue((root / 'price-capacity-native' / 'batch.json').exists())
@@ -408,7 +420,10 @@ class ProductionEntryTests(TestCase):
     def test_uncertain_author_stops_with_original_claim_and_no_retry(self):
         self.actual_path(uncertain_author=True)
 
-    def actual_path(self, *, benefit=True, amplitude=.04, failed_worker=False, uncertain_author=False):
+    def test_explicit_waits_reach_all_actual_native_services_and_cold_replay(self):
+        self.actual_path(wait_seconds=300)
+
+    def actual_path(self, *, benefit=True, amplitude=.04, failed_worker=False, uncertain_author=False, wait_seconds=120):
         from contextlib import ExitStack
         import json
         import subprocess
@@ -427,7 +442,7 @@ class ProductionEntryTests(TestCase):
         self.f = fixtures.PriceServiceTests(); self.addCleanup(self.f.doCleanups); self.f.setUp()
         root, repo = self.f.root, self.f.h.repo
         native_transport, sampler = roles.native_transport, entry.r.w.sample_rss
-        calls, workers, wire_response = [], [], [None]
+        calls, workers, wire_response, waits = [], [], [None], []
         with ExitStack() as stack:
             stack.enter_context(patch.object(subprocess, 'check_output', REAL_CHECK_OUTPUT))
             stack.enter_context(patch.object(roles, 'datetime', handoff_fixtures.Clock))
@@ -443,6 +458,10 @@ class ProductionEntryTests(TestCase):
                 'serving_snapshot': 'unknown', 'max_input_bytes': 262144, 'max_call_seconds': 120,
                 'caps': {name: 2 for name in roles.ROLES}, 'raw_train_transfer': False,
                 'tools_enabled': False, 'automatic_retry': False}
+            if wait_seconds != 120:
+                grant['account_roles'].update(max_call_seconds=wait_seconds,
+                    call_seconds={name: wait_seconds for name in roles.ROLES})
+                grant['account_transfer']['max_call_seconds'] = wait_seconds
             authority = self.f.h.f.write('authorization', grant)
             ledger = entry.r.t._file(root / 'ledger.json')
             # Reset disposable setup fixture originals only, never operational history.
@@ -527,6 +546,8 @@ class ProductionEntryTests(TestCase):
                 return value
 
             def transport(directory, packet, timeout, *, controller=False, preflight_only=False):
+                if not preflight_only:
+                    waits.append(('controller' if controller else packet['role'], timeout))
                 wire_response[0] = {} if preflight_only else response(packet, controller)
                 return native_transport(directory, packet, timeout, controller=controller, preflight_only=preflight_only)
             def process(command, **kwargs):
@@ -561,6 +582,9 @@ class ProductionEntryTests(TestCase):
                 return
             result = entry.run(launch, seed)
             self.assertTrue(result['complete']); self.assertEqual(len(calls), 10); self.assertEqual(len(workers), 1)
+            self.assertEqual(len(waits), 10)
+            self.assertEqual({role for role, _ in waits}, roles.ROLES | {'controller'})
+            self.assertTrue(all(timeout == wait_seconds for _, timeout in waits))
             actual = entry.r.t._file(root / 'ledger.json')
             self.assertEqual([row['fits_reserved'] for row in actual['attempts']], [0, 4])
             self.assertEqual([row['status'] for row in actual['attempts']], ['succeeded', 'failed' if failed_worker else 'succeeded'])
