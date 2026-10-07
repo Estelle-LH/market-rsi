@@ -2655,3 +2655,22 @@ their source paths or injecting native directories into global `sys.path`.
 Add root/legacy import compatibility checks and inspect the unchanged module
 before importing it. Re-run all root and relevant native regressions. This
 repair is developer compatibility only, not scientific or R/H improvement.
+
+Failed candidate checkpoint: `52be511`. Compatibility repair uses package
+attribute forwarding to the existing stdlib-only control-plane module under
+its repository namespace. It copies no helper body and does not change native
+source files, global import search paths or production child cwd. New regression
+checks every top-level legacy function/class is the original object from its
+original source file, plus missing-attribute behavior. Native subprocess imports
+remain separate from the developer API bridge. Full legacy serializer/global
+patch semantics and live execution are not claimed. Verification pending.
+
+Repaired candidate focused verification: existing Python3.12.3,
+`python -B -m unittest discover -s tests -v`:22PASS,0.812s. Native fixture
+imports now work in the same process as the package; CLI price launches remain
+mocked. `python -B -m market_rsi --help` and `price --help` expose options only.
+AST/literal comparison confirms the5smoke/24price module lists equal parent
+`41bfdaf` exactly, including order. The measured15-path diff matches the frozen
+allowlist. `git diff --exit-code 41bfdaf -- ':(glob)research/market_rsi/**/*.py'`
+returns0; all1,118native Python files retain their tracked bytes and paths.
+Whitespace checks pass. Save this repaired source before full regression.

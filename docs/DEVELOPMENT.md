@@ -140,6 +140,11 @@ directory aliases would break that contract. Moving core modules requires a
 separate import/reference inventory, cold replay tests and new prospective
 bindings. The original historical source and outcomes must remain recoverable.
 No duplicate core implementation or symlink facade has been added.
+The pre-existing `market_rsi.py` name is also used by native modules. The new
+package forwards missing attributes to that unchanged module so developer and
+native fixtures can share a process. Forwarded functions/classes keep their
+original source files; production subprocesses still use the native cwd and
+import layout. This is an API bridge, not a completed core-module migration.
 Earnings remains planned, with no implemented profile.
 
 - Production code and its `test_*.py` modules often share directories. The named
