@@ -3236,61 +3236,33 @@ result pending here; command outputs are recorded in this chat, not a separately
 saved raw verification artifact. This doc-only result does not invalidate the
 just-tested executable snapshot.
 
-## 2026-10-07 — Data-centric diagnosis: separate data, task and researcher
+## 2026-10-07 — Isolate concurrent staging from the pipeline PR
 
-Human requested a data scientist and collection/crawling/capture research, then
-asked whether missing improvement comes from weak data, unavailable extra
-information, benchmark design or task scope. This is a sidecar diagnostic, not
-a native Controller round or authorization for dataset acquisition/training.
-Starting observed active source99c4be9; isolated candidate checkpointa5b243b.
-Two distinct agents were registered before dispatch in this candidate index,
-with non-overlapping dedicated logs; canonical dirty registry/source and actual
-batch were untouched. Dashboard reader confirmed both records and logs exist
-without starting a server. A full uniqueness check failed on an inherited
-duplicate repair_controller_continuation_20261005 already present in HEAD;
-our two IDs are unique and unrelated rows were not repaired.
+During result publication, another chat had staged two new data-audit logs,
+18registry lines and its progress section in the shared cleanup checkout.
+The staged-stat inspection exposed four paths, but this integration command
+incorrectly continued to commit/push instead of rejecting the unexpected scope.
+Actual published checkpointfaf1875 retains that history; this is recorded as
+an integration mistake, not a nine-path-only result or a secret-purge claim.
 
-Read and applied market-rsi-research-progress and indicator-prediction-evals
-(including evaluation-gates): separate data/indicator/prediction/objective/PnL,
-and predictor score from research-process ability. Trading promotion thresholds
-were not applied to this read-only investigation. Agents read applicable full
-instructions and source/curated audits, not raw/per-row or protected data.
-Public-document research used primary DataPerf/Datasheets/Hyperagents papers,
-official Databento timestamp/recovery docs and Polymarket/Kalshi API docs;
-exact queries, sections, links and uncertainties are in the two dedicated logs.
+Both audit logs are public-document/source/curated-aggregate analyses, not raw
+payloads. They belong to a separate completed data-centric diagnostic and were
+not part of the requested co-evolution pipeline fix. Preserve their exact bytes
+and registry/progress in the original cleanup checkout atfaf1875. Do not reset
+or delete that owner's checkout or rewrite published history.
 
-Verified source-level finding: existing300s audit records4485anchors,
-2721forecastable/1848scorable (41.2%anchors, not41.2%games). Integrity and
-occupancy checks support the construction; genuine sparse fills vs filtering/
-provider loss remains undiagnosed. API receipt exhaustion does not establish
-exchange completeness. Current price candidate sees13tradefeatures/900s history;
-resident PBP and other outcome-token records are unused. Pure-context R/H cannot
-investigate data/files/tools. Latest actual fresh02 R1proposal was rejected at
-semantic admission before authors/attempts/fits, an interface failure, not data
-evidence or a tested capacity failure. Historical priceMSE is a coherent predictor
-diagnostic, not sufficient research-process or executable-trading evaluation.
+Correction occurs only in a new isolated checkout/branch
+codex/market-rsi-pr2-sync-20261007 at /private/tmp/market-rsi-pr2-final-hB2rDy:
+remove the two sidecar logs and their18registry lines from this PR's final
+tree, and remove only their separate progress section. The original branch
+and historical checkpoint remain recoverable. Allowed correction set is those
+two log paths, AGENT_LOG_INDEX_2026-09-17.json and this progress file; no code,
+task/scorer, archive or operational changes. A deletion here is scope isolation
+from the PR tip, not erasure of the public Git ancestry.
 
-Current official v2trade docs distinguish cursor pagination/query shape,
-duplicate maker/taker representations, retained history and minimum filtering;
-sampled price history is not a fill tape or historical L2. Capture can preserve
-future receive clocks/raw frames and detect gaps; recovery snapshots restore
-current state, not missing paths. Existing NFLcapture chat reports queuefull/
-depth-recovery issues under investigation; these2026operations are not proof
-of missingness in this2025Train tape. Reuse existing capture/cursor code rather
-than build another collector; globalPolymarket/US/Kalshi remain separate.
-
-Outcome: four explanations remain causally unseparated; evidence strongest for
-action-space/evaluation mismatch plus actual admission defects. No mandatory
-domain switch established. Proposed next checks: zero-fit evidenced-cause audit
-of saved receipts; same-row/model PBP information ablation after causal-anchor
-validation; fixed-vs-evolving researcher comparison with equal information and
-total budget. None executed here. Counts alone or a richer narrative are not
-learning; data repair must show useful coverage/correctness and subsequent use.
-
-Only task logs/index and this progress entry changed in this diagnostic. Agents
-completed and both index rows markedDONE. No crawler/capture/provider data
-request, SDK installation, new scientific fit/model call, scorer/data/clock/
-label/grant/ledger/runtime/source activation, publication or remote operation
-was initiated by this work. Acquisition rights, repaired counts and prediction
-benefit remain unknown. Preserve this as a local documentation checkpoint;
-shared-source sync/publication work belongs to its existing integration owner.
+Use exact path-only staging/commit plus a fail-closed staged-list equality
+check, so any other owner's staged work cannot be published again. Verify
+the resulting tree equals tested a5b243b except this progress record, then
+update the same PR branch without force and save actual publication outcome.
+Previous22/69/80/397 test results remain tied to identical executable bytes.
+PR stays unmerged; original Supervisor and cleanup owner work stay untouched.
