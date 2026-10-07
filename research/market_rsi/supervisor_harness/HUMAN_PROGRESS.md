@@ -3127,3 +3127,16 @@ results remain applicable, no new run or unrelated source selected. Final PR
 comparison will now use public main as an ancestor rather than their older
 common base. Earlier836file comparison remains historical, not its new count.
 Remote branch update and GitHub mergeability recheck pending; main unchanged.
+
+Publication verification COMPLETE: merge checkpoint
+dee0acbda204f1b5cb1472f268f34b1826f8fb03 pushed to PR branch; GitHub PR2
+OPEN/draft/base main,630changedfiles,MERGEABLE/CLEAN. Exact remote main remains
+6978e08947992173fb6b29cb260fc1c4e0320618. Native core unchanged; history retained.
+PR description now separates pipeline, package cleanup, verification, review
+order and remaining work, with accurate630file count and conflict provenance.
+gh pr edit failed on deprecated Projects-classic GraphQL lookup; authorized
+REST body update succeeded, no scope change. Attached PR2 to this chat;
+browser open returned queued, so no rendered-page inspection is claimed.
+Final Supervisor committed-tip check stillc966660, all unfinished work untouched.
+Save/push this documentation-only result checkpoint; no merge to main, tag,
+release, deployment, live experiment, new data/model call or source activation.
