@@ -2518,3 +2518,38 @@ Original log bytes and registry remain recoverable from both the local archive
 and the pre-move Git source. Canonical Supervisor files, including its dirty
 registry and ongoing logs, are untouched. No push/merge/activation. Integration
 owner must reconcile its newer registry when adopting this cleanup branch.
+
+## 2026-10-07 — RSIBench-Data repository-layout adoption plan
+
+User requested following the reference paper's Git layout. Inspected official
+`https://github.com/evolvent-ai/RSIBench-Data` at source
+`4c807610243e7b481d382c5ed360c71c79a22f61`, accessed October7. Read its
+README Repository Layout and Artifacts and Accounting, `.gitignore`,
+`tools/README.md`, benchmark spec and runner output placement. The source
+separates runner, backend services, benchmark profiles, docs, tests and tools;
+generated runs and closed artifacts are ignored. It also commits selected
+baseline diagnostics under benchmarks, so this is not a logs-free source repo.
+Reuse these organizational principles; do not adopt Tinker/E2B, old benchmark
+tasks, service permissions or training budgets.
+
+Local parent/rollback source: `11c1ed74cc6fb62adf0f340f0f65896264bef77f`, branch
+`codex/market-rsi-cleanup-20261007`. This is human-authored developer housekeeping,
+not an activated H/R change or research improvement. Freeze production Python,
+imports, source identities, scientific records, archived logs, dashboard index,
+current state, data and all live accounting. Canonical Supervisor remains untouched.
+
+Exact change allowlist: add root `.gitignore`; move `DEVELOPMENT.md` to
+`docs/DEVELOPMENT.md`; move `tools/tests/test_check.py` and
+`tools/tests/test_fixture_cleanup.py` byte-for-byte into root `tests/`; update
+the root, project and Supervisor README navigation; append this progress entry.
+Document the future runner/backend/benchmarks mapping in the existing guide.
+Do not add placeholder services, duplicate code or redirect production imports.
+
+Verification plan: inspect exact changed paths; verify all project Python and
+the two moved tests against parent Git blobs; resolve current navigation links;
+check representative generated/secret paths are ignored and source/fixtures
+remain visible; run root developer tests and the synthetic smoke and price suites.
+Use existing Python3.12, single numerical-library threads, no installs, live
+account calls, resident Train fits, paid providers, push, merge or activation.
+Scientific configuration, model, data and memory manifests: not applicable.
+Tests and final layout verification are pending at this planning checkpoint.
