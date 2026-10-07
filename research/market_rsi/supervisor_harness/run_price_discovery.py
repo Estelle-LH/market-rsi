@@ -246,7 +246,8 @@ class PricePilotRuntime(r.PilotRuntime):
             configuration_binding=self.configuration, transport=account.controller_transport,
             transport_contract=contract)
         packet = r.t.c._read(prepared["input"])
-        if packet["bindings"]["feedback"]["sha256"] not in {e["sha256"] for e in response["candidate"]["evidence_used"]}:
+        selected = response["candidate"] if response["candidate"] is not None else response.get("capacity")
+        if selected is None or packet["bindings"]["feedback"]["sha256"] not in {e["sha256"] for e in selected["evidence_used"]}:
             raise ValueError("original Controller did not cite current verified feedback")
         directory = self.root / "decisions" / packet["bindings"]["feedback"]["sha256"]
         return {"decision": response, "directory": str(directory), "artifacts": [r.pin(directory / name) for name in
@@ -266,19 +267,27 @@ def build(batch_configuration):
     from supervisor_harness.price_candidate_author import CandidateAuthor
     from supervisor_harness.price_independent_review import IndependentPriceReviewer
     config = r.t.c._read(batch_configuration)
-    if (type(config) is not dict or set(config) not in (FIELDS, FIELDS | {"recovery"})
-            or config["schema"] != "price_discovery_launch_v1"
+    capacity = type(config) is dict and config.get("schema") == "price_discovery_launch_v2"
+    expected_fields = (FIELDS | {"capacity_configuration"},) if capacity else (FIELDS, FIELDS | {"recovery"})
+    expected_services = {"author", "reviewer", "roles", "entry"} | ({"capacity_author", "capacity_loop"} if capacity else set())
+    if (type(config) is not dict or set(config) not in expected_fields
+            or config["schema"] not in {"price_discovery_launch_v1", "price_discovery_launch_v2"}
             or type(config["max_rounds"]) is not int or config["max_rounds"] != 2
             or type(config["source_files"]) is not dict or not config["source_files"]
-            or set(config["service_sources"]) != {"author", "reviewer", "roles", "entry"}):
+            or set(config["service_sources"]) != expected_services):
         raise ValueError("exact two-round real launch configuration required")
     repo, root = Path(config["repo"]), Path(config["root"])
     if (not repo.is_absolute() or repo.resolve() != repo or not root.is_absolute()
             or root.resolve() != root or root.parent != r.t.ROOT.parent):
         raise ValueError("existing canonical repository/permanent artifact root required")
+    if config["role_authorization"] != config["authorization"]:
+        raise ValueError("all roles must bind the same exact original batch authorization")
     modules = {"author": __import__(CandidateAuthor.__module__, fromlist=["x"]),
                "reviewer": __import__(IndependentPriceReviewer.__module__, fromlist=["x"]),
                "roles": roles}
+    if capacity:
+        from supervisor_harness import price_capacity_services, price_capacity_loop
+        modules.update(capacity_author=price_capacity_services, capacity_loop=price_capacity_loop)
     for name, binding in config["service_sources"].items():
         path = s.h._binding(binding)
         actual = Path(__file__ if name == "entry" else modules[name].__file__).resolve()
@@ -301,9 +310,12 @@ def build(batch_configuration):
     service = LivePriceServices(runtime, config["base_spec"], author=author.author,
         reviewer=reviewer.review, callback_sources={key: config["service_sources"][key]
                                                     for key in ("author", "reviewer")})
+    if capacity:
+        capacity_author = price_capacity_services.CapacityAuthor(runtime, config["source_files"], config["role_authorization"])
+        service.capacity = price_capacity_loop.PriceCapacityLoop(service, config["capacity_configuration"], capacity_author, reviewer)
     service.completed_prefix, service.recovered_seed_sha256 = prefix, seed_hash
     service.restored_stages = restored
-    service.recovery_directory = "price-loop-admission-v3" if round2 else "price-loop-admission-v2"
+    service.recovery_directory = "price-loop-admission-v3" if round2 else "price-loop-admission-v2" if "recovery" in config else "price-loop"
     service.recovery_binding = config.get("recovery")
     return config, service, account
 
@@ -311,6 +323,10 @@ def build(batch_configuration):
 def preflight(batch_configuration, initial_feedback):
     from supervisor_harness import price_account_roles as roles
     config, service, account = build(batch_configuration)
+    grant = service.runtime.fixed_grant
+    if grant.get("account_roles", {}).get("approved") is True:
+        if any(grant["account_roles"]["caps"][role] < config["max_rounds"] for role in roles.ROLES):
+            raise ValueError("whole-batch role caps cannot complete the declared rounds before account preflight")
     seed = r.t.c._read(initial_feedback)
     staged = r.t.c.subprocess.check_output(["git", "diff", "--cached", "--name-only"],
         cwd=service.runtime.repo, text=True, timeout=10)
@@ -320,6 +336,11 @@ def preflight(batch_configuration, initial_feedback):
     context = {"round_index": 1, "seed": seed, "previous_result": seed,
                "previous_feedback_sha256": r.t.c._digest(seed), "outputs": {}}
     packet = service.prepare_packet(context)
+    if getattr(service, "capacity", None):
+        scope = r.t.action_context(packet)["identity_configuration"]["allowed_write_paths"]
+        namespace = "research/market_rsi/research_capacities/" + grant["batch_id"] + "/"
+        if any(not name.startswith(namespace) for names in scope.values() for name in names):
+            raise ValueError("capacity writes must use this batch's versioned namespace before account preflight")
     prompt_bytes = len(roles._prompt(packet, controller=True).encode("utf-8"))
     input_limit = r.t.input_limit(service.runtime.fixed_grant)
     if prompt_bytes > input_limit:
@@ -346,7 +367,14 @@ def preflight(batch_configuration, initial_feedback):
     runner = "research/market_rsi/" + s.h.MODULE.replace(".", "/") + ".py"
     if runner not in config["source_files"]:
         raise ValueError("frozen runner missing before account call")
-    for relative, digest in config["source_files"].items():
+    frozen = dict(config["source_files"])
+    if getattr(service, "capacity", None):
+        for component in service.capacity.config["baseline"]["components"].values():
+            for name, token in component["sources"].items():
+                if name in frozen and frozen[name] != token:
+                    raise ValueError("capacity and frozen source commitments conflict before account preflight")
+                frozen[name] = token
+    for relative, digest in frozen.items():
         path = service.runtime.repo / relative
         if (Path(relative).is_absolute() or ".." in Path(relative).parts
                 or path.resolve() != path or r.w.sha(path) != digest):
@@ -381,7 +409,7 @@ def run(batch_configuration, initial_feedback, *, preflight_only=False):
         result = service.run(r.t.c._read(initial_feedback), max_rounds=config["max_rounds"])
     return {"preflight": receipt, "loop": result, "wall_seconds": time.monotonic() - started,
             "complete": result.get("status") == "completed" and result.get("completed_rounds") == 2,
-            "claim": "Historical Train autonomous predictor iteration only; not R/H evolution or profit"}
+            "claim": "Pipeline execution only; prediction and capacity effects require their saved evidence. Not profit or research-process superiority"}
 
 
 def main():

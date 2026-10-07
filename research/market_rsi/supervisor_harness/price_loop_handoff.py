@@ -50,10 +50,46 @@ def _native(runtime, name):
     return path
 
 
+def _prediction_input(runtime, response, input_binding=None):
+    """Keep v1 intact; bind typed predictions to the actual saved original."""
+    if response.get("schema") != "controller_coevolution_action_v2":
+        t.c._validate(response, t.SCHEMA)
+        return None
+    key = response.get("feedback_sha256")
+    if type(key) is not str or t.c._hashes(key) != {key}:
+        raise ValueError("exact typed prediction feedback hash required")
+    directory = runtime.root / "decisions" / key
+    if directory.resolve() != directory:
+        raise ValueError("original typed prediction directory drift")
+    packet, claim = t._file(directory / "input.json"), t._file(directory / "claim.json")
+    t.validate_response(response, packet)
+    if response["action"] != "prediction":
+        raise ValueError("typed capacity/authority request is not a prediction")
+    if (claim.get("authorization") != runtime.authority
+            or claim.get("configuration_sha256") != runtime.configuration["sha256"]
+            or t.c._read(claim["input_binding"]) != packet
+            or input_binding is not None and input_binding != claim["input_binding"]):
+        raise ValueError("typed prediction input/authority/configuration drift")
+    if runtime.fixed_grant.get("account_roles", {}).get("approved") is True:
+        from supervisor_harness import price_account_roles as roles
+        if claim.get("controller_transport") != roles.transport_contract():
+            raise ValueError("native tools-closed typed prediction original required")
+    recovered = t._recover(directory, packet, claim, claim.get("controller_transport"))
+    matches = [row for row in t._file(runtime.root / "ledger.json")["controller_decisions"]
+        if row.get("status") == "completed" and row.get("decision_sha256") == t.c._digest(response)
+        and row.get("input_sha256") == t.c._digest(packet)
+        and row.get("completion_sha256") == w.sha(directory / "completion.json")]
+    if recovered != response or len(matches) != 1:
+        raise ValueError("completed typed prediction original/accounting differs")
+    return packet
+
+
 def _validate(runtime, response, spec):
     if type(spec) is not dict or set(spec) != FIELDS:
         raise ValueError("exact trusted handoff specification required")
-    t.c._validate(response, t.SCHEMA)
+    packet = _prediction_input(runtime, response)
+    if packet is not None and spec["identity_configuration"] != t.action_context(packet)["identity_configuration"]:
+        raise ValueError("typed prediction selected pair/context drift")
     choice = response["candidate"]
     if choice["action"] != "propose_candidate":
         raise ValueError("closed authority request is not executable")

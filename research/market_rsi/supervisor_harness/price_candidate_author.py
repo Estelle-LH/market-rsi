@@ -148,7 +148,14 @@ class CandidateAuthor:
 
     def author(self, ctx):
         decision = ctx["outputs"]["controller"]["decision"]
-        h.t.c._validate(decision, h.t.SCHEMA)
+        original = None
+        if decision.get("schema") == "controller_coevolution_action_v2":
+            prepared = ctx["outputs"]["input"]
+            if prepared["authorization"] != self.runtime.authority or prepared["configuration"] != self.runtime.configuration:
+                raise ValueError("typed author input authority/configuration drift")
+            original = h._prediction_input(self.runtime, decision, prepared["input"])
+        else:
+            h.t.c._validate(decision, h.t.SCHEMA)
         if decision["candidate"]["action"] != "propose_candidate" or not self.runtime.admit({"stage": "implement"}):
             raise ValueError("original candidate decision and open admission required")
         digest = h.t.c._digest(decision)
@@ -180,7 +187,8 @@ class CandidateAuthor:
         directory.mkdir()
         try:
             packet = {"schema": "price_candidate_implementation_input_v1", "original_controller_decision": decision,
-                "context": {k: h.t.c._read(ctx["previous_result"][k]) for k in ("feedback", "memory", "source_context")},
+                "context": {k: original[k] if original is not None else h.t.c._read(ctx["previous_result"][k])
+                    for k in ("feedback", "memory", "source_context")},
                 "instructions": "Implement the exact original recipe, no scientific substitution. Return plain source strings, no commands; combinedsource/test<=12KiB, concise notes. fit_predict(x,y,weights,xc,history,check_history,*,seed) sees only past13features/history<=900s and fitlabels; return finite 1Dlen(xc) changes. Frozen300s target/scorer/folds unchanged. One bounded model fit per invocation, n_jobs=1; no inner CV/refits. Imports limited to NumPy/math and numeric sklearn classes. No file/network/process/dynamic execution. Test code imports from candidate import fit_predict, defines test_candidate() using synthetic13feature arrays/history, and executes only under __name__ == '__main__'. No decorators/classes/fixtures/rawTrain. Synthetic tests are not scientific fits.",
                 "allowed_imports": {k: sorted(v) if v is not None else "numeric module" for k, v in IMPORTS.items()}}
             if len(json.dumps(packet, sort_keys=True, allow_nan=False).encode()) > h.t.input_limit(h.t.c._read(self.grant), "account_roles"):

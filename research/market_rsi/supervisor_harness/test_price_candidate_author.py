@@ -173,6 +173,39 @@ class AuthorServiceTests(TestCase):
         self.assertGreater(len(json.dumps(self.calls[0][1]).encode()), 32768)
         self.assertEqual(len(self.calls), 1)  # Mock role, no actual model.
 
+    def test_typed_original_author_consumes_actual_hook_context_without_legacy_rewrap(self):
+        from supervisor_harness.test_coevo_pilot_transaction import TypedActionTests
+        fixture = TypedActionTests(); fixture.setUp(); self.addCleanup(fixture.doCleanups)
+        fixture.action = 'prediction'
+        fixture.packet['source_context'] = {'capacity_hook_outputs': {'verified_synthetic_finding': 'avoid repeated recipe'}}
+        fixture.packet['bindings']['source_context'] = fixture.h.write('typed-source', fixture.packet['source_context'])
+        fixture.bind(); decision = fixture.h.call()
+        self.decision, self.digest = decision, a.h.t.c._digest(decision)
+        self.runtime.root = fixture.h.root
+        self.runtime.fixed_grant = fixture.h.authorization
+        self.runtime.authority, self.runtime.configuration = fixture.h.authorization_binding, fixture.h.configuration_binding
+        self.ctx['outputs'] = {'controller': {'decision': decision}, 'input': {
+            'input': fixture.h.input_binding, 'authorization': self.runtime.authority,
+            'configuration': self.runtime.configuration, 'review': fixture.h.review_binding}}
+        self.author.author(self.ctx)
+        self.assertEqual(self.calls[0][1]['original_controller_decision'], decision)
+        self.assertEqual(self.calls[0][1]['context']['source_context'], fixture.packet['source_context'])
+        self.assertEqual(fixture.h.calls, 1)
+
+    def test_typed_author_rejects_substituted_input_before_account_call(self):
+        from supervisor_harness.test_coevo_pilot_transaction import TypedActionTests
+        fixture = TypedActionTests(); fixture.setUp(); self.addCleanup(fixture.doCleanups)
+        fixture.action = 'prediction'; fixture.bind(); decision = fixture.h.call()
+        self.runtime.root = fixture.h.root
+        self.runtime.fixed_grant = fixture.h.authorization
+        self.runtime.authority, self.runtime.configuration = fixture.h.authorization_binding, fixture.h.configuration_binding
+        substituted = fixture.h.write('substituted-input', fixture.packet)
+        self.ctx['outputs'] = {'controller': {'decision': decision}, 'input': {
+            'input': substituted, 'authorization': self.runtime.authority,
+            'configuration': self.runtime.configuration, 'review': fixture.h.review_binding}}
+        with self.assertRaisesRegex(ValueError, 'input/authority/configuration'): self.author.author(self.ctx)
+        self.assertFalse(self.call.called)
+
     def test_author_old_32k_budget_rejects_large_context_without_role_call(self):
         a.h.w.save(self.root / 'large-memory.json', {'synthetic_memory': 'x' * 40000})
         self.ctx['previous_result']['memory'] = a.h.r.pin(self.root / 'large-memory.json')
