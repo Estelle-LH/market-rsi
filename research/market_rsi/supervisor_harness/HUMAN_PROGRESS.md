@@ -3330,3 +3330,13 @@ complete confidentiality audit. Final Supervisor tip recheck is stillbbd8d4e.
 Current comparison to main spans633files. Save this doc-only result checkpoint
 and publish the replacement PR with the verified final snapshot and PR2 link.
 Actual co-evolution effectiveness still requires live scientific evidence.
+
+Publication verified ataa32c0461703befb5bbe7c4ac7b5fb590cf0e255: renamed remote
+head matches local source; old remote `codex/market-rsi-cleanup-20261007` is absent.
+PR3 already existed with an empty description, so create returned exit1 rather
+than creating a duplicate. Preserve its title and populate its empty body with
+the prior scope, current633-file comparison, final22/407 checks and PR2 history
+link. PR3 is OPEN/non-draft, base main, MERGEABLE/CLEAN, attached to this chat.
+Published recursive tree contains0 `.agents/` paths; both local files still
+exist ignored. Main remains unchanged6978e08. Save/push this doc-only actual
+publication result; no additional scientific work or active-checkout mutation.
