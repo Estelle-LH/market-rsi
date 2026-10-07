@@ -1,5 +1,17 @@
 # Market RSI — human progress
 
+## 2026-10-07 15:49 NY — fresh connected pilot preparation
+
+Exact new20261007-01 whole-batch structured grant received;45min clock not started.
+Reviewer wait repair version7b7a234 keeps old120s grants/no-retry/final receipts,
+newgrant explicitly reviews<=300s,Controller/author<=120s and refresheddeadline.
+50focused/420integrated synthetic or inert tests pass; new reused preparer022bb7c
+checks27committed sources with0accountcalls/0fits. Independent source review
+underway; no new framework/scorer/data task. Next: one genuine reviewed R/H
+proposal/test, then price predictor chosen from its actual feedback/output.
+User-directed Supervisor repair is not autonomous R/H gain. All old results,
+caps, raw/protected data and external spending/publication boundaries unchanged.
+
 ## 2026-10-07 14:58 NY — connected pilot 实际尝试，未完成
 
 - 正式 v2 入口和真实账户工具关闭预检通过；两个初始 R/H hook 实际执行。

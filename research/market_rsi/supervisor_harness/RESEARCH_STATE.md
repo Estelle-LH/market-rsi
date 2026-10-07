@@ -1,3 +1,28 @@
+# Current Market RSI decision — 2026-10-07 fresh connected pilot PREPARATION
+
+Structured human approval call_McgTKX5H5sbgMuxk8xmOvLdi question0,
+"批准上述新批次", binds fresh market-rsi-coevo-price-connected-pilot-20261007-01.
+45min after completed local preparation; 2original Controller+2author+6independent
+reviews,2attempts/8fits,serial/thread1/900s/1GiB sampled. Controller/author120s,
+reviews300s bounded by globaldeadline;256KiB compact private Train aggregates/
+history/source per signed-in gpt-6.1-sol input, serving snapshotunknown, runtime
+tools-closed verification required. No raw/per-row transfer, automatic retries,
+paidprovider,newdata/literature,DevFinal,release/push/promotion. Old caps stay closed.
+
+Timeout source7b7a234 changes only prospective role waits/refreshed admission;
+legacy120 and final native receipt remain required. Focused50PASS4.364s;
+integrated420synthetic/inert testsPASS45.304s (expected missing fixed.py negative
+test stderr). Fresh reused preparer022bb7c zero-call checkPASS27committed pins.
+Independent source review in progress, fresh runtime root/window NOT created;
+0new model calls/attempts/fits. No duplicate Python supervisor/worker present.
+Plan: genuine Controller chooses one small research R or H change and matched
+test; actual reviewed feedback/version output feeds next price candidate.
+Frozen300s price task/scorer/folds/data/B0 incumbent/B0+B1 pool and oldhistory
+unchanged. Supervisor timeout repair is engineering, NOT autonomous evolution.
+Idle legacy journal only synchronizes status; new native ledger will own quotas.
+
+## Historical connected pilot timeout — preserved unchanged below
+
 # Current Market RSI decision — 2026-10-07 connected pilot NOT COMPLETE
 
 Direct human "try now" approves the exact pending fresh market-rsi-coevo-price-connected-pilot-20261006-01 scope: 45minutes after preparation, 2Controller+2author+6independent originals,2attempts/8fits, serial/thread1/900s/1GiB sampled, <=256KiB compact private Train aggregate/history/source per signed-in gpt-6.1-sol input, tools actually closed, serving snapshot unknown. No raw transfer/retry/new acquisition/paid/DevFinal/release/push/promotion. All old caps/history stay closed.
