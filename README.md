@@ -11,13 +11,14 @@ review, execution, result review and durable feedback. R/H proposal and
 activation hooks are integrated and covered by synthetic tests; live
 co-evolution and performance gains remain research questions.
 
-Start with [the development guide](DEVELOPMENT.md) for the code map and named
+Start with [the development guide](docs/DEVELOPMENT.md) for the code map and named
 test suites. [The project README](research/market_rsi/README.md) retains the
 historical research designs and test instructions.
 
 ```sh
 python3 -B tools/check.py --suite smoke
 python3 -B tools/check.py --suite price
+python3 -B -m unittest discover -s tests -v
 ```
 
 Use the existing Python 3.12 CPU test environment. These commands run selected

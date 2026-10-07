@@ -7,7 +7,7 @@ loop. Historical probability experiments and earlier harnesses remain available
 for replay. The equities/earnings adapter is planned.
 
 Use Python 3.12 with the existing CPU environment described by
-[`requirements-cpu.txt`](research/market_rsi/data_scientist_harness/requirements-cpu.txt).
+[`requirements-cpu.txt`](../research/market_rsi/data_scientist_harness/requirements-cpu.txt).
 The check runner uses its own interpreter; it never installs or upgrades packages.
 Some inherited integration tests use host-specific runtime paths, so the full
 suite currently targets the existing development machine. They also invoke
@@ -21,7 +21,7 @@ From the repository root:
 python3 -B tools/check.py --suite smoke
 python3 -B tools/check.py --suite price
 python3 -B tools/check.py --suite price --list
-python3 -B -m unittest discover -s tools/tests -v
+python3 -B -m unittest discover -s tests -v
 ```
 
 `smoke` selects five control/identity test modules. `price` selects the existing
@@ -71,6 +71,52 @@ five-minute trade-VWAP target measures historical price changes, not executable
 quotes or PnL.
 
 ## Code, state and history
+
+### Repository layout
+
+The layout follows the separation of responsibilities in the reference
+[RSIBench-Data repository](https://github.com/evolvent-ai/RSIBench-Data/tree/4c807610243e7b481d382c5ed360c71c79a22f61).
+Its runner, backend, benchmark profiles, docs, tests and tools are distinct;
+generated sessions live under ignored `artifacts/runs/`. Selected baseline
+diagnostics are committed under its benchmarks. We adopt the separation, not
+its Tinker/E2B runtime or benchmark tasks.
+
+Current checkout layout:
+
+```text
+README.md                     Project summary and main entry
+docs/DEVELOPMENT.md            Current code map, checks and migration boundaries
+tools/check.py                Developer check command
+tests/                        Developer-command and fixture-cleanup regressions
+research/market_rsi/           Existing production modules and bound evidence
+  supervisor_harness/         Loop, roles, review, execution and state
+  experiments/                Current data adapters, prediction recipes and scorer
+  data_scientist_harness/      Existing co-evolution controls and research tooling
+```
+
+The runtime's configured permanent artifact root remains authoritative.
+Root `artifacts/` and other local output directories are ignored if used;
+the layout does not redirect existing runs or move live accounting. Closed
+historical logs are mapped by the
+[local archive manifest](../research/market_rsi/LOCAL_LOG_ARCHIVE_2026-10-07.json).
+
+Target source organization, to migrate one verified boundary at a time:
+
+| Reference responsibility | Current Market RSI implementation | Eventual destination |
+| --- | --- | --- |
+| Session runner | `supervisor_harness/run_price_discovery.py` and durable loop modules | `runner/` |
+| Service implementations | Account roles, candidate author, review and worker adapters | `backend/` |
+| Task definitions and evaluation | `experiments/nfl_ingame_price_data.py` and price diagnostic/scorer | `benchmarks/` |
+| Documentation | Current development guide and curated operating instructions | `docs/` |
+| Regression tests | Root developer tests and existing colocated `test_*.py` modules | `tests/` |
+| Developer utilities | `tools/check.py` | `tools/` |
+
+Only developer documentation and its two regression modules have moved in this
+pass. Production imports, command paths, source-hashed manifests, task/scorer
+and machine-referenced records stay at their existing locations. Migrating
+runner/backend/benchmarks requires an import/reference inventory, cold replay
+tests and fresh prospective source bindings; preserve old run identities.
+Earnings remains a planned task adapter, not an implemented benchmark profile.
 
 - Production code and its `test_*.py` modules often share directories. The named
   suites above make the current regression scope explicit.

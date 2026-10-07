@@ -6,7 +6,7 @@ support reviewed R/H proposals and activation.
 
 ## Start here
 
-- [Current code map and test commands](../../../DEVELOPMENT.md)
+- [Current code map and test commands](../../../docs/DEVELOPMENT.md)
 - [Operating protocol](RESEARCH_SUPERVISOR.md)
 - [Current decision state](RESEARCH_STATE.md)
 - [Original supervision charter](USER_SUPERVISION_CHARTER_2026-09-16.txt)

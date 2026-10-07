@@ -5,7 +5,7 @@ changes to researcher workflow (R) and the execution harness (H).
 
 ## Development
 
-- [Code map and synthetic test commands](../../DEVELOPMENT.md)
+- [Code map and synthetic test commands](../../docs/DEVELOPMENT.md)
 - [Price-research entry](supervisor_harness/run_price_discovery.py)
 - [R/H integration](supervisor_harness/price_capacity_loop.py)
 

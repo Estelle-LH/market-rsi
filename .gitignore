@@ -1,0 +1,24 @@
+# Local configuration and development caches.
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Generated session material. Curated evidence already tracked stays tracked.
+/artifacts/
+/archived_artifacts/
+/outputs/
+/jobs/
+/results/
+/checkpoints/
+/final_model/
+/external/
+/data/
+/.runtime/
+*.log
+*.tmp
