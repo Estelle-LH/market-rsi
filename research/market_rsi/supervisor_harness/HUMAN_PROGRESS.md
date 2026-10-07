@@ -2454,3 +2454,43 @@ Source checkpoints: `73e52d9` README pruning, `509ebf6` broker probes,
 recoverable from the recorded parent or earlier Git history. No push, merge,
 live run or activation; the Supervisor checkout was not edited. Next: review
 and integrate the bounded cleanup branch when the integration owner is ready.
+
+## 2026-10-07 — local historical-log archive
+
+User requested moving logs into a local archive. Parent/rollback source:
+`36f301b4130e2b65f89833c1d05395bc82db03a5`. Preserve every retained Python byte, active/recent
+log, code/machine-referenced record, JSONL trajectory, current state/progress,
+authority, runtime and dataset. This is local record housekeeping, not an
+activated research or harness change.
+
+Frozen selection: the 107 exact paths and pre-move SHA256/bytes in
+`../LOCAL_LOG_ARCHIVE_2026-10-07.json`: dated before October1, inactive in both
+this checkout and the canonical index, with no tracked code/JSON/JSONL/TOML/TXT
+reference outside the mutable dashboard index. All107bytes also match the
+canonical checkout. Preserve125recent/active logs and102older referenced logs.
+This is a safe subset, not all project records.
+
+Archive target: `/Users/estelle/Library/Application Support/MarketRSI/archive/market-rsi/logs-20261007-36f301b`, a fresh
+private local directory outside Git. Copy original paths unchanged under that
+root, retain the full original dashboard index as `index-snapshot.json`, and
+verify all hashes before deleting originals from the isolated branch. Then
+remove only the49inactive archived entries from this branch's active dashboard
+index; keep every retained entry unchanged. The shared dirty index and logs
+remain untouched in the canonical Supervisor checkout.
+
+Exact allowlist: the107manifested log removals, the new archive manifest,
+`AGENT_LOG_INDEX_2026-09-17.json`, this progress file, and the project,
+Supervisor and local-dashboard READMEs. No Python/source/runtime or scientific
+record changes. Immutable old document references retain their original meaning;
+the manifest maps their old log names to the preserved local files, with the
+pre-archive Git source available for historical replay.
+
+Plan: checkpoint the manifest; copy to the fresh archive with no overwrite;
+verify107hashes plus the original index; remove originals and prune only selected
+inactive index entries; verify all retained Python blobs and index records,
+dashboard reads, local doc links, ten developer tests and369synthetic price
+regressions. At most five minutes per test command, no live account/provider
+calls, fitting resident Train, downloads, push, merge or activation. Numerical
+runtime: existing Python3.12.3; research model/data/memory manifests: N/A.
+Verification pending. This bulk step only relocates closed textual records;
+no operational co-evolution attribution or safety gain is claimed.

@@ -1,0 +1,609 @@
+{
+  "activation": "Local candidate branch only; canonical Supervisor checkout is untouched",
+  "archive_root": "/Users/estelle/Library/Application Support/MarketRSI/archive/market-rsi/logs-20261007-36f301b",
+  "archived_agent_ids": [
+    "continuous_discovery_minimal_orchestrator_20260929",
+    "market_orthogonal_price_path_v1_pre_score_review_20260929",
+    "market_orthogonal_price_path_v1_implementation_20260929",
+    "market_offset_ridge_logistic_v1_implementation_20260929",
+    "market_offset_ridge_result_independent_review_20260929",
+    "market_only_ridge_calibration_implementation_20260929",
+    "market_only_ridge_calibration_result_review_20260929",
+    "local_train_domain_inventory_20260929",
+    "first_real_train_pipeline_audit_20260929",
+    "first_real_train_runner_implementation_20260929",
+    "first_real_train_spec_independent_review_20260929",
+    "first_real_train_result_independent_review_20260929",
+    "synthetic_adapter_canary_runner_worker_20260929",
+    "chat_2024_evidence_replacement_20260922",
+    "chat_train_admission_review_20260922",
+    "chat_v2_cursor_review_20260922",
+    "chat_2024_rights_coverage_20260922",
+    "gate1_short_choice_20260922",
+    "gate1_plan_integration_20260921",
+    "gate1_firstwave_audit_20260921",
+    "gate1_canary_design_20260921",
+    "gate1_capability_contract_20260921",
+    "gate1_sample_materializer_20260921",
+    "gate1_trade_query_runner_20260921",
+    "p0_outer_runner_review_20260919",
+    "p0_outer_runner_20260918",
+    "p0_release_review_20260918",
+    "p0_b_containment_canary",
+    "p0_final_metadata_screen",
+    "policy_echo",
+    "sdk_timeout",
+    "directional_probes",
+    "release_audit",
+    "budget_preflight",
+    "canary_review",
+    "sdk_to_a_timeout_fix",
+    "directional_design",
+    "handoff_latency_design",
+    "persistent_handoff",
+    "one_b_guest_loop",
+    "one_b_live_adapter",
+    "one_b_gate_audit",
+    "one_b_parent_runner",
+    "one_b_live_readiness",
+    "gate1_v0125_schema_visibility_review_20260928",
+    "gate1_v0125_integrated_release_review_20260928",
+    "gate1_v0125_remote_release_verification_20260928",
+    "gate1_v0125_first_canary_execution_20260928",
+    "gate1_v0125_first_canary_review_20260928"
+  ],
+  "cutoff_exclusive": "2026-10-01",
+  "files": [
+    {
+      "bytes": 100360,
+      "original_path": "research/market_rsi/DAILY_LOG_2026-09-09.md",
+      "sha256": "ef1f6c8a620a73dab554c1c41db499021e5ca5729af4142a43bb0a1cd388945a"
+    },
+    {
+      "bytes": 36999,
+      "original_path": "research/market_rsi/DAILY_LOG_2026-09-10.md",
+      "sha256": "c1bd2ffd7311fbadbea454e57127acd908035439093e80b648126a4ca7986952"
+    },
+    {
+      "bytes": 23430,
+      "original_path": "research/market_rsi/DAILY_LOG_2026-09-11.md",
+      "sha256": "5257d35f248e6da638c48c128ae5bf32fe0f7db23c143c76452b1a090177f953"
+    },
+    {
+      "bytes": 2827,
+      "original_path": "research/market_rsi/DAILY_LOG_2026-09-12.md",
+      "sha256": "3716498f3c47ef550310dfdcff5f029d210b249bffd103820f2eac016747a26d"
+    },
+    {
+      "bytes": 18261,
+      "original_path": "research/market_rsi/DAILY_LOG_2026-09-13.md",
+      "sha256": "3ed4fff299a82a827f7e1f0203b165f30811d1af46cbafe981c0d6cab680d5ab"
+    },
+    {
+      "bytes": 1381,
+      "original_path": "research/market_rsi/DAILY_LOG_2026-09-14.md",
+      "sha256": "fb0f5240a7aedb3d6f04a9b153a11aac1441a03ab0724108585435c3d09f9892"
+    },
+    {
+      "bytes": 54030,
+      "original_path": "research/market_rsi/DAILY_LOG_2026-09-15.md",
+      "sha256": "9d5d60a8ac253d2d0ce7d9c9800142e5817614e21a5f97e8a2160d38b39b75fb"
+    },
+    {
+      "bytes": 60756,
+      "original_path": "research/market_rsi/DAILY_LOG_2026-09-16.md",
+      "sha256": "b360d765d4e6436ae59f52b07d62c08f99221234d7c1feb0d16f3ce7e46ee745"
+    },
+    {
+      "bytes": 67108,
+      "original_path": "research/market_rsi/DAILY_LOG_2026-09-17.md",
+      "sha256": "67b5c7aa147ffc6e573636737be2186b2285d9d730f614878936af5750d592b5"
+    },
+    {
+      "bytes": 21184,
+      "original_path": "research/market_rsi/DAILY_LOG_2026-09-18.md",
+      "sha256": "ef054badae4d60eba019b2b66dfaac16437ac64afdaab15ebc071a1ef9c108ac"
+    },
+    {
+      "bytes": 2376,
+      "original_path": "research/market_rsi/DAILY_LOG_2026-09-20.md",
+      "sha256": "ec77555fc2740af4b71b4390e12aaf7bbfc600bd879dd5a8531c78e53293de51"
+    },
+    {
+      "bytes": 51376,
+      "original_path": "research/market_rsi/WEEKLY_FULL_LOG_2026-09-14_TO_2026-09-20.md",
+      "sha256": "2812040c8765e15ba4c61316893eca4fc71cf3bb99845ce78b9a81b377f335ea"
+    },
+    {
+      "bytes": 6242,
+      "original_path": "research/market_rsi/agents/AGENT_LOG_INGAME_PRIOR_PLAY_SUCCESS_UNCERTAINTY_STRATIFIED_OFFSET_V4_RESULT_INDEPENDENT_REVIEW_2026-09-29.md",
+      "sha256": "69e5578a55670fb5327979a9e5dc30cedbbcfe2660d763f234489738d9d4f078"
+    },
+    {
+      "bytes": 7873,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_2024_FULL_DENOMINATOR_LEDGER_2026-09-22.md",
+      "sha256": "bdcd1acc533c0faa77f9dc7b06c0c8b600239d163ba520278623801420118ec8"
+    },
+    {
+      "bytes": 5845,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_2024_OUTCOME_ORIENTATION_VERIFIER_2026-09-22.md",
+      "sha256": "7fccceab3c642bb93e3353423d6015a534e9dac14d693d5ce60671cd469d0aa5"
+    },
+    {
+      "bytes": 3669,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_BUDGET_PREFLIGHT_2026-09-17.md",
+      "sha256": "34b9ae95ac17816e7b8546b2ad83df40f98cd59536e7067676b144d792bc8b6e"
+    },
+    {
+      "bytes": 3355,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_CANARY_REVIEW_2026-09-17.md",
+      "sha256": "4114d03ce95ed2c72e0aec111bf2d0f4933aa7418c0cd6d0c3121914e9d089bb"
+    },
+    {
+      "bytes": 626,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_CHAT_2024_EVIDENCE_REPLACEMENT_2026-09-22.md",
+      "sha256": "558eed3ab4554275343764ab2c07d043820602066c9635426653d5925e9edd08"
+    },
+    {
+      "bytes": 721,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_CHAT_2024_RIGHTS_COVERAGE_2026-09-22.md",
+      "sha256": "fbe3869f8e702d91873ae9f0a0eb073d8490d63ef494eea3942c4be1ad1cd9be"
+    },
+    {
+      "bytes": 1503,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_CHAT_TRAIN_ADMISSION_REVIEW_2026-09-22.md",
+      "sha256": "934cc31430b7fde1c8c04eeef34cf83420ee7907b5e3a4515f7aff62cda22309"
+    },
+    {
+      "bytes": 771,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_CHAT_V2_CURSOR_REVIEW_2026-09-22.md",
+      "sha256": "9513e2a0e6a270cb2e411ff57370d5a5350a7bff2bb915c98105017ca359b854"
+    },
+    {
+      "bytes": 14300,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_CONTINUOUS_DISCOVERY_MINIMAL_ORCHESTRATOR_2026-09-29.md",
+      "sha256": "07227b04ee01bb6467606174000b38ba466f993c23f71c7c93bd5ff85640f42e"
+    },
+    {
+      "bytes": 20242,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_CONTINUOUS_DISCOVERY_MINIMAL_ORCHESTRATOR_REVIEW_2026-09-29.md",
+      "sha256": "17047b4d4276fd73ad7287983e36740077285a33d4647874496d0c6d06584eb7"
+    },
+    {
+      "bytes": 7594,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_CONTINUOUS_DISCOVERY_RESEARCH_SCHEDULER_V2_FINAL_REREVIEW_2026-09-29.md",
+      "sha256": "fae09900753d70757a38af1c1f45d429580ebbe4685b2c77f5f6c2ee12571322"
+    },
+    {
+      "bytes": 6064,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_CONTINUOUS_DISCOVERY_RESEARCH_SCHEDULER_V2_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "1e2a2a8d6b84a38b42e05f1d63ef0bf1fe2f480449c82261698d50341301ba5d"
+    },
+    {
+      "bytes": 9652,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_CONTINUOUS_DISCOVERY_RESEARCH_SCHEDULER_V2_INDEPENDENT_REVIEW_2026-09-29.md",
+      "sha256": "16ba058f20eed11e65843c60fb4ea646a65f2349759e059d2cf738533717db9d"
+    },
+    {
+      "bytes": 9479,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_CONTINUOUS_DISCOVERY_RESEARCH_SCHEDULER_V2_REREVIEW_2026-09-29.md",
+      "sha256": "19acfca320129058c978f6623a33c2a52ee9cc03331fde40843f9ab9e8d50495"
+    },
+    {
+      "bytes": 5255,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_DIRECTIONAL_DESIGN_2026-09-17.md",
+      "sha256": "b7c6a1292cb046c65f9247f60be495354b68be6a3e7bc019ffedd09c0f54940c"
+    },
+    {
+      "bytes": 3403,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_DIRECTIONAL_PROBES_2026-09-17.md",
+      "sha256": "5281d04dd792eebadf05b2af1124d8b2deff2964a6216b92833a68aa8585e04d"
+    },
+    {
+      "bytes": 10489,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_FIRST_REAL_TRAIN_PIPELINE_AUDIT_2026-09-29.md",
+      "sha256": "3aabe20e98da1d994a8d36e611791bfb01bfba7a15f5b1ffb56fa4d0ae1cc375"
+    },
+    {
+      "bytes": 8225,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_FIRST_REAL_TRAIN_RESULT_INDEPENDENT_REVIEW_2026-09-29.md",
+      "sha256": "cf66cbe39ae1319e3a19212914b98d0a3a9ee9193d6301ed740716e49da043e0"
+    },
+    {
+      "bytes": 8313,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_FIRST_REAL_TRAIN_RUNNER_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "02d4b2c0ae296bc0a1922955f6dad0d0ff0372f30288c7639e1bfdd7e61c7df8"
+    },
+    {
+      "bytes": 9103,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_FIRST_REAL_TRAIN_SPEC_INDEPENDENT_REVIEW_2026-09-29.md",
+      "sha256": "a46e6fa16a971ef268c190f84338b1d08b18b9bacff60d72353d8597f28e2626"
+    },
+    {
+      "bytes": 4826,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_CANARY_DESIGN_2026-09-21.md",
+      "sha256": "93fff76e66e3e974252d8a1f2234e583d33c68bb114cd042a08e32bbae990db1"
+    },
+    {
+      "bytes": 3740,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_CAPABILITY_CONTRACT_2026-09-21.md",
+      "sha256": "6894f634f3fcaf5693f90cf6c12210282e6d07b972c01afde7fc08c28a0b8469"
+    },
+    {
+      "bytes": 11602,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_FIRSTWAVE_AUDIT_2026-09-21.md",
+      "sha256": "70381fbc5425d0ce9330cfccec680f57579ccb555763af84a96ba009e4345ab9"
+    },
+    {
+      "bytes": 6914,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_PLAN_INTEGRATION_2026-09-21.md",
+      "sha256": "658348411f39f9dca6d780f63d7a6451f16258416667f4f61c76b0bd26fb2346"
+    },
+    {
+      "bytes": 2731,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_SAMPLE_MATERIALIZER_2026-09-21.md",
+      "sha256": "759176c31354dbb5f8f5de3bfd3e21bfe9dd9a312b6aa0f4a6d0318b944460b6"
+    },
+    {
+      "bytes": 8903,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_SHORT_CHOICE_2026-09-22.md",
+      "sha256": "969472d983fefa5001a8a3524bc0d25d7858941d0ffada20d2a05e5d900326a1"
+    },
+    {
+      "bytes": 6115,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_TRADE_QUERY_RUNNER_2026-09-21.md",
+      "sha256": "aef3315e6027bf422e65abca43b7605ac3418251106468728fa012bd0154fedf"
+    },
+    {
+      "bytes": 1629,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0125_FIRST_CANARY_EXECUTION_2026-09-28.md",
+      "sha256": "21de8cc5d98130aa117e1c7b6f8d93111dfb25bd6e078be54e194b36398bd2d3"
+    },
+    {
+      "bytes": 1890,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0125_FIRST_CANARY_REVIEW_2026-09-28.md",
+      "sha256": "d321983c19854b06853475df63a3228e07229348ebf47e16a8040d4c1032c392"
+    },
+    {
+      "bytes": 2236,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0125_INTEGRATED_RELEASE_REVIEW_2026-09-28.md",
+      "sha256": "c3a0b11555956f6d7b45dfed0ee3bb72952e926a0085787810b46d6c65007c26"
+    },
+    {
+      "bytes": 1776,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0125_REMOTE_RELEASE_VERIFICATION_2026-09-28.md",
+      "sha256": "099b1c804ee936da40b63209dc4dbbd1d4f2ee26dfe5604f7d017fb9b020352a"
+    },
+    {
+      "bytes": 1728,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0125_SCHEMA_VISIBILITY_REVIEW_2026-09-28.md",
+      "sha256": "761a32054cdff488e147e745deebd329b0e18a6c873e1caa7679156b9485df9a"
+    },
+    {
+      "bytes": 4400,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_HANDOFF_LATENCY_DESIGN_2026-09-17.md",
+      "sha256": "997bab443f2c2d503a860596c65aa41f65504afc2fc4814778d63259ef335396"
+    },
+    {
+      "bytes": 5822,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_DISCOVERY_V3_BATCH_FINAL_STATE_REVIEW_2026-09-29.md",
+      "sha256": "8fb61d058e2b9feefed2a977e9cc5fd047205c9e3ca2e925f138e82f155c6935"
+    },
+    {
+      "bytes": 4004,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_DISCOVERY_V3_BATCH_INITIALIZATION_STATE_REVIEW_2026-09-29.md",
+      "sha256": "21ea87373c371a2c05f287d9e3ddb900bb6e0d4de224ddff6bd341be24f5980b"
+    },
+    {
+      "bytes": 3702,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_IDENTITY_ANCHORED_MARKET_CALIBRATION_V1_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "81744a7a2fe56f21190cbf36bc5baaac41487e0bdc95b963b4de805dd27c82e1"
+    },
+    {
+      "bytes": 3982,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_IDENTITY_ANCHORED_MARKET_CALIBRATION_V1_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "8c9170c5d4ecf14b8281cd626b3d469e6f6bea2cf447fac1dc34f39b3c696625"
+    },
+    {
+      "bytes": 4858,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_IDENTITY_ANCHORED_MARKET_CALIBRATION_V1_RESULT_INDEPENDENT_REVIEW_2026-09-29.md",
+      "sha256": "e234818638de242efeda2bef08e8d35727e18793af3b4d642b0e7fb4922be4ae"
+    },
+    {
+      "bytes": 5542,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_MARKET_OFFSET_SCORE_TIME_V1_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "2753e5bbefda642720a7193c22e2a21ac0367963a7632a5f67a71f42d29e607a"
+    },
+    {
+      "bytes": 9952,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_MARKET_OFFSET_SCORE_TIME_V1_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "bd32577374246e5845242f6cec61d7619bfbb5238ad2d2679c837793ee4bc4d0"
+    },
+    {
+      "bytes": 2730,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_OFFSET_SCORETIME_V1_SUPERVISOR_LAUNCH_2026-09-29.md",
+      "sha256": "c15b182561e3bece7053ed6c3d4cf1b0303cc84140ad5cdf1c3c89ef9442c6c5"
+    },
+    {
+      "bytes": 5700,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_PREDICTIVE_AUTONOMY_FINAL_CONTROLLER_MEMORY_2026-09-29.md",
+      "sha256": "fdcc90070ff31b01828136a35c481c99ff70d3405decb0c3f2b7fcd1d7b1240d"
+    },
+    {
+      "bytes": 6717,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_PRE_ANCHOR_MARKET_MOMENTUM_RESIDUAL_V3_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "a39b016f26622d2105d57fd36d42f27a55cdf0f5ebc71bebfff1da7979b12826"
+    },
+    {
+      "bytes": 7439,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_PRE_ANCHOR_MARKET_MOMENTUM_RESIDUAL_V3_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "045117784c126eb6d7e3ebf0a67c88d8d100f9d88ea197a7f15469765f471c3e"
+    },
+    {
+      "bytes": 3691,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_PRE_ANCHOR_MOMENTUM_OFFSET_LOGISTIC_V4_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "6eab7a569e2d24849412124ff475f5c9dd94e538ed977529ec33b7fbef71a5a2"
+    },
+    {
+      "bytes": 5108,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_PRE_ANCHOR_MOMENTUM_OFFSET_LOGISTIC_V4_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "eae8045a9e5de0b2fb2d7e753c61ca63605939a43a6fbb4778ef6fc13a19f0c2"
+    },
+    {
+      "bytes": 5556,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_PRIOR_PLAY_SUCCESS_MARKET_UNCERTAINTY_V3_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "d9e5b017592651bbe0423cd0d70e8fad63638e0b074f043204fd558a9e721189"
+    },
+    {
+      "bytes": 6719,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_PRIOR_PLAY_SUCCESS_MARKET_UNCERTAINTY_V3_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "fa7bc5b13cf7c2afe6a273789a4302fbe89d96134a2bd7383dabd796419768a1"
+    },
+    {
+      "bytes": 8374,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_PRIOR_PLAY_SUCCESS_MARKET_UNCERTAINTY_V3_RESULT_INDEPENDENT_REVIEW_2026-09-29.md",
+      "sha256": "321ffc11c8e71114071bc928e46251b7b85ca07b2f63096597503d4c1cf7d2ab"
+    },
+    {
+      "bytes": 7248,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_PRIOR_PLAY_SUCCESS_RESIDUAL_V2_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "990a0a7e85994ec6f1da62c6b7cd39e79703f40d187ee1292bef496ce172f78b"
+    },
+    {
+      "bytes": 7518,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_PRIOR_PLAY_SUCCESS_RESIDUAL_V2_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "f0b56557e82b8a4968beb82c301a07fff85fdf6a6afa33a8ef598826a50ad07b"
+    },
+    {
+      "bytes": 2658,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_PRIOR_PLAY_SUCCESS_UNCERTAINTY_STRATIFIED_OFFSET_V4_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "3d93ea7b18724a2a4b73a9e80b61bead4a917a7477b211ee6c6c6712b27247d4"
+    },
+    {
+      "bytes": 4644,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_PRIOR_PLAY_SUCCESS_UNCERTAINTY_STRATIFIED_OFFSET_V4_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "9ad7eeeb5bbf3817adcc9f29537fd3954cf2594c0922fa8b3dd0085dd772b8f0"
+    },
+    {
+      "bytes": 6889,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_STATE_SUPPORT_GEOMETRY_AUDIT_V1_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "eb69fe621e2862889c8f8ddde22c171839c681ee92605977e65a77a2c62d0578"
+    },
+    {
+      "bytes": 7086,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_STATE_SUPPORT_GEOMETRY_AUDIT_V1_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "338481254aa555751be927c96e604839a63487be51a552bf9cc85f9671f14c2a"
+    },
+    {
+      "bytes": 7711,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_STATE_SUPPORT_GEOMETRY_AUDIT_V1_RESULT_INDEPENDENT_REVIEW_2026-09-29.md",
+      "sha256": "d8d9c89dbbcea9e765de0308c4f4fe74d285b1fda8188f06fcbb06ef2de485f5"
+    },
+    {
+      "bytes": 4875,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_STATIC_STATE_NESTED_SHRINKAGE_V2_FAILURE_INDEPENDENT_REVIEW_2026-09-29.md",
+      "sha256": "003a96e3cd65f9bf3ad70221f07509512a49c3e4f56960bcbdc087b3ca32d938"
+    },
+    {
+      "bytes": 6723,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_STATIC_STATE_NESTED_SHRINKAGE_V2_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "895c60eb3bd6af113dbdb77e31de3b0781e1a40685180c857206c1d1f29389f0"
+    },
+    {
+      "bytes": 5557,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INGAME_STATIC_STATE_NESTED_SHRINKAGE_V2_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "fc4ca918cb8feb246314100c1967aa0d96e6f232121de9980ea4be591e076cbf"
+    },
+    {
+      "bytes": 10087,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_LOCAL_TRAIN_DOMAIN_INVENTORY_2026-09-29.md",
+      "sha256": "9e70854151bad487322b1b76e4dcf48b64196b4ff7d7a90501b27db7420acbdc"
+    },
+    {
+      "bytes": 4759,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_ALL_PRIOR_DECAY_COMPOSITE_PATH_V4_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "d56e87d3ba213c17d22dd73ff6ca3b8a2a894d058ae06a902ec2323c85f33b0b"
+    },
+    {
+      "bytes": 7464,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_ALL_PRIOR_DECAY_COMPOSITE_PATH_V4_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "3980f2ffd1782db99d398384d671da16d05da888a62b716567b7a990c80186d7"
+    },
+    {
+      "bytes": 8605,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_OFFSET_RIDGE_LOGISTIC_V1_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "6ef0ec0e9b7a98e0f623ae6fe7dc958aab8e8b67066966992edf9949fcbc31c3"
+    },
+    {
+      "bytes": 11227,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_OFFSET_RIDGE_RESULT_INDEPENDENT_REVIEW_2026-09-29.md",
+      "sha256": "f2a4dcb7ca1f4f1468d6ea3acfc6ccda0d911d47d9f840ac4a219df370aedb91"
+    },
+    {
+      "bytes": 6802,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_ONLY_RIDGE_CALIBRATION_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "dc4475bb067075f28155aad253c689b952efecfbc377f8c80b478790b3054e85"
+    },
+    {
+      "bytes": 13737,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_ONLY_RIDGE_CALIBRATION_RESULT_INDEPENDENT_REVIEW_2026-09-29.md",
+      "sha256": "f824e5aa330975e583ecb02e58e94e0d443c5bf6a9ac94003721db398f3b618a"
+    },
+    {
+      "bytes": 4759,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_ORTHOGONAL_PRICE_PATH_V1_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "4115fed89707535c63664fec5dc07a45731359e189c788a7bd5227172e58e037"
+    },
+    {
+      "bytes": 7484,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_ORTHOGONAL_PRICE_PATH_V1_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "f79208cf09807f2f477acb98df40b6c251fb9834a0b6d3c4677080329aef713e"
+    },
+    {
+      "bytes": 4571,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_RECENCY_WEIGHTED_COMPOSITE_DISPERSION_V5_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "3a69cfdbeeac76cb876bc966bc5f7525df17f5a9dc087944c667ea5f977310f6"
+    },
+    {
+      "bytes": 6930,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_RECENCY_WEIGHTED_COMPOSITE_DISPERSION_V5_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "7289da2b9441feeb6ef41e6b7615dbc5094bbf513e04bee0a00fa56beb4b8acd"
+    },
+    {
+      "bytes": 6704,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_RECENCY_WEIGHTED_COMPOSITE_DISPERSION_V5_RESULT_INDEPENDENT_REVIEW_2026-09-29.md",
+      "sha256": "1b40be66df0df6dbff7042b345f2f4c8f981421448602931520f779a25e418b5"
+    },
+    {
+      "bytes": 3922,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_RECENCY_WEIGHTED_COMPOSITE_PATH_V3_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "1fc8a8ee293fac6971a5dc1f5d9b2a2193304cac5e8e3da81b408f6ad507545a"
+    },
+    {
+      "bytes": 5372,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_RECENCY_WEIGHTED_COMPOSITE_PATH_V3_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "4842c407e4572aaa231386be7e2ca37ed1f16be16e25b7710d73863df4be32ed"
+    },
+    {
+      "bytes": 6420,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_RECENT_COMPOSITE_PATH_V2_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "77ad040c3c9e8b430d3adb092f016ec7ba9f459b7ea3cb3614bed53df1e95bd1"
+    },
+    {
+      "bytes": 9455,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_RECENT_COMPOSITE_PATH_V2_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "179d46f337e0ec90f012b64750f3343724dfdd3ac46e6f7cfdfb4ef863e88fb7"
+    },
+    {
+      "bytes": 18459,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_MARKET_RSI_CONTROLLER_RESEARCH_CAPABILITY_CREDIT_AUDIT_2026-09-29.md",
+      "sha256": "872b1dc0bbb05f5907e45ae33910af4fbb80d1cb5e4bed25988032915f295c17"
+    },
+    {
+      "bytes": 17289,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_NFL_INGAME_PBP_LOCAL_DATA_AUDIT_AND_V0_DESIGN_2026-09-29.md",
+      "sha256": "ac68542d41c2e8b4f1387a7ed51e64f683b16cb33707efba41ffe4c43a23fd86"
+    },
+    {
+      "bytes": 10957,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_NFL_INGAME_WIN_PROBABILITY_V0_PRE_SCORE_REVIEW_2026-09-29.md",
+      "sha256": "7f21e991d7bf45a0bb59bb4424eb8cdfa7eeeb5839ba5147837a605713426abd"
+    },
+    {
+      "bytes": 6777,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_ONE_B_GATE_AUDIT_2026-09-17.md",
+      "sha256": "65e2a7c68964c1bd68443331ede6c673140659c3ffd918e164d95c4ac595633a"
+    },
+    {
+      "bytes": 2040,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_ONE_B_GUEST_LOOP_2026-09-17.md",
+      "sha256": "101ada474249d73bae6859c4b71ffd8bc32bd3228a7b47031e1c216d6ad6e043"
+    },
+    {
+      "bytes": 4403,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_ONE_B_LIVE_ADAPTER_2026-09-17.md",
+      "sha256": "7ff6a1fda22b9b51b009cb901bd44858d9f397e907976389d0454cf32b2d15bf"
+    },
+    {
+      "bytes": 336,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_ONE_B_LIVE_READINESS_2026-09-17.md",
+      "sha256": "ad254ae83c7496178c6977abb9ee6a9533efa99b8df1710bb171ea0fd2b29260"
+    },
+    {
+      "bytes": 2555,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_ONE_B_PARENT_RUNNER_2026-09-17.md",
+      "sha256": "69d60c3eca6bd06eb7585abf22eba5768490d16bbe54a44206ff8350c05f56c4"
+    },
+    {
+      "bytes": 991,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_P0_B_CONTAINMENT_2026-09-18.md",
+      "sha256": "4322ee8c030375b3edc6b5bc2f2d4e7e8cf005bae1d517b444aa23049ca75282"
+    },
+    {
+      "bytes": 1033,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_P0_FINAL_METADATA_2026-09-18.md",
+      "sha256": "ab6f581c218fcc80ca85a03f36c9989af9221d83a45d95e7daeb24821d7562f0"
+    },
+    {
+      "bytes": 3193,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_P0_OUTER_RUNNER_2026-09-18.md",
+      "sha256": "506f6582b47c756b07ca877afc584c310990cc25e0289fbc58538732c88e9f6b"
+    },
+    {
+      "bytes": 2131,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_P0_OUTER_RUNNER_REVIEW_2026-09-19.md",
+      "sha256": "ae57e46f95d5aec7103261553241d3ad8712a15de50ca1c488867ee714cafceb"
+    },
+    {
+      "bytes": 1318,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_P0_RELEASE_REVIEW_2026-09-18.md",
+      "sha256": "022c3868eee2d1d888422f1bf28bad5c8ef13304c5c2ae24311da7929f3ba7ad"
+    },
+    {
+      "bytes": 4625,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_PERSISTENT_HANDOFF_2026-09-17.md",
+      "sha256": "545f1fe4aeeb32c9c21d0cd4a5d50f3c1ee6e4b24f6037f86efaf95df360c8ea"
+    },
+    {
+      "bytes": 4147,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_POLICY_ECHO_2026-09-17.md",
+      "sha256": "8ff55dbc7011b937b414dd828a1ca62df9acca79926bde0aa711d9caaba44c50"
+    },
+    {
+      "bytes": 3613,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_RELEASE_AUDIT_2026-09-17.md",
+      "sha256": "85a0ff77f56b883197272f4f652ac326b2c43726a5596ac2f89b98edd14fcefa"
+    },
+    {
+      "bytes": 2508,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_SDK_TIMEOUT_2026-09-17.md",
+      "sha256": "d103918019137d27491163839f529efc79a55d36428ab0720e4ea99d9d21ee04"
+    },
+    {
+      "bytes": 5291,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_SDK_TO_A_TIMEOUT_FIX_2026-09-17.md",
+      "sha256": "31eb6e69b8e73bb2467c51c96843de1d23cbf4c70ed52c5cafcd2b6788239c39"
+    },
+    {
+      "bytes": 7347,
+      "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_SYNTHETIC_ADAPTER_CANARY_RUNNER_IMPLEMENTATION_2026-09-29.md",
+      "sha256": "20afddac68f5d68813482f9a6d067cee544cc69f03426027db7cc64af6f1d0a6"
+    }
+  ],
+  "index_snapshot": {
+    "archive_filename": "index-snapshot.json",
+    "bytes": 119174,
+    "original_path": "research/market_rsi/supervisor_harness/AGENT_LOG_INDEX_2026-09-17.json",
+    "sha256": "8568e0a8bd178189e0f3026291e13c49e613d75eadd409f8f96bda18379d21cc"
+  },
+  "layout": "Archive log paths are identical to original_path, relative to archive_root. The original full dashboard index is at index-snapshot.json.",
+  "retained_index_entry_count": 139,
+  "retained_log_counts": {
+    "code_or_machine_reference": 102,
+    "recent_or_active": 125
+  },
+  "schema": "market_rsi_local_log_archive_v1",
+  "source_branch": "codex/market-rsi-cleanup-20261007",
+  "source_commit": "36f301b4130e2b65f89833c1d05395bc82db03a5",
+  "state": "planned"
+}
