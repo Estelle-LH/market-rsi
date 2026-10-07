@@ -120,7 +120,7 @@ class HandoffTests(TestCase):
         self.typed_prediction(); prepared = self.prepare()
         self.assertEqual(h.t.c._read(prepared['response']), self.response)
         state = self.batch(self.root / prepared['native_name']).snapshot()
-        self.assertEqual(state['micro_evolution']['pair'], self.spec['identity_configuration']['pair'])
+        self.assertEqual(state['micro_evolution']['active_pair'], self.spec['identity_configuration']['pair'])
         self.assertEqual(self.f.calls, 2)  # Two distinct synthetic originals, never resampled.
 
     def test_typed_prediction_rejects_stale_pair_before_native_or_reservation(self):

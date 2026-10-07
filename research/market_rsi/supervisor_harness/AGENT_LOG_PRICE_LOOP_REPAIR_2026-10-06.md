@@ -673,3 +673,9 @@ test. No production admission/source constraint is weakened; no actual model
 call or Train fit. Command: pinned one-thread Python `-B -m unittest
 supervisor_harness.test_price_candidate_author
 supervisor_harness.test_price_loop_handoff -q` in the research directory.
+
+F4c assertion corrected to the real native `active_pair` field; no production
+change for this correction. Focused45testsPASS (elapsed below in final check).
+Typed actual-original author/source context and native selected-pair bindings
+are now covered, with substituted packet/pair rejection before calls or native
+preparation. Mocked model decisions remain engineering fixtures, not live proof.
