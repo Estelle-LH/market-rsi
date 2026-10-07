@@ -711,3 +711,12 @@ ContinuousDiscoveryBatch mock, whereas its own setup supplies explicit
 temporary/test-clock flags. Preserve this failed fixture state, then restore
 the real class only inside nested setup. Production admission unchanged;
 zero live account calls, new Train reads or fits.
+
+F4d final22testsPASS8.315s. Nested test setup restores the real native class
+only while it supplies temporary/test-clock options; production construction
+still installs the actual account author/reviewer/capacity services. Formal
+v2 pins configuration and baseline files before initialization and dispatches
+capacity-only originals without a dummy predictor. Default v1 remains intact.
+This is connected engineering verification, not a newly completed live batch.
+Next verify capacity-to-prediction feedback through the same formal entry;
+do not acquire equities data or consume an expired scientific authorization.

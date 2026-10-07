@@ -7,6 +7,7 @@ from unittest.mock import Mock, patch
 from supervisor_harness import run_price_discovery as entry
 from supervisor_harness import test_price_loop_services as fixtures
 from supervisor_harness import test_price_loop_handoff as handoff_fixtures
+from supervisor_harness.continuous_discovery_batch import ContinuousDiscoveryBatch as RealBatch
 
 REAL_CHECK_OUTPUT = entry.r.t.c.subprocess.check_output
 
@@ -212,7 +213,8 @@ class EntryTests(TestCase):
         from supervisor_harness.test_price_capacity_loop import HookTests
         self.build.stop()
         fixture = HookTests(); self.addCleanup(fixture.doCleanups)
-        with patch.object(entry.r.t.c.subprocess, 'check_output', REAL_CHECK_OUTPUT):
+        with patch.object(entry.r.t.c.subprocess, 'check_output', REAL_CHECK_OUTPUT), \
+                patch.object(capacity_loop.native, 'ContinuousDiscoveryBatch', RealBatch):
             fixture.setUp()
         original = fixture.f.f.f
         root, repo = fixture.f.runtime.root, fixture.f.runtime.repo
