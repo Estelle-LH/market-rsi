@@ -2,6 +2,24 @@
   "purpose": "Human-readable, non-secret subagent work logs; these are not GLM research trajectories or live E2B tool streams.",
   "agents": [
     {
+      "id": "data_centric_local_audit_20261007",
+      "title": "DONE: data-centric local source and missingness audit",
+      "log": "AGENT_LOG_DATA_CENTRIC_LOCAL_AUDIT_2026-10-07.md",
+      "task": "Read-only source/curated aggregate audit of collection, filtering, token orientation, clock alignment and observed versus unknown missingness; no raw/protected payload, fitting, crawling or active-source changes",
+      "next": "Bounded zero-fit reason audit of existing source receipts, then resident-PBP information ablation and matched researcher-process evaluation; all proposed, not executed",
+      "status": "Read-only source/curated aggregate review complete; sparse anchors confirmed, acquisition loss unknown, unused PBP/token1 and capacity-scope mismatch identified; no data fixed or fits",
+      "active": false
+    },
+    {
+      "id": "data_capture_primary_sources_20261007",
+      "title": "DONE: official historical backfill and live capture research",
+      "log": "AGENT_LOG_DATA_CAPTURE_PRIMARY_SOURCES_2026-10-07.md",
+      "task": "Read primary Polymarket/Kalshi and capture documentation; compare historical trades/prices, book snapshots/deltas and gap recovery; no actual provider requests or dataset capture",
+      "next": "Reuse existing cursor validator and collector; verify API epoch, fill identity, stream health and rights before any new acquisition/capture",
+      "status": "Official Polymarket/Kalshi docs read and limits mapped; cursor/time-bound, maker duplication, historical tiers and capture clocks distinguished; no provider data requests",
+      "active": false
+    },
+    {
       "id": "price_live_services_20261006",
       "title": "DONE: real price candidate implementation service",
       "log": "AGENT_LOG_PRICE_LIVE_SERVICES_2026-10-06.md",

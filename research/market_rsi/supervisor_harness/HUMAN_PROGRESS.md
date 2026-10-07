@@ -3198,3 +3198,99 @@ both checkpoint histories, no squash/rebase/force/tags. Recheck Supervisor tip
 at close and report any later committed work separately. Fetch succeeded;
 one local tracking-ref check failed because this origin has no PR-branch ref,
 so exact gh PR head and ls-remote comparisons were used instead. Outcome pending.
+
+Plan checkpointbc16b71; conflict-free source merge
+a5b243b9b53ba98676afe196b9dc8826d3b7229e includes all four Supervisor commits
+through99c4be9, preserving both histories. Measured nine-path merge equals the
+declared scope. Consumer, corrected transaction tests, closeout and current
+research state match Supervisor exactly. Root package/config/task/developer
+tests/guide/skill/archive manifest, price data/target/scorer and semantic
+validator/micro-component policy compare byte-identical to0432f05.
+
+Actual fresh verification on a5b243b, pinned Python3.12.3, no installation:
+- Cwd cleanup root, `python -B -m unittest discover -s tests -q`:
+  22tests PASS0.977s.
+- Same cwd, `python -B -m market_rsi check --suite smoke`:69PASS0.864s.
+- Cwd cleanup research/market_rsi, `python -B -m unittest
+  supervisor_harness.test_account_controller_feedback_consumer
+  supervisor_harness.test_coevo_pilot_transaction -q`:80PASS0.843s.
+- Cleanup root, `python -B -m market_rsi check --suite price`:
+  397PASS62.758s/exit0 with host-process inspection; expected invalid fixed.py
+  fixture stderr is not a failure. Counts overlap and are not additive. The
+  Supervisor's separately reported441enumeration is not substituted for this
+  actual developer-command result; focused consumer checks were run explicitly.
+- New closeout script AST-only parse/compile PASS, no import/execution.
+
+Scope/whitespace/ancestry checks PASS. Incremental15Git blobs checked for
+credential/private-key patterns and excluded operational paths: no hits;
+targeted scan is not a complete confidentiality audit. No old artifact, private
+response/Train data, grant, budget or global journal was read/modified here.
+Supervisor final tip recheck is still99c4be9, no newer committed fixes omitted;
+same seven unfinished records preserved. Original actual pilot remains
+NOT_COMPLETE; imported repair is not R1 implementation or a research-gain claim.
+
+Save this result checkpoint, then push exact PR branch and update PR2's scope,
+fresh test results and latest Supervisor SHA; mark ready for review. Public
+main stays fixed, no deployment/release/live experiment implied. PR publication
+result pending here; command outputs are recorded in this chat, not a separately
+saved raw verification artifact. This doc-only result does not invalidate the
+just-tested executable snapshot.
+
+## 2026-10-07 — Data-centric diagnosis: separate data, task and researcher
+
+Human requested a data scientist and collection/crawling/capture research, then
+asked whether missing improvement comes from weak data, unavailable extra
+information, benchmark design or task scope. This is a sidecar diagnostic, not
+a native Controller round or authorization for dataset acquisition/training.
+Starting observed active source99c4be9; isolated candidate checkpointa5b243b.
+Two distinct agents were registered before dispatch in this candidate index,
+with non-overlapping dedicated logs; canonical dirty registry/source and actual
+batch were untouched. Dashboard reader confirmed both records and logs exist
+without starting a server. A full uniqueness check failed on an inherited
+duplicate repair_controller_continuation_20261005 already present in HEAD;
+our two IDs are unique and unrelated rows were not repaired.
+
+Read and applied market-rsi-research-progress and indicator-prediction-evals
+(including evaluation-gates): separate data/indicator/prediction/objective/PnL,
+and predictor score from research-process ability. Trading promotion thresholds
+were not applied to this read-only investigation. Agents read applicable full
+instructions and source/curated audits, not raw/per-row or protected data.
+Public-document research used primary DataPerf/Datasheets/Hyperagents papers,
+official Databento timestamp/recovery docs and Polymarket/Kalshi API docs;
+exact queries, sections, links and uncertainties are in the two dedicated logs.
+
+Verified source-level finding: existing300s audit records4485anchors,
+2721forecastable/1848scorable (41.2%anchors, not41.2%games). Integrity and
+occupancy checks support the construction; genuine sparse fills vs filtering/
+provider loss remains undiagnosed. API receipt exhaustion does not establish
+exchange completeness. Current price candidate sees13tradefeatures/900s history;
+resident PBP and other outcome-token records are unused. Pure-context R/H cannot
+investigate data/files/tools. Latest actual fresh02 R1proposal was rejected at
+semantic admission before authors/attempts/fits, an interface failure, not data
+evidence or a tested capacity failure. Historical priceMSE is a coherent predictor
+diagnostic, not sufficient research-process or executable-trading evaluation.
+
+Current official v2trade docs distinguish cursor pagination/query shape,
+duplicate maker/taker representations, retained history and minimum filtering;
+sampled price history is not a fill tape or historical L2. Capture can preserve
+future receive clocks/raw frames and detect gaps; recovery snapshots restore
+current state, not missing paths. Existing NFLcapture chat reports queuefull/
+depth-recovery issues under investigation; these2026operations are not proof
+of missingness in this2025Train tape. Reuse existing capture/cursor code rather
+than build another collector; globalPolymarket/US/Kalshi remain separate.
+
+Outcome: four explanations remain causally unseparated; evidence strongest for
+action-space/evaluation mismatch plus actual admission defects. No mandatory
+domain switch established. Proposed next checks: zero-fit evidenced-cause audit
+of saved receipts; same-row/model PBP information ablation after causal-anchor
+validation; fixed-vs-evolving researcher comparison with equal information and
+total budget. None executed here. Counts alone or a richer narrative are not
+learning; data repair must show useful coverage/correctness and subsequent use.
+
+Only task logs/index and this progress entry changed in this diagnostic. Agents
+completed and both index rows markedDONE. No crawler/capture/provider data
+request, SDK installation, new scientific fit/model call, scorer/data/clock/
+label/grant/ledger/runtime/source activation, publication or remote operation
+was initiated by this work. Acquisition rights, repaired counts and prediction
+benefit remain unknown. Preserve this as a local documentation checkpoint;
+shared-source sync/publication work belongs to its existing integration owner.
