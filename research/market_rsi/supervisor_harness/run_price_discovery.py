@@ -295,6 +295,7 @@ def build(batch_configuration):
             raise ValueError("real service module differs from pinned source")
     runtime = PricePilotRuntime(root, repo, config["authorization"], config["configuration"])
     account = roles.AccountRoles(root, config["role_authorization"])
+    author_timeout = roles.call_limits(runtime.fixed_grant["account_roles"])["author"]
     round2 = "recovery" in config and r.t.c._read(config["recovery"]).get("schema") == "price_certain_completed_round2_prefix_recovery_v1"
     if round2:
         restored, seed_hash, author_recovery = completed_round2_prefix(runtime, config["recovery"])
@@ -304,14 +305,15 @@ def build(batch_configuration):
             if "recovery" in config else ({}, None, None))
         restored = {}
     author = CandidateAuthor(runtime, config["source_files"], config["role_authorization"],
-        completed_author_recovery=author_recovery)
+        completed_author_recovery=author_recovery, timeout_seconds=author_timeout)
     reviewer = IndependentPriceReviewer(runtime, account.call,
         role_grant_binding=config["role_authorization"])
     service = LivePriceServices(runtime, config["base_spec"], author=author.author,
         reviewer=reviewer.review, callback_sources={key: config["service_sources"][key]
                                                     for key in ("author", "reviewer")})
     if capacity:
-        capacity_author = price_capacity_services.CapacityAuthor(runtime, config["source_files"], config["role_authorization"])
+        capacity_author = price_capacity_services.CapacityAuthor(runtime, config["source_files"], config["role_authorization"],
+            timeout_seconds=author_timeout)
         service.capacity = price_capacity_loop.PriceCapacityLoop(service, config["capacity_configuration"], capacity_author, reviewer)
     service.completed_prefix, service.recovered_seed_sha256 = prefix, seed_hash
     service.restored_stages = restored

@@ -2924,3 +2924,10 @@ new committed tip for a second local merge after preserving the first.
 Do not copy remaining dirty Supervisor files. Full final price regression will
 run on the integrated source; these imported timeout changes do not enlarge
 existing grants or create a new experiment authority.
+
+First merge checkpoint `5ed4516` includes Supervisor `f1be520` plus the scoped
+skill update. Second merge of `9fd2f7f` is conflict-free and adds only the three
+reviewed entry/test/repair-log paths. Imported native entry and timeout service
+bytes match the frozen Supervisor source; test merges retain only the earlier
+cleanup-before-setup adjustment in addition to its new cases. Commit this
+integrated source before final synthetic regression; public push remains held.
