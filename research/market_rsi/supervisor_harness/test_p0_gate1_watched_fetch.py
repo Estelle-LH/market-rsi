@@ -2,14 +2,17 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
-from market_rsi import digest
+from market_rsi import canonical, digest
 from supervisor_harness.build_p0_gate1_controller_packet import build
 from supervisor_harness.p0_gate1_public_fetch import ADMISSION_SCHEMA
+from supervisor_harness import p0_gate1_source_scope_fetch_adapter as scope_adapter
+from supervisor_harness import p0_gate1_watched_fetch as watched_module
 from supervisor_harness.p0_gate1_research_contract import (
     DECISION_SCHEMA, validate_and_compile,
 )
-from supervisor_harness.p0_gate1_watched_fetch import run
+from supervisor_harness.p0_gate1_watched_fetch import run, run_preclaimed
 from supervisor_harness.supervisor_watchdog import SupervisorWatchdog
 
 
@@ -106,6 +109,155 @@ class WatchedGate1FetchTests(unittest.TestCase):
                  "body": b"bad"}))
         state = self.watchdog.snapshot()
         self.assertEqual(state["incidents"][0]["classification"], "malformed_data")
+
+    def source_scope_pair(self):
+        run_root = Path(self.tmp.name) / "source-scope-run"
+        release_source = "a" * 64
+        runtime = "b" * 64
+        authorization = "c" * 64
+        canary_receipt = "d" * 64
+        canary_verification = "e" * 64
+        task = {
+            "schema": scope_adapter.TASK_SCHEMA,
+            "attempt_id": scope_adapter.ATTEMPT_ID,
+            "request_bundle_canonical_sha256":
+                scope_adapter.REQUEST_BUNDLE_SHA256,
+            "request_plan_canonical_sha256":
+                scope_adapter.REQUEST_PLAN_SHA256,
+            "authorization_file_sha256": authorization,
+            "release": {"tag": scope_adapter.RELEASE_TAG,
+                        "commit": "1" * 40, "tag_object": "2" * 40,
+                        "source_sha256": release_source},
+            "runtime_sha256": runtime,
+            "prior_canary_receipt_sha256": canary_receipt,
+            "prior_canary_verification_sha256": canary_verification,
+            "source": {"source_id": scope_adapter.SOURCE_ID,
+                       "url": scope_adapter.DOCUMENT_URL,
+                       "url_sha256": scope_adapter.DOCUMENT_URL_SHA256},
+            "request": {"method": "GET", "query_parameters": [],
+                        "body": None,
+                        "transport_headers": dict(
+                            scope_adapter.REQUEST_HEADERS)},
+            "bounds": {"max_requests": 1,
+                       "max_response_bytes":
+                           scope_adapter.MAX_RESPONSE_BYTES,
+                       "max_elapsed_seconds":
+                           scope_adapter.MAX_ELAPSED_SECONDS,
+                       "transport_timeout_seconds":
+                           scope_adapter.TRANSPORT_TIMEOUT_SECONDS,
+                       "provider_cost_usd": "0"},
+            "policy": {"redirects_allowed": False,
+                       "automatic_retries_allowed": False,
+                       "alternate_url_allowed": False,
+                       "credential_use_allowed": False,
+                       "purchase_allowed": False,
+                       "source_write_allowed": False},
+            "authority": {"network_fetch_authorized": True,
+                          "snapshot_retention_authorized": True,
+                          "formal_data_admission_authorized": False,
+                          "train_dev_final_access_authorized": False,
+                          "training_evaluation_authorized": False,
+                          "snapshot_redistribution_authorized": False,
+                          "prediction_claim_authorized": False},
+            "output_root": str(run_root),
+        }
+        admission = {
+            "schema": scope_adapter.ADMISSION_SCHEMA,
+            "attempt_id": scope_adapter.ATTEMPT_ID,
+            "task_canonical_sha256": digest(task),
+            "request_bundle_canonical_sha256":
+                scope_adapter.REQUEST_BUNDLE_SHA256,
+            "request_plan_canonical_sha256":
+                scope_adapter.REQUEST_PLAN_SHA256,
+            "authorization_file_sha256": authorization,
+            "release_source_sha256": release_source,
+            "runtime_sha256": runtime,
+            "prior_canary_receipt_sha256": canary_receipt,
+            "prior_canary_verification_sha256": canary_verification,
+            "source_id": scope_adapter.SOURCE_ID,
+            "url_sha256": scope_adapter.DOCUMENT_URL_SHA256,
+            "fetch_authorized": True,
+            "snapshot_retention_authorized": True,
+            "max_requests": 1,
+            "max_response_bytes": scope_adapter.MAX_RESPONSE_BYTES,
+        }
+        return run_root, task, admission
+
+    def claim_source_scope(self, task, admission):
+        self.watchdog.claim_task(
+            task_id=scope_adapter.ATTEMPT_ID + "-watched-fetch",
+            task_kind="research", stage="gate1_source_scope_fetch",
+            owner="trusted_broker", heartbeat_timeout_seconds=20,
+            progress_timeout_seconds=30,
+            input_sha256=digest({"task": task, "admission": admission}),
+            process_identity={"pid": 4321, "command_sha256": "5" * 64},
+            container_identity=None, now=self.clock())
+
+    @staticmethod
+    def fake_source_scope_fetch(_task, _admission, output):
+        output.mkdir()
+        (output / "public-source.snapshot").write_bytes(b"official")
+        receipt = {"fixture": "exact"}
+        (output / "receipt.json").write_text(canonical(receipt) + "\n")
+        return receipt
+
+    def test_preclaimed_records_two_progress_events_and_does_not_close(self):
+        run_root, task, admission = self.source_scope_pair()
+        run_root.mkdir()
+        self.claim_source_scope(task, admission)
+        with patch.object(scope_adapter, "RUN_ROOT", run_root), patch.object(
+                watched_module, "fetch_source_scope_snapshot",
+                side_effect=self.fake_source_scope_fetch):
+            receipt = run_preclaimed(
+                watchdog=self.watchdog,
+                task_id=scope_adapter.ATTEMPT_ID + "-watched-fetch",
+                task=task, admission=admission, output=run_root / "snapshot",
+                pid=4321, process_command_sha256="5" * 64,
+                budget_snapshot_sha256="6" * 64,
+                receipt_validator=lambda value, _path: value,
+                clock=self.clock)
+        active = self.watchdog.snapshot()["active_task"]
+        self.assertEqual(receipt, {"fixture": "exact"})
+        self.assertEqual(active["progress_seq"], 2)
+        self.assertEqual(active["status"], "active")
+
+    def test_preclaimed_failure_reports_one_incident_and_never_closes(self):
+        run_root, task, admission = self.source_scope_pair()
+        run_root.mkdir()
+        self.claim_source_scope(task, admission)
+        with patch.object(scope_adapter, "RUN_ROOT", run_root), patch.object(
+                watched_module, "fetch_source_scope_snapshot",
+                side_effect=TimeoutError("fixed timeout")):
+            with self.assertRaises(TimeoutError):
+                run_preclaimed(
+                    watchdog=self.watchdog,
+                    task_id=scope_adapter.ATTEMPT_ID + "-watched-fetch",
+                    task=task, admission=admission,
+                    output=run_root / "snapshot", pid=4321,
+                    process_command_sha256="5" * 64,
+                    budget_snapshot_sha256="6" * 64,
+                    receipt_validator=lambda value, _path: value,
+                    clock=self.clock)
+        state = self.watchdog.snapshot()
+        self.assertEqual(len(state["incidents"]), 1)
+        self.assertEqual(state["active_task"]["status"], "repair_pending")
+
+    def test_preclaimed_missing_claim_fails_before_fetch(self):
+        run_root, task, admission = self.source_scope_pair()
+        run_root.mkdir()
+        with patch.object(scope_adapter, "RUN_ROOT", run_root), patch.object(
+                watched_module, "fetch_source_scope_snapshot") as fetch:
+            with self.assertRaisesRegex(ValueError, "active parent"):
+                run_preclaimed(
+                    watchdog=self.watchdog,
+                    task_id=scope_adapter.ATTEMPT_ID + "-watched-fetch",
+                    task=task, admission=admission,
+                    output=run_root / "snapshot", pid=4321,
+                    process_command_sha256="5" * 64,
+                    budget_snapshot_sha256="6" * 64,
+                    receipt_validator=lambda value, _path: value,
+                    clock=self.clock)
+        fetch.assert_not_called()
 
 
 if __name__ == "__main__":

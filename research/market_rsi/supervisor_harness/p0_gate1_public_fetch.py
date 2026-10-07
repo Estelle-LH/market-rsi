@@ -26,6 +26,9 @@ ALLOWED_CONTENT_TYPES = frozenset({
 })
 MAX_HARD_BYTES = 5_000_000
 TIMEOUT_SECONDS = 15
+_SENSITIVE_RESPONSE_HEADERS = frozenset({
+    "content-type", "content-encoding", "etag", "last-modified",
+})
 
 
 class _NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -39,14 +42,35 @@ class UrlLibTransport:
             url, headers={"User-Agent": "MarketRSI-Public-Research/1.0",
                           "Accept": "application/json,text/html,text/plain;q=0.9"},
             method="GET")
-        opener = urllib.request.build_opener(_NoRedirect)
+        opener = urllib.request.build_opener(
+            urllib.request.ProxyHandler({}), _NoRedirect)
         try:
             with opener.open(request, timeout=timeout_seconds) as response:
                 body = response.read(max_bytes + 1)
                 return {"status": response.status, "final_url": response.geturl(),
-                        "headers": dict(response.headers.items()), "body": body}
+                        "headers": _response_header_map(
+                            response.headers.items()), "body": body}
         except urllib.error.HTTPError as exc:
             raise RuntimeError(f"public source returned HTTP {exc.code}") from exc
+
+
+def _response_header_map(items) -> dict[str, str]:
+    """Reject ambiguous security-sensitive headers before dict conversion."""
+    result: dict[str, str] = {}
+    seen_sensitive: set[str] = set()
+    for item in items:
+        if (not isinstance(item, tuple) or len(item) != 2
+                or not isinstance(item[0], str)
+                or not isinstance(item[1], str)):
+            raise ValueError("response header entry is invalid")
+        name, value = item
+        lowered = name.lower()
+        if lowered in _SENSITIVE_RESPONSE_HEADERS:
+            if lowered in seen_sensitive:
+                raise ValueError("ambiguous duplicate response header")
+            seen_sensitive.add(lowered)
+        result[name] = value
+    return result
 
 
 def _validate_url(url: object) -> str:
@@ -65,12 +89,26 @@ def _content_type(headers: dict) -> str:
         raise ValueError("response headers are invalid")
     value = next((item for key, item in headers.items()
                   if isinstance(key, str) and key.lower() == "content-type"), None)
-    if not isinstance(value, str):
+    if (not isinstance(value, str)
+            or len(value.encode("utf-8")) > 500):
         raise ValueError("response content type is missing")
     media_type = value.split(";", 1)[0].strip().lower()
     if media_type not in ALLOWED_CONTENT_TYPES:
         raise ValueError("response content type is not allowlisted")
     return media_type
+
+
+def _content_encoding(headers: dict) -> None:
+    if not isinstance(headers, dict):
+        raise ValueError("response headers are invalid")
+    value = next((item for key, item in headers.items()
+                  if isinstance(key, str)
+                  and key.lower() == "content-encoding"), None)
+    if value is None:
+        return None
+    if not isinstance(value, str) or value.strip().lower() != "identity":
+        raise ValueError("encoded public response is not permitted")
+    return None
 
 
 def _exclusive_write(path: Path, body: bytes) -> None:
@@ -120,13 +158,16 @@ def fetch_snapshot(task: dict, admission: dict, output: Path, transport) -> dict
     if (response["status"] != 200 or response["final_url"] != url
             or not isinstance(body, bytes) or not 0 < len(body) <= admitted_limit):
         raise ValueError("public response status, URL, or size is invalid")
-    media_type = _content_type(response["headers"])
+    if type(response["headers"]) is not dict:
+        raise ValueError("response headers are invalid")
+    response_headers = _response_header_map(response["headers"].items())
+    media_type = _content_type(response_headers)
     output.mkdir(parents=True)
     snapshot = output / "public-source.snapshot"
     _exclusive_write(snapshot, body)
     safe_headers = {}
     for name in ("etag", "last-modified"):
-        value = next((item for key, item in response["headers"].items()
+        value = next((item for key, item in response_headers.items()
                       if isinstance(key, str) and key.lower() == name), None)
         if isinstance(value, str) and len(value.encode("utf-8")) <= 500:
             safe_headers[name] = value
@@ -145,6 +186,88 @@ def fetch_snapshot(task: dict, admission: dict, output: Path, transport) -> dict
         "b_network_access": False,
         "sealed_data_read": False,
         "formal_data_admitted": False,
+    }
+    receipt_path = output / "receipt.json"
+    _exclusive_write(receipt_path, (canonical(receipt) + "\n").encode("utf-8"))
+    return receipt
+
+
+def fetch_source_scope_snapshot(task: dict, admission: dict,
+                                output: Path) -> dict:
+    """Perform the sole exact v0.1.26 source-scope documentation request.
+
+    This separate schema path intentionally has no transport argument.  The
+    caller must already have produced the release/runtime/canary-bound task
+    and dual-authority admission accepted by the pure adapter.
+    """
+    from supervisor_harness.p0_gate1_source_scope_fetch_adapter import (
+        SNAPSHOT_RECEIPT_SCHEMA, validate_task_admission,
+    )
+
+    task, admission = validate_task_admission(task, admission)
+    output = Path(output)
+    expected_output = Path(task["output_root"]) / "snapshot"
+    if (output != expected_output or not output.is_absolute()
+            or output.exists() or output.is_symlink()
+            or not output.parent.is_dir() or output.parent.is_symlink()):
+        raise ValueError("fresh exact source-scope snapshot output required")
+    url = _validate_url(task["source"]["url"])
+    limit = task["bounds"]["max_response_bytes"]
+    timeout = task["bounds"]["transport_timeout_seconds"]
+    response = UrlLibTransport().fetch(
+        url, timeout_seconds=timeout, max_bytes=limit)
+    if not isinstance(response, dict) or set(response) != {
+            "status", "final_url", "headers", "body"}:
+        raise ValueError("transport response schema is invalid")
+    body = response["body"]
+    if (type(response["status"]) is not int or response["status"] != 200
+            or response["final_url"] != url or not isinstance(body, bytes)
+            or not 0 < len(body) <= limit):
+        raise ValueError("public response status, URL, or size is invalid")
+    if type(response["headers"]) is not dict:
+        raise ValueError("response headers are invalid")
+    response_headers = _response_header_map(response["headers"].items())
+    media_type = _content_type(response_headers)
+    content_encoding = _content_encoding(response_headers)
+    output.mkdir()
+    snapshot = output / "public-source.snapshot"
+    _exclusive_write(snapshot, body)
+    safe_headers = {}
+    for name in ("etag", "last-modified"):
+        value = next((item for key, item in response_headers.items()
+                      if isinstance(key, str) and key.lower() == name), None)
+        if isinstance(value, str) and len(value.encode("utf-8")) <= 500:
+            safe_headers[name] = value
+    receipt = {
+        "schema": SNAPSHOT_RECEIPT_SCHEMA,
+        "attempt_id": task["attempt_id"],
+        "task_canonical_sha256": digest(task),
+        "admission_canonical_sha256": digest(admission),
+        "request_plan_canonical_sha256":
+            task["request_plan_canonical_sha256"],
+        "authorization_file_sha256": task["authorization_file_sha256"],
+        "release_source_sha256": task["release"]["source_sha256"],
+        "source_id": task["source"]["source_id"],
+        "url_sha256": task["source"]["url_sha256"],
+        "final_url": response["final_url"],
+        "content_type": media_type,
+        "content_encoding": content_encoding,
+        "status": 200,
+        "response_headers": safe_headers,
+        "snapshot_bytes": len(body),
+        "snapshot_sha256": hashlib.sha256(body).hexdigest(),
+        "requests_made": 1,
+        "redirects_followed": 0,
+        "automatic_retries": 0,
+        "provider_calls": 0,
+        "actual_provider_cost_usd": "0",
+        "rights_proven": False,
+        "sealed_data_read": False,
+        "formal_data_admitted": False,
+        "train_dev_final_read": False,
+        "training_or_evaluation_performed": False,
+        "snapshot_redistributed": False,
+        "prediction_improvement_proven": False,
     }
     receipt_path = output / "receipt.json"
     _exclusive_write(receipt_path, (canonical(receipt) + "\n").encode("utf-8"))

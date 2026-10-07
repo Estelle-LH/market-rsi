@@ -79,6 +79,19 @@ PROTOCOL_FILES = (
     "supervisor_harness/p0_data_gap_proposal.py",
     "supervisor_harness/prospective_source_scope_decision.py",
     "supervisor_harness/test_prospective_source_scope_decision.py",
+    # The reviewed D0-to-request bridge is offline and non-executing, but its
+    # exact registry mapping and adversarial tests must share release bytes.
+    "supervisor_harness/p0_gate1_source_scope_request_plan.py",
+    "supervisor_harness/test_p0_gate1_source_scope_request_plan.py",
+    # The v0.1.26 bridge canary executes the exact immutable D0 compilation
+    # without importing fetch/network/provider code.  Its parent, verifier and
+    # adversarial tests are controlled source, not private run evidence.
+    "supervisor_harness/p0_gate1_source_scope_request_plan_canary_child.py",
+    "supervisor_harness/run_p0_gate1_source_scope_request_plan_canary.py",
+    "supervisor_harness/source_scope_request_plan_canary_receipt.py",
+    "supervisor_harness/test_p0_gate1_source_scope_request_plan_canary_child.py",
+    "supervisor_harness/test_run_p0_gate1_source_scope_request_plan_canary.py",
+    "supervisor_harness/test_source_scope_request_plan_canary_receipt.py",
     "supervisor_harness/gate1_canary_receipt.py",
     "supervisor_harness/test_gate1_canary_receipt.py",
     "supervisor_harness/p0_gate1_controller_adapter.py",
@@ -92,6 +105,21 @@ PROTOCOL_FILES = (
     "supervisor_harness/run_p0_gate1_controller_production_cli_canary.py",
     "supervisor_harness/p0_gate1_public_fetch.py",
     "supervisor_harness/p0_gate1_watched_fetch.py",
+    # The only live source-scope path is a distinct task/admission language
+    # bound to the reviewed release, runtime, bridge canary, dual authority,
+    # permanent global claim and outer watchdog.  Include pure terminal replay
+    # plus every fake-transport/adversarial test; exclude plans/logs/run bytes.
+    "supervisor_harness/p0_gate1_source_scope_fetch_adapter.py",
+    "supervisor_harness/p0_gate1_source_scope_watched_fetch_child.py",
+    "supervisor_harness/run_p0_gate1_source_scope_watched_fetch.py",
+    "supervisor_harness/source_scope_fetch_receipt.py",
+    "supervisor_harness/test_p0_gate1_source_scope_fetch_adapter.py",
+    "supervisor_harness/test_run_p0_gate1_source_scope_watched_fetch.py",
+    "supervisor_harness/test_source_scope_fetch_receipt.py",
+    "supervisor_harness/test_p0_gate1_source_scope_fetch_integration.py",
+    "supervisor_harness/test_p0_gate1_public_fetch.py",
+    "supervisor_harness/test_p0_gate1_watched_fetch.py",
+    "supervisor_harness/test_protocol_source_release.py",
     # The bounded existing-plan lane is executable only when its compiler,
     # Train-only materializer and request builder share the published bytes.
     # Include the corresponding zero-network canary and fixtures as well.

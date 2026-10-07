@@ -1,12 +1,14 @@
 import copy
 import tempfile
 import unittest
+import urllib.request
 from pathlib import Path
+from unittest.mock import patch
 
 from market_rsi import digest
 from supervisor_harness.build_p0_gate1_controller_packet import build
 from supervisor_harness.p0_gate1_public_fetch import (
-    ADMISSION_SCHEMA, fetch_snapshot,
+    ADMISSION_SCHEMA, UrlLibTransport, _response_header_map, fetch_snapshot,
 )
 from supervisor_harness.p0_gate1_research_contract import (
     DECISION_SCHEMA, validate_and_compile,
@@ -111,6 +113,71 @@ class Gate1PublicFetchTests(unittest.TestCase):
             with self.assertRaises(TimeoutError):
                 fetch_snapshot(self.task, self.admission, output, transport)
             self.assertFalse(output.exists())
+
+    def test_url_transport_disables_ambient_proxies(self):
+        class Response:
+            status = 200
+            headers = {"Content-Type": "text/html"}
+
+            def geturl(self):
+                return self_url
+
+            def read(self, _limit):
+                return b"official"
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args):
+                return False
+
+        class Opener:
+            def open(self, _request, *, timeout):
+                self.timeout = timeout
+                return Response()
+
+        self_url = self.url
+        opener = Opener()
+        with patch.object(
+                urllib.request, "build_opener", return_value=opener) as build:
+            response = UrlLibTransport().fetch(
+                self.url, timeout_seconds=15, max_bytes=100)
+        handlers = build.call_args.args
+        self.assertIsInstance(handlers[0], urllib.request.ProxyHandler)
+        self.assertEqual(handlers[0].proxies, {})
+        self.assertEqual(response["body"], b"official")
+
+    def test_duplicate_sensitive_headers_reject_before_dict_conversion(self):
+        for items in (
+                [("Content-Type", "text/html"),
+                 ("content-type", "text/plain")],
+                [("ETag", "one"), ("etag", "two")],
+                [("Content-Encoding", "identity"),
+                 ("content-encoding", "gzip")],
+                [("Last-Modified", "one"),
+                 ("last-modified", "two")]):
+            with self.subTest(items=items):
+                with self.assertRaisesRegex(ValueError, "duplicate"):
+                    _response_header_map(items)
+
+    def test_fake_mapping_cannot_bypass_duplicate_or_content_type_bound(self):
+        responses = (
+            {"status": 200, "final_url": self.url,
+             "headers": {"Content-Type": "text/html",
+                         "content-type": "text/plain"}, "body": b"x"},
+            {"status": 200, "final_url": self.url,
+             "headers": {"Content-Type": "text/html;" + "a" * 501},
+             "body": b"x"},
+        )
+        for response in responses:
+            transport = FakeTransport(response)
+            with self.subTest(headers=response["headers"]), \
+                    tempfile.TemporaryDirectory() as directory:
+                output = Path(directory) / "fresh"
+                with self.assertRaises(ValueError):
+                    fetch_snapshot(
+                        self.task, self.admission, output, transport)
+                self.assertFalse(output.exists())
 
 
 if __name__ == "__main__":
