@@ -1503,3 +1503,22 @@ cold-replay/downstream-version paths verified. No actual account/Train fit.
 Item1 independent PASS_CODE_ONLY108tests25.359s for exact0251b67, own review
 59d0a22d; not attributed to these later item2 changes. Full integrated suite and
 separate final item2 review still required before any fresh authorized trial.
+
+## 2026-10-07 item2 downstream attachment — separate small H checkpoint
+
+Parentbd4f244; component verified benefit-to-next-input handoff. Inspection found
+the existing reconcile copied only finding and artifact paths; tools-closed next
+Controller cannot open a local measurement path. Allowed production change
+price_capacity_loop.py only, existing official-entry test only. Copy the already
+verified measured aggregate into feedback/memory/history after exact equality
+against its immutable measurement; no new evaluator/data/permission/resource
+or algorithm. Keep source/trial changes in preceding checkpoint. Exact packet
+test must demonstrate next Controller sees parent/new/reference values and
+probe hash after accepted or rejected capacity, with zero duplicate cold replay.
+
+Official actual-service/native-wire fixtures6PASS17.598s verify measured parent,
+candidate and retrieval-reference numbers actually reach the next packet's
+feedback, memory and history, including no-benefit rejection and cold replay.
+Account/worker outputs remain synthetic; no real Controller feedback-use claim.
+Source snapshot frozen for final integrated tests and independent source review;
+new scientific phase still waits for the existing fresh03 exact human reply.

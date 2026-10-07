@@ -573,6 +573,11 @@ class ProductionEntryTests(TestCase):
                     output = packet['source_context']['capacity_hook_outputs']['actual_invocations']['H']['output']
                     self.assertEqual(output.get('remaining_questions', []), ['synthetic baseline mismatch'] if benefit else [])
                     self.assertEqual(packet['feedback']['capacity_decision'], 'accept' if benefit else 'reject')
+                    benefit_metrics = packet['feedback']['named_benefit_measurement']
+                    self.assertEqual((benefit_metrics['parent'], benefit_metrics['candidate'],
+                                      benefit_metrics['direct_lookup_reference']), (0., 1., 1.))
+                    self.assertEqual(packet['memory']['verified_capacity_finding']['named_benefit_measurement'], benefit_metrics)
+                    self.assertEqual(packet['history']['last_capacity_change']['named_benefit_measurement'], benefit_metrics)
                     old = self.f.response(packet)
                     old['candidate']['recipe'] = f'Synthetic constant amplitude {amplitude:g}; controlled fixture only.'
                     old['candidate']['hypothesis'] = 'Synthetic descendant uses the verified hook finding; no real scientific authorship.'

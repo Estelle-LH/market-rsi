@@ -161,8 +161,10 @@ class PriceCapacityLoop:
     def reconcile(self, ctx):
         result = ctx["outputs"]["result_review"]; material = result["material"]
         request, review = t.c._read(material["request"]), t.c._read(result["review"])
+        measured = t.c._read(material['measurement'])['benefit_measurement']
         if (review.get("authorization_sha256") != self.runtime.authority["sha256"]
-                or review.get("request") != material["request"] or review.get("measurement") != material["measurement"]):
+                or review.get("request") != material["request"] or review.get("measurement") != material["measurement"]
+                or review.get('named_benefit_measurement') != measured):
             raise ValueError("independent capacity result binding drift")
         previous = ctx["previous_result"]; data = {key: t.c._read(value) for key, value in previous.items()}
         attempt_id = "capacity-" + t.c._digest(request["decision"])[:20]
@@ -179,6 +181,7 @@ class PriceCapacityLoop:
                 "controller_decision_sha256": t.c._digest(request["decision"]), "source_commit": request["implementation"]["source_commit"],
                 "before_pair": trial.cs.activation.pair(request["before"]), "selected_pair": trial.cs.activation.pair(selected["manifest"]),
                 "capacity_decision": review["capacity_decision"], "finding": review["finding"], "measurement": material["measurement"],
+                "named_benefit_measurement": measured, "research_credit": review['research_credit'],
                 "review": result["review"], "execution_outcome": material["execution_outcome"], "prediction_decision": "UNCHANGED"}
             feedback = {**data["feedback"], **entry, "decision": "UNCHANGED", "task_id": trial.cs.h.TASK}
             memory = {"previous": previous["memory"], "prior": data["memory"], "verified_capacity_finding": entry}
