@@ -643,3 +643,33 @@ code-only branch; private working-history tip is not an ancestor of main.
 No branch deletion, release/tag, new model call, fit or scientific authorization.
 Private working files and unrelated dirty changes preserved. This receipt is
 local-only and is not included in the public source PR.
+
+Human priority redirect: connect the actual existing pipeline first, then
+equities earnings prediction. Earnings target (price reaction versus reported
+EPS surprise) remains a pending user choice. No external acquisition, data
+permission expansion, old batch reopening or frozen scoring change. Reuse the
+existing research-progress record and prediction/data/PnL distinctions; no new
+method/literature is needed for this unchanged integration operation.
+F4c contract, parente3c5cbb: user-directed H compatibility repair only in
+price_candidate_author.py and price_loop_handoff.py plus their existing tests
+and this worklog. Observed blockers: author and native handoff still require
+legacy v1, and author receives stale pre-hook source context. Expected effect:
+an authentic saved typed prediction original is verified/replayed, implemented
+using its actual reviewed packet including hook outputs, and handed to the
+worker with exactly that original's selected R/H pair. No wrapping v2 into a
+fabricated v1 response. Reject substituted input, original, pair or authority
+before source/native preparation. Legacy v1 unchanged; task/data/scorer/folds,
+model/runtime, old ledger/grants and unrelated work fixed. Local synthetic
+originals/temporary Git/native tests only; zero new live role calls or Train
+fits. At most two production modules/~200changed lines; new rollback commit
+restores only this component, never operational history. Next is formal-entry
+installation and operation-aware admission, not an equities framework rebuild.
+
+F4c first focused execution:45tests,44PASS/1ERROR3.569s. Both typed author
+fixtures passed; native preparation also completed, but the new assertion
+looked up non-existent `micro_evolution.pair` instead of the actual snapshot
+selection field. Preserve this failure/source checkpoint before fixing the
+test. No production admission/source constraint is weakened; no actual model
+call or Train fit. Command: pinned one-thread Python `-B -m unittest
+supervisor_harness.test_price_candidate_author
+supervisor_harness.test_price_loop_handoff -q` in the research directory.

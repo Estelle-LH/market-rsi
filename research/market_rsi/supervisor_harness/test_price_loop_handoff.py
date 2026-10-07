@@ -96,6 +96,39 @@ class HandoffTests(TestCase):
         self.assertEqual(request['max_fits'], 4)
         self.assertEqual(self.f.calls, 1)  # Only synthetic original fixture transport.
 
+    def typed_prediction(self):
+        packet = self.f.packet
+        packet['schema'] = 'controller_price_feedback_input_v2'
+        packet['action_context'] = {'schema': 'price_controller_action_context_v1',
+            'identity_configuration': deepcopy(self.spec['identity_configuration']), 'available_actions': ['prediction']}
+        packet['feedback'] = {**packet['feedback'], 'typed_fixture': True}
+        packet['bindings']['feedback'] = self.f.write('typed-feedback', packet['feedback'])
+        def typed(packet):
+            old = fixtures.ConfigurationTests.response(self.f, packet)
+            return {key: old[key] for key in ('input_sha256', 'feedback_sha256', 'requested_model',
+                'serving_snapshot', 'candidate', 'attribution')} | {
+                'schema': 'controller_coevolution_action_v2', 'action': 'prediction',
+                'capacity': None, 'authority_request': None}
+        self.f.response = typed
+        self.f.rebind_config()
+        self.f.review.update(action_context_sha256=h.t.c._digest(packet['action_context']),
+            decision_schema_sha256=h.t.c._digest(h.t.SCHEMA_V2))
+        self.f.review_binding = self.f.write('operation-review', self.f.review)
+        self.response = self.f.call()
+
+    def test_typed_prediction_native_handoff_keeps_actual_original_and_selected_pair(self):
+        self.typed_prediction(); prepared = self.prepare()
+        self.assertEqual(h.t.c._read(prepared['response']), self.response)
+        state = self.batch(self.root / prepared['native_name']).snapshot()
+        self.assertEqual(state['micro_evolution']['pair'], self.spec['identity_configuration']['pair'])
+        self.assertEqual(self.f.calls, 2)  # Two distinct synthetic originals, never resampled.
+
+    def test_typed_prediction_rejects_stale_pair_before_native_or_reservation(self):
+        self.typed_prediction()
+        self.spec['identity_configuration']['pair']['researcher_sha256'] = 'f' * 64
+        with self.assertRaisesRegex(ValueError, 'selected pair/context'): self.prepare()
+        self.no_native()
+
     def test_existing_preparation_and_finalization_never_overwrite(self):
         prepared = self.prepare()
         with self.assertRaises(FileExistsError): self.prepare()
