@@ -1459,3 +1459,66 @@ Existing approved roadmap and this contract define the narrow review dispatch:
 owner price_live_review_20261006, dependency integrated local tests, max12min,
 own log only; PASS_CODE_ONLY requires read-only contract/replay review and
 targeted actual-entry tests. Failures returned to Root, no account/data action.
+
+## 2026-10-07 roadmap item2 — named benefit probe, frozen before execution
+
+AxisH, component matched capacity measurement; Supervisor-authored integration,
+not implementation of the rejected R1. Allowed production: price_capacity_trial.py
+and price_independent_review.py only, existing associated tests. Parent0251b67;
+K/M/C/R/typed Controller validator and all old artifacts/caps protected unchanged.
+Observed gap: actual13 child calls establish execution compatibility but a final
+benefit boolean does not measure a named evidence-handling improvement.
+Smallest fix: original-bound independent source review freezes one specific
+evidence-output probe per supplied case BEFORE replay; the context truth is
+read by an exact JSON path, not author self-reported accuracy. After replay,
+Supervisor deterministically counts exact correct output matches for actual
+parent/new sources on identical cases. Also report direct same-information
+lookup reference as a retrieval ceiling, not a process-superiority benchmark.
+Independent final review must agree and the measured parent delta must improve
+before adoption. No significance/prediction-score requirement. Probe scope is
+correct evidence return; efficiency, hypothesis quality and generalization
+remain separate, not falsely established by this metric. Other scientific
+methods remain open; future different named effects need their appropriate
+matched test, not acceptance via this probe or a mandatory mutation.
+Reject missing/stale/trivial self-attested probes and forged measurements;
+valid no-benefit/failed execution preserves the parent and goes downstream.
+Local engineering budget: bounded tests/review,0accountcalls/Trainreads/fits.
+Rollback0251b67 without operational rollback. No new service/docs/reward system.
+
+First31-run40.060s and frozen31-run40.476s:30PASS/1ERROR, new test assumed
+top-level benefit_observed where legacy receipt only nested it in activation
+review. Preserve both outcomes; explicitly save measured versus reviewer-reported
+benefit separately rather than obscuring disagreement. Inspection also identified
+representation confound: one child-only output path could penalize a correct
+parent under a different key. Freeze separate parent/child paths to the SAME
+semantic answer and supply reviewed parent source; equivalent renamed outputs
+must score equal. Original source-review response binding must equal the frozen
+probe. This is evidence-return coverage, not proof of improved decisions.
+
+Final focused32testsPASS37.676s: actual local bounded capacity subprocesses,
+synthetic original/native-wire role responses and synthetic worker predictions.
+Freeze-before-run probe, actual output recomputation, no-gain boolean override,
+forged/missing/stale probe, renamed equivalent parent answer, success/failure/
+cold-replay/downstream-version paths verified. No actual account/Train fit.
+Item1 independent PASS_CODE_ONLY108tests25.359s for exact0251b67, own review
+59d0a22d; not attributed to these later item2 changes. Full integrated suite and
+separate final item2 review still required before any fresh authorized trial.
+
+## 2026-10-07 item2 downstream attachment — separate small H checkpoint
+
+Parentbd4f244; component verified benefit-to-next-input handoff. Inspection found
+the existing reconcile copied only finding and artifact paths; tools-closed next
+Controller cannot open a local measurement path. Allowed production change
+price_capacity_loop.py only, existing official-entry test only. Copy the already
+verified measured aggregate into feedback/memory/history after exact equality
+against its immutable measurement; no new evaluator/data/permission/resource
+or algorithm. Keep source/trial changes in preceding checkpoint. Exact packet
+test must demonstrate next Controller sees parent/new/reference values and
+probe hash after accepted or rejected capacity, with zero duplicate cold replay.
+
+Official actual-service/native-wire fixtures6PASS17.598s verify measured parent,
+candidate and retrieval-reference numbers actually reach the next packet's
+feedback, memory and history, including no-benefit rejection and cold replay.
+Account/worker outputs remain synthetic; no real Controller feedback-use claim.
+Source snapshot frozen for final integrated tests and independent source review;
+new scientific phase still waits for the existing fresh03 exact human reply.
