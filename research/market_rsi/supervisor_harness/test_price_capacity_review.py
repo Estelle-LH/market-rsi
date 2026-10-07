@@ -43,8 +43,14 @@ class CapacityReviewTests(TestCase):
             'finding': 'Synthetic independent source verdict; no scientific/capacity gain claim.',
             'evidence': ['Supplied source and original-bound synthetic artifact hashes'], 'research_credit': 0,
             'research_outcome': 'not_applicable', 'route_action': 'not_applicable'}
+        if 'benefit_probe' in schema['properties']:
+            response['benefit_probe'] = {'metric_name': 'exact_evidence_match_fraction',
+                'expected_effect': packet['material']['original_controller_response']['capacity']['expected_effect'],
+                'cases': {name: {'context_path': ['history', '0', 'question'],
+                    'before_output_path': ['remaining_questions', '0'], 'after_output_path': ['remaining_questions', '0']}
+                    for name in packet['material']['frozen_replay_cases']}}
         return {'response': response, 'call_id': kwargs['operation_id'], 'usage': {'synthetic': True}, 'serving_snapshot': 'unknown',
-            **{key + '_binding': self.f.h.write('synthetic-review-' + key, {'synthetic': True})
+            **{key + '_binding': self.f.h.write('synthetic-review-' + key, response if key == 'response' else {'synthetic': True})
                 for key in ('input', 'response', 'process', 'completion')}}
 
     def review(self):

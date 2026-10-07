@@ -596,6 +596,12 @@ class ProductionEntryTests(TestCase):
                     'stage': stage, 'verdict': 'PASS', 'finding': 'Synthetic separate native role, not empirical reviewer approval.',
                     'evidence': ['Bound original and measured fixtures'], 'research_credit': 0,
                     'research_outcome': 'not_applicable', 'route_action': 'not_applicable'}
+                if stage == 'source' and body['material'].get('frozen_replay_cases') is not None:
+                    value['benefit_probe'] = {'metric_name': 'exact_evidence_match_fraction',
+                        'expected_effect': body['material']['original_controller_response']['capacity']['expected_effect'],
+                        'cases': {name: {'context_path': ['history', '0', 'question'],
+                            'before_output_path': ['remaining_questions', '0'], 'after_output_path': ['remaining_questions', '0']}
+                            for name in body['material']['frozen_replay_cases']}}
                 if stage == 'result' and 'measurement' in body['material']:
                     value.update(benefit_observed=benefit, compatibility_checks={key: True for key in body['trusted_checks']})
                 elif stage == 'result' and body['material']['outcome'] == 'succeeded':
