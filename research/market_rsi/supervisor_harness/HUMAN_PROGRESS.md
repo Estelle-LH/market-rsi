@@ -2584,3 +2584,57 @@ regressions and all machine-bound records stay put. Runtime artifacts and the
 verified locally; runner/backend/benchmarks source migration remains planned
 pending import and source-binding inventory. Integrating this branch with the
 Supervisor's newer work is a separate source review, not implied by these tests.
+
+## 2026-10-07 — Package-first developer layout plan
+
+User requested applying the reviewed popular-repository layout. Parent/rollback
+source is `41bfdaf2f733109e91f869262b46e805e6322f8f`, isolated local branch
+`codex/market-rsi-cleanup-20261007`; the canonical Supervisor checkout has newer
+commits and unrelated dirty work and will not be modified or merged here.
+
+Reuse the October7 source inspection: OpenEvolve
+`9196d8763300d1e46cc8b48cb0dc987966db3d48` separates its importable package,
+configs, examples and tests; AutoResearch
+`228791fb499afffb54b46200aca536f79142f117` separates fixed preparation/evaluation,
+editable training and research instructions; AI Scientist v2
+`96bd51617cfdbb494a9fc283af00fe090edfae48` has structured journals/reporting;
+DGM `a565fd2d1dca504ef5104a7cc0f3bdc4ab9b4fd2` separates agents, benchmarks and
+initial evidence. These are organizational references, not measured framework
+performance. Their relevant source files and ignore/checkpoint policies were
+read; no repository code was installed or executed. No new method, evaluator,
+permission or scientific assumption is being introduced.
+
+Observed problem: the developer runner still embeds its suite configuration,
+and newcomers must traverse the historical research tree to find the active
+task and launch command. Many production paths are literal frozen source names;
+the native preflight rejects symlinks/noncanonical paths and changed committed
+source bytes. A mass relocation would invalidate bindings. This is human-led
+developer organization, not autonomous H/R evolution or activation.
+
+One bounded component: the developer-facing source layout. Exact allowlist:
+`market_rsi/__init__.py`, `market_rsi/__main__.py`, `market_rsi/cli.py`,
+`market_rsi/checks.py`, `configs/checks.json`, `benchmarks/nfl_price/profile.json`,
+`benchmarks/nfl_price/README.md`, `tools/check.py`, `tests/test_check.py`,
+`tests/test_fixture_cleanup.py`, `tests/test_cli.py`, `tests/test_layout.py`,
+`README.md`, `docs/DEVELOPMENT.md`, and this append-only progress file.
+
+Move the existing developer check implementation into the importable package;
+keep its old script as a compatibility entry, and move the exact suite lists
+into configuration. Add a thin package CLI that delegates price work to the
+unchanged native module in its existing working directory, preserving explicit
+arguments, caller-relative input paths, interpreter and exit status. Add a
+read-only active-task profile pointing to existing data/target/scorer sources;
+it is not a batch grant or new benchmark implementation. No dependency installs,
+network/provider calls, data reads, Train fits, permission changes or live runs.
+Protected: every existing project Python file, source-bound JSON/JSONL/history,
+scientific config/scorer/data, state/ledgers, archive and canonical checkout.
+K/M/C/R and native H bytes stay fixed; new launcher is unactivated human tooling.
+
+Expected effect: checks run from the package and old script identically, and
+the current task is discoverable at the top level. Verify unchanged suite
+selection, commands, timeouts, thread caps and status propagation; mocked price
+success/failure and no retry; real help/list from root and another cwd; profile
+references and all native Python bytes; root, smoke and full price regressions.
+Use existing Python3.12, five-minute suite bound, no empirical/model budget.
+Model/data/memory manifests and empirical replay are not applicable. Preserve
+failed checks as results. Tests pending at this planning checkpoint.
