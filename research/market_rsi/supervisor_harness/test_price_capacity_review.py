@@ -11,7 +11,9 @@ from supervisor_harness import test_price_capacity_services as fixtures
 
 class CapacityReviewTests(TestCase):
     def setUp(self):
-        self.f = fixtures.CapacityAuthorTests(); self.f.setUp(); self.addCleanup(self.f.doCleanups)
+        self.f = fixtures.CapacityAuthorTests()
+        self.addCleanup(self.f.doCleanups)
+        self.f.setUp()
         before = self.f.before
         self.f.before = fixtures.s.identity.manifest(kernel=before['components']['K'], model=before['model'],
             predictor=before['components']['C'], harness=before['components']['H'], researcher=before['components']['R'],

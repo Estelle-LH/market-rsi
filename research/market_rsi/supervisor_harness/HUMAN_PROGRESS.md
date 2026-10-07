@@ -2341,3 +2341,16 @@ Plan: run new failure-injection tests once before the fix (expected failure),
 once after, and the unchanged 369-test host-permitted price selection once after
 the fix. Each run has a five-minute ceiling, with no live account calls or Train
 fits. Keep the pre-fix failure and post-fix results as separate local checkpoints.
+
+Pre-fix source `3493916` (parent plan `6970eb2`):
+`python -B -m unittest discover -s tools/tests -p test_fixture_cleanup.py -q`
+ran two tests/ten failing subcases in 0.835s, exit 1. Each injected child setup
+starts a synthetic `_recover` patch, registers its cleanup and raises before
+filesystem, account or worker activity. All ten parent call sites failed to
+restore that patch. The regression itself restores its patches even on failure.
+This independently confirms the cleanup-order defect rather than assuming all
+sandbox-run failures have the same cause.
+
+Implementation: move child cleanup registration before setup in those ten call
+sites across the declared nine price-test files. No production source or test
+assertion is relaxed. Post-fix verification is pending at this source checkpoint.

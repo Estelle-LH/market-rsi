@@ -50,7 +50,9 @@ class FitBudgetTests(TestCase):
 
 class IndependentReviewTests(TestCase):
     def setUp(self):
-        self.s = fixtures.PriceServiceTests(); self.s.setUp(); self.addCleanup(self.s.doCleanups)
+        self.s = fixtures.PriceServiceTests()
+        self.addCleanup(self.s.doCleanups)
+        self.s.setUp()
         self.runtime = self.s.runtime
         self.calls = []
         self.transport = Mock(side_effect=self.synthetic_role)

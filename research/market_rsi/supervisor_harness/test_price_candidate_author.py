@@ -175,7 +175,9 @@ class AuthorServiceTests(TestCase):
 
     def test_typed_original_author_consumes_actual_hook_context_without_legacy_rewrap(self):
         from supervisor_harness.test_coevo_pilot_transaction import TypedActionTests
-        fixture = TypedActionTests(); fixture.setUp(); self.addCleanup(fixture.doCleanups)
+        fixture = TypedActionTests()
+        self.addCleanup(fixture.doCleanups)
+        fixture.setUp()
         fixture.action = 'prediction'
         fixture.packet['source_context'] = {'capacity_hook_outputs': {'verified_synthetic_finding': 'avoid repeated recipe'}}
         fixture.packet['bindings']['source_context'] = fixture.h.write('typed-source', fixture.packet['source_context'])
@@ -194,7 +196,9 @@ class AuthorServiceTests(TestCase):
 
     def test_typed_author_rejects_substituted_input_before_account_call(self):
         from supervisor_harness.test_coevo_pilot_transaction import TypedActionTests
-        fixture = TypedActionTests(); fixture.setUp(); self.addCleanup(fixture.doCleanups)
+        fixture = TypedActionTests()
+        self.addCleanup(fixture.doCleanups)
+        fixture.setUp()
         fixture.action = 'prediction'; fixture.bind(); decision = fixture.h.call()
         self.runtime.root = fixture.h.root
         self.runtime.fixed_grant = fixture.h.authorization

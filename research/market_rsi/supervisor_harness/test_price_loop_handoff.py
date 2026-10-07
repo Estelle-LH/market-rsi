@@ -16,7 +16,9 @@ from data_scientist_harness import test_micro_evolution as micro
 
 class HandoffTests(TestCase):
     def setUp(self):
-        self.f = fixtures.ConfigurationTests(); self.f.setUp(); self.addCleanup(self.f.doCleanups)
+        self.f = fixtures.ConfigurationTests()
+        self.addCleanup(self.f.doCleanups)
+        self.f.setUp()
         self.root, self.repo = self.f.root, self.f.f.repo
         self.f.ledger['authorization_sha256'] = self.f.authorization_binding['sha256']
         self.f.write('ledger', self.f.ledger)

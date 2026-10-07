@@ -13,7 +13,9 @@ class TrialTests(TestCase):
         original = fixtures.fixtures.CapacityAuthorTests.start
         with patch.object(fixtures.fixtures.CapacityAuthorTests, 'start',
                 new=lambda instance, **kwargs: original(instance, axis='harness', replay_cases=cases)):
-            self.f = fixtures.CapacityReviewTests(); self.f.setUp(); self.addCleanup(self.f.doCleanups)
+            self.f = fixtures.CapacityReviewTests()
+            self.addCleanup(self.f.doCleanups)
+            self.f.setUp()
         self.runtime = self.f.f.runtime
         self.scope = self.f.review()
         from supervisor_harness.continuous_discovery_batch import ContinuousDiscoveryBatch

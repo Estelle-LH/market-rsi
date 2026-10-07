@@ -16,8 +16,8 @@ REAL_POPEN = entry.r.w.subprocess.Popen
 class EntryTests(TestCase):
     def setUp(self):
         self.f = fixtures.PriceServiceTests()
-        self.f.setUp()
         self.addCleanup(self.f.doCleanups)
+        self.f.setUp()
         self.service = self.f.service()
         self.config = {"schema": "price_discovery_launch_v1", "repo": str(self.f.h.repo),
             "root": str(self.f.root), "authorization": self.f.runtime.authority,

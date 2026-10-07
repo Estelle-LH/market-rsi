@@ -10,7 +10,9 @@ from supervisor_harness import test_price_capacity_trial as fixtures
 
 class HookTests(TestCase):
     def setUp(self):
-        self.f = fixtures.TrialTests(); self.f.setUp(); self.addCleanup(self.f.doCleanups)
+        self.f = fixtures.TrialTests()
+        self.addCleanup(self.f.doCleanups)
+        self.f.setUp()
         trial = fixtures.trial
         runtime = self.f.runtime
         config = {'schema': 'price_capacity_loop_configuration_v1', 'baseline': self.f.f.f.before,

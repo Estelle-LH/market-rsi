@@ -13,7 +13,9 @@ from supervisor_harness.test_price_capacity_source import SOURCE, TEST
 
 class CapacityAuthorTests(TestCase):
     def setUp(self):
-        self.fixture = TypedActionTests(); self.fixture.setUp(); self.addCleanup(self.fixture.doCleanups)
+        self.fixture = TypedActionTests()
+        self.addCleanup(self.fixture.doCleanups)
+        self.fixture.setUp()
         self.h = self.fixture.h; self.repo, self.root = self.h.f.repo, self.h.root
         self.packet = self.fixture.packet
         self.namespace = 'research/market_rsi/research_capacities/' + self.h.authorization['batch_id'] + '/'
