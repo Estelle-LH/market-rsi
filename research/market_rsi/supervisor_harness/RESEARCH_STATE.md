@@ -1,4 +1,4 @@
-# Current Market RSI decision — 2026-10-07 fresh connected pilot PREPARATION
+# Current Market RSI decision — 2026-10-07 fresh connected pilot RUNNING
 
 Structured human approval call_McgTKX5H5sbgMuxk8xmOvLdi question0,
 "批准上述新批次", binds fresh market-rsi-coevo-price-connected-pilot-20261007-01.
@@ -13,8 +13,15 @@ Timeout source7b7a234 changes only prospective role waits/refreshed admission;
 legacy120 and final native receipt remain required. Focused50PASS4.364s;
 integrated420synthetic/inert testsPASS45.304s (expected missing fixed.py negative
 test stderr). Fresh reused preparer022bb7c zero-call checkPASS27committed pins.
-Independent source review in progress, fresh runtime root/window NOT created;
-0new model calls/attempts/fits. No duplicate Python supervisor/worker present.
+Independent source review50f30633 PASS_CODE_ONLY/PASS_SOURCE_ONLY; fresh clock
+19:56:13–20:41:13UTC, selectioncutoff20:36:13. Official v2 entry session89060
+running; actual native metadata policy operational_ready true, zero turns in
+preflight. Bootstrap R/H hooks ran; first input-review original admitted19:56:43
+with explicit300s effective limit. At this snapshot:1reviewstarted,0completed,
+0Controller/author/attempt/fits; no completion inferred from partial JSON.
+Permanent root /Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-price-connected-pilot-20261007-01;
+launch6ef1fc44/seedafafce2b/grant4c253535, rendered initialController51643bytes.
+No duplicate Python supervisor/worker existed at preflight. No deadline extension.
 Plan: genuine Controller chooses one small research R or H change and matched
 test; actual reviewed feedback/version output feeds next price candidate.
 Frozen300s price task/scorer/folds/data/B0 incumbent/B0+B1 pool and oldhistory
