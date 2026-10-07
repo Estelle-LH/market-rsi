@@ -1407,3 +1407,55 @@ and completed fullregression. New03clock not started, no grant/pilot artifacts,
 no old02retry/unusedcaprenewal. If approved, prepare exactnewscope then run
 existingentry capacity-to-prediction actualfeedbacktest; if not, stopscience.
 Do not repeat the question or invent additional infrastructure while pending.
+
+## 2026-10-07 approved roadmap item1 — prospective implementation contract
+
+Parent99c4be9; user "做吧" authorizes local roadmap execution, not the separately
+pending fresh03 payload/account decision. Trigger: synthetic read-only probe
+showed typed validator accepts a one-file capacity and noncurrent eligible
+citation, but actual author schema and official Controller guard reject them.
+AxisH, component input/executability disclosure, author Supervisor (human
+direction); expected effect: copyable metadata reaches unchanged consumers,
+unexecutable enabled scopes fail before runtime/account/original/reservation.
+Allowed production writes: account_controller_feedback_consumer.py and
+run_price_discovery.py; tests only their existing test modules. K/M/C/R,
+validator/schema, task/scorer, authority, old ledgers/results protected unchanged.
+Reuse existing original-bound response_schema; no new general admission service,
+new scientific method, external retrieval or payload expansion. Rollback source
+99c4be9, without rewinding any operational history. Local synthetic tests and
+independent source review only, account calls0/Train reads0/fits0. Keep evidence
+levelL1 until actual reviewed live execution; no autonomous R/H benefit claim.
+Tests: copyable pair/current citation passes typed validator -> formal guard ->
+author schema; one-file/noncurrent remain rejected; enabled missing/stale or
+non-sibling pairs denied before runtime/backend; disabled axes not required.
+First apply_patch attempt found a mismatched __main__ anchor; atomic rejection,
+verified no source changes. Corrected exact existing anchor, not a code failure.
+
+First15 focused tests0.281s FAILED(1failure/3errors): new fixtures accidentally
+reused a Mock capacity hook, supplied a forbidden empty disabled scope, tried a
+nonexistent memory binding key, and instantiated account metadata with a legacy
+fixture grant. Preserve this engineering failure. Fixture correction only:
+clear Mock before packet preparation, retain nonempty disabled path scope, cite
+an actually eligible noncurrent model binding, isolate AccountRoles construction
+while exercising the real formal-entry citation guard. No production relaxation,
+account operation or Train read; full service construction already tested apart.
+Second15run0.334s retained one positive-preflight fixture error: Mock capacity
+had no baseline component map/identity output. Added empty inert maps in fixture,
+not production. Both failed test runs remain attributable local test failures.
+
+Integrated107tests24.888s:102PASS/5ERROR. Real inherited completed cold-replay
+cases exposed a production regression in the new freshness preflight: completed
+capacity sources correctly exist, but were wrongly treated as new author paths.
+Narrow correction: first launch still requires every enabled axis executable;
+restart first verifies existing manifest checksum/handler identity/seed/rounds,
+then retains existing loop's artifact/context/source replay checks, not a fresh
+write requirement. No retry, new call, refund or weakening of author freshness.
+Existing real-service negative/KEEP/failure/adoption cold-replay tests verify it.
+
+Integrated107PASS26.220s after correction. Added a specific replay-manifest
+drift regression; independent source-only final review follows. Exact scope
+two production modules, no transaction schema/validator/frozen judge change.
+Existing approved roadmap and this contract define the narrow review dispatch:
+owner price_live_review_20261006, dependency integrated local tests, max12min,
+own log only; PASS_CODE_ONLY requires read-only contract/replay review and
+targeted actual-entry tests. Failures returned to Root, no account/data action.

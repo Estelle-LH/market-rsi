@@ -377,7 +377,9 @@ class TypedActionTests(unittest.TestCase):
         self.assertEqual(self.prompt_metadata(), {
             'parent_pair_sha256': c._digest(context['identity_configuration']['pair']),
             'components_by_axis': {axis: sorted(labels) for axis, labels in micro.MICRO_COMPONENTS.items()},
-            'eligible_evidence_sha256': sorted(expected_hashes)})
+            'eligible_evidence_sha256': sorted(expected_hashes),
+            'required_current_feedback_sha256': self.packet['bindings']['feedback']['sha256'],
+            'source_test_pairs_by_axis': {'researcher': [], 'harness': []}})
 
     def test_copied_prompt_metadata_passes_without_relaxing_bad_metadata(self):
         metadata = self.prompt_metadata()
