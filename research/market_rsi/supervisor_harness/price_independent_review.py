@@ -432,7 +432,10 @@ class IndependentPriceReviewer:
             schema["properties"].update(benefit_observed={"type": "boolean"},
                 compatibility_checks=t.c._object({name: {"type": "boolean"} for name in checks}))
             schema["required"] += ["benefit_observed", "compatibility_checks"]
-        call = self.role_call(stage + "_review", packet, schema, operation_id=role_id, timeout_seconds=120)
+        # Only a new explicit per-role grant can enlarge this wait; legacy stays120.
+        limits = t.c._read(self.grant)["account_roles"].get("call_seconds", {})
+        timeout = limits.get(stage + "_review", 120)
+        call = self.role_call(stage + "_review", packet, schema, operation_id=role_id, timeout_seconds=timeout)
         response = call["response"]
         t.c._validate(response, schema)
         if (type(response["research_credit"]) is not int or not 0 <= response["research_credit"] <= 2

@@ -1,5 +1,48 @@
 # Market RSI — human progress
 
+## 2026-10-07 16:06 NY — fresh connected pilot NOT COMPLETE
+
+- 真实独立输入审核PASS并有原生完成回执，97.625s；不是模拟审核。
+- 下一阶段Controller120.106s超时，只有reasoning事件，没有候选决定或完成回执；首个阻断是Controller等待限时。
+- 2次账户original启动/1次完成；0实现、0候选尝试、0拟合、0新预测或scorecard；第二轮未发生。
+- 20:06:47UTC关闭，634.235s含执行及终结核验/记账；没有延长原窗口、自动重试或退还额度。已核验原进程退出。
+- 审核已知token24087input/1900output；Controller和总token/订阅美元未知，paidprovider0。不是已证实的co-evolution。
+- 永久closeoutc0e14d05/ledgerdc63bcea绑定全部原始证据；旧两批账本、runner/scorer和B0/B1池保持原样。
+
+正式启动命令在既有AGENT_LOG_PRICE_LOOP_REPAIR_2026-10-06.md。剩余具体阻断：
+本次仅审核等待可到300s，Controller仍120s；下一次需要新的prospective授权和
+相应Controller等待配置，不得重跑本ID。未把工程完成替代真实循环验收。
+
+## 2026-10-07 15:57 NY — fresh connected pilot running
+
+Independent source review50f30633 passed; official entry started exact new
+20261007-01,19:56:13–20:41:13UTC /15:56:13–16:41:13NY,cutoff16:36:13NY.
+Actual no-environment runtime-policy probe PASS; R/H bootstrap hooks executed.
+First real independent input review running with300s cap; at snapshot no
+Controller/author/candidate/fit yet. Seedafafce2b/launch6ef1fc44/grant4c253535.
+No streamed response accepted without terminal receipt; no deadline/cap change.
+This is running status, not completed research/capacity gain.
+
+## 2026-10-07 15:49 NY — fresh connected pilot preparation
+
+Exact new20261007-01 whole-batch structured grant received;45min clock not started.
+Reviewer wait repair version7b7a234 keeps old120s grants/no-retry/final receipts,
+newgrant explicitly reviews<=300s,Controller/author<=120s and refresheddeadline.
+50focused/420integrated synthetic or inert tests pass; new reused preparer022bb7c
+checks27committed sources with0accountcalls/0fits. Independent source review
+underway; no new framework/scorer/data task. Next: one genuine reviewed R/H
+proposal/test, then price predictor chosen from its actual feedback/output.
+User-directed Supervisor repair is not autonomous R/H gain. All old results,
+caps, raw/protected data and external spending/publication boundaries unchanged.
+
+## 2026-10-07 14:58 NY — connected pilot 实际尝试，未完成
+
+- 正式 v2 入口和真实账户工具关闭预检通过；两个初始 R/H hook 实际执行。
+- 第一个独立输入审核已调用，但120秒内缺少原生完成回执，被限时终止；流式 PASS JSON 仅用于诊断，不能当成已完成审核。
+- 本次1次审核调用、0次 Controller、0候选/0拟合；没有新分数或 co-evolution 证据。不自动重试、不退款、不重开旧批次。
+- 451.77176秒后关闭；原有 B0/B1 活跃池、B0 最佳和全部历史结果不变。tokens/订阅美元成本未知，付费 provider0。
+- 永久证据：artifacts/market-rsi-coevo-price-connected-pilot-20261006-01/closeout.json，SHA87a586a7；完整启动命令和失败在现有 price-loop worklog。下一项明确阻断是审核原生完成等待限时，不是数据或评分器。
+
 ## 2026-10-07 14:15 NY — verified pipeline source pushed
 
 Published eight pipeline source/test files to public branch
@@ -2860,3 +2903,24 @@ tip at close and report any later commits/uncommitted work not included. No live
 launch, fits, provider call, automatic repair/retry, activation, push or release.
 Save a plan checkpoint before merge and a merge/result checkpoint after actual
 verification. Tests and merge outcome pending at this planning checkpoint.
+
+Plan checkpoint `c26e452`; merge of frozen Supervisor `f1be520` completed
+without unresolved conflicts. Three imported production modules and current
+research state match Supervisor exactly. The review-test merge preserves the
+Supervisor's new cases plus only the existing cleanup-before-setup fixture
+fix. Both progress branches remain recorded. Root22tests PASS,0.608s; current
+smoke69tests PASS,0.626s (five more inherited checks than the prior64).
+Updated skill with sync-before-publication guidance, using skill-creator's
+narrow instruction-only approach; its validator PASS. Save this merge source
+before the full regression. No live call/fit or accounting change.
+
+Supervisor advanced during integration to `9fd2f7f25eb50a8f6bc4cb900bcec47adc684bf1`:
+two additional commits `849b842` and `9fd2f7f`. They add explicit grant-bound
+timeouts to both candidate/capacity author construction and strengthen actual
+native-service/cold-replay tests; correct a disposable test authorization path.
+Read the exact diff. Extend import scope only to the two additional native
+entry/test paths and the already allowed price-loop repair log; freeze this
+new committed tip for a second local merge after preserving the first.
+Do not copy remaining dirty Supervisor files. Full final price regression will
+run on the integrated source; these imported timeout changes do not enlarge
+existing grants or create a new experiment authority.

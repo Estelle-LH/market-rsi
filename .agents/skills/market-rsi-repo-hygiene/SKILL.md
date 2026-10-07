@@ -20,6 +20,13 @@ changed. Read applicable `AGENTS.md` files and the
 checkout lacks the guide, inventory its actual code rather than assuming the
 new layout is installed.
 
+Before publication or integration, compare against the Supervisor's current
+committed source and bring its newer commits into the candidate without
+rewriting either history. Keep unfinished edits in the owner's checkout; do
+not stage or copy them as if they were an approved source snapshot. Recheck the
+Supervisor tip after validation and report exactly which commit is included
+and what is still pending. Syncing source does not authorize public disclosure.
+
 ## Organize by responsibility
 
 Prefer an importable `market_rsi/` package for reusable loop, role, service and

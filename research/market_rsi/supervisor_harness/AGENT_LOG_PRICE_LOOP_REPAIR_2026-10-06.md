@@ -929,3 +929,211 @@ pre-author failure continuation and credit1 archived-parent eligibility;
 separate same-budget fixed/evolving evidence; equities earnings target and
 point-in-time data adapter afterwards. Hard arbitrary-code containment and
 OS-hard resource isolation are not established by static guard/sampledRSS.
+
+## 2026-10-07 connected pilot — direct human "try now"
+
+Preparation contract: exact fresh market-rsi-coevo-price-connected-pilot-20261006-01,
+45min after prep, 2Controller+2author+6independent originals, 2attempts/8fits,
+serial/thread1/900s/1GiB sampled; <=256KiB private aggregate/history/source to
+signed-in gpt-6.1-sol(snapshotunknown), actual tools closed, no raw transfer/
+retry/new acquisition/paid/DevFinal/publication/promotion. Direct reply to
+pending whole-batch request, NOT a structured question reply or old authority.
+Bootstrap only: two actual versioned pure apply(context) R/H projections of
+supplied latest factual evidence, no invented scientific choice or gain.
+Both AST guard and synthetic REVERT/context smoke PASS; no scientific window,
+account original or Train fit. First apply_patch failed creating nonexistent
+parent; created exact directory and applied new sources, no data/cap changed.
+Batch-specific preparer reuses completed B3 feedback/archive/unchanged scoring,
+fresh grant and sole empty ledger. Existing production pipeline unmodified.
+Controller chooses small R/H change and matched benefit, then downstream
+predictor from actual feedback; rejection allowed, adoption not scientific gain.
+
+Preparation checks caught two zero-call failures: direct script launch requires
+PYTHONPATH=research/market_rsi; source list contained nonexistent
+price_capacity_review.py (actual review is existing price_independent_review).
+Independent helper corroborated the latter; removed only nonexistent binding.
+Existing journal replays idle headd645bbf7/docb82a18cf, whereas current committed
+canonical document hashes c7112517; snapshot rejects unsynchronized bytes.
+Use the authorized prospective decision revision, preserve full historical text
+and journal chain; do not reset/reinitialize or claim native worker enforcement.
+
+Corrected preparer zero-call check PASS27sourcepins. Independent helper review
+71a86fba PASS_SOURCE_ONLY exact53791a4. Root32 inert identity/guard/formal-entry
+tests PASS19.091s, including actual-service synthetic capacity/prediction/replay/
+failure paths. First nonexistent unittest class selector failed after10passing
+checks; corrected by running the existing full module, no production repair.
+Prospective authorized decision revision retains old canonical history and
+idle permanent journal. Fresh preparation/metadata probe/live entry follow;
+helper not scientific reviewer and costs unmetered, no gain asserted.
+
+### Actual connected pilot terminal — NOT COMPLETE
+
+Fresh rootmarket-rsi-coevo-price-connected-pilot-20261006-01;
+launch2f298973/seed4317d2ba/grantfa9f13e4. Clock18:50:37–19:35:37UTC/
+cutoff19:30:37, no extension. Actual formal command from research/market_rsi:
+`env PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m supervisor_harness.run_price_discovery --batch-config '/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-price-connected-pilot-20261006-01/launch.json' --initial-feedback '/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-price-connected-pilot-20261006-01/initial-feedback.json'`
+Operation admitted, no egress rejection. Real runtime metadata-policy probe
+PASS(no turn/model/privatepayload), baseline H/R hooks2PASS .036035/.037632s,
+peaks18.68/19.58MB, fits0. First original inputreview120.106820s timeout,
+stage120.314011s. Input86,256pretty-JSON bytes,1turn/start/0toolRPC.
+Streamed1363-byte PASS JSON schema-valid but no final native completion/usage;
+diagnostic only, not an accepted independent verdict. Process11453 gone,
+formal session exit1, round1.input.failed/TimeoutExpired/no_retry preserved.
+Controller0/author0/attempt0/fits0/newprediction0. No cap refund/reopening.
+Closed18:58:08.771760UTC451.77176s fromactivation, ledger4fd6b6ca,
+closeout87a586a753d8f356f354625bfd7f8619b7f68099c2add19de820483e98815d70
+in permanent root binds all wire/failure/timing/policy/hook evidence.
+1accountoriginal started/0completed, requestedgpt-6.1-sol(snapshotunknown),
+token/subscriptionUSDunknown, paidproviders0, helperoverheadunmetered.
+Two pre-window Supervisor source/command repairs and bad testselector failure
+preserved; no per-round human science instruction. B0 incumbent/B0B1pool/
+all4archive unchanged. Existing scorer/data/runner and closed history frozen.
+Concrete next work: prospectively configurable native-review completion wait
+within batch deadline, not another evaluation redesign. Cannot revive this
+failed original or call missing R/H-to-C effect complete. Decision journal
+is idle status synchronization, not native executor; no published/profit/OOS/
+co-evolution/fixed-process superiority claim.
+Independent source-only helper review registered separately; no private Train
+feedback transfer, account role call or scientific selection delegated to it.
+
+## 2026-10-07 reviewer-completion timeout child — frozen local contract
+
+Parent1db89c9; trigger actual closeout87a586a7, native120.10682s timeout
+despite schema-valid partialPASS/no terminal receipt. AuthorSupervisor at
+human "继续", H only, component bounded account-review completion wait.
+Reuse existing native stdio/once-only/grant/deadline machinery and independent
+review; no new science/literature/source acquisition. Alternatives: accepting
+partialPASS rejected(no completion); automaticretry rejected; relaxing global
+deadline rejected. Prospective explicitly authorized per-role time map is the
+smallest useful change: legacy grants stay120, author<=120, reviews<=300;
+caller reads exact grant, effective wait clipped to refreshed deadline after
+metadata proof, no claim if selection closed. Bind requested/allowed wait in
+original claim; completion semantics unchanged. Observable expected benefit:
+synthetic late terminal receipt can complete within larger explicit review
+allowance; same old allowance still fails, partial/uncertain stays unusable.
+Exact production allowlist price_account_roles.py + price_independent_review.py;
+tests only matching test_price_account_roles.py/test_price_independent_review.py.
+Fixed K/data/scorer/target/folds, Mmodel/runtime, Cpredictor, Rbaseline/memory/
+selection, tools/data/fees/attempt caps; old failed grant/claims/ledger immutable.
+Matched tests: legacy/success, latecomplete vs timeout, uncertain failure,
+completed coldreplay, invalid grants and after-probe deadline/selection clip.
+Local tests/review only until fresh pending20261007-01wholebatch human reply.
+New scientific timer not opened; no account call/fit. Earn at most engineering
+L1/L2, not autonomous capacity or predictive gain. Rollback1db89c9 source only,
+never reset operational history. Root implements; source-only independent helper
+review follows frozen diff and owns its new log, no private data/role call.
+
+Structured whole-batch approval now received: call_McgTKX5H5sbgMuxk8xmOvLdi
+question0, answer "批准上述新批次", exact fresh20261007-01 scope. Reviewer300s,
+Controller/author120s,45min after preparation,2Controller+2author+6reviews,
+2attempts/8fits, serial/thread1/900s/1GiB sampled,256KiB compact private
+aggregates/history/source, signed-in gpt-6.1-sol(snapshotunknown), no raw rows,
+retry, paid provider, acquisition, DevFinal or publication. No timer/call/fit yet.
+Focused50synthetic/inert-native tests PASS4.364s. Before first test invocation,
+removed an unnecessary recursive digest mock from the new reviewer fixture;
+not a real run failure. Real stdio fixture emits complete-looking JSON before
+terminal; late terminal passes with prospective300 allowance, partial-only
+times out and blocks retry. Refreshed metadata admission and deadline tested.
+
+Source checkpoint7b7a234, fresh batch-specific reused ops022bb7c. Integrated24
+module suite420PASS45.304s; expected fixed.py negative gitstderr retained, not a
+failure. No-model opscheck27currentHEADpinsPASS;0actualcalls/fits/root/window.
+Read-only process check initially sandboxdenied ps; approved executable-name
+check found no Python supervisor/worker. Idle journal head187977d4/doc c05779fe
+verified before prospective status update. Source helperreview ongoing; no
+private artifacts or account role/scientific choices delegated. Fresh bootstrap
+hooks identical to reviewed oldones; new scope/ID/structuredconsent only, no
+renewal of oldclosedcaps. Exact source rollback parent1db89c9 retained.
+
+Independent review50f30633 PASS_CODE_ONLY7b7a234 / PASS_SOURCE_ONLY022bb7c,
+50focused tests4.668s,7exact source hashes unchanged; no blocking source defect.
+Helper no private reads/calls/fits. First journal revision command failed at
+repo cwd beforemutation (ModuleNotFoundError); correct research package cwd
+completed authorized revision0a7bf52d/doc3820320d, idlehistory preserved.
+Proceeding to exact fresh45min preparation/formal entry, no additional framework
+change, algorithm prescription, historical retry or published operation.
+
+Fresh prep source42e69bc, actual --prepare PASS27pins/51643renderedControllerbytes,
+0accountcalls/fits. Clock19:56:13–20:41:13UTC/cutoff20:36:13, fixed45min.
+Grant4c253535/launch6ef1fc44/seedafafce2b at permanent fresh20261007-01root.
+Formal command from research/market_rsi:
+`env PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m supervisor_harness.run_price_discovery --batch-config '/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-price-connected-pilot-20261007-01/launch.json' --initial-feedback '/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-price-connected-pilot-20261007-01/initial-feedback.json'`
+Actual session89060, native no-environment metadata acknowledgement PASS/no turn,
+R/H baselinehooks PASS; first independent inputreview admitted19:56:43.041216
+requested/allowed/effective300s. No initialC/author/attempt/fit; not completedyet.
+Oldfailedledger4fd6b6ca/oldpriceledger67b0bcb4/runneracfbfbb5/scorerd66b6c6b
+rehashed unchanged beforelaunch. No further engineering changes duringlivecall.
+
+### Fresh20261007-01 actual terminal — NOT COMPLETE
+
+First independentinputreview completed native terminal/schema/verdictPASS,
+97.62515799998s,24087input/1900output(reasoning1552included)tokens. Original
+Controller follows genuine accepted inputreview; native PID31088, one turn/start,
+reasoning items only,0agentMessage/0turncompleted/0finalusage. It timedout
+120.106299417035s, driverstage120.208745s, exact round1.controller.failed
+TimeoutExpired/no_retry. Formalentrysession89060 exited1. No newCdecision,
+author/candidate/test/sourcecommit/trainingreservation/fit/prediction/scorecard
+or secondround; no agent R/H modification or downstreameffect to report.
+Actualreview limit300 did not authorize widening fixedController120; no retry,
+partial adoption, replacement decision or quota refund attempted.
+
+Exact-process ps31088 verifiedgone; terminal source4a81782 usesexistingentry+
+pilotlocks, originalcompletedreview recovery and existingledger saver. Validated
+both original processesgone, onlyone roleclaim, exactlyone unresolvedController
+reservation/zeroattempts, oldledgers4fd6b6ca/67b0bcb4 unchanged, native0toolRPC/
+0completedturn. Preserved ledger-before-terminal, all claim/wire/failure/evidence.
+Closed20:06:47.235457UTC,634.235457s sinceactivation inclusive terminalwork;
+not extended beyond original20:41:13. Closeoutc0e14d056d48e552942fa7d543ecae70929030e4a9298268f279e8ddbf14368b;
+ledgerdc63bcea7ff6225387d5461b4e81f21a686fb0082ac3fe31e3ae39329eb1ec51
+closed_failed_no_retry keepscountedreserved original; no unusedcaprenewal.
+2accountoriginalsstarted/1complete, C1started0complete, author0/attempt0/
+fits0/newforecast0; knownreviewusageabove, Controller/totaltokensunknown,
+subscriptionUSDunknown, paidprovider0, helper/Supervisor overheadunmetered.
+Rbaseline actualwall.0340355s/17.334272MBsampled; H.0542845s/18.808832MB;
+these are bootstrap hooks, not autonomous capacity gain. B0/B1pool/B0best and
+fulloldarchive unchanged. No per-roundhuman science decision; user-directed
+Supervisor timeoutrepair/prepfix/sourcechecks/terminaloperations disclosed.
+Concrete remainingboundary: newconfigurableController waiting requires fresh
+prospective allowance, not relabeling this failed original or redesigningscoring.
+
+## 2026-10-07 complete call-chain wait repair — frozen local contract
+
+Parent4136a84, trigger actualcloseoutc0e14d05/Controller120.106299s with no
+agentMessage/terminal. Human "can you start fixing" authorizes local source/tests,
+NOT pending fresh02 account/data transfer/window grant. H/Supervisor engineering
+only: component grant-bound account completion wait across existing paths.
+Reuse native stdio/emptyenvironment/once-only/locks/finalreceipt, no new method,
+literature or framework. Expectedeffect: explicit future300s grants reach actual
+Controller and both authors, while all existing120s grants stay120 and elapsed
+local preparation cannot extend actual batchdeadline. No partial acceptance,
+automaticretry, caprefund, model/tool/data/scorer/authority expansion.
+Split source checkpoint A: exact price_account_roles.py/coevo_pilot_transaction.py
+and matching tests. Controller limit read from immutable account_transfer
+max_call_seconds (absentlegacy120); role limits from existing explicit map
+(absentlegacy120), strictint1..300. Refresh actual time immediately before
+process and preserve uncertain claims if deadline passes after reservation.
+Checkpoint B: exact run_price_discovery.py/test_run_price_discovery.py to pass
+approved author limit to predictor and capacity implementations; no internal
+author/scorer changes. All preflight limits validated before metadata/model.
+ProtectedK: runneracfbfbb5/scorerd66b6c6b/data/folds/closedledgers4fd6b6ca,
+67b0bcb4,dc63bcea; Mmodel/runtime, Cprediction and Rmemory/policy fixed.
+Allowlist union3production/3tests across2small commits; oldlogs/status/journal
+append-only supporting records. Local synthetic/inerttests only, thread1,
+no real Train/account calls/fits/window, no push/release. Test legacy/300/delayed
+completion/invalidgrant/after-reviewcutoff/deadlineclip/uncertain/coldreplay;
+actual official service construction and both author waits. Independentreview
+of final integrated source; nohelperprivate Train/artifact reads/science choice.
+Rollbacksource4136a84 only, never consumed originals. Current pendingfresh02
+approval remains needed before runtime300 activation/new model calls. At most
+engineeringL1/L2; cannot claim live closure or autonomous R/H improvement.
+
+CheckpointA focused58synthetic/inerttests PASS1.893s (first57PASS1.840s before
+adding post-reviewcutoff regression). Two production modules24changedlines,
+matchingtests only; Controller allowance bound in originalclaim and timeout.json.
+No newwindow/root/grant/model/Train, old120defaults and consumedhistory unchanged.
+Command pinnedPython/thread1 `-B -m unittest
+supervisor_harness.test_price_account_roles
+supervisor_harness.test_coevo_pilot_transaction -q` from canonicalresearchcwd.
+Virtual180scompletion proves300 reachesControllertransport; realinertstdio
+author300 waitsfor terminal receipt and replayswithoutnewcalls. Cutoff/deadline
+failures preserveexpectedpreclaimorchargedreserved outcomes, no refund/retry.

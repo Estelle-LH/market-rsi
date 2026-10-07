@@ -1,3 +1,75 @@
+# Current Market RSI decision — 2026-10-07 fresh connected pilot NOT COMPLETE
+
+Actual fresh20261007-01 terminal closed20:06:47.235457UTC,634.235457s from
+19:56:13activation; original20:36:13cutoff/20:41:13deadline not extended.
+First genuine independent inputreview PASS with completed native receipt,
+97.625158s,24087input/1900output tokens(reasoning1552included). Original Controller
+then timed out120.106299s before agentMessage or turn/completed; only reasoning
+items observed, no partial candidate/decision available. Exact PID31088 gone;
+entrysession89060 exit1, round1.controller.failed/TimeoutExpired/no_retry retained.
+No automatic retry/refund/reopening. Two original account calls started/one
+completed; Controller1started/0completed,author0,attempt0,fit0,prediction0.
+First blocking stage is Controller completion wait, not candidate science,
+scoring, feature evidence or implementation service. Actual Controller wait is
+still120s by unchanged authorization; native review300s repair cannot enlarge it.
+
+Permanent closeoutc0e14d056d48e552942fa7d543ecae70929030e4a9298268f279e8ddbf14368b
+at /Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-price-connected-pilot-20261007-01/closeout.json;
+ledgerdc63bcea7ff6225387d5461b4e81f21a686fb0082ac3fe31e3ae39329eb1ec51
+closed_failed_no_retry retains its counted unresolved original reservation;
+ledger-before-terminal immutable copy retained. Exact grant/launch/seed, review
+completion, Controller wire/failure/claim and hook receipts bound. Total tokens
+and subscriptionUSDunknown (Controller final usage absent), paidprovider0.
+No accepted autonomous R/H proposal, matched improvement or downstream effect.
+B0 incumbent/B0+B1pool and all old results unchanged; no new co-evolution,
+prediction/profit/OOS/process-superiority evidence. Supervisor timeout/prep/
+terminal accounting work is engineering, not autonomous R/H. New original run
+requires fresh authority; no hidden continuation using unused old caps.
+
+## Fresh pilot preparation/running snapshot — preserved below
+
+# Current Market RSI decision — 2026-10-07 fresh connected pilot RUNNING
+
+Structured human approval call_McgTKX5H5sbgMuxk8xmOvLdi question0,
+"批准上述新批次", binds fresh market-rsi-coevo-price-connected-pilot-20261007-01.
+45min after completed local preparation; 2original Controller+2author+6independent
+reviews,2attempts/8fits,serial/thread1/900s/1GiB sampled. Controller/author120s,
+reviews300s bounded by globaldeadline;256KiB compact private Train aggregates/
+history/source per signed-in gpt-6.1-sol input, serving snapshotunknown, runtime
+tools-closed verification required. No raw/per-row transfer, automatic retries,
+paidprovider,newdata/literature,DevFinal,release/push/promotion. Old caps stay closed.
+
+Timeout source7b7a234 changes only prospective role waits/refreshed admission;
+legacy120 and final native receipt remain required. Focused50PASS4.364s;
+integrated420synthetic/inert testsPASS45.304s (expected missing fixed.py negative
+test stderr). Fresh reused preparer022bb7c zero-call checkPASS27committed pins.
+Independent source review50f30633 PASS_CODE_ONLY/PASS_SOURCE_ONLY; fresh clock
+19:56:13–20:41:13UTC, selectioncutoff20:36:13. Official v2 entry session89060
+running; actual native metadata policy operational_ready true, zero turns in
+preflight. Bootstrap R/H hooks ran; first input-review original admitted19:56:43
+with explicit300s effective limit. At this snapshot:1reviewstarted,0completed,
+0Controller/author/attempt/fits; no completion inferred from partial JSON.
+Permanent root /Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-price-connected-pilot-20261007-01;
+launch6ef1fc44/seedafafce2b/grant4c253535, rendered initialController51643bytes.
+No duplicate Python supervisor/worker existed at preflight. No deadline extension.
+Plan: genuine Controller chooses one small research R or H change and matched
+test; actual reviewed feedback/version output feeds next price candidate.
+Frozen300s price task/scorer/folds/data/B0 incumbent/B0+B1 pool and oldhistory
+unchanged. Supervisor timeout repair is engineering, NOT autonomous evolution.
+Idle legacy journal only synchronizes status; new native ledger will own quotas.
+
+## Historical connected pilot timeout — preserved unchanged below
+
+# Current Market RSI decision — 2026-10-07 connected pilot NOT COMPLETE
+
+Direct human "try now" approves the exact pending fresh market-rsi-coevo-price-connected-pilot-20261006-01 scope: 45minutes after preparation, 2Controller+2author+6independent originals,2attempts/8fits, serial/thread1/900s/1GiB sampled, <=256KiB compact private Train aggregate/history/source per signed-in gpt-6.1-sol input, tools actually closed, serving snapshot unknown. No raw transfer/retry/new acquisition/paid/DevFinal/release/push/promotion. All old caps/history stay closed.
+
+Actual fresh clock18:50:37–19:35:37UTC/cutoff19:30:37, terminal closed18:58:08.771760UTC after451.77176s, no extension. Formal v2 entry passed source/parent/configuration and real no-environment policy probe, invoked two baseline hooks, then started one genuine independent input-review original. It timed out120.10682s without native turn/completed. Streamed1363-byte PASS JSON validates its output schema, but is NOT an accepted completed verdict. Exact process11453 gone. Driver saved round1.input.failed and stopped:0Controller/0author/0attempts/0fits/0new forecasts. Ledger closed_failed_no_retry4fd6b6ca, no refund/retry, unused caps are not continuing authority.
+
+Permanent audit87a586a7: /Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-price-connected-pilot-20261006-01/closeout.json; exact launch2f298973/initial4317d2ba/grantfa9f13e4 and original failed wire/timing bound. Tokens/subscription dollars unknown (no final usage), externalpaidprovider0. B0/B1 pool and B0 incumbent/all historical results unchanged. Supervisor bootstrap/pre-window repairs are engineering, not agent-proposed R/H evolution; source-only review71a86fba/32inerttests cannot replace missing real cycle. No capacity proposal/adoption/downstream effect/prediction gain/co-evolution/process advantage. Concrete blocker: existing120s reviewer limit cuts off waiting for terminal native receipt. Any future timeout/configuration change and fresh run must be prospective, never widening/retrying this original. Authorized idle decision journal synchronizes terminal status; native ledger/locks enforce quotas, not legacy journal.
+
+## Historical October 6 price-loop delivery — preserved unchanged below
+
 # Current Market RSI decision — 2026-10-06 real two-round price-loop delivery
 
 Fresh `market-rsi-price-auto-loop-20261006-01` is CLOSED at its original two-attempt/eight-fit cap. The formal entry completed two real account-Controller-selected, automatically authored/reviewed/trained/scored candidates at 22:57:09 UTC, 25m34s after the original 22:31:35 start. Original selection cutoff 23:11:35 and deadline 23:16:35 were not extended. Two finite AI Supervisor numeric-admission repairs and restored-completion launches were required; this is not interruption-free execution. No model resampling, quota refund, uncertain retry or per-round human algorithm choice occurred.
