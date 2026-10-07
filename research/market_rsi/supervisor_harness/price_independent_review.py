@@ -421,14 +421,19 @@ class IndependentPriceReviewer:
         if capacity_result:
             packet["question"] = "Independently judge the predeclared named capacity benefit on actual matched outputs. PASS is not acceptance: benefit and compatibility must both be demonstrated. Reject unsupported claims; a valid no-benefit result is useful negative evidence, not a prediction failure. No requirement of MSE gain. Replay fixtures do not establish researcher superiority or full-driver recovery."
         if capacity_probe:
-            packet['question'] += (' Freeze an exact_evidence_match_fraction probe BEFORE execution: for each original case name, '
+            packet['question'] += (' Select benefit_probe only if the ORIGINAL expected_effect explicitly concerns factual '
+                'evidence-return correctness and this metric is applicable. Otherwise set benefit_probe=null, explain the '
+                'limitation in finding, and retain review of the original named effect on actual matched outputs. Recovery, '
+                'efficiency, selection and workflow improvements are NOT required to improve evidence accuracy. Do not '
+                'recast their proposal as an accuracy claim. For an applicable probe, freeze it BEFORE execution: for each original case name, '
                 'select context_path to factual truth already in that case, before_output_path and after_output_path '
                 'to the SAME semantic answer in actual parent and candidate outputs, respecting their possibly different representations. '
                 'Paths are lists of dictionary keys or decimal list indices. Justify applicability to the original expected_effect; '
                 'reject unrelated, author-self-attested, trivial constant or scenario-label-only truth. Do not invent truth, modify the '
                 'proposal or choose the next scientific method. A direct same-information lookup reference is a retrieval ceiling, not '
                 'proof of researcher superiority. Merely renaming a field or repackaging already accessible correct parent evidence '
-                'is not improved accuracy. If this probe cannot test the proposed effect, REJECT rather than falsely measuring it.')
+                'is not improved accuracy. Null is not proof of benefit; final independent named-effect and compatibility '
+                'review remain required. Do not invent a quantitative measure for an unsupported effect.')
         if len((json.dumps(packet, sort_keys=True, indent=2, allow_nan=False) + "\n").encode()) > t.input_limit(t.c._read(self.grant), "account_roles"):
             raise ValueError("review payload exceeds authorized input byte budget before account call")
         role_id = "price-" + stage + "-review-" + t.c._digest(packet)[:20]
@@ -442,7 +447,8 @@ class IndependentPriceReviewer:
         schema["properties"]["stage"] = {"type": "string", "const": stage}
         if capacity_probe:
             from supervisor_harness import price_capacity_trial as trial
-            schema['properties']['benefit_probe'] = trial.probe_schema(account['original_controller_response']['capacity']['expected_effect'])
+            schema['properties']['benefit_probe'] = {'anyOf': [{'type': 'null'},
+                trial.probe_schema(account['original_controller_response']['capacity']['expected_effect'])]}
             schema['required'].append('benefit_probe')
         if capacity_result:
             schema["properties"].update(benefit_observed={"type": "boolean"},
@@ -493,7 +499,7 @@ class IndependentPriceReviewer:
             verified = {name: value is True and response["compatibility_checks"][name] is True for name, value in checks.items()}
             measured = account['measurement']['benefit_measurement']
             observed = (response["benefit_observed"] and material["execution_outcome"] == "succeeded"
-                        and measured['candidate_minus_parent'] > 0)
+                        and (request['benefit_probe'] is None or measured['candidate_minus_parent'] > 0))
             receipt.update(benefit_observed=observed, reviewer_reported_benefit=response['benefit_observed'])
             accept = response["verdict"] == "PASS" and observed and all(verified.values())
             compatibility = replay.save(directory / "compatibility.json", {"binding": binding, "checks": verified,

@@ -98,6 +98,42 @@ class TrialTests(TestCase):
         self.assertFalse(receipt['benefit_observed'])
         self.assertEqual(receipt['capacity_decision'], 'reject')
 
+    def test_other_named_effect_preserves_matched_output_review_without_accuracy_gate(self):
+        # A synthetic original source review opts out before trial, with both
+        # response and receipt bound. No real model or scientific claim here.
+        source = trial.t.c._read(self.scope)
+        response = trial.t.c._read(source['original_account_call']['response_binding'])
+        response['benefit_probe'] = None; source['benefit_probe'] = None
+        source['original_account_call']['response_binding'] = self.f.f.h.write('null-probe-original', response)
+        self.scope = self.f.f.h.write('null-probe-source-review', source)
+        measured = trial.execute(self.runtime, self.prepare(), self.adapter)
+        expected, account, checks = trial.result_material(self.runtime, measured, self.f.reviewer)
+        metrics = account['measurement']['benefit_measurement']
+        self.assertEqual(metrics['status'], 'independent_named_effect_review_only')
+        self.assertIsNone(metrics['metric_name']); self.assertNotIn('candidate_minus_parent', metrics)
+        self.assertTrue(all(checks.values())); self.assertEqual(expected['execution_outcome'], 'succeeded')
+        receipt = trial.t.c._read(self.result_review(measured))
+        self.assertEqual(receipt['capacity_decision'], 'accept')
+        self.assertEqual(receipt['named_benefit_measurement'], metrics)
+
+    def test_posthoc_null_probe_cannot_evade_original_accuracy_probe(self):
+        changed = trial.t.c._read(self.scope); changed['benefit_probe'] = None
+        self.scope = self.f.f.h.write('posthoc-null-probe', changed)
+        with self.assertRaisesRegex(ValueError, 'differs from original independent source response'):
+            self.prepare()
+        self.assertIsNone(self.batch.snapshot()['micro_evolution']['pending'])
+
+    def test_null_probe_does_not_fabricate_gain_for_already_correct_parent(self):
+        cases = {name: {'truth': name} for name in trial.CASES}
+        outputs = {name + '-' + phase: {'succeeded': True, 'output': {'answer': name}}
+                   for name in trial.CASES for phase in ('before', 'after')}
+        metrics = trial.measure_probe(trial.validate_probe(None, 'bounded recovery benefit', cases), cases, outputs)
+        self.assertEqual(metrics['status'], 'independent_named_effect_review_only')
+        self.assertNotIn('parent', metrics); self.assertNotIn('candidate', metrics)
+        for malformed in (False, 0, '', [], {}):
+            with self.subTest(probe=malformed), self.assertRaises(ValueError):
+                trial.validate_probe(malformed, 'bounded recovery benefit', cases)
+
     def test_probe_missing_output_is_incorrect_and_json_types_are_distinct(self):
         cases = {name: {'truth': False} for name in trial.CASES}
         probe = {'metric_name': 'exact_evidence_match_fraction', 'expected_effect': 'synthetic evidence equality',

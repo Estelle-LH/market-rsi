@@ -19,7 +19,8 @@ class CapacityReviewTests(TestCase):
             predictor=before['components']['C'], harness=before['components']['H'], researcher=before['components']['R'],
             memory=before['memory_sha256'], runtime={'python': r.r.pin(Path('/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12')),
                 'dependencies': {}})
-        self.f.start()
+        self.f.start(replay_cases={name: {'history': [{'decision': 'REVERT', 'question': name}]}
+            for name in ('success', 'failure', 'restart', 'historical_replay')})
         ordinary = self.f.role
         def author(*args, **kwargs):
             result = ordinary(*args, **kwargs)
@@ -46,7 +47,7 @@ class CapacityReviewTests(TestCase):
             'evidence': ['Supplied source and original-bound synthetic artifact hashes'], 'research_credit': 0,
             'research_outcome': 'not_applicable', 'route_action': 'not_applicable'}
         if 'benefit_probe' in schema['properties']:
-            response['benefit_probe'] = {'metric_name': 'exact_evidence_match_fraction',
+            response['benefit_probe'] = self.probe if hasattr(self, 'probe') else {'metric_name': 'exact_evidence_match_fraction',
                 'expected_effect': packet['material']['original_controller_response']['capacity']['expected_effect'],
                 'cases': {name: {'context_path': ['history', '0', 'question'],
                     'before_output_path': ['remaining_questions', '0'], 'after_output_path': ['remaining_questions', '0']}
@@ -74,6 +75,22 @@ class CapacityReviewTests(TestCase):
         self.assertTrue(self.replay_mock.called)
         self.assertEqual(r.t._file(self.f.root / 'ledger.json')['attempts'], [])
         with self.assertRaises(FileExistsError): self.review()
+        self.assertEqual(len(self.calls), 1)
+
+    def test_null_probe_preserves_original_named_effect_review_path(self):
+        self.probe = None
+        binding = self.review(); receipt = r.t.c._read(binding)
+        self.assertTrue(receipt['passed']); self.assertIsNone(receipt['benefit_probe'])
+        original = r.t.c._read(receipt['original_account_call']['response_binding'])
+        self.assertIsNone(original['benefit_probe'])
+        self.assertIn('NOT required to improve evidence accuracy', self.calls[0][1]['question'])
+        self.assertEqual(r.t.c._read(receipt['generated_test_receipt'])['exit_code'], 0)
+
+    def test_malformed_non_null_probe_denied_before_generated_test(self):
+        self.probe = False  # anyOf is not handled by legacy validator; explicit validation is mandatory.
+        with patch.object(self.reviewer, '_tests') as tested, self.assertRaises(ValueError):
+            self.review()
+        self.assertFalse(tested.called)
         self.assertEqual(len(self.calls), 1)
 
     def test_source_test_or_original_role_drift_denied_before_independent_call(self):

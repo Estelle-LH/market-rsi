@@ -26,6 +26,9 @@ def lookup(value, path):
 
 
 def validate_probe(probe, effect, cases):
+    # Only evidence-correctness proposals opt into this narrow metric. Other
+    # named effects retain actual matched replay + independent effect review.
+    if probe is None: return None
     t.c._validate(probe, probe_schema(effect))
     if type(cases) is not dict or set(cases) != CASES:
         raise ValueError("probe requires four original supplied cases")
@@ -39,6 +42,9 @@ def validate_probe(probe, effect, cases):
 
 
 def measure_probe(probe, cases, outputs):
+    if probe is None:
+        return {'status': 'independent_named_effect_review_only', 'metric_name': None, 'probe_sha256': None,
+            'claim_boundary': 'No built-in deterministic probe for this named effect. Actual matched outputs require independent benefit review; no evidence-accuracy gain is claimed.'}
     rows = {}
     for name, paths in sorted(probe['cases'].items()):
         expected = lookup(cases[name], paths['context_path'])
@@ -53,7 +59,7 @@ def measure_probe(probe, cases, outputs):
         rows[name] = row
     before = sum(row['before_correct'] for row in rows.values()) / len(rows)
     after = sum(row['after_correct'] for row in rows.values()) / len(rows)
-    return {'metric_name': probe['metric_name'], 'probe_sha256': t.c._digest(probe),
+    return {'status': 'measured_paired_evidence_return', 'metric_name': probe['metric_name'], 'probe_sha256': t.c._digest(probe),
         'cases': rows, 'parent': before, 'candidate': after, 'candidate_minus_parent': after - before,
         'direct_lookup_reference': 1.0, 'candidate_minus_reference': after - 1.0,
         'claim_boundary': 'Supplied-case evidence return only. Direct lookup is a competent retrieval ceiling, not a research-process benchmark.'}
@@ -84,8 +90,11 @@ def prepare(runtime, implementation, static_review, reviewer, adapter):
         raise ValueError("four frozen JSON replay contexts required in original input before execution")
     before, after = account["before_identity"], account["after_identity"]
     reviewed = t.c._read(static_review)
-    probe = validate_probe(reviewed.get('benefit_probe'), cap['expected_effect'], cases)
-    if t.c._read(reviewed['original_account_call']['response_binding']).get('benefit_probe') != probe:
+    original_review = t.c._read(reviewed['original_account_call']['response_binding'])
+    if 'benefit_probe' not in reviewed or 'benefit_probe' not in original_review:
+        raise ValueError("source review must explicitly freeze a benefit probe or null")
+    probe = validate_probe(reviewed['benefit_probe'], cap['expected_effect'], cases)
+    if original_review['benefit_probe'] != probe:
         raise ValueError("benefit probe differs from original independent source response")
     state = adapter.batch.snapshot()
     if adapter._selected(state)["manifest"] != before:
@@ -179,6 +188,7 @@ def result_material(runtime, material, reviewer):
             or account["original_controller_response"] != request["decision"]
             or evidence.get("request") != material["request"] or evidence.get("binding") != request["binding"]
             or request["cases"] != original_cases or evidence.get("cases_sha256") != t.c._digest(original_cases)
+            or 'benefit_probe' not in request
             or request.get('benefit_probe') != t.c._read(request['source_review']).get('benefit_probe')
             or request["downstream_context"] != {key: original_packet[key] for key in ("feedback", "memory", "history", "pool")}
             or material["execution_outcome"] != ("succeeded" if evidence["error_type"] is None else "failed")):
