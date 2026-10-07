@@ -2431,3 +2431,26 @@ run ten developer tests and the unchanged 369-test host-permitted price suite.
 At most five minutes per test command, no live model/provider/network probes,
 Train fits, installation, push, merge or activation. Runtime is the existing
 Python 3.12.3; scientific model/data/memory manifests: N/A. Verification pending.
+
+Verified at source `6c6ba374a3a2270a47c2800ff899e15adb565fa3`:
+
+- Git blob comparison to the parent confirms exactly the six declared Python
+  deletions (396 lines) and all 1,118 retained Python files byte-identical.
+  The total changed path set equals the nine-path allowlist.
+- Both concise entry READMEs pass all 22 local-link checks. Their rewrite removes
+  238 lines of repeated historical walkthrough and adds 39 navigation lines.
+  Detailed protocols and original experiment records remain unchanged.
+- Existing Python 3.12.3, `PYTHONDONTWRITEBYTECODE=1`,
+  `python -B -m unittest discover -s tools/tests -v`: 10 tests PASS, 0.797s.
+- Same interpreter, `python -B tools/check.py --suite price`, explicit host
+  process-inspection permission: 369 tests PASS, 57.646s. The inherited deliberate
+  invalid-source fixture diagnostic is unchanged; final exit 0.
+- `git diff 202bc8c6ecbae76e879134a025c859ceda201295 --check`: PASS.
+
+Outcome: redundant leaf launchers and duplicated README prose removed from the
+isolated branch; retained core code, tests, data and experiment history intact.
+Source checkpoints: `73e52d9` README pruning, `509ebf6` broker probes,
+`e31cc35` E2B utilities, `6c6ba37` old MCP-wire launcher. Deleted content is
+recoverable from the recorded parent or earlier Git history. No push, merge,
+live run or activation; the Supervisor checkout was not edited. Next: review
+and integrate the bounded cleanup branch when the integration owner is ready.
