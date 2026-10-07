@@ -3042,3 +3042,19 @@ Recheck Supervisor tip at close and name any later work not included rather
 than chasing an active branch indefinitely. Publication and PR outcome pending
 at this planning checkpoint. Existing targeted history scan is not a complete
 confidentiality audit; full-history public disclosure was explicitly described.
+
+Frozen8dc5eb4 import completed without conflict. All five imported paths match
+that commit exactly; all Python/config/task bytes from tested811ccc4 remain
+identical except the new batch-specific preparation script. Existing Python
+3.12.3: root22tests PASS1.023s, smoke69PASS0.955s; new preparer AST-only
+compile PASS, no import or execution. Prior389price PASS61.683s applies to
+unchanged suite/executable bytes, not a fresh full-suite rerun. Staged scope and
+whitespace checks PASS; targeted key/private-key scan of newly imported files
+returns no hits (git grep exit1); no excluded artifact path imported. Repository
+metadata confirms public Estelle-LH/market-rsi/default main; no open PR exists.
+Remote main refreshed unchanged6978e08947992173fb6b29cb260fc1c4e0320618.
+
+Supervisor advanced to c9666601f2ec654a559fac4cbc4097a6d4b55215 at close.
+Preserve this first integration checkpoint, inspect the later committed diff
+before deciding a final bounded import; dirty work remains with its owner.
+No push, PR, main update or live run has occurred at this checkpoint.

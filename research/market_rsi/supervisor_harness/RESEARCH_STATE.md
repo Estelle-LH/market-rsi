@@ -1,3 +1,31 @@
+# Current Market RSI decision — 2026-10-07 fresh02 approved, exact preparation
+
+Human "try again co-evo closing loop" directly replies to the pending fresh
+market-rsi-coevo-price-connected-pilot-20261007-02 scope after bc70adf status.
+This is recorded as a direct human reply, not a structured reply or renewal of
+closed originals. Same45min after completed prep,2originalController/2author/
+6independentreviews,2attempts8fits,serial/thread1/900s/1GiB sampled, allrolewaits
+explicit<=300s clippedbydeadline. <=256KiB compact private aggregatefeedback/
+memory/history/relevantsource to signed-in gpt-6.1-sol(snapshotunknown), verified
+runtimeclosedtools; no raw/per-row egress/retries/refunds/paid/newdata/literature/
+DevFinal/release/push/promotion. Exact actual operation still independently
+reviewed, and auto-review rejection would not permit indirect workaround.
+
+Newops c08ec79 only fresh02preparer875fce4d; existing repairedpipeline9fd2f7f,
+baselineR/Hsources reused unchanged, target/folds/scorer/oldledger/pool fixed.
+Zero-call checkPASS27sourcepins. First command's missingPYTHONPATH failedimport
+beforemutations; corrected invocation, no sourcefix. UnrelatedlocalHTTPserver
+PID35698leftuntouched; no duplicateMarketRSI supervisor/trainer observed.
+Independent exactops source review underway; no newroot/grant/clock/account/
+attempt/fit/prediction yet. Once reviewPASS, use existing formalentry to obtain
+genuine firstRorHproposal/test/review then secondController from actualfeedback
+and execute pricecandidate. Controller owns choice; accepted source alone is
+not improvement, rejection remains feedback. Oneaxis pilot is not bothR/H
+improvement or matched fixed/evolving superiority. No framework redesign.
+Idleexistingjournal statusonly, nativebatchledger solequotaauthority.
+
+## Previous repair status — preserved unchanged below
+
 # Current Market RSI decision — 2026-10-07 complete call-chain repair READY, live pilot pending
 
 Integrated source9fd2f7f, split H/Supervisor checkpoints f1be520/849b842 and
