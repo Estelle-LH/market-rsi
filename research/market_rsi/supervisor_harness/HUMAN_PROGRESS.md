@@ -1,5 +1,17 @@
 # Market RSI — human progress
 
+## 2026-10-07 17:10 NY — fresh02 launch rejected before process
+
+Fresh02 preparation/checks and independent source review completed; fixed
+17:09:50–17:54:50NY window,27sourcepins,51692renderedinputbytes,0calls/fits.
+Actual formal launch was rejected beforeprocess: approval checker did not
+accept "try again co-evo" as explicit fresh-batch privatefeedback/history/source
+payload and signed-in-account destination consent. Prior approval was anotherID.
+No live process, Controller/author/review original, training or prediction ran.
+One exact combined explicit question now pending; no workaround/retry/clock
+extension or more harness work. This is authorization-blocked, not failed
+science or proven co-evolution. Existing prepared artifacts/history preserved.
+
 ## 2026-10-07 16:59 NY — complete timeout chain repaired; no new live batch
 
 - 实际阻断已按整条调用链修复，不再只修审核：Controller、预测候选实现和R/H实现都读取本批明确授权的等待时间；新授权可到300秒，旧授权仍120秒。
@@ -3058,3 +3070,19 @@ Supervisor advanced to c9666601f2ec654a559fac4cbc4097a6d4b55215 at close.
 Preserve this first integration checkpoint, inspect the later committed diff
 before deciding a final bounded import; dirty work remains with its owner.
 No push, PR, main update or live run has occurred at this checkpoint.
+
+First integration checkpointf276a57. Final bounded import of c966660 is
+documentation-only:96lines in repair log, progress and state, recording a
+pre-process launch rejection and later explicit consent in the Supervisor's
+separate experiment. Import does not initiate that experiment here or transfer
+private payload/artifact bytes. All three paths already fall within this PR's
+approved progress/status scope. Merge preserves both progress histories; no
+Python/configuration/task/test bytes changed, so fresh22/69 and unchanged-suite
+389 results above remain applicable without another rerun. Reuse is explicit.
+
+Freeze final included Supervisor tip c9666601f2ec654a559fac4cbc4097a6d4b55215
+for this draft publication. Later active-checkout commits and its unfinished
+records remain pending rather than extending this publication indefinitely.
+Final pre-push checks: whitespace, clean staged scope, exact source/state
+comparison, full PR comparison inventory, public destination and no duplicate
+PR. Push/PR outcome will be recorded separately; remote main remains untouched.

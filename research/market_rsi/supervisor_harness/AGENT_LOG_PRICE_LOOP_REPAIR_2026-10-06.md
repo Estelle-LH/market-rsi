@@ -1274,3 +1274,43 @@ Existingidlejournal prospectively synced0e7014f2/doca22ea8e4; histories/caps
 unchanged. Proceed to prepare exactnewroot then existingformalentry, no generic
 newframework work. Actualinput/operation/scientificsource/result reviews still
 performed by realindependentaccountroles under10originalcallcap.
+
+### Actual fresh02 launch rejection — zero originals, not a live scientific failure
+
+Opscheckpoint8dc5eb4; --prepare actuallycompleted21:09:50UTC at newpermanent
+root market-rsi-coevo-price-connected-pilot-20261007-02. Fixed45min deadline
+21:54:50/cutoff21:49:50, noextension.27currentcommittedpins/51692renderedbytes,
+0calls/fits. launchc6578224583912c9f47b1ffc449a6625244c6241ce9a2d64f475c7adfb41aac7,
+initialc1f93374f9db042d7fe06e1179cec448653c6342dddffdbc529cf75ece2c0b07,
+authorization96b3623903df6ad5f98460607b89356237d9b51f8a374cd2d2e5c8775188a7ad.
+Existingcapacitynative initialization and versionregistry created in prep;
+no empiricalclaim and no account-original/worker process.
+
+Exact formal command from canonicalresearchcwd with pinnedPython/thread1:
+`-B -m supervisor_harness.run_price_discovery --batch-config '/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-price-connected-pilot-20261007-02/launch.json' --initial-feedback '/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-price-connected-pilot-20261007-02/initial-feedback.json'`
+exec_command auto-review REJECTED before CreateProcess: private Train-derived
+aggregates/history/memory/source transfer to signed-in externalController needs
+explicit exactfresh payload/destination authority; human "try again co-evo"
+was insufficient, previouswholebatchgrant anotherID. Preserve Supervisor's
+directreply interpretation above; rejection supersedes operational admission.
+No rerun/workaround/indirectagent/model/tool. Inspection21:10:46UTC foundno
+role_calls/decisions/price-loop/worker, ledgeropen with0Cclaims/0attempts.
+Model/controller/author/reviewer originals0,actualfits0/newpredictions0.
+Accountsubscriptionusage not incurred by this rejected operation; Supervisor/
+source-helper cost unmetered, not totalUSD0. Paidprovider0.
+
+One exact fullscope explicitquestion sent after material rejection, same02
+preparedwindow/deadline/caps, not a per-round method approval. Await human
+reply; no repeatedquestion or invented newharnesswork. Exactconsent/operation
+must be reverified before any newlaunch. Preserve all oldledgers and current
+preparedfiles. No closed-IDreopen/capreset; no co-evolution evidence yet.
+
+Explicit structuredhuman reply now received call_e761ff73225149c6ba49c87869cd33f7
+question0, "Explicitly authorize this payload, destination and fresh batch".
+Sameprepared02/256KiB/accountmodel/toolsclosed/2C2author6review/2attempt8fits/
+300s/900s1thread1GiB and original21:54:50deadline. Supplemental permanent
+explicit-account-consent.json binds exactgrant96b36239/launchc6578224/seedc1f93374;
+preparedimmutablegrant/launch/seed/capacitynative state remainunchanged. Earlier
+rejectionbeforeprocess preserved,0claims/calls/fits. Fresh exactrealoperation
+review may now admit sameformalentry; this is newauthority evidence, not an
+indirect workaround or retry of a started original. No selection/scoring change.
