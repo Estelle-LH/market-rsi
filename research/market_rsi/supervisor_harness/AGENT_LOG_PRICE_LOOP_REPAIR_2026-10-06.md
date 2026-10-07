@@ -1352,3 +1352,21 @@ onlythisspecificopshelper to reuse existing t._recover checks, permit ONLY
 its expectedsemantic rejection, then explicitly verify onecompletedturn and
 unchangedfinalresponse; bind originalclaim/ledgerinput/authority/config/transport.
 Reviewer failure preserved; no helperexecuted beforecorrection,0newcalls/fits.
+
+Final exacthelper3968824c independent PASS_SOURCE_ONLY, checkpoint4b37bef.
+Root then actually executed once with originalcore unchanged: terminalguards
+PASS; closed02 at21:24:37.584619UTC,887.584619s window wall. closeout879406cf,
+ledger0c77f78d,2nativeoriginalscompleted/1Cchargedrejected,0acceptedC/authors/
+attempts/fits/predictions. Originalresponse/claim/caps preserved, no refund,
+resample, reopenedclock or oldledger changes. Newprompt repair starts AFTER
+terminal reconciliation so it cannot rewrite original receipt verification.
+
+Prospective prompt-only metadata disclosure added in oneproductionmodule and
+existing transactiontestmodule: exactexistingpairdigest/componentlabels/citation
+eligibility, no schema/validator/authority/scorer edits. First local80test run
+0.621s:79pass/1FAIL in newlegacybytehash assertion. Root incorrectly pinned a
+whole fixture prompt containing ephemeral temporarypath/sourcebinding hashes;
+that hash is not stable across fixture setups. Preserve this engineering test
+failure, then narrow the constant-guidance pin plus dynamicpacket/binding checks.
+No nativecall/training was launched by these tests. This is Supervisorrepair,
+not implementation of the original agent R1 or proven co-evolution.

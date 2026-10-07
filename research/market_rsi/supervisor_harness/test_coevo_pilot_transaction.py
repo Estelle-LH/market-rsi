@@ -362,5 +362,54 @@ class TypedActionTests(unittest.TestCase):
         drift = deepcopy(self.legacy); drift['action_context'] = self.packet['action_context']
         with self.assertRaisesRegex(ValueError, 'explicit v2'): p.response_schema(drift)
 
+    def prompt_metadata(self):
+        prefix = 'Capacity metadata contract: '
+        lines = [line for line in c._prompt(self.packet).splitlines() if line.startswith(prefix)]
+        self.assertEqual(len(lines), 1)
+        return json.loads(lines[0][len(prefix):])
+
+    def test_prompt_exposes_exact_existing_validator_metadata(self):
+        from data_scientist_harness import co_evolution_loop as micro
+        context = p.action_context(self.packet)
+        expected_hashes = ({item['sha256'] for item in self.packet['bindings'].values()}
+            | c._hashes(self.packet['memory']) | c._hashes(self.packet['history'])
+            | set(self.packet['provided_source_sha256']) | c._hashes(context) | c._hashes(self.packet['overhead']))
+        self.assertEqual(self.prompt_metadata(), {
+            'parent_pair_sha256': c._digest(context['identity_configuration']['pair']),
+            'components_by_axis': {axis: sorted(labels) for axis, labels in micro.MICRO_COMPONENTS.items()},
+            'eligible_evidence_sha256': sorted(expected_hashes)})
+
+    def test_copied_prompt_metadata_passes_without_relaxing_bad_metadata(self):
+        metadata = self.prompt_metadata()
+        response = self.response(self.packet)
+        response['capacity'].update(parent_pair_sha256=metadata['parent_pair_sha256'],
+            component=metadata['components_by_axis']['researcher'][0])
+        response['capacity']['evidence_used'][0]['sha256'] = metadata['eligible_evidence_sha256'][0]
+        self.assertEqual(p.validate_response(response, self.packet), response)
+        for field, value in (('parent_pair_sha256', 'f' * 64), ('component', 'arbitrary component prose')):
+            bad = deepcopy(response); bad['capacity'][field] = value
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, 'capacity parent'):
+                p.validate_response(bad, self.packet)
+
+    def test_supplied_nested_receipt_does_not_expand_citation_eligibility(self):
+        self.packet['feedback']['supplied_unlisted_receipt_sha256'] = 'f' * 64
+        self.packet['overhead']['verified_observation_sha256'] = 'd' * 64
+        hashes = self.prompt_metadata()['eligible_evidence_sha256']
+        self.assertIn('d' * 64, hashes); self.assertNotIn('f' * 64, hashes)
+        response = self.response(self.packet)
+        response['capacity']['evidence_used'][0]['sha256'] = 'd' * 64
+        self.assertEqual(p.validate_response(response, self.packet), response)
+        response['capacity']['evidence_used'][0]['sha256'] = 'f' * 64
+        with self.assertRaisesRegex(ValueError, 'capacity parent'): p.validate_response(response, self.packet)
+
+    def test_metadata_render_is_deterministic_inert_and_legacy_prompt_unchanged(self):
+        import hashlib
+        original = deepcopy(self.packet)
+        self.assertEqual(c._prompt(self.packet), c._prompt(self.packet))
+        self.assertEqual(self.packet, original)
+        self.assertEqual(hashlib.sha256(c._prompt(self.legacy).encode()).hexdigest(),
+            '0c2c011debca1904af6b4d5dd3d4de6c65586a936961ea520d13adfcaffc61b1')
+        self.assertNotIn('Capacity metadata contract:', c._prompt(self.legacy))
+
 
 if __name__ == "__main__": unittest.main()
