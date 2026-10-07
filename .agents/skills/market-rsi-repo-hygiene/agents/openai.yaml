@@ -1,0 +1,7 @@
+interface:
+  display_name: "Market RSI Repository Hygiene"
+  short_description: "Clean the repo while preserving core behavior and history"
+  default_prompt: "Use $market-rsi-repo-hygiene to plan and verify a bounded Market RSI repository cleanup."
+
+policy:
+  allow_implicit_invocation: true

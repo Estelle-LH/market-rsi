@@ -2748,3 +2748,35 @@ full price rerun needed if executable/config/task bytes remain unchanged from
 the verified `f77c129` source. No live activation, merge or remote push. Source,
 model/data/memory inputs and empirical replay: not applicable to this
 instruction-only work. Validation pending at this planning checkpoint.
+
+Skill implementation/verification follows plan checkpoint `592d25a`.
+Created one instruction-only `market-rsi-repo-hygiene` skill with concise
+frontmatter and optional UI metadata; normal implicit selection stays enabled.
+Root `AGENTS.md` and README link the skill for cleanup/refactoring tasks, while
+nested research instructions and runtime prompts remain unchanged. No copied
+policy, validation service, script scaffold or automatic cleanup task was added.
+Skill-creator influenced the narrow trigger, progressive reference to the
+existing development guide, and instruction-only design. OpenAI Docs confirmed
+the repository-local `.agents/skills` location; actual UI discovery in a new
+chat has not been tested. This skill is available to checkouts carrying this
+branch, not asserted installed in the active canonical Supervisor or globally.
+
+Existing Python3.12.3, cwd `/private/tmp/market-rsi-cleanup-IYDuCk`:
+- `python -B /Users/estelle/.codex/skills/.system/skill-creator/scripts/quick_validate.py
+  .agents/skills/market-rsi-repo-hygiene`:PASS, Skill is valid.
+- UI YAML policy/prompt/description and skill/root local link checks:PASS.
+- `python -B -m unittest discover -s tests -q`:22PASS,0.752s.
+- `python -B -m market_rsi check --suite smoke`:64PASS, no model/data/fit calls.
+- Diff against `cc11784` shows no Python, native scientific JSON/JSONL,
+  development config, task profile or nested `AGENTS.md` changes; whitespace
+  checks PASS. Prior369price regression result remains applicable to identical
+  executable/config/task bytes and was not rerun for instruction-only edits.
+
+Inspect/stage exactly the five planned files and save the result as a local
+checkpoint. No behavioral subagent evaluation was needed for this small skill;
+frontmatter validation does not establish future agent compliance or research
+improvement. No live run, release, global install, merge, push or activation.
+Use `$market-rsi-repo-hygiene` when asking an agent working in this checkout for
+repo cleanup; integrate the branch with the canonical owner before claiming the
+active Supervisor has adopted it. Instruction/runtime activation remains a
+separate integration action.
