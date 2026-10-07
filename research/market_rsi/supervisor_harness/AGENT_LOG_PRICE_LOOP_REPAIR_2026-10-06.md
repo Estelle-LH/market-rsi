@@ -606,3 +606,24 @@ branch is not yet remote, and its unpublished history contains Train-derived
 result reports and internal run/approval logs. No push, visibility change or
 history rewrite performed. Preserve the local checkpoint; clarify publication
 scope before transferring that private-derived history to a public destination.
+
+Remote source checkpoint after the user's follow-up "yes push": selected the
+recommended code-only scope, not public disclosure of private research reports.
+Public branch `codex/market-rsi-code-20261006`, commit
+`fdb36e6fb67d8e9f2bc3beedb42837fba9e735f9`, exports224Python/R source/test files
+from localb5a2e70546b9d7cde4cbbf1f01f7818f6941e9e9 and excludes578changed
+reports/logs/approval/doc paths. Its sole parent is already-public main
+6403028a39eae77536e033eef6b505294f1699bb; private local commits are NOT ancestors.
+No new JSON/JSONL/Markdown/doc/data files in the public diff. Source AST,
+credential-pattern, credential-literal and embedded-private-score scans found
+no matches; six existing blank-EOF warnings preserved to keep exact source.
+Exact source-only detached checkout:181targetedtestsPASS33.637s on pinned
+one-thread Python, covering price runner/data/scorer, author/reviewer/transport,
+formal entry, handoff, loop services and capacity replay/trial/hooks. Synthetic
+account roles and local fixtures only; no live account calls or Train fits.
+Authorized `git push --no-follow-tags origin
+refs/heads/codex/market-rsi-code-20261006:refs/heads/codex/market-rsi-code-20261006`
+succeeded; read-only `git ls-remote --heads origin` verified the exact commit.
+Main, tags, original research branch/history and unrelated dirty files unchanged.
+This source publication is not a release, live capacity acceptance, demonstrated
+co-evolution or authorization for a new scientific batch.
