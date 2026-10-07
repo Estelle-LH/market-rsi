@@ -302,6 +302,9 @@ class IndependentPriceReviewer:
         return expected, account, checks
 
     def _result(self, material):
+        if material.get("kind") == "capacity_result":
+            from supervisor_harness.price_capacity_trial import result_material
+            return result_material(self.runtime, material, self)
         choice = material["original_candidate_proposal"]
         expected = {key: material[key] for key in ("candidate_sha256", "execution_outcome", "manifest", "comparison",
             "question_digest_sha256", "source_batch_id", "source_attempt_id")}
@@ -407,10 +410,13 @@ class IndependentPriceReviewer:
         if stage not in {"input", "source", "result"}:
             raise ValueError("unknown independent review stage")
         expected, account, checks = getattr(self, "_" + stage)(material)
+        capacity_result = stage == "result" and material.get("kind") == "capacity_result"
         packet = {"schema": "market_rsi_independent_price_review_input_v1", "stage": stage,
             "question": "Independently PASS or REJECT the supplied material. Judge consistency, leakage, boundary and evidence; do not author source or choose the next candidate.",
             "trusted_checks": checks, "material": account,
             "limitations": "Repeated historical Train Discovery; no untouched OOS, executable fills/profit or researcher superiority. Research credit is evidence quality, never added to MSE. Failed execution is not scientific refutation."}
+        if capacity_result:
+            packet["question"] = "Independently judge the predeclared named capacity benefit on actual matched outputs. PASS is not acceptance: benefit and compatibility must both be demonstrated. Reject unsupported claims; a valid no-benefit result is useful negative evidence, not a prediction failure. No requirement of MSE gain. Replay fixtures do not establish researcher superiority or full-driver recovery."
         if len((json.dumps(packet, sort_keys=True, indent=2, allow_nan=False) + "\n").encode()) > t.input_limit(t.c._read(self.grant), "account_roles"):
             raise ValueError("review payload exceeds authorized input byte budget before account call")
         role_id = "price-" + stage + "-review-" + t.c._digest(packet)[:20]
@@ -422,6 +428,10 @@ class IndependentPriceReviewer:
         schema = json.loads(json.dumps(SCHEMA))
         schema["properties"]["input_sha256"] = {"type": "string", "const": t.c._digest(packet)}
         schema["properties"]["stage"] = {"type": "string", "const": stage}
+        if capacity_result:
+            schema["properties"].update(benefit_observed={"type": "boolean"},
+                compatibility_checks=t.c._object({name: {"type": "boolean"} for name in checks}))
+            schema["required"] += ["benefit_observed", "compatibility_checks"]
         call = self.role_call(stage + "_review", packet, schema, operation_id=role_id, timeout_seconds=120)
         response = call["response"]
         t.c._validate(response, schema)
@@ -433,6 +443,9 @@ class IndependentPriceReviewer:
             raise ValueError("independent verdict needs actual role identity and bounded verified metadata")
         if response["input_sha256"] != t.c._digest(packet) or response["stage"] != stage:
             raise ValueError("independent original response does not bind reviewed material")
+        if capacity_result and call["call_id"] in {account["authored_by_call_id"],
+                t.c._read(t.c._read(material["request"])["source_review"])["original_account_call"]["call_id"]}:
+            raise ValueError("capacity benefit needs a distinct original reviewer call")
         if stage != "result" and (response["research_credit"] != 0
                 or response["research_outcome"] != "not_applicable" or response["route_action"] != "not_applicable"):
             raise ValueError("input/source review cannot invent scientific research credit")
@@ -451,7 +464,30 @@ class IndependentPriceReviewer:
             "independence": "Separate original account reviewer; not candidate author self-signature"}
         if response["verdict"] == "PASS" and stage == "source":
             receipt["generated_test_receipt"] = self._tests(material, directory)
+        if capacity_result:
+            from supervisor_harness import price_capacity_replay as replay
+            request = t.c._read(material["request"]); binding = request["binding"]
+            verified = {name: value is True and response["compatibility_checks"][name] is True for name, value in checks.items()}
+            observed = response["benefit_observed"] and material["execution_outcome"] == "succeeded"
+            accept = response["verdict"] == "PASS" and observed and all(verified.values())
+            compatibility = replay.save(directory / "compatibility.json", {"binding": binding, "checks": verified,
+                "measurement": material["measurement"], "review_response": call["response_binding"]})
+            benefit = replay.save(directory / "benefit.json", {**{k: binding[k] for k in
+                ("proposal_sha256", "before_identity_sha256", "after_identity_sha256")},
+                "effect": request["decision"]["capacity"]["expected_effect"], "benefit_observed": observed,
+                "matched_outputs_sha256": compatibility["sha256"], "measurement": material["measurement"],
+                "independent_response": call["response_binding"]})
+            native_review = {"reviewer_id": t.c._read(request["source_review"])["reviewer_id"],
+                "proposal_sha256": binding["proposal_sha256"], "decision": "accept" if accept else "reject",
+                "reason": response["finding"], "tested_pair_sha256": binding["tested_pair_sha256"],
+                "anchor_pair_sha256": binding["anchor_pair_sha256"],
+                "checks": {name: {"passed": value, "evidence_sha256": compatibility["sha256"]} for name, value in verified.items()},
+                "benefit_observed": observed, "benefit_evidence_sha256": benefit["sha256"],
+                "actual_write_paths": request["decision"]["capacity"]["write_paths"]}
+            receipt["capacity_activation_review"] = replay.save(directory / "activation-review.json", {
+                "review": native_review, "evidence": {item["sha256"]: item["path"] for item in (compatibility, benefit)}})
+            receipt["capacity_decision"] = native_review["decision"]
         w.save(directory / "review.json", receipt)
-        if response["verdict"] != "PASS":
+        if response["verdict"] != "PASS" and not capacity_result:
             raise RuntimeError("independent reviewer rejected material; preserve original response without retry")
         return r.pin(directory / "review.json")

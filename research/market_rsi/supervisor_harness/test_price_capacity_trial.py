@@ -75,5 +75,55 @@ class TrialTests(TestCase):
         self.assertEqual(evidence['train_fits'], 0); self.assertEqual(len(evidence['outputs']), 2)
         self.assertEqual(self.batch.snapshot()['micro_evolution']['active_pair'], trial.cs.activation.pair(self.f.f.before))
 
+    def result_review(self, measured, *, observed=True, verdict='PASS', compatibility=True, self_sign=False):
+        ordinary = self.f.review_role
+        def role(name, packet, schema, **kwargs):
+            value = ordinary(name, packet, schema, **kwargs)
+            value['response'].update(stage='result', verdict=verdict, benefit_observed=observed,
+                compatibility_checks={name: compatibility for name in packet['trusted_checks']})
+            value['response']['finding'] = 'Synthetic reviewer control of adoption, not empirical capability benefit.'
+            if self_sign: value['call_id'] = self.f.author_result['call_id']
+            return value
+        self.f.review_transport.side_effect = role
+        return self.f.reviewer.review('result', measured)
+
+    def test_independent_acceptance_selects_version_and_actual_downstream_child_uses_it(self):
+        measured = trial.execute(self.runtime, self.prepare(), self.adapter)
+        binding = self.result_review(measured)
+        receipt = trial.t.c._read(binding); self.assertEqual(receipt['capacity_decision'], 'accept')
+        self.adapter.review(receipt['capacity_activation_review'], expected_state_sha256=self.batch.snapshot()['state_sha256'])
+        selected = self.adapter._selected(self.batch.snapshot())
+        source = self.runtime.repo / selected['entrypoints']['H']
+        downstream = trial.replay.invoke(trial.replay.pin(source), selected['manifest']['runtime']['python'],
+            {'history': [{'decision': 'REVERT', 'question': 'next actual input'}]}, self.runtime.root / 'actual-downstream',
+            seconds=2, rss_bytes=1073741824)
+        self.assertEqual(downstream['output']['remaining_questions'], ['next actual input'])
+        restored = trial.cs.activation.CapacityActivation(self.batch, source_root=self.runtime.repo,
+            registry_root=self.runtime.root / 'capacity-versions', baseline=self.f.f.before, entrypoints=self.f.f.entrypoints)
+        self.assertEqual(restored._selected(self.batch.snapshot()), selected)
+        self.assertEqual(len(self.batch.snapshot()['micro_evolution']['history']), 1)
+        with self.assertRaises(FileExistsError): self.result_review(measured)
+
+    def test_no_benefit_is_recorded_rejection_not_loop_exception_or_activation(self):
+        measured = trial.execute(self.runtime, self.prepare(), self.adapter)
+        binding = self.result_review(measured, observed=False)
+        receipt = trial.t.c._read(binding); self.assertEqual(receipt['capacity_decision'], 'reject')
+        self.adapter.review(receipt['capacity_activation_review'], expected_state_sha256=self.batch.snapshot()['state_sha256'])
+        state = self.batch.snapshot()['micro_evolution']
+        self.assertIsNone(state['pending']); self.assertEqual(state['active_pair'], trial.cs.activation.pair(self.f.f.before))
+        self.assertEqual(state['history'][0]['review']['decision'], 'reject')
+
+    def test_independent_REJECT_can_reconcile_but_cannot_adopt(self):
+        measured = trial.execute(self.runtime, self.prepare(), self.adapter)
+        receipt = trial.t.c._read(self.result_review(measured, verdict='REJECT'))
+        self.assertFalse(receipt['passed']); self.assertEqual(receipt['capacity_decision'], 'reject')
+        self.adapter.review(receipt['capacity_activation_review'], expected_state_sha256=self.batch.snapshot()['state_sha256'])
+        self.assertEqual(self.batch.snapshot()['micro_evolution']['active_pair'], trial.cs.activation.pair(self.f.f.before))
+
+    def test_author_cannot_self_sign_benefit(self):
+        measured = trial.execute(self.runtime, self.prepare(), self.adapter)
+        with self.assertRaisesRegex(ValueError, 'distinct original reviewer'):
+            self.result_review(measured, self_sign=True)
+
 
 if __name__ == '__main__': main()

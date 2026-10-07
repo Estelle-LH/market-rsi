@@ -536,3 +536,17 @@ the parent. Rejected capacity/result routing is the next bounded substep.
 Initial4PASS3.095s on pinned one-thread Python (test_price_capacity_trial);
 synthetic account roles and temporary real Git/native journal, actual pure
 Python processes; no new account originals or Train fits. Final recheck below.
+
+F3c(c), parentffcbebe: existing result reviewer now accepts capacity measurement,
+rechecks actual child/source/runtime/input/output bindings and asks a distinct
+original reviewer for the named effect and compatibility verdict. A separate
+native review/evidence envelope reuses CapacityActivation.review. No-benefit or
+REJECT records rejection without a loop exception or activation; source/benefit
+self-signatures denied. Local source tests do not supply a real independent
+model verdict. Synthetic accepted/rejected verdicts tested against the actual
+native journal, including restored selection and a subsequent real pure-Python
+child invoking the selected source. No new threshold or prediction-rule change.
+Command above with `test_price_capacity_trial test_price_independent_review`:
+25PASS10.097s. Earlier adapter/author/child regression29PASS4.728s. No account
+calls, Train fits or old-ledger changes. Formal-entry installation and quota/
+feedback handoffs remain next; this substep is not a completed live cycle.
