@@ -1147,3 +1147,11 @@ before any model/metadatacall. Preserve this snapshot before correctingfixture.
 Six actual-service nativewire paths include all-ten-call explicit300 progression
 and legacy120, negative/KEEP/knownfailure/uncertain/coldreplay. All account/worker
 scientificoutputs remain synthetic; real local pure-hook children only.
+
+Rejectedfixture snapshot849b842 retained. Corrected only disposable grant path
+to exactroot/authorization.json;23officialentrytestsPASS22.249s. A firstrerun
+command from reporoot failed modulelookup (0tests/0calls/fits); corrected by
+using canonical research package cwd, no production repair or authoritychange.
+Inert fullentry now proves both legacy120 and explicit300 across all tenrole
+calls, including2Controller/2authors/6reviewers and coldreplay with0newcalls.
+Pendinglivegrant unchanged; old120 Controller failures not retried or adopted.

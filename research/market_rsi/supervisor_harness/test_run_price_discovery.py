@@ -262,7 +262,8 @@ class EntryTests(TestCase):
             grant['account_roles'].update(max_call_seconds=300,
                 call_seconds={key: 300 for key in roles.ROLES})
             grant['account_transfer']['max_call_seconds'] = 300
-            binding = self.f.h.f.write('explicit-wait-authorization', grant)
+            # Replace only this disposable fixture's authority before any original.
+            binding = self.f.h.f.write('authorization', grant)
             config.update(authorization=binding, role_authorization=binding)
             _, longer, _ = entry.build(self.f.h.f.write('explicit-wait-construction', config))
             self.assertEqual(longer.author.__self__.timeout, 300)
