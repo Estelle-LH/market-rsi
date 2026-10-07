@@ -2553,3 +2553,34 @@ Use existing Python3.12, single numerical-library threads, no installs, live
 account calls, resident Train fits, paid providers, push, merge or activation.
 Scientific configuration, model, data and memory manifests: not applicable.
 Tests and final layout verification are pending at this planning checkpoint.
+
+Layout source checkpoint: `371216736e1b0554219ddb2da7cad4591e4a9565`, following
+plan checkpoint `eb85bde`. Seven logical files changed: root ignore policy,
+guide relocation/update, three navigation updates and two byte-identical test
+relocations. The source comparison
+`git diff --exit-code eb85bde -- ':(glob)research/market_rsi/**/*.py' tools/check.py`
+returns0: no project Python or developer runner changes. Both moved tests pass
+`cmp` against their parent Git blobs.
+Updated current navigation targets resolve; representative credentials, caches,
+raw data and generated output paths are ignored while source, docs, tests and
+the synthetic fixture task remain visible. Ignore rules do not untrack existing
+curated evidence. Staged scope and whitespace checks pass.
+
+Exact verification commands, from `/private/tmp/market-rsi-cleanup-IYDuCk`,
+using `/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python`
+(Python3.12.3), without installs:
+
+- `python -B -m unittest discover -s tests -v`: 10 PASS,0.806s.
+- `python -B tools/check.py --suite smoke`: 64 PASS,0.609s.
+- `python -B tools/check.py --suite price`: 369 PASS,58.392s, under explicit
+  host process-inspection permission; numerical-library threads capped by
+  the existing check runner. Its intentional invalid-source Git diagnostic
+  is unchanged and the suite exits0.
+
+No live model/provider calls, resident Train fits, data acquisition, source-path
+activation, push or merge. Root tests moved; existing colocated production
+regressions and all machine-bound records stay put. Runtime artifacts and the
+107-log archive remain at their existing locations. Developer layout is now
+verified locally; runner/backend/benchmarks source migration remains planned
+pending import and source-binding inventory. Integrating this branch with the
+Supervisor's newer work is a separate source review, not implied by these tests.
