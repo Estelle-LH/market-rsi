@@ -1370,3 +1370,22 @@ that hash is not stable across fixture setups. Preserve this engineering test
 failure, then narrow the constant-guidance pin plus dynamicpacket/binding checks.
 No nativecall/training was launched by these tests. This is Supervisorrepair,
 not implementation of the original agent R1 or proven co-evolution.
+
+Corrected only the unstable fixture assertion: pin the constant legacy-guidance
+prefix (unchanged in diff against4b37bef), verify actual current binding values
+and serialized packet suffix. No production behavior changed by correction.
+80focused transaction/consumer tests PASS0.601s; full inherited24module437test
+suite and independent source-only metadata review running. Journal snapshot
+d2b8d50b / decision6c0d55ef idle before this factual terminal status revision.
+One snapshot inspection omitted --snapshot and exited usage2 before mutation;
+corrected inspection then PASS. No accountcall/fit or quota change.
+
+First full24module run actually enumerated441tests,34.761s:8errors under sandbox,
+including /bin/ps PermissionError in real child RSS checks and capacity-hook
+failure cascades. Preserve this outcome rather than calling the run PASS or
+patching instrumentation to bypass it. Rerun SAME local synthetic/inert suite
+with process inspection allowed; no account call/Train fit in these fixtures.
+Earlier437 estimate was not the actual enumeration; inherited fixture reuse
+counts may overlap. Corrected fixture assertion is the only new test repair.
+An attempted log append matched "correct inspection" not "corrected" and
+apply_patch rejected with no file changes; corrected append follows here.

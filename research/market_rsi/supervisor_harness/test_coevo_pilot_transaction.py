@@ -407,9 +407,13 @@ class TypedActionTests(unittest.TestCase):
         original = deepcopy(self.packet)
         self.assertEqual(c._prompt(self.packet), c._prompt(self.packet))
         self.assertEqual(self.packet, original)
-        self.assertEqual(hashlib.sha256(c._prompt(self.legacy).encode()).hexdigest(),
-            '0c2c011debca1904af6b4d5dd3d4de6c65586a936961ea520d13adfcaffc61b1')
-        self.assertNotIn('Capacity metadata contract:', c._prompt(self.legacy))
+        legacy = c._prompt(self.legacy)
+        self.assertEqual(hashlib.sha256(legacy.split('input_sha256=', 1)[0].encode()).hexdigest(),
+            'b72863fd3e7d5d689f4102732f356ec4a428c8ae294e58f4c771e61ca031058e')
+        self.assertIn('input_sha256=' + c._digest(self.legacy)
+            + ' feedback_sha256=' + self.legacy['bindings']['feedback']['sha256'], legacy)
+        self.assertTrue(legacy.endswith(json.dumps(self.legacy, allow_nan=False)))
+        self.assertNotIn('Capacity metadata contract:', legacy)
 
 
 if __name__ == "__main__": unittest.main()
