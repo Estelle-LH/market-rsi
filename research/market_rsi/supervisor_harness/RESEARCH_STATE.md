@@ -1,3 +1,47 @@
+# Current Market RSI decision — 2026-10-07 fresh02 explicit consent received, launch
+
+Actual structured human reply request_user_input_async/call_e761ff73225149c6ba49c87869cd33f7/0:
+"Explicitly authorize this payload, destination and fresh batch" approves exact
+fresh02 compact private Train aggregate/history/memory/source/tests/request
+metadata<=256KiB to signed-in Codex gpt-6.1-sol(snapshotunknown), original
+2C/2author/6review/2attempt8fits,allrole300,serial1thread/900s/1GiB sampled,
+reviewed versioned R/H and downstream price use. Tools must be verifiedclosed;
+raw/per-row, retry, paid/external/DevFinal/publication/promotion stayclosed.
+Exact supplemental explicit-account-consent.json binds existing grant96b36239,
+launchc6578224 andinitialc1f93374 without changing those prepared files, caps or
+21:54:50UTCdeadline/cutoff21:49:50. Earlier pre-process rejection preserved.
+At consent:0originals/attempts/fits. Exact source/runtime/input admission remains
+required; launch existingformalentry, no indirect account workaround. Accepted
+live outcomes and actualsecondfeedbackuse not inferred before completion.
+
+## Pre-consent rejection — preserved unchanged below
+
+# Current Market RSI decision — 2026-10-07 fresh02 launch blocked before process
+
+Actual --prepare completed21:09:50UTC,0accountcalls/fits,27committedpins,
+renderedinput51692bytes. Prepared fixed clock21:09:50–21:54:50UTC /17:09:50–
+17:54:50NewYork; selectioncutoff21:49:50. No extension or oldIDreuse.
+Launchc6578224,initialc1f93374,grant96b36239, core9fd2f7f/ops8dc5eb4.
+Formalentry exec_command was REJECTED by auto-review beforeprocess: direct
+human "try again co-evo" was judged insufficient explicit authorization for
+private Train-derived aggregate/history/memory/source egress to signed-in
+account Controller in this fresh batch. Prior grant covered a differentID.
+Supervisor's prelaunch directreply interpretation below is preserved but does
+not override rejection. No actual runtimepolicy/modelreview/Controller/author/
+hook/training process started;0originalclaims,0attempts/0fits/newpredictions.
+Existing capacitynative initialization records are prep, not live evidence.
+
+One exact combined explicitpayload/destination question has now been sent for
+this02batch and unchanged deadline/caps. No indirect model/agent/transport
+workaround or repeatlaunch while pending. Keep local prepared source/artifacts
+and all oldclosedledgers unchanged; if approved beforecutoff, fresh exact
+consent/input/operation verification is needed before formalentry. If elapsed,
+no clockreset/reopen; savezeroresult. Do not expand harness while permission
+pending. Engineering review/tests do not substitute for a co-evolution cycle.
+Idleexistingjournal statusonly; nativeledger stillopen with0claims/0attempts.
+
+## Prelaunch interpretation — preserved, not accepted egress authority
+
 # Current Market RSI decision — 2026-10-07 fresh02 approved, exact preparation
 
 Human "try again co-evo closing loop" directly replies to the pending fresh

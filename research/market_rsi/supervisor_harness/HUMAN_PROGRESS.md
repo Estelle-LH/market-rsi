@@ -1,5 +1,17 @@
 # Market RSI — human progress
 
+## 2026-10-07 17:10 NY — fresh02 launch rejected before process
+
+Fresh02 preparation/checks and independent source review completed; fixed
+17:09:50–17:54:50NY window,27sourcepins,51692renderedinputbytes,0calls/fits.
+Actual formal launch was rejected beforeprocess: approval checker did not
+accept "try again co-evo" as explicit fresh-batch privatefeedback/history/source
+payload and signed-in-account destination consent. Prior approval was anotherID.
+No live process, Controller/author/review original, training or prediction ran.
+One exact combined explicit question now pending; no workaround/retry/clock
+extension or more harness work. This is authorization-blocked, not failed
+science or proven co-evolution. Existing prepared artifacts/history preserved.
+
 ## 2026-10-07 16:59 NY — complete timeout chain repaired; no new live batch
 
 - 实际阻断已按整条调用链修复，不再只修审核：Controller、预测候选实现和R/H实现都读取本批明确授权的等待时间；新授权可到300秒，旧授权仍120秒。
