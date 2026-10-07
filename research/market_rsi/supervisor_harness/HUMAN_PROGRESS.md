@@ -2820,3 +2820,43 @@ tool or indirect route. Preserve this status in a local documentation checkpoint
 only, open the current README locally for review, and ask the user to choose
 full-history public publication or preparation of a narrowly scoped alternative.
 Existing core, active Supervisor, remote main and local archive remain unchanged.
+
+## 2026-10-07 — Synchronize committed Supervisor work before publication
+
+User instructed pulling Supervisor changes. Local cleanup parent/rollback
+`15ab824953b00be050b4aafbc3e57c0b9ea12f27`; Supervisor branch
+`market-rsi-coevolution-checkpoint-20261001` in
+`/Users/estelle/Developer/market-rsi` currently has12new commits through
+`f1be52021a29927306b31e625532269a6b93f1fa`, relative to shared base
+`7b6da3527eb5b77c4692adc8d8051006cbf3e063`. Snapshot this exact committed tip;
+its uncommitted launch/test, registry/trajectory/H1 edits and untracked records
+remain owned by the Supervisor and will not be staged, copied or reset here.
+This is a local merge into the cleanup candidate, not a pull/merge into active
+Supervisor or remote main. Public publication remains blocked pending approval
+of the inherited research history; this sync does not grant that approval.
+
+Apply the repository-hygiene skill: merge without rewriting either history,
+inspect conflicts and retain both append-only progress sections. Preserve
+Supervisor source bytes, except independently review any collision with the
+already committed nested-fixture cleanup. Keep current archive selections and
+newer research state; restore a newly referenced record if the merge exposes
+an archive/delete conflict rather than discarding current Supervisor evidence.
+Imports are Supervisor-authored engineering, not new autonomous H/R changes.
+
+Import allowlist is the18paths changed by Supervisor since the shared base:
+seven connected-pilot capacity/preparation/closeout scripts, two new review
+logs, the updated price-loop repair log, progress/state, three native
+transaction/role/review modules and their three tests. Local edits additionally
+allow only this progress file and the repository skill's sync-before-publication
+paragraph. No data, scorer, evaluator, model/dependency, runtime permission,
+budget/ledger, archived log bytes, scientific configuration or live run changes
+are initiated here. Preserve all bound historical receipts; merged code needs
+fresh prospective bindings before a later authorized live use.
+
+Verification: exact Supervisor ancestry/source comparison, clean merge diff,
+scope/conflict checks, root22developer checks, smoke and full relevant price
+regressions with the existing Python3.12runtime. Recheck the Supervisor committed
+tip at close and report any later commits/uncommitted work not included. No live
+launch, fits, provider call, automatic repair/retry, activation, push or release.
+Save a plan checkpoint before merge and a merge/result checkpoint after actual
+verification. Tests and merge outcome pending at this planning checkpoint.
