@@ -2494,3 +2494,27 @@ calls, fitting resident Train, downloads, push, merge or activation. Numerical
 runtime: existing Python3.12.3; research model/data/memory manifests: N/A.
 Verification pending. This bulk step only relocates closed textual records;
 no operational co-evolution attribution or safety gain is claimed.
+
+Archive verification source: `08d46a11b755988fec32f005146234284f2098bc`.
+All107archived files (1,009,418bytes) and the full original index pass byte/hash
+checks; their originals are removed from this branch. All139retained index
+objects equal their original values, with49inactive entries retained in the
+archive snapshot. The retained dashboard view is unchanged (99valid entries);
+two pre-existing unavailable untracked recent logs remain unavailable, with no
+additional missing logs. Every1,118Pythonfile matches its parent Git blob.
+Exact113-path scope, all current README links and whitespace checks PASS.
+
+Existing Python3.12.3, `PYTHONDONTWRITEBYTECODE=1`,
+`python -B -m unittest discover -s tools/tests -v`: ten tests PASS,0.728s.
+Same interpreter, `python -B tools/check.py --suite price`, with explicit host
+process-inspection permission:369tests PASS,55.026s, exit0. The inherited
+deliberate invalid-source diagnostic remains expected. No full-legacy-suite or
+live research claim; no real account/provider calls, Train fits or core changes.
+
+Set the archive manifest to `archived_verified` and mirror that final manifest
+into the persistent archive. Source checkpoint8005497 freezes selection;
+08d46a1 records the move; the next local result commit records this verification.
+Original log bytes and registry remain recoverable from both the local archive
+and the pre-move Git source. Canonical Supervisor files, including its dirty
+registry and ongoing logs, are untouched. No push/merge/activation. Integration
+owner must reconcile its newer registry when adopting this cleanup branch.
