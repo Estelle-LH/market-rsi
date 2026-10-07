@@ -307,9 +307,10 @@ def call(root, input_binding, authorization_binding, review_binding, repo, *, tr
         raise ValueError("original grant and sole permanent pilot root required")
     packet = c._read(input_binding)
     schema = response_schema(packet)
+    from supervisor_harness import price_account_roles as roles
+    allowed_timeout = roles.controller_call_seconds(c._read(authorization_binding))
     if transport_contract is not None:
         import inspect
-        from supervisor_harness import price_account_roles as roles
         if (type(transport_contract) is not dict or transport_contract != roles.transport_contract()
                 or transport is None
                 or Path(inspect.getsourcefile(transport)).resolve() != Path(roles.__file__).resolve()
@@ -330,7 +331,7 @@ def call(root, input_binding, authorization_binding, review_binding, repo, *, tr
         claim = {"input_sha256": c._digest(packet), "input_binding": input_binding,
             "authorization": authorization_binding, "review": review_binding,
             "schema_sha256": c._digest(schema), "transaction_source_sha256": c.sha(Path(__file__).resolve()),
-            "cli_sha256": c.CLI_SHA, **c._identity()}
+            "cli_sha256": c.CLI_SHA, "allowed_timeout_seconds": allowed_timeout, **c._identity()}
         if configuration_binding is not None: claim["configuration_sha256"] = configuration_binding["sha256"]
         if transport_contract is not None: claim["controller_transport"] = transport_contract
         if (directory / "claim.json").exists(): return _finish(root, directory, packet, _recover(directory, packet, claim, transport_contract), batch_id=config["batch_id"])
@@ -352,9 +353,15 @@ def call(root, input_binding, authorization_binding, review_binding, repo, *, tr
         reservation = {"feedback_sha256": key, "input_sha256": c._digest(packet), "status": "reserved"}
         decisions.append(reservation); _ledger(ledger_path, ledger)
         c.save(directory / "input.json", packet); c.save(directory / "schema.json", schema); c.save(directory / "claim.json", claim)
+        c.save(directory / "timeout.json", {"allowed_seconds": allowed_timeout,
+            "effective_seconds": min(allowed_timeout, (c._time(config["deadline_utc"]) - now).total_seconds()),
+            "admitted_at_utc": now.isoformat(), "deadline_utc": config["deadline_utc"]})
         started = time.monotonic()
         try:
-            (transport or c._transport)(directory, packet, min(120., (c._time(config["deadline_utc"]) - now).total_seconds()))
+            remaining = (c._time(config["deadline_utc"]) - datetime.now(timezone.utc)).total_seconds()
+            if remaining <= 0:
+                raise TimeoutError("batch deadline reached before original Controller process")
+            (transport or c._transport)(directory, packet, min(allowed_timeout, remaining))
             result = _recover(directory, packet, claim, transport_contract)
         except BaseException as error:
             c.save(directory / "failure.json", {"error": str(error), "no_resample": True,

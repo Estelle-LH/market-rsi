@@ -21,8 +21,16 @@ DISABLED = ("shell_tool", "unified_exec", "shell_snapshot", "apps", "plugins", "
     "workspace_dependencies", "unbounded_connection_retries")
 
 
+def controller_call_seconds(grant):
+    """An absent legacy bound is120; a new explicit grant may allow up to300."""
+    value = grant.get("account_transfer", {}).get("max_call_seconds", 120)
+    if type(value) is not int or not 0 < value <= 300:
+        raise ValueError("explicit bounded Controller timeout required")
+    return value
+
+
 def call_limits(roles):
-    """Legacy120 remains exact; longer reviews need an explicit bound grant."""
+    """Legacy120 remains exact; longer role waits need an explicit bound grant."""
     maximum = roles.get("max_call_seconds")
     limits = roles.get("call_seconds")
     if limits is None and "call_seconds" not in roles:
@@ -30,8 +38,7 @@ def call_limits(roles):
             raise ValueError("legacy role timeout must remain120")
         return {role: 120 for role in ROLES}
     if (type(limits) is not dict or set(limits) != ROLES
-            or any(type(value) is not int or not 0 < value <= (120 if role == "author" else 300)
-                   for role, value in limits.items())
+            or any(type(value) is not int or not 0 < value <= 300 for value in limits.values())
             or type(maximum) is not int or maximum != max(limits.values())):
         raise ValueError("explicit bounded per-role timeouts required")
     return dict(limits)
@@ -45,6 +52,7 @@ def _grant(root, binding):
     account, roles = grant.get("account_transfer", {}), grant.get("account_roles", {})
     input_limit(grant, "account_roles")
     call_limits(roles)
+    controller_call_seconds(grant)
     caps = roles.get("caps", {})
     if (grant.get("granted") is not True or grant.get("batch_id") != root.name
             or grant.get("schema") != "market_rsi_bounded_coevo_pilot_authorization_v1"

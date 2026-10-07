@@ -1095,3 +1095,45 @@ fulloldarchive unchanged. No per-roundhuman science decision; user-directed
 Supervisor timeoutrepair/prepfix/sourcechecks/terminaloperations disclosed.
 Concrete remainingboundary: newconfigurableController waiting requires fresh
 prospective allowance, not relabeling this failed original or redesigningscoring.
+
+## 2026-10-07 complete call-chain wait repair — frozen local contract
+
+Parent4136a84, trigger actualcloseoutc0e14d05/Controller120.106299s with no
+agentMessage/terminal. Human "can you start fixing" authorizes local source/tests,
+NOT pending fresh02 account/data transfer/window grant. H/Supervisor engineering
+only: component grant-bound account completion wait across existing paths.
+Reuse native stdio/emptyenvironment/once-only/locks/finalreceipt, no new method,
+literature or framework. Expectedeffect: explicit future300s grants reach actual
+Controller and both authors, while all existing120s grants stay120 and elapsed
+local preparation cannot extend actual batchdeadline. No partial acceptance,
+automaticretry, caprefund, model/tool/data/scorer/authority expansion.
+Split source checkpoint A: exact price_account_roles.py/coevo_pilot_transaction.py
+and matching tests. Controller limit read from immutable account_transfer
+max_call_seconds (absentlegacy120); role limits from existing explicit map
+(absentlegacy120), strictint1..300. Refresh actual time immediately before
+process and preserve uncertain claims if deadline passes after reservation.
+Checkpoint B: exact run_price_discovery.py/test_run_price_discovery.py to pass
+approved author limit to predictor and capacity implementations; no internal
+author/scorer changes. All preflight limits validated before metadata/model.
+ProtectedK: runneracfbfbb5/scorerd66b6c6b/data/folds/closedledgers4fd6b6ca,
+67b0bcb4,dc63bcea; Mmodel/runtime, Cprediction and Rmemory/policy fixed.
+Allowlist union3production/3tests across2small commits; oldlogs/status/journal
+append-only supporting records. Local synthetic/inerttests only, thread1,
+no real Train/account calls/fits/window, no push/release. Test legacy/300/delayed
+completion/invalidgrant/after-reviewcutoff/deadlineclip/uncertain/coldreplay;
+actual official service construction and both author waits. Independentreview
+of final integrated source; nohelperprivate Train/artifact reads/science choice.
+Rollbacksource4136a84 only, never consumed originals. Current pendingfresh02
+approval remains needed before runtime300 activation/new model calls. At most
+engineeringL1/L2; cannot claim live closure or autonomous R/H improvement.
+
+CheckpointA focused58synthetic/inerttests PASS1.893s (first57PASS1.840s before
+adding post-reviewcutoff regression). Two production modules24changedlines,
+matchingtests only; Controller allowance bound in originalclaim and timeout.json.
+No newwindow/root/grant/model/Train, old120defaults and consumedhistory unchanged.
+Command pinnedPython/thread1 `-B -m unittest
+supervisor_harness.test_price_account_roles
+supervisor_harness.test_coevo_pilot_transaction -q` from canonicalresearchcwd.
+Virtual180scompletion proves300 reachesControllertransport; realinertstdio
+author300 waitsfor terminal receipt and replayswithoutnewcalls. Cutoff/deadline
+failures preserveexpectedpreclaimorchargedreserved outcomes, no refund/retry.

@@ -126,7 +126,7 @@ class RoleTests(unittest.TestCase):
         self.explicit_review_grant()
         valid = json.loads(json.dumps(self.grant['account_roles']))
         for value in [None, {}, {'input_review': 300},
-                      {**valid['call_seconds'], 'author': 121},
+                      {**valid['call_seconds'], 'author': 301},
                       {**valid['call_seconds'], 'source_review': 301},
                       {**valid['call_seconds'], 'input_review': True}]:
             self.grant['account_roles'] = {**valid, 'call_seconds': value}; self.bind_grant()
@@ -135,6 +135,30 @@ class RoleTests(unittest.TestCase):
         self.grant['account_roles'] = {k: v for k, v in valid.items() if k != 'call_seconds'}; self.bind_grant()
         with self.assertRaisesRegex(ValueError, 'legacy role timeout'): self.call()
         self.assertEqual(self.calls, 0); self.assertFalse((self.root / 'role_calls').exists())
+
+    def test_new_author_wait_requires_explicit_map_and_reaches_native_stdio(self):
+        with self.assertRaisesRegex(ValueError, 'bounded role timeout'):
+            self.call(timeout_seconds=300)
+        self.grant['account_roles'].update(max_call_seconds=300,
+            call_seconds={role: 300 for role in p.ROLES})
+        self.bind_grant()
+        with self.native_fixture(completion_delay=.08):
+            first = self.call(timeout_seconds=300, transport=p._transport)
+        self.assertEqual(first, self.call(timeout_seconds=300))
+        self.assertEqual(first['usage'], {'input_tokens': 7, 'output_tokens': 3})
+        claim = p.c._read({'path': str(self.root/'role_calls/author/original-1/claim.json'),
+            'sha256': p.c.sha(self.root/'role_calls/author/original-1/claim.json')})
+        self.assertEqual(claim['allowed_timeout_seconds'], 300)
+
+    def test_controller_wait_exact_types_legacy_and_before_role_claim(self):
+        self.assertEqual(p.controller_call_seconds(self.grant), 120)
+        for value in (None, True, 0, -1, 301, 300., '300'):
+            self.grant['account_transfer']['max_call_seconds'] = value; self.bind_grant()
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'Controller timeout'):
+                self.call()
+        self.assertFalse((self.root/'role_calls').exists()); self.assertEqual(self.calls, 0)
+        self.grant['account_transfer']['max_call_seconds'] = 300
+        self.assertEqual(p.controller_call_seconds(self.grant), 300)
 
     def test_wait_clipped_to_deadline_after_runtime_probe(self):
         self.explicit_review_grant()

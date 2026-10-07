@@ -58,7 +58,7 @@ class PilotTests(unittest.TestCase):
 
     def transport(self, directory, packet, timeout, *, mutate=None, extra_event=None):
         self.calls += 1; response = self.response(packet)
-        self.assertLessEqual(timeout, 120)
+        self.assertLessEqual(timeout, self.authorization['account_transfer'].get('max_call_seconds', 120))
         if mutate: mutate(response)
         c.save(directory / "process.json", {"pid": 123, "command": c._command(directory),
             "cli_sha256": c.CLI_SHA, "input_sha256": c._digest(packet), **c._identity()})
@@ -106,6 +106,76 @@ class PilotTests(unittest.TestCase):
         with self.assertRaises(KeyboardInterrupt): self.call(interrupted)
         with self.assertRaises(FileNotFoundError): self.call()
         self.assertEqual(self.calls, 1)
+
+    def prospective_wait(self, value=300):
+        self.authorization['account_transfer']['max_call_seconds'] = value
+        self.authorization_binding = self.write('authorization', self.authorization)
+        self.packet['authority'] = self.authorization
+        self.rebind()
+
+    def test_explicit_controller_wait_reaches_transport_and_cold_replay(self):
+        self.prospective_wait(); waits = []
+        def late(directory, packet, timeout):
+            waits.append(timeout)
+            if timeout < 180:
+                raise TimeoutError('Virtual late completion, not actual model latency')
+            self.transport(directory, packet, timeout)
+        first = self.call(late)
+        self.assertEqual(waits, [300]); self.assertEqual(self.call(), first)
+        self.assertEqual(self.calls, 1)
+        directory = next((self.root/'decisions').iterdir())
+        self.assertEqual(p._file(directory/'claim.json')['allowed_timeout_seconds'], 300)
+        self.assertEqual(p._file(directory/'timeout.json')['allowed_seconds'], 300)
+
+    def test_invalid_controller_wait_rejected_before_original_claim(self):
+        for value in (None, True, 0, -1, 301, 300., '300'):
+            self.prospective_wait(value)
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'Controller timeout'):
+                self.call()
+        self.assertEqual(self.calls, 0); self.assertFalse((self.root/'decisions').exists())
+        self.assertEqual(p._file(self.root/'ledger.json')['controller_decisions'], [])
+
+    def test_controller_wait_clips_to_fresh_deadline(self):
+        self.prospective_wait(); deadline = c._time(p.TIMES['deadline_utc'])
+        cutoff = datetime.fromtimestamp(deadline.timestamp()-1, timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+        self.authorization['selection_cutoff_utc'] = cutoff
+        self.authorization_binding = self.write('authorization', self.authorization); self.rebind()
+        waits = []
+        def recorded(directory, packet, timeout):
+            waits.append(timeout); self.transport(directory, packet, timeout)
+        with patch.dict(p.TIMES, selection_cutoff_utc=cutoff), patch.object(p, 'datetime') as clock:
+            clock.now.return_value = datetime.fromtimestamp(deadline.timestamp()-40, timezone.utc)
+            self.call(recorded)
+        self.assertEqual(waits, [40])
+
+    def test_slow_review_crossing_cutoff_rejects_before_original_reservation(self):
+        actual = p._review
+        with patch.object(p, 'datetime') as clock:
+            clock.now.return_value = Clock.now()
+            def slow_review(*args, **kwargs):
+                result = actual(*args, **kwargs)
+                clock.now.return_value = c._time(p.TIMES['selection_cutoff_utc'])
+                return result
+            with patch.object(p, '_review', side_effect=slow_review), \
+                    self.assertRaisesRegex(ValueError, 'selection window closed'):
+                self.call()
+        self.assertEqual(self.calls, 0)
+        self.assertEqual(p._file(self.root/'ledger.json')['controller_decisions'], [])
+        self.assertFalse((self.root/'decisions').exists())
+
+    def test_deadline_crossed_after_claim_stays_reserved_without_process_or_retry(self):
+        self.prospective_wait(); deadline = c._time(p.TIMES['deadline_utc'])
+        cutoff = datetime.fromtimestamp(deadline.timestamp()-1, timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+        self.authorization['selection_cutoff_utc'] = cutoff
+        self.authorization_binding = self.write('authorization', self.authorization); self.rebind()
+        with patch.dict(p.TIMES, selection_cutoff_utc=cutoff), patch.object(p, 'datetime') as clock:
+            clock.now.side_effect = [datetime.fromtimestamp(deadline.timestamp()-2, timezone.utc), deadline]
+            with self.assertRaisesRegex(TimeoutError, 'before original Controller process'):
+                self.call()
+        self.assertEqual(self.calls, 0)
+        self.assertEqual(p._file(self.root/'ledger.json')['controller_decisions'][0]['status'], 'reserved')
+        with self.assertRaises(FileNotFoundError): self.call()
+        self.assertEqual(self.calls, 0)
 
     def test_strict_r_h_fields_and_unknown_events_fail_without_second_call(self):
         with self.assertRaisesRegex(ValueError, "strict response fields"):
