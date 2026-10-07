@@ -2306,3 +2306,38 @@ selection with explicit host permission is planned to distinguish environmental
 denial from source defects; it stays within the same five-minute ceiling and
 synthetic-only scope. The original one-run test plan is amended for this measured
 environmental failure only, with no automatic retry behavior in the check tool.
+
+Host-permitted rerun of the same `tools/check.py --suite price` at source
+`e9a6d70`: 369 tests PASS, 60.544s. A deliberately invalid fixture Git source
+prints a fatal diagnostic, but its rejection test passes; process exit is 0.
+This establishes the selected current regression baseline, not the full legacy
+repository suite or live research performance. The first cleanup pass is L1
+developer verification; no runtime activation or external write occurred.
+
+### Second bounded cleanup contract — nested synthetic test-fixture lifecycle
+
+Trigger: the sandbox-denied run produced cascading role-test failures after
+earlier nested fixture setup errors. Inspection finds child cleanups registered
+after `setUp()` in ten current price-test call sites. A setup error can therefore
+leave a child's already-started patches active in later tests. Change one named
+component: nested fixture ownership. Register child `doCleanups` before calling
+its `setUp`; add synthetic failure-injection tests to measure restoration.
+
+Parent: the first-pass verification checkpoint; rollback restores that source.
+Human-directed developer-test change, not an operational R/H proposal. Exact
+allowlist: this progress file; `tools/tests/test_fixture_cleanup.py`; and these
+files under `research/market_rsi/supervisor_harness/`:
+`test_run_price_discovery.py`, `test_price_loop_services.py`,
+`test_price_loop_handoff.py`, `test_price_independent_review.py`,
+`test_price_candidate_author.py`, `test_price_capacity_services.py`,
+`test_price_capacity_review.py`, `test_price_capacity_trial.py`,
+`test_price_capacity_loop.py`. All production modules and experiment/runtime/
+data/authority identities remain protected and unchanged. No new dependencies.
+
+Expected effect: a deliberately failing child setup cannot leave its registered
+mock active after parent cleanup. Reuse standard unittest cleanup semantics and
+the existing synthetic fixtures; no new scientific method or data assumption.
+Plan: run new failure-injection tests once before the fix (expected failure),
+once after, and the unchanged 369-test host-permitted price selection once after
+the fix. Each run has a five-minute ceiling, with no live account calls or Train
+fits. Keep the pre-fix failure and post-fix results as separate local checkpoints.
