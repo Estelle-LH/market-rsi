@@ -3117,3 +3117,13 @@ this progress record beyond the existing identical tree. Verify unchanged full
 tree before result entry, main ancestry/whitespace and clean source, then push
 this merge to the PR branch and verify GitHub mergeability. This is branch
 integration, not merging/deploying main or modifying the active Supervisor.
+
+Conflict-audit plan checkpoint89ae60912dc49bdc65c3389dfe09b28f7412d9a7.
+Exact6978e08 merge opened successfully; staged and unstaged full-tree comparisons
+to that parent both exit0 before this result entry. Thus integration changes no
+source/config/test/data/document bytes except this explicit progress entry.
+Commit the two-parent merge with unchanged tested core; all prior regression
+results remain applicable, no new run or unrelated source selected. Final PR
+comparison will now use public main as an ancestor rather than their older
+common base. Earlier836file comparison remains historical, not its new count.
+Remote branch update and GitHub mergeability recheck pending; main unchanged.
