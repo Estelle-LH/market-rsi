@@ -35,9 +35,9 @@ class PriceCapacityLoop:
             raise ValueError("capacity baseline/model/runtime differs from frozen entry")
         # Existing native micro journal is a version-selection record only;
         # global ledger.json remains the sole operation/fit quota authority.
-        batch = native.ContinuousDiscoveryBatch(self.runtime.root / "price-capacity-native")
         if _test_adapter is None:
-            if not (batch.root / "state.json").exists():
+            batch = native.ContinuousDiscoveryBatch(self.runtime.root / "price-capacity-native")
+            if not batch.snapshot_path.exists():
                 grant = self.runtime.fixed_grant
                 batch.initialize(batch_id=grant["batch_id"], start_utc=grant["start_utc"], deadline_utc=grant["deadline_utc"],
                     max_attempts=grant["limits"]["candidate_attempts"], active_pool_capacity=2, learning_checkpoint_version=1,

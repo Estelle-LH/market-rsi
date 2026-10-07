@@ -560,3 +560,12 @@ also found wrong snapshot filename (`state.json` vs native `batch.json`), which
 would prevent normal restoration; preserve this failure snapshot before fixing.
 Exact writes newprice_capacity_loop/test and existing log. Official default
 entry remains oldv1; no live grant or accepted real capacity changed.
+
+F4a constructor correction second result:1PASS/1ERROR2tests1.430s. Constructor
+no longer opens a permanent-native object for an injected temporary fixture,
+and restore uses actual batch.snapshot_path. Remaining failure is substantive:
+the synthetic candidate expects history=list, while the real packet API supplies
+history=object. Four hand-chosen replay contexts alone could miss a downstream
+type error. Preserve this result; add the original real packet frame to matched
+before/after replay and author context, rather than mutate runtime history or
+weaken acceptance. This is execution compatibility, not a scientific rejection.
