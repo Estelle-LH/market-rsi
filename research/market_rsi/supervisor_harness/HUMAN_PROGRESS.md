@@ -2674,3 +2674,49 @@ AST/literal comparison confirms the5smoke/24price module lists equal parent
 allowlist. `git diff --exit-code 41bfdaf -- ':(glob)research/market_rsi/**/*.py'`
 returns0; all1,118native Python files retain their tracked bytes and paths.
 Whitespace checks pass. Save this repaired source before full regression.
+
+Verified source checkpoint: `f77c1290a9f575da539fbe0f8b9274925d870aba`.
+Plan `10a142d` -> failed candidate `52be511` -> compatibility repair `f77c129`;
+failed history is preserved, not reset. Count correction to the focused entry:
+1,115Python files are under `research/market_rsi/`;1,118was the previous total
+including developer files. All1,115native sources retain exact bytes/paths.
+
+Exact final regression commands, cwd `/private/tmp/market-rsi-cleanup-IYDuCk`,
+using `/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python`
+(Python3.12.3), no installs:
+
+- `python -B -m unittest discover -s tests -v`:22PASS,0.812s.
+- `python -B -m market_rsi check --suite smoke`:64PASS,0.550s.
+- `python -B -m market_rsi check --suite price`:369PASS,56.420s, with explicit
+  host process-inspection access required by inherited synthetic tests. Expected
+  invalid-source `fixed.py` diagnostic remains unchanged; overall exit0.
+- From `/private/tmp`, `python -B /private/tmp/market-rsi-cleanup-IYDuCk/tools/check.py
+  --suite smoke`:64PASS, proving the compatibility entry's real external-cwd
+  launch. The22root tests also check both external-cwd listing interfaces.
+
+The64smoke tests are a subset of369price tests:391distinct root+price tests,
+not455independent tests. Native source/data boundaries, scientific JSON/JSONL
+and archive manifests compare unchanged against `41bfdaf`. New navigation
+links resolve; generated artifacts/credentials stay ignored and package,
+config, profile and tests remain visible. Exact15-path scope and whitespace
+checks pass; working tree will be clean after this result checkpoint.
+
+Versioned config SHA256:
+`configs/checks.json` = `949fa15f33668fbb67fbd4c0f6e63b63e2b531c2c4b6b507b50fcab7a3f55a10`;
+`benchmarks/nfl_price/profile.json` = `7335c62e0ba090f2f92f6caa7df4de6850b4ccab3587af28fbdc012bce99e4af`.
+No model, Train-data, held-out or memory inputs were used; fixture seeds remain
+in the unchanged test sources. Test output is in this chat's command receipts;
+no separate immutable raw-output artifact/hash was saved. Source recovery and
+synthetic regressions are verified; empirical or live-wrapper replay is not.
+
+Outcome: package-first developer organization is locally verified. It relocates
+the existing check implementation instead of copying it, centralizes suite
+selection, exposes one thin CLI and indexes the current task. Existing core
+imports/source bindings/history and permanent artifact/archive roots stay put.
+No raw log/data deletion, new dependencies/services/gates, live calls/fits,
+remote push, merge, release, authority renewal or activation. This is not a
+completed migration of the core into `market_rsi/loop`, `roles`, `services` or
+`history`, nor an earnings implementation or research-performance result.
+Next integration action: review this exact local branch against Supervisor's
+newer source/dirty registry before adopting developer changes. Migrate a bound
+core component only with separate prospective bindings and replay evidence.
