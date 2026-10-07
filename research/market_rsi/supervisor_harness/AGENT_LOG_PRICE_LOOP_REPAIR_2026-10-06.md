@@ -956,5 +956,14 @@ Existing journal replays idle headd645bbf7/docb82a18cf, whereas current committe
 canonical document hashes c7112517; snapshot rejects unsynchronized bytes.
 Use the authorized prospective decision revision, preserve full historical text
 and journal chain; do not reset/reinitialize or claim native worker enforcement.
+
+Corrected preparer zero-call check PASS27sourcepins. Independent helper review
+71a86fba PASS_SOURCE_ONLY exact53791a4. Root32 inert identity/guard/formal-entry
+tests PASS19.091s, including actual-service synthetic capacity/prediction/replay/
+failure paths. First nonexistent unittest class selector failed after10passing
+checks; corrected by running the existing full module, no production repair.
+Prospective authorized decision revision retains old canonical history and
+idle permanent journal. Fresh preparation/metadata probe/live entry follow;
+helper not scientific reviewer and costs unmetered, no gain asserted.
 Independent source-only helper review registered separately; no private Train
 feedback transfer, account role call or scientific selection delegated to it.

@@ -1,3 +1,11 @@
+# Current Market RSI decision — 2026-10-07 fresh connected capacity pilot
+
+Direct human "try now" approves the exact pending fresh market-rsi-coevo-price-connected-pilot-20261006-01 scope: 45minutes after preparation, 2Controller+2author+6independent originals,2attempts/8fits, serial/thread1/900s/1GiB sampled, <=256KiB compact private Train aggregate/history/source per signed-in gpt-6.1-sol input, tools actually closed, serving snapshot unknown. No raw transfer/retry/new acquisition/paid/DevFinal/release/push/promotion. All old caps/history stay closed.
+
+Preparation uses the current unchanged production v2 entry, pure-context baseline R/H hooks, existing source/review/worker/scorer/ledger services and the real completed B3 negative feedback. Bootstrap is Supervisor engineering, not a learned capacity or a fixed-process superiority baseline. Source-only independent review71a86fba PASS;32 inert same-entry/guard/identity tests PASS19.091s. Fresh window/role/fit not yet started at this prospective synchronization. Controller owns first small R/H proposal and downstream prediction choice from actual verified feedback. The permanent decision journal synchronizes this view while idle; native pilot's sole ledger/locks enforce its execution quotas. Do not reset the historical journal or pretend it manages native workers.
+
+## Historical October 6 price-loop delivery — preserved unchanged below
+
 # Current Market RSI decision — 2026-10-06 real two-round price-loop delivery
 
 Fresh `market-rsi-price-auto-loop-20261006-01` is CLOSED at its original two-attempt/eight-fit cap. The formal entry completed two real account-Controller-selected, automatically authored/reviewed/trained/scored candidates at 22:57:09 UTC, 25m34s after the original 22:31:35 start. Original selection cutoff 23:11:35 and deadline 23:16:35 were not extended. Two finite AI Supervisor numeric-admission repairs and restored-completion launches were required; this is not interruption-free execution. No model resampling, quota refund, uncertain retry or per-round human algorithm choice occurred.
