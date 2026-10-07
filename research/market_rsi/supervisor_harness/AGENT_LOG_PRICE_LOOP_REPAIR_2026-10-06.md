@@ -443,3 +443,43 @@ child reap on sampler exception in the reused test executor (ResourceWarning pid
 bounded kill/reap on diagnostic exception, without bypassing RSS/resource evidence
 or reviewer denial. No actual account call/Train fits; no independent live verdict
 or capacity benefit/activation claim. Source not installed in official entry.
+
+## F3b.2 — original-to-source-review/test integration verified
+
+Parenta964aee retains the exact41-test failure. Correct negative fixtures so Git
+provenance subprocesses stay real and claim tampering is explicit temporary-file
+mutation. Reused executor now guarantees bounded kill/reap after diagnostic error
+and preserves candidate-test.json/stdout/stderr with null unavailable RSS before
+re-raising, without inventing PASS or a retry. Exact prior child40712 absent on
+read-only PID check. Add regression for forced sampler PermissionError and actual
+completed child cleanup, no accepted review or fit evidence. Live capacity author
+also requires the actual native tools-closed Controller contract; a historical
+unverified original cannot be used with a live role grant.
+
+Corrected focused42PASS6.807s; after native-original regression43PASS6.599s. Final
+stabilized24-module regression398PASS27.450s. Commands run from canonical research
+root; pinned ds-py312 Python3.12.3/numpy1.26.4/sklearn1.6.1, one-thread environment:
+
+```sh
+env PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest supervisor_harness.test_price_loop_services supervisor_harness.test_price_loop_handoff supervisor_harness.test_price_account_roles supervisor_harness.test_price_candidate_author supervisor_harness.test_price_independent_review supervisor_harness.test_run_price_discovery supervisor_harness.test_coevo_pilot_transaction supervisor_harness.test_coevo_pilot_configuration supervisor_harness.test_account_controller_feedback_consumer supervisor_harness.test_feedback_loop_runtime supervisor_harness.test_feedback_linked_loop supervisor_harness.test_continuous_discovery_batch supervisor_harness.test_opened_train_discovery_worker experiments.test_nfl_ingame_price_data experiments.test_nfl_ingame_price_change_train_diagnostic experiments.test_nfl_ingame_price_score supervisor_harness.test_price_capacity_source supervisor_harness.test_price_capacity_services supervisor_harness.test_price_capacity_review supervisor_harness.test_research_capacity_identity supervisor_harness.test_research_capacity_activation supervisor_harness.test_capacity_feedback_integration supervisor_harness.test_coevo_pilot_capacities data_scientist_harness.test_micro_evolution -q
+```
+
+New positive path uses saved synthetic original/temporary real Git, mocked author
+and distinct reviewer/native-role replay, then real pinned Python synthetic smoke
+with actual RSS sampling. Local test escalation was needed only for read-only
+/bin/ps; no account/private egress/network/model invocation. The intentionally
+invalid commit test emits Git fatal stderr and is an expected passing rejection,
+not a failed real experiment. Fixture artifacts are temporary/disposable, not
+scientific outputs; committed test source and exact commands provide replay.
+Source author never executes code or self-accepts. Reviewed source identity only
+changes its declared R or H axis, holds K/M/C/memory/runtime fixed and retains
+parent files. Static review/smoke does not demonstrate the named capacity benefit.
+
+Frozen price sources72999782/acfbfbb5/d66b6c6b, closed real ledger67b0bcb4 and
+authorization141da82a remain unchanged. New actual accountcalls0/Trainfits0,
+paidprovider/external/protected/release/push/promotion0; subscription/Supervisor
+cost unmetered. All failure/source checkpoints preserved. This is user-directed
+Supervisor H integration, L1 only, not agent-originated R/H improvement. No new
+live batch or larger grant. Remaining F3 step is matched parent/new benefit;
+F4 must still install the capacity service, accepted-version hooks and quota-aware
+dispatch in the formal entry. Do not call this local service path a live pilot.

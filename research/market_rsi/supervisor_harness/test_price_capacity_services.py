@@ -160,6 +160,12 @@ class CapacityAuthorTests(TestCase):
         with self.assertRaises(ValueError): self.author_once()
         self.assertFalse(self.transport.called)
 
+    def test_live_role_grant_cannot_use_legacy_unverified_Controller_original(self):
+        self.h.authorization['account_roles']['approved'] = True
+        self.start()
+        with self.assertRaisesRegex(ValueError, 'native tools-closed Controller original'): self.author_once()
+        self.assertFalse(self.transport.called)
+
     def test_larger_author_context_and_old_budget_without_call(self):
         self.start(history={'synthetic': 'x' * 40000}, limit=262144)
         self.author_once()

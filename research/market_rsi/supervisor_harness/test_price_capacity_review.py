@@ -78,7 +78,7 @@ class CapacityReviewTests(TestCase):
             elif field == 'commit': self.material['source_commit'] = 'f' * 40
             else:
                 path = self.f.root / 'role_calls/author' / self.author_result['call_id'] / 'claim.json'
-                old = path.read_text(); claim = r.t._file(path); claim['authorization'] = {}; r.w.save(path, claim)
+                old = path.read_text(); claim = r.t._file(path); claim['authorization'] = {}; path.write_text(r.json.dumps(claim))
             try:
                 with self.subTest(field=field), self.assertRaises((ValueError, r.subprocess.CalledProcessError)):
                     self.review()
@@ -91,16 +91,16 @@ class CapacityReviewTests(TestCase):
         def self_signed(*args, **kwargs):
             value = ordinary(*args, **kwargs); value['call_id'] = self.author_result['call_id']; return value
         self.review_transport.side_effect = self_signed
-        with patch.object(r.subprocess, 'Popen') as launched, self.assertRaises(ValueError): self.review()
-        self.assertFalse(launched.called)
+        with patch.object(self.reviewer, '_tests') as tested, self.assertRaises(ValueError): self.review()
+        self.assertFalse(tested.called)
 
     def test_rejection_preserved_without_test_activation_or_retry(self):
         ordinary = self.review_role
         def reject(*args, **kwargs):
             value = ordinary(*args, **kwargs); value['response']['verdict'] = 'REJECT'; return value
         self.review_transport.side_effect = reject
-        with patch.object(r.subprocess, 'Popen') as launched, self.assertRaises(RuntimeError): self.review()
-        self.assertFalse(launched.called)
+        with patch.object(self.reviewer, '_tests') as tested, self.assertRaises(RuntimeError): self.review()
+        self.assertFalse(tested.called)
         receipt = r.t._file(next((self.f.root / 'independent-reviews').glob('*/review.json')))
         self.assertFalse(receipt['passed'])
         with self.assertRaises(FileExistsError): self.review()
@@ -113,8 +113,18 @@ class CapacityReviewTests(TestCase):
             path = Path(self.material['test']['path']); path.write_text(path.read_text() + '# after verdict\n')
             return value
         self.review_transport.side_effect = mutate
-        with patch.object(r.subprocess, 'Popen') as launched, self.assertRaises(ValueError): self.review()
-        self.assertFalse(launched.called); self.assertEqual(len(self.calls), 1)
+        with patch.object(r.subprocess, 'Popen', wraps=r.subprocess.Popen) as launched, self.assertRaises(ValueError): self.review()
+        self.assertTrue(all(call.args[0][0] == 'git' for call in launched.call_args_list))
+        self.assertEqual(len(self.calls), 1)
+
+    def test_sampler_exception_reaps_exact_child_preserves_failure_not_zero_rss(self):
+        with patch.object(r.w, 'sample_rss', side_effect=PermissionError('synthetic sampler denial')):
+            with self.assertRaises(PermissionError): self.review()
+        receipt = r.t._file(next((self.f.root / 'independent-reviews').glob('*/candidate-test.json')))
+        self.assertTrue(receipt['process_reaped']); self.assertIsNone(receipt['sampled_peak_rss_bytes'])
+        self.assertEqual(receipt['diagnostic_error_type'], 'PermissionError')
+        self.assertIsNotNone(receipt['exit_code']); self.assertEqual(receipt['train_fits'], 0)
+        self.assertFalse(list((self.f.root / 'independent-reviews').glob('*/review.json')))
 
 
 if __name__ == '__main__': main()

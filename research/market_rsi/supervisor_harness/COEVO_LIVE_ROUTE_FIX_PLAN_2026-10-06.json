@@ -94,7 +94,7 @@
     {
       "id": "F3-capacity-implementation-and-benefit",
       "depends_on": ["F2-typed-actions-and-review"],
-      "status": "implementing_bounded_source_and_author_service",
+      "status": "source_author_and_independent_source_review_local_pass_matched_benefit_pending",
       "paths": ["research/market_rsi/supervisor_harness/price_capacity_services.py (new thin adapter)", "research/market_rsi/supervisor_harness/price_independent_review.py", "focused tests"],
       "change": "Reuse existing role transport for bounded author output and distinct review; test old/new reviewed R or research-tool H on the same inputs; call existing CapacityActivation.propose/review/resolve/rollback rather than build another gate or registry.",
       "acceptance": "Separate exact source review and observed benefit evidence; rejected/untested changes never activate; original proposal/source/failed output persists. Source-generated code requires reviewed bounded execution, not unrestricted resolve/import.",
@@ -111,6 +111,19 @@
         "expected_effect": "A genuine saved capacity-only original can reach text author and produce immutable source/test/provenance without a fake candidate; malformed/drift/closed/missing-original cases reject before call and failure never resamples.",
         "reuse": "Existing original transaction, role_call, AST admission approach, source identity/activation and Git checkpointing; no new scientific method or literature acquisition.",
         "rollback": "New source-revert checkpoint to parent272b695; never rewind old calls/history. Default official v1 remains off for capacities until F4."
+      },
+      "actual_result": {
+        "source_checkpoints": ["469d663", "0791027", "38de6f7", "a964aee"],
+        "source_admission": "87-line pure-context source admission; generated code is never imported by author/static checks. No OS containment claim.",
+        "author": "Saved capacity-only original -> once-only author transport -> fresh immutable source/test -> real local Git checkpoint. Exact parent/claim/input/ledger verified; live role grant requires the verified native Controller transport. Separate destination input limit, opt-in and original role quotas enforced.",
+        "review": "Existing distinct source reviewer rechecks native author completion, scope/Git/one-axis identity, rejects self-signature and runs generated smoke only after PASS. Default formal entry still v1; no accepted capacity is activated.",
+        "failures": "Initial author fixtures17PASS/2ERROR19tests1.334s, old Controller byte grant inadvertently blocked intended author test; preserved0791027. Initial source review36PASS/2FAIL/3ERROR41tests5.631s; fixture Popen scope/exclusive tamper errors and real RSS denial exposed missing child cleanup; preserveda964aee.",
+        "repairs": "Only synthetic budget and negative-test isolation corrected. Bounded child kill/reap now persists diagnostic failure with RSS unavailable(null), not zero, before re-raising. Exact reported prior child40712 was no longer present. No uncertain retry/refund.",
+        "verification": "Focused43PASS6.599s; integrated24-module price/native/worker/scorer/capacity regression398PASS27.450s on pinned one-thread Python. Real temporary Python smoke and RSS sampling permitted through local diagnostic escalation; model/native author/reviewer remain mocked in new fixtures.",
+        "protected": "Five-minute data/runner/scorer and last real closed ledger/grant SHA256 unchanged; source integration and synthetic local tests only.",
+        "account_calls": 0,
+        "resident_train_fits": 0,
+        "pending": "Predeclared matched parent/new benefit evidence, capacity proposal/acceptance through existing registry, official-entry hook dispatch and actual downstream version use. No live independent review, R/H capability improvement or completed co-evolution claim."
       }
     },
     {

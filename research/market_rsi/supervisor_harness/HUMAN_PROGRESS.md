@@ -1,5 +1,20 @@
 # Market RSI — human progress
 
+## 2026-10-06 20:00 NY — capacity implementation and source-review path connected locally
+
+R/H originals can now reach a real text-only implementation adapter, generate fresh
+versioned source/test, preserve the parent and produce a local Git checkpoint.
+Existing independent source reviewer verifies saved Controller/author provenance,
+scope and single-axis identity; self-signature and drift reject. Only after PASS
+does a bounded real Python smoke run. Author itself never imports or activates code.
+A sandbox RSS failure exposed missing child reap; cleanup/failure preservation is
+now covered. Failed snapshots0791027/a964aee retained; fixture-only fixes separate.
+Final relevant regression398PASS27.450s, with mocked account decisions/reviews and
+real temporary Python/Git. This is local engineering, not a real model-generated
+improvement. Actual accountcalls/Trainfits0; frozen price sources and old closed
+ledger/grant unchanged. Matched capacity benefit, activation and formal downstream
+hook use remain unconnected; default official entry stays on its old v1 path.
+
 ## 2026-10-06 19:41 NY — typed R/H decisions and input review wired locally
 
 Prospective v2 allows one prediction, one researcher-policy or one research-tool

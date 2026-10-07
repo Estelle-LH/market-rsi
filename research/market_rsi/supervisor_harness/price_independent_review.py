@@ -367,25 +367,38 @@ class IndependentPriceReviewer:
         with (directory / "candidate-test.stdout").open("xb") as stdout, (directory / "candidate-test.stderr").open("xb") as stderr:
             child = subprocess.Popen(command, cwd=candidate.parent, env=environment, stdout=stdout, stderr=stderr,
                 start_new_session=True)
-            peak, stopped = 0, None
-            while child.poll() is None:
-                peak = max(peak, 1024 * w.sample_rss(child))
-                if time.monotonic() - start > wall_limit or peak > self.runtime.fixed_grant["limits"]["sampled_rss_bytes"]:
+            peak, stopped, diagnostic_error = 0, None, None
+            try:
+                while child.poll() is None:
+                    peak = max(peak, 1024 * w.sample_rss(child))
+                    if time.monotonic() - start > wall_limit or peak > self.runtime.fixed_grant["limits"]["sampled_rss_bytes"]:
+                        import signal
+                        stopped = "timeout" if time.monotonic() - start > wall_limit else "sampled_rss_cap"
+                        os.killpg(child.pid, signal.SIGKILL)
+                        break
+                    if sum((directory / name).stat().st_size for name in ("candidate-test.stdout", "candidate-test.stderr")) > 1048576:
+                        import signal
+                        stopped = "output_cap"; os.killpg(child.pid, signal.SIGKILL); break
+                    time.sleep(.05)
+            except BaseException as error:
+                diagnostic_error = error
+            finally:
+                if child.poll() is None:
                     import signal
-                    stopped = "timeout" if time.monotonic() - start > wall_limit else "sampled_rss_cap"
-                    os.killpg(child.pid, signal.SIGKILL)
-                    break
-                if sum((directory / name).stat().st_size for name in ("candidate-test.stdout", "candidate-test.stderr")) > 1048576:
-                    import signal
-                    stopped = "output_cap"; os.killpg(child.pid, signal.SIGKILL); break
-                time.sleep(.05)
-            status = child.wait(timeout=5)
+                    try: os.killpg(child.pid, signal.SIGKILL)
+                    except ProcessLookupError: pass
+                status = child.wait(timeout=5)
         receipt = {"command": command, "exit_code": status, "stop_reason": stopped,
             "wall_seconds": time.monotonic() - start, "sampled_peak_rss_bytes": peak,
             "source": spec["candidate_binding"], "test": r.pin(test),
             "stdout": r.pin(directory / "candidate-test.stdout"), "stderr": r.pin(directory / "candidate-test.stderr"),
             "synthetic_inputs_only": True, "train_fits": 0, "arbitrary_code_containment_claim": False}
+        if diagnostic_error is not None:
+            receipt.update(diagnostic_error_type=type(diagnostic_error).__name__, process_reaped=True,
+                sampled_peak_rss_bytes=None)  # Unavailable sampling is not measured zero.
         w.save(directory / "candidate-test.json", receipt)
+        if diagnostic_error is not None:
+            raise diagnostic_error
         if status != 0 or stopped is not None:
             raise RuntimeError("independently reviewed generated test failed; preserve without automatic retry")
         return r.pin(directory / "candidate-test.json")

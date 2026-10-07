@@ -44,6 +44,10 @@ def original(runtime, ctx, before, entrypoints):
     if directory.resolve() != directory:
         raise ValueError("original capacity decision directory symlink")
     claim = t._file(directory / "claim.json")
+    if runtime.fixed_grant.get("account_roles", {}).get("approved") is True:
+        from supervisor_harness import price_account_roles as roles
+        if claim.get("controller_transport") != roles.transport_contract():
+            raise ValueError("actual native tools-closed Controller original required for capacity author")
     if (claim.get("authorization") != runtime.authority or claim.get("input_binding") != prepared["input"]
             or claim.get("review") != prepared["review"] or claim.get("configuration_sha256") != runtime.configuration["sha256"]
             or t._recover(directory, packet, claim, claim.get("controller_transport")) != decision):
