@@ -2382,3 +2382,52 @@ no push, merge, experiment launch or runtime activation. Next: integration owner
 reviews these source-only changes, then chooses one recovery/scheduler boundary
 for the next bounded cleanup; defer historical file moves until references and
 source commitments are audited.
+
+## 2026-10-07 — remove redundant entry material and retired leaf probes
+
+User instruction: remove redundant material while keeping core code intact.
+Parent/rollback source: `202bc8c6ecbae76e879134a025c859ceda201295`, isolated
+branch `codex/market-rsi-cleanup-20261007`. This is human-directed repository
+pruning, not an activated R/H change or a new research experiment.
+
+Read-only inventory: no byte-identical tracked files >=100 bytes. A conservative
+AST import/string-reference traversal from the price entry and capacity services
+reaches 54 modules, including several old-looking harness dependencies; preserve
+them. Six removable leaf CLI probes have zero external filename/stem/SHA256
+references in tracked source, docs or records in both this checkout and the
+canonical repo at `1db89c923c8b45b537f5b26cd3ff8f8c62786d58`. Their old network/
+SDK checks are superseded by the current account-backed price entry and retained
+local regression tests. This does not establish that all unused files are redundant.
+
+Exact allowlist: `research/market_rsi/README.md`,
+`research/market_rsi/supervisor_harness/README.md`, this progress file, and these
+six deletions under `research/market_rsi/` (pre-delete SHA256):
+
+- `audit_tools/canary_finding_aliases.py`:
+  `1d7641b718da2279b08204c942dbbd25912e40142c44573a9f4d4025db6f2b4a`
+- `audit_tools/canary_json_text_argument.py`:
+  `7936543a07f87690776f93d24a169b25c6f04c5e82bbf0dc2a9450a1bef30b03`
+- `audit_tools/canary_public_links.py`:
+  `78caa78cc65140a28ce4cb28a8a06bce8152a3b449cc48e8afcd80ef250b35e8`
+- `list_e2b_sandboxes.py`:
+  `8b454c4122fd24569577fa8ff9997cc399c7ced751f1329a2caaef046f7c9062`
+- `polymarket_runtime_probe.py`:
+  `9859962605bb700e701b88a66486486201e6afc513d2db4049c704cbf792bbae`
+- `codex_mcp_wire_canary.py`:
+  `cca90db420ee6bf3fbb3983db4868fb4bd86082216f67a291570eaef4b1c4eb3`
+
+Protected: every other Python module and test, current pipeline/worker/scorer,
+data/runtime/dependency specifications, instructions, state, authority/ledger,
+approved plans and dated immutable results/logs. Keep useful SQL-decode and
+Docker-control fixtures even though the current price entry does not import
+them. Remove the repeated historical walkthroughs from the two entry READMEs;
+their old bytes and all deleted scripts remain recoverable at the parent commit.
+
+Split checkpoints: concise README entries; three obsolete broker network probes
+(146 code lines); two retired E2B utilities (113 lines); one old GLM MCP-wire
+probe (137 lines). No retained core behavior is changed. Plan: verify exact
+deleted set and unchanged retained Python bytes, doc links and whitespace, then
+run ten developer tests and the unchanged 369-test host-permitted price suite.
+At most five minutes per test command, no live model/provider/network probes,
+Train fits, installation, push, merge or activation. Runtime is the existing
+Python 3.12.3; scientific model/data/memory manifests: N/A. Verification pending.
