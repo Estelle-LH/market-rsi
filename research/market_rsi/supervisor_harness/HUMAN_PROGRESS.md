@@ -3002,3 +3002,43 @@ this final merge/result checkpoint:15Supervisor commits are included through
 executable bytes (69smoke overlapping). Reused results are not a fresh rerun.
 No active Supervisor files or public remote were changed. This is source sync
 and engineering verification, not live co-evolution or research improvement.
+
+## 2026-10-07 — Approved full-history public draft PR to main
+
+The human replied "yes" to the explicit choice of a full Supervisor + cleanup
+PR versus a smaller cleanup-only PR, after being told that the destination is
+the public Estelle-LH/market-rsi repository and the comparison spans834files
+and unpublished Supervisor history. Treat this as approval for that full public
+branch/history and a draft PR targeting main, not a merge, release, activation
+or live experiment. Prior publication rejection remains preserved above; this
+new direct reply supplies the missing broad publication authority.
+
+Starting cleanup checkpoint0a6fdbb9ea8e521715ea0e130cda963b115b66ab.
+Supervisor now has two newer commits through
+8dc5eb4fd7667ec9dc10776fe15758a6ce992d14. Reviewed exact335-line/five-path diff:
+new fresh02 prepare_pilot.py, independent operations-review log, repair log,
+human intervention and research state. Freeze that committed tip for import;
+its dirty/untracked controller/index/trajectory/H1/researcher/reviewer records
+remain untouched in the active checkout. Repository hygiene skill supplies
+sync-before-publication and historical-source preservation. Earlier RSIBench
+origin text in legacy instructions is superseded by the user's active
+market-rsi repository identification.
+
+Allowed writes: this progress entry plus the five committed Supervisor paths
+via a history-preserving merge. Root package/config/task and native core,
+runtime/dependencies, historical artifacts/data/scorer, archive manifest and
+operational ledgers remain fixed. Verification: exact imported source and
+unchanged previously tested production/configuration bytes; AST-only compile
+of the new preparation script without importing/executing it; root developer
+tests, smoke, whitespace and staged scope, targeted credential/excluded-path
+checks for newly imported material. The earlier22developer/389price tests are
+reusable only where executable bytes remain identical; fresh results will be
+labelled separately. No new scientific source change or price run is intended.
+
+After verification, preserve source/result checkpoints, push only the cleanup
+branch (no tags/force/main update), verify its exact remote SHA, create one draft
+PR to main, attach its URL to this chat and inspect published README/PR metadata.
+Recheck Supervisor tip at close and name any later work not included rather
+than chasing an active branch indefinitely. Publication and PR outcome pending
+at this planning checkpoint. Existing targeted history scan is not a complete
+confidentiality audit; full-history public disclosure was explicitly described.
