@@ -2720,3 +2720,31 @@ completed migration of the core into `market_rsi/loop`, `roles`, `services` or
 Next integration action: review this exact local branch against Supervisor's
 newer source/dirty registry before adopting developer changes. Migrate a bound
 core component only with separate prospective bindings and replay evidence.
+
+## 2026-10-07 — Reusable repository-hygiene skill plan
+
+User requested saving the package-first cleanup as a skill or harness guidance.
+Parent/rollback `cc11784db766ee33a7dda113e4f983f47e980785`, same isolated cleanup
+branch. Use the skill-creator instructions for concise, scoped, instruction-only
+guidance. Official OpenAI skills documentation, fetched October7 from
+`https://developers.openai.com/codex/skills`, documents repository discovery
+under `.agents/skills` and explicit/implicit invocation. No user-global install,
+plugin configuration, runtime service or account call is needed.
+
+Exact allowlist: root `AGENTS.md`,
+`.agents/skills/market-rsi-repo-hygiene/SKILL.md`,
+`.agents/skills/market-rsi-repo-hygiene/agents/openai.yaml`, root `README.md`,
+and this progress file. Add one skill with a narrow cleanup/refactoring trigger;
+link it from root repository instructions rather than copying a second policy
+into runtime prompts. Read the developer guide only when the task applies.
+Preserve nested research instructions and all core sources/evidence; existing
+cleanup scope and source-binding rules remain authoritative. This is Supervisor
+maintenance guidance, not a scientific Controller policy or automatic runtime
+admission gate, and grants no cleanup/run/push authority by itself.
+
+Verify frontmatter and UI metadata, local links, exact changed paths, unchanged
+native/developer executables, root regression tests and synthetic smoke. No
+full price rerun needed if executable/config/task bytes remain unchanged from
+the verified `f77c129` source. No live activation, merge or remote push. Source,
+model/data/memory inputs and empirical replay: not applicable to this
+instruction-only work. Validation pending at this planning checkpoint.
