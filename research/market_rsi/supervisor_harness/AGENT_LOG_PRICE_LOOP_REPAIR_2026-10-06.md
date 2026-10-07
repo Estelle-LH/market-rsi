@@ -627,3 +627,19 @@ succeeded; read-only `git ls-remote --heads origin` verified the exact commit.
 Main, tags, original research branch/history and unrelated dirty files unchanged.
 This source publication is not a release, live capacity acceptance, demonstrated
 co-evolution or authorization for a new scientific batch.
+
+User requested removing `codex/` from branch names: renamed all six local
+branches and the one public branch without changing their commits/files;
+linked-worktree branch refs verified. Public source branch is now
+`market-rsi-code-20261006`; private working branch is
+`market-rsi-coevolution-checkpoint-20261001`. No history rewrite or data upload.
+User then requested a PR and merge into main. Created and attached
+https://github.com/Estelle-LH/market-rsi/pull/1, pinned to publicfdb36e6.
+GitHub reported CLEAN/MERGEABLE with no reported CI checks or review requirement;
+181localtargetedtests remain the actual verification, not remote CI evidence.
+Normal merge completed and API verified MERGED; origin/main fetched at
+6978e08947992173fb6b29cb260fc1c4e0320618. Main tree exactly equals the tested
+code-only branch; private working-history tip is not an ancestor of main.
+No branch deletion, release/tag, new model call, fit or scientific authorization.
+Private working files and unrelated dirty changes preserved. This receipt is
+local-only and is not included in the public source PR.
