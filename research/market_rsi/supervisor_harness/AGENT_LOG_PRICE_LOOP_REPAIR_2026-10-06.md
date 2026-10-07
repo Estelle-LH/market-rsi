@@ -550,3 +550,13 @@ Command above with `test_price_capacity_trial test_price_independent_review`:
 25PASS10.097s. Earlier adapter/author/child regression29PASS4.728s. No account
 calls, Train fits or old-ledger changes. Formal-entry installation and quota/
 feedback handoffs remain next; this substep is not a completed live cycle.
+
+F4a initial hook adapter checkpoint (unfinished): prospective configuration,
+selected-source validation and actual R/H outputs in next bound input. First
+`test_price_capacity_loop` run2ERROR/2 in0.755s: constructor eagerly created the
+real native adapter even when a temporary test adapter was explicitly injected.
+No child/account/Train execution in those failed tests. Read-only source review
+also found wrong snapshot filename (`state.json` vs native `batch.json`), which
+would prevent normal restoration; preserve this failure snapshot before fixing.
+Exact writes newprice_capacity_loop/test and existing log. Official default
+entry remains oldv1; no live grant or accepted real capacity changed.
