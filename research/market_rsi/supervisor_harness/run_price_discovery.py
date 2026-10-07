@@ -339,10 +339,25 @@ def preflight(batch_configuration, initial_feedback):
                "previous_feedback_sha256": r.t.c._digest(seed), "outputs": {}}
     packet = service.prepare_packet(context)
     if getattr(service, "capacity", None):
-        scope = r.t.action_context(packet)["identity_configuration"]["allowed_write_paths"]
+        from supervisor_harness import price_capacity_services as capacity_services
+        action_context = r.t.action_context(packet)
+        scope = action_context["identity_configuration"]["allowed_write_paths"]
         namespace = "research/market_rsi/research_capacities/" + grant["batch_id"] + "/"
         if any(not name.startswith(namespace) for names in scope.values() for name in names):
             raise ValueError("capacity writes must use this batch's versioned namespace before account preflight")
+        manifest_path = service.runtime.root / getattr(service, "recovery_directory", "price-loop") / "manifest.json"
+        if manifest_path.exists():
+            manifest = s.loop._read_pair(manifest_path)
+            if (manifest['handler_identity'] != service.identity() or manifest['max_rounds'] != config['max_rounds']
+                    or manifest['seed_sha256'] != r.t.c._digest(seed)):
+                raise ValueError("original replay manifest drift before account preflight")
+        for axis in (() if manifest_path.exists() else ("researcher", "harness")):
+            if axis in action_context["available_actions"]:
+                try:
+                    capacity_services.response_schema({"capacity": {"write_paths": scope[axis],
+                        "change_id": "preflight-only-no-decision"}}, service.runtime.repo)
+                except ValueError as error:
+                    raise ValueError(axis + " needs a fresh sibling source/test pair before account preflight") from error
     prompt_bytes = len(roles._prompt(packet, controller=True).encode("utf-8"))
     input_limit = r.t.input_limit(service.runtime.fixed_grant)
     if prompt_bytes > input_limit:

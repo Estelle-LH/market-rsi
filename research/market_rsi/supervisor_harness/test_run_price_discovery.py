@@ -206,6 +206,64 @@ class EntryTests(TestCase):
         self.assertEqual(self.account.preflight.call_count, 0)
         self.assertEqual(self.f.h.f.calls, self.f.calls_before)
 
+    def capacity_packet(self, paths, *, enabled=('researcher', 'harness')):
+        self.service.capacity = None  # Build an inert packet, not a Mock hook output.
+        packet = self.service.prepare_packet({'round_index': 1, 'previous_result': self.f.seed})
+        packet.update(schema='controller_price_feedback_input_v2', action_context={
+            'schema': 'price_controller_action_context_v1', 'available_actions': list(enabled),
+            'identity_configuration': deepcopy(self.f.base['identity_configuration'])})
+        packet['action_context']['identity_configuration']['allowed_write_paths'] = paths
+        self.service.capacity = Mock(config={'baseline': {'components': {}}}, identity=Mock(return_value={}))
+        return packet
+
+    def test_capacity_pair_preflight_rejects_before_runtime_original_or_reservation(self):
+        namespace = 'research/market_rsi/research_capacities/' + self.f.runtime.fixed_grant['batch_id'] + '/'
+        good = [namespace + 'capacity.py', namespace + 'test_capacity.py']
+        before = entry.r.w.sha(self.f.root / 'ledger.json')
+        bad_pairs = ([good[0]], [good[1]], [good[0], namespace + 'other/test_capacity.py'],
+                     [namespace + 'capacity.txt', good[1]])
+        for axis in ('researcher', 'harness'):
+            for bad in bad_pairs:
+                paths = {'researcher': good, 'harness': good}; paths[axis] = bad
+                packet = self.capacity_packet(paths)
+                with self.subTest(axis=axis, paths=bad), patch.object(self.service, 'prepare_packet', return_value=packet):
+                    with self.assertRaisesRegex(ValueError, axis + ' needs a fresh sibling source/test pair'):
+                        self.execute(preflight=True)
+        self.assertFalse(self.account.preflight.called)
+        self.assertEqual(self.f.h.f.calls, self.f.calls_before)
+        self.assertEqual(entry.r.w.sha(self.f.root / 'ledger.json'), before)
+
+    def test_capacity_preflight_existing_file_rejects_but_disabled_axis_is_not_required(self):
+        namespace = 'research/market_rsi/research_capacities/' + self.f.runtime.fixed_grant['batch_id'] + '/'
+        source = self.f.h.repo / namespace / 'capacity.py'
+        source.parent.mkdir(parents=True); source.write_text('# synthetic existing parent\n')
+        pair = [str(source.relative_to(self.f.h.repo)), namespace + 'test_capacity.py']
+        packet = self.capacity_packet({'researcher': pair, 'harness': [namespace + 'h.py']})
+        with patch.object(self.service, 'prepare_packet', return_value=packet):
+            with self.assertRaisesRegex(ValueError, 'researcher needs a fresh sibling source/test pair'):
+                self.execute(preflight=True)
+        fresh = [namespace + 'fresh.py', namespace + 'test_fresh.py']
+        packet = self.capacity_packet({'researcher': fresh, 'harness': [namespace + 'h.py']}, enabled=('prediction', 'researcher'))
+        with patch.object(self.service, 'prepare_packet', return_value=packet):
+            result, children = self.execute(preflight=True)
+        self.assertEqual(children, 0)
+        self.assertEqual(result['scientific_reservations'], 0)
+
+    def test_capacity_restart_manifest_drift_rejects_before_backend(self):
+        namespace = 'research/market_rsi/research_capacities/' + self.f.runtime.fixed_grant['batch_id'] + '/'
+        packet = self.capacity_packet({axis: [namespace + axis + '.py', namespace + 'test_' + axis + '.py']
+                                      for axis in ('researcher', 'harness')})
+        path = self.f.root / 'price-loop/manifest.json'; path.parent.mkdir()
+        entry.s.loop._save_pair(path, {'handler_identity': self.service.identity(), 'max_rounds': 2,
+                                     'seed_sha256': 'f' * 64})
+        before = entry.r.w.sha(self.f.root / 'ledger.json')
+        with patch.object(self.service, 'prepare_packet', return_value=packet):
+            with self.assertRaisesRegex(ValueError, 'original replay manifest drift'):
+                self.execute(preflight=True)
+        self.assertFalse(self.account.preflight.called)
+        self.assertEqual(self.f.h.f.calls, self.f.calls_before)
+        self.assertEqual(entry.r.w.sha(self.f.root / 'ledger.json'), before)
+
     def test_parent_or_native_fixed_identity_drift_precedes_original_call(self):
         original = deepcopy(self.config["base_spec"]["identity_configuration"])
         self.config["base_spec"]["identity_configuration"]["fixed_context"]["evaluation_sha256"] = "e" * 64
@@ -600,6 +658,52 @@ class ProductionEntryTests(TestCase):
             self.assertTrue(entry.run(launch, seed)['complete'])
             self.assertEqual(len(calls), count); self.assertEqual(len(workers), 1)
             self.assertEqual(entry.r.w.sha(root / 'ledger.json'), ledger_hash)
+
+
+class ControllerImplementationContractTests(TestCase):
+    """Synthetic original at the real guard; no native calls or Train access."""
+    def setUp(self):
+        from supervisor_harness.test_coevo_pilot_transaction import TypedActionTests
+        self.f = TypedActionTests(); self.f.setUp(); self.addCleanup(self.f.doCleanups)
+        self.packet = self.f.packet
+        self.pair = ['research_capacities/synthetic/capacity.py', 'research_capacities/synthetic/test_capacity.py']
+        self.packet['action_context']['identity_configuration']['allowed_write_paths']['researcher'] = self.pair
+        self.f.bind()
+        self.runtime = object.__new__(entry.PricePilotRuntime)
+        self.runtime.root, self.runtime.repo = self.f.h.root, self.f.h.f.repo
+        self.runtime.authority, self.runtime.configuration = self.f.h.authorization_binding, self.f.h.configuration_binding
+        self.context = {'outputs': {'input': {'input': self.f.h.input_binding,
+            'authorization': self.runtime.authority, 'configuration': self.runtime.configuration,
+            'review': self.f.h.review_binding}}}
+
+    def guard(self, response):
+        from supervisor_harness import price_account_roles as roles
+        with patch.object(roles, 'AccountRoles'), patch.object(entry.r.t, 'call', return_value=response), \
+                patch.object(entry.r, 'pin', side_effect=lambda path: {'path': str(path), 'sha256': 'e' * 64}):
+            return self.runtime.controller(self.context)['decision']
+
+    def test_copyable_metadata_passes_validator_real_guard_and_author_schema(self):
+        from supervisor_harness import price_capacity_services as services
+        metadata = self.f.prompt_metadata(); response = self.f.response(self.packet)
+        response['capacity']['write_paths'] = metadata['source_test_pairs_by_axis']['researcher'][0]
+        response['capacity']['evidence_used'][0]['sha256'] = metadata['required_current_feedback_sha256']
+        self.assertEqual(entry.r.t.validate_response(response, self.packet), response)
+        self.assertEqual(self.guard(response), response)
+        schema = services.response_schema(response, self.runtime.repo)
+        self.assertEqual(schema['properties']['source_path']['enum'], self.pair[:1])
+        self.assertEqual(schema['properties']['test_path']['enum'], self.pair[1:])
+
+    def test_one_file_and_noncurrent_citation_remain_rejected_by_existing_consumers(self):
+        from supervisor_harness import price_capacity_services as services
+        one_file = self.f.response(self.packet)
+        self.assertEqual(entry.r.t.validate_response(one_file, self.packet), one_file)
+        with self.assertRaisesRegex(ValueError, 'approved fresh capacity and test paths'):
+            services.response_schema(one_file, self.runtime.repo)
+        old_citation = deepcopy(one_file); old_citation['capacity']['write_paths'] = self.pair
+        old_citation['capacity']['evidence_used'][0]['sha256'] = self.packet['action_context']['identity_configuration']['fixed_context']['model_sha256']
+        self.assertEqual(entry.r.t.validate_response(old_citation, self.packet), old_citation)
+        with self.assertRaisesRegex(ValueError, 'did not cite current verified feedback'):
+            self.guard(old_citation)
 
 
 if __name__ == "__main__":
