@@ -3140,3 +3140,40 @@ browser open returned queued, so no rendered-page inspection is claimed.
 Final Supervisor committed-tip check stillc966660, all unfinished work untouched.
 Save/push this documentation-only result checkpoint; no merge to main, tag,
 release, deployment, live experiment, new data/model call or source activation.
+
+## 2026-10-07 — Merge Supervisor co-evolution fixes before PR handoff
+
+Human requests Supervisor fixes merged first, then PR to main. Starting/source
+rollback0432f05f514756d3fce633f8ee674f0eb618c70e; existing public PR2 is OPEN,
+draft/main, exact remote head matches. Main remains6978e08947992173fb6b29cb260fc1c4e0320618.
+Freeze four new committed Supervisor checkpoints through
+99c4be95af4cd4490973ddd27948fe046d67fa91. Read the complete changed source,
+tests and independent reviews. Its seven unfinished log/index/trajectory/H1
+records remain in the active checkout and must not be copied or staged.
+
+Import scope is exactly nine paths: fresh02 closeout_pilot.py; new capacity
+metadata and terminal review logs; existing repair log, human interventions,
+progress and state; account_controller_feedback_consumer.py; and existing
+test_coevo_pilot_transaction.py. The production repair exposes the existing
+pair digest/component labels/citation eligibility to v2 Controller input;
+the semantic validator and frozen K/data/scorer/permissions remain unchanged.
+This is Supervisor engineering; original failed proposal is not accepted or
+relabelled as an R/H improvement. Reuse the existing independent80-test source
+review and mechanical-merge evidence; no new scientific method/literature choice.
+
+Use repository-hygiene sync/preservation guidance. Plan checkpoint before merge,
+history-preserving merge/source checkpoint before tests, then result checkpoint.
+Verify imported production bytes exactly, preserve earlier fixture-cleanup
+changes, AST-only compile the new closeout script without import/execution,
+run focused consumer/transaction tests plus root developer/smoke/full price
+regressions in existing Python3.12.3. Local synthetic tests only; no live pilot,
+private artifacts, original response, budget/journal or model/runtime mutation.
+Scope/whitespace and incremental history credential/excluded-path checks before
+public push. The raw data, runtimes and live ledgers remain excluded.
+
+Update the same approved public PR2 (not a duplicate), keep main untouched,
+and mark ready for review only after verification. Retain main ancestry and
+both checkpoint histories, no squash/rebase/force/tags. Recheck Supervisor tip
+at close and report any later committed work separately. Fetch succeeded;
+one local tracking-ref check failed because this origin has no PR-branch ref,
+so exact gh PR head and ls-remote comparisons were used instead. Outcome pending.
