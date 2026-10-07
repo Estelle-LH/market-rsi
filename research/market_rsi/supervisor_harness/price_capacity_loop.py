@@ -17,6 +17,8 @@ t, r, w = trial.t, trial.r, trial.w
 class PriceCapacityLoop:
     def __init__(self, service, configuration, author, reviewer, *, _test_adapter=None):
         self.service, self.runtime, self.author, self.reviewer = service, service.runtime, author, reviewer
+        if configuration.get("path") != str(self.runtime.root / "capacity-configuration.json"):
+            raise ValueError("capacity configuration must be the exact batch-local file")
         self.binding, self.config = configuration, t.c._read(configuration)
         value = self.config
         if (set(value) != {"schema", "baseline", "entrypoints", "replay_cases", "hook_seconds"}
@@ -33,6 +35,16 @@ class PriceCapacityLoop:
                 or baseline["runtime"]["python"]["sha256"] != service.base["python_binding"].get(
                     "sha256", service.base["python_binding"].get("binary", {}).get("sha256"))):
             raise ValueError("capacity baseline/model/runtime differs from frozen entry")
+        entries = value["entrypoints"]
+        if (type(entries) is not dict or set(entries) != {"H", "R"}
+                or any(name not in baseline["components"][axis]["sources"] for axis, name in entries.items())):
+            raise ValueError("capacity entrypoints must belong to exact baseline sources")
+        for component in baseline["components"].values():
+            for name, token in component["sources"].items():
+                trial.cs.h._binding({"path": str(self.runtime.repo / name), "sha256": token})
+        trial.cs.h._binding(baseline["runtime"]["python"])
+        for name in entries.values():
+            trial.cs.guard.validate_source((self.runtime.repo / name).read_text())
         # Existing native micro journal is a version-selection record only;
         # global ledger.json remains the sole operation/fit quota authority.
         if _test_adapter is None:

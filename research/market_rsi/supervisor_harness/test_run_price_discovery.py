@@ -201,6 +201,65 @@ class EntryTests(TestCase):
         self.assertIn("input", output)  # Normal second-round reviewer is not bypassed.
         self.assertEqual(len(self.f.reviews), review_count + 1)
 
+    def test_actual_opt_in_capacity_services_construct_without_role_call(self):
+        from supervisor_harness import price_account_roles as roles
+        from supervisor_harness import price_candidate_author as author
+        from supervisor_harness import price_independent_review as reviewer
+        from supervisor_harness import price_capacity_services as capacity_author
+        from supervisor_harness import price_capacity_loop as capacity_loop
+        from supervisor_harness.test_price_capacity_loop import HookTests
+        self.build.stop()
+        fixture = HookTests(); fixture.setUp(); self.addCleanup(fixture.doCleanups)
+        original = fixture.f.f.f
+        root, repo = fixture.f.runtime.root, fixture.f.runtime.repo
+        grant = deepcopy(fixture.f.runtime.fixed_grant)
+        grant['account_roles'] = {'approved': True, 'capacity_changes_approved': True,
+            'destination': roles.DESTINATION, 'requested_model': entry.r.t.c.MODEL,
+            'serving_snapshot': 'unknown', 'max_input_bytes': 262144, 'max_call_seconds': 120,
+            'caps': {key: 2 for key in roles.ROLES}, 'raw_train_transfer': False,
+            'tools_enabled': False, 'automatic_retry': False}
+        authority = original.h.write('authorization', grant)
+        ledger = entry.r.t._file(root / 'ledger.json')
+        ledger['authorization_sha256'] = authority['sha256']; entry.r.t._ledger(root / 'ledger.json', ledger)
+        base = deepcopy(self.config['base_spec'])
+        base['identity_configuration'] = deepcopy(fixture.service.base['identity_configuration'])
+        base['identity_configuration']['fixed_context'].update(authority_sha256=authority['sha256'],
+            evaluation_sha256=base['plan_binding']['sha256'])
+        base['python_binding'] = fixture.hooks.config['baseline']['runtime']['python']
+        config = {**self.config, 'schema': 'price_discovery_launch_v2', 'repo': str(repo), 'root': str(root),
+            'authorization': authority, 'role_authorization': authority,
+            'configuration': original.h.configuration_binding, 'base_spec': base,
+            'source_files': {'fixed.py': entry.r.w.sha(original.fixed)},
+            'capacity_configuration': fixture.hooks.binding,
+            'service_sources': {key: entry.r.pin(module.__file__) for key, module in
+                (('author', author), ('reviewer', reviewer), ('roles', roles), ('entry', entry),
+                 ('capacity_author', capacity_author), ('capacity_loop', capacity_loop))}}
+        launch = original.h.write('capacity-entry', config)
+        with patch.object(entry.r.t, 'ROOT', root.parent / 'old-fixture'), \
+                patch.object(roles, 'native_transport', side_effect=AssertionError('no role call')):
+            _, actual, account = entry.build(launch)
+        self.assertIsInstance(actual.capacity, capacity_loop.PriceCapacityLoop)
+        self.assertIsInstance(actual.capacity.author, capacity_author.CapacityAuthor)
+        self.assertIsInstance(actual.capacity.reviewer, reviewer.IndependentPriceReviewer)
+        self.assertIn('capacity_service', actual.identity()['controller'])
+        self.assertTrue((root / 'price-capacity-native' / 'batch.json').exists())
+
+    def test_native_controller_accepts_capacity_feedback_evidence_without_dummy_candidate(self):
+        from supervisor_harness import price_account_roles as roles
+        runtime = object.__new__(entry.PricePilotRuntime)
+        runtime.root, runtime.repo = self.f.root, self.f.h.repo
+        runtime.authority, runtime.configuration = self.f.runtime.authority, self.f.runtime.configuration
+        packet = self.service.prepare_packet({'round_index': 1, 'previous_result': self.f.seed})
+        binding = self.f.h.f.write('typed-controller-input', packet)
+        response = {'candidate': None, 'capacity': {'evidence_used': [
+            {'sha256': packet['bindings']['feedback']['sha256']}]}}
+        prepared = {'input': binding, 'authorization': runtime.authority,
+            'configuration': runtime.configuration, 'review': self.f.callback_binding}
+        with patch.object(roles, 'AccountRoles'), patch.object(entry.r.t, 'call', return_value=response), \
+                patch.object(entry.r, 'pin', return_value=self.f.callback_binding):
+            returned = runtime.controller({'outputs': {'input': prepared}})
+        self.assertEqual(returned['decision'], response)
+
     def test_certain_prefix_rejects_unreviewed_or_wrong_schema_before_replay(self):
         binding = self.f.h.f.write("unreviewed-prefix", {"schema": "not-a-grant"})
         with self.assertRaisesRegex(ValueError, "exact certain-prefix"):

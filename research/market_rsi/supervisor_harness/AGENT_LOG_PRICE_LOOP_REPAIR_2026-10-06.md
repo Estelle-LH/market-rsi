@@ -679,3 +679,27 @@ change for this correction. Focused45testsPASS (elapsed below in final check).
 Typed actual-original author/source context and native selected-pair bindings
 are now covered, with substituted packet/pair rejection before calls or native
 preparation. Mocked model decisions remain engineering fixtures, not live proof.
+
+F4d contract, parent1acfef1: install the already-written capacity adapter in
+the same formal entry, opt-in launch_v2 only, and validate baseline source/
+entrypoint/configuration before native journal initialization. Exact production
+scope run_price_discovery.py and price_capacity_loop.py; existing tests/log.
+Controller evidence dispatch supports the actual selected C/R/H action, not
+an assumed non-null candidate. Expected effect: real services constructed from
+exact pinned source/configuration, v1 untouched, no synthetic production
+callbacks, no model/fit before preflight. Invalid/stale/unauthorized capacity
+configuration must fail before a native journal or account call. Old recovery
+remains v1 only. K/data/scorer/budgets/old history fixed; no new live grant or
+earnings acquisition. Two modules/~200lines ceiling; next separate component
+is operation-aware global fit admission. Prior F4c final45PASS3.466s.
+
+F4d first22tests20PASS/2ERROR7.960s. New constructor fixture inherited an outer
+mock Git reader tied to a different temporary repo; its nested author could
+not read fixed.py. New file-drift fixture used all-zero SHA, rejected by the
+existing identity validator before reaching actual filesystem validation.
+These are fixture errors, not valid science or weakened production checks.
+Preserve this source/failure checkpoint; correct test isolation/nonzero fake
+hash only. Temporary setup warning retained; no actual account call/Train fit.
+Command: pinned one-thread Python `-B -m unittest
+supervisor_harness.test_run_price_discovery
+supervisor_harness.test_price_capacity_loop -q` with local RSS sampling allowed.

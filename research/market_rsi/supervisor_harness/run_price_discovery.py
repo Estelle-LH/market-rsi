@@ -246,7 +246,8 @@ class PricePilotRuntime(r.PilotRuntime):
             configuration_binding=self.configuration, transport=account.controller_transport,
             transport_contract=contract)
         packet = r.t.c._read(prepared["input"])
-        if packet["bindings"]["feedback"]["sha256"] not in {e["sha256"] for e in response["candidate"]["evidence_used"]}:
+        selected = response["candidate"] if response["candidate"] is not None else response.get("capacity")
+        if selected is None or packet["bindings"]["feedback"]["sha256"] not in {e["sha256"] for e in selected["evidence_used"]}:
             raise ValueError("original Controller did not cite current verified feedback")
         directory = self.root / "decisions" / packet["bindings"]["feedback"]["sha256"]
         return {"decision": response, "directory": str(directory), "artifacts": [r.pin(directory / name) for name in
@@ -266,11 +267,14 @@ def build(batch_configuration):
     from supervisor_harness.price_candidate_author import CandidateAuthor
     from supervisor_harness.price_independent_review import IndependentPriceReviewer
     config = r.t.c._read(batch_configuration)
-    if (type(config) is not dict or set(config) not in (FIELDS, FIELDS | {"recovery"})
-            or config["schema"] != "price_discovery_launch_v1"
+    capacity = type(config) is dict and config.get("schema") == "price_discovery_launch_v2"
+    expected_fields = (FIELDS | {"capacity_configuration"},) if capacity else (FIELDS, FIELDS | {"recovery"})
+    expected_services = {"author", "reviewer", "roles", "entry"} | ({"capacity_author", "capacity_loop"} if capacity else set())
+    if (type(config) is not dict or set(config) not in expected_fields
+            or config["schema"] not in {"price_discovery_launch_v1", "price_discovery_launch_v2"}
             or type(config["max_rounds"]) is not int or config["max_rounds"] != 2
             or type(config["source_files"]) is not dict or not config["source_files"]
-            or set(config["service_sources"]) != {"author", "reviewer", "roles", "entry"}):
+            or set(config["service_sources"]) != expected_services):
         raise ValueError("exact two-round real launch configuration required")
     repo, root = Path(config["repo"]), Path(config["root"])
     if (not repo.is_absolute() or repo.resolve() != repo or not root.is_absolute()
@@ -279,6 +283,9 @@ def build(batch_configuration):
     modules = {"author": __import__(CandidateAuthor.__module__, fromlist=["x"]),
                "reviewer": __import__(IndependentPriceReviewer.__module__, fromlist=["x"]),
                "roles": roles}
+    if capacity:
+        from supervisor_harness import price_capacity_services, price_capacity_loop
+        modules.update(capacity_author=price_capacity_services, capacity_loop=price_capacity_loop)
     for name, binding in config["service_sources"].items():
         path = s.h._binding(binding)
         actual = Path(__file__ if name == "entry" else modules[name].__file__).resolve()
@@ -301,6 +308,9 @@ def build(batch_configuration):
     service = LivePriceServices(runtime, config["base_spec"], author=author.author,
         reviewer=reviewer.review, callback_sources={key: config["service_sources"][key]
                                                     for key in ("author", "reviewer")})
+    if capacity:
+        capacity_author = price_capacity_services.CapacityAuthor(runtime, config["source_files"], config["role_authorization"])
+        service.capacity = price_capacity_loop.PriceCapacityLoop(service, config["capacity_configuration"], capacity_author, reviewer)
     service.completed_prefix, service.recovered_seed_sha256 = prefix, seed_hash
     service.restored_stages = restored
     service.recovery_directory = "price-loop-admission-v3" if round2 else "price-loop-admission-v2"
