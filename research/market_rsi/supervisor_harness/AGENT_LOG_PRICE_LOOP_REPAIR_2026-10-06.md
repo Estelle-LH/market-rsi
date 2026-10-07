@@ -761,3 +761,30 @@ independent snapshot review and a fresh whole-role grant; no old batch renewal.
 General pre-author failure continuation and research-process superiority are
 not made prerequisites for a success-path pilot. Equities target/data adapter
 comes afterwards, separately named and authorized; no earnings data acquisition.
+
+Human continuation: game plan then heads-down pipeline repair, not a new
+scientific batch or EPS/price-reaction choice. Root owns the shared integration;
+no parallel source mutation or new framework. Reuse current seven-stage route,
+account/native review/worker/scorer/ledgers and existing research principles.
+F6a contract parentfcde61c, H/preflight admission only in run_price_discovery.py
+plus its existing tests/worklog. Observed late failures: a one-call role cap
+passes construction but cannot serve two rounds; foreign role binding, v2
+non-batch write namespace and uncheckpointed capacity baseline can survive
+earlier admission. Expected effect: reject before account preflight, original
+model reservation or training. Preserve old completion replay, caps, data,
+scorer, model/runtime, no-retry/uncertain stop, old grants/ledgers and unrelated
+dirty files. One production module/about200lines ceiling; no live account
+calls or Train fits. Rollback is a new source-revert checkpoint only.
+Then F6b verify actual production services through formal entry with inert
+native-stdio decisions/reviews and synthetic training children, actual Git,
+generated smoke tests and matched hooks. Finally consolidate remaining actual
+live-role authority/review needs; do not make every F5 failure route a pilot
+prerequisite. Equities adapter remains deferred until target/data scope known.
+
+F6a focused17formal-entry testsPASS6.002s. New checks bind all roles to the
+same exact batch grant, require sufficient declared role calls for both rounds,
+validate the capacity write namespace and include baseline capacity files in
+the pre-account HEAD/file check. Completed replay remains intact. One production
+module changed; local fixture tests only, no original account or Train call.
+Checkpoint before F6b actual-service vertical test; first meaningful test/source
+failures will remain separate history, not silently overwritten.

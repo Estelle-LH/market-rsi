@@ -280,6 +280,8 @@ def build(batch_configuration):
     if (not repo.is_absolute() or repo.resolve() != repo or not root.is_absolute()
             or root.resolve() != root or root.parent != r.t.ROOT.parent):
         raise ValueError("existing canonical repository/permanent artifact root required")
+    if config["role_authorization"] != config["authorization"]:
+        raise ValueError("all roles must bind the same exact original batch authorization")
     modules = {"author": __import__(CandidateAuthor.__module__, fromlist=["x"]),
                "reviewer": __import__(IndependentPriceReviewer.__module__, fromlist=["x"]),
                "roles": roles}
@@ -321,6 +323,10 @@ def build(batch_configuration):
 def preflight(batch_configuration, initial_feedback):
     from supervisor_harness import price_account_roles as roles
     config, service, account = build(batch_configuration)
+    grant = service.runtime.fixed_grant
+    if grant.get("account_roles", {}).get("approved") is True:
+        if any(grant["account_roles"]["caps"][role] < config["max_rounds"] for role in roles.ROLES):
+            raise ValueError("whole-batch role caps cannot complete the declared rounds before account preflight")
     seed = r.t.c._read(initial_feedback)
     staged = r.t.c.subprocess.check_output(["git", "diff", "--cached", "--name-only"],
         cwd=service.runtime.repo, text=True, timeout=10)
@@ -330,6 +336,11 @@ def preflight(batch_configuration, initial_feedback):
     context = {"round_index": 1, "seed": seed, "previous_result": seed,
                "previous_feedback_sha256": r.t.c._digest(seed), "outputs": {}}
     packet = service.prepare_packet(context)
+    if getattr(service, "capacity", None):
+        scope = r.t.action_context(packet)["identity_configuration"]["allowed_write_paths"]
+        namespace = "research/market_rsi/research_capacities/" + grant["batch_id"] + "/"
+        if any(not name.startswith(namespace) for names in scope.values() for name in names):
+            raise ValueError("capacity writes must use this batch's versioned namespace before account preflight")
     prompt_bytes = len(roles._prompt(packet, controller=True).encode("utf-8"))
     input_limit = r.t.input_limit(service.runtime.fixed_grant)
     if prompt_bytes > input_limit:
@@ -356,7 +367,14 @@ def preflight(batch_configuration, initial_feedback):
     runner = "research/market_rsi/" + s.h.MODULE.replace(".", "/") + ".py"
     if runner not in config["source_files"]:
         raise ValueError("frozen runner missing before account call")
-    for relative, digest in config["source_files"].items():
+    frozen = dict(config["source_files"])
+    if getattr(service, "capacity", None):
+        for component in service.capacity.config["baseline"]["components"].values():
+            for name, token in component["sources"].items():
+                if name in frozen and frozen[name] != token:
+                    raise ValueError("capacity and frozen source commitments conflict before account preflight")
+                frozen[name] = token
+    for relative, digest in frozen.items():
         path = service.runtime.repo / relative
         if (Path(relative).is_absolute() or ".." in Path(relative).parts
                 or path.resolve() != path or r.w.sha(path) != digest):

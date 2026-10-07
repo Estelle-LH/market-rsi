@@ -119,6 +119,9 @@ class EntryTests(TestCase):
         config = self.f.base['identity_configuration']
         config['pair'] = activation.pair(before)
         config['fixed_context'].update(authority_sha256=runtime.authority['sha256'], model_sha256=before['M'])
+        namespace = 'research/market_rsi/research_capacities/' + grant['batch_id'] + '/'
+        config['allowed_write_paths'] = {axis: [namespace + axis + '/capacity.py', namespace + axis + '/test_capacity.py']
+                                         for axis in ('researcher', 'harness')}
         self.f.base['python_binding'] = python
         binding = self.f.h.f.write('capacity-configuration', {'schema': 'price_capacity_loop_configuration_v1',
             'baseline': before, 'entrypoints': {axis: names[axis] for axis in ('H', 'R')},
@@ -194,6 +197,15 @@ class EntryTests(TestCase):
         self.assertEqual(self.f.h.f.calls, self.f.calls_before)
         self.assertEqual(entry.r.t._file(self.f.root / 'ledger.json')['attempts'], [])
 
+    def test_insufficient_whole_batch_role_cap_rejects_before_account_preflight(self):
+        from supervisor_harness import price_account_roles as roles
+        self.f.runtime.fixed_grant['account_roles'] = {'approved': True, 'caps': {name: 2 for name in roles.ROLES}}
+        self.f.runtime.fixed_grant['account_roles']['caps']['author'] = 1
+        with self.assertRaisesRegex(ValueError, 'whole-batch role caps'):
+            self.execute(preflight=True)
+        self.assertEqual(self.account.preflight.call_count, 0)
+        self.assertEqual(self.f.h.f.calls, self.f.calls_before)
+
     def test_parent_or_native_fixed_identity_drift_precedes_original_call(self):
         original = deepcopy(self.config["base_spec"]["identity_configuration"])
         self.config["base_spec"]["identity_configuration"]["fixed_context"]["evaluation_sha256"] = "e" * 64
@@ -237,6 +249,9 @@ class EntryTests(TestCase):
         launch = self.f.h.f.write("actual-construction", config)
         with patch.object(entry.r.t, "ROOT", self.f.root.parent / "old-fixture"), \
                 patch.object(roles, "native_transport", side_effect=AssertionError("no call")):
+            foreign = deepcopy(config); foreign['role_authorization'] = self.f.callback_binding
+            with self.assertRaisesRegex(ValueError, 'same exact original batch'):
+                entry.build(self.f.h.f.write('foreign-role-binding', foreign))
             _, actual, account = entry.build(launch)
             self.assertIsInstance(actual, entry.LivePriceServices)
             self.assertIsInstance(account, roles.AccountRoles)
