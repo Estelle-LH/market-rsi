@@ -1,5 +1,17 @@
 # Market RSI — human progress
 
+## 2026-10-07 16:59 NY — complete timeout chain repaired; no new live batch
+
+- 实际阻断已按整条调用链修复，不再只修审核：Controller、预测候选实现和R/H实现都读取本批明确授权的等待时间；新授权可到300秒，旧授权仍120秒。
+- 两个小源码checkpoint f1be520/849b842，保留测试路径失败后以9fd2f7f纠正；评分、数据、旧结果和所有已关闭额度不变。
+- 433项继承回归测试通过；独立81项核验通过，verdict PASS_CODE_ONLY。均为合成/本地inert测试，不是新实验或co-evolution证据。
+- 正式入口已测试负结果继续、新最佳、执行失败、两种实现路径以及重启不新增调用；具体失败和修复保留在现有worklog。
+- 本轮0账户科学调用、0真实拟合、0新预测；没有重试旧失败Controller或启动新科学计时。
+
+本地修复已ready。下一项是收到已经发出的fresh20261007-02整批授权后，
+用同一正式入口真实运行；不再以新增框架建设为前置条件。没有回复前不能把
+“开始修”解释为私有反馈账户传输/新批次授权。工程修复不算自主R/H提升。
+
 ## 2026-10-07 16:06 NY — fresh connected pilot NOT COMPLETE
 
 - 真实独立输入审核PASS并有原生完成回执，97.625s；不是模拟审核。

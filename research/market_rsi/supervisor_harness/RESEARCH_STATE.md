@@ -1,3 +1,43 @@
+# Current Market RSI decision — 2026-10-07 complete call-chain repair READY, live pilot pending
+
+Integrated source9fd2f7f, split H/Supervisor checkpoints f1be520/849b842 and
+fixture-only correction9fd2f7f, fixes the actual completed-account wait chain.
+Controller reads exact immutable account_transfer.max_call_seconds; both
+predictor and capacity authors receive the explicit role grant; reviewers keep
+their grant-bound waits. Prospective explicit integer limits1..300 supported,
+legacy120 unchanged. Fresh post-review admission/process-deadline clipping,
+native terminal receipt, original caps/no retry/refund and uncertainty preserved.
+No scoring, price target, data-time, R policy/memory or model change.
+
+Targeted58PASS2.031s and official-entry23PASS22.249s; inherited24-module
+regression433PASS48.049s. Independent integrated PASS_CODE_ONLY9fd2f7f,
+81testsPASS23.894s; log6c84f27147c3be0e2c536ff99a99817fffc519580757d0baefb24424e259f232.
+These are overlapping synthetic/inert verification sets, not real science.
+First noncanonical fixture rejection, wrong-cwd test command and independent
+sandbox ps/RSS denial remain in logs/checkpoints; no production fix for test
+environment failure. Official-entry fixtures cover negative/KEEP/known failure/
+uncertain original and completed cold replay, with both implementation paths.
+
+As verified20:59:33UTC, three old closed ledgersdc63bcea/4fd6b6ca/67b0bcb4 and
+frozen runneracfbfbb5/scorerd66b6c6b hashes unchanged. B0 incumbent/B0+B1pool,
+archive, historical scores/rules/caps remain unchanged. This repair has0new
+account Controller/author/review calls,0actualTrain fits/attempts/forecasts,
+no raw/protected reads or external/paid/publish operation. Supervisor/helper
+engineering overhead is unmetered; local verification is not subscriptionUSD0.
+
+One already-pending whole-batch question for fresh20261007-02 would explicitly
+allow all role waits<=300s; no human approval received, no new grant/root/clock
+or scientific call opened. Human "can you start fixing" authorizes local repair,
+not that private-payload account operation. Do not repeat the question or reuse
+unused closed caps. After exact approval, bind a new prospective grant/source/
+input and verify actual runtime policy using the existing entry before science.
+Do not invent another framework prerequisite. Engineering repair READY does
+not mean the real R/H-plus-downstream cycle is complete or predict success.
+No autonomous R/H gain, process superiority, OOS validity or profitability.
+Existing idle global decision journal synchronizes status only, not live quotas.
+
+## Previous failed live pilot — preserved unchanged below
+
 # Current Market RSI decision — 2026-10-07 fresh connected pilot NOT COMPLETE
 
 Actual fresh20261007-01 terminal closed20:06:47.235457UTC,634.235457s from

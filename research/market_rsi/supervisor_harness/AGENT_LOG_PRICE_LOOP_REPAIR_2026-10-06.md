@@ -1155,3 +1155,79 @@ using canonical research package cwd, no production repair or authoritychange.
 Inert fullentry now proves both legacy120 and explicit300 across all tenrole
 calls, including2Controller/2authors/6reviewers and coldreplay with0newcalls.
 Pendinglivegrant unchanged; old120 Controller failures not retried or adopted.
+
+### 2026-10-07 20:59 UTC — integrated repair verified, live grant still pending
+
+Frozen integrated source9fd2f7f independently reviewed against4136a84. Own
+source scope remains3production/3tests across the declared2small checkpoints;
+25production additions/8deletions. Final inherited24-module regression actually
+ran433tests in48.049s, exit0/OK (session87384); expected missing fixed.py negative
+gitstderr retained. This is not the entire repository suite or actual science.
+Exact command from canonical research/market_rsi with pinnedPython,
+PYTHONDONTWRITEBYTECODE=1, OPENBLAS/OMP/MKL threads1, -B -m unittest -q:
+supervisor_harness.test_price_loop_services,
+supervisor_harness.test_price_loop_handoff,
+supervisor_harness.test_price_account_roles,
+supervisor_harness.test_price_candidate_author,
+supervisor_harness.test_price_independent_review,
+supervisor_harness.test_run_price_discovery,
+supervisor_harness.test_coevo_pilot_transaction,
+supervisor_harness.test_coevo_pilot_configuration,
+supervisor_harness.test_account_controller_feedback_consumer,
+supervisor_harness.test_feedback_loop_runtime,
+supervisor_harness.test_feedback_linked_loop,
+supervisor_harness.test_continuous_discovery_batch,
+supervisor_harness.test_opened_train_discovery_worker,
+experiments.test_nfl_ingame_price_data,
+experiments.test_nfl_ingame_price_change_train_diagnostic,
+experiments.test_nfl_ingame_price_score,
+supervisor_harness.test_price_capacity_source,
+supervisor_harness.test_price_capacity_services,
+supervisor_harness.test_price_capacity_review,
+supervisor_harness.test_research_capacity_identity,
+supervisor_harness.test_research_capacity_activation,
+supervisor_harness.test_capacity_feedback_integration,
+supervisor_harness.test_coevo_pilot_capacities,
+data_scientist_harness.test_micro_evolution.
+
+Independent /root/price_live_review_20261006 verdict PASS_CODE_ONLY9fd2f7f,
+81source/inerttestsPASS23.894s(session9159). Its first sandbox run74PASS/7errors
+was ps/RSS permission failure before relevant hooks, not science; one exact
+local diagnostic escalation rerun, no account/privateTrain/actualfits or source
+repair. Failure preserved in AGENT_LOG_CALL_CHAIN_WAIT_REVIEW_2026-10-07.md,
+SHA6c84f27147c3be0e2c536ff99a99817fffc519580757d0baefb24424e259f232.
+Reviewer checked exactlimits/legacy/defaults/authorpropagation/deadlines/
+originalclaims/nativecompletion/coldreplay/imports. No blocking code defect.
+Root58/23/433 and reviewer81 sets overlap; do not sum as unique tests.
+
+Read-only20:59:33UTC hashes verify three old closed ledgersdc63bcea7ff6225387d5461b4e81f21a686fb0082ac3fe31e3ae39329eb1ec51,
+4fd6b6ca762bc9cdf4728c4c7183d06284d1c2f4748ef7e760f7d7aab29478af,
+67b0bcb4c3197aacfc518ecce09958febe1dca90181bb025d28ba6f1c54cc543,
+frozen runneracfbfbb53c45b0746ed71aac49f3256cb041160cd194bceef9055e0299ca7f8b
+and scorerd66b6c6ba6ca466622cbf531662b8fcdf4a4d06ddcfa148c2d7f3cfa3dfb350b
+unchanged. Six integrated production/test files match reviewed checkpoint;
+diff-check4136a84..9fd2f7f passes. No new live root/grant/clock, model account
+calls, real Train fits/attempts/forecasts, raw/DevFinal reads, external/paid or
+publication operation. Pure local diagnostic/test processes only; engineering
+overhead unmetered, not scientificUSD0. Exact oldController original remains
+closed_failed_no_retry; no partial adoption, retry/refund/reopen.
+
+Existing authoritative idle journal snapshot before status-only update:
+head0ba384c9f18f3da1e395410188e774ea14c20f5129ac3179ddd645869b3c6c9f,
+bounddocbbc3713c5ae984bfbbae0d42aee25b47b93f2bd7b2bb6421d05ca476e001f508,
+active_cycle null; prospective revision only, not initialization/reset or live
+quota authority. Source repair READY; pending fresh20261007-02allrole300 grant
+still has no explicit human reply. No repeated question or new framework work.
+Once exactapproval arrives, prepare/rebind existing entry and execute actual
+feedback-linked capacity→price pilot; no Supervisor algorithm prescription.
+Real R/H downstream cycle remains NOT COMPLETE; this repair is human-directed
+Supervisor H engineering, not self-evolution/predictivegain/processsuperiority.
+
+Existing authorized status-only journal revision succeeded from canonical
+researchcwd: head6d80580188e0d7ce99a3fef04d17fe2665daa77175079bb075bb707f6fe773a6,
+decisiondoc48f896372f32e66c9253a8dff6ee123f7e154c0844ebe5cfff1ce0eca4d5abda,
+active_cycle null; old claimed/completed cycles and review pin unchanged.
+Own reviewer index row markeddone; preexisting unrelateddirty index remains
+unstaged, with all other unrelateduser/agent changes preserved. Only these
+local repair/status/review records enter the final checkpoint, no artifact/
+ledger/private scientific output/push/release. New science authority pending.
