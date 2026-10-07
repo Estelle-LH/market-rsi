@@ -111,6 +111,14 @@ class CapacityAuthor:
             "context": {key: packet[key] for key in ("feedback", "memory", "history")},
             "downstream_context_example": {key: packet[key] for key in ("feedback", "memory", "history", "pool")},
             "frozen_replay_cases": packet["source_context"].get("capacity_replay_cases"),
+            "static_admission": {"combined_source_test_bytes_max": 12288,
+                "individual_source_bytes_max": 24576, "ast_nodes_max": 3000,
+                "allowed_builtins": sorted(guard.BUILTINS), "allowed_methods": sorted(guard.METHODS),
+                "allowed_math": sorted(guard.MATH),
+                "note": "These are existing unchanged validator constraints, not new permissions. "
+                    "Use compact generated in-memory fixtures rather than duplicating full feedback prose. "
+                    "Methods absent from this list (including dict.pop) are rejected. "
+                    "Keep source plus test comfortably below 12288 UTF-8 bytes; tests are not performance evidence."},
             "instructions": "Implement the exact original capacity proposal, no substituted science. Return source strings only. Pure apply(context) sees supplied JSON aggregates/history, returns JSON research advice or tool results; never changes evaluation, authority, data or budget. Choose two fresh sibling .py paths from write_paths, one module and one test. Preserve parent sources. Combined source/test<=12KiB. Test imports that exact module's apply, defines test_capacity(), synthetic cases only, main guard invokes test_capacity(). No file/network/process/model/fit/dynamic calls. Pure math, JSON-container builtins/control-flow and helpers permitted. No import-time behavior. Source/test unexecuted until independent review; benefit is not author self-certification."}
         if len(json.dumps(body, sort_keys=True, allow_nan=False).encode()) > t.input_limit(runtime.fixed_grant, "account_roles"):
             raise ValueError("capacity author input exceeds authorized input byte budget")

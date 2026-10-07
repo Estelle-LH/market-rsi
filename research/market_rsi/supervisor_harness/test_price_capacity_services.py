@@ -93,6 +93,11 @@ class CapacityAuthorTests(TestCase):
         self.assertFalse(imported.called); self.assertEqual(authored['kind'], 'capacity')
         self.assertNotEqual(authored['source_commit'], before_commit)
         self.assertEqual(self.calls[0][1]['original_controller_decision'], self.ctx['outputs']['controller']['decision'])
+        contract = self.calls[0][1]['static_admission']
+        self.assertEqual(contract['combined_source_test_bytes_max'], 12288)
+        self.assertEqual(set(contract['allowed_methods']), s.guard.METHODS)
+        self.assertEqual(set(contract['allowed_builtins']), s.guard.BUILTINS)
+        self.assertNotIn('pop', contract['allowed_methods'])
         self.assertNotIn('candidate', self.calls[0][1]['original_controller_decision']['capacity'])
         receipt = s.t.c._read(authored['author_receipt'])
         self.assertEqual(receipt['axis'], 'R'); self.assertFalse(receipt['generated_tests_executed'])
