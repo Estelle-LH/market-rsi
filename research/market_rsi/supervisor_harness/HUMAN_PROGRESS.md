@@ -2931,3 +2931,41 @@ reviewed entry/test/repair-log paths. Imported native entry and timeout service
 bytes match the frozen Supervisor source; test merges retain only the earlier
 cleanup-before-setup adjustment in addition to its new cases. Commit this
 integrated source before final synthetic regression; public push remains held.
+
+Integrated source checkpoint `811ccc43ce6cc37d7bc0aba6953a4564ea3c4831`;
+includes14Supervisor commits through
+`9fd2f7f25eb50a8f6bc4cb900bcec47adc684bf1`, with both parent histories intact.
+Supervisor tip recheck at verification close is still9fd2f7f, with no later
+committed source omitted. Its dirty registry/trajectory/H1/controller log and
+untracked review/researcher records were not copied, staged or reset here.
+Launch/test edits it subsequently committed were imported only via its commits.
+
+Exact verification, cwd `/private/tmp/market-rsi-cleanup-IYDuCk`, existing
+`/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python`
+(Python3.12.3), no dependency changes:
+- `python -B -m unittest discover -s tests -q`:22PASS,0.595s.
+- `python -B -m market_rsi check --suite smoke`:69PASS,0.626s.
+- `python -B -m market_rsi check --suite price`:389PASS,61.683s, explicit host
+  process-inspection access for inherited synthetic tests. Expected invalid
+  `fixed.py` source diagnostic unchanged; final exit0.
+- Skill-creator `quick_validate.py .agents/skills/market-rsi-repo-hygiene`:PASS.
+
+Smoke is a subset of price:411distinct developer+price tests, not480independent
+tests. The21-path integration diff equals20imported Supervisor paths plus the
+scoped skill paragraph; whitespace/conflict/ancestry checks PASS. Imported four
+native production modules, seven pilot scripts and research state match the
+Supervisor commit exactly. Two merged test files differ only by retained
+cleanup-before-setup lines from the earlier cleanup; all new Supervisor cases
+are present. Data/target/scorer, benchmark profile, developer configs/package,
+archive manifest and other protected cleanup boundaries compare unchanged from
+`15ab824`. Historical run bindings remain original; prospective live execution
+must use newly bound committed source, not assume old receipts admit this merge.
+
+Result: local cleanup branch synchronized and regression-verified. The skill's
+narrow maintenance rule now requires checking/importing committed Supervisor
+changes and reporting unfinished work before publication/integration; no new
+runtime gate or scientific decision rule was added. Command receipts are in
+this chat; no separate raw-output artifact/hash is claimed. No live model call,
+real Train fit, operational ledger change, active-checkout activation, merge to
+remote main, public push or release. Public research-history approval remains
+pending. Recheck Supervisor once more if publishing later, since it is active.
