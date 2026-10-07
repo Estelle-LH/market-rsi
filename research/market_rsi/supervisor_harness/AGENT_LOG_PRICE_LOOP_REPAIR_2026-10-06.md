@@ -841,3 +841,58 @@ No scientific account call, resident Train fitting or live independent model
 approval occurred. Checkpoint this matrix before independent integrated review
 and broad regression. General pre-author certain-failure continuation remains
 deferred; a valid negative or a rejected capacity is not an automatic stop.
+
+F6c review contract2026-10-07T02:08UTC: integrated snapshotdcfe4a5 (changes
+sincefcde61c); Root freezes source while running the24-module regression.
+Existing independent price_live_review_20261006 agent is assigned a new
+read-only review, maximumtenminutes, sole write scope
+AGENT_LOG_PRICE_ENTRY_INTEGRATION_REVIEW_2026-10-06.md. Review exact fresh-entry
+preflight/timing fix, scientific-history projection and five actual-service
+fixtures; distinguish production dispatch from inert account/training outputs,
+check no-retry/replay and unchanged scorer/old authority. Reviewer must not
+change source, choose science, inspect raw Train, call accounts, run real fits,
+commit, push or mutate old artifacts. Independent PASS_CODE_ONLY cannot serve
+as a live operation/input approval. The new index registration is additive;
+unrelated dirty index edits are preserved and not staged. Only this review is
+parallel; no simultaneous candidate or shared-source work.
+
+F6c Root24-module regression369PASS56.029s on the pinned one-thread Python.
+Includes all five actual-service formal-entry fixtures and inherited capacity,
+account/native transport, author/reviewer, runtime/driver, batch/worker and
+frozen price data/runner/scorer tests. The deliberate nonexistent fixed.py Git
+message is an expected negative test, not a failed experiment. Root checked
+runner/scorer/old closed ledger/grant SHA256 against their earlier bindings:
+all four unchanged. New account model calls0; actual resident Train fits0;
+temporary local test process usage only, subscription cost not incurred.
+Production change sincefcde61c is two modules22 added/two removed lines in
+separate bounded checkpoints; substantive fixture expansion201lines. No frozen
+science, authority, uncertainty rule or unrelated dirty file was edited.
+
+Formal CLI help independently loads successfully without runtime/account/data
+operations. From /Users/estelle/Developer/market-rsi/research/market_rsi:
+```sh
+env PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m supervisor_harness.run_price_discovery --batch-config <fresh-permanent-root>/launch.json --initial-feedback <fresh-permanent-root>/initial-feedback.json
+```
+Appending --preflight performs source/configuration/seed/native identity and
+actual metadata-only account-policy admission, with no model call or fit.
+That real-account metadata step was NOT performed in this local repair turn.
+Placeholders are not an existing approved launch: a fresh full-role grant,
+prepared bindings and exact live input/operation review remain necessary.
+No stale root, consumed calls or historical recovery config should be reused.
+
+F6c independent reviewPASS_CODE_ONLY for exactdcfe4a5. Reviewer independently
+ran29focused testsPASS23.838s. First sandbox29run13errors10.115s was /bin/ps
+RSS access denial; original failure retained in the review log, identical local
+diagnostic escalation passed with no source change or skipped check. Reviewer
+read source/scorer, not actual private runtime/data; Root alone checked old
+ledger/grant hashes. Final own review logSHA256
+8d705b863ac82e8097075fa83bc2225862f45edf89d5be9190e0d9f6b57d1465.
+Review confirms exact source scope, fresh path, scientific-summary handoff,
+native pair and once-only replay. It does NOT grant live input/operation or
+arbitrary-code hard-containment authority. Nonblocking limitations: general
+pre-author certain-failure continuation, credit1 native branch eligibility,
+actual R/H benefit and downstream effect, matched-budget mechanism comparison.
+No new live scientific cycle occurred. Freeze engineering here; next real test
+needs one fresh complete-role grant and source/input/operation admission, not
+more unrelated repairs. Only existing plan/progress/log and independent review
+artifact are checkpointed; unrelated dirty index/history changes remain local.

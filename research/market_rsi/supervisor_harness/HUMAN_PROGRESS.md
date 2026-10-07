@@ -1,5 +1,32 @@
 # Market RSI — human progress
 
+## 2026-10-06 22:10 NY — full production-service route verified locally
+
+Fresh-entry testing found and fixed two concrete integration blockers: timing
+was written to a recovery-only directory, and capacity reconciliation hid the
+last scientific experiment from the next selected hook. Whole-batch role/grant,
+write-namespace and committed-source preparation checks now run before account
+metadata admission. Source checkpointsd521fc0/f911fc3/e56a089; failed snapshots
+66703db andf911fc3 preserve the evidence that led to each bounded repair.
+
+The actual formal entry constructs production Controller transport, capacity
+and candidate authors, separate reviewers, native worker/scorer and journals.
+Five engineering paths PASS12.932s: accepted/rejected capacity continuation,
+KEEP, known worker failure and uncertain-author no-retry; cold replay preserves
+the ledger and makes no extra calls. Full24-module regression369PASS56.029s.
+Account stdio and training outputs are inert/synthetic fixtures; source tests,
+temporary Git and measured matched hook children are real local processes.
+These are Supervisor-directed integration repairs, NOT autonomous R/H learning,
+actual new Train prediction evidence, profitability or mechanism superiority.
+
+Actual new account model calls0 and resident Train fits0. Frozen runner/scorer,
+old closed ledger and authorization retain their recorded hashes. Independent
+snapshot reviewPASS_CODE_ONLY,29focusedPASS23.838s; no fresh batch opened or old
+batch renewed. After code review, the next step is a separately authorized
+live feedback-linked cycle through the same entry, not more harness expansion.
+Equities earnings remains next, after the pipeline; price-reaction versus
+EPS/surprise target and new data scope remain unresolved.
+
 ## 2026-10-06 21:46 NY — pipeline first, equities afterwards
 
 The same formal price entry now supports opt-in v2 with actual capacity author,

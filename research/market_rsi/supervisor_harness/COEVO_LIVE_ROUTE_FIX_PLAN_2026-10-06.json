@@ -156,14 +156,25 @@
     {
       "id": "F6-integrated-closure",
       "depends_on": ["F4-entry-resolution-and-accounting"],
-      "status": "typed_vertical_engineering_path_verified_live_cycle_not_run",
+      "status": "five_actual_service_paths_pass_independently_reviewed_live_cycle_requires_fresh_grant",
       "change": "Verify one official-entry vertical path and exact protected-source diff. Independently review the integrated snapshot before prospective activation. Only a fresh applicable whole-role experiment grant may launch live Controller/author/reviewer calls and Train fits.",
       "acceptance": "Synthetic engineering path first; then a separately authorized real proposal/test/version/downstream-use trace. Report engineering pass separately from real co-evolution and matched-budget superiority.",
+      "current_result": {
+        "checkpoints": ["d521fc0", "66703db", "f911fc3", "e56a089", "dcfe4a5"],
+        "preflight": "Exact whole-role grant/call sufficiency, per-batch capacity namespace and baseline HEAD bindings fail before account metadata preflight or scientific reservation.",
+        "actual_blockers_fixed": ["Fresh launch timing used an absent recovery-only directory", "Capacity reconciliation buried the last scientific experiment summary before the next hook input"],
+        "verification": "Five formal-entry actual-service paths PASS12.932s; full24-module regression369PASS56.029s. Model stdio and training outputs are inert synthetic fixtures, not live account or Train experiments.",
+        "paths": ["accepted capacity -> predictor REVERT -> cold replay", "rejected capacity -> retained parent -> predictor", "predictor KEEP and incumbent replacement", "known worker failure -> invalid evidence -> replay", "uncertain author -> original claim retained -> no retry"],
+        "protected": "Frozen price runner/scorer, old closed ledger and grant retain their recorded SHA256; no old results/caps rewritten.",
+        "actual_account_calls": 0,
+        "actual_train_fits": 0,
+        "independent_review": "PASS_CODE_ONLY for dcfe4a5; reviewer independently29PASS23.838s, sandbox-only first failure preserved with no source change. AGENT_LOG_PRICE_ENTRY_INTEGRATION_REVIEW_2026-10-06.md SHA2568d705b863ac82e8097075fa83bc2225862f45edf89d5be9190e0d9f6b57d1465. Review is not live authority or scientific validation."
+      },
       "live_status": "not_authorized_by_this_plan",
       "priority": "Connect and independently review the existing entry, then demonstrate a bounded real feedback-linked cycle. Do not require all F5 or deferred research gaps to be eliminated first. Afterwards adapt authorized data to equities earnings; target meaning remains pending and no new data acquisition is authorized."
     }
   ],
   "deferred_not_blocking": ["credit1 archived-parent consumption policy", "matched-budget multi-trajectory research-process superiority", "external exploration", "profitability and prospective independent confirmation"],
-  "work_rules": "One bounded component and exact write scope per source checkpoint; over two production modules or about 200 changed lines requires splitting or explicit independent inseparability review. Preserve all meaningful failures and source/result checkpoints. No parallel mutation of shared source; no subagents dispatched in this plan.",
+  "work_rules": "One bounded component and exact write scope per source checkpoint; over two production modules or about 200 changed lines requires splitting or explicit independent inseparability review. Preserve all meaningful failures and source/result checkpoints. No parallel mutation of shared source; one existing independent agent performs read-only integration review alongside Root regression, without science or account calls.",
   "completion": "This plan is not delivery. Item results must contain actually run commands/tests and explicit remaining limitations; no synthetic test is called a real scientific cycle."
 }
