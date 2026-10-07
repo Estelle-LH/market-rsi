@@ -703,3 +703,11 @@ hash only. Temporary setup warning retained; no actual account call/Train fit.
 Command: pinned one-thread Python `-B -m unittest
 supervisor_harness.test_run_price_discovery
 supervisor_harness.test_price_capacity_loop -q` with local RSS sampling allowed.
+
+F4d second22tests21PASS/1ERROR8.224s. Nonzero forged source hash now reaches
+the actual baseline-file drift rejection; real Git fixture isolation succeeds.
+The remaining nested constructor fixture inherits the outer one-argument
+ContinuousDiscoveryBatch mock, whereas its own setup supplies explicit
+temporary/test-clock flags. Preserve this failed fixture state, then restore
+the real class only inside nested setup. Production admission unchanged;
+zero live account calls, new Train reads or fits.

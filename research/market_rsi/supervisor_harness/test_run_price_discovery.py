@@ -8,6 +8,8 @@ from supervisor_harness import run_price_discovery as entry
 from supervisor_harness import test_price_loop_services as fixtures
 from supervisor_harness import test_price_loop_handoff as handoff_fixtures
 
+REAL_CHECK_OUTPUT = entry.r.t.c.subprocess.check_output
+
 
 class EntryTests(TestCase):
     def setUp(self):
@@ -209,7 +211,9 @@ class EntryTests(TestCase):
         from supervisor_harness import price_capacity_loop as capacity_loop
         from supervisor_harness.test_price_capacity_loop import HookTests
         self.build.stop()
-        fixture = HookTests(); fixture.setUp(); self.addCleanup(fixture.doCleanups)
+        fixture = HookTests(); self.addCleanup(fixture.doCleanups)
+        with patch.object(entry.r.t.c.subprocess, 'check_output', REAL_CHECK_OUTPUT):
+            fixture.setUp()
         original = fixture.f.f.f
         root, repo = fixture.f.runtime.root, fixture.f.runtime.repo
         grant = deepcopy(fixture.f.runtime.fixed_grant)

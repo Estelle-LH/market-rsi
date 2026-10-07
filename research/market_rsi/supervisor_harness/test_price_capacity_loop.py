@@ -53,7 +53,7 @@ class HookTests(TestCase):
         from unittest.mock import patch
         value = deepcopy(self.hooks.config)
         name = value['entrypoints']['H']
-        value['baseline']['components']['H']['sources'][name] = '0' * 64
+        value['baseline']['components']['H']['sources'][name] = 'f' * 64
         value['baseline'] = fixtures.trial.cs.identity.manifest(
             kernel=value['baseline']['components']['K'], predictor=value['baseline']['components']['C'],
             harness=value['baseline']['components']['H'], researcher=value['baseline']['components']['R'],
