@@ -3266,3 +3266,19 @@ the resulting tree equals tested a5b243b except this progress record, then
 update the same PR branch without force and save actual publication outcome.
 Previous22/69/80/397 test results remain tied to identical executable bytes.
 PR stays unmerged; original Supervisor and cleanup owner work stay untouched.
+
+Scope correction50ea6d74fac0e6d7b18c4e7e507fa60c8c97a90d verified: only this
+progress file differs from tested a5b243b; new isolated checkout22developer
+tests PASS0.680s. All20new-history blobs, including the retained concurrent
+documentation checkpoint, scanned with no credential/excluded-path hits;
+not a complete confidentiality audit. Original audit files/index/progress
+remain intact in /private/tmp/market-rsi-cleanup-IYDuCk atfaf1875 and Git history.
+No history rewrite or deletion in their owner's checkout occurred.
+
+PR2 updated and marked READY_FOR_REVIEW: OPEN/non-draft/base main,
+634changedfiles,MERGEABLE/CLEAN at exact50ea6d7. Description identifies
+Supervisor99c4be9, fresh22/69/80/397 checks and preserved staging-collision
+correction. Main verified unchanged6978e08947992173fb6b29cb260fc1c4e0320618.
+Save/push this documentation-only publication result with exact path-only
+staging and fail-closed scope check. No main merge, release, activation or new
+live science; original actual co-evolution pilot remains NOT_COMPLETE.
