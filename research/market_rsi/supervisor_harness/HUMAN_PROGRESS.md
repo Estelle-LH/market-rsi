@@ -3282,3 +3282,36 @@ correction. Main verified unchanged6978e08947992173fb6b29cb260fc1c4e0320618.
 Save/push this documentation-only publication result with exact path-only
 staging and fail-closed scope check. No main merge, release, activation or new
 live science; original actual co-evolution pilot remains NOT_COMPLETE.
+
+## 2026-10-07 — Local agent settings and unbranded publication branch
+
+User requested removing `codex/` from the current published branch and keeping
+local `.agents/` material out of Git. Parent91dcca4; maintenance checkpoint791c586
+changes only `.gitignore`, root AGENTS.md/README.md and the two tracked skill
+paths. Both files remain on disk, are ignored, and have no tracked paths at the
+new tip. Shared AGENTS.md remains versioned and records unbranded branch names;
+cleanup guidance falls back to the development guide when the local skill is
+absent. Earlier Git history is preserved, not purged or renamed retrospectively.
+
+Publication sync found new committed Supervisor source0251b67740918c39c018f8c4e49990fb74fa8530.
+Merge8d900f4411d5b4aff939719b47c4f283c9cb9038 includes its five-path capacity-input
+and first-launch/replay-preflight repair. Original source, schema and tests were
+reviewed from the committed snapshot; pending Supervisor edits were not copied.
+Existing research instructions and state are unchanged. Reuse their previously
+read protocols and the repair log's source-specific contract; no new method,
+data, model/runtime, permission, budget or evaluator change is introduced here.
+
+Actual verification on8d900f4 using the existing Python3.12.3 CPU runtime:
+`python -B -m unittest discover -s tests -v`:22PASS0.780s;
+`python -B -m market_rsi check --suite price`:402PASS66.428s,24modules.
+These are synthetic/inert engineering tests, not live research; counts overlap.
+Ignored-file existence/tracking checks, exact changed-scope review and whitespace
+checks pass. Raw command outputs are in this chat, not a saved replay artifact;
+no account/model call, fit, Train read, global-state or live-ledger action here.
+
+GitHub native rename succeeded: `market-rsi-cleanup-20261007` retains the old
+remote head91dcca4 and closes PR2 automatically. Local integration branch is now
+`market-rsi-pr2-sync-20261007`. Publish the verified source and this doc-only
+result checkpoint to the renamed branch, then create a replacement PR to main
+referencing PR2. Main remains6978e08947992173fb6b29cb260fc1c4e0320618; no merge,
+release, deployment or Supervisor activation is implied. Publication pending.
