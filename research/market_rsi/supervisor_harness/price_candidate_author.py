@@ -26,7 +26,8 @@ NP = {"array", "asarray", "zeros", "ones", "full", "full_like", "zeros_like", "o
     "linspace", "column_stack", "hstack", "vstack", "stack", "concatenate", "clip", "sqrt", "log", "log1p", "exp",
     "abs", "sign", "maximum", "minimum", "where", "isfinite", "nan_to_num", "sum", "mean", "median", "std", "var",
     "min", "max", "all", "any", "cumsum", "searchsorted", "dot", "einsum", "quantile", "percentile", "unique", "argsort", "argmax", "argmin", "average",
-    "power", "square", "tanh", "multiply", "divide", "float64", "int64", "pi", "inf", "nan", "linalg", "testing"}
+    "power", "square", "tanh", "multiply", "divide", "eye", "allclose", "array_equal",
+    "float64", "int64", "pi", "inf", "nan", "linalg", "testing"}
 BUILTINS = {"len", "range", "enumerate", "zip", "float", "int", "min", "max", "sum", "abs", "list", "tuple",
     "dict", "sorted", "all", "any", "ValueError", "RuntimeError", "AssertionError"}
 
@@ -191,6 +192,17 @@ class CandidateAuthor:
                     for k in ("feedback", "memory", "source_context")},
                 "instructions": "Implement the exact original recipe, no scientific substitution. Return plain source strings, no commands; combinedsource/test<=12KiB, concise notes. fit_predict(x,y,weights,xc,history,check_history,*,seed) sees only past13features/history<=900s and fitlabels; return finite 1Dlen(xc) changes. Frozen300s target/scorer/folds unchanged. One bounded model fit per invocation, n_jobs=1; no inner CV/refits. Imports limited to NumPy/math and numeric sklearn classes. No file/network/process/dynamic execution. Test code imports from candidate import fit_predict, defines test_candidate() using synthetic13feature arrays/history, and executes only under __name__ == '__main__'. No decorators/classes/fixtures/rawTrain. Synthetic tests are not scientific fits.",
                 "allowed_imports": {k: sorted(v) if v is not None else "numeric module" for k, v in IMPORTS.items()}}
+            if recovered_packet is None:
+                packet["static_admission"] = {"combined_source_test_bytes": 12288,
+                    "individual_source_bytes": 24576, "ast_nodes": 3000,
+                    "numpy_attributes": sorted(NP), "object_methods": sorted(METHODS),
+                    "builtins": sorted(BUILTINS),
+                    "note": "Use these exact numeric call limits; no file/network/dynamic execution. "
+                        "Small synthetic fixtures, no exhaustive test suite. Admission is not OS containment."}
+            elif "static_admission" in recovered_packet:
+                # Preserve the original informational snapshot, never regenerate
+                # or widen the certainly-completed role's input on recovery.
+                packet["static_admission"] = recovered_packet["static_admission"]
             if len(json.dumps(packet, sort_keys=True, allow_nan=False).encode()) > h.t.input_limit(h.t.c._read(self.grant), "account_roles"):
                 raise ValueError("author context exceeds authorized input byte budget")
             if recovered_packet is not None:

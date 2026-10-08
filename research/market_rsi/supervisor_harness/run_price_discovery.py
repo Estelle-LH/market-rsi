@@ -162,10 +162,13 @@ def completed_round2_prefix(runtime, binding):
     from supervisor_harness import price_account_roles as roles
     from supervisor_harness import price_candidate_author as author
     value = r.t.c._read(binding)
+    capacity = value.get("schema") == "price_certain_completed_capacity_round2_prefix_recovery_v1"
+    fields = {"schema", "authorization", "original_manifest", "original_failed_stage",
+              "original_author_recovery", "review"} | (set() if capacity else {"previous_recovery"})
     if (binding["path"] != str(runtime.root / "completed-round2-prefix-recovery.json")
-            or set(value) != {"schema", "authorization", "original_manifest", "original_failed_stage",
-                              "original_author_recovery", "previous_recovery", "review"}
-            or value["schema"] != "price_certain_completed_round2_prefix_recovery_v1"
+            or set(value) != fields
+            or value["schema"] not in {"price_certain_completed_round2_prefix_recovery_v1",
+                "price_certain_completed_capacity_round2_prefix_recovery_v1"}
             or value["authorization"] != runtime.authority):
         raise ValueError("exact completed round2 recovery required")
     review = r.t.c._read(value["review"])
@@ -173,15 +176,18 @@ def completed_round2_prefix(runtime, binding):
             or review.get("author_source_sha256") != r.w.sha(author.__file__)
             or review.get("no_new_model_call") is not True):
         raise ValueError("independent exact round2 recovery source review required")
-    old = runtime.root / "price-loop-admission-v2"
+    old = runtime.root / ("price-loop" if capacity else "price-loop-admission-v2")
     manifest = s.loop._read_pair(old / "manifest.json")
     if (value["original_manifest"] != r.pin(old / "manifest.json") or manifest["max_rounds"] != 2
             or value["original_failed_stage"]["path"] != str(old / "round-0002-implement.failed.json")
-            or value["previous_recovery"]["path"] != str(runtime.root / "completed-prefix-recovery.json")):
+            or not capacity and value["previous_recovery"]["path"] != str(runtime.root / "completed-prefix-recovery.json")):
         raise ValueError("original round2 prefix identity drift")
-    r.t.c._read(value["previous_recovery"])
-    if any(v.get("completed_prefix_recovery") != value["previous_recovery"] for v in manifest["handler_identity"].values()):
-        raise ValueError("round1 recovery history drift")
+    if not capacity:
+        r.t.c._read(value["previous_recovery"])
+        if any(v.get("completed_prefix_recovery") != value["previous_recovery"] for v in manifest["handler_identity"].values()):
+            raise ValueError("round1 recovery history drift")
+    elif any("completed_prefix_recovery" in v for v in manifest["handler_identity"].values()):
+        raise ValueError("capacity recovery must preserve the original unrecovered loop")
     ledger = r.t._file(runtime.root / "ledger.json")
     if (len(ledger["controller_decisions"]) != 2 or any(d["status"] != "completed" for d in ledger["controller_decisions"])
             or any(a["status"] in {"reserved", "uncertain"} for a in ledger["attempts"])
@@ -215,8 +221,16 @@ def completed_round2_prefix(runtime, binding):
             raise ValueError("original Controller completion/accounting drift")
         if index == 1:
             previous = outputs["reconcile"]
-            if not any(a.get("reconciled_feedback_sha256") == previous["feedback"]["sha256"] and a.get("status") == "succeeded" for a in ledger["attempts"]):
+            first_attempts = [a for a in ledger["attempts"] if
+                a.get("reconciled_feedback_sha256") == previous["feedback"]["sha256"] and a.get("status") == "succeeded"]
+            if len(first_attempts) != 1:
                 raise ValueError("original accepted first-round accounting drift")
+            if capacity and (decision.get("action") not in {"researcher", "harness"}
+                    or any(a.get("kind") != "capacity" or a.get("fits_reserved") != 0 or a.get("actual_fits") != 0
+                        for a in first_attempts)) or not capacity and decision.get("action") in {"researcher", "harness"}:
+                raise ValueError("completed recovery prefix task-kind drift")
+        elif capacity and decision.get("action") != "prediction":
+            raise ValueError("capacity recovery must finish the original selected predictor")
     failed = r.t.c._read(value["original_failed_stage"])
     failed_claim = old / "round-0002-implement.claim.json"
     context["outputs"] = outputs
@@ -268,7 +282,7 @@ def build(batch_configuration):
     from supervisor_harness.price_independent_review import IndependentPriceReviewer
     config = r.t.c._read(batch_configuration)
     capacity = type(config) is dict and config.get("schema") == "price_discovery_launch_v2"
-    expected_fields = (FIELDS | {"capacity_configuration"},) if capacity else (FIELDS, FIELDS | {"recovery"})
+    expected_fields = (FIELDS | {"capacity_configuration"}, FIELDS | {"capacity_configuration", "recovery"}) if capacity else (FIELDS, FIELDS | {"recovery"})
     expected_services = {"author", "reviewer", "roles", "entry"} | ({"capacity_author", "capacity_loop"} if capacity else set())
     if (type(config) is not dict or set(config) not in expected_fields
             or config["schema"] not in {"price_discovery_launch_v1", "price_discovery_launch_v2"}
@@ -296,7 +310,11 @@ def build(batch_configuration):
     runtime = PricePilotRuntime(root, repo, config["authorization"], config["configuration"])
     account = roles.AccountRoles(root, config["role_authorization"])
     author_timeout = roles.call_limits(runtime.fixed_grant["account_roles"])["author"]
-    round2 = "recovery" in config and r.t.c._read(config["recovery"]).get("schema") == "price_certain_completed_round2_prefix_recovery_v1"
+    recovery_schema = r.t.c._read(config["recovery"]).get("schema") if "recovery" in config else None
+    if capacity and recovery_schema not in {None, "price_certain_completed_capacity_round2_prefix_recovery_v1"} or not capacity and recovery_schema == "price_certain_completed_capacity_round2_prefix_recovery_v1":
+        raise ValueError("recovery launch kind differs from original completed prefix")
+    round2 = recovery_schema in {"price_certain_completed_round2_prefix_recovery_v1",
+        "price_certain_completed_capacity_round2_prefix_recovery_v1"}
     if round2:
         restored, seed_hash, author_recovery = completed_round2_prefix(runtime, config["recovery"])
         prefix = {}
@@ -315,6 +333,12 @@ def build(batch_configuration):
         capacity_author = price_capacity_services.CapacityAuthor(runtime, config["source_files"], config["role_authorization"],
             timeout_seconds=author_timeout)
         service.capacity = price_capacity_loop.PriceCapacityLoop(service, config["capacity_configuration"], capacity_author, reviewer)
+        if round2:
+            packet = r.t.c._read(restored[2, "input"]["output"]["input"])
+            selected = service.capacity.validate()
+            if (packet["source_context"]["capacity_identity"] != selected["manifest"]
+                    or packet["source_context"]["capacity_entrypoints"] != selected["entrypoints"]):
+                raise ValueError("actual reviewed capacity selection drift before completed predictor continuation")
     service.completed_prefix, service.recovered_seed_sha256 = prefix, seed_hash
     service.restored_stages = restored
     service.recovery_directory = "price-loop-admission-v3" if round2 else "price-loop-admission-v2" if "recovery" in config else "price-loop"
@@ -351,7 +375,7 @@ def preflight(batch_configuration, initial_feedback):
             if (manifest['handler_identity'] != service.identity() or manifest['max_rounds'] != config['max_rounds']
                     or manifest['seed_sha256'] != r.t.c._digest(seed)):
                 raise ValueError("original replay manifest drift before account preflight")
-        for axis in (() if manifest_path.exists() else ("researcher", "harness")):
+        for axis in (() if manifest_path.exists() or getattr(service, "restored_stages", {}) else ("researcher", "harness")):
             if axis in action_context["available_actions"]:
                 try:
                     capacity_services.response_schema({"capacity": {"write_paths": scope[axis],

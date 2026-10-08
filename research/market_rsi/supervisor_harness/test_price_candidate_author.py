@@ -76,6 +76,15 @@ class SourceGuardTests(TestCase):
         with self.assertRaises(ValueError):
             a.validate_source("#" * 24577)
 
+    def test_numeric_eye_and_comparisons_do_not_admit_io(self):
+        test = TEST.replace("    assert result.shape == (2,)",
+            "    assert np.allclose(np.eye(2), np.eye(2))\n"
+            "    assert np.array_equal(result, result)\n    assert result.shape == (2,)")
+        self.assertTrue(a.validate_source(test, is_test=True)["passed"])
+        for forbidden in ("np.load('x')", "np.save('x', x)", "np.fromfile('x')"):
+            with self.subTest(forbidden=forbidden), self.assertRaises(ValueError):
+                a.validate_source(test.replace("    x = np.zeros((20, 13))", "    " + forbidden), is_test=True)
+
     def test_numeric_all_any_and_test_only_literal_object_dtype(self):
         reduction = SOURCE.replace("    model = Ridge(alpha=10)", "    assert np.all(np.isfinite(x)) or np.any(x == 0)\n    model = Ridge(alpha=10)")
         self.assertTrue(a.validate_source(reduction)["passed"])
@@ -150,6 +159,7 @@ class AuthorServiceTests(TestCase):
         self.assertEqual(set(authored), {"candidate_binding", "source_commit", "files", "method_family"})
         self.assertNotEqual(authored["source_commit"], before)
         self.assertEqual(self.calls[0][1]["original_controller_decision"], self.decision)
+        self.assertEqual(self.calls[0][1]["static_admission"]["numpy_attributes"], sorted(a.NP))
         candidate = Path(authored["candidate_binding"]["path"])
         receipt = json.loads((candidate.parent / "author_receipt.json").read_text())
         self.assertFalse(receipt["generated_tests_executed"])
