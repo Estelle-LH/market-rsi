@@ -2,12 +2,786 @@
   "purpose": "Human-readable, non-secret subagent work logs; these are not GLM research trajectories or live E2B tool streams.",
   "agents": [
     {
-      "id": "p0_admission_integration_implementation_20260922",
-      "title": "ACTIVE：P0 candidate-admission integration remediation",
-      "task": "Compose the reviewed ledger, orientation and Train receipt boundaries into one controlled candidate-only non-test consumer.",
-      "status": "First snapshot passed 13/13 focused and 95/95 combined, but independent reviewer reproduced generic authority-key escalation and an ancestor-directory symlink/hardlink race. A superseding source is already being written and remains unreviewed.",
+      "id": "price_live_services_20261006",
+      "title": "DONE: real price candidate implementation service",
+      "log": "AGENT_LOG_PRICE_LIVE_SERVICES_2026-10-06.md",
+      "task": "Bounded original-recipe source-author service and two reviewed numeric-admission fixes; no helper live calls or Train",
+      "next": "No further work in the closed two-attempt batch",
+      "status": "20focusedPASS; original account author outputs admitted unchanged after two Supervisor repairs; two automatic source checkpoints and real runs verified",
+      "active": false
+    },
+    {
+      "id": "price_live_transport_20261006",
+      "title": "DONE: tools-closed account transport",
+      "log": "AGENT_LOG_PRICE_LIVE_TRANSPORT_2026-10-06.md",
+      "task": "Pinned native empty-environment text-only original role transport; no helper account calls",
+      "next": "No further calls in consumed ten-original-role cap",
+      "status": "23focusedPASS; actual metadata acknowledgement and all ten original native completions verified; snapshot and subscription cost unknown",
+      "active": false
+    },
+    {
+      "id": "price_live_review_20261006",
+      "title": "DONE: independent integrated price runtime review",
+      "log": "AGENT_LOG_PRICE_LIVE_REVIEW_2026-10-06.md",
+      "task": "Independent code/runtime/source/result/feedback audits; no helper account calls or fits",
+      "next": "No further scientific work; remaining limits in final audit",
+      "status": "127integratedPASS/31focusedPASS; two real independently rescored REVERT candidates/eightfits/feedback dependency verified;7a9954e7audit, two H interventions disclosed",
+      "active": false
+    },
+    {
+      "id": "price_native_repair_20261006",
+      "title": "DONE: price native handoff and linked fixtures",
+      "log": "AGENT_LOG_PRICE_NATIVE_REPAIR_2026-10-06.md",
+      "task": "Handoff compiler/runtime binding and synthetic service tests only; no science or ledger changes",
+      "next": "Real author/reviewer installation and fresh exact pilot admission remain separate",
+      "status": "30focusedPASS/236independentregressionsPASS; actual venv read-only probe PASS; zero actual calls/fits",
+      "active": false
+    },
+    {
+      "id": "price_loop_repair_review_20261006",
+      "title": "DONE: independent price loop repair review",
+      "log": "AGENT_LOG_PRICE_LOOP_REPAIR_REVIEW_2026-10-06.md",
+      "task": "Exact source/provenance/feedback/launch review; own immutable receipts only",
+      "next": "Live backend/tool semantics/input/operation admission still required; no scientific success claim",
+      "status": "98b58e4cPASS_CODE_ONLY;236tests10.160s; protected sources and closed ledgers intact; narrow319lineHexception",
+      "active": false
+    },
+    {
+      "id": "price_data_20261006",
+      "title": "DONE: fixed price materializer",
+      "log": "AGENT_LOG_PRICE_DATA_2026-10-06.md",
+      "task": "Own only new price data module/tests; no fits/account/ledger/old source",
+      "next": "No further assignment",
+      "status": "Reviewed179line source;9synthetic tests; locald1c4b22; Root real geometry matches",
+      "active": false
+    },
+    {
+      "id": "price_score_20261006",
+      "title": "DONE: paired regression scorer",
+      "log": "AGENT_LOG_PRICE_SCORE_2026-10-06.md",
+      "task": "Own only new price scorer/tests; no raw Train/fits/account/ledger/old scorer",
+      "next": "No further assignment",
+      "status": "Reviewed174line source;14tests; local3a7b18c; independent actual score reconstruction PASS",
+      "active": false
+    },
+    {
+      "id": "price_review_20261006",
+      "title": "DONE: independent price pilot review",
+      "log": "AGENT_LOG_PRICE_REVIEW_2026-10-06.md",
+      "task": "Exact aggregate input/source review and independently reconstructed baseline; no scientific recipe choice/fits/calls/ledger",
+      "next": "Future authority/window and hard runtime tools restriction must be checked before a new launch",
+      "status": "Baseline67tests/4fit numeric PASS; fresh static input checks PASS but20:58postcutoff launch admission FAIL8770a1cf; no call",
+      "active": false
+    },
+    {
+      "id": "loop_driver_20261006",
+      "title": "DONE: once-only feedback handoffs",
+      "task": "Own only feedback_linked_loop.py/tests/own log; code-only once-only coordinator, no live model or Train",
+      "status": "Source01e01be;20focused PASS, integrated synthetic continuation PASS; oldpilot04 unchanged",
+      "active": false,
+      "next": "Independent integrated review; no expired scientific calls",
+      "log": "AGENT_LOG_LOOP_DRIVER_2026-10-06.md"
+    },
+    {
+      "id": "loop_capacity_20261006",
+      "title": "DONE: distinct capacity identities and activation",
+      "task": "Own only research_capacity_identity/activation modules/tests/own log; reuse existing micro journal",
+      "status": "Separate29dc5ed/6ec0c85 source;44focused/inherited PASS; actual synthetic downstream versions and rollback",
+      "active": false,
+      "next": "Independent integrated review, no live capacity/scientific gain claim",
+      "log": "AGENT_LOG_LOOP_CAPACITY_2026-10-06.md"
+    },
+    {
+      "id": "loop_review_20261006",
+      "title": "DONE: integrated loop closure independent review",
+      "task": "Read-only review of exact final code and synthetic integrated tests, no source/ledger/data changes",
+      "status": "Firstdd49fae FAIL preserved; exact620e612 PASS_CODE_ONLY;48independentfocused PASS/224Rootrelevant, zero account/Train calls",
+      "active": false,
+      "next": "Registered live services and fresh exact pilot admission still required; no scientific/process-superiority claim",
+      "log": "AGENT_LOG_LOOP_INTEGRATION_2026-10-06.md"
+    },
+    {
+      "id": "window_handoff_20261006",
+      "title": "DONE:10h native selection handoff",
+      "task": "Reviewed source/decision to native branch and existing dispatch",
+      "status": "Sourcea6405b47/test600b0810;21new/263relevantPASS; independent47f59f24 and locala9a22b6",
+      "active": false,
+      "next": "Preserve originalquestion/source/lineage/oncefence; no realactivation or standaloneauthoringclaim",
+      "log": "AGENT_LOG_WINDOW_HANDOFF_2026-10-06.md"
+    },
+    {
+      "id": "window_ops_20261006",
+      "title": "DONE:10h reviewed operations reuse",
+      "task": "Read-only exact acceptedN2 bootstrap and reusedoperations spec",
+      "status": "N2inputc6d8exactreplay/75sourcepins; archive6proofsca8b3d28; serialcce12776/testb5d8354a7PASS; missingfitprogressP1resolved",
+      "active": false,
+      "next": "Explicit accountpayloadconsent pending; originalprivateoperations/source/budgetreviews do notgrant egress",
+      "log": "AGENT_LOG_WINDOW_OPS_2026-10-06.md"
+    },
+    {
+      "id": "window_review_20261006",
+      "title": "DONE:10h independent source/input review",
+      "task": "Read-only preflight then stable integrated review",
+      "status": "Receipt47f59f24/log2dec8a29 frozen; independent263PASS5.310s/1skip; exactcurrentinput/source/firstoperation",
+      "active": false,
+      "next": "Keep reviewsource separate from failed sensitive-egress admission; actualcandidate/output/learning review stillneeded",
+      "log": "AGENT_LOG_WINDOW_REVIEWER_2026-10-06.md"
+    },
+    {
+      "id": "controller_evidence_observation_review_20261006",
+      "title": "DONE: evidence content/order independent review",
+      "task": "Separate read-only verifier repair review; own new log/receipt",
+      "status": "Independent237PASS4.713s/1skip and external15PASS; receiptf2983f00/logac7beac5 frozen; prior receipts unchanged",
+      "active": false,
+      "next": "Retain invalid/permissive evidence semantics; no live parity or learning claim",
+      "log": "AGENT_LOG_CONTROLLER_EVIDENCE_OBSERVATION_REVIEWER_2026-10-06.md"
+    },
+    {
+      "id": "candidate_dispatch_implementation_20261006",
+      "title": "DONE: reviewed candidate dispatch",
+      "task": "New native handoff/recovery helper and synthetic tests only",
+      "status": "Source172bb564/test468b8036;23focused PASS; local10965ae; protected sources fixed",
+      "active": false,
+      "next": "Retain execution-only handoff; code authoring and metric review remain separate",
+      "log": "AGENT_LOG_CANDIDATE_DISPATCH_IMPLEMENTER_2026-10-06.md"
+    },
+    {
+      "id": "candidate_dispatch_review_20261006",
+      "title": "DONE: candidate dispatch independent review",
+      "task": "Read-only preflight and final stable exact-source review",
+      "status": "Independent229PASS4.516s/1skip; receipt23cccdbf/logc2b1d8bb frozen;206line one-boundary exception accepted",
+      "active": false,
+      "next": "Execution receipt recovery not original prediction replay; no full scientific autonomy claim",
+      "log": "AGENT_LOG_CANDIDATE_DISPATCH_REVIEWER_2026-10-06.md"
+    },
+    {
+      "id": "controller_runtime_probe_20261005",
+      "title": "DONE: Controller runtime catalog probe",
+      "task": "Pinned runtime no-account local synthetic tool catalog proof; new test/log only",
+      "status": "Exact production profile passed actualCLI2tests/3local requests; log75c57369/testd59ae483 frozen",
+      "active": false,
+      "next": "Account-provider parity unverified; preserve local proof, no live activation",
+      "log": "AGENT_LOG_CONTROLLER_RUNTIME_PROBE_2026-10-05.md"
+    },
+    {
+      "id": "controller_failure_adapter_20261005",
+      "title": "DONE: factual Controller failure feedback",
+      "task": "New failure input adapter/test only; consumer integration owned by Root",
+      "status": "Source85f80468/test506c8b25;14focused/134combined native tests PASS, no dispatch shim; localbc3b8bb",
+      "active": false,
+      "next": "Preserve real-shaped failure with no fake scores; future runtime/batch separately scoped",
+      "log": "AGENT_LOG_CONTROLLER_FAILURE_ADAPTER_2026-10-05.md"
+    },
+    {
+      "id": "controller_integration_review_20261005",
+      "title": "DONE: Controller integration independent review",
+      "task": "Read-only preflight then stable integrated review; own receipt/log only",
+      "status": "Independent206executions3.522s PASS/1skip; receipt a16f9098; protected sources unchanged",
+      "active": false,
+      "next": "Accepted synthetic native H boundary only; no account activation or researcher-superiority claim",
+      "log": "AGENT_LOG_CONTROLLER_INTEGRATION_REVIEWER_2026-10-05.md"
+    },
+    {
+      "id": "controller_evidence_tools_implementation_20261005",
+      "title": "DONE: scoped Controller evidence tools",
+      "task": "New standalone read-only evidence bridge/test only under exact P0 contract; no old source, data, calls or fits",
+      "status": "Source01980b/test84cb98 frozen; 33 new synthetic tests pass; independent one-component 284-line inseparability accepted",
+      "active": false,
+      "next": "Preserve unactivated source; consumer integration and effective channel denial are separate checkpoints",
+      "log": "AGENT_LOG_CONTROLLER_EVIDENCE_TOOLS_IMPLEMENTER_2026-10-05.md"
+    },
+    {
+      "id": "controller_enablement_review_20261005",
+      "title": "DONE: Controller evidence tools independent review",
+      "task": "Read-only scope/runtime preflight and integrated evidence-tools review; own log/review receipt only",
+      "status": "Independent 172 test executions/2.223s PASS; source unchanged; receipt1ceb2fd8/logeae67b8d frozen; L1 only",
+      "active": false,
+      "next": "Consumer integration must verify tool catalog and pre-access channel denial; no live activation or exhausted-budget renewal claimed",
+      "log": "AGENT_LOG_CONTROLLER_ENABLEMENT_REVIEWER_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_continuation_n2_ops_20261005",
+      "title": "DONE: continuation N2 ops",
+      "task": "Mechanical exact actualproposal distance contract and predeclared rule only; no scientificselection/calls/fits",
+      "status": "Exactcontractba407/rule0bc2/log62e930 frozen; no modelcall or fit byhelper",
+      "active": false,
+      "next": "Closed approved2/8/2 batch; preserve frozen evidence. No next input/call/fit; new role requires fresh bounded scope and log.",
+      "log": "AGENT_LOG_CHECKPOINT_CONTINUATION_N2_OPS_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_continuation_n2_review_20261005",
+      "title": "DONE: continuation N2 review",
+      "task": "Independent originaltransaction/scope/source/actualresult/learning only; no candidateimplementation/calls/fits",
+      "status": "Sourceb6ca/preclaim03ab/resultb77c/learningc09d PASS, log9e820 frozen; no fits/calls or candidatecode edits",
+      "active": false,
+      "next": "Closed approved2/8/2 batch; preserve frozen evidence. No next input/call/fit; new role requires fresh bounded scope and log.",
+      "log": "AGENT_LOG_CHECKPOINT_CONTINUATION_N2_REVIEW_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_continuation_n2_implementation_20261005",
+      "title": "DONE: continuation N2 implementation",
+      "task": "Only newdistance Cmodule/test after exactscopeadmission; oldsourcefixed/noactualfits",
+      "status": "Source88b4/test9347/logc60fb frozen;267unique PASS, independent221lineone-C admission; Root4actualfits independentlyaccepted",
+      "active": false,
+      "next": "Closed approved2/8/2 batch; preserve frozen evidence. No next input/call/fit; new role requires fresh bounded scope and log.",
+      "log": "AGENT_LOG_CHECKPOINT_CONTINUATION_N2_IMPLEMENTER_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_continuation_n1_ops_20261005",
+      "title": "DONE: continuation N1 ops",
+      "task": "Mechanically transcribe only actual field-position proposal to exact contract and predeclared research rule; no science or fits",
+      "status": "Exact actualproposal contract30df/ruleefa389/log3d7f7178 frozen; no modelcall or fit byhelper",
+      "active": false,
+      "next": "Closed approved2/8/2 batch; preserve frozen evidence. No next input/call/fit; new role requires fresh bounded scope and log.",
+      "log": "AGENT_LOG_CHECKPOINT_CONTINUATION_N1_OPS_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_continuation_n1_review_20261005",
+      "title": "DONE: continuation N1 independent review",
+      "task": "Original transaction/contract/source/result/learning independent review only; no source edits or fits",
+      "status": "Actualresult03375/learning8979/nextinputarchive645d PASS; log9dea7d frozen; nextrole requiresnewlog",
+      "active": false,
+      "next": "Closed approved2/8/2 batch; preserve frozen evidence. No next input/call/fit; new role requires fresh bounded scope and log.",
+      "log": "AGENT_LOG_CHECKPOINT_CONTINUATION_N1_REVIEW_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_continuation_n1_implementation_20261005",
+      "title": "DONE: continuation N1 implementation",
+      "task": "Only new field_position_slope source/test after independently admitted contract; no old source edits or fits",
+      "status": "Sourcec133/test8993/log12b764 frozen;256 unique PASS, independent233lineone-C admission; Root4actualfits independently accepted",
+      "active": false,
+      "next": "Closed approved2/8/2 batch; preserve frozen evidence. No next input/call/fit; new role requires fresh bounded scope and log.",
+      "log": "AGENT_LOG_CHECKPOINT_CONTINUATION_N1_IMPLEMENTER_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_continuation_binding_20261005",
+      "title": "DONE: exact fresh continuation binding",
+      "task": "Only nativeconsumer/test/newbindinglog; addexactnew2/8seal, olddefaults/3/12/code behaviorpreserved, no calls/fits",
+      "status": "Consumer91a 13-line diff/245unique PASS independently admitted231294; olddefaults preserved; frozen bindinglog",
+      "active": false,
+      "next": "Closed approved2/8/2 batch; preserve frozen evidence. No next input/call/fit; new role requires fresh bounded scope and log.",
+      "log": "AGENT_LOG_CHECKPOINT_CONTINUATION_BINDING_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_continuation_ops_20261005",
+      "title": "DONE: fresh continuation mechanical operations",
+      "task": "OnlynewopsSPEC/log andexactnewartifact-rootcopies declared inSPEC; auxiliarynot scientificController",
+      "status": "Exact5scripts/archive38f admitted231294; no scientificchoice/calls/fits byhelper; frozenopslog",
+      "active": false,
+      "next": "Closed approved2/8/2 batch; preserve frozen evidence. No next input/call/fit; new role requires fresh bounded scope and log.",
+      "log": "AGENT_LOG_CHECKPOINT_CONTINUATION_OPS_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_continuation_review_20261005",
+      "title": "DONE: fresh continuation source review",
+      "task": "Onlyfreshpreflight/source/actualdecision/result/learning reviewJSONs anddedicatednewlog; oldreview/log immutable",
+      "status": "Exact73 sourcepins/input11roles/245unique PASS; review231294/frozenreviewlog; actualN1 has separate receipts",
+      "active": false,
+      "next": "Closed approved2/8/2 batch; preserve frozen evidence. No next input/call/fit; new role requires fresh bounded scope and log.",
+      "log": "AGENT_LOG_CHECKPOINT_CONTINUATION_REVIEW_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_pilot_c1_implementation_20261005",
+      "title": "DONE: fresh pilot C1 down-slope predictor",
+      "task": "Owned only new C1 down_slope Cmodule/test and dedicated log under exact e9ef31ab; no oldsource/H/calls/fits/commits",
+      "status": "Sourceb915/testda350/logbc07 frozen;240unique checks PASS. Independentsource24a5 admitted221lineinseparableone-C. Rootreal4fit run completed4.691s",
+      "active": false,
+      "next": "Preserve frozen implementation; actual result/learning acceptance and next scientificchoice are separate",
+      "log": "AGENT_LOG_CHECKPOINT_PILOT_C1_IMPLEMENTER_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_pilot_c1_review_20261005",
+      "title": "DONE: fresh pilot C1 result and separate learning review",
+      "task": "Owned fresh C1 decision/scope/source/archive/result/learning and continuation ops review JSONs plus dedicated log only; no source implementation/calls/fits",
+      "status": "Result753c and learning565a PASS;4fits/193causalrows/87predictions reconstructed without refitting. Negativecredit2/nonduplicate/branch, D5reuse observed benefitunmeasured, REVERT unchanged. Final log9622e9e8 frozen with appended timing correction.",
+      "active": false,
+      "next": "Preserve frozen receipts/log; Root acceptedfeedbackab621 and preparedbbda. Next account transfer blocked pre-process, direct trusted payload reconfirmation pending; no next scientific choice by reviewer.",
+      "log": "AGENT_LOG_CHECKPOINT_PILOT_C1_REVIEW_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_pilot_c1_ops_20261005",
+      "title": "DONE: fresh pilot C1 mechanical ops",
+      "task": "Auxiliary helper; exact new C1 contract/scope/fresh-root scripts/imports/log only; no science/calls/fits/state mutation",
+      "status": "Frozen launch00cc/accept26fea/preparef94c/archiveeab3/logeb6d; AST andtemporaryv4 proofs PASS, independentarchiveops9aaa admitted",
+      "active": false,
+      "next": "Reuse exact parameterized Root-only ops; latestfeedback/rule/history explicit, no oldhistory edits",
+      "log": "AGENT_LOG_CHECKPOINT_PILOT_C1_OPS_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_pilot_binding_20261005",
+      "title": "DONE: fresh pilot consumer binding",
+      "task": "Exact prospective consumer window/budget binding and tests only",
+      "status": "Sourced31e4a16;51productionline diff,81focusedPASS; root229fullrelevantPASS",
+      "active": false,
+      "next": "Preserve frozenlog7d5d8156; independent exactsource review beforeactivation",
+      "log": "AGENT_LOG_CHECKPOINT_PILOT_BINDING_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_pilot_preflight_20261005",
+      "title": "DONE: fresh pilot evidence preflight",
+      "task": "Auxiliary read-only actual feedback/launch feasibility; not scientificController",
+      "status": "All68historicalGitbindings/roles/C2 exact; originalD5memory and readonlysnapshot verified",
+      "active": false,
+      "next": "Preserve frozenlogf1c17778; no actualaccountcall or fit",
+      "log": "AGENT_LOG_CHECKPOINT_PILOT_PREFLIGHT_2026-10-05.md"
+    },
+    {
+      "id": "checkpoint_pilot_review_20261005",
+      "title": "DONE: fresh pilot independent binding review",
+      "task": "Read-only integrated source/input review after dependencies",
+      "status": "Review8049faa1/229independenttestsPASS15.795s;45legacy prefixes and exact11role input reproduced",
+      "active": false,
+      "next": "Preserve frozenloga021eaad; actual Controller/Train/v4 benefit not certified; freshaccounttransfer approval pending",
+      "log": "AGENT_LOG_CHECKPOINT_PILOT_REVIEW_2026-10-05.md"
+    },
+    {
+      "id": "learning_checkpoint_scope_review_20261005",
+      "title": "DONE: learning checkpoint independent integrated review",
+      "task": "Owned only new scope/core/integrated review receipts and own dedicated log; no source edits/calls/fits.",
+      "status": "Scope df8d31e0/core277944b0/integrated2773be0a PASS;222independent unique synthetic tests/45oldprefixes exact;393-line core semantic ruling and separate34-line consumer accepted.",
+      "active": false,
+      "next": "Preserve code-only L2 review/logd0ebf27a; no new live authority, real failed-run recovery, R gain or prediction improvement certified.",
+      "log": "AGENT_LOG_LEARNING_CHECKPOINT_REVIEWER_2026-10-05.md"
+    },
+    {
+      "id": "learning_checkpoint_feedback_precheck_20261005",
+      "title": "DONE: learning checkpoint feedback integration precheck",
+      "task": "Auxiliary helper owns only dedicated log, read-only actual consumer/recorder; no scientific selections/calls/fits/source edits.",
+      "status": "Actual source inspected,50baseline synthetic tests PASS; minimal immutable-record eligibility/feedback projection risks documented in log824fea94.",
+      "active": false,
+      "next": "Root consumer integration after exact core review; no account calls or cap reset.",
+      "log": "AGENT_LOG_LEARNING_CHECKPOINT_FEEDBACK_2026-10-05.md"
+    },
+    {
+      "id": "learning_checkpoint_core_implementation_20261005",
+      "title": "DONE: prospective learning checkpoint recorder implementation",
+      "task": "Owned only new assessment helper/test, existing recorder/test and dedicated implementation log; no source outside allowlist/calls/fits/commits.",
+      "status": "Core79efe01/helpera53d348a/recorder3d0c0508,43testsPASS; independently admitted393-line inseparable H component by review277944b0. Pending nextquestion leaves actual science with Controller.",
+      "active": false,
+      "next": "Preserve frozen core/logbaa4d2a3. Separate consumer and integration review owned by root/reviewer; livepilot not run.",
+      "log": "AGENT_LOG_LEARNING_CHECKPOINT_IMPLEMENTER_2026-10-05.md"
+    },
+    {
+      "id": "repair_d5_math_precheck_20261005",
+      "title": "DONE: D5 exact transcription/math and mechanical ops",
+      "task": "Auxiliary helper only; owns D5 contract/math preflight/math log; no scientific choice, Train fits, Controller calls or authority updates.",
+      "status": "Contract9649/math741752 PASS9synthetic; launch_d5/accept_d5 syntax/full mechanical inspected; no scientific selection/real fits/calls.",
+      "active": false,
+      "next": "Root inspected scoped scripts; only root executes/updates authority.",
+      "log": "AGENT_LOG_REPAIR_D5_MATH_2026-10-05.md"
+    },
+    {
+      "id": "repair_d5_implementation_20261005",
+      "title": "DONE: D5 possession-only candidate frozen",
+      "task": "Own only new possession_only Cmodule/test and D5IMPLEMENTERlog after exact scope PASS; no oldsource/H/scorer/real fits/calls/commits.",
+      "status": "Exact213line sourcea9679dc9/test328linesa1647c7b; worker11focused/148integrated PASS; root148PASS14.631s. Source admission and real fits separate.",
+      "active": false,
+      "next": "Exact source independently reviewed after root checkpoint; old H/helpers/K/worker unchanged.",
+      "log": "AGENT_LOG_REPAIR_D5_IMPLEMENTER_2026-10-05.md"
+    },
+    {
+      "id": "repair_d5_review_20261005",
+      "title": "DONE: independent D5 result and final batch closure",
+      "task": "Own only D5_SCOPE_REVIEW, D5_SOURCE_REVIEW, D5_RESULT_REVIEW and D5REVIEWERlog; no source edits/fits/accountcalls.",
+      "status": "Source4ddb/resultf09/final logefcba3eb PASS; acceptedstatefecb/feedback46248/memoryeb023/terminalv2 7ef60; all five9event journals/400bindings/six87masks/all12originalPIDs absent/6attempts24fits guard verified.",
+      "active": false,
+      "next": "Preserve all original artifacts and negative findings; no call or training after cap. Next actual choice requires a separately bounded batch.",
+      "log": "AGENT_LOG_REPAIR_D5_REVIEWER_2026-10-05.md"
+    },
+    {
+      "id": "repair_controller_continuation_20261005",
+      "title": "DONE: narrow H continuation-policy repair",
+      "task": "Own only account_controller_feedback_consumer.py, existing matching test and AGENT_LOG_REPAIR_CONTROLLER_CONTINUATION_2026-10-05.md under v3scope after independent code-only PASS; no fits/account calls/science selection/old artifacts/commits.",
+      "status": "Three-location sourceb0c4c7a2 independently admittedc221caca, 69relevant synthetic checks PASS; exactlyone human-approved freshresponse385accf2 selectedD5, actually executed and independently accepted at6/24. Originalstop8972c6ae preserved.",
+      "active": false,
+      "next": "Preserve source/tests/original stop/fresh permission; Supervisor-directed H repair is not autonomous R evolution or prediction gain. No further call at cap.",
+      "log": "AGENT_LOG_REPAIR_CONTROLLER_CONTINUATION_2026-10-05.md"
+    },
+    {
+      "id": "repair_d4_replacement_controller_review_20261005",
+      "title": "DONE: original fresh D5 choice independently reviewed",
+      "task": "Own only COEVO_ACTUAL_CONTROLLER_DECISION_REVIEW_2026-10-05-v5.json and AGENT_LOG_REPAIR_D4_REPLACEMENT_DECISION_REVIEW_2026-10-05.md; original fresh transaction/input/policy/science scope read-only, no account calls/fits/source edits.",
+      "status": "PASS4637f12a exact original transaction/11roles/68science files/oncecall/response385accf2; actual D5 scope choice admitted, no fits yet.",
+      "active": false,
+      "next": "Preserve admitted evidence; D5 exact source/result remain separate.",
+      "log": "AGENT_LOG_REPAIR_D4_REPLACEMENT_DECISION_REVIEW_2026-10-05.md"
+    },
+    {
+      "id": "repair_d4_actual_controller_review_20261005",
+      "title": "DONE: original D4 stop preserved but not admitted",
+      "task": "Own only COEVO_ACTUAL_CONTROLLER_DECISION_REVIEW_2026-10-05-v4.json and AGENT_LOG_REPAIR_D4_CONTROLLER_DECISION_REVIEW_2026-10-05.md; original once-completed transaction/input/evidence review, no transport/fits/source edits.",
+      "status": "Original v4 8972c6ae transport PASS/science continuation denied; fresh human permission replacement separate.",
+      "active": false,
+      "next": "Preserve admitted evidence; D5 exact source/result remain separate.",
+      "log": "AGENT_LOG_REPAIR_D4_CONTROLLER_DECISION_REVIEW_2026-10-05.md"
+    },
+    {
+      "id": "repair_controller_continuation_review_20261005",
+      "title": "DONE: narrow H continuation source independently admitted",
+      "task": "Own only COEVO_FEEDBACK_CONTINUATION_SCOPE_REVIEW_2026-10-05-v3.json, COEVO_FEEDBACK_CONTINUATION_SOURCE_REVIEW_2026-10-05-v3.json and AGENT_LOG_REPAIR_CONTROLLER_CONTINUATION_REVIEW_2026-10-05.md; no source edits/fits/accountcalls.",
+      "status": "Three-location H change b0c4c7a2/sourceReviewc221caca,69synthetic PASS; old transport/validator/scorer preserved.",
+      "active": false,
+      "next": "Preserve admitted evidence; D5 exact source/result remain separate.",
+      "log": "AGENT_LOG_REPAIR_CONTROLLER_CONTINUATION_REVIEW_2026-10-05.md"
+    },
+    {
+      "id": "repair_d4_math_precheck_20261005",
+      "title": "ACTIVE: D4 math PASS and minimal operational adaptation",
+      "task": "Original only math receipt/log plus explicitly expanded scoped outer launch_d4.py, accept_d4_feedback.py, prepare_d4_input.py; root alone executes/updates authority. No science choice/source/harness/fit/modelcalls.",
+      "status": "Nine synthetic checks PASS3483ae82; one-shot prior scripts mechanically adapted, no execution.",
       "active": true,
-      "next": "Generalize authority escalation rejection, hold and validate the full ancestor descriptor chain end-to-end, add deterministic adversarial tests, and return fresh hashes for rereview.",
+      "next": "Return syntax checked exact scripts/hashes for root full inspection.",
+      "log": "AGENT_LOG_REPAIR_D4_MATH_2026-10-05.md"
+    },
+    {
+      "id": "repair_d4_implementation_20261005",
+      "title": "ACTIVE: actual D3-feedback-selected odd-confidence candidate",
+      "task": "Own only nfl_ingame_temperature_odd_confidence_joint_offset.py, matching test and AGENT_LOG_REPAIR_D4_IMPLEMENTER_2026-10-05.md after exactcontract/scopePASS; no oldsource/H/scorer/fits/transport/commits.",
+      "status": "Scope608593af PASS notified18:10UTC; implementation active, no realfit.",
+      "active": true,
+      "next": "One small direct Ccomponent using fixed tanh marketlogit basis, existinggenericD1solver/C7parent and unchangedH1; preserve strict replay/admission/failure and actualsize.",
+      "log": "AGENT_LOG_REPAIR_D4_IMPLEMENTER_2026-10-05.md"
+    },
+    {
+      "id": "repair_d4_review_20261005",
+      "title": "DONE: D4 actual result independently reviewed",
+      "task": "Own only COEVO_D4_SCOPE_REVIEW_2026-10-05.json, later COEVO_D4_SOURCE_REVIEW_2026-10-05.json and COEVO_D4_RESULT_REVIEW_2026-10-05.json plus AGENT_LOG_REPAIR_D4_REVIEWER_2026-10-05.md; no source edits/fits/model calls.",
+      "status": "Result10297dae PASS no-refit; both parent losses worse/1of4; credit2/refute/branch, exact recipe stopped not family.",
+      "active": false,
+      "next": "Preserve admitted evidence; D5 exact source/result remain separate.",
+      "log": "AGENT_LOG_REPAIR_D4_REVIEWER_2026-10-05.md"
+    },
+    {
+      "id": "repair_d3_actual_controller_review_20261005",
+      "title": "DONE: actual D3-feedback transaction independently reviewed",
+      "task": "Own only COEVO_ACTUAL_CONTROLLER_DECISION_REVIEW_2026-10-05-v3.json and AGENT_LOG_REPAIR_D3_CONTROLLER_DECISION_REVIEW_2026-10-05.md; original completed transaction/source/input/evidence review only, no transport/source/fits.",
+      "status": "Original once-only responseb692/v3review2856d6bd PASS; negativeD3 feedback actually chose D4. No reviewer calls/fits.",
+      "active": false,
+      "next": "Preserve original; D4 source/result review separate.",
+      "log": "AGENT_LOG_REPAIR_D3_CONTROLLER_DECISION_REVIEW_2026-10-05.md"
+    },
+    {
+      "id": "repair_d3_math_precheck_20261005",
+      "title": "DONE: D3 constant-column solver precheck",
+      "task": "Existing auxiliary Controller worker owns only COEVO_D3_MATH_PREFLIGHT_2026-10-05.json and AGENT_LOG_REPAIR_D3_MATH_2026-10-05.md; read-only synthetic math, no scientific selection/source/Train/model calls.",
+      "status": "Six synthetic ones-column cases PASS; fixed recipe supports unchanged generic solver. Operational scripts syntax/IDs/history checked; no Train or model calls.",
+      "active": false,
+      "next": "Preserve immutable preflight; final source and actual result remain separate.",
+      "log": "AGENT_LOG_REPAIR_D3_MATH_2026-10-05.md"
+    },
+    {
+      "id": "repair_d3_implementation_20261005",
+      "title": "DONE: actual D2-feedback-selected intercept implementation",
+      "task": "Own only new nfl_ingame_temperature_intercept_joint_offset.py, matching test and AGENT_LOG_REPAIR_D3_IMPLEMENTER_2026-10-05.md after frozen contract/scope PASS; no oldsource/H/scorer/fits/model calls/commits.",
+      "status": "Frozen196line sourcec744dbf0/testca3b802f/logf6f72ef2;10focused/127relevant PASS, source checkpointa93598a. No worker realfits.",
+      "active": false,
+      "next": "Distinct exact-source admission then Supervisor once-only resident-Train execution.",
+      "log": "AGENT_LOG_REPAIR_D3_IMPLEMENTER_2026-10-05.md"
+    },
+    {
+      "id": "repair_d3_review_20261005",
+      "title": "ACTIVE: independent D3 scope/source/result review",
+      "task": "Own only COEVO_D3_SCOPE_REVIEW_2026-10-05.json, later COEVO_D3_SOURCE_REVIEW_2026-10-05.json and COEVO_D3_RESULT_REVIEW_2026-10-05.json plus AGENT_LOG_REPAIR_D3_REVIEWER_2026-10-05.md; no source/fits/model selection or calls.",
+      "status": "Actual D3 choice and frozen contract await scope; no selected attempt or prediction yet.",
+      "active": true,
+      "next": "Actual-response fidelity and unchanged boundaries before implementation; exact source before once-fit; independent no-refit numerical result after.",
+      "log": "AGENT_LOG_REPAIR_D3_REVIEWER_2026-10-05.md"
+    },
+    {
+      "id": "repair_d2_actual_controller_review_20261005",
+      "title": "DONE: original D2-feedback account decision review",
+      "task": "Own only COEVO_ACTUAL_CONTROLLER_DECISION_REVIEW_2026-10-05-v2.json and AGENT_LOG_REPAIR_D2_CONTROLLER_DECISION_REVIEW_2026-10-05.md; inspect original completed call/input/authorization/choice, no transport/source/fits.",
+      "status": "Original once-only response1f6c3acd and11roles/68bindings verified; reviewd6b2ce9d PASS. Actual D2negative selected distinct C7intercept question.",
+      "active": false,
+      "next": "Preserve original response and scope; D3 implementation/source/result are separate gates.",
+      "log": "AGENT_LOG_REPAIR_D2_CONTROLLER_DECISION_REVIEW_2026-10-05.md"
+    },
+    {
+      "id": "repair_d2_math_precheck_20261005",
+      "title": "ACTIVE: parallel D2 pure-math/age reuse check",
+      "task": "Existing Controller worker read-only checks frozenD2recipe vs genericD1solver and causal_age; owns ONLY COEVO_D2_MATH_PREFLIGHT_2026-10-05.json and AGENT_LOG_REPAIR_D2_MATH_2026-10-05.md. No algorithm selection/sourcewrites/Train/modelcalls.",
+      "status": "Registered directcritical-path synthetic helper check; newCsource notyetadmitted.",
+      "active": true,
+      "next": "In<=5min verify generic z>1 allowed/convex derivatives/brackets/KKT/gamma0 and causalage semantics; give actionable pitfalls toimplementer/reviewer, not a newplan.",
+      "log": "AGENT_LOG_REPAIR_D2_MATH_2026-10-05.md"
+    },
+    {
+      "id": "repair_d2_implementation_20261005",
+      "title": "ACTIVE: actual feedback-selected receipt-age slope candidate",
+      "task": "Existing predictorworker owns ONLY new nfl_ingame_temperature_receipt_age_slope_offset.py, matchingtest and AGENT_LOG_REPAIR_D2_IMPLEMENTER_2026-10-05.md under frozenD2contract. No oldsource/H/scorer writes or real fits/commits.",
+      "status": "ActualaccountController4a71dbb9 chose distinctagequestion afteracceptedD1negative; thirdouterattempt/fourfitsreserved. Await exactcontract scope review.",
+      "active": true,
+      "next": "Implement smallest directly executable candidate with frozenC7parent/alpha16/H1 and genericD1solver after scopePASS; verify synthetic/full relevant, no Train fits.",
+      "log": "AGENT_LOG_REPAIR_D2_IMPLEMENTER_2026-10-05.md"
+    },
+    {
+      "id": "repair_d2_review_20261005",
+      "title": "ACTIVE: independent D2 scope/source/results",
+      "task": "Existing reviewer owns ONLY COEVO_D2_SCOPE_REVIEW_2026-10-05.json, COEVO_D2_SOURCE_REVIEW_2026-10-05.json, later COEVO_D2_RESULT_REVIEW_2026-10-05.json and AGENT_LOG_REPAIR_D2_REVIEWER_2026-10-05.md; no candidate edits/fits/algorithm substitution.",
+      "status": "D2actualControllerchoice admitted forimplementation, rootoperationaltranscription frozen and awaiting exactscope review.",
+      "active": true,
+      "next": "Check originalresponse fidelity/causalage/H1compatibility/smallness before code; exactsource/protocol before fit, actualscore/no-refit review after.",
+      "log": "AGENT_LOG_REPAIR_D2_REVIEWER_2026-10-05.md"
+    },
+    {
+      "id": "repair_actual_controller_review_20261005",
+      "title": "ACTIVE: independent corrected account decision admission",
+      "task": "Existing reviewer owns ONLY COEVO_ACTUAL_CONTROLLER_DECISION_REVIEW_2026-10-05-v1.json and AGENT_LOG_REPAIR_ACTUAL_CONTROLLER_REVIEW_2026-10-05.md. Read exact newtransaction/authorization/input/response/evidence; no source/fits/newmodelcalls or algorithm selection.",
+      "status": "Fresh explicitly authorized call launched; response pending, not fabricated.",
+      "active": true,
+      "next": "Verify original response/event/source/onceclaim and evidence-driven scientific choice; source implementation follows admitted actual choice.",
+      "log": "AGENT_LOG_REPAIR_ACTUAL_CONTROLLER_REVIEW_2026-10-05.md"
+    },
+    {
+      "id": "repair_feedback_schema_20261005",
+      "title": "DONE: type-only service-schema repair",
+      "task": "Existing Controller worker owned ONLY consumer/test/newrepairlog under505a7c92, no calls/fits/scientific selection.",
+      "status": "Frozen d6b72f61/b2aea883 at74688e1;5source replacements,57distinct checksPASS; independently admitted576e93b4.",
+      "active": false,
+      "next": "Preserve exact source and originalfailedcall; fresh replacement needs explicit approval.",
+      "log": "AGENT_LOG_REPAIR_FEEDBACK_SCHEMA_2026-10-05.md"
+    },
+    {
+      "id": "repair_feedback_schema_review_20261005",
+      "title": "DONE: independent schema repair and original-call verification",
+      "task": "Existing reviewer owned scope/finalreceipts and ownlog; no calls/fits/source writes.",
+      "status": "b10b711e scope/576e93b4 exactsource PASS;34schema nodes/10types/unchangedAST/57tests, originalHTTP400 hashes/childabsence verified.",
+      "active": false,
+      "next": "Conditional source admission only; fresh ID approval and actual decision/descendant remain unproved.",
+      "log": "AGENT_LOG_REPAIR_FEEDBACK_SCHEMA_REVIEW_2026-10-05.md"
+    },
+    {
+      "id": "repair_feedback_consumer_reviewer_20261005",
+      "title": "ACTIVE: independent consumer scope/source review",
+      "task": "Existing reviewer; own ONLY COEVO_FEEDBACK_CONSUMER_SCOPE_REVIEW_2026-10-05-v1.json and later COEVO_FEEDBACK_CONSUMER_SOURCE_REVIEW_2026-10-05-v1.json plus AGENT_LOG_REPAIR_FEEDBACK_CONSUMER_REVIEWER_2026-10-05.md. No source/fits/realmodelcalls.",
+      "status": "Scope e5510b87 PASS only; implementation dispatched. Final exact source remains pending.",
+      "active": true,
+      "next": "Inspect stable consumer implementation/tests, no actual calls/fits.",
+      "log": "AGENT_LOG_REPAIR_FEEDBACK_CONSUMER_REVIEWER_2026-10-05.md"
+    },
+    {
+      "id": "repair_feedback_consumer_20261005",
+      "title": "ACTIVE: one H numerical feedback consumer",
+      "task": "Exact new account_controller_feedback_consumer.py and matchingtest plus ownlog only, after independent scopePASS. No source changes to recorder/worker/R and no realCLI/fits.",
+      "status": "Actually dispatched to existing Controller role after e5510b87 scope PASS; new allowlisted module/test and synthetic checks only.",
+      "active": true,
+      "next": "Freeze actual source/tests within20min for distinct review; no real model calls by implementer.",
+      "log": "AGENT_LOG_REPAIR_FEEDBACK_CONSUMER_2026-10-05.md"
+    },
+    {
+      "id": "repair_d1_entry_reviewer_20261005",
+      "title": "ACTIVE: D1 integrated-source independent review",
+      "task": "Existing independent reviewer; own ONLY COEVO_D1_ENTRY_SCOPE_REVIEW_2026-10-05-v1.json, later distinct COEVO_D1_INTEGRATED_SOURCE_REVIEW_2026-10-05-v1.json, and AGENT_LOG_REPAIR_D1_REVIEWER_2026-10-05.md. Scope before code; source/puremath/239line inseparability before realfits.",
+      "status": "Scope953f3fc6 passed; actual checkpoint745fa58/91line entry38387cdb and248line testeacf1eed dispatched. Root106 synthetic PASS7.695s.",
+      "active": true,
+      "next": "Review original239line science inseparability and exact integrated source/time/failure/replay before single Train attempt.",
+      "log": "AGENT_LOG_REPAIR_D1_REVIEWER_2026-10-05.md"
+    },
+    {
+      "id": "repair_d1_entry_implementer_20261005",
+      "title": "DONE: D1 thin entry and synthetic tests",
+      "task": "Existing predictorworker only new D1 entry envelope and dedicated log first; no code until scope review, no fits. Original mathematical source immutable.",
+      "status": "Frozen entry38387cdb/testeacf1eed/logd6097841;106 synthetic PASS7.538s, zero Train fits. Local checkpoint745fa58.",
+      "active": false,
+      "next": "Distinct integrated review then Supervisor once-only real worker; original science unchanged.",
+      "log": "AGENT_LOG_REPAIR_D1_IMPLEMENTER_2026-10-05.md"
+    },
+    {
+      "id": "repair_controller_continuation_20261005",
+      "title": "DONE: actual feedback-consumer integration recommendation",
+      "task": "Existing Controller read-only operational integration recommendation, one dedicated log; no new scientific candidate before reviewed D1.",
+      "status": "Frozen trigger1efc9d23; recorder lacks numerical model consumer, account transport tested with unknown exact serving version.",
+      "active": false,
+      "next": "Recommendation now implemented separately as one H component; actual scientific continuation only from reviewed result.",
+      "log": "AGENT_LOG_REPAIR_CONTROLLER_CONTINUATION_2026-10-05.md"
+    },
+    {
+      "id": "repair_h1_reviewer_20261005",
+      "title": "DONE: independent H1 source and real parity review",
+      "task": "Existing independent reviewer route; own ONLY H1reviewlog, immutable v3 proposal/source receipts and NEW COEVO_H1_LIVE_PARITY_REVIEW_2026-10-05.json. No source edits/fits.",
+      "status": "Exact source13913664 and livec619bca9 PASS;87 five-arm rows/four states/all34 scoring fields exact,4fits/childabsent.",
+      "active": false,
+      "next": "Preserve receipts; no prediction/R/automatic continuation success.",
+      "log": "AGENT_LOG_REPAIR_H1_REVIEWER_2026-10-05.md"
+    },
+    {
+      "id": "repair_h1_implementer_20261005",
+      "title": "DONE: bounded H1 adapter completion",
+      "task": "Existing predictor worker route; exact adapter and matching focused-test write set plus own new log. No Train fits or old source writes.",
+      "status": "Frozen245line sourcef62a5459/testb8ad2377; independent scope/source/parity accepted and local checkpoints saved.",
+      "active": false,
+      "next": "Preserve repaired adapter; D1 uses unchanged reviewed source, no control rerun.",
+      "log": "AGENT_LOG_REPAIR_H1_IMPLEMENTER_2026-10-05.md"
+    },
+    {
+      "id": "repair_p0_controller_20261005",
+      "title": "DONE: fresh Controller availability probe",
+      "task": "Existing coevo_controller_20261003 route; read-only P0 acknowledgement and prerequisite check, own only new preflight log.",
+      "status": "Actual reply received, P0 prerequisite PASS; read-only log frozen.",
+      "active": false,
+      "next": "Reuse live role for bounded tasks; no stale capacity error treated as current.",
+      "log": "AGENT_LOG_REPAIR_P0_CONTROLLER_2026-10-05.md"
+    },
+    {
+      "id": "repair_p0_reviewer_20261005",
+      "title": "DONE: fresh reviewer availability probe",
+      "task": "Existing coevo_independent_review_20261003 route; read-only P0 acknowledgement and boundary check, own only new preflight log.",
+      "status": "Actual reply received, P0 prerequisite PASS; read-only log frozen.",
+      "active": false,
+      "next": "Reuse live independent role under exact task write scopes.",
+      "log": "AGENT_LOG_REPAIR_P0_REVIEWER_2026-10-05.md"
+    },
+    {
+      "id": "coevo_controller_20261005",
+      "title": "ACTIVE: Eight-hour Controller and three-branch selection",
+      "task": "Choose scientific candidates from accepted prior evidence, return feedback-dependent decisions and global ranked three-branch snapshots; propose one small R change only with a problem-bound contract and matched evidence.",
+      "status": "Registered before dispatch; actual source clean atc979577, window starts04:37:44UTC.",
+      "active": true,
+      "next": "Freeze D1 contract and initial three branches; no source edits, fits, model/provider changes or invented scores.",
+      "log": "AGENT_LOG_COEVO_CONTROLLER_2026-10-05.md"
+    },
+    {
+      "id": "coevo_predictor_worker_20261005",
+      "title": "ACTIVE: Candidate reuse and implementation",
+      "task": "Inspect minimal reuse path for prior recommended joint offset; then implement only a Supervisor-admitted exact Controller contract. Isolated new candidate source/tests; do not rewrite frozen runners.",
+      "status": "Registered before dispatch; actual source clean atc979577, window starts04:37:44UTC.",
+      "active": true,
+      "next": "Read-only API feasibility and exact paths/line-budget recommendation before contract acceptance; no Train fits.",
+      "log": "AGENT_LOG_COEVO_RESEARCHER_2026-10-05.md"
+    },
+    {
+      "id": "coevo_independent_review_20261005",
+      "title": "ACTIVE: Independent source/result/attribution review",
+      "task": "Verify fixed scorer/runtime/data identities and audit candidates plus H/R microsteps independently; no algorithm selection, implementation, fits or commits.",
+      "status": "Registered before dispatch; actual source clean atc979577, window starts04:37:44UTC.",
+      "active": true,
+      "next": "Read-only baseline/preflight and identify necessary smallness/three-branch evidence, then exact-source admission and results.",
+      "log": "AGENT_LOG_COEVO_REVIEWER_2026-10-05.md"
+    },
+    {
+      "id": "coevo_controller_20261003",
+      "title": "DONE: Final accepted-evidence Controller memory",
+      "task": "Own ONLY new COEVO_CONTROLLER_WINDOW_MEMORY_FINAL_2026-10-03.json and AGENT_LOG_COEVO_CONTROLLER_WINDOW_FINAL_2026-10-03.md; all13actualevidence reconciled, priorrecords preserved.",
+      "status": "Finalmemoryd7bd0a67/logf3f41792 frozen, thirteenactualsource/score/review/feedback bindings checked. Rawincumbentunchanged; globaltwofamiliesC7calibration andB3/A2causalstate. No newfit orRchange.",
+      "active": false,
+      "next": "Unexecuted nextseparatelyboundedquestion InGameTemperaturePossessionPressureJointOffset-v1: nativeA2pressure conditionalonC7, C7actualparent/A2contributor/C7trigger distinct, oldjudge andscope unchanged; no morefits in exhaustedcurrentcap.",
+      "log": "AGENT_LOG_COEVO_CONTROLLER_WINDOW_FINAL_2026-10-03.md"
+    },
+    {
+      "id": "coevo_predictor_worker_20261003",
+      "title": "DONE: C7 market-temperature production",
+      "task": "Own ONLY new nfl_ingame_market_temperature_offset.py and AGENT_LOG_COEVO_C7_WORKER_2026-10-03.md; frozenf0d92597, actualC1parent/acceptedC6trigger.",
+      "status": "Finalsourcef5a80888/419lines independently admitted and checkpoint9481f772; no worker Trainfits, oldsource unchanged.",
+      "active": false,
+      "next": "Preserve finalcandidate bytes; source changes require fresh identity, no same-ID rerun.",
+      "log": "AGENT_LOG_COEVO_C7_WORKER_2026-10-03.md"
+    },
+    {
+      "id": "coevo_independent_review_20261003",
+      "title": "DONE: Final thirteen-result operational closure",
+      "task": "Own ONLY new COEVO_WINDOW_FINAL_OPERATIONAL_REVIEW_2026-10-03.json and AGENT_LOG_COEVO_WINDOW_FINAL_REVIEW_2026-10-03.md. Allsource/results/Train read-only, no fits/optimizer/candidate/scorer/harness edits/commit/network/provider/protected operation.",
+      "status": "Finalreviewcbc9c5e7/logc2136fef frozen and accepted. OPERATIONAL_PASS_NOT_PREDICTIVE_OR_MECHANISM_SUCCESS: all13bindings/scores, sevenclosedcaps,102journalprefixes/14freshpure-replays, finalmemory and13PIDsabsent verified. Priorrecords unchanged.",
+      "active": false,
+      "next": "Preserve exact receipts and unsupported claims. No currentfits; next concrete Controller proposal requires a separatelybounded batch. Nativecrossbatchconsumption and interrupted-real-fit recovery remain unimplemented/untested, not closure failures.",
+      "log": "AGENT_LOG_COEVO_WINDOW_FINAL_REVIEW_2026-10-03.md"
+    },
+    {
+      "id": "market_calibration_next_controller_20260929",
+      "title": "DONE：Astra next Controller — market-only calibration",
+      "task": "Interpret the reviewed offset result and choose the next concrete Discovery experiment, including a past-only market calibration control.",
+      "status": "DONE: gpt-6-astra/high froze MarketOnlyRidgeCalibration-v1, a two-parameter market-logit-only nested control using the same offset objective, penalty and optimizer; no Train fit was run by Controller.",
+      "active": false,
+      "next": "Implement the thin sibling runner/tests, independently pre-review it, then execute one fresh local Train diagnostic and return the result to Controller.",
+      "log": "AGENT_LOG_MARKET_CALIBRATION_NEXT_CONTROLLER_2026-09-29.md"
+    },
+    {
+      "id": "post_calibration_next_controller_20260929",
+      "title": "DONE：Astra next Controller — compressed orthogonal price path",
+      "task": "Interpret calibration and full-offset attribution, then select one next open-Discovery recipe for conditional information beyond market.",
+      "status": "DONE: gpt-6-astra/high froze MarketOrthogonalPricePath-v1, compressing existing causal paths to two signed families, prior-only residualizing them against market logit, and fitting a four-parameter offset ridge; no implementation or Train run yet.",
+      "active": false,
+      "next": "Implement a thin sibling runner/tests, independently pre-review, then execute under a fresh persistent ID if valid.",
+      "log": "AGENT_LOG_POST_CALIBRATION_NEXT_CONTROLLER_2026-09-29.md"
+    },
+    {
+      "id": "first_real_train_next_hypothesis_20260929",
+      "title": "DONE：Next Train diagnostic hypothesis",
+      "task": "Interpret the completed -02 Train scorecard and propose exactly one next prediction-stage change that is causally motivated and testable on the same frozen rows/splits.",
+      "status": "DONE: gpt-6-astra/high proposed exactly one next candidate, MarketOffsetRidgeLogistic-v1, with fixed lambda=1 mean-NLL residual objective and a new 600-second fail-closed staleness gate.",
+      "active": false,
+      "next": "Implement synthetic gradient/staleness/control-parity tests, independently freeze the new snapshot, then run one fresh persistent Train diagnostic ID.",
+      "log": "AGENT_LOG_FIRST_REAL_TRAIN_NEXT_HYPOTHESIS_2026-09-29.md"
+    },
+    {
+      "id": "synthetic_adapter_canary_boundary_reviewer_20260929",
+      "title": "DONE/PAUSED：Synthetic adapter live-canary boundary review",
+      "task": "Read-only review of the exact v4 adapter and A01-A22 threat model; specify launch-critical live synthetic probes and later independently review the one-shot terminal artifacts.",
+      "status": "Design-boundary PASS at 0 P0 / 0 P1. Live terminal review is strategically paused; no Docker dispatch or ID consumption occurred.",
+      "active": false,
+      "next": "Preserve design evidence; do not treat it as a prerequisite for open Train Discovery.",
+      "log": "AGENT_LOG_SYNTHETIC_ADAPTER_CANARY_BOUNDARY_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "synthetic_adapter_canary_oneshot_reviewer_20260929",
+      "title": "DONE/PAUSED：Synthetic adapter one-shot launch-state review",
+      "task": "Audit the authorized ID's preflight, durable local paths, one-shot consumption, replay and failure semantics without running Docker.",
+      "status": "PASS_FOR_IMPLEMENTATION_ONLY at 0 P0 / 0 P1. Superseding authorization now permits local Train diagnostics and pauses this canary-first path. ID remains unconsumed.",
+      "active": false,
+      "next": "Preserve the one-shot contract for a later locked-Evaluation canary; do not resume before the first Train scorecard.",
+      "log": "AGENT_LOG_SYNTHETIC_ADAPTER_CANARY_ONESHOT_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "independent_real_candidate_adapter_reviewer_20260929",
+      "title": "DONE：Independent synthetic local candidate adapter v4 rereview",
+      "task": "Fresh non-author rereview of repaired aggregate 87a32217bca2919e1a4724785ef578a6b7cda23b10bf99c56319017235e9472b, replaying all three prior review rounds and the full A01-A22 disposition.",
+      "status": "PASS, 0 P0 / 0 P1 for exact v4 synthetic adapter readiness. Independently recomputed aggregate 87a32217...e9472b; 85/85 focused-plus-adjacent, 516/516 repository tests with 2 skips, and 11/11 extra terminal mutations passed/fail-closed. No live Docker canary or real data was used.",
+      "active": false,
+      "next": "Freeze this exact adapter snapshot. Request a separately authorized fresh-ID zero-provider synthetic Docker isolation canary; real data, scoring, training, provider, release and protected splits remain blocked.",
+      "log": "AGENT_LOG_REAL_CANDIDATE_ADAPTER_INDEPENDENT_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "real_candidate_adapter_threat_reviewer_20260929",
+      "title": "DONE：Real candidate adapter threat model",
+      "task": "Independently inspect the frozen synthetic prediction protocol and existing local Docker containment sources; specify the smallest attack-complete local adapter using synthetic fixtures only.",
+      "status": "PASS for synthetic-only implementation readiness: exact stdin/stdout interface, two read-only source mounts, host-owned fsync sequencing, exit/absence-before-completion, and A01-A22 attack matrix. 59 existing offline checks passed; no Docker or real data used.",
+      "active": false,
+      "next": "Supervisor implements the narrow adapter with synthetic fixtures only, then freezes one exact snapshot for independent integrated review.",
+      "log": "AGENT_LOG_REAL_CANDIDATE_ADAPTER_THREAT_MODEL_2026-09-29.md"
+    },
+    {
+      "id": "prediction_first_minimal_loop_20260929",
+      "title": "DONE：Prediction-first minimal loop",
+      "task": "Implement the smallest synthetic probability loop in three disjoint tracks, then integrate KEEP/REVERT and obtain fresh independent review.",
+      "status": "Exact v4 synthetic loop PASS：54/54 focused、33/33 adjacent and fresh non-author attack review with 0 P0 / 0 P1. KEEP then REVERT, frozen-Dev binding, full-score persistence, crash recovery and aggregate-only lineage all verified; no empirical prediction claim exists.",
+      "active": false,
+      "next": "Freeze this exact snapshot. Next, separately plan an already-opened local-data diagnostic and a real isolation canary; no fetch, protected split, provider, release or promotion is granted.",
+      "log": "AGENT_LOG_PREDICTION_FIRST_MINIMAL_LOOP_REVIEW_2026-09-29.md"
+    },
+    {
+      "id": "pmb_role_reversal_audit_20260929",
+      "title": "DONE：PMB role-reversal audit",
+      "task": "Locate every active PMB architectural claim and identify the minimal safe supersession without mutating historical hashes.",
+      "status": "Read-only PASS：42 PMB files form an isolated untracked island; current architecture/release manifest is PMB-free; one superseding decision is sufficient.",
+      "active": false,
+      "next": "Keep PMB smoke-only and cancel prospective intake/adapter/hidden-evaluator/Controller-swap work.",
+      "log": "AGENT_LOG_PREDICTION_FIRST_RESET_2026-09-29.md"
+    },
+    {
+      "id": "minimal_prediction_loop_audit_20260929",
+      "title": "DONE：Minimal prediction-loop component audit",
+      "task": "Map existing code to raw data, signal, prediction, objective and PnL, then identify the smallest missing prediction-first loop pieces.",
+      "status": "Read-only PASS：most primitives exist; the three real gaps are settlement probability scoring, isolated label-free prediction execution and KEEP/REVERT lineage.",
+      "active": false,
+      "next": "Build only the three gaps and prove two synthetic rounds before any real data or PnL work.",
+      "log": "AGENT_LOG_PREDICTION_FIRST_RESET_2026-09-29.md"
+    },
+    {
+      "id": "p0_admission_integration_implementation_20260922",
+      "title": "PAUSED：P0 candidate-admission integration remediation",
+      "task": "Compose the reviewed ledger, orientation and Train receipt boundaries into one controlled candidate-only non-test consumer.",
+      "status": "First snapshot was REPLAN; subsequent repair evidence is preserved. Strategy reset pauses additional admission governance until the minimal prediction loop exists.",
+      "active": false,
+      "next": "Do not resume automatically. After the synthetic loop passes, select one stable repair snapshot and obtain fresh independent review before any admission claim.",
       "log": "AGENT_LOG_P0_ADMISSION_INTEGRATION_IMPLEMENTATION_2026-09-22.md"
     },
     {
@@ -45,42 +819,6 @@
       "active": false,
       "next": "Integration remains REPLAN：add controlled release coverage and a non-test consumer that owns canonical path/symlink provenance; separately resolve rights/provider provenance and formal Train admission.",
       "log": "AGENT_LOG_CHAT_2024_ORIENTATION_REVIEW_2026-09-22.md"
-    },
-    {
-      "id": "chat_2024_evidence_replacement_20260922",
-      "title": "DONE · P0 2024 evidence replacement",
-      "task": "Replacement visible Codex task audits local rights, denominator, orientation, clock and provenance evidence after the original task returned empty.",
-      "status": "REPLAN for formal admission：offline replay found 285 unique games, 284 mapped and one explicit missing 2024_22_KC_PHI/event 17330 row; rights, code-owned home/away orientation and provider publish/local receive provenance remain unresolved.",
-      "active": false,
-      "next": "Build and independently review the full-denominator ledger and orientation verifier. Do not redownload first or claim admission; rights/timing remain external gates.",
-      "log": "AGENT_LOG_CHAT_2024_EVIDENCE_REPLACEMENT_2026-09-22.md"
-    },
-    {
-      "id": "chat_train_admission_review_20260922",
-      "title": "DONE · P0 Train gate rereview",
-      "task": "Visible Codex task independently reviews the formal Train receipt gate and pushes its final result back to the Supervisor.",
-      "status": "Fresh independent PASS for scoped validator/Watchdog binding：23/23 focused、37/37 adjacent and zero-paid canary passed. Dataset bytes/path, seasons, Controller question/task and fail-closed evidence were verified.",
-      "active": false,
-      "next": "Integration remains REPLAN：add module to controlled manifest, create a real training/eval caller, and close post-claim TOCTOU before any admission or training.",
-      "log": "AGENT_LOG_CHAT_TRAIN_ADMISSION_REVIEW_2026-09-22.md"
-    },
-    {
-      "id": "chat_v2_cursor_review_20260922",
-      "title": "DONE · P0 v2 cursor review",
-      "task": "Visible Codex task independently reviews the v2 cursor contract and pushes its final result back to the Supervisor.",
-      "status": "Independent bounded offline PASS on final source SHA 6c329f54…e080f：55/55 adversarial and 80/80 focused+adjacent tests passed; legacy v1 unchanged; no network authority or data admission granted.",
-      "active": false,
-      "next": "Supervisor integrates both new files into controlled-source review; live executor, rights, catalog and formal admission remain separate gates.",
-      "log": "AGENT_LOG_CHAT_V2_CURSOR_REVIEW_2026-09-22.md"
-    },
-    {
-      "id": "chat_2024_rights_coverage_20260922",
-      "title": "ARCHIVED · P0 2024 evidence · empty",
-      "task": "Visible Codex task audits exact rights and complete-denominator evidence for the preserved 2024 candidate and pushes findings to Supervisor.",
-      "status": "Task completed three turns without any visible final or delegated result, including two explicit retrieval requests. No audit conclusion exists.",
-      "active": false,
-      "next": "Archived after preserving the empty outcome; replacement work completed separately. Do not revive this task.",
-      "log": "AGENT_LOG_CHAT_2024_RIGHTS_COVERAGE_2026-09-22.md"
     },
     {
       "id": "formal_train_admission_gate_20260922",
@@ -144,15 +882,6 @@
       "active": false,
       "next": "由 Supervisor 核对新轮预算、唯一 ID、全局状态和授权后，才考虑一次新 Controller 决策。",
       "log": "AGENT_LOG_GATE1_SHORT_CHOICE_REVIEW_2026-09-22.md"
-    },
-    {
-      "id": "gate1_short_choice_20260922",
-      "title": "DONE：Gate 1 精简 Controller 提交接口",
-      "task": "离线实现短 choice ID 加少量科研字段；可信代码映射执行细节，保留新来源提案通道和独立 compiler，增加对抗测试。",
-      "status": "离线实现完成；72/72 focused tests 通过。最终 packet 为 3310 输入、2750 输出，硬上界 $0.0494991；发布后 CLI 零费用 canary PASS。旧 3300/$0.0494505 估算已作废。",
-      "active": false,
-      "next": "等待新轮前置检查；不得把离线通过当成正式数据结果。",
-      "log": "AGENT_LOG_GATE1_SHORT_CHOICE_2026-09-22.md"
     },
     {
       "id": "gate1_strict_parser_review_20260922",
@@ -299,60 +1028,6 @@
       "log": "AGENT_LOG_SUPERVISOR_VISIBILITY_AUDIT_2026-09-21.md"
     },
     {
-      "id": "gate1_plan_integration_20260921",
-      "title": "P0：Gate 1 可执行计划接线",
-      "task": "把能力契约、固定样本和 trade request builder 接成唯一、hash-bound 的 executable-plan compiler。",
-      "status": "已完成：Wave 2 离线集成；当前无运行中 agent",
-      "active": false,
-      "next": "Supervisor 已整合结果；真实 Train 入场和发布仍另行审查。",
-      "log": "AGENT_LOG_GATE1_PLAN_INTEGRATION_2026-09-21.md"
-    },
-    {
-      "id": "gate1_firstwave_audit_20260921",
-      "title": "P0：Wave 1 独立安全与可执行性审查",
-      "task": "只读检查权限、hash、source/operation、split、分页、限额和 executor 声明边界。",
-      "status": "已完成：原 Wave 1 审查发现 REPLAN，后续独立复核关闭窄范围收据缺口",
-      "active": false,
-      "next": "新源码及生产接线必须再审；旧结论不自动放行发布。",
-      "log": "AGENT_LOG_GATE1_FIRSTWAVE_AUDIT_2026-09-21.md"
-    },
-    {
-      "id": "gate1_canary_design_20260921",
-      "title": "P0：Gate 1 零费用与攻击性 canary",
-      "task": "设计 decision→task→materialization→request manifest 的零 provider/零网络 canary 和反例覆盖。",
-      "status": "已完成：离线 fixtures 和 canary；当前无运行中 agent",
-      "active": false,
-      "next": "合成结果已整合；发布后的生产路径仍需独立零费用验收。",
-      "log": "AGENT_LOG_GATE1_CANARY_DESIGN_2026-09-21.md"
-    },
-    {
-      "id": "gate1_capability_contract_20260921",
-      "title": "P0：Gate 1 可执行能力契约",
-      "task": "离线实现 source x operation 能力表；Controller 请求 broker 尚未实现的组合时必须 fail closed。",
-      "status": "已完成：trusted capability registry 已实现，55/55 相邻测试通过",
-      "active": false,
-      "next": "由 Wave 2 integrator 显式注册验收后的 sample/trade handler；新能力在此之前仍 fail closed。",
-      "log": "AGENT_LOG_GATE1_CAPABILITY_CONTRACT_2026-09-21.md"
-    },
-    {
-      "id": "gate1_sample_materializer_20260921",
-      "title": "P0：Gate 1 固定样本生成器",
-      "task": "把冻结 Train-only 抽样规则确定性转换成 exact IDs、canonical JSON 和 hash。",
-      "status": "已完成：确定性 Train-only materializer 实现，10/10 专测和 13/13 相邻测试通过",
-      "active": false,
-      "next": "Wave 2 验证 materialization/request-plan hashes 后接入 trusted compiler。",
-      "log": "AGENT_LOG_GATE1_SAMPLE_MATERIALIZER_2026-09-21.md"
-    },
-    {
-      "id": "gate1_trade_query_runner_20260921",
-      "title": "P0：Gate 1 公开成交查询 runner",
-      "task": "离线构建严格 allowlist 的 Polymarket trades exact request manifest；本波不执行网络请求。",
-      "status": "已完成：离线 exact request manifest builder 实现，44/44 相关回归通过",
-      "active": false,
-      "next": "Wave 2 接入 trusted compiler；真实 network executor 仍不存在且未授权。",
-      "log": "AGENT_LOG_GATE1_TRADE_QUERY_RUNNER_2026-09-21.md"
-    },
-    {
       "id": "p0_outer_runner_rereview_20260919",
       "title": "P0：外层 runner 修复后二次审查",
       "task": "只读复查 post-clear 状态重验和失败回执终态修复，并重跑独立复现测试。",
@@ -360,24 +1035,6 @@
       "active": false,
       "next": "把 runner 加入发布清单，重新测试并按明确白名单发布新版本；真实 canary 仍关闭。",
       "log": "AGENT_LOG_P0_OUTER_RUNNER_REREVIEW_2026-09-19.md"
-    },
-    {
-      "id": "p0_outer_runner_review_20260919",
-      "title": "P0：外层 runner 独立审查",
-      "task": "只读审查 outer runner 的发布、state、预算、唯一 ID、进程/镜像/公开输入及终态对账；不改代码、不调用服务、不推送。",
-      "status": "独立审查完成并阻止发布：发现 clear callback 后未重查 state，以及失败回执先于取消/关闭写入",
-      "active": false,
-      "next": "修复两处并加回归测试；再次独立复查前不能发布。",
-      "log": "AGENT_LOG_P0_OUTER_RUNNER_REVIEW_2026-09-19.md"
-    },
-    {
-      "id": "p0_outer_runner_20260918",
-      "title": "P0：真实接线外层 runner（仅离线实现）",
-      "task": "把发布、protected state、唯一预算账本、ID/进程/镜像/公开输入闸门与单次 adapter 调用和终态对账接起来；只用严格 fake 和临时账本测试。",
-      "status": "两处缺口已修；Supervisor 复跑 106 项相邻测试和 15 项预算测试通过",
-      "active": false,
-      "next": "等待第二次独立审查；通过前不能发布。",
-      "log": "AGENT_LOG_P0_OUTER_RUNNER_2026-09-18.md"
     },
     {
       "id": "p0_live_release_review_v2_20260918",
@@ -416,15 +1073,6 @@
       "log": "AGENT_LOG_P0_LIVE_ADAPTER_2026-09-18.md"
     },
     {
-      "id": "p0_release_review_20260918",
-      "title": "P0：新源码独立只读审查",
-      "task": "只读审查六个变动的协议源码和相邻测试，核对是否能安全发布；不改代码、不推送、不调用模型或沙箱。",
-      "status": "只读审查完成；代码发布范围无阻塞，两个上线前缺口已修并复测",
-      "active": false,
-      "next": "仍需实现真实 GLM→B 接线并审查新版源码；不能把代码版发布当成模型验收。",
-      "log": "AGENT_LOG_P0_RELEASE_REVIEW_2026-09-18.md"
-    },
-    {
       "id": "p0_source_rights_review",
       "title": "P0：数据来源与使用权只读核对",
       "task": "核对现有公开来源和权利记录，区分文档声称与已经验证的数据；不取数、不付费、不碰封存数据。",
@@ -441,24 +1089,6 @@
       "active": false,
       "next": "先做全新零付费 B 任意代码隔离 canary，再单独证明 GLM 作者身份。",
       "log": "AGENT_LOG_P0_CONTROLLER_B_GATE_2026-09-18.md"
-    },
-    {
-      "id": "p0_b_containment_canary",
-      "title": "P0：本机 B 任意代码隔离 canary",
-      "task": "全新编号、零付费，用事先审过的合成诱饵验证 B 越界访问被拒，同时允许正常工作；必须有原始回执和精确清理。",
-      "status": "零付费选择性隔离 canary 通过；模型作者身份仍未证明",
-      "active": false,
-      "next": "独立证明 GLM 作者身份并接上有界任务驱动；此测试不能放行正式实验。",
-      "log": "AGENT_LOG_P0_B_CONTAINMENT_2026-09-18.md"
-    },
-    {
-      "id": "p0_final_metadata_screen",
-      "title": "P0：未触碰测试期元数据筛查",
-      "task": "只看本机旧回执，寻找同机制、至少 20 个日期且能证明未打开的候选；不读价格、标签或封存答案。",
-      "status": "只读筛查完成；旧 Final 不合格，未来 20 日期候选已固定但未入场",
-      "active": false,
-      "next": "候选日期前验证市场机制、权利与完整访问日志；不能叫正式 Final。",
-      "log": "AGENT_LOG_P0_FINAL_METADATA_2026-09-18.md"
     },
     {
       "id": "p0_glm_adapter_offline",
@@ -488,184 +1118,139 @@
       "log": "AGENT_LOG_DATA_ADMISSION_2026-09-18.md"
     },
     {
-      "id": "policy_echo",
-      "title": "E2B 回显 / 安全判断",
-      "task": "核对请求与返回的隔离字段；不把缺失回显误判为通过。",
-      "status": "离线修改完成；等待总体验收",
+      "id": "gate1_v0125_d0_budget_state_preflight_20260928",
+      "title": "DONE · REPLAN：v0.1.25 paid D0 budget/state preflight",
+      "task": "Read-only audit the fresh paid D0 ID, authoritative setup budget, global decision-state hash/head, exact v0.1.25 prior canary, process/container absence and protected-data boundaries. Do not reserve, claim, call a provider or fetch.",
+      "status": "REPLAN: ID/state/canary/process gates passed, but setup available USD 0.044036812 is below the production fixed USD 0.05 reservation by USD 0.005963188.",
       "active": false,
-      "next": "总体验收后仍需新的真实双向证据；缺回显不能算隔离通过。",
-      "log": "AGENT_LOG_POLICY_ECHO_2026-09-17.md"
+      "next": "Obtain explicit append-only allocation-transfer authority, then version the plan and repeat the full preflight before launch.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_BUDGET_STATE_PREFLIGHT_2026-09-28.md"
     },
     {
-      "id": "sdk_timeout",
-      "title": "本机 SDK → A 超时",
-      "task": "找出命令哪一步耗时或卡住，并留下分段回执。",
-      "status": "离线修改完成；等待总体验收",
+      "id": "gate1_v0125_d0_launch_binding_preflight_20260928",
+      "title": "DONE · REPLAN：v0.1.25 paid D0 launch-binding preflight",
+      "task": "Read-only derive and audit the exact production command/entry, release/source/runtime/prior-canary bindings, packet/token/cost upper, credential boundary, one-sample/no-retry controls and terminal receipts for the authorized D0. Do not execute it.",
+      "status": "REPLAN: immutable launch recipe passed, but production reserves fixed USD 0.05 and the durable decision state still needs a paid-authorization revision after the budget blocker is resolved.",
       "active": false,
-      "next": "总体验收回执与超时分类；真实 SDK 回调尚未验证。",
-      "log": "AGENT_LOG_SDK_TIMEOUT_2026-09-17.md"
+      "next": "Keep the exact argv dormant; after explicit allocation authority, rebind state and rerun all launch gates.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_LAUNCH_BINDING_PREFLIGHT_2026-09-28.md"
     },
     {
-      "id": "directional_probes",
-      "title": "A → B / B → A 探针",
-      "task": "分别保留每个方向、每个请求的证据，未完成时不猜测结果。",
-      "status": "离线修改完成；等待总体验收",
+      "id": "gate1_v0125_d0_execution_20260928",
+      "title": "DONE · PASS：v0.1.25 paid D0 one-shot execution",
+      "task": "After both independent preflights pass and Supervisor rechecks all gates, execute exactly one paid Controller D0 under market-rsi-v0125-gate1-controller-d0-20260928-01, at most one GLM/Tinker sample, no retry, exact upper $0.0389772; no fetch, Train/Dev/Final or training.",
+      "status": "PASS: invoked once; child exit 0, one 4020/511/0-token sample, metered USD 0.02574585, valid scope-only non-executable source-scope decision, terminal budget/state closure and exact cleanup. ID permanently consumed.",
       "active": false,
-      "next": "总体验收逐请求回执；真实双向连通或阻断仍未知。",
-      "log": "AGENT_LOG_DIRECTIONAL_PROBES_2026-09-17.md"
+      "next": "Archived. Never rerun this ID; keep all downstream fetch/data/training gates closed pending a separate reviewed plan and authorization.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_EXECUTION_2026-09-28.md"
     },
     {
-      "id": "release_audit",
-      "title": "新版本发布核对",
-      "task": "检查将要发布到用户 fork 的源码、测试和日志；避免数据、密钥或 artifacts 混入。",
-      "status": "只读核对完成",
+      "id": "gate1_v0125_d0_independent_review_20260928",
+      "title": "DONE · PASS：v0.1.25 paid D0 independent review",
+      "task": "After terminal execution artifacts exist, independently verify provider/sample/cost, exact release/source/runtime/canary lineage, immutable raw response and parsed decision/failure, no retry/fetch/data/training, budget/state closure and cleanup. Read-only.",
+      "status": "PASS: fresh reviewer verified one sample, metered USD 0.02574585, immutable raw response, valid non-executable D0 semantics, budget/global-state closure, 74 healthy watchdog records and no residual process/container.",
       "active": false,
-      "next": "待代码修复与离线复测完成后，只发布审过的文件到用户 fork。",
-      "log": "AGENT_LOG_RELEASE_AUDIT_2026-09-17.md"
+      "next": "Archived. Operational D0 PASS only; it is not an experiment result and grants no fetch, data admission or training authority.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_INDEPENDENT_REVIEW_2026-09-28.md"
     },
     {
-      "id": "budget_preflight",
-      "title": "预算与重复运行检查",
-      "task": "核对权威账本、全局状态、确切进程与 E2B 账户；不得启动沙箱。",
-      "status": "只读核对完成；14:50 EDT 账户零活跃沙箱",
+      "id": "gate1_v0125_d0_post_transfer_budget_state_recheck_20260928",
+      "title": "DONE · PASS：v0.1.25 D0 post-transfer budget/state recheck",
+      "task": "After the authorized USD 0.006 repair-to-setup transfer and durable state rebind, independently repeat unique-ID, budget, state, canary, path, process and container gates. Read-only; no claim/reserve/provider/fetch/data/training.",
+      "status": "PASS: setup available USD 0.050036812; exact transferred budget and rebound state heads, fresh ID/path absence, canary and exact-clear checks all reproduced without mutation.",
       "active": false,
-      "next": "真实测试发出前由主程序再次核对进程、账户与预算；旧 23 个未结算条目不修改。",
-      "log": "AGENT_LOG_BUDGET_PREFLIGHT_2026-09-17.md"
+      "next": "Archived; Supervisor independently replays the perishable gates immediately before execution.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_POST_TRANSFER_BUDGET_STATE_RECHECK_2026-09-28.md"
     },
     {
-      "id": "canary_review",
-      "title": "真实测试入口审查",
-      "task": "用固定运行环境审查双向探针、超时回执、失败与清理路径。",
-      "status": "回显误判漏洞已修；46 项离线测试通过",
+      "id": "gate1_v0125_d0_post_auth_launch_recheck_20260928",
+      "title": "DONE · PASS：v0.1.25 D0 post-authorization launch recheck",
+      "task": "After allocation transfer and state rebind, independently replay the exact dormant argv bindings, 4020/1600 token cost, one-sample/no-retry controls, credential boundary and terminal receipt checklist. Read-only.",
+      "status": "PASS: exact v0.1.25 launch bindings, 4020/1600 token cost, USD 0.0389772 upper, USD 0.05 reserve, one-sample/no-retry/no-catalog and credential metadata boundary reproduced.",
       "active": false,
-      "next": "主程序审核发布源码；真实沙箱结果仍待新编号测试。",
-      "log": "AGENT_LOG_CANARY_REVIEW_2026-09-17.md"
+      "next": "Archived; Supervisor uses the exact audited argv after its own immediate replay.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_POST_AUTH_LAUNCH_RECHECK_2026-09-28.md"
     },
     {
-      "id": "sdk_to_a_timeout_fix",
-      "title": "P0：本机 SDK → A 超时专项修复",
-      "task": "针对旧 -03 运行的 a_to_b_application_probe TimeoutException，定位阻塞点并提出或实现最小的安全修复；只做离线检查，不启动付费沙箱。",
-      "status": "P0 单请求硬截止修复完成；50 项合并离线测试通过",
+      "id": "gate1_v0125_d0_bridge_gap_audit_20260928",
+      "title": "DONE · PASS：v0.1.25 D0-to-request gap audit",
+      "task": "Read-only trace the exact reviewed D0 source/response choice through the current packet, validator, compiler and production paths; identify the minimal deterministic offline bridge and adversarial cases.",
+      "status": "PASS: no existing reviewed path suffices; exact opaque-pair/registry crosswalk, immutable provenance bindings and adversarial rejects are fully specified for one pure offline bridge.",
       "active": false,
-      "next": "主程序审核并发布新版本、做新零费用前置检查；之后才可用新编号验证真实 A/B 路径。",
-      "log": "AGENT_LOG_SDK_TO_A_TIMEOUT_FIX_2026-09-17.md"
+      "next": "Archived; Supervisor reproduces the findings during integration.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_BRIDGE_GAP_AUDIT_2026-09-28.md"
     },
     {
-      "id": "directional_design",
-      "title": "单向权限的代码证据核对",
-      "task": "只读核对现有 broker、controller 和 researcher 代码能否支持 A 看 B、B 不能直接碰 A；列出缺口，不决定架构。",
-      "status": "代码证据核对完成；现有组件尚未构成单 E2B 实验",
+      "id": "gate1_v0125_d0_fetch_boundary_audit_20260928",
+      "title": "DONE · PASS：v0.1.25 D0 fetch-boundary audit",
+      "task": "Read-only inspect fixed official-source mapping, public/watched-fetch contracts, rights boundary and watchdog ceilings; define the complete exact documentation-manifest checklist without contacting the source.",
+      "status": "PASS: fixed URL/GET/headers/limits/redirect/retry/content/hash/watchdog/rights boundaries specified; low-level generic-HTTPS gap identified without network action.",
       "active": false,
-      "next": "Supervisor 负责把接口缺口纳入新设计；本任务归档。",
-      "log": "AGENT_LOG_DIRECTIONAL_DESIGN_2026-09-17.md"
+      "next": "Archived; Supervisor must bind the complete registry record before any later admission.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_FETCH_BOUNDARY_AUDIT_2026-09-28.md"
     },
     {
-      "id": "handoff_latency_design",
-      "title": "P0：交接计时可实现性核对",
-      "task": "只读核对现有 SDK/broker 在单 B 沙箱持续会话中能记录哪些时间戳与原始回执；不定验收标准或架构。",
-      "status": "交接计时代码证据核对完成；现有接口只支持单次任务",
+      "id": "gate1_v0125_d0_bridge_integration_20260928",
+      "title": "DONE · PASS：v0.1.25 D0-to-request bridge integration",
+      "task": "After both independent audits pass, implement only the converged deterministic offline bridge and adversarial tests while preserving the D0 bytes and validator unchanged.",
+      "status": "PASS: exact D0 decision/provenance/packet/release/registry/capability commitments now compile offline to deterministic plan 34b45266...b9b812c; all fetch/data/training/release authority remains false.",
       "active": false,
-      "next": "Supervisor 负责实现持续会话与计时验收；本任务归档。",
-      "log": "AGENT_LOG_HANDOFF_LATENCY_DESIGN_2026-09-17.md"
+      "next": "Archived as stable integration snapshot c8053164...a51faee2; no release or fetch authority.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_BRIDGE_INTEGRATION_2026-09-28.md"
     },
     {
-      "id": "persistent_handoff",
-      "title": "P0：单 B 沙箱持续交接",
-      "task": "实现新 A→本机 broker→持续 B 的 20 次离线交接与回读测试；记录原始回执和主机计时，不启动付费沙箱。",
-      "status": "20 次交接离线实现完成；38 项相关测试通过",
+      "id": "gate1_v0125_d0_bridge_tests_20260928",
+      "title": "DONE · PASS：v0.1.25 D0-to-request bridge tests",
+      "task": "On one stable integration snapshot, run focused adversarial and full relevant offline tests plus diff/JSON/secret/data-scope checks.",
+      "status": "PASS: focused 12/12 and pinned-runtime full 516/516 with 2 existing skips; diff and source-only secret checks passed.",
       "active": false,
-      "next": "Supervisor 审核后才可准备新版本和真实单 B 沙箱测试；真实 E2B 延迟尚未验证。",
-      "log": "AGENT_LOG_PERSISTENT_HANDOFF_2026-09-17.md"
+      "next": "Archived; stable candidate proceeds to non-author independent review only.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_BRIDGE_TESTS_2026-09-28.md"
     },
     {
-      "id": "one_b_guest_loop",
-      "title": "P0：B 沙箱持续接收与回显",
-      "task": "实现一个 B 沙箱内持续处理编号任务、写回 ACK 和工具事件的最小真实 guest；只做离线测试，不启动付费沙箱。",
-      "status": "单 B guest 离线实现完成；相关 31 项测试通过",
+      "id": "gate1_v0125_d0_bridge_review_20260928",
+      "title": "DONE · PASS：v0.1.25 D0-to-request independent review",
+      "task": "After integration and tests stabilize, independently review the complete diff, provenance, manifest fixture, fail-closed adversarial cases and absence of network/data action.",
+      "status": "PASS: fresh non-author review reproduced the actual immutable-D0 compile twice, plan 34b45266...b9b812c, 341-file digest c8053164...a51faee2 and focused 12/12; exact mapping and all-false execution/data/release authority confirmed.",
       "active": false,
-      "next": "等待 host adapter 合并验证和真实 E2B 单沙箱测试。",
-      "log": "AGENT_LOG_ONE_B_GUEST_LOOP_2026-09-17.md"
+      "next": "Archived as an unpublished offline release candidate; release, fresh canary and fetch remain separate authorization gates.",
+      "log": "AGENT_LOG_GATE1_V0125_D0_BRIDGE_REVIEW_2026-09-28.md"
     },
     {
-      "id": "one_b_live_adapter",
-      "title": "P0：本机到单 B 沙箱真实接线",
-      "task": "把离线 DirectionalHandoff 连接到一个持久 B 的 E2B SDK 生命周期；先写离线 fake 测试与清理/计时回执，不启动付费沙箱。",
-      "status": "单 B 接线完成；47 项相关离线测试通过",
+      "id": "gate1_v0126_release_scope_preflight_20260928",
+      "title": "DONE：v0.1.26 public release-scope preflight",
+      "task": "Read-only identify an isolated clean-origin release path and exact public allowlist that cannot publish internal D0/budget/state/orchestration evidence.",
+      "status": "PASS only for an isolated clean worktree from freshly verified origin/main; current main must not be pushed because it contains private orchestration history.",
       "active": false,
-      "next": "真实 E2B 延迟、隔离、费用和清理仍需全新 canary 验证。",
-      "log": "AGENT_LOG_ONE_B_LIVE_ADAPTER_2026-09-17.md"
+      "next": "After stable source review, construct the final public allowlist and release only from the clean worktree; never force-push or move a tag.",
+      "log": "AGENT_LOG_GATE1_V0126_RELEASE_SCOPE_PREFLIGHT_2026-09-28.md"
     },
     {
-      "id": "one_b_gate_audit",
-      "title": "P0：单 B 测试的发布与费用闸门",
-      "task": "独立只读核对源码发布、唯一运行 ID、全局状态、预算、进程和 E2B 清理；列出真实测试前的精确阻塞项，不修改账本或启动服务。",
-      "status": "独立闸门核对完成；真实测试仍被发布/状态/额度闸门阻止",
+      "id": "gate1_v0126_fetch_adapter_preflight_20260928",
+      "title": "DONE：v0.1.26 exact fetch-adapter preflight",
+      "task": "Read-only derive the minimal exact plan/release/authorization/watchdog adapter and adversarial contract before any real fetch.",
+      "status": "Design PASS, implementation required: distinct exact schemas, dual authority, permanent claim, outer watchdog, proxy hardening and terminal verification.",
       "active": false,
-      "next": "Supervisor 完成离线入口与父级清理，再处理受保护状态和预算审批。",
-      "log": "AGENT_LOG_ONE_B_GATE_AUDIT_2026-09-17.md"
+      "next": "Implement the adapter component on its exact v2 paths with fake transports only.",
+      "log": "AGENT_LOG_GATE1_V0126_FETCH_ADAPTER_PREFLIGHT_2026-09-28.md"
     },
     {
-      "id": "one_b_parent_runner",
-      "title": "P0：单 B 运行父级与清理结算",
-      "task": "实现新单 B canary 的父子进程监督、确切清理、账户核对和失败结算离线测试；不得启动真实 E2B。",
-      "status": "单 B 父级运行器完成；9 项专属离线测试通过，相关合并检查 107 项通过",
+      "id": "gate1_v0126_canary_path_preflight_20260928",
+      "title": "DONE：v0.1.26 zero-provider canary-path preflight",
+      "task": "Read-only select the release-bound zero-provider/no-network canary and enumerate fresh-ID/source/runtime/watchdog/cleanup evidence.",
+      "status": "Runbook PASS, implementation required: the generic production CLI canary is insufficient; a dedicated exact-D0 bridge canary and pure verifier are mandatory.",
       "active": false,
-      "next": "真实运行仍受发布、全局决策和 setup 额度闸门限制；不能把模拟传输当作隔离或预测结果。",
-      "log": "AGENT_LOG_ONE_B_PARENT_RUNNER_2026-09-17.md"
+      "next": "Implement the dedicated component under permanent ID market-rsi-v0126-gate1-d0-bridge-first-current-source-20260928-01.",
+      "log": "AGENT_LOG_GATE1_V0126_CANARY_PATH_PREFLIGHT_2026-09-28.md"
     },
     {
-      "id": "one_b_live_readiness",
-      "title": "P0：单 B 真实测试入口独立审查",
-      "task": "只读审查新单 B 入口、父子进程、密钥、预算、全局状态、沙箱清理和失败路径；指出任何真实测试前必须修复的漏洞，不启动付费服务。",
-      "status": "未启动：subagent 线程存储错误；由 Supervisor 自行审查",
+      "id": "gate1_v0126_fetch_binding_integration_20260928",
+      "title": "PAUSED：v0.1.26 exact fetch-binding integration",
+      "task": "Under v3, integrate the two accepted components into the distinct exact-plan/release-bound shared watched-fetch seam, controlled-source manifest and adversarial test surface, then run full checks and fresh independent review.",
+      "status": "Integration and fresh non-author review PASS on digest 2e3b6b14...f741a23f. Isolated release commit e26891f4 and annotated tag object 4e00ec64 are ready after 516/516 tests, but the approval layer rejected remote publication pending exact payload/destination authorization; remote remains unchanged.",
       "active": false,
-      "next": "待协作工具恢复后可再做独立复核；当前不能伪称已有审查结论。",
-      "log": "AGENT_LOG_ONE_B_LIVE_READINESS_2026-09-17.md"
-    },
-    {
-      "id": "gate1_v0125_schema_visibility_review_20260928",
-      "title": "DONE：v0.1.25 tool-schema visibility independent review",
-      "task": "Independently review the one-layer model-visible mode-limit description, regression tests, validator invariance, tokenizer cost and full-suite evidence; do not edit, publish, canary or call a provider.",
-      "status": "Independent PASS: the only production hunk is the model-visible bounded_investigation description; captured failure remains rejected, one-field correction passes, focused 48/48 and full 516/516 tests pass with 2 environment skips.",
-      "active": false,
-      "next": "Superseded by the published and independently verified v0.1.25 release; a new zero-provider canary and any paid/fetch work remain separately unauthorized.",
-      "log": "AGENT_LOG_GATE1_V0125_SCHEMA_VISIBILITY_REVIEW_2026-09-28.md"
-    },
-    {
-      "id": "gate1_v0125_integrated_release_review_20260928",
-      "title": "DONE：v0.1.25 integrated release independent review",
-      "task": "Independently audit the combined architecture-documentation and schema-visibility release candidate against main: exact diff, controlled-source digest, validator invariance, focused/full test evidence, secret/data scope and release gates. Read-only; do not edit, tag, push, canary, fetch or call a provider.",
-      "status": "Independent PASS: exact integrated candidate has one production schema-description change, unchanged validator/parser/provider/outer/fetch layers, 48/48 focused and 516/516 full tests with 2 skips, clean secret/data scope and controlled digest c61f48e...a2d4.",
-      "active": false,
-      "next": "Publication and independent remote verification completed. Canary/provider/fetch/data/training remain unauthorized.",
-      "log": "AGENT_LOG_GATE1_V0125_INTEGRATED_RELEASE_REVIEW_2026-09-28.md"
-    },
-    {
-      "id": "gate1_v0125_remote_release_verification_20260928",
-      "title": "DONE：v0.1.25 independent remote release verification",
-      "task": "Independently verify the published origin main ref, annotated v0.1.25 tag object and peeled commit, exact 339-file controlled-source digest and public release boundary from remote evidence. Read-only; do not edit, tag, push, canary, fetch project data or call a provider.",
-      "status": "Independent PASS from credential-free remote refs and anonymous clone: annotated tag object 67b8e4a8...d682 peels to ed4048e...cdeb and all 339 controlled files match digest c61f48e...a2d4.",
-      "active": false,
-      "next": "Release report finalized. A new zero-provider canary requires separate authorization; no provider/fetch/data/training authority is granted.",
-      "log": "AGENT_LOG_GATE1_V0125_REMOTE_RELEASE_VERIFICATION_2026-09-28.md"
-    },
-    {
-      "id": "gate1_v0125_first_canary_execution_20260928",
-      "title": "DONE：v0.1.25 zero-provider first canary execution",
-      "task": "Run exactly once under permanent ID market-rsi-v0125-gate1-first-current-source-20260928-01 through the programmatic first-canary bootstrap and production CLI/Supervisor path. No retry, provider, fetch, Train/Dev/Final read/admission or training.",
-      "status": "One authorized execution completed PASS: production CLI/parent used, provider calls 0, provider cost USD 0, no fetch or formal data admission, no retry.",
-      "active": false,
-      "next": "Independent review passed and the receipt is promoted as zero-provider infrastructure evidence only; the permanent ID must not be rerun.",
-      "log": "AGENT_LOG_GATE1_V0125_FIRST_CANARY_EXECUTION_2026-09-28.md"
-    },
-    {
-      "id": "gate1_v0125_first_canary_review_20260928",
-      "title": "DONE：v0.1.25 zero-provider first canary independent review",
-      "task": "After the one authorized canary terminates, independently verify release/source/runtime binding, bootstrap capability, production CLI/parent path, provider/fetch/data/training zeros, isolated ledger/state closure, process/container cleanup and immutable receipt hashes. Read-only.",
-      "status": "Independent PASS: exact release/source/runtime/bootstrap and production CLI/parent bindings verified; provider/fetch/data/training zeros, isolated state/budget closure, 30 immutable evidence hashes and terminal cleanup all passed.",
-      "active": false,
-      "next": "Permanent canary ID is consumed and must not be rerun. Any paid v0.1.25 D0 needs a fresh ID and separate explicit authorization; any fetch remains a later separate gate.",
-      "log": "AGENT_LOG_GATE1_V0125_FIRST_CANARY_REVIEW_2026-09-28.md"
+      "next": "Preserve the clean worktree, commit, tag and reviews without pushing. Reconsider only after the minimal prediction loop passes and this documentation-fetch path is shown to be necessary.",
+      "log": "AGENT_LOG_GATE1_V0126_FETCH_BINDING_INTEGRATION_2026-09-28.md"
     }
   ]
 }

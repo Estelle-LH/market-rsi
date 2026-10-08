@@ -1,0 +1,40 @@
+# Local configuration and development caches.
+/.agents/
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local research records and generated reports; keep source and shared configs.
+# Ignore rules do not untrack existing files or remove published Git history.
+/research/market_rsi/**/AGENT_LOG_*.md
+/research/market_rsi/**/DAILY_LOG_*.md
+/research/market_rsi/**/WEEKLY_FULL_LOG_*.md
+/research/market_rsi/**/*_20??-??-??*.md
+/research/market_rsi/**/*_20??-??-??*.json
+/research/market_rsi/**/*_20??-??-??*.jsonl
+/research/market_rsi/supervisor_harness/HUMAN_PROGRESS.md
+/research/market_rsi/supervisor_harness/HUMAN_INTERVENTIONS.md
+/research/market_rsi/supervisor_harness/RESEARCH_STATE.md
+/research/market_rsi/supervisor_harness/plans/*.docx
+/research/market_rsi/experiments/price_candidates/**/author_receipt.json
+/research/market_rsi/research_capacities/**/author_receipt.json
+
+# Generated session material.
+/artifacts/
+/archived_artifacts/
+/outputs/
+/jobs/
+/results/
+/checkpoints/
+/final_model/
+/external/
+/data/
+/.runtime/
+*.log
+*.tmp

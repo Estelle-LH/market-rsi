@@ -1,0 +1,1278 @@
+{
+  "schema": "market_rsi_independent_candidate_result_review_v1",
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "review_observed_utc": "2026-10-03 19:53:01 UTC",
+  "verdict": "PASS_valid_completed_prediction_experiment",
+  "candidate_id": "InGameMarketFreshnessBrierOffset-v2",
+  "attempt_id": "attempt-03",
+  "artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-01/runs/attempt-03",
+  "source_commit": "35e4c0303cf317289c5070e1b61efe171a5c921e",
+  "source_files_independently_checked": 26,
+  "request_sha256": "5d5127b088ddb3ea5a57d21b1241e53307ffd1a7fc1cce8fd431918312e583c3",
+  "execution_receipt_sha256": "b645c38c80d462b3883b42a0bab51b91ed6bfd7a7c1df0aea6f1ce5f63af0ed1",
+  "generation2_launch_manifest_sha256": "9fa2c1b2f52ebb762b21fdf4aefbef93dde38b8dc4be0551dc82b90d4f6e85b5",
+  "generation2_memory_sha256": "e1d39bf8ff7194c0a437a279bc79653bcf04a77f6fdb31b0429f79071cbdbe6f",
+  "runtime_pair_sha256": "ad5bbccc2bbd16c4dd06d355fddb5310176a10a4f39ecc5052a3516a4b55fad7",
+  "pre_score_review_sha256": "f6e6ef2845ab02f688362503e5dc0b8b803c88fcd49297e127a0b0cc6d4d99f0",
+  "controller_contract_sha256": "a177b01df267879275b337e73a86ee87c5a7c2e45da6312976ec2732d6f90fa2",
+  "research_parent_sha256": "d7e16a2d745f6440fe84b97aba54950b2c78a23428172b6002b187b385f057cd",
+  "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+  "actual_research_parent_comparator": "frozen actual A1 candidate; separate from raw-market incumbent and frozen v0 state reference",
+  "artifact_sha256": {
+    "exclusions.json": "e6b19b230318dc9daf89e6495504c93996f49b3245415a14a45144fece81fdfb",
+    "input_receipts.json": "1a4e673ad77845897d474bbb8f9f464ca2e9fd2c8f38fd3b8cf01f10002cfb1e",
+    "manifest.json": "37fc016f4e772111d267d57ee69416d5e424ac77267be1c9e1a2f2424f43abad",
+    "pre_score_lock.json": "bea02c0630ad3017a13aa8f2700d4b2e4bbccde8a6c9de625370f7e155301a09",
+    "predictions.csv": "252368b5159a119dc98824ba4079cee0a1cbc98c9325a18e537b91e1f2a5f478",
+    "scorecard.json": "09fc03c5407c349ebe50547a203e0b95dd9793dbcf7608d0c647e266bb78bd94"
+  },
+  "checks": {
+    "committed_source_and_current_bytes_match": true,
+    "runtime_interpreter_versions_and_memory_match": true,
+    "request_process_receipt_stdout_stderr_and_manifest_hashes_match": true,
+    "pre_score_lock_before_completion_before_deadline": true,
+    "exact_Controller_recipe_and_feedback_lineage_match": true,
+    "all87_frozen_comparators_labels_cutoffs_and_availability_match": true,
+    "all87_actual_A1_parent_probabilities_exact_CSV_parity": true,
+    "all87_predictor_reconstructions": true,
+    "max_prediction_reconstruction_absolute_error_at_most_2e_minus16": true,
+    "full195_denominator_and193plus2_exclusions": true,
+    "causal_PBP_market_receipts_and_all193_age_coverage": true,
+    "strict_prior_fit_labels_and_frozen_chronology": true,
+    "fit_only_scaling_independently_reconstructed": true,
+    "four_Brier_objectives_and_stationarity_gradients": true,
+    "all_four_gradient_magnitudes_within_1e_minus8": true,
+    "equal_event_scores_calibration_reliability_all_five_arms": true,
+    "all_paired_folds_dates_and16_date_week_intervals": true,
+    "unchanged_frozen_KEEP_and_exact_recipe_classification": true,
+    "actual_parent_additional_comparator_not_new_judge": true,
+    "actual_child_PID_absence_verified": true,
+    "no_reviewer_actual_Train_fit": true,
+    "no_protected_data_network_paid_provider_release_or_promotion_by_reviewer": true
+  },
+  "population": {
+    "check_dates": 20,
+    "check_events": 87,
+    "check_key_sha256": "2e35779fdbb4b83e129758008338b0c778d7f6281682118ad8d26d21293cc9f9",
+    "check_weeks": 7,
+    "excluded_events": 2,
+    "materialized_events": 193,
+    "source_dates": 42,
+    "source_events": 195
+  },
+  "metrics": {
+    "actual_a1_parent": {
+      "brier": 0.1419584856290269,
+      "calibration_intercept": -0.011020450029667339,
+      "calibration_slope": 1.0326254247199125,
+      "log_loss": 0.4295469774994743,
+      "rows": 87
+    },
+    "frozen_state_reference": {
+      "brier": 0.16068099016465245,
+      "calibration_intercept": 0.04813167873790908,
+      "calibration_slope": 0.9186856458868063,
+      "log_loss": 0.4711973192666776,
+      "rows": 87
+    },
+    "ordinary": {
+      "brier": 0.14548231253271718,
+      "calibration_intercept": -0.023504802267641844,
+      "calibration_slope": 1.0568122659695651,
+      "log_loss": 0.43992197245621956,
+      "rows": 87
+    },
+    "candidate": {
+      "brier": 0.1419817702645588,
+      "calibration_intercept": -0.011193942152067038,
+      "calibration_slope": 1.0343248731576977,
+      "log_loss": 0.4296664712947707,
+      "rows": 87
+    },
+    "raw_market": {
+      "brier": 0.14195252900323282,
+      "calibration_intercept": -0.011806646530491793,
+      "calibration_slope": 1.0370387494646494,
+      "log_loss": 0.4296707847132428,
+      "rows": 87
+    }
+  },
+  "paired": {
+    "actual_a1_parent": {
+      "brier": {
+        "delta_equal_event": 0.000023284635531885547,
+        "game_date_interval_95": [
+          -0.00039459752268779756,
+          0.00044512521805115877
+        ],
+        "game_week_interval_95": [
+          -0.00038998834742656876,
+          0.0004115889102785449
+        ]
+      },
+      "log_loss": {
+        "delta_equal_event": 0.00011949379529640836,
+        "game_date_interval_95": [
+          -0.0010719234030199419,
+          0.0015072306863471122
+        ],
+        "game_week_interval_95": [
+          -0.000994248805501205,
+          0.001303812710387231
+        ]
+      }
+    },
+    "frozen_state_reference": {
+      "brier": {
+        "delta_equal_event": -0.018699219900093666,
+        "game_date_interval_95": [
+          -0.03608837844070424,
+          -0.002374655379392447
+        ],
+        "game_week_interval_95": [
+          -0.03546772648446367,
+          -0.0020124261792277645
+        ]
+      },
+      "log_loss": {
+        "delta_equal_event": -0.04153084797190688,
+        "game_date_interval_95": [
+          -0.08498723833230686,
+          -0.002000072459040251
+        ],
+        "game_week_interval_95": [
+          -0.08194645038922344,
+          -0.003032105139010444
+        ]
+      }
+    },
+    "ordinary": {
+      "brier": {
+        "delta_equal_event": -0.003500542268158372,
+        "game_date_interval_95": [
+          -0.005914348705149447,
+          -0.001371358623884571
+        ],
+        "game_week_interval_95": [
+          -0.0055438079226525884,
+          -0.002141653201640269
+        ]
+      },
+      "log_loss": {
+        "delta_equal_event": -0.01025550116144882,
+        "game_date_interval_95": [
+          -0.0166665497929283,
+          -0.005174031938189255
+        ],
+        "game_week_interval_95": [
+          -0.015763491196102698,
+          -0.006295285404869705
+        ]
+      }
+    },
+    "raw_market": {
+      "brier": {
+        "delta_equal_event": 0.00002924126132597374,
+        "game_date_interval_95": [
+          -0.00045821090111799735,
+          0.000493099539043903
+        ],
+        "game_week_interval_95": [
+          -0.0003974659873176934,
+          0.00047657721579038843
+        ]
+      },
+      "log_loss": {
+        "delta_equal_event": -0.000004313418472122303,
+        "game_date_interval_95": [
+          -0.0017058713394353551,
+          0.0013551203759111386
+        ],
+        "game_week_interval_95": [
+          -0.0013896186829441101,
+          0.001219219885559727
+        ]
+      }
+    }
+  },
+  "paired_by_schedule_date": {
+    "actual_a1_parent": {
+      "brier": [
+        {
+          "date": "2025-10-23",
+          "delta": -0.00006746160562222793,
+          "events": 1
+        },
+        {
+          "date": "2025-10-26",
+          "delta": -0.00016141970414289584,
+          "events": 11
+        },
+        {
+          "date": "2025-10-27",
+          "delta": 0.0008565001723441715,
+          "events": 1
+        },
+        {
+          "date": "2025-10-30",
+          "delta": 0.00034329691557989346,
+          "events": 1
+        },
+        {
+          "date": "2025-11-02",
+          "delta": -0.0011373369047574097,
+          "events": 12
+        },
+        {
+          "date": "2025-11-03",
+          "delta": 0.001280277662359896,
+          "events": 1
+        },
+        {
+          "date": "2025-11-06",
+          "delta": 0.0013904811514151086,
+          "events": 1
+        },
+        {
+          "date": "2025-11-09",
+          "delta": 0.000700434678539976,
+          "events": 12
+        },
+        {
+          "date": "2025-11-10",
+          "delta": 0.0005262589609400514,
+          "events": 1
+        },
+        {
+          "date": "2025-11-13",
+          "delta": 0.00008839741329179406,
+          "events": 1
+        },
+        {
+          "date": "2025-11-16",
+          "delta": 0.0005524424549305999,
+          "events": 13
+        },
+        {
+          "date": "2025-11-17",
+          "delta": 0.00008869932781241396,
+          "events": 1
+        },
+        {
+          "date": "2025-11-20",
+          "delta": 0.0016865877415881692,
+          "events": 1
+        },
+        {
+          "date": "2025-11-23",
+          "delta": -0.00021929684652184547,
+          "events": 12
+        },
+        {
+          "date": "2025-11-24",
+          "delta": 0.0006834072518344062,
+          "events": 1
+        },
+        {
+          "date": "2025-11-27",
+          "delta": 0.0003228157757323759,
+          "events": 3
+        },
+        {
+          "date": "2025-11-28",
+          "delta": -0.0011033620448339665,
+          "events": 1
+        },
+        {
+          "date": "2025-11-30",
+          "delta": -0.00023435028348564588,
+          "events": 11
+        },
+        {
+          "date": "2025-12-01",
+          "delta": 0.000004979942845365903,
+          "events": 1
+        },
+        {
+          "date": "2025-12-04",
+          "delta": 0.000325359897209351,
+          "events": 1
+        }
+      ],
+      "log_loss": [
+        {
+          "date": "2025-10-23",
+          "delta": -0.000849097288351218,
+          "events": 1
+        },
+        {
+          "date": "2025-10-26",
+          "delta": -0.0003055699056986255,
+          "events": 11
+        },
+        {
+          "date": "2025-10-27",
+          "delta": 0.0046663170458789704,
+          "events": 1
+        },
+        {
+          "date": "2025-10-30",
+          "delta": 0.0033598528495694183,
+          "events": 1
+        },
+        {
+          "date": "2025-11-02",
+          "delta": -0.0028186463971818488,
+          "events": 12
+        },
+        {
+          "date": "2025-11-03",
+          "delta": 0.005167154592515821,
+          "events": 1
+        },
+        {
+          "date": "2025-11-06",
+          "delta": 0.0041014132133933845,
+          "events": 1
+        },
+        {
+          "date": "2025-11-09",
+          "delta": 0.0020163265101165243,
+          "events": 12
+        },
+        {
+          "date": "2025-11-10",
+          "delta": 0.0010595234469549242,
+          "events": 1
+        },
+        {
+          "date": "2025-11-13",
+          "delta": 0.000949286738199967,
+          "events": 1
+        },
+        {
+          "date": "2025-11-16",
+          "delta": 0.0019338859962811715,
+          "events": 13
+        },
+        {
+          "date": "2025-11-17",
+          "delta": 0.0017024192744880644,
+          "events": 1
+        },
+        {
+          "date": "2025-11-20",
+          "delta": 0.0035948611156217947,
+          "events": 1
+        },
+        {
+          "date": "2025-11-23",
+          "delta": -0.001890557533036661,
+          "events": 12
+        },
+        {
+          "date": "2025-11-24",
+          "delta": 0.004051602640740962,
+          "events": 1
+        },
+        {
+          "date": "2025-11-27",
+          "delta": 0.0007248823018481398,
+          "events": 3
+        },
+        {
+          "date": "2025-11-28",
+          "delta": -0.0022654897956202458,
+          "events": 1
+        },
+        {
+          "date": "2025-11-30",
+          "delta": -0.0008428085538570752,
+          "events": 11
+        },
+        {
+          "date": "2025-12-01",
+          "delta": 0.0003707352178024667,
+          "events": 1
+        },
+        {
+          "date": "2025-12-04",
+          "delta": 0.0021189083787301055,
+          "events": 1
+        }
+      ]
+    },
+    "frozen_state_reference": {
+      "brier": [
+        {
+          "date": "2025-10-23",
+          "delta": 0.0013468140932234444,
+          "events": 1
+        },
+        {
+          "date": "2025-10-26",
+          "delta": 0.009632263165223089,
+          "events": 11
+        },
+        {
+          "date": "2025-10-27",
+          "delta": -0.02445585475489359,
+          "events": 1
+        },
+        {
+          "date": "2025-10-30",
+          "delta": 0.0028519226709830814,
+          "events": 1
+        },
+        {
+          "date": "2025-11-02",
+          "delta": -0.06159768874009026,
+          "events": 12
+        },
+        {
+          "date": "2025-11-03",
+          "delta": 0.014473454213625874,
+          "events": 1
+        },
+        {
+          "date": "2025-11-06",
+          "delta": -0.005526101744336223,
+          "events": 1
+        },
+        {
+          "date": "2025-11-09",
+          "delta": 0.004070533285235501,
+          "events": 12
+        },
+        {
+          "date": "2025-11-10",
+          "delta": 0.024345484067264084,
+          "events": 1
+        },
+        {
+          "date": "2025-11-13",
+          "delta": -0.00013838211705957974,
+          "events": 1
+        },
+        {
+          "date": "2025-11-16",
+          "delta": -0.007244242145472866,
+          "events": 13
+        },
+        {
+          "date": "2025-11-17",
+          "delta": 0.0006051501412800671,
+          "events": 1
+        },
+        {
+          "date": "2025-11-20",
+          "delta": -0.0288660588592696,
+          "events": 1
+        },
+        {
+          "date": "2025-11-23",
+          "delta": -0.0300001278186106,
+          "events": 12
+        },
+        {
+          "date": "2025-11-24",
+          "delta": 0.0026297446601010214,
+          "events": 1
+        },
+        {
+          "date": "2025-11-27",
+          "delta": -0.017163348700908156,
+          "events": 3
+        },
+        {
+          "date": "2025-11-28",
+          "delta": -0.10394887042330209,
+          "events": 1
+        },
+        {
+          "date": "2025-11-30",
+          "delta": -0.037351300489755664,
+          "events": 11
+        },
+        {
+          "date": "2025-12-01",
+          "delta": -0.000010883914581977477,
+          "events": 1
+        },
+        {
+          "date": "2025-12-04",
+          "delta": -0.009236545495868921,
+          "events": 1
+        }
+      ],
+      "log_loss": [
+        {
+          "date": "2025-10-23",
+          "delta": 0.02336965963280599,
+          "events": 1
+        },
+        {
+          "date": "2025-10-26",
+          "delta": 0.03408357739601748,
+          "events": 11
+        },
+        {
+          "date": "2025-10-27",
+          "delta": -0.09806513153852871,
+          "events": 1
+        },
+        {
+          "date": "2025-10-30",
+          "delta": 0.04162672229657794,
+          "events": 1
+        },
+        {
+          "date": "2025-11-02",
+          "delta": -0.1513741345994552,
+          "events": 12
+        },
+        {
+          "date": "2025-11-03",
+          "delta": 0.07067973610796911,
+          "events": 1
+        },
+        {
+          "date": "2025-11-06",
+          "delta": -0.015892489736771515,
+          "events": 1
+        },
+        {
+          "date": "2025-11-09",
+          "delta": -0.008322656625204606,
+          "events": 12
+        },
+        {
+          "date": "2025-11-10",
+          "delta": 0.0492759445362575,
+          "events": 1
+        },
+        {
+          "date": "2025-11-13",
+          "delta": -0.0014539374520020215,
+          "events": 1
+        },
+        {
+          "date": "2025-11-16",
+          "delta": -0.0034729736043184307,
+          "events": 13
+        },
+        {
+          "date": "2025-11-17",
+          "delta": 0.015399638021367108,
+          "events": 1
+        },
+        {
+          "date": "2025-11-20",
+          "delta": -0.06040236888197564,
+          "events": 1
+        },
+        {
+          "date": "2025-11-23",
+          "delta": -0.0580525665586648,
+          "events": 12
+        },
+        {
+          "date": "2025-11-24",
+          "delta": 0.016504293486272956,
+          "events": 1
+        },
+        {
+          "date": "2025-11-27",
+          "delta": -0.03251410383190793,
+          "events": 3
+        },
+        {
+          "date": "2025-11-28",
+          "delta": -0.2219292463634116,
+          "events": 1
+        },
+        {
+          "date": "2025-11-30",
+          "delta": -0.09111132385926317,
+          "events": 11
+        },
+        {
+          "date": "2025-12-01",
+          "delta": -0.0007491253696729041,
+          "events": 1
+        },
+        {
+          "date": "2025-12-04",
+          "delta": -0.04855899544732549,
+          "events": 1
+        }
+      ]
+    },
+    "ordinary": {
+      "brier": [
+        {
+          "date": "2025-10-23",
+          "delta": -0.0009029309512060082,
+          "events": 1
+        },
+        {
+          "date": "2025-10-26",
+          "delta": -0.0021742599817005334,
+          "events": 11
+        },
+        {
+          "date": "2025-10-27",
+          "delta": -0.004364131933263061,
+          "events": 1
+        },
+        {
+          "date": "2025-10-30",
+          "delta": -0.004565659242737934,
+          "events": 1
+        },
+        {
+          "date": "2025-11-02",
+          "delta": -0.009215916462619529,
+          "events": 12
+        },
+        {
+          "date": "2025-11-03",
+          "delta": -0.0010461060106200931,
+          "events": 1
+        },
+        {
+          "date": "2025-11-06",
+          "delta": -0.017021719118581177,
+          "events": 1
+        },
+        {
+          "date": "2025-11-09",
+          "delta": -0.004637185578512343,
+          "events": 12
+        },
+        {
+          "date": "2025-11-10",
+          "delta": 0.02104040067837082,
+          "events": 1
+        },
+        {
+          "date": "2025-11-13",
+          "delta": -0.001926524203124513,
+          "events": 1
+        },
+        {
+          "date": "2025-11-16",
+          "delta": -0.0031815268705685288,
+          "events": 13
+        },
+        {
+          "date": "2025-11-17",
+          "delta": -0.000750997973311813,
+          "events": 1
+        },
+        {
+          "date": "2025-11-20",
+          "delta": -0.013839207390591052,
+          "events": 1
+        },
+        {
+          "date": "2025-11-23",
+          "delta": -0.00142640153703545,
+          "events": 12
+        },
+        {
+          "date": "2025-11-24",
+          "delta": -0.005426685732402802,
+          "events": 1
+        },
+        {
+          "date": "2025-11-27",
+          "delta": -0.006123902837330636,
+          "events": 3
+        },
+        {
+          "date": "2025-11-28",
+          "delta": -0.0169722645633556,
+          "events": 1
+        },
+        {
+          "date": "2025-11-30",
+          "delta": 0.0008913761712970511,
+          "events": 11
+        },
+        {
+          "date": "2025-12-01",
+          "delta": -0.00004290336183582936,
+          "events": 1
+        },
+        {
+          "date": "2025-12-04",
+          "delta": -0.0015311248452903707,
+          "events": 1
+        }
+      ],
+      "log_loss": [
+        {
+          "date": "2025-10-23",
+          "delta": -0.010298710645784602,
+          "events": 1
+        },
+        {
+          "date": "2025-10-26",
+          "delta": -0.008920932748830284,
+          "events": 11
+        },
+        {
+          "date": "2025-10-27",
+          "delta": -0.021621379084618017,
+          "events": 1
+        },
+        {
+          "date": "2025-10-30",
+          "delta": -0.034368770992244446,
+          "events": 1
+        },
+        {
+          "date": "2025-11-02",
+          "delta": -0.023872529793260697,
+          "events": 12
+        },
+        {
+          "date": "2025-11-03",
+          "delta": -0.0041286833715187266,
+          "events": 1
+        },
+        {
+          "date": "2025-11-06",
+          "delta": -0.04721985721683322,
+          "events": 1
+        },
+        {
+          "date": "2025-11-09",
+          "delta": -0.011649543832124363,
+          "events": 12
+        },
+        {
+          "date": "2025-11-10",
+          "delta": 0.04254939434566696,
+          "events": 1
+        },
+        {
+          "date": "2025-11-13",
+          "delta": -0.01770312617004941,
+          "events": 1
+        },
+        {
+          "date": "2025-11-16",
+          "delta": -0.008411691872202512,
+          "events": 13
+        },
+        {
+          "date": "2025-11-17",
+          "delta": -0.011683926319819373,
+          "events": 1
+        },
+        {
+          "date": "2025-11-20",
+          "delta": -0.029200376387429283,
+          "events": 1
+        },
+        {
+          "date": "2025-11-23",
+          "delta": -0.0005362309837538513,
+          "events": 12
+        },
+        {
+          "date": "2025-11-24",
+          "delta": -0.02829453057364756,
+          "events": 1
+        },
+        {
+          "date": "2025-11-27",
+          "delta": -0.013474805347911753,
+          "events": 3
+        },
+        {
+          "date": "2025-11-28",
+          "delta": -0.035014891739423626,
+          "events": 1
+        },
+        {
+          "date": "2025-11-30",
+          "delta": -0.00023441861663124492,
+          "events": 11
+        },
+        {
+          "date": "2025-12-01",
+          "delta": -0.0026228572515795733,
+          "events": 1
+        },
+        {
+          "date": "2025-12-04",
+          "delta": -0.009435954926654722,
+          "events": 1
+        }
+      ]
+    },
+    "raw_market": {
+      "brier": [
+        {
+          "date": "2025-10-23",
+          "delta": 0.00008395805839980482,
+          "events": 1
+        },
+        {
+          "date": "2025-10-26",
+          "delta": 0.00016352049481267386,
+          "events": 11
+        },
+        {
+          "date": "2025-10-27",
+          "delta": -0.0012174467219091302,
+          "events": 1
+        },
+        {
+          "date": "2025-10-30",
+          "delta": -0.0005093251886513299,
+          "events": 1
+        },
+        {
+          "date": "2025-11-02",
+          "delta": 0.0012590940096855858,
+          "events": 12
+        },
+        {
+          "date": "2025-11-03",
+          "delta": -0.0008661411742282542,
+          "events": 1
+        },
+        {
+          "date": "2025-11-06",
+          "delta": -0.0009177283813049456,
+          "events": 1
+        },
+        {
+          "date": "2025-11-09",
+          "delta": -0.00045881287241597633,
+          "events": 12
+        },
+        {
+          "date": "2025-11-10",
+          "delta": -0.00034051326815454086,
+          "events": 1
+        },
+        {
+          "date": "2025-11-13",
+          "delta": -0.000058841915654011395,
+          "events": 1
+        },
+        {
+          "date": "2025-11-16",
+          "delta": -0.0007593552127420505,
+          "events": 13
+        },
+        {
+          "date": "2025-11-17",
+          "delta": -0.00013846636172999975,
+          "events": 1
+        },
+        {
+          "date": "2025-11-20",
+          "delta": -0.002302418997590455,
+          "events": 1
+        },
+        {
+          "date": "2025-11-23",
+          "delta": 0.000246537256693597,
+          "events": 12
+        },
+        {
+          "date": "2025-11-24",
+          "delta": -0.001008888739327635,
+          "events": 1
+        },
+        {
+          "date": "2025-11-27",
+          "delta": -0.0008530071890361368,
+          "events": 3
+        },
+        {
+          "date": "2025-11-28",
+          "delta": 0.002858139860745512,
+          "events": 1
+        },
+        {
+          "date": "2025-11-30",
+          "delta": 0.0005419892970078113,
+          "events": 11
+        },
+        {
+          "date": "2025-12-01",
+          "delta": -0.000015751055964598914,
+          "events": 1
+        },
+        {
+          "date": "2025-12-04",
+          "delta": -0.0009143754840994483,
+          "events": 1
+        }
+      ],
+      "log_loss": [
+        {
+          "date": "2025-10-23",
+          "delta": 0.0010798098964370714,
+          "events": 1
+        },
+        {
+          "date": "2025-10-26",
+          "delta": 0.00020885139918438094,
+          "events": 11
+        },
+        {
+          "date": "2025-10-27",
+          "delta": -0.006362327248712746,
+          "events": 1
+        },
+        {
+          "date": "2025-10-30",
+          "delta": -0.0046764548200475264,
+          "events": 1
+        },
+        {
+          "date": "2025-11-02",
+          "delta": 0.0032563810796624923,
+          "events": 12
+        },
+        {
+          "date": "2025-11-03",
+          "delta": -0.0034240963494119037,
+          "events": 1
+        },
+        {
+          "date": "2025-11-06",
+          "delta": -0.0026832280943005216,
+          "events": 1
+        },
+        {
+          "date": "2025-11-09",
+          "delta": -0.001327901745939127,
+          "events": 12
+        },
+        {
+          "date": "2025-11-10",
+          "delta": -0.0006854541719658602,
+          "events": 1
+        },
+        {
+          "date": "2025-11-13",
+          "delta": -0.0006228826878109037,
+          "events": 1
+        },
+        {
+          "date": "2025-11-16",
+          "delta": -0.002672282057380379,
+          "events": 13
+        },
+        {
+          "date": "2025-11-17",
+          "delta": -0.0024753888944170077,
+          "events": 1
+        },
+        {
+          "date": "2025-11-20",
+          "delta": -0.004893927855157243,
+          "events": 1
+        },
+        {
+          "date": "2025-11-23",
+          "delta": 0.002273354659570987,
+          "events": 12
+        },
+        {
+          "date": "2025-11-24",
+          "delta": -0.005737431127579601,
+          "events": 1
+        },
+        {
+          "date": "2025-11-27",
+          "delta": -0.0019049107266558656,
+          "events": 3
+        },
+        {
+          "date": "2025-11-28",
+          "delta": 0.0058619623729795345,
+          "events": 1
+        },
+        {
+          "date": "2025-11-30",
+          "delta": 0.001706716614620767,
+          "events": 11
+        },
+        {
+          "date": "2025-12-01",
+          "delta": -0.0010617889409532478,
+          "events": 1
+        },
+        {
+          "date": "2025-12-04",
+          "delta": -0.005732916631611018,
+          "events": 1
+        }
+      ]
+    }
+  },
+  "folds": [
+    {
+      "candidate_minus_actual_parent": {
+        "brier": -0.0005496663123215062,
+        "log_loss": -0.0011541520431449515
+      },
+      "candidate_minus_market": {
+        "brier": 0.0005871169118079195,
+        "log_loss": 0.0012082679297944487
+      },
+      "check_events": 26,
+      "fit_events": 106,
+      "fold": 1,
+      "metrics": {
+        "frozen_a1_freshness_parent": {
+          "brier": 0.12561521434032968,
+          "log_loss": 0.3803743826161928
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.15019918218394343,
+          "log_loss": 0.43593711570560223
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.13061710877713692,
+          "log_loss": 0.39656213359146736
+        },
+        "market_freshness_brier_offset": {
+          "brier": 0.12506554802800818,
+          "log_loss": 0.3792202305730478
+        },
+        "raw_market": {
+          "brier": 0.12447843111620026,
+          "log_loss": 0.3780119626432534
+        }
+      }
+    },
+    {
+      "candidate_minus_actual_parent": {
+        "brier": 0.0007306644581554222,
+        "log_loss": 0.002217081007028887
+      },
+      "candidate_minus_market": {
+        "brier": -0.0004805612005208404,
+        "log_loss": -0.001459405140922465
+      },
+      "check_events": 16,
+      "fit_events": 132,
+      "fold": 2,
+      "metrics": {
+        "frozen_a1_freshness_parent": {
+          "brier": 0.17175232049160488,
+          "log_loss": 0.5001512893773579
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.1673579315846153,
+          "log_loss": 0.5021972845123244
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.17589549592451675,
+          "log_loss": 0.5127619202842759
+        },
+        "market_freshness_brier_offset": {
+          "brier": 0.1724829849497603,
+          "log_loss": 0.5023683703843868
+        },
+        "raw_market": {
+          "brier": 0.17296354615028114,
+          "log_loss": 0.5038277755253092
+        }
+      }
+    },
+    {
+      "candidate_minus_actual_parent": {
+        "brier": 0.00025031728846683365,
+        "log_loss": 0.00042152537807382817
+      },
+      "candidate_minus_market": {
+        "brier": -0.0003701051708561165,
+        "log_loss": -0.0007345056681516415
+      },
+      "check_events": 28,
+      "fit_events": 148,
+      "fold": 3,
+      "metrics": {
+        "frozen_a1_freshness_parent": {
+          "brier": 0.1487522579865548,
+          "log_loss": 0.4590417389608034
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.16613856976689173,
+          "log_loss": 0.48697318908653625
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.15180591666281168,
+          "log_loss": 0.4660691786040406
+        },
+        "market_freshness_brier_offset": {
+          "brier": 0.14900257527502164,
+          "log_loss": 0.45946326433887724
+        },
+        "raw_market": {
+          "brier": 0.14937268044587776,
+          "log_loss": 0.4601977700070289
+        }
+      }
+    },
+    {
+      "candidate_minus_actual_parent": {
+        "brier": -0.00014014282328966843,
+        "log_loss": -0.0004042407874100262
+      },
+      "candidate_minus_market": {
+        "brier": 0.00031358082474464144,
+        "log_loss": 0.0007133180812515794
+      },
+      "check_events": 17,
+      "fit_events": 176,
+      "fold": 4,
+      "metrics": {
+        "frozen_a1_freshness_parent": {
+          "brier": 0.1277230779639739,
+          "log_loss": 0.3897213984407664
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.16143885580678952,
+          "log_loss": 0.46996446595500513
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.12917780945822577,
+          "log_loss": 0.3946157885206703
+        },
+        "market_freshness_brier_offset": {
+          "brier": 0.12758293514068422,
+          "log_loss": 0.3893171576533564
+        },
+        "raw_market": {
+          "brier": 0.12726935431593958,
+          "log_loss": 0.3886038395721048
+        }
+      }
+    }
+  ],
+  "optimizer_reconstruction": [
+    {
+      "absolute_analytic_gradient": 4.3965941998180824e-12,
+      "beta": -0.03909661526627051,
+      "check_events": 26,
+      "fit_events": 106,
+      "fold": 1,
+      "mean_age": 25.80781135694036,
+      "objective": 14.655785537154298,
+      "population_std_age": 31.674980238848484
+    },
+    {
+      "absolute_analytic_gradient": 4.7188396523623055e-9,
+      "beta": -0.01826769655999235,
+      "check_events": 16,
+      "fit_events": 132,
+      "fold": 2,
+      "mean_age": 24.114962156974908,
+      "objective": 17.903062078867006,
+      "population_std_age": 30.61088796265004
+    },
+    {
+      "absolute_analytic_gradient": 3.04760661151704e-11,
+      "beta": -0.037960744745519456,
+      "check_events": 28,
+      "fit_events": 148,
+      "fold": 3,
+      "mean_age": 23.73604733396221,
+      "objective": 20.658101649836745,
+      "population_std_age": 29.801606713461492
+    },
+    {
+      "absolute_analytic_gradient": 3.959529482067126e-9,
+      "beta": -0.04905840328443049,
+      "check_events": 17,
+      "fit_events": 176,
+      "fold": 4,
+      "mean_age": 22.70846026187593,
+      "objective": 24.827731182627097,
+      "population_std_age": 28.617136849478204
+    }
+  ],
+  "raw_brier_fold_wins": 2,
+  "ordinary_brier_fold_wins": 4,
+  "decision_conditions": {
+    "candidate_brier_below_all_three": false,
+    "candidate_log_loss_below_all_three": true,
+    "date_brier_upper_below_zero": false,
+    "ordinary_brier_fold_wins": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "ordinary_brier_fold_wins_at_least_3_of_4": true,
+    "raw_brier_fold_wins": [
+      false,
+      true,
+      true,
+      false
+    ],
+    "raw_brier_fold_wins_at_least_3_of_4": false,
+    "raw_brier_fold_wins_at_most_1_of_4": false,
+    "week_brier_upper_below_zero": false
+  },
+  "scientific_decision": "REFUTED_exact_recipe",
+  "operational_decision": "REVERT",
+  "research_credit_recommendation": {
+    "credit": 2,
+    "evidence": "Valid negative experiment on the distinct frozen Brier-loss hypothesis. Candidate is worse than actual A1 on both aggregate proper scores and worse than raw market on primary Brier; no incumbent update. All prediction and optimizer evidence is independently verified.",
+    "branch_eligibility": "Controller may retain or archive this valid branch and develop a distinct hypothesis in a later authorized batch; do not automatically retry this exact recipe or count the same finding again.",
+    "interpretation": "REFUTED is the frozen exact-recipe operational evidence label, not a formal rejection of all freshness features or all Brier-trained methods."
+  },
+  "evidence_classification": {
+    "axis": "C",
+    "component": "candidate_training_objective",
+    "data_increment_demonstrated": false,
+    "predictor_improvement_over_raw_or_actual_parent": false,
+    "feedback_driven_predictor_optimization_executed": true,
+    "research_tools_workflow_or_selection_policy_modified_by_Controller": false,
+    "self_iteration_mechanism_superiority_demonstrated": false,
+    "feedback_dependency": "Verified A1 near-market Brier and modest log-loss improvement, plus worse A2 Brier, led Controller to select a same-feature Brier-trained A1 descendant. Actual run did not improve either actual-parent score."
+  },
+  "resources": {
+    "model_fits_in_run": 4,
+    "control_refits": 0,
+    "automatic_retries": 0,
+    "provider_calls_requested": 0,
+    "run_wall_seconds": 4.0875693329871865,
+    "sampled_peak_rss_kib": 137008,
+    "review_fits": 0,
+    "actual_child_pid": 46930,
+    "actual_child_absence_check": "Scoped escalated os.kill(46930,0) raised ProcessLookupError. No signal sent.",
+    "limit": "one-second parent RSS polling, not OS-hard isolation"
+  },
+  "runtime_versions": {
+    "Python": "3.12.3",
+    "numpy": "1.26.4",
+    "scipy": "1.14.0",
+    "sklearn": "1.6.1"
+  },
+  "evidence_level": "L3_opened_Train_predictive_effect",
+  "claim_limits": [
+    "Repeatedly inspected historical Train Discovery only, not untouched OOS.",
+    "Historical event clock, not authenticated publish/receive time or realtime edge.",
+    "No family-wide freshness or Brier-training futility conclusion.",
+    "Different loss units change effective shrinkage despite numeric ridge16 being fixed; result cannot isolate objective alignment from regularization balance.",
+    "Strict local optimizer stationarity is not global optimum proof.",
+    "No same-budget fixed-process mechanism superiority or transfer evidence.",
+    "Controller exact serving model version remains unknown.",
+    "Trusted host/source execution and sampled RSS are not arbitrary-code sandbox or authenticated no-network isolation; provider calls requested were zero."
+  ]
+}

@@ -1,5 +1,120 @@
 # Research before changing the Market RSI harness
 
+## Replayable Git checkpoints — 2026-10-01 user instruction
+
+The user requires a local Git commit at every meaningful work checkpoint, not
+only at release time. The supervising integration owner must preserve the
+starting source, commit each completed bounded change, record experiment
+outcomes (including failures), and record acceptance or rollback as new history.
+Keep harness and researcher changes separate when testing their attribution.
+Do not squash, amend or rewrite an already referenced checkpoint unless the
+user explicitly requests it. Do not silently include unrelated concurrent work.
+
+Each checkpoint's existing progress/report entry must identify its purpose,
+parent/source commit, changed scope, actual verification and outcome, and next
+step. For executable work, also retain the exact command, configuration/seed,
+model/runtime/dependency identity, input data and memory manifest hashes, and
+immutable output/receipt locations and hashes. Use explicit not-applicable or
+unknown values rather than invented provenance. A run binds to its pre-run
+source commit; its later result commit records that binding. See the detailed
+checkpoint procedure in `supervisor_harness/RESEARCH_SUPERVISOR.md`.
+
+This is lightweight source/evidence bookkeeping, not a new research admission
+gate, mandatory release, per-round approval, Git hook or scientific success
+requirement. Failed and unfinished work can be preserved as clearly labelled
+local checkpoints; that does not make it approved for activation. Exclude raw
+data, credentials, runtimes and live budget/global-state ledgers from Git;
+retain evidence references instead. Local commits do not authorize remote
+pushes, release tags, paid reruns or deployment. Do not claim exact experiment
+replay from Git alone or rewind operational history when restoring source.
+
+## Attributable small changes — 2026-10-03 user instruction
+
+Every co-evolution checkpoint must identify exactly where change occurred. Use
+five separately hashed identities: `K` for the protected evaluation kernel and
+data boundary, `M` for the base model/runtime, `C` for the prediction candidate,
+`H` for the execution/research harness, and `R` for researcher capacity such as
+memory, hypothesis selection, evidence interpretation or research workflow.
+Changing features, a trainer or a loss is `C`, not proof that `R` improved.
+Human-directed integration work is `H` with human authorship, not autonomous
+self-evolution. Keep `K` fixed and protected; hold all but one of `C/H/R` fixed
+for an attributable comparison. A useful composite Discovery experiment is
+allowed, but label it `COMPOSITE_UNATTRIBUTABLE` and do not assign its effect to
+one mechanism.
+
+Before implementation, freeze a problem-bound change contract containing the
+parent step, triggering evidence, proposal author, one change axis, one named
+component, one observable expected effect, exact allowed and protected paths,
+fixed `K/M/C/H/R` hashes as applicable, resource ceiling, test plan and rollback
+parent. The trusted Supervisor must compare the measured Git diff and runtime
+manifest with that contract. The final changed file set must equal the declared
+allowlist; an unexpected file, dependency, permission, model/runtime, data,
+evaluator, authority, network or budget change fails closed. The small-step
+journal's hashes are records, not proof of the actual filesystem or process.
+
+Judge smallness by causal and operational blast radius, not line count. For the
+first pilot, one `C` proposal is one frozen candidate recipe on identical rows
+and scorer; one `H` proposal changes one operational component and one named
+benefit; one `R` proposal changes one memory, selection or interpretation policy
+while tools, permissions and Harness remain fixed. More than two production
+modules or about 200 changed lines triggers mandatory splitting or an explicit
+inseparability review, but staying below that warning threshold is not safety
+evidence. A one-line permission expansion is broad and prohibited.
+
+Advance a proposed `H` or `R` change only through: static scope review, targeted
+and inherited tests, matched replay of success/failure/restart/history, distinct
+independent review, and at most one bounded live trial after the batch is idle.
+Accept only when the predeclared benefit is observed and fixed identities remain
+fixed; otherwise reject or roll back and preserve the evidence. Do not silently
+repair a failed proposal in place. Record evidence level separately: `L0` code
+exists, `L1` tests pass, `L2` matched replay effect, `L3` opened-Train operational
+effect, `L4` repeated matched fixed-versus-evolving comparison, and `L5` frozen
+future-event confirmation. Never report a higher level than the evidence earned.
+
+Maintain an append-only trajectory whose machine and human views share the same
+records. Each step must include before/after `K/M/C/H/R`, exact commit and files,
+triggering evidence, actual tool/runtime use, execution and review receipts,
+prediction metrics, Harness/research-capacity metrics, resource use, decision,
+rollback and claim boundary. Final reports must answer prediction change,
+Harness change and researcher-capacity change separately.
+
+## Opened-Train Discovery policy — 2026-09-29 human override
+
+The active research mainline is `SettlementProbabilityTrainDiagnostic-v0`.
+For already-opened, resident local Train data, private diagnostic research may
+read the full Train set, change code/features/models/training methods/tools,
+run repeated chronological validation and accumulate research memory without a
+new release, canary or per-round authorization.  This exception does not apply
+to protected Dev/Final, external acquisition, paid providers, publication,
+deployment or promotion.
+
+Discovery is open-ended.  A one-component A/B remains useful when the purpose
+is attribution or ablation, but it is not a universal restriction: a Controller
+may combine changes when exploring, provided the complete recipe, data-time
+boundary, score definition, resource budget and comparison rows are recorded.
+`KEEP`/`REVERT` changes only the current best prediction recipe; failed branches,
+code and evidence remain available for later development.  Failure is not proof
+that the Controller is weak or that a feature family has no incremental signal.
+
+Before adding complexity, distinguish market-only calibration from incremental
+non-market information.  Primary metrics stay equal-event proper scores on
+identical rows.  Resampling must preserve that estimand: sample complete
+schedule days or weeks, then recompute the equal-event metric inside every
+draw.  Always report event, schedule-date and game-week breadth.  Reused Train
+folds are Discovery, never untouched OOS.
+
+The self-evolution hypothesis is evaluated separately with matched model
+version, data permissions and resource budget: fixed research process versus a
+process that may accumulate memory and improve its workflow, over multiple
+independent runs.  Do not attribute a base-model upgrade to RSI.  Formal final
+evaluation must additionally address LLM memorization by freezing the candidate
+and model version before future events occur and settle; planning that boundary
+does not block current Train Discovery.
+
+The fixed 15-minute cutoff, 22 + 4x5 folds, NFL seed domain and named trainers
+are project choices, not literature consensus.  Literature-backed principles,
+project parameters and unvalidated hypotheses must be labelled separately.
+
 **Later 2026-09-17 execution correction:** The user retired new E2B
 connection tests. B Researcher now targets one local Docker container; A/GLM,
 the Supervisor, broker, keys, budget and evaluator remain outside it. A live

@@ -1,0 +1,15 @@
+{
+  "role": "read_only_source_index_not_launch_configuration",
+  "task_id": "MarketTradeVWAPChange300sTrainDiagnostic-v1",
+  "horizon_seconds": 300,
+  "target": "future trailing-30s same-token trade VWAP minus current trailing-30s trade VWAP",
+  "evaluation_scope": "reused historical opened-Train diagnostic; not untouched OOS or executable PnL",
+  "source_paths": {
+    "entry": "research/market_rsi/supervisor_harness/run_price_discovery.py",
+    "data": "research/market_rsi/experiments/nfl_ingame_price_data.py",
+    "runner": "research/market_rsi/experiments/nfl_ingame_price_change_train_diagnostic.py",
+    "scorer": "research/market_rsi/experiments/nfl_ingame_price_score.py",
+    "baseline_recipe": "research/market_rsi/experiments/nfl_ingame_price_change_train_diagnostic.py"
+  },
+  "baseline_ids": ["B0-NoPriceChange", "B1-FixedHGBRegressor"]
+}

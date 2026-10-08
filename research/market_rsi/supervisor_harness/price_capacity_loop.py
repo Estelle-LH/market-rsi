@@ -17,6 +17,8 @@ t, r, w = trial.t, trial.r, trial.w
 class PriceCapacityLoop:
     def __init__(self, service, configuration, author, reviewer, *, _test_adapter=None):
         self.service, self.runtime, self.author, self.reviewer = service, service.runtime, author, reviewer
+        if configuration.get("path") != str(self.runtime.root / "capacity-configuration.json"):
+            raise ValueError("capacity configuration must be the exact batch-local file")
         self.binding, self.config = configuration, t.c._read(configuration)
         value = self.config
         if (set(value) != {"schema", "baseline", "entrypoints", "replay_cases", "hook_seconds"}
@@ -33,6 +35,16 @@ class PriceCapacityLoop:
                 or baseline["runtime"]["python"]["sha256"] != service.base["python_binding"].get(
                     "sha256", service.base["python_binding"].get("binary", {}).get("sha256"))):
             raise ValueError("capacity baseline/model/runtime differs from frozen entry")
+        entries = value["entrypoints"]
+        if (type(entries) is not dict or set(entries) != {"H", "R"}
+                or any(name not in baseline["components"][axis]["sources"] for axis, name in entries.items())):
+            raise ValueError("capacity entrypoints must belong to exact baseline sources")
+        for component in baseline["components"].values():
+            for name, token in component["sources"].items():
+                trial.cs.h._binding({"path": str(self.runtime.repo / name), "sha256": token})
+        trial.cs.h._binding(baseline["runtime"]["python"])
+        for name in entries.values():
+            trial.cs.guard.validate_source((self.runtime.repo / name).read_text())
         # Existing native micro journal is a version-selection record only;
         # global ledger.json remains the sole operation/fit quota authority.
         if _test_adapter is None:
@@ -149,8 +161,10 @@ class PriceCapacityLoop:
     def reconcile(self, ctx):
         result = ctx["outputs"]["result_review"]; material = result["material"]
         request, review = t.c._read(material["request"]), t.c._read(result["review"])
+        measured = t.c._read(material['measurement'])['benefit_measurement']
         if (review.get("authorization_sha256") != self.runtime.authority["sha256"]
-                or review.get("request") != material["request"] or review.get("measurement") != material["measurement"]):
+                or review.get("request") != material["request"] or review.get("measurement") != material["measurement"]
+                or review.get('named_benefit_measurement') != measured):
             raise ValueError("independent capacity result binding drift")
         previous = ctx["previous_result"]; data = {key: t.c._read(value) for key, value in previous.items()}
         attempt_id = "capacity-" + t.c._digest(request["decision"])[:20]
@@ -167,11 +181,14 @@ class PriceCapacityLoop:
                 "controller_decision_sha256": t.c._digest(request["decision"]), "source_commit": request["implementation"]["source_commit"],
                 "before_pair": trial.cs.activation.pair(request["before"]), "selected_pair": trial.cs.activation.pair(selected["manifest"]),
                 "capacity_decision": review["capacity_decision"], "finding": review["finding"], "measurement": material["measurement"],
+                "named_benefit_measurement": measured, "research_credit": review['research_credit'],
                 "review": result["review"], "execution_outcome": material["execution_outcome"], "prediction_decision": "UNCHANGED"}
             feedback = {**data["feedback"], **entry, "decision": "UNCHANGED", "task_id": trial.cs.h.TASK}
             memory = {"previous": previous["memory"], "prior": data["memory"], "verified_capacity_finding": entry}
             history = {"previous": previous["history"], "prior": {k: v for k, v in data["history"].items() if k != "process_feedback"},
                 "last_capacity_change": entry}
+            if "last_experiment" in data["history"]:
+                history["last_experiment"] = data["history"]["last_experiment"]
             history["process_feedback"] = self.service.process_feedback(ctx, row, {"execution_outcome": row["status"],
                 "manifest": None, "review": result["review"]})
             source = {**data["source_context"], "previous": previous["source_context"],

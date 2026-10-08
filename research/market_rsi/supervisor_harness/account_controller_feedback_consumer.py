@@ -285,6 +285,21 @@ def _terminate(child):
 
 def _prompt(packet):
     if packet.get("schema") == "controller_price_feedback_input_v2":
+        from data_scientist_harness import co_evolution_loop as micro
+        context = packet["action_context"]
+        # Display the existing validator contract; do not broaden eligibility.
+        hashes = ({item["sha256"] for item in packet["bindings"].values()}
+            | _hashes(packet["memory"]) | _hashes(packet["history"])
+            | set(packet["provided_source_sha256"]) | _hashes(context) | _hashes(packet["overhead"]))
+        metadata = {"parent_pair_sha256": _digest(context["identity_configuration"]["pair"]),
+            "components_by_axis": {axis: sorted(labels) for axis, labels in micro.MICRO_COMPONENTS.items()},
+            "eligible_evidence_sha256": sorted(hashes),
+            "required_current_feedback_sha256": packet["bindings"]["feedback"]["sha256"],
+            "source_test_pairs_by_axis": {axis: [[source, test] for source in paths for test in paths
+                if Path(source).suffix == Path(test).suffix == ".py"
+                and not Path(source).name.startswith("test_") and Path(test).name.startswith("test_")
+                and Path(source).parent == Path(test).parent]
+                for axis, paths in context["identity_configuration"]["allowed_write_paths"].items()}}
         return ("No tools, file/data/network/credentials access or authority changes. Use supplied verified feedback, process observations, history and memory. "
             "Choose one enabled action: an actual prediction hypothesis, one researcher policy/memory/workflow change, one research-side harness/tool change, "
             "or a genuinely necessary request for closed authority. Methods remain open. Do not force an R/H mutation or attach a dummy prediction to it. "
@@ -292,7 +307,14 @@ def _prompt(packet):
             "Do not modify protected evaluator/data/permissions/budget/trusted Supervisor. Configuration is not proof that capacities were used; "
             "a proposal is not implemented/tested/accepted evidence. Prior negative scores are not stop reasons. Supervisor owns stopping and resource accounting. "
             "Return exact controller_coevolution_action_v2 JSON; only the field for your selected action is non-null. "
+            "Copy the capacity metadata below; do not calculate hashes. Component labels identify the changed layer, not a method menu. "
+            "Cite only eligible evidence hashes; for a nested observation cite its supplied eligible enclosing binding, not an unlisted receipt. "
+            "The selected prediction/capacity evidence_used MUST include required_current_feedback_sha256 and its choice consequence; "
+            "the top-level feedback_sha256 alone is not that citation. For a capacity, write_paths MUST be exactly two fresh sibling .py files: "
+            "one source whose name does not start test_ and one test whose name starts test_. Copy one source_test_pairs_by_axis pair "
+            "for the selected axis; do not select only one file or overwrite an existing parent. These are implementation requirements, not new permissions. "
             "Copy binding values verbatim: input_sha256=" + _digest(packet) + " feedback_sha256=" + packet["bindings"]["feedback"]["sha256"]
+            + "\nCapacity metadata contract: " + json.dumps(metadata, sort_keys=True, separators=(",", ":"), allow_nan=False)
             + "\n" + json.dumps(packet, allow_nan=False))
     prompt = "No tools, file/data/network/credentials access or authority changes. Use only this verified numerical evidence and prior memory. Return one non-executable evidence-cited scientific next decision; no invented results or preselected model. Within the still-open budget, propose a reasonable distinct small actual prediction hypothesis even without prior improvement; reasonable first small hypotheses do not require prior gains. Negative scores or implementation overhead are not reasons to stop; Supervisor owns allowed stop conditions. Methods remain open, with no forced R modification or scoring change. Use request_closed_authority only for a specific genuinely necessary next operation outside the fixed task/data/permission boundary, not a disguised voluntary stop; a request grants no authority.\nCopy these binding values verbatim; do not calculate hashes: input_sha256=" + _digest(packet) + " feedback_sha256=" + packet["bindings"]["feedback"]["sha256"] + "\n" + json.dumps(packet, allow_nan=False)
     if packet.get("schema") == "controller_failure_feedback_input_v1":

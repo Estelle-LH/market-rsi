@@ -1,0 +1,1306 @@
+{
+  "schema": "coevo_candidate_independent_result_review_v1",
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "review_observed_utc": "2026-10-03T21:04:49Z",
+  "passed": true,
+  "verdict": "PASS_VALID_HISTORICAL_TRAIN_RESULT_NOT_CONFIRMED_PREDICTIVE_GAIN",
+  "artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-03/runs/attempt-02",
+  "artifact_sha256": {
+    "exclusions.json": "e6b19b230318dc9daf89e6495504c93996f49b3245415a14a45144fece81fdfb",
+    "input_receipts.json": "b8593c0c982df34c3a4273691403ad44bc74cc4eb656575c50e5fd59dd125ccf",
+    "manifest.json": "19300efb81f9b17666531599e6a3b5d470dc21bf94b544f8e3d0c85278db5bf3",
+    "pre_score_lock.json": "1b76c8d459a86d57321834373318eb58f29b07cc4178956638098d19ce7f743d",
+    "predictions.csv": "de8b4d1e2b56da2e0b2e96e9dfa9aee557f25706c2046aaff6d833cccbdea911",
+    "predictor_states.json": "0397f76cf86eca60ea09a95444aa5e9699e77458b52b3d4e43fefdb275c25044",
+    "scorecard.json": "e52c39ca3d4d585f0bb7f0f20b905a6bbfda435027ad9703202ef65b4e9f26c0"
+  },
+  "attempt_id": "attempt-02",
+  "candidate_arm": "prior_play_volume_offset",
+  "candidate_id": "InGamePriorPlayVolumeOffset-v1",
+  "clipped_examples": [],
+  "clipped_total": 0,
+  "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+  "decision_conditions": {
+    "candidate_brier_below_all_three": true,
+    "candidate_log_loss_below_all_three": true,
+    "date_brier_upper_below_zero": false,
+    "ordinary_brier_fold_wins": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "ordinary_brier_fold_wins_at_least_3_of_4": true,
+    "raw_brier_fold_wins": [
+      true,
+      false,
+      false,
+      true
+    ],
+    "raw_brier_fold_wins_at_least_3_of_4": false,
+    "raw_brier_fold_wins_at_most_1_of_4": false,
+    "week_brier_upper_below_zero": false
+  },
+  "execution_receipt_sha256": "0a72f92716668a4631830e6b1b645ca65df8ab443efde76b5de0275a206568dd",
+  "feature_receipts": {
+    "all_materialized_rows_validated": 193,
+    "extractor_rerun": false,
+    "feature_artifact_hashes": {
+      "event_audit.csv": "0b85a96491237edcf1b74e8718db0582bae28d0bf380c0d0f89564edaf20e2f5",
+      "input_receipts.json": "0f8902d5aee81a08d5c17c44f2025e10ca650cc6f825c4be150735c0ac7934e0",
+      "manifest.json": "addececc96838399be8b9713b85048dba6c449e840aff6f69f099f1779750144",
+      "pre_audit_lock.json": "d046d70927f0f29f327b0ed8552e523fbaf3c1955db257af19a225250f9e2929",
+      "prior_play_success.csv": "cca09f294f88f19a5cfa05fce294d6ec2a11c6264fed54840460784cbabea764",
+      "scorecard.json": "db53da50fecbebce76eb105915d53db51ce44eced92fbf41dd9688ac40e71846"
+    },
+    "feature_values_sha256": "92c2d33baf20a989d9153c00cf94f56d50e24c4372c58c43b9276c01b402d7fe",
+    "formula": "(home_eligible_plays-away_eligible_plays)/(home_eligible_plays+away_eligible_plays)",
+    "predictive_fields": [
+      "home_eligible_plays",
+      "away_eligible_plays"
+    ],
+    "source_feature_rows": 195,
+    "source_receipts": {
+      "cohort_sha256": "ba07b5535917f6ccfd4ddb5eadb53f6428b02bcc238595adac42894643d37885",
+      "pbp_games": 195,
+      "pbp_receipts_sha256": "078e2645f80f238dd58e79348c2f49d66e97f647ab2937621604d1971fdd871e",
+      "source_manifest_sha256": "429a0ef100ade70f7e7b7f5862c39f42adffd7dcdaaddf35c73c88b60f80074f"
+    },
+    "x_max": 0.4588235294117647,
+    "x_min": -0.391304347826087
+  },
+  "folds": [
+    {
+      "candidate_minus_actual_parent": {
+        "brier": -0.0007244772400478439,
+        "log_loss": -0.0008927118721840377
+      },
+      "candidate_minus_market": {
+        "brier": -0.00007434319969439052,
+        "log_loss": -0.00032931901901839256
+      },
+      "check_events": 26,
+      "fit_events": 106,
+      "fold": 1,
+      "metrics": {
+        "frozen_actual_research_parent": {
+          "brier": 0.1251285651565537,
+          "log_loss": 0.378575355496419
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.15019918218394343,
+          "log_loss": 0.43593711570560223
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.13061710877713692,
+          "log_loss": 0.39656213359146736
+        },
+        "prior_play_volume_offset": {
+          "brier": 0.12440408791650587,
+          "log_loss": 0.377682643624235
+        },
+        "raw_market": {
+          "brier": 0.12447843111620026,
+          "log_loss": 0.3780119626432534
+        }
+      }
+    },
+    {
+      "candidate_minus_actual_parent": {
+        "brier": -0.0005036647713086706,
+        "log_loss": -0.0005506161452984992
+      },
+      "candidate_minus_market": {
+        "brier": 0.00017380326544352842,
+        "log_loss": 0.0003220923378313145
+      },
+      "check_events": 16,
+      "fit_events": 132,
+      "fold": 2,
+      "metrics": {
+        "frozen_actual_research_parent": {
+          "brier": 0.17364101418703334,
+          "log_loss": 0.504700484008439
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.1673579315846153,
+          "log_loss": 0.5021972845123244
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.17589549592451675,
+          "log_loss": 0.5127619202842759
+        },
+        "prior_play_volume_offset": {
+          "brier": 0.17313734941572467,
+          "log_loss": 0.5041498678631405
+        },
+        "raw_market": {
+          "brier": 0.17296354615028114,
+          "log_loss": 0.5038277755253092
+        }
+      }
+    },
+    {
+      "candidate_minus_actual_parent": {
+        "brier": 0.0006450180130357919,
+        "log_loss": 0.001814192661315328
+      },
+      "candidate_minus_market": {
+        "brier": 0.00012442132636966696,
+        "log_loss": 0.00023122670599068362
+      },
+      "check_events": 28,
+      "fit_events": 148,
+      "fold": 3,
+      "metrics": {
+        "frozen_actual_research_parent": {
+          "brier": 0.14885208375921163,
+          "log_loss": 0.45861480405170424
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.16613856976689173,
+          "log_loss": 0.48697318908653625
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.15180591666281168,
+          "log_loss": 0.4660691786040406
+        },
+        "prior_play_volume_offset": {
+          "brier": 0.14949710177224743,
+          "log_loss": 0.46042899671301957
+        },
+        "raw_market": {
+          "brier": 0.14937268044587776,
+          "log_loss": 0.4601977700070289
+        }
+      }
+    },
+    {
+      "candidate_minus_actual_parent": {
+        "brier": -0.0007251858449348059,
+        "log_loss": -0.0015399263479897174
+      },
+      "candidate_minus_market": {
+        "brier": -0.0002775874383496024,
+        "log_loss": -0.0006562768959079701
+      },
+      "check_events": 17,
+      "fit_events": 176,
+      "fold": 4,
+      "metrics": {
+        "frozen_actual_research_parent": {
+          "brier": 0.12771695272252478,
+          "log_loss": 0.38948748902418656
+        },
+        "frozen_v0_market_plus_state_parent": {
+          "brier": 0.16143885580678952,
+          "log_loss": 0.46996446595500513
+        },
+        "frozen_v0_ordinary_market_only": {
+          "brier": 0.12917780945822577,
+          "log_loss": 0.3946157885206703
+        },
+        "prior_play_volume_offset": {
+          "brier": 0.12699176687758998,
+          "log_loss": 0.38794756267619684
+        },
+        "raw_market": {
+          "brier": 0.12726935431593958,
+          "log_loss": 0.3886038395721048
+        }
+      }
+    }
+  ],
+  "launch_manifest_sha256": "29d7bf244fa1dbb00cbfac52e4c09105c8ff039292de1d5618a80abb32d5fb96",
+  "memory_sha256": "052702067841691bac81ac09e4067e21861cf86130b3e1a5310b5095b923967d",
+  "metrics": {
+    "frozen_actual_research_parent": {
+      "brier": 0.14219132715636526,
+      "calibration_intercept": -0.010816023864898439,
+      "calibration_slope": 1.034759756824771,
+      "log_loss": 0.4296628599298944,
+      "rows": 87
+    },
+    "frozen_v0_market_plus_state_parent": {
+      "brier": 0.16068099016465245,
+      "calibration_intercept": 0.04813167873790908,
+      "calibration_slope": 0.9186856458868063,
+      "log_loss": 0.4711973192666776,
+      "rows": 87
+    },
+    "frozen_v0_ordinary_market_only": {
+      "brier": 0.14548231253271718,
+      "calibration_intercept": -0.023504802267641844,
+      "calibration_slope": 1.0568122659695651,
+      "log_loss": 0.43992197245621956,
+      "rows": 87
+    },
+    "prior_play_volume_offset": {
+      "brier": 0.14194807773589316,
+      "calibration_intercept": -0.011239323965385739,
+      "calibration_slope": 1.036308659582834,
+      "log_loss": 0.42957778268391095,
+      "rows": 87
+    },
+    "raw_market": {
+      "brier": 0.14195252900323282,
+      "calibration_intercept": -0.011806646530491793,
+      "calibration_slope": 1.0370387494646494,
+      "log_loss": 0.4296707847132428,
+      "rows": 87
+    }
+  },
+  "operational_decision": "REVERT",
+  "ordinary_brier_fold_wins": 4,
+  "paired": {
+    "candidate_minus_frozen_actual_research_parent": {
+      "brier": {
+        "by_schedule_date": [
+          {
+            "date": "2025-10-23",
+            "delta": -0.00005189818237973489,
+            "events": 1
+          },
+          {
+            "date": "2025-10-26",
+            "delta": 0.00018672184120474905,
+            "events": 11
+          },
+          {
+            "date": "2025-10-27",
+            "delta": 0.000355892566980558,
+            "events": 1
+          },
+          {
+            "date": "2025-10-30",
+            "delta": 0.000011354017271019562,
+            "events": 1
+          },
+          {
+            "date": "2025-11-02",
+            "delta": -0.0017671414080307174,
+            "events": 12
+          },
+          {
+            "date": "2025-11-03",
+            "delta": -0.0007256467244147503,
+            "events": 1
+          },
+          {
+            "date": "2025-11-06",
+            "delta": 0.0020808146551664977,
+            "events": 1
+          },
+          {
+            "date": "2025-11-09",
+            "delta": -0.0002965512108473863,
+            "events": 12
+          },
+          {
+            "date": "2025-11-10",
+            "delta": -0.0059757478798034,
+            "events": 1
+          },
+          {
+            "date": "2025-11-13",
+            "delta": 0.00012055813828168536,
+            "events": 1
+          },
+          {
+            "date": "2025-11-16",
+            "delta": 0.0017014688448218586,
+            "events": 13
+          },
+          {
+            "date": "2025-11-17",
+            "delta": 0.00003702936928200683,
+            "events": 1
+          },
+          {
+            "date": "2025-11-20",
+            "delta": -0.0010763640999991164,
+            "events": 1
+          },
+          {
+            "date": "2025-11-23",
+            "delta": -0.00027241175153660304,
+            "events": 12
+          },
+          {
+            "date": "2025-11-24",
+            "delta": 0.000249685131473127,
+            "events": 1
+          },
+          {
+            "date": "2025-11-27",
+            "delta": -0.0030873232935689685,
+            "events": 3
+          },
+          {
+            "date": "2025-11-28",
+            "delta": 0.003187308814911527,
+            "events": 1
+          },
+          {
+            "date": "2025-11-30",
+            "delta": -0.0006175297403581255,
+            "events": 11
+          },
+          {
+            "date": "2025-12-01",
+            "delta": 0.000003876480433363009,
+            "events": 1
+          },
+          {
+            "date": "2025-12-04",
+            "delta": 0.0005354523654097654,
+            "events": 1
+          }
+        ],
+        "delta_equal_event": -0.00024324942047211284,
+        "game_date_interval_95": [
+          -0.0010206596386200953,
+          0.0005319170024984582
+        ],
+        "game_week_interval_95": [
+          -0.000951403578516038,
+          0.0005722971815268177
+        ]
+      },
+      "log_loss": {
+        "by_schedule_date": [
+          {
+            "date": "2025-10-23",
+            "delta": -0.0006741537144413223,
+            "events": 1
+          },
+          {
+            "date": "2025-10-26",
+            "delta": 0.0021916688206158864,
+            "events": 11
+          },
+          {
+            "date": "2025-10-27",
+            "delta": 0.0018307999254453533,
+            "events": 1
+          },
+          {
+            "date": "2025-10-30",
+            "delta": 0.0001004087647822477,
+            "events": 1
+          },
+          {
+            "date": "2025-11-02",
+            "delta": -0.004047993389945372,
+            "events": 12
+          },
+          {
+            "date": "2025-11-03",
+            "delta": -0.002829270631918568,
+            "events": 1
+          },
+          {
+            "date": "2025-11-06",
+            "delta": 0.006101333864949932,
+            "events": 1
+          },
+          {
+            "date": "2025-11-09",
+            "delta": -0.00011263345492523723,
+            "events": 12
+          },
+          {
+            "date": "2025-11-10",
+            "delta": -0.012023895915565297,
+            "events": 1
+          },
+          {
+            "date": "2025-11-13",
+            "delta": 0.0012935758168616113,
+            "events": 1
+          },
+          {
+            "date": "2025-11-16",
+            "delta": 0.003637630266657853,
+            "events": 13
+          },
+          {
+            "date": "2025-11-17",
+            "delta": 0.0006430050953156498,
+            "events": 1
+          },
+          {
+            "date": "2025-11-20",
+            "delta": -0.002285153002899498,
+            "events": 1
+          },
+          {
+            "date": "2025-11-23",
+            "delta": 0.0003120514479837671,
+            "events": 12
+          },
+          {
+            "date": "2025-11-24",
+            "delta": 0.0014057315820552307,
+            "events": 1
+          },
+          {
+            "date": "2025-11-27",
+            "delta": -0.006610901538259699,
+            "events": 3
+          },
+          {
+            "date": "2025-11-28",
+            "delta": 0.0065177604330508565,
+            "events": 1
+          },
+          {
+            "date": "2025-11-30",
+            "delta": -0.0014928960543007372,
+            "events": 11
+          },
+          {
+            "date": "2025-12-01",
+            "delta": 0.00024844328121463415,
+            "events": 1
+          },
+          {
+            "date": "2025-12-04",
+            "delta": 0.0033096095819973442,
+            "events": 1
+          }
+        ],
+        "delta_equal_event": -0.00008507724598338263,
+        "game_date_interval_95": [
+          -0.0019922853827433824,
+          0.0016410129026706805
+        ],
+        "game_week_interval_95": [
+          -0.0018850936318969681,
+          0.0017397905560030157
+        ]
+      }
+    },
+    "candidate_minus_frozen_v0_market_plus_state_parent": {
+      "brier": {
+        "by_schedule_date": [
+          {
+            "date": "2025-10-23",
+            "delta": 0.00124496655578158,
+            "events": 1
+          },
+          {
+            "date": "2025-10-26",
+            "delta": 0.009398322860455974,
+            "events": 11
+          },
+          {
+            "date": "2025-10-27",
+            "delta": -0.02325733463948198,
+            "events": 1
+          },
+          {
+            "date": "2025-10-30",
+            "delta": 0.00338590658074529,
+            "events": 1
+          },
+          {
+            "date": "2025-11-02",
+            "delta": -0.06295229507628645,
+            "events": 12
+          },
+          {
+            "date": "2025-11-03",
+            "delta": 0.015296643044785216,
+            "events": 1
+          },
+          {
+            "date": "2025-11-06",
+            "delta": -0.004402843217290099,
+            "events": 1
+          },
+          {
+            "date": "2025-11-09",
+            "delta": 0.0049036608285834135,
+            "events": 12
+          },
+          {
+            "date": "2025-11-10",
+            "delta": 0.0228508603177974,
+            "events": 1
+          },
+          {
+            "date": "2025-11-13",
+            "delta": -0.0001179047905433511,
+            "events": 1
+          },
+          {
+            "date": "2025-11-16",
+            "delta": -0.006009091832229839,
+            "events": 13
+          },
+          {
+            "date": "2025-11-17",
+            "delta": 0.0007428092551087905,
+            "events": 1
+          },
+          {
+            "date": "2025-11-20",
+            "delta": -0.027377591734909,
+            "events": 1
+          },
+          {
+            "date": "2025-11-23",
+            "delta": -0.03038976537976382,
+            "events": 12
+          },
+          {
+            "date": "2025-11-24",
+            "delta": 0.00346905700591267,
+            "events": 1
+          },
+          {
+            "date": "2025-11-27",
+            "delta": -0.016854277257283598,
+            "events": 3
+          },
+          {
+            "date": "2025-11-28",
+            "delta": -0.10923307977157432,
+            "events": 1
+          },
+          {
+            "date": "2025-11-30",
+            "delta": -0.03795800094620238,
+            "events": 11
+          },
+          {
+            "date": "2025-12-01",
+            "delta": 0.000004653201956838837,
+            "events": 1
+          },
+          {
+            "date": "2025-12-04",
+            "delta": -0.008271243046697593,
+            "events": 1
+          }
+        ],
+        "delta_equal_event": -0.01873291242875931,
+        "game_date_interval_95": [
+          -0.03662725632870777,
+          -0.002042662387862868
+        ],
+        "game_week_interval_95": [
+          -0.03606183716660937,
+          -0.0013318172156913898
+        ]
+      },
+      "log_loss": {
+        "by_schedule_date": [
+          {
+            "date": "2025-10-23",
+            "delta": 0.02205628631401809,
+            "events": 1
+          },
+          {
+            "date": "2025-10-26",
+            "delta": 0.03337982448227506,
+            "events": 11
+          },
+          {
+            "date": "2025-10-27",
+            "delta": -0.0917995003942564,
+            "events": 1
+          },
+          {
+            "date": "2025-10-30",
+            "delta": 0.04652143355021213,
+            "events": 1
+          },
+          {
+            "date": "2025-11-02",
+            "delta": -0.15488104690754553,
+            "events": 12
+          },
+          {
+            "date": "2025-11-03",
+            "delta": 0.07393532562961368,
+            "events": 1
+          },
+          {
+            "date": "2025-11-06",
+            "delta": -0.012610852992041094,
+            "events": 1
+          },
+          {
+            "date": "2025-11-09",
+            "delta": -0.006259420198380852,
+            "events": 12
+          },
+          {
+            "date": "2025-11-10",
+            "delta": 0.046266275058649886,
+            "events": 1
+          },
+          {
+            "date": "2025-11-13",
+            "delta": -0.001236371702593539,
+            "events": 1
+          },
+          {
+            "date": "2025-11-16",
+            "delta": 0.00008681422703032986,
+            "events": 13
+          },
+          {
+            "date": "2025-11-17",
+            "delta": 0.017861153659013092,
+            "events": 1
+          },
+          {
+            "date": "2025-11-20",
+            "delta": -0.05723678981293717,
+            "events": 1
+          },
+          {
+            "date": "2025-11-23",
+            "delta": -0.06052386566219525,
+            "events": 12
+          },
+          {
+            "date": "2025-11-24",
+            "delta": 0.021296052690406145,
+            "events": 1
+          },
+          {
+            "date": "2025-11-27",
+            "delta": -0.03172880872211555,
+            "events": 3
+          },
+          {
+            "date": "2025-11-28",
+            "delta": -0.232759763895813,
+            "events": 1
+          },
+          {
+            "date": "2025-11-30",
+            "delta": -0.09310224824132801,
+            "events": 11
+          },
+          {
+            "date": "2025-12-01",
+            "delta": 0.0002991733324728598,
+            "events": 1
+          },
+          {
+            "date": "2025-12-04",
+            "delta": -0.04251560835544531,
+            "events": 1
+          }
+        ],
+        "delta_equal_event": -0.04161953658276661,
+        "game_date_interval_95": [
+          -0.08637512461167915,
+          -0.0007782503573020148
+        ],
+        "game_week_interval_95": [
+          -0.08301109693506396,
+          -0.0018210804912942222
+        ]
+      }
+    },
+    "candidate_minus_frozen_v0_ordinary_market_only": {
+      "brier": {
+        "by_schedule_date": [
+          {
+            "date": "2025-10-23",
+            "delta": -0.0010047784886478726,
+            "events": 1
+          },
+          {
+            "date": "2025-10-26",
+            "delta": -0.0024082002864676474,
+            "events": 11
+          },
+          {
+            "date": "2025-10-27",
+            "delta": -0.0031656118178514485,
+            "events": 1
+          },
+          {
+            "date": "2025-10-30",
+            "delta": -0.004031675332975725,
+            "events": 1
+          },
+          {
+            "date": "2025-11-02",
+            "delta": -0.01057052279881572,
+            "events": 12
+          },
+          {
+            "date": "2025-11-03",
+            "delta": -0.00022291717946075137,
+            "events": 1
+          },
+          {
+            "date": "2025-11-06",
+            "delta": -0.015898460591535053,
+            "events": 1
+          },
+          {
+            "date": "2025-11-09",
+            "delta": -0.003804058035164431,
+            "events": 12
+          },
+          {
+            "date": "2025-11-10",
+            "delta": 0.019545776928904135,
+            "events": 1
+          },
+          {
+            "date": "2025-11-13",
+            "delta": -0.0019060468766082844,
+            "events": 1
+          },
+          {
+            "date": "2025-11-16",
+            "delta": -0.0019463765573255016,
+            "events": 13
+          },
+          {
+            "date": "2025-11-17",
+            "delta": -0.0006133388594830896,
+            "events": 1
+          },
+          {
+            "date": "2025-11-20",
+            "delta": -0.012350740266230453,
+            "events": 1
+          },
+          {
+            "date": "2025-11-23",
+            "delta": -0.001816039098188672,
+            "events": 12
+          },
+          {
+            "date": "2025-11-24",
+            "delta": -0.004587373386591154,
+            "events": 1
+          },
+          {
+            "date": "2025-11-27",
+            "delta": -0.0058148313937060785,
+            "events": 3
+          },
+          {
+            "date": "2025-11-28",
+            "delta": -0.022256473911627828,
+            "events": 1
+          },
+          {
+            "date": "2025-11-30",
+            "delta": 0.0002846757148503419,
+            "events": 11
+          },
+          {
+            "date": "2025-12-01",
+            "delta": -0.000027366245297013044,
+            "events": 1
+          },
+          {
+            "date": "2025-12-04",
+            "delta": -0.0005658223961190426,
+            "events": 1
+          }
+        ],
+        "delta_equal_event": -0.003534234796824018,
+        "game_date_interval_95": [
+          -0.006276352378309088,
+          -0.0014598494968102766
+        ],
+        "game_week_interval_95": [
+          -0.00591342623373209,
+          -0.0021667982506631983
+        ]
+      },
+      "log_loss": {
+        "by_schedule_date": [
+          {
+            "date": "2025-10-23",
+            "delta": -0.0116120839645725,
+            "events": 1
+          },
+          {
+            "date": "2025-10-26",
+            "delta": -0.0096246856625727,
+            "events": 11
+          },
+          {
+            "date": "2025-10-27",
+            "delta": -0.015355747940345707,
+            "events": 1
+          },
+          {
+            "date": "2025-10-30",
+            "delta": -0.02947405973861026,
+            "events": 1
+          },
+          {
+            "date": "2025-11-02",
+            "delta": -0.027379442101351025,
+            "events": 12
+          },
+          {
+            "date": "2025-11-03",
+            "delta": -0.0008730938498741625,
+            "events": 1
+          },
+          {
+            "date": "2025-11-06",
+            "delta": -0.0439382204721028,
+            "events": 1
+          },
+          {
+            "date": "2025-11-09",
+            "delta": -0.00958630740530061,
+            "events": 12
+          },
+          {
+            "date": "2025-11-10",
+            "delta": 0.039539724868059345,
+            "events": 1
+          },
+          {
+            "date": "2025-11-13",
+            "delta": -0.01748556042064093,
+            "events": 1
+          },
+          {
+            "date": "2025-11-16",
+            "delta": -0.004851904040853752,
+            "events": 13
+          },
+          {
+            "date": "2025-11-17",
+            "delta": -0.009222410682173388,
+            "events": 1
+          },
+          {
+            "date": "2025-11-20",
+            "delta": -0.026034797318390812,
+            "events": 1
+          },
+          {
+            "date": "2025-11-23",
+            "delta": -0.003007530087284311,
+            "events": 12
+          },
+          {
+            "date": "2025-11-24",
+            "delta": -0.02350277136951437,
+            "events": 1
+          },
+          {
+            "date": "2025-11-27",
+            "delta": -0.012689510238119373,
+            "events": 3
+          },
+          {
+            "date": "2025-11-28",
+            "delta": -0.04584540927182501,
+            "events": 1
+          },
+          {
+            "date": "2025-11-30",
+            "delta": -0.0022253429986961097,
+            "events": 11
+          },
+          {
+            "date": "2025-12-01",
+            "delta": -0.0015745585494338094,
+            "events": 1
+          },
+          {
+            "date": "2025-12-04",
+            "delta": -0.0033925678347745403,
+            "events": 1
+          }
+        ],
+        "delta_equal_event": -0.010344189772308552,
+        "game_date_interval_95": [
+          -0.01738110313872158,
+          -0.005454079757543031
+        ],
+        "game_week_interval_95": [
+          -0.016731179135807607,
+          -0.00652834593534629
+        ]
+      }
+    },
+    "candidate_minus_raw_market": {
+      "brier": {
+        "by_schedule_date": [
+          {
+            "date": "2025-10-23",
+            "delta": -0.000017889479042059592,
+            "events": 1
+          },
+          {
+            "date": "2025-10-26",
+            "delta": -0.00007041980995444003,
+            "events": 11
+          },
+          {
+            "date": "2025-10-27",
+            "delta": -0.000018926606497517845,
+            "events": 1
+          },
+          {
+            "date": "2025-10-30",
+            "delta": 0.000024658721110878794,
+            "events": 1
+          },
+          {
+            "date": "2025-11-02",
+            "delta": -0.00009551232651060588,
+            "events": 12
+          },
+          {
+            "date": "2025-11-03",
+            "delta": -0.000042952343068912435,
+            "events": 1
+          },
+          {
+            "date": "2025-11-06",
+            "delta": 0.00020553014574117845,
+            "events": 1
+          },
+          {
+            "date": "2025-11-09",
+            "delta": 0.00037431467093193544,
+            "events": 12
+          },
+          {
+            "date": "2025-11-10",
+            "delta": -0.0018351370176212245,
+            "events": 1
+          },
+          {
+            "date": "2025-11-13",
+            "delta": -0.00003836458913778276,
+            "events": 1
+          },
+          {
+            "date": "2025-11-16",
+            "delta": 0.00047579510050097657,
+            "events": 13
+          },
+          {
+            "date": "2025-11-17",
+            "delta": -8.072479012763509e-7,
+            "events": 1
+          },
+          {
+            "date": "2025-11-20",
+            "delta": -0.0008139518732298567,
+            "events": 1
+          },
+          {
+            "date": "2025-11-23",
+            "delta": -0.00014310030445962487,
+            "events": 12
+          },
+          {
+            "date": "2025-11-24",
+            "delta": -0.00016957639351598656,
+            "events": 1
+          },
+          {
+            "date": "2025-11-27",
+            "delta": -0.0005439357454115797,
+            "events": 3
+          },
+          {
+            "date": "2025-11-28",
+            "delta": -0.0024260694875267164,
+            "events": 1
+          },
+          {
+            "date": "2025-11-30",
+            "delta": -0.0000647111594388978,
+            "events": 11
+          },
+          {
+            "date": "2025-12-01",
+            "delta": -2.1393942578259995e-7,
+            "events": 1
+          },
+          {
+            "date": "2025-12-04",
+            "delta": 0.0000509269650718798,
+            "events": 1
+          }
+        ],
+        "delta_equal_event": -0.000004451267339672208,
+        "game_date_interval_95": [
+          -0.00023600248507111356,
+          0.00018305918336794893
+        ],
+        "game_week_interval_95": [
+          -0.00018969449171691723,
+          0.00020096691392753092
+        ]
+      },
+      "log_loss": {
+        "by_schedule_date": [
+          {
+            "date": "2025-10-23",
+            "delta": -0.00023356342235082705,
+            "events": 1
+          },
+          {
+            "date": "2025-10-26",
+            "delta": -0.0004949015145580372,
+            "events": 11
+          },
+          {
+            "date": "2025-10-27",
+            "delta": -0.00009669610444043575,
+            "events": 1
+          },
+          {
+            "date": "2025-10-30",
+            "delta": 0.00021825643358665964,
+            "events": 1
+          },
+          {
+            "date": "2025-11-02",
+            "delta": -0.00025053122842783683,
+            "events": 12
+          },
+          {
+            "date": "2025-11-03",
+            "delta": -0.0001685068277673396,
+            "events": 1
+          },
+          {
+            "date": "2025-11-06",
+            "delta": 0.0005984086504298991,
+            "events": 1
+          },
+          {
+            "date": "2025-11-09",
+            "delta": 0.0007353346808846266,
+            "events": 12
+          },
+          {
+            "date": "2025-11-10",
+            "delta": -0.003695123649573473,
+            "events": 1
+          },
+          {
+            "date": "2025-11-13",
+            "delta": -0.00040531693840242106,
+            "events": 1
+          },
+          {
+            "date": "2025-11-16",
+            "delta": 0.0008875057739683814,
+            "events": 13
+          },
+          {
+            "date": "2025-11-17",
+            "delta": -0.000013873256771022163,
+            "events": 1
+          },
+          {
+            "date": "2025-11-20",
+            "delta": -0.0017283487861187719,
+            "events": 1
+          },
+          {
+            "date": "2025-11-23",
+            "delta": -0.00019794444395947243,
+            "events": 12
+          },
+          {
+            "date": "2025-11-24",
+            "delta": -0.0009456719234464117,
+            "events": 1
+          },
+          {
+            "date": "2025-11-27",
+            "delta": -0.0011196156168634859,
+            "events": 3
+          },
+          {
+            "date": "2025-11-28",
+            "delta": -0.00496855515942185,
+            "events": 1
+          },
+          {
+            "date": "2025-11-30",
+            "delta": -0.00028420776744409755,
+            "events": 11
+          },
+          {
+            "date": "2025-12-01",
+            "delta": -0.000013490238807483887,
+            "events": 1
+          },
+          {
+            "date": "2025-12-04",
+            "delta": 0.00031047046026916325,
+            "events": 1
+          }
+        ],
+        "delta_equal_event": -0.0000930020293318562,
+        "game_date_interval_95": [
+          -0.0005755083461352074,
+          0.0003036091822362854
+        ],
+        "game_week_interval_95": [
+          -0.00048128100260020707,
+          0.0003336872778013005
+        ]
+      }
+    }
+  },
+  "population": {
+    "check_dates": 20,
+    "check_events": 87,
+    "check_game_weeks": 7,
+    "dates": 42,
+    "events": 195,
+    "excluded_events": 2,
+    "materialized_events": 193
+  },
+  "primitive_checks": [
+    {
+      "beta": 0.03429658095778942,
+      "check_events": 26,
+      "fit_events": 106,
+      "fold": 1,
+      "gradient_absolute": 1.1102230246251565e-16,
+      "objective": 44.91780924075505,
+      "prediction_max_abs_error": 5.551115123125783e-17,
+      "state_sha256": "c1f0d9191fe4d3100f409ea3933525cee90712e73b862bc73e88fc0372998766"
+    },
+    {
+      "beta": 0.04945228486620847,
+      "check_events": 16,
+      "fit_events": 132,
+      "fold": 2,
+      "gradient_absolute": 1.5987211554602254e-14,
+      "objective": 54.73568048728163,
+      "prediction_max_abs_error": 5.551115123125783e-17,
+      "state_sha256": "1165733a28f0a7bdef7e65dad2f69c5f310d59bc6c573016026253936bf0ba8f"
+    },
+    {
+      "beta": 0.04301675291257686,
+      "check_events": 28,
+      "fit_events": 148,
+      "fold": 3,
+      "gradient_absolute": 1.609823385706477e-14,
+      "objective": 62.80173872142235,
+      "prediction_max_abs_error": 1.1102230246251565e-16,
+      "state_sha256": "f3d5bf14b02a8e4134684a2d75638c62bafef6e25a0d9e4fde780ca06dcb3dd4"
+    },
+    {
+      "beta": 0.033753836557043615,
+      "check_events": 17,
+      "fit_events": 176,
+      "fold": 4,
+      "gradient_absolute": 2.55351295663786e-15,
+      "objective": 75.69304197649419,
+      "prediction_max_abs_error": 5.551115123125783e-17,
+      "state_sha256": "5bdee239f8ebd9b6870e58ccbc87ce7bb1c7228c2ef3ce296cd2cd6d2d70fbd8"
+    }
+  ],
+  "raw_brier_fold_wins": 2,
+  "request_sha256": "9820e3be81ed1015a7a20315d8091995d16c7e29ae11add6ef6b3ded5647c1dd",
+  "research_parent_sha256": "4ea2935fb896397b4d21125bb040a0f82ff82be01abd2779717378d3465a0ab3",
+  "resources": {
+    "PID": 52740,
+    "automatic_retries": 0,
+    "control_refits": 0,
+    "model_fits": 4,
+    "provider_calls_requested": 0,
+    "review_Train_fits": 0,
+    "sampled_peak_rss_kib": 139424,
+    "wall_seconds": 4.46397137499298
+  },
+  "reviewed_utc": "2026-10-03T21:03:45.104041+00:00",
+  "runtime_pair_sha256": "ad5bbccc2bbd16c4dd06d355fddb5310176a10a4f39ecc5052a3516a4b55fad7",
+  "scientific_decision": "INCONCLUSIVE",
+  "source_commit": "50895c74f93dd8f3def9cf2e4d6144dec9b10c7b",
+  "source_files_checked": 36,
+  "pre_score_review_sha256": "8c2342914aefa4eb757abef6d3a9c8b6d82999fe177fb982ff85a1a568e264b0",
+  "question_id": "ingame-prior-play-volume-offset-v1-q1",
+  "question_digest_sha256": "df46063d8c88d1a55aef39b3ff9f490cd07457c99289b6a70ac9233d242ca997",
+  "hypothesis_digest_sha256": "6146ce86a06b23a1ad632d9ad3edae2b31efef79766a68171f71bde3ef72186a",
+  "predeclared_rule_sha256": "2caa0e05ce534795beae886da3d30b1df5dcef47449a38cae2ecd959bceb9372",
+  "checks": {
+    "manifest_outputs": "All six outputs bound to manifest, plus manifest/stdout identity and four canonical state digests",
+    "count_features": "Independent original CSV195unique frozenanchors/exactpre-play ID/order rechecked; same193positiveinteger count rows and2exclusions; formula independently computed, all193 feature digest92c2d33b...d7fe and full feature receipts match output",
+    "source_lineage": "All six old feature artifact hashes and original source/cohort/PBP receipts match current frozen source/v0; original extractor strict orderSequence<anchor/eligibility source already independently reviewed; no extractor rerun/new source",
+    "fitted_states": "Four finite beta/feature-digest states; independently scalar NLL objectives and stationary gradients on strict-prior fit rows; unchanged market coefficient1/nointercept/no scaling/penalty16/zero second coefficient/50maxiterations/0retries",
+    "numeric_replay": "All87 independent scalar logit-offset/sigmoid predictions match CSV to <=1.1102230246251565e-16",
+    "sample_mask": "195population42dates=193materialized+2exact named exclusions;87unique frozen keys20dates7weeks, strict-prior fit106/132/148/176 and26/16/28/17checks; unchanged labels/raw/ordinary/v0state/actual A2 parent and fractional event-clock receipts",
+    "score_reconstruction": "Independent aggregate and4fold Brier/logloss/linear calibration/reliability; all20 date deltas and16 whole-date/week10000-draw eventweighted intervals (seed20260929); unchanged frozen KEEP and scientificclassification",
+    "provenance": "36committed/current hashes including frozenC1 helper, exact source50895c74f93dd8f3def9cf2e4d6144dec9b10c7b/Python/runtime/request/command/pre-review/memory/receipt/stdout/stderr",
+    "research_memory": "All six prior feedback file+packet hashes verified (wrapper-aware), exact initial/activation memory and pre-review; normal evidence accumulation, no Rpolicy change",
+    "process": "PID52740 independently absent via scoped escalated os.kill(pid,0)",
+    "budget": "One actual4fit run/0retries/controlrefits,4.46397137499298s,139424KiB sampled; batch2claims8reservedfits/currentmax3/12/90min/2slots and outer8/10attempts32actualfits retained; no old batch cap reset",
+    "reviewer_Train_fits": 0,
+    "reviewer_new_predictions": 0
+  },
+  "interpretation": {
+    "raw_brier_delta": -0.000004451267339672208,
+    "raw_log_loss_delta": -0.0000930020293318562,
+    "actual_A2_parent_brier_delta": -0.00024324942047211284,
+    "actual_A2_parent_log_loss_delta": -0.00008507724598338263,
+    "result": "Tiny equal-event aggregate raw improvement on repeatedly inspected Train,2/4raw Brierblock wins; all raw date/weekBrier/logloss intervals crosszero. Exact original judge INCONCLUSIVE/REVERT, rawincumbent unchanged.",
+    "no_significance_barrier": "The valid inconclusive candidate remains eligible for bounded Discovery; not required to reach statistical significance before another candidate",
+    "parent_comparison": "Same A2trainer, different count-ratio representation; scale changes effective regularization. Not pure new-data benefit, universal PBP edge or model/trainer upgrade.",
+    "beta_sign": "Allfour fitted coefficients positive for this fixed ratio; future applicability and incremental value remain uncertain",
+    "research_flow": "A valid first exploration of prior-play-volume information, not autonomous workflow/H/R modification"
+  },
+  "credit_recommendation": {
+    "evidence_value_under_user_rubric": 2,
+    "problem_id": "historical-ingame-settlement",
+    "question_id": "ingame-prior-play-volume-offset-v1-q1",
+    "outcome": "inconclusive",
+    "route_action": "bounded_followup",
+    "reason": "Valid real experiment independently tests a distinct hypothesis with complete coverage and preserved uncertainty. Tiny aggregate gain is not confirmed improvement or incumbent update. Evidence credit is not Brier credit.",
+    "frozen_recorder_admissible": {
+      "value": 1,
+      "outcome": "inconclusive",
+      "route_action": "bounded_followup"
+    },
+    "recorder_limitation": "Existing frozen credit/outcome mapping admits only credit1 for inconclusive boundedfollowup, although user evidence rubric permits2 for valid hypothesis test. Supervisor may record1 with explicit mapping and retain separate independent evidencecredit2; do not mislabel support/refute, silently changeH or retroactively alter judge/history.",
+    "next_scientific_choice": "Controller, after this verified packet; no prescribed algorithm or automatic repeat"
+  },
+  "boundary": {
+    "evidence_level": "L3 historical opened-Train prediction diagnostic",
+    "protected_Dev_Final_reads": false,
+    "provider_calls": 0,
+    "external_fetches": 0,
+    "release": false,
+    "promotion": false,
+    "K_M_H_R": "Fixed hashes unchanged; candidate C only; ordinary memory accumulation not Rmodification",
+    "Controller_exact_version": "unknown",
+    "trusted_host_not_network_sandbox": true,
+    "unsupported_claims": [
+      "Confirmed market edge",
+      "Untouched OOS/prospective confirmation",
+      "Real-time publish/receive availability",
+      "Pure-data increment versus scale/representation",
+      "General PBP utility or futility",
+      "Research-process self-modification/superiority",
+      "Broad legacy suite green"
+    ]
+  },
+  "clerical_caveat": "Committed C2 pre-score receipt finalverification correctly says16focused/160adjacentPASS, but one inherited limits sentence says151checks. Actual final runs16/160 verified; no committed receipt edited.",
+  "review_probe_failures_preserved": "None in this C2 result reconstruction; copied candidate-local immutable boundary read-only and calculations independent."
+}

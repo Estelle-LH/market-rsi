@@ -1,0 +1,688 @@
+{
+  "schema": "coevo_candidate_independent_pre_score_review_v1",
+  "reviewed_utc": "2026-10-03T22:39:00Z",
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "passed": true,
+  "verdict": "PASS_FOR_ONE_BOUNDED_SUPERVISOR_LAUNCH_AFTER_EXACT_SOURCE_CHECKPOINT",
+  "batch_id": "market-rsi-coevo-train-pilot-20261003-05",
+  "attempt_id": "attempt-01",
+  "candidate_id": "InGameCurvatureUnitMatchedBrierJointOffset-v4",
+  "question_id": "ingame-curvature-unit-matched-Brier-joint-v4-q1",
+  "contract": {
+    "path": "research/market_rsi/supervisor_harness/COEVO_BATCH5_CONTRACT_2026-10-03.json",
+    "sha256": "2da17c7c181ad3ffe050ac9c926bf3c0e27128f7d3a7e5aba2f1a9aca4b2f852",
+    "commit": "532dad2b5e2c1cc8a848e3cf0521c6d2dd75963a"
+  },
+  "source_parent_commit": "532dad2b5e2c1cc8a848e3cf0521c6d2dd75963a",
+  "exact_source_hashes": {
+    "research/market_rsi/experiments/nfl_ingame_curvature_unit_matched_brier_joint_offset.py": "021e347fce1692189dbe666c7367a833b83dc61c31f957a81fe95f0e7f08256b",
+    "research/market_rsi/experiments/test_nfl_ingame_curvature_unit_matched_brier_joint_offset.py": "5f656f5f8b9a1a5662957df86b05e7d608615daf9a232a89c5bc859b0f1d6a6a"
+  },
+  "scientific_scope": {
+    "changed_axis": "C",
+    "component": "unweighted_Brier_training_local_prior_units_and_predeclared_continuous_optimizer",
+    "actual_parent_candidate_id": "InGamePriorPlayVolumeUnitScaleJointOffset-v3",
+    "actual_parent_sha256": "ff251b120bd80dbcaf7846f830cb0c065d3abb15bb9bc769b9826d09e63c32da",
+    "actual_parent_result_review_sha256": "66b055451d32c32a983d15de39695b5fb1765ca428ccafae0aeba01ad38091c9",
+    "feedback_trigger_sha256": "3bd8a89936325fe9f08e3b23af0d70fffa6cba399745c2abe28c3f7df655fe9a",
+    "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+    "information_and_representation": "Exactly C4 two columns, all193 original causal inputs, four native/normalized FIT/CHECK hashes, fit-only ddof0 volume division without centering/floor and identical freshness normalizers. No new source, extractor, representation, dimension, sign constraints, intercept or free market coefficient.",
+    "objective": "SUM_i(q_i-y_i)^2 +0.5*SUM_j(lambda_j*theta_j^2), q=sigmoid(rawlogit+Xtheta); unweighted sum, not mean or weighted loss",
+    "local_prior_units": "v=rawp*(1-rawp); d_j=SUM(v*x_j^2), n_j=SUM(2*v^2*x_j^2), r=n/d, lambda=16*r. Strict-prior FIT design/rawp only, no labels/check rows; finite d>0 and 0<r<=0.5, no floors/clips/fallback.",
+    "interpretation": "Matches hypothetical Bernoulli(rawp) expected diagonal data-to-prior ratios at theta0; not equal numeric actual Hessian, full/offdiagonal geometry, true probabilities, higher-order/global theorem or pure-loss benefit.",
+    "gradient": "2X'[(q-y)u]+lambda*theta, u=q(1-q)",
+    "hessian": "2X'diag(u^2+(q-y)u(1-2q))X+diag(lambda)",
+    "optimizer": "One zero-start L-BFGS-B with exact frozen options, then at most25 modified-Newton steps from its finite returned x on SAME objective/prior; eigenfloor1e-6 only direction, Armijo1e-4/alpha1/halve/max60. No restart/retry/multistart. Final analytic grad infinity<=1e-8 and actual Hessian PD; local numerical validity only.",
+    "attribution": "One combined candidate training/objective/prior/optimizer recipe, not data gain, isolated loss effect, H change or R self-evolution.",
+    "external_score_and_keep_changed": false,
+    "H_changed": false,
+    "R_policy_changed": false
+  },
+  "checks": {
+    "complete_final_source_test_and_contract_read": true,
+    "source_runtime_admission": "PASS exact contract/C4 source and recursive frozen causal/solver/scorer dependencies; pinned Python3.12.3/numpy1.26.4/scipy1.14.0/sklearn1.6.1.",
+    "parent_binding": "PASS actual seven C4 files, four canonical numeric state/report hashes, task/source/contract/V0/materialized/PBP/exclusions/boundary controls. All87 existing C4 probabilities replay exactly with optimizers explicitly disabled.",
+    "fit_parity": "PASS allfour strict-prior C4 native/normalized FIT/CHECK digests, scale and freshness normalizers checked before any candidate optimizer. Exact prefit parent replay does not create candidate Train predictions.",
+    "calculus": "PASS independent scalar F/g/H plus synthetic finite differences; unweighted summed objective and local hypothetical ratio caveat explicit.",
+    "optimizer_fail_closed": "PASS finite reported phase1 x/fun/two-coordinate jac and independently reevaluated F/g/H; preserve success/status/message/eval counts. Finite unsuccessful phase1 may predeclared-continue without relabeling success. Nonfinite/exception/Armijo60/iteration25/final-gradient/actualH-PD violations terminal invalid, no retry.",
+    "failure_receipts": "PASS optimizer partial status/last checked F/g/H/proposal counts saved; run failure/progress preserve first failed fit without scorecard. Converged optimizer followed by rejected predictions keeps converged receipt plus post-prediction error. fit-call entries are not falsely called optimizer starts/completed fits.",
+    "safe_replay": "PASS primitive theta/scales/four designs/curvature n,d,r,lambda/native-prior/stationarity/continuous pipeline saved; lambda=16*r/base16/unweighted-label/finite arithmetic checked. Immutable C4 prediction helper used with a local copied validator proxy only, no parent fit/run or monkeypatch in production.",
+    "check_isolation": "PASS future/check labels/counts/ages cannot alter FIT units, transforms, coefficients, optimizer or stationarity. CHECK provenance digests correctly change independently; whole-state hash is not misreported invariant.",
+    "population_and_causal_boundary": "PASS frozen195=193+2 exact exclusions,87 common keys/20dates7weeks; fit106/132/148/176, checks26/16/28/17,22initialdates+four5-date checks, strict prior label availability. Fractional pre-play checkpoint age retained; no future/terminal fields or protected data.",
+    "fixed_scoring": "PASS identical equal-event Brier/logloss/calibration and whole-date/week pooled-event 10k bootstrap seed20260929; unchanged original scientific/KEEP judge. Parent annotation and correction-energy diagnostics separate and cannot select incumbent.",
+    "preclaim_metadata": "PASS initialized pilot05 three records, zero claims, max1/4 and min90min/original deadline00:02:16.099335Z. Ten old feedback/9eligible archives, consumed C2 excluded; old four closed caps/results preserved. Exact runtime/source/memory/request binding still required by Supervisor before actual launch.",
+    "scope": "PASS no tracked old Python diff from exact current contract checkpoint; only one new candidate/test. Root registration metadata is separate from scientific source. No H/M/K/R, permissions, data, evaluator or scheduler edits.",
+    "credit": "No new experimental credit from this mathematics/source/test review; only future independently verified actual valid predictive evidence may score research question. Credit cannot compensate score regression."
+  },
+  "small_step_trigger": {
+    "production_lines": 418,
+    "test_lines": 467,
+    "production_modules": 1,
+    "threshold_exceeded": true,
+    "decision": "ACCEPT_EXPLICIT_BOUNDED_INSEPARABILITY",
+    "rationale": "One candidate-local inseparable executable recipe needs analytic Brier/prior units and bounded continuous optimizer/failure receipts, safe numeric replay, exact seven-file/four-design/87-probability actual-parent prefit proof, and immutable contract/source/195-causal/chronology/output entry. Frozen parent does not admit the new task contract, so a separate entry is required. All existing pure feature/materialization/scoring/chronology helpers are reused without edits; no new general harness, workflow/reward service, extractor or authority change. Size alone is not evidence of smallness; actual effect remains one C objective/prior/optimizer question."
+  },
+  "verification": {
+    "focused": {
+      "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONHASHSEED=0 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest experiments.test_nfl_ingame_curvature_unit_matched_brier_joint_offset -v",
+      "passed": true,
+      "tests": 16,
+      "seconds": 0.073,
+      "synthetic_only": true
+    },
+    "inherited_ingame": {
+      "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONHASHSEED=0 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest discover -s experiments -p 'test_nfl_ingame*.py' -q",
+      "tests": 195,
+      "passed": true,
+      "seconds": 12.39,
+      "synthetic_only": true
+    },
+    "boundary": {
+      "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONHASHSEED=0 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest supervisor_harness.test_opened_train_discovery_worker supervisor_harness.test_continuous_discovery_batch supervisor_harness.test_continuous_discovery_small_steps supervisor_harness.test_continuous_discovery_branch_retention -q",
+      "tests": 78,
+      "passed": true,
+      "seconds": 1.392,
+      "synthetic_only": true
+    },
+    "proper_score": {
+      "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONHASHSEED=0 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest tests.test_minimal_probability_contract tests.test_polymarket_scoring -q",
+      "tests": 34,
+      "passed": true,
+      "seconds": 0.012,
+      "synthetic_only": true
+    },
+    "independent_math": {
+      "actual_Train_fits": 0,
+      "actual_minus_hypothetical_Brier_Hessian_max_abs": 1.2955214723639612,
+      "existing_C4_rows_replayed_exact": 87,
+      "expected_data_to_ridge_diagonal_ratio_max_error": 0,
+      "interpretation": "Matches expected diagonal data-to-prior ratio at raw zero under Bernoulli(raw), not actual/full Hessian or pure loss experiment",
+      "native_feature_rows": 193,
+      "new_C5_Train_predictions": 0,
+      "synthetic_gradient_finite_difference_max_error": 1.3088197192701045e-10,
+      "synthetic_hessian_finite_difference_max_error": 7.551914649184255e-11,
+      "synthetic_penalties": [
+        6.4418751268083465,
+        7.2197427805299945
+      ]
+    },
+    "exact_final_parent_preflight": [
+      {
+        "C4_artifact_bindings_checked": 7,
+        "C4_states_checked": 4,
+        "actual_Train_fits": 0,
+        "all193_inputs": 193,
+        "candidate_score_preview": false,
+        "exact_C4_rows_replayed": 87,
+        "new_C5_Train_predictions": 0,
+        "perfold_local_units": [
+          {
+            "check_events": 26,
+            "data_to_prior_ratio_max_error": 0,
+            "exact_C4_design_scale_normalizer": true,
+            "fit_events": 106,
+            "fold": 1,
+            "local_matched_penalty": [
+              6.5168633634573805,
+              2.5444577525433134
+            ],
+            "local_unit_ratio": [
+              0.4073039602160863,
+              0.1590286095339571
+            ],
+            "parent_state_sha256": "ec7e8afd49ce44e862596cc507a143f5eea6c8305f02c0d144b689a7f96fcc97",
+            "raw_expected_Brier_diagonal": [
+              5.578034051830019,
+              3.177436202098128
+            ],
+            "raw_expected_NLL_diagonal": [
+              13.695015508493249,
+              19.98028034961631
+            ]
+          },
+          {
+            "check_events": 16,
+            "data_to_prior_ratio_max_error": 0,
+            "exact_C4_design_scale_normalizer": true,
+            "fit_events": 132,
+            "fold": 2,
+            "local_matched_penalty": [
+              6.049477219466987,
+              2.8097415723167503
+            ],
+            "local_unit_ratio": [
+              0.3780923262166867,
+              0.1756088482697969
+            ],
+            "parent_state_sha256": "6ecea4d49990bf846341cb310919c7c4899c2cd62777b0b9ea84e87aa76b93b2",
+            "raw_expected_Brier_diagonal": [
+              6.340391977206183,
+              4.723877293977619
+            ],
+            "raw_expected_NLL_diagonal": [
+              16.76942782904425,
+              26.899995874468033
+            ]
+          },
+          {
+            "check_events": 28,
+            "data_to_prior_ratio_max_error": 0,
+            "exact_C4_design_scale_normalizer": true,
+            "fit_events": 148,
+            "fold": 3,
+            "local_matched_penalty": [
+              6.146829152385481,
+              2.8645928034943027
+            ],
+            "local_unit_ratio": [
+              0.3841768220240926,
+              0.17903705021839392
+            ],
+            "parent_state_sha256": "99bec62e28e486d85487eaa0c341689c7bf794ca4ecfa8c648d2348832ee8b5c",
+            "raw_expected_Brier_diagonal": [
+              7.349583499958253,
+              5.260640989648096
+            ],
+            "raw_expected_NLL_diagonal": [
+              19.130731159771383,
+              29.38297398907675
+            ]
+          },
+          {
+            "check_events": 17,
+            "data_to_prior_ratio_max_error": 0,
+            "exact_C4_design_scale_normalizer": true,
+            "fit_events": 176,
+            "fold": 4,
+            "local_matched_penalty": [
+              6.297190279822964,
+              2.7933766630935177
+            ],
+            "local_unit_ratio": [
+              0.3935743924889353,
+              0.17458604144334486
+            ],
+            "parent_state_sha256": "5300d9d66a3b2560b530b82236e05e556482d40bb552e3a92bf85f88ed5dbab8",
+            "raw_expected_Brier_diagonal": [
+              9.59601565046981,
+              6.156110828218816
+            ],
+            "raw_expected_NLL_diagonal": [
+              24.381707330564165,
+              35.26118570147284
+            ]
+          }
+        ]
+      },
+      {
+        "Train_fits": 0,
+        "expected_four_designs": 4,
+        "final_C5_contract_admission": true,
+        "new_C5_Train_predictions": 0,
+        "parent_replay": {
+          "all_four_designs_and_normalizers_exact": true,
+          "all_parent_probabilities_exact": true,
+          "folds": [
+            {
+              "fit_events": 106,
+              "fold": 1,
+              "freshness_normalization": {
+                "fit_age_mean": 25.80781135694036,
+                "fit_age_std_ddof0": 31.674980238848484,
+                "fit_only": true
+              },
+              "native_check_feature_sha256": "80aede132fa1278d77d4908f8a25142bc156bccd754ebd76232aded5ecf87e71",
+              "native_fit_feature_sha256": "85945c1083ccaa94167714baf47e247f3230d3936b2748f56d79283cefbbe744",
+              "normalized_check_feature_sha256": "f1886780df176b1f24df7b205073b43f450734199252e34633180f8c73cc4388",
+              "normalized_fit_feature_sha256": "3aeb396b2305f78265b0cfe544a974831b1bb35db0228e6c8684eb5a0b31c0fd",
+              "parent_probabilities_replayed": 26,
+              "parent_refits": 0,
+              "parent_state_sha256": "ec7e8afd49ce44e862596cc507a143f5eea6c8305f02c0d144b689a7f96fcc97",
+              "volume_scale": 0.13171757898980566
+            },
+            {
+              "fit_events": 132,
+              "fold": 2,
+              "freshness_normalization": {
+                "fit_age_mean": 24.114962156974908,
+                "fit_age_std_ddof0": 30.61088796265004,
+                "fit_only": true
+              },
+              "native_check_feature_sha256": "43fdd9285680e18efa28fca1888eff111953873730389dcd051168e67beec452",
+              "native_fit_feature_sha256": "78fc8ce1d7c965112b5159e275b27ae12f647adf3fa3e6dacc9418a2ab958e5d",
+              "normalized_check_feature_sha256": "630a2c57c0ed9e769fa5e15c580b554b85867373ecd9c04af8de43c515f009dd",
+              "normalized_fit_feature_sha256": "9e7f701040f7630c2f9aa2920a3eaf4e1b9c7947c9fa0c517d4556cae6e2f4b6",
+              "parent_probabilities_replayed": 16,
+              "parent_refits": 0,
+              "parent_state_sha256": "6ecea4d49990bf846341cb310919c7c4899c2cd62777b0b9ea84e87aa76b93b2",
+              "volume_scale": 0.14414350421274333
+            },
+            {
+              "fit_events": 148,
+              "fold": 3,
+              "freshness_normalization": {
+                "fit_age_mean": 23.73604733396221,
+                "fit_age_std_ddof0": 29.801606713461492,
+                "fit_only": true
+              },
+              "native_check_feature_sha256": "55f7704e573207006516851e53457b61d2a335923e3c18e9b31c6b5cfb61d50f",
+              "native_fit_feature_sha256": "6c931eb4263be8811ff85b64aea77ee9d17af932b5cc9df6074d714d93a2b622",
+              "normalized_check_feature_sha256": "6c15e45086e51891f68b2ed3fd3ce4a5f3b399f4b494bf90358bb91dbfc8ce54",
+              "normalized_fit_feature_sha256": "4cab1cf19c10c0b9e08cf29b6373c1e1d172174d3254d0d3b875ab591751646e",
+              "parent_probabilities_replayed": 28,
+              "parent_refits": 0,
+              "parent_state_sha256": "99bec62e28e486d85487eaa0c341689c7bf794ca4ecfa8c648d2348832ee8b5c",
+              "volume_scale": 0.14512001629284735
+            },
+            {
+              "fit_events": 176,
+              "fold": 4,
+              "freshness_normalization": {
+                "fit_age_mean": 22.70846026187593,
+                "fit_age_std_ddof0": 28.617136849478204,
+                "fit_only": true
+              },
+              "native_check_feature_sha256": "e564428dfc1fd8f1e22d45595e703006e3047ab6d9c42c325bf693f5e25e9c47",
+              "native_fit_feature_sha256": "d97fe3be924941a56b7567712456804724e5a5484f26ec53c615711486af9773",
+              "normalized_check_feature_sha256": "7bcbf7ec0cb3b72920e41d048cf8f05507c63452626ddfcf85848cbf08a76fa9",
+              "normalized_fit_feature_sha256": "d9d45dbfd539cef5a49e922c40e08dafd2b5360765d7c0bc082d2a3e784f43cb",
+              "parent_probabilities_replayed": 17,
+              "parent_refits": 0,
+              "parent_state_sha256": "5300d9d66a3b2560b530b82236e05e556482d40bb552e3a92bf85f88ed5dbab8",
+              "volume_scale": 0.14590563066059195
+            }
+          ],
+          "parent_refits": 0,
+          "parent_rows_replayed": 87
+        }
+      }
+    ],
+    "material_independent_ftol_reproduction": {
+      "X_sha256": "f0b4d8f630b568b40261044e45cb0c8249a940e4b05b0ade93e44391c92b6de3",
+      "actual_Train_fits": 0,
+      "actual_hessian_eigenvalues": [
+        7.838581151948151,
+        9.761388840919322
+      ],
+      "columns": 2,
+      "continuation_backtracks": 0,
+      "final_gradient_infinity": 2.498001805406602e-16,
+      "final_objective": 8.543631487066467,
+      "final_x": [
+        0.01428761145275021,
+        0.25572057387827596
+      ],
+      "fixed_prior": [
+        6.4418751268083465,
+        7.2197427805299945
+      ],
+      "generation_order": [
+        "X=default_rng(7391).normal(size=(31,2))",
+        "offset=rng.normal(size=31)",
+        "y=rng.integers(0,2,31).astype(float)"
+      ],
+      "global_optimality_claim": false,
+      "lambda_rule": "16*sum(2*v^2*X^2,axis=0)/sum(v*X^2,axis=0), v=raw*(1-raw), raw=sigmoid(offset)",
+      "new_C5_Train_predictions": 0,
+      "no_restart": true,
+      "objective": "unweighted sum(sigmoid(offset+X@theta)-y)^2 +0.5 sum(lambda*theta^2)",
+      "offset_sha256": "7f4828a3bbddb7bfedd244fc799f865df84eb7f445090f20c8976626527ef2c3",
+      "phase1_bounds": null,
+      "phase1_function_evaluations": 10,
+      "phase1_gradient_evaluations": 10,
+      "phase1_gradient_infinity": 1.4767341335875095e-8,
+      "phase1_initial": [
+        0,
+        0
+      ],
+      "phase1_iterations": 5,
+      "phase1_message": "CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH",
+      "phase1_method": "L-BFGS-B",
+      "phase1_objective": 8.543631487066468,
+      "phase1_options": {
+        "ftol": 1e-12,
+        "gtol": 1e-8,
+        "maxcor": 10,
+        "maxfun": 15000,
+        "maxiter": 500,
+        "maxls": 50
+      },
+      "phase1_status": 0,
+      "phase1_success": true,
+      "phase1_x": [
+        0.01428760955947541,
+        0.2557205748536266
+      ],
+      "phase2_options": {
+        "Armijo": 0.0001,
+        "direction_eigen_floor": 0.000001,
+        "gradient_infinity_tolerance": 1e-8,
+        "halving": 0.5,
+        "initial_alpha": 1,
+        "max_iterations": 25,
+        "max_trials": 60
+      },
+      "phase2_receipts": [
+        {
+          "alpha": 1,
+          "backtracks": 0,
+          "directional_product": 3.7090211019520187e-17,
+          "iteration": 1,
+          "objective_after": 8.543631487066467,
+          "objective_before": 8.543631487066468
+        }
+      ],
+      "rows": 31,
+      "runtime": {
+        "numpy": "1.26.4",
+        "python": "3.12.3",
+        "scipy": "1.14.0"
+      },
+      "same_objective_continuation_steps": 1,
+      "seed": 7391,
+      "synthetic": true,
+      "y_sha256": "7624638f0011c8442118bf8ad0e901a442841d7b136b11bf4b8905bfdf6bc67a"
+    },
+    "exact_final_source_synthetic_probe": {
+      "C5_Train_predictions": 0,
+      "Train_fits": 0,
+      "independent_scalar_Hessian_error": 1.1102230246251565e-16,
+      "independent_scalar_gradient_error": 8.881784197001252e-16,
+      "independent_scalar_objective_error": 0,
+      "seed": 7391,
+      "source_optimizer_receipt": {
+        "converged": true,
+        "initial": [
+          0,
+          0
+        ],
+        "lambda": [
+          6.4418751268083465,
+          7.2197427805299945
+        ],
+        "lambda_sha256": "1fbc9cb299377d8d45683f9f49216a85c18b62f26dafeca4ac44e07d832226a3",
+        "local_not_global_optimum": true,
+        "model_fits": 1,
+        "phase1": {
+          "bounds": null,
+          "independent_gradient": [
+            -7.601558271730369e-13,
+            -1.0660361482450753e-12
+          ],
+          "independent_objective": 8.54363148706647,
+          "message": "CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_<=_PGTOL",
+          "method": "L-BFGS-B",
+          "nfev": 7,
+          "nit": 5,
+          "njev": 7,
+          "options": {
+            "ftol": 1e-12,
+            "gtol": 1e-8,
+            "maxcor": 10,
+            "maxfun": 15000,
+            "maxiter": 500,
+            "maxls": 50
+          },
+          "reported_fun": 8.54363148706647,
+          "reported_fun_repr": "8.54363148706647",
+          "reported_jac": [
+            -7.601558271730369e-13,
+            -1.0660361482450753e-12
+          ],
+          "reported_jac_repr": "array([-7.60155827e-13, -1.06603615e-12])",
+          "returned_x": [
+            0.014287611452654395,
+            0.25572057387816755
+          ],
+          "returned_x_repr": "array([0.01428761, 0.25572057])",
+          "status": 0,
+          "success": true
+        },
+        "phase2": {
+          "eigenvalue_floor_direction_only": 0.000001,
+          "final_x": [
+            0.014287611452654395,
+            0.25572057387816755
+          ],
+          "initial": [
+            0.014287611452654395,
+            0.25572057387816755
+          ],
+          "iterations": 0,
+          "last_checked": {
+            "actual_eigenvalues": [
+              7.838581151948214,
+              9.761388840919185
+            ],
+            "actual_hessian": [
+              [
+                7.842074080945572,
+                0.08187814226133848
+              ],
+              [
+                0.08187814226133835,
+                9.757895911921826
+              ]
+            ],
+            "gradient": [
+              -7.601558271730369e-13,
+              -1.0660361482450753e-12
+            ],
+            "objective": 8.54363148706647,
+            "x": [
+              0.014287611452654395,
+              0.25572057387816755
+            ]
+          },
+          "max_armijo_proposals": 60,
+          "max_iterations": 25,
+          "steps": []
+        },
+        "restart_count": 0,
+        "retry_count": 0,
+        "same_objective_and_lambda_all_phases": true,
+        "stationarity": {
+          "gradient": [
+            -7.601558271730369e-13,
+            -1.0660361482450753e-12
+          ],
+          "gradient_infinity_norm": 1.0660361482450753e-12,
+          "hessian": [
+            [
+              7.842074080945572,
+              0.08187814226133848
+            ],
+            [
+              0.08187814226133835,
+              9.757895911921826
+            ]
+          ],
+          "hessian_eigenvalues": [
+            7.838581151948214,
+            9.761388840919185
+          ],
+          "objective": 8.54363148706647
+        }
+      },
+      "source_units_match_exact": true,
+      "synthetic_final_theta": [
+        0.014287611452654395,
+        0.25572057387816755
+      ],
+      "synthetic_rows": 31
+    },
+    "numeric_reproduction_distinction": "Independent scalar implementation's seeded31-row L-BFGS-B ftol success had grad1.4767e-8 and one same-F Newton continuation; exact production implementation on same synthetic design stopped on projected-gradient with grad1.0660e-12 and zero continuation. Both truthful receipts kept; not relabeled as same optimizer trace or actual Train evidence.",
+    "local_primary_optimizer_source": {
+      "path": "runtimes/ds-py312-20260912-01/lib/python3.12/site-packages/scipy/optimize/_lbfgsb_py.py",
+      "sha256": "011e8f59fcf9c601c14fa1841bf5797bb4bdc2a37c08a6037bd0bf4a1a53fee0",
+      "read": "Installed primary implementation/docs distinguish relative-ftol vs projected-gradient stop; no live external retrieval or literature-fulltext claim."
+    },
+    "fixtures": "All unit cases portable synthetic; directly authored C4 states, no parent training/private artifact paths. Full195 pipeline makes exactly four actual synthetic candidate optimizations and all87 primitive replays. Read-only actual parent preflight separately labeled.",
+    "history": "Two worker patch/log-context rejections before any source write/fit preserved. Test owner's initial inherited suite launch errors from omitted PYTHONHASHSEED fixed in test command only; independent frozen-env suite passes. Reviewer initially used wrong own-log directory in a read-only tail command, then read correct registered supervisor_harness log; no write/fitting consequence. Four pre-freeze failure-record guards strengthened without algorithm/judge changes. Reviewer supplemental memory probe initially compared A1/A2 envelope files to their inner packet and failed before writes/fits; corrected to the existing scheduler_packet normalization. All ten file hashes and exact normalized packets then passed, plus all four old terminal hashes; no artifact changed.",
+    "old_python_diff_from_contract_checkpoint": "",
+    "diff_check": "PASS",
+    "evidence_level": "L1 exact-source/synthetic validation plus existing actual-parent non-fitting replay; no new actual C5 experiment result",
+    "memory_feedback_bindings": {
+      "feedback_bindings": [
+        {
+          "attempt_id": "attempt-01",
+          "batch_id": "market-rsi-coevo-train-pilot-20261003-01",
+          "feedback_sha256": "812cd7b0adba76e7de15b5216dbf9d9bffb0e356c42e8cac333a57adb65b7a0f",
+          "review_sha256": "f327f4457a3801a661adfdfd8b15c01c5b83dafee39fbc38b2547729744b38a2",
+          "wrapper_normalization": true
+        },
+        {
+          "attempt_id": "attempt-02",
+          "batch_id": "market-rsi-coevo-train-pilot-20261003-01",
+          "feedback_sha256": "812250d571f956b58ae7c6768be35cf1b9a6dd182d25372445170fd24f108fbc",
+          "review_sha256": "048d4f643a5c0ed494947c4b70935104fd861058fca93d3fde5379a494265a8e",
+          "wrapper_normalization": true
+        },
+        {
+          "attempt_id": "attempt-03",
+          "batch_id": "market-rsi-coevo-train-pilot-20261003-01",
+          "feedback_sha256": "3d442bf40ed1ad2d9807f48366e2beebd68583aa7d6ca9ab5545d765b66ba4cc",
+          "review_sha256": "87fc1782636a3b55d4ee06ed4fb0cffa925a814ed0ded71ba07fb9c3121f0217",
+          "wrapper_normalization": false
+        },
+        {
+          "attempt_id": "attempt-01",
+          "batch_id": "market-rsi-coevo-train-hgb-pilot-20261003-02",
+          "feedback_sha256": "f04ad9c40f66a872bdb16b1ceba01e4ecb8a4bb67231e70482f7d2831a26ba3a",
+          "review_sha256": "37213fcba838be60009eed50ea753d96bcade9e0a4312769996807ed5be24ed0",
+          "wrapper_normalization": false
+        },
+        {
+          "attempt_id": "attempt-02",
+          "batch_id": "market-rsi-coevo-train-hgb-pilot-20261003-02",
+          "feedback_sha256": "c96425199174d57aec2cf2b94aed3a1fe34331ce8cbd469966a7e36ec3214aac",
+          "review_sha256": "4703575bbd7502e4eb328699686a889c321842bfaf893938dd635ecf7c87f597",
+          "wrapper_normalization": false
+        },
+        {
+          "attempt_id": "attempt-03",
+          "batch_id": "market-rsi-coevo-train-hgb-pilot-20261003-02",
+          "feedback_sha256": "c983c43a9075b269522b93f789ffa68f3a119307be1e4d80c38da2131b7221df",
+          "review_sha256": "cb8cdc801a2a921bbcd8c4c7619de8490ad45ecbab27a785307fef3c0fd8f637",
+          "wrapper_normalization": false
+        },
+        {
+          "attempt_id": "attempt-01",
+          "batch_id": "market-rsi-coevo-train-pilot-20261003-03",
+          "feedback_sha256": "7de9d3dd3f4af25856192d4732368de659e50c8e0407afcbbd5f89ca3c4b8f9e",
+          "review_sha256": "93400e9757c41d461bfdd1840d9b62bc30843e23d82c4accc969cfe5a9609f24",
+          "wrapper_normalization": false
+        },
+        {
+          "attempt_id": "attempt-02",
+          "batch_id": "market-rsi-coevo-train-pilot-20261003-03",
+          "feedback_sha256": "b5b47a4769408c7a7b45812653ecd48ca4cfc8a4eba0b53b74cd5a0b9dd6b26f",
+          "review_sha256": "a8ff65b8abd5c78c911ff7a2e3b758d7e9440bbfea309b045bdc3fd707305cb8",
+          "wrapper_normalization": false
+        },
+        {
+          "attempt_id": "attempt-03",
+          "batch_id": "market-rsi-coevo-train-pilot-20261003-03",
+          "feedback_sha256": "b1fc10d571b0ac25350aaff3cfe9a8df3e6ad2cd6ba9fea29ec6ee2c1212f6df",
+          "review_sha256": "c055b99fb38c60f9a0869061072a5679ceb695c28488591d72613ff07f41edc0",
+          "wrapper_normalization": false
+        },
+        {
+          "attempt_id": "attempt-01",
+          "batch_id": "market-rsi-coevo-train-pilot-20261003-04",
+          "feedback_sha256": "3bd8a89936325fe9f08e3b23af0d70fffa6cba399745c2abe28c3f7df655fe9a",
+          "review_sha256": "66b055451d32c32a983d15de39695b5fb1765ca428ccafae0aeba01ad38091c9",
+          "wrapper_normalization": false
+        }
+      ],
+      "feedback_hashes_and_exact_normalized_packets_verified": 10,
+      "old_terminals_exact": 4,
+      "preclaim_memory_sha256": "27eddae73bdba82f84841ea69b642c5c653e9b25eee75ad1e9c60406634ae5bd"
+    }
+  },
+  "fixed_hashes": {
+    "K": "c94492041d5c331a2cc31c4d6cd529984742ce200e1b9365e3fb7d07e5b1ce64",
+    "M": "32d09dd7c177b30932b9a0619b60246ba574f8989c9eac80869aff134cded58d",
+    "H": "50d32690f488a583b705d23d114091326af17ec8afab9343283c0f28b8514df0",
+    "R_policy": "5bc2d879b4030190e3a6b17ddd186379b153c112ad1a5f58f5d571c9660bccf8",
+    "worker": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360",
+    "scheduler": "1b3065ea2990e886ff05869d5c6afd39bc0e80ebb053436f51fd9d9cee0d148c",
+    "scorer": "64165cbceb4bcba6d03b6b42402ea7a47790c9a57f9280b15bfe2fe57becc06b",
+    "probability_contract": "7ba4a32d3c3a2ab80ac17ca6c18ea29fe864b958de8a81ac2be59dba121e9d74"
+  },
+  "feature_artifact_hashes": {
+    "event_audit.csv": "0b85a96491237edcf1b74e8718db0582bae28d0bf380c0d0f89564edaf20e2f5",
+    "input_receipts.json": "0f8902d5aee81a08d5c17c44f2025e10ca650cc6f825c4be150735c0ac7934e0",
+    "manifest.json": "addececc96838399be8b9713b85048dba6c449e840aff6f69f099f1779750144",
+    "pre_audit_lock.json": "d046d70927f0f29f327b0ed8552e523fbaf3c1955db257af19a225250f9e2929",
+    "prior_play_success.csv": "cca09f294f88f19a5cfa05fce294d6ec2a11c6264fed54840460784cbabea764",
+    "scorecard.json": "db53da50fecbebce76eb105915d53db51ce44eced92fbf41dd9688ac40e71846"
+  },
+  "preclaim_metadata": {
+    "attempts_claimed": 0,
+    "consumed_C2_excluded": true,
+    "deadline": "2026-10-04T00:02:16.099335Z",
+    "eligible_archives": 9,
+    "initial_memory_fields": [
+      "activation_review_source_bindings_required_before_claim",
+      "actual_global_research_pool",
+      "all_ten_verified_feedback",
+      "authority_interpretation",
+      "closed_ten_segment_memory",
+      "controller_contract_sha256",
+      "current_singleton_cap",
+      "eligible_archived_parents",
+      "excluded_from_eligible_parent_imports",
+      "fixed_manifest_sha256",
+      "native_cross_batch_consumption_not_claimed",
+      "normal_evidence_accumulation_not_R_modification",
+      "old_closed_pilots",
+      "old_final_closure_sha256",
+      "prior_segment_attempts",
+      "prior_segment_fits",
+      "prospective_continuation_before",
+      "prospective_continuation_cap",
+      "research_policy_unchanged"
+    ],
+    "initial_memory_sha256": "27eddae73bdba82f84841ea69b642c5c653e9b25eee75ad1e9c60406634ae5bd",
+    "journal_records": 3,
+    "max_attempts": 1,
+    "memory": {
+      "activation_review_source_bindings_required_before_claim": true,
+      "controller_contract_sha256": "2da17c7c181ad3ffe050ac9c926bf3c0e27128f7d3a7e5aba2f1a9aca4b2f852",
+      "current_singleton_cap": 1,
+      "eligible_archived_parents": 9,
+      "fixed_manifest_sha256": "348baa2d4b77c1588fee4863eef136fa12cb733a3305e82aa1e247c9021eba42",
+      "native_cross_batch_consumption_not_claimed": true,
+      "normal_evidence_accumulation_not_R_modification": true,
+      "old_final_closure_sha256": "c8bcc3fcfed07cdb0785bcbecf2a1cbaec8bd105b886ee900540cf515e8678c3",
+      "prior_segment_attempts": 10,
+      "prior_segment_fits": 40,
+      "prospective_continuation_before": 0,
+      "prospective_continuation_cap": 3
+    },
+    "source_fits_started": false,
+    "start": "2026-10-03T22:32:16.099335Z",
+    "state_sha256": "1485674355dcbf91309ac3bc4baaa3e0c66f306d673da73c6cebd84b19365b34"
+  },
+  "limits": {
+    "reviewer_actual_Train_fits": 0,
+    "reviewer_new_C5_Train_predictions": 0,
+    "protected_reads": 0,
+    "provider_calls": 0,
+    "external_fetches": 0,
+    "authority_interpretation": "Supervisor explicitly applies latest five-hour human directive prospectively to fresh singleton pilots (continuation cap3/12 before original00:10:37Z), not a fabricated reply or rewrite of prior ten-attempt/four closed caps. This review permits only current pilot05 max1/four fits with earlier actual00:02:16.099335Z stop; no extension/retry.",
+    "before_launch": "Supervisor must checkpoint exact source/test/review, freeze exact source/runtime/memory/request and claim one fresh ID, execute through unchanged opened-Train worker. Current initial memory is not the future source-bound activation memory.",
+    "after_launch": "Independent source/request/runtime/memory/resource/budget/process checks,193 causal features and allfour C4 designs/fit-only units, objective/grad/actualHessian/phase receipts,87 candidate+actualC4 scalar replays,5arm metrics/calibration/16 intervals/annotation/correction decomposition and unchanged KEEP.",
+    "native_cross_batch_limit": "Native scheduler does not itself persist consumed followup allowance across batches; Supervisor explicitly excludes consumed C2 from imported eligible parents. Do not claim stronger native guarantee.",
+    "unsupported_claims": [
+      "C5 predictive improvement before actual run",
+      "Pure loss benefit or full curvature/global-optimum theorem",
+      "New data gain or changed research workflow/R mechanism superiority",
+      "Authenticated exact Controller serving version/Astra comparison",
+      "Historical Train as untouched OOS or proven live availability/market edge",
+      "Broad legacy suite green",
+      "Network/arbitrary-code/OS-hard memory isolation from trusted-host worker"
+    ]
+  }
+}

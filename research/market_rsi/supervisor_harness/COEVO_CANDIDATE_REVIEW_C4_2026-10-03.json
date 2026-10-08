@@ -1,0 +1,201 @@
+{
+  "schema": "coevo_candidate_independent_pre_score_review_v1",
+  "reviewed_utc": "2026-10-03T21:48:39Z",
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "passed": true,
+  "verdict": "PASS_FOR_ONE_FINAL_BOUNDED_SUPERVISOR_LAUNCH_AFTER_SOURCE_CHECKPOINT",
+  "batch_id": "market-rsi-coevo-train-pilot-20261003-04",
+  "attempt_id": "attempt-01",
+  "candidate_id": "InGamePriorPlayVolumeUnitScaleJointOffset-v3",
+  "question_id": "ingame-prior-play-volume-fit-unit-ridge-v3-q1",
+  "contract": {
+    "path": "research/market_rsi/supervisor_harness/COEVO_BATCH4_CONTRACT_2026-10-03.json",
+    "sha256": "c40d9c30dadab9c46d307a7f23ff697e911d5673f2b39e2ab1c24297b05c9394",
+    "commit": "92c59666d6fe92f455d25145b370410a7f28f9fb"
+  },
+  "source_parent_commit": "ac053d8470df8e192f2a9da1805a855cb38aceba",
+  "exact_source_hashes": {
+    "research/market_rsi/experiments/nfl_ingame_prior_play_volume_unit_scale_joint_offset.py": "ff251b120bd80dbcaf7846f830cb0c065d3abb15bb9bc769b9826d09e63c32da",
+    "research/market_rsi/experiments/test_nfl_ingame_prior_play_volume_unit_scale_joint_offset.py": "b91a62170e8586b71d4c280e4f9b362c19bc19b895374118d24bd43798b0beef"
+  },
+  "scientific_scope": {
+    "changed_axis": "C",
+    "component": "fit_only_volume_coordinate_scale_and_effective_prior",
+    "actual_parent_candidate_id": "InGamePriorPlayVolumeFreshnessJointOffset-v2",
+    "actual_parent_sha256": "7a3175c1ec75465e2b71816260d7ef2d8fd75bfd6a854da6276d619271c046ce",
+    "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+    "column_order": [
+      "fit_unit_prior_play_volume_ratio",
+      "fit_only_freshness_x_market_logit"
+    ],
+    "prediction_recipe": "logit(q)=logit(p_raw)+theta_volume*(x_volume/s_volume)+theta_freshness*x_freshness",
+    "scale": "np.std(native volume fit coordinate,ddof=0), strict-prior fit only; divide only, no centering/floor/adaptation",
+    "freshness": "Exact unchanged C3 fit-only age mean/populationstd product with raw logit; allfour parent normalizers exact",
+    "effective_native_prior": "beta_volume=theta_volume/s; scaled penalty0.5*16*theta_volume^2 equals native0.5*16*s^2*beta_volume^2. Not equivalent conditioning; same information/model dimension, different effective ridge geometry.",
+    "objective": "Unchanged Bernoulli NLL +0.5*16*(theta_volume^2+theta_freshness^2)",
+    "solver_source_sha256": "b827eecdd669451d92a24a1023e2407a10ddebd26585f4515e395c0f486ff589",
+    "trainer": "Same two-dimensional analytic damped Newton, zero start,max50/max60Armijo,1e-4/step1halving,gradient infinity<=1e-8/positive Hessian,zero retry",
+    "market_coefficient": 1,
+    "intercept": false,
+    "sign_constraint": false,
+    "new_data_source": false,
+    "new_extractor": false,
+    "H_changed": false,
+    "R_policy_changed": false,
+    "attribution": "C normalization/effective-prior effect relative C3; not new information, pure numerical conditioning, greater model dimension, H or R mechanism gain."
+  },
+  "checks": {
+    "complete_final_source_and_test_read": true,
+    "dependency_admission": "PASS immutable new contract and native C3/C2/C1/A1/causal validators/analytic solver dependencies; no old run entry or production monkeypatch.",
+    "parent_receipts": "PASS seven frozen C3 files (manifest plus six outputs, exclusions bound by pinned manifest), exact source/contract/PBP/materialized receipts/boundary flags and four canonical state/report digest+formula/normalizer/schema identities.",
+    "actual_parent_replay": "Rebuilt all193 original ratio+fractional causal-age inputs, allsource/PBP/features; with fitting explicitly disabled, all87 C3 probabilities, strict-prior available labels/native fit feature digests and allfour fit-only normalizers replay exactly. Not new C4 predictions.",
+    "features": "Same full195 anchors/source/cohort/PBP and six old feature hashes;193 native features exact finite coverage,193 ages[0,300], no success/terminal/future/outcome/ID feature or extraction.",
+    "scale_only": "Fit ddof0 std finitepositive; no centering, minfloor, pooled/check statistic or imputation. Natural equal-count zero preserved. Tiny finitepositive scale remains unchanged, nonfinite transformed features/invalid optimizer/predictions fail closed.",
+    "fit_vs_check_isolation": "Check labels/counts/ages/terminal fields cannot affect coefficients, scale, fit-only freshness stats, fit-design hashes, stationarity or optimizer. Native/normalized CHECK hashes correctly change as separate check provenance; whole numeric state digest is not falsely called invariant.",
+    "stationarity_and_replay": "Synthetic analytic objective/gradient/Hessian finite-difference checks; independently scalar NLL/gradient/Hessian/std/prediction replay and effective-native prior algebra. Safe primitive states persist scale,coefficients/native coefficient/effectivepenalty, native+normalized fit/check digests and stationarity; four synthetic actual fits/all87 numeric replays.",
+    "population_chronology": "195=193+2 exact exclusions,87 keys/20dates7weeks, strict-prior fit106/132/148/176 and check26/16/28/17; check outcome unavailable filtering unchanged and no row deletion.",
+    "scoring": "Same equal-event Brier/logloss/calibration,16 paired whole-date/week10k eventweighted intervals seed20260929, original KEEP/scientific judge. Parent question annotation/correction-energy diagnostics cannot change judge.",
+    "failures": "Source/runtime/control/mask/feature/scale/nonconvergence/stationarity/epsilon violations terminal invalid,0retry/no overwrite/replacementrecipe; invalid run not scientific refutation.",
+    "scope": "One new candidate/test only; old Python diff from declared parent empty.313-line method+parentproof+immutable entry reviewed explicitly, not accepted by size alone.",
+    "credit_and_parent": "Actual parent reviewed C3 credit2/refute/branch supports distinct unit-prior question. C2 bounded child consumed and not restored as fresh parent. Predictive test evidence credit separated from scoring/frozen recorder; no Hessian-reading-only credit.",
+    "resources": "One final new attempt/fourfits/900s/sampled1GiB/oneprocess/onethread, outer9used of10/36fits before claim. No extension of closed3/12caps, retry/repeat, external/protected/provider/release authority."
+  },
+  "small_step_trigger": {
+    "production_lines": 313,
+    "test_lines": 281,
+    "production_modules": 1,
+    "threshold_exceeded": true,
+    "decision": "ACCEPT_EXPLICIT_BOUNDED_INSEPARABILITY",
+    "rationale": "One candidate-local representation/prior recipe inseparably needs scaled analytic fit and safe numeric replay, exact prefit C3 seven-file/four-state/87-probability proof, plus immutable contract/source/195-denominator/causality/chronology/failure/output entry. Reuses all frozen pure helpers. No shared harness module, extractor, scheduler, scoring, R or permission expansion; every old production hash remains bound. Complete exact source reviewed."
+  },
+  "verification": {
+    "runtime": "Pinned Python3.12.3/numpy1.26.4/scipy1.14.0/sklearn1.6.1; python -B, one-thread environment",
+    "focused": {
+      "command": "python -B -m unittest experiments.test_nfl_ingame_prior_play_volume_unit_scale_joint_offset -v",
+      "tests": 8,
+      "passed": 8,
+      "seconds": 0.044
+    },
+    "adjacent": {
+      "command": "python -B -m unittest [C4,C3,C2,C1,A1,A2,A3,B1,B2,B3,worker,batch,small_steps,branch_retention,probability] -q",
+      "tests": 175,
+      "passed": 175,
+      "seconds": 1.818
+    },
+    "independent_probe": {
+      "actual_Train_fits": 0,
+      "actual_parent_replay": {
+        "all_freshness_normalizers_exact": true,
+        "all_parent_probabilities_exact": true,
+        "folds": [
+          {
+            "fold": 1,
+            "freshness_normalization_exact": true,
+            "native_fit_feature_sha256": "85945c1083ccaa94167714baf47e247f3230d3936b2748f56d79283cefbbe744",
+            "parent_probabilities_replayed": 26,
+            "parent_refits": 0,
+            "parent_state_sha256": "0d1bd5215e9d2ff772566f26ae778cf6f3cc07d62a28f6de9dcd6ade6e8635a6"
+          },
+          {
+            "fold": 2,
+            "freshness_normalization_exact": true,
+            "native_fit_feature_sha256": "78fc8ce1d7c965112b5159e275b27ae12f647adf3fa3e6dacc9418a2ab958e5d",
+            "parent_probabilities_replayed": 16,
+            "parent_refits": 0,
+            "parent_state_sha256": "5707742b7453821cb10f2fe2994ebe9b33cf027668b3599a8059851b1701ab7e"
+          },
+          {
+            "fold": 3,
+            "freshness_normalization_exact": true,
+            "native_fit_feature_sha256": "6c931eb4263be8811ff85b64aea77ee9d17af932b5cc9df6074d714d93a2b622",
+            "parent_probabilities_replayed": 28,
+            "parent_refits": 0,
+            "parent_state_sha256": "8464f1589f85794c8d1a54d6ceda01fc0ba05ef8d35f043629d0625aa8e91d1a"
+          },
+          {
+            "fold": 4,
+            "freshness_normalization_exact": true,
+            "native_fit_feature_sha256": "d97fe3be924941a56b7567712456804724e5a5484f26ec53c615711486af9773",
+            "parent_probabilities_replayed": 17,
+            "parent_refits": 0,
+            "parent_state_sha256": "11e304c43e4912bfaf580665afa2d7e217e9662001e6cafefa724608ad8ffd1c"
+          }
+        ],
+        "parent_refits": 0,
+        "parent_rows_replayed": 87
+      },
+      "causal_ages_sha256": "7f1dea869d1247988435100f239f83ebf6f857c23510c0808ffc2fe9ae6849c6",
+      "effective_penalty_algebra_error": 0,
+      "feature_values_sha256": "92c2d33baf20a989d9153c00cf94f56d50e24c4372c58c43b9276c01b402d7fe",
+      "new_C4_Train_predictions": 0,
+      "old_python_diff": "",
+      "opened_Train_feature_rows": 193,
+      "production_lines": 313,
+      "synthetic_gradient_inf": 5.162537064506978e-15,
+      "synthetic_hessian_error": 7.105427357601002e-15,
+      "synthetic_objective_error": 3.552713678800501e-15,
+      "synthetic_probability_error": 0,
+      "synthetic_scale_scalar_error": 1.3877787807814457e-17,
+      "test_lines": 281
+    },
+    "independent_prior_algebra": {
+      "synthetic_fit_std_ddof0": 0.08746623066269335,
+      "scaled_native_linear_error": 1.1102230246251565e-16,
+      "effective_penalty_algebra_error": 0,
+      "effective_native_lambda": 0.12240546410143166,
+      "natural_volume_zero_preserved": true,
+      "Train_fits": 0,
+      "C4_predictions": 0
+    },
+    "parent_metadata_preflight": {
+      "contract_sha256": "c40d9c30dadab9c46d307a7f23ff697e911d5673f2b39e2ab1c24297b05c9394",
+      "actualparent": "C3",
+      "bound_parent_rows": 87,
+      "canonical_states": 4,
+      "geometry_evidence_exact": true,
+      "old_helpers_unchanged": true,
+      "actual_Train_fits": 0,
+      "new_C4_predictions": 0
+    },
+    "diff_check": "PASS",
+    "fixtures": "Portable synthetic seven-file87parent/fourstate fixtures and full195 pipeline, parentstates authored directly with zero control training; no private artifact unit dependency.",
+    "worker_fixture_failure_preserved": "Initial synthetic constant0.2 case yielded floating tiny-positive np.std, so exactzero failure fixture corrected to0.25. Production scale/no-floor policy/source unchanged; no actual Train retry.",
+    "evidence_level": "L1 exact-source/synthetic validation plus old-parent metadata/replay; no new actual C4 result"
+  },
+  "fixed_hashes": {
+    "K": "c94492041d5c331a2cc31c4d6cd529984742ce200e1b9365e3fb7d07e5b1ce64",
+    "M": "32d09dd7c177b30932b9a0619b60246ba574f8989c9eac80869aff134cded58d",
+    "H": "50d32690f488a583b705d23d114091326af17ec8afab9343283c0f28b8514df0",
+    "R_policy": "5bc2d879b4030190e3a6b17ddd186379b153c112ad1a5f58f5d571c9660bccf8",
+    "worker": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360",
+    "scheduler": "1b3065ea2990e886ff05869d5c6afd39bc0e80ebb053436f51fd9d9cee0d148c",
+    "scorer": "64165cbceb4bcba6d03b6b42402ea7a47790c9a57f9280b15bfe2fe57becc06b",
+    "probability_contract": "7ba4a32d3c3a2ab80ac17ca6c18ea29fe864b958de8a81ac2be59dba121e9d74"
+  },
+  "feature_artifact_hashes": {
+    "event_audit.csv": "0b85a96491237edcf1b74e8718db0582bae28d0bf380c0d0f89564edaf20e2f5",
+    "input_receipts.json": "0f8902d5aee81a08d5c17c44f2025e10ca650cc6f825c4be150735c0ac7934e0",
+    "manifest.json": "addececc96838399be8b9713b85048dba6c449e840aff6f69f099f1779750144",
+    "pre_audit_lock.json": "d046d70927f0f29f327b0ed8552e523fbaf3c1955db257af19a225250f9e2929",
+    "prior_play_success.csv": "cca09f294f88f19a5cfa05fce294d6ec2a11c6264fed54840460784cbabea764",
+    "scorecard.json": "db53da50fecbebce76eb105915d53db51ce44eced92fbf41dd9688ac40e71846"
+  },
+  "limits": {
+    "reviewer_actual_Train_fits": 0,
+    "reviewer_new_C4_Train_predictions": 0,
+    "protected_reads": 0,
+    "provider_calls": 0,
+    "external_fetches": 0,
+    "before_launch": "Supervisor checkpoints exact reviewed source/tests, freezes source/runtime/memory/request and excludes consumed C2 archive parent; one final outer ID at max10, newbatch max1/4 unchanged.",
+    "after_launch": "Independent full193 feature/source/time/scale/prior availability, four fit std/parentnormalizer/stationarity/native+normalized digests,87 candidate+parent scalar replays,5arm scores/calibration/16intervals/questionannotation/originaljudge, source/runtime/memory/budgets/processabsence.",
+    "unsupported_claims": [
+      "Market edge or predicted improvement before actual result",
+      "New data/information or equivalent numerical conditioning",
+      "Historical Train relabeled untouched OOS/real-time availability",
+      "Research workflow/tool selfmodification or superiority versus matched fixed policy",
+      "Authenticated exact Controller serving version/Astra",
+      "Broad legacy suite green",
+      "Network/arbitrary-code/OS-hard memory sandbox"
+    ]
+  }
+}

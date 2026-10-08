@@ -1,0 +1,211 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "checkpoint-continuation-20261005-v1",
+  "symptom": "ReviewedC1feedbackready but previousconsumer accepts only closedold3/12 envelope; newlyapprovedfresh2/8window needs exact prospective binding and Root-onlyexistingoperations rebind",
+  "source_evidence": "Source6a68396049c59879d1167c9f78848f4c09ac80ec/consumerd31e4a16/acceptedC1ab6211ab; directhuman approve22:32:32observed",
+  "objective": "Execute2 real feedback-dependent new prediction candidates from acceptedC1 within fresh90minutes,not anotherframework-only milestone",
+  "boundary": "22:32:32Z\u201300:02:32Z,selection23:47:32;2newattempts8fits2originalaccountdecisions,max2live/thread1/900s/RSS1GiB; residentTrain only andfrozenjudge/protected/fees/oldresults preserved",
+  "resolution_check": "Exactold/defaultbindingsremainclosed/newexact2/8bindingmatchesuserauthority; source+opsindependentlyverified,actualoriginalControllerresponse followedbyrealcandidate and feedback-dependentdescendant wherebudgetpermits; honeststopcounts",
+  "supervisor_owner": "root",
+  "parent_commit": "6a68396049c59879d1167c9f78848f4c09ac80ec",
+  "root_artifact_path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-continuation-20261005-01",
+  "approval_sha256": "cf6731278a94e73054bed4c0c042a7f4337117668572f55b844346bfd3e516ab",
+  "change_contract": {
+    "axis": "H",
+    "component": "exact_authorized_continuation_envelope",
+    "author": "Human-approvedSupervisorcoordination,notautonomousR",
+    "expected_effect": "Newapproved2/8windowadmittedwithoutreopeningoriginalbindings; canonicalscientificsourceunchanged",
+    "allowed_production_paths": [
+      "research/market_rsi/supervisor_harness/account_controller_feedback_consumer.py"
+    ],
+    "allowed_test_paths": [
+      "research/market_rsi/supervisor_harness/test_account_controller_feedback_consumer.py"
+    ],
+    "protected": "Oldcandidate/scorer/worker/recorder/learninghelper/solver/defaults/originalconsumerfunctions except_prospective_binding, CLI/model/schema/scope/no-tools/oldroots",
+    "fixed": "K/M/C/R; Hsingleenvelopeonly,operationalcopiesreviewed separately",
+    "smallness": "Addoneexactcontinuation_pilot_binding() andaccept original/new sealedbindingonly; target<30changedproductionlines/1module,no arbitrarydynamicbudgets",
+    "rollback": "Retainoriginald31Git/source; original expired/exhausted windowscannot beopened; failedfreshattemptscounted"
+  },
+  "parallel_work": {
+    "base_source_sha256": "d31e4a161a2b9a1fcfee75147a264ee52d91a4dca451f340d43bb0df446078fd",
+    "worker_step_ids": [
+      "binding",
+      "ops"
+    ],
+    "integration_step_id": "integration",
+    "review_step_id": "review"
+  },
+  "steps": [
+    {
+      "id": "preflight",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [],
+      "action": "ReadonlyactualC1receipt/runtime/73sourcebindings/approval/newauthority/nativev4parenteligibility andonceoldcallabsence",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_PREFLIGHT_REVIEW_2026-10-05.json",
+      "verification": "ActualoriginalC1counts/exactfiles/oldclosedclock/source/newgrant,nostatewriter/refit/transport",
+      "pass_condition": "Originalfeedbackandfreshauthoritysafe for prospectiveinput",
+      "failure_action": "Preserve failure; no scoring/authority relaxation, no sameIDresample or budget/clockreset",
+      "time_bound_minutes": 5,
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent actual C1 source/evidence and fresh authority preflight passed",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "CHECKPOINT_CONTINUATION_PREFLIGHT_REVIEW_2026-10-05.json",
+        "evidence_sha256": "9126aef1dd43239a950e90611d6c931d6d3b40794cdfeb9b14c394bcb845992f"
+      }
+    },
+    {
+      "id": "binding",
+      "owner": "coevo_predictor_worker_20261003",
+      "depends_on": [],
+      "action": "Addonly exact static continuation_pilot_binding andtwoallowedhashes; targetedsynthetic continuation/oldguards/recovery test usinginheritedfixtures",
+      "expected_artifact": "AGENT_LOG_CHECKPOINT_CONTINUATION_BINDING_2026-10-05.md",
+      "verification": "Oldprospectivefunctionunchanged; noimplicit/defaultnewauth, bool/float/extra/mutatedbinding/cross-window/recovery/source/input/cap/concurrency/cutoffreject; noCLI/run/fits",
+      "pass_condition": "Minimalcode exactnew2/8seal, relevanttestsPASS",
+      "failure_action": "Preserve failure; no scoring/authority relaxation, no sameIDresample or budget/clockreset",
+      "time_bound_minutes": 6,
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/account_controller_feedback_consumer.py",
+        "research/market_rsi/supervisor_harness/test_account_controller_feedback_consumer.py",
+        "research/market_rsi/supervisor_harness/AGENT_LOG_CHECKPOINT_CONTINUATION_BINDING_2026-10-05.md"
+      ],
+      "result": {
+        "verdict": "pass",
+        "observed": "13 changed production lines, one module;245 relevant unique tests passed",
+        "reviewer": "root integration",
+        "evidence_path": "CHECKPOINT_CONTINUATION_BINDING_2026-10-05.json",
+        "evidence_sha256": "71fed06c6014b8dd09a4949eb37912e74ebd84bf130255c2d1f3d27c130d0c11"
+      }
+    },
+    {
+      "id": "ops",
+      "owner": "coevo_controller_20261003",
+      "depends_on": [],
+      "action": "Mechanical reuseexistingfreshRootops, newROOT/continuationbinding/approvalsha/2handoffcap only; bootstrap C1roles and prospectivearchive exportwithoutcreditreearning",
+      "expected_artifact": "AGENT_LOG_CHECKPOINT_CONTINUATION_OPS_2026-10-05.md",
+      "verification": "NewROOTonly/oldreadonly,once/cutoffbeforecallandexecute, noauthority/algorithmmutation; originalC1v4wrapper admittedwithoutC2reset; independentpureAST/syntheticproof",
+      "pass_condition": "Root-onlyscriptsandscope readywithoutmodelcallorfits",
+      "failure_action": "Preserve failure; no scoring/authority relaxation, no sameIDresample or budget/clockreset",
+      "time_bound_minutes": 8,
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/CHECKPOINT_CONTINUATION_OPS_SPEC_2026-10-05.json",
+        "research/market_rsi/supervisor_harness/AGENT_LOG_CHECKPOINT_CONTINUATION_OPS_2026-10-05.md"
+      ],
+      "result": {
+        "verdict": "pass",
+        "observed": "Exact five reused scripts/archive frozen; old roots and all73 current source pins unchanged",
+        "reviewer": "root integration",
+        "evidence_path": "AGENT_LOG_CHECKPOINT_CONTINUATION_OPS_2026-10-05.md",
+        "evidence_sha256": "1c568a64452a2c0560914bbb218c63b5844439b0652bbe0019422c75cfdbde5a"
+      }
+    },
+    {
+      "id": "integration",
+      "owner": "root",
+      "depends_on": [
+        "binding",
+        "ops",
+        "preflight"
+      ],
+      "action": "Oneintegratedsnapshot,fullrelevantsynthetic suite, freezeexactnative+ops+approval and73C1inputfiles",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_INTEGRATION_2026-10-05.json",
+      "verification": "Measuredallowlist/ASToldsources/currentoldbindings/pinnedruntime/nativeprepare no exemption/one-threadsynthetics",
+      "pass_condition": "Integratedsource/input nooldsourceorpermissiondrift",
+      "failure_action": "Preserve failure; no scoring/authority relaxation, no sameIDresample or budget/clockreset",
+      "time_bound_minutes": 5,
+      "result": {
+        "verdict": "pass",
+        "observed": "Integrated exact native/source/tests/ops/actual C1 numerical packet with no calls or fits; final independent admission pending",
+        "reviewer": "root",
+        "evidence_path": "CHECKPOINT_CONTINUATION_INTEGRATION_2026-10-05.json",
+        "evidence_sha256": "50ad307d02dc3ea7323ed3d67a06ffcc6c4d214326c66f76199abed0eb0b3724"
+      }
+    },
+    {
+      "id": "review",
+      "owner": "coevo_independent_review_20261003",
+      "depends_on": [
+        "integration"
+      ],
+      "action": "Independentlyreview exactnativebinding/ops/newbootstrapreproducibility andsharedcaps",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_SOURCE_REVIEW_2026-10-05.json",
+      "verification": "Targeted+fullrelevant checks, actualbody/semanticboundaries, oldC1 andsource/clock/hash unchanged; reviewer nofits/calls",
+      "pass_condition": "NoP0/P1 withsameoldbehavior andexactnewauthorization",
+      "failure_action": "Preserve failure; no scoring/authority relaxation, no sameIDresample or budget/clockreset",
+      "time_bound_minutes": 6,
+      "write_paths": [],
+      "result": {
+        "verdict": "pass",
+        "observed": "Independent245unique tests PASS17.653s, exact native/5ops/archive/C1packet with73currentGitpins11roles/caps preserved",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "CHECKPOINT_CONTINUATION_SOURCE_REVIEW_2026-10-05.json",
+        "evidence_sha256": "23129473b481609ce5d7d2bc745b1f36cc5a2a0501160e49dca02d664a3589c9"
+      }
+    },
+    {
+      "id": "controller",
+      "owner": "root",
+      "depends_on": [
+        "review"
+      ],
+      "action": "Originalonce scientificC1feedbackdecisionusingnewapprovedaccountscope",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_CONTROLLER_2026-10-05.json",
+      "verification": "Reviewedpacket/input/source/approval/liveclock/uniqueclaim/no-tools/pin/runtime/response/usage",
+      "pass_condition": "ActualControllerproposal,notSupervisoralgorithm",
+      "failure_action": "Preserve failure; no scoring/authority relaxation, no sameIDresample or budget/clockreset",
+      "time_bound_minutes": 3,
+      "result": {
+        "verdict": "pass",
+        "observed": "One actual original account decision cc35 afterC1feedback; independent transaction/evidence review95e2 PASS; modelalias6.1sol servingunknown; no invented secondmodel or results",
+        "reviewer": "coevo_independent_review_20261003",
+        "evidence_path": "CHECKPOINT_CONTINUATION_N1_DECISION_REVIEW_2026-10-05.json",
+        "evidence_sha256": "95e2d5b22b9ef64efc15821776d7fbdb6dce6b16193e35a851a02587d5ac4357"
+      }
+    },
+    {
+      "id": "experiments",
+      "owner": "root",
+      "depends_on": [
+        "controller"
+      ],
+      "action": "Exactsciencecontract then independentimplementation/review; actual4fit run; review/learning/feedback andoneactualnextdecision/secondrun",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_RESULT_2026-10-05.json",
+      "verification": "Identicalscoring/data/baselines/parent/samples andcreditseparate, shared2/8/calls2/no-retries",
+      "pass_condition": "Twoactualcandidates feedbackdependent wherebudgetpermits; truthfullycountfailedattempts",
+      "failure_action": "Preserve failure; no scoring/authority relaxation, no sameIDresample or budget/clockreset",
+      "time_bound_minutes": 45,
+      "result": {
+        "verdict": "pass",
+        "observed": "Two real feedback-dependent candidates/eightfits/two originaldecisions independently accepted; both validnegativeREVERT/credit2; rawincumbentunchanged; actualN1finding changedN2 choice.",
+        "reviewer": "Root independent receipt synthesis",
+        "evidence_path": "CHECKPOINT_CONTINUATION_RESULT_2026-10-05.json",
+        "evidence_sha256": "3b0c7ed58435cb8a8662dfe2748523b23879d3257e827d69cf2d228312c318fe"
+      }
+    },
+    {
+      "id": "closeout",
+      "owner": "root",
+      "depends_on": [
+        "experiments"
+      ],
+      "action": "Preservetable/trajectory/pool/memory/costs/budgetstop/localcommit",
+      "expected_artifact": "CHECKPOINT_CONTINUATION_CLOSEOUT_2026-10-05.json",
+      "verification": "Actualcounts/hashes/processabsence/unsupportedclaimsbeforeoriginaldeadline",
+      "pass_condition": "Closedauditablebatch,notclaimedmechanismsuperiority",
+      "failure_action": "Preserve failure; no scoring/authority relaxation, no sameIDresample or budget/clockreset",
+      "time_bound_minutes": 8,
+      "result": {
+        "verdict": "pass",
+        "observed": "Actual2/8/2 accepted, rawincumbentheld,149 current/runGitpins/pure9+9journal/4PIDabsence/oldtraceprefix/6archivewrappers/C2preservation/capreject/newinputabsent verified. Report, memory/pool/archive saved; no additionalscience.",
+        "reviewer": "Root final operational checks; prior independent result/learning receipts reused, not new independent closure",
+        "evidence_path": "CHECKPOINT_CONTINUATION_CLOSEOUT_2026-10-05.json",
+        "evidence_sha256": "6866bffa8ce7a05f33c12fa023631641fc6ca5ff88c0de0357f353972ce09ad3"
+      }
+    }
+  ],
+  "resolution": {
+    "verdict": "pass",
+    "observed": "Two real feedback-dependent candidates independently reviewed and separatecredit2 accepted; truthfulcapstop/report/trace/rootverification complete beforeharddeadline; localGit evidencecheckpoint next.",
+    "reviewer": "Root synthesis of prior independent reviews and final actual operational verification"
+  }
+}

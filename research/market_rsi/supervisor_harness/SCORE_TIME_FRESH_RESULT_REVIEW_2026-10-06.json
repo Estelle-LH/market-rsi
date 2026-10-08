@@ -1,0 +1,138 @@
+{
+  "schema": "market_rsi_fresh_score_time_independent_result_review_v1",
+  "reviewer": "/root/priority_review_20261006",
+  "reviewed_at_utc": "2026-10-06T18:21:32Z",
+  "passed": true,
+  "candidate_id": "InGameTemperatureScoreTimeJointOffset-v1",
+  "attempt_id": "score-time-fresh-03",
+  "batch_id": "market-rsi-coevo-score-time-20261006-03",
+  "authorization_sha256": "b22f1cfc873b772a934f332b97b70a891c8ca8a8b28348ab36ecf77699c3cc4b",
+  "source_commit": "66f327336324137c79d2421a25f19cb1f89c08ad",
+  "request_sha256": "ccfc699c12e20a9b2e653dc799ec914130ca804d6832658f8a5a976cdd6475eb",
+  "source_review_sha256": "1ffdd670bfaa7a6ba0a14880da47b4a0ff318b016ba369b89aaafe74bd9743f3",
+  "artifacts": {
+    "manifest.json": "b7f521e5b44156591870547785cb6f14d4e763bf8bf312b6cfbd81dde920fc76",
+    "scorecard.json": "5881ef6835276abfcafed34ccff9386c636c5c2d0ece93b9a8d7e1996f8e270f",
+    "predictions.csv": "13a8f19c5c32c2bef80d89ed4d3a4d6e53ff940d78cd0567e92f63e78b93a78a",
+    "predictor_states.json": "234f22d4dc955be7a6fad3776985e917f865ddcd7da1f73f67b3dfc636b35d3e",
+    "input_receipts.json": "20707722aec0820918121e69cbeb9484721128b80777754e206479d993989c98",
+    "fit_progress.json": "777bbaadb6b034631704abe09e40158c80c8391bae149b54bd2de14e45b57f07",
+    "worker_receipt": "4637f72bdde737467b09b7c8a42c1377346fcddc4ad78e5462c3cef35f087d55",
+    "closed_global_ledger_snapshot": "abc2d72458c11b71ab3ccf71f96420df81650cb9008d92e652b291984bd1abb1"
+  },
+  "execution": {
+    "outcome": "succeeded",
+    "exit_code": 0,
+    "candidate_processes": 1,
+    "fit_calls_entered": 4,
+    "fit_calls_completed": 4,
+    "fit_reservations_consumed": 4,
+    "wall_seconds": 4.433481332962401,
+    "sampled_peak_rss_kib": 142144,
+    "rss_enforcement": "One-second sampling, not OS-hard isolation",
+    "stdout_stderr": "Empty",
+    "automatic_retries": 0,
+    "fallbacks": 0,
+    "new_controller_calls": 0,
+    "paid_provider_calls_requested": 0,
+    "remaining_attempts_or_fits": 0
+  },
+  "performance_validity": {
+    "status": "valid",
+    "leakage_detected": false,
+    "reason": "Real succeeded four-fit process; exact frozen population/exclusions/87 paired row-time-label-fold-control masks; strict-prior fit rows, causal pre-play feature reconstruction, primitive state and independent equation replay; full original scores and judge reconstructed. No detected leakage in this declared historical Train task, not proof of actual real-time availability.",
+    "binding": "Root must attach the hash of this frozen independent receipt as original validity review_sha256; no self-attestation hash inside the receipt"
+  },
+  "independent_reconstruction": {
+    "seconds": 3.6,
+    "resident_train_permission": "Root explicitly authorized local already-opened Train rematerialization for replay only; no fitting or transfer of raw rows to any account model",
+    "source_population": 195,
+    "source_dates": 42,
+    "materialized_events": 193,
+    "exclusions": [{"game_id": "2025_04_GB_DAL", "code": "unresolved_outcome"}, {"game_id": "2025_05_TEN_ARI", "code": "market_trade_too_stale"}],
+    "paired_checks": 87,
+    "check_dates": 20,
+    "check_game_weeks": 7,
+    "frozen_key_labels_times_and_control_predictions": "Exact",
+    "source_materialized_receipts_and_feature_matrix": "Exact",
+    "explicit_independent_equation": "clip(expit((1+beta)*logit(clip(market,1e-6,1-1e-6))+gamma*clip(preplay_home_score_diff/14,-1,1)*(1-clip(regulation_seconds_remaining/3600,0,1))),1e-6,1-1e-6)",
+    "independent_equation_max_abs_difference": 2.220446049250313e-16,
+    "primitive_callback_replay_vs_all87_saved_probabilities": "Exactly equal",
+    "four_saved_state_hashes": "Exact",
+    "four_fit_matrix_and_float_outcome_hashes": "Exact",
+    "four_saved_objectives_and_gradients_recomputed_without_optimizer": "Exactly equal",
+    "all_five_arms_metrics_calibration_reliability": "Exactly equal to frozen scorecard",
+    "all_four_fold_metrics": "Exactly equal",
+    "all_paired_comparisons_schedule_date_and_week_intervals": "Exactly equal; each10000-replicate seed20260929 draw resamples whole groups and recomputes equal-event mean",
+    "unchanged_scientific_operational_decision_conditions": "Exactly equal",
+    "reviewer_command_repairs": "Initial replay used exact equality for an algebraically reassociated independent equation (roundoff <=2.22e-16) and an integer label array in a float-array hash; corrected reviewer verification to explicit1e-15 tolerance and float labels. No source, score, fit or gate changed."
+  },
+  "aggregate": {
+    "raw_market": {"brier": 0.14195252900323282, "log_loss": 0.4296707847132428, "calibration_intercept": -0.011806646530491793, "calibration_slope": 1.0370387494646494},
+    "C7_actual_parent": {"brier": 0.14195410408172784, "log_loss": 0.4288860887954059, "calibration_intercept": -0.0024641133052663022, "calibration_slope": 1.018681140256926},
+    "candidate": {"brier": 0.14207819118069467, "log_loss": 0.4291379026551911, "calibration_intercept": -0.002421483210098385, "calibration_slope": 1.0185634872374374},
+    "ordinary_market_only": {"brier": 0.14548231253271718, "log_loss": 0.43992197245621956, "calibration_intercept": -0.023504802267641844, "calibration_slope": 1.0568122659695651},
+    "frozen_market_plus_state_reference": {"brier": 0.16068099016465245, "log_loss": 0.4711973192666776, "calibration_intercept": 0.04813167873790908, "calibration_slope": 0.9186856458868063}
+  },
+  "paired_delta_negative_is_better": {
+    "candidate_minus_market": {
+      "brier": {"mean": 0.00012566217746186898, "date95": [-0.0005632564155415271, 0.0008174288930041301], "week95": [-0.00032461494947446767, 0.0006484160282956659]},
+      "log_loss": {"mean": -0.0005328820580517054, "date95": [-0.0029061467021239493, 0.0015831439585446308], "week95": [-0.0018029102180216734, 0.0012305979558427577]}
+    },
+    "candidate_minus_C7_actual_parent": {
+      "brier": {"mean": 0.00012408709896683786, "date95": [-0.000024077380101992985, 0.000379175590923984], "week95": [-0.00005805493020503739, 0.000388447796778447]},
+      "log_loss": {"mean": 0.00025181385978521523, "date95": [-0.00009340482260855082, 0.0008147295244903621], "week95": [-0.00017591803268296544, 0.0008442201329533991]}
+    },
+    "candidate_minus_ordinary": {"brier": -0.003404121352022477, "log_loss": -0.010784069801028402},
+    "candidate_minus_frozen_state_reference": {"brier": -0.01860279898395777, "log_loss": -0.04205941661148646}
+  },
+  "folds": [
+    {"fold": 1, "fit_events": 106, "check_events": 26, "beta": 0.04718243066697591, "gamma": -0.019640644054586587, "candidate_brier": 0.12494138100346343, "market_brier": 0.12447843111620026, "C7_brier": 0.1248802778768361, "delta_market": 0.0004629498872631699, "delta_C7": 0.00006110312662732653, "kkt_diagnostic": 6.990523104821733e-08},
+    {"fold": 2, "fit_events": 132, "check_events": 16, "beta": 0.04980375964585423, "gamma": -0.007943290511522394, "candidate_brier": 0.17388963821129427, "market_brier": 0.17296354615028114, "C7_brier": 0.1738743724389793, "delta_market": 0.0009260920610131285, "delta_C7": 0.000015265772314976278, "kkt_diagnostic": 8.757148339810783e-10},
+    {"fold": 3, "fit_events": 148, "check_events": 28, "beta": 0.03343081003437001, "gamma": -0.011421201312361337, "candidate_brier": 0.1488468271243352, "market_brier": 0.14937268044587776, "C7_brier": 0.14893449815565618, "delta_market": -0.0005258533215425631, "delta_C7": -0.00008767103132098497, "kkt_diagnostic": 4.133344777557113e-10},
+    {"fold": 4, "fit_events": 176, "check_events": 17, "beta": 0.05242948790011219, "gamma": -0.04520305026152404, "candidate_brier": 0.127198903280488, "market_brier": 0.12726935431593958, "C7_brier": 0.12652728958414958, "delta_market": -0.00007045103545158526, "delta_C7": 0.0006716136963384189, "kkt_diagnostic": 1.672596505741808e-10}
+  ],
+  "frozen_judge": {
+    "scientific_decision": "REFUTED",
+    "operational_decision": "REVERT",
+    "interpretation": "Original frozen rule does not replace incumbent. REFUTED is the historic rule label for this recipe, not statistical proof of absent score-time/PBP information or permission to discard its entire family. All market/actual-parent grouped intervals cross zero.",
+    "incumbent_after": "Raw market unchanged",
+    "ordinary_reference": "Not a selected Strong-Baseline-1",
+    "exploration": "Valid negative remains in archive; future exploration eligibility is distinct from incumbent replacement and grants no execution authority"
+  },
+  "research_credit": {
+    "independently_assessed_credit": 2,
+    "kind": "hypothesis_test",
+    "question_id": "score-time-v1-q1",
+    "canonical_finding_sha256": "62165ed9feb77b7e66e426134a45cbc7211277c3ee078646fa2f4bd62a476d79",
+    "evidence_sha256": "5881ef6835276abfcafed34ccff9386c636c5c2d0ece93b9a8d7e1996f8e270f",
+    "reason": "One valid real experiment tests the distinct frozen joint score-time offset question; useful negative evidence, not predictor gain. Earlier failed admissions provide no performance evidence and receive no duplicate credit. Root must deduplicate the canonical finding in its sole ledger.",
+    "canonical_finding": {
+      "question_id": "score-time-v1-q1",
+      "candidate_id": "InGameTemperatureScoreTimeJointOffset-v1",
+      "candidate_source_sha256": "0414fcf2db6b564e4719e26f3746c1bdd1cdda216b4cf2bb82235387b5a969eb",
+      "scorecard_sha256": "5881ef6835276abfcafed34ccff9386c636c5c2d0ece93b9a8d7e1996f8e270f",
+      "validity": "valid",
+      "brier_delta_vs_market": 0.00012566217746186898,
+      "brier_delta_vs_C7_parent": 0.00012408709896683786,
+      "finding": "This fixed regularized score-time joint offset did not replace the incumbent: higher Brier than market and C7 on the unchanged87-row Discovery protocol, with grouped intervals crossing zero. Valid negative evidence about this recipe, not proof that score-time information or its whole model class is useless.",
+      "credit": 2,
+      "credit_scope": "One valid experiment tests this exact distinct research question; no prediction/R-improvement or repeated failed-admission credit."
+    }
+  },
+  "component_trajectory": {
+    "C": "Original account Controller proposed the new joint offset using earlier reviewed feedback; unchanged candidate now actually fitted/scored. This trial tests predictor/representation, not new data acquisition.",
+    "H": "Controller-proposed derived-feature semantic oracle actually runs before fitting, returns real19 numeric/six invalid fixture receipt; independent rematerialization and matrix reproduce exactly. Designated mutant advantage remains narrow synthetic validation, not a full research-process comparison.",
+    "R": "Structured hypothesis entry persisted/versioned in memory, but no second Controller call/result-dependent decision is authorized here. No downstream R reuse or improved scientific judgment demonstrated.",
+    "Supervisor": "Fresh authority entry/initialization correction and prior failed admissions are Supervisor implementation/review coordination, not system self-evolution"
+  },
+  "metadata_and_numerics": {
+    "actual_training_objective": "Summed unweighted NLL+8*(beta²+gamma²), all four states penalty8",
+    "legacy_alpha_label": "Shared unchanged H1 card alpha16 is a generic legacy label; no silent correction or altered scientific recipe. Report actual equation/state rather than infer a new penalty from the label.",
+    "fold1_kkt": "6.99e-8 exceeds nominal gtol1e-8, while SciPy reports success; original source converged predicate permits it. KKT remains diagnostic; no retrospective new gate. Other folds below1e-8.",
+    "independent_verification": "No optimizer/minimize/fit invoked by reviewer; descriptive calibration recomputed using frozen scorer only"
+  },
+  "limitations": ["Repeatedly inspected historical Train Discovery, not untouched OOS", "Event-time causal checks do not prove actual real-time feed availability", "87 games/20 dates/7 weeks do not guarantee statistical sufficiency", "One Controller-proposed trial, not a continuous within-batch autonomous trajectory", "No second feedback-driven Controller decision or measured R benefit", "No same-budget fixed-process comparison, mechanism superiority, prospective edge or promotion"],
+  "reviewer_actions": {"candidate_fits": 0, "account_calls": 0, "protected_dev_final_reads": false, "external_calls": false, "implementation_edits": false, "operational_ledger_writes": false},
+  "terminal_authority": "Fresh one-attempt/four-fit cap exhausted; no retry, additional fit or Controller call. Prior closed caps and records unchanged."
+}

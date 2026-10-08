@@ -1,0 +1,123 @@
+{
+  "schema": "actual_prediction_learning_acceptance_v1",
+  "recorded_utc": "2026-10-05T22:09:05.932742+00:00",
+  "parent_commit": "46dadcc489e97cab121f6d250106dd5807660c0c",
+  "source_commit": "12b4f0b1654b72edac77b2cfdb0a8748f0211292",
+  "candidate_id": "InGameTemperatureDownSlopeJointOffset-v1",
+  "attempt_id": "checkpoint-c1-down-slope-joint-01",
+  "result_review_sha256": "753c31caf538737aeb2adca7fda2599a8f1effba3849cbf2bd63969be0d6ff15",
+  "learning_review_sha256": "565a14ef34d6cda645c9076310d3bbc9f1cc91eb6279c138292924e36c2fb5fa",
+  "actual_checkpoint_sha256": "823d389cc057f5b7cf01d12b8542a570c6c70d75ff56c202ae661981fed614e4",
+  "accepted_evidence_manifest_sha256": "cb6b89a44fafd8b9125d14fa3c702cccb169fdd4cf28d1454a8edece7c6c2085",
+  "accepted_feedback_sha256": "ab6211abf4b1335f211c8a1119c9dc349a7ea3f0964f0f6af039a2c06be4553f",
+  "accepted_state_sha256": "9a11a0e53e648c7f22f6031b55d161a76db869faa0ef5a6d92fb1ddf25074312",
+  "core_evidence_sha256": "2f10b6316ca5b99523e51e7ed592bdae20945cbe60731e8fe6fa9eb0d5bb868b",
+  "canonical_finding_sha256": "712adbadbf2a4fb2be7d614521cd6032f81e57a9d2c4f84343ad16ded569e44f",
+  "validity": "valid",
+  "predictor_decision": "REVERT",
+  "learning_credit": 2,
+  "duplicate_finding": false,
+  "exploration_action": "branch",
+  "parent_eligible": true,
+  "active_membership": "Not automatically changed by REVERT or credit; last actual Controller selected C7+B3",
+  "prior_evidence_reuse": {
+    "status": "observed",
+    "prior_finding_sha256": "dec166709c4a32dc1000fc90f9d00a190839d5d19b05b06e40eb4e1f5ef8cb66",
+    "benefit": "unmeasured"
+  },
+  "actual_scientific_author": "Original account gpt-6.1-sol response, exact serving snapshot unknown",
+  "fits": {
+    "entered": 4,
+    "completed": 4,
+    "control_refits": 0,
+    "retries": 0,
+    "wall_seconds": 4.690958374994807,
+    "sampled_peak_rss_kib": 139264
+  },
+  "source_scope": {
+    "axis": "C",
+    "modules": 1,
+    "production_lines": 221,
+    "explicit_inseparability_review_sha256": "24a54cc84421fb45dccdd0ce7838d8738a36cd8e25b446557da4ce14f93bda5c",
+    "fixed": "K/scorer/protected permissions/base runtime/coreH and Rpolicy; ordinary context separately bound"
+  },
+  "actual_scorecard_path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-pilot-20261005-01/c1/runs/checkpoint-c1-down-slope-joint-01/scorecard.json",
+  "actual_predictions_path": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-learning-checkpoint-pilot-20261005-01/c1/runs/checkpoint-c1-down-slope-joint-01/predictions.csv",
+  "same_samples": {
+    "source_events": 195,
+    "materialized_events": 193,
+    "excluded_events": 2,
+    "check_events": 87,
+    "schedule_dates": 20,
+    "game_weeks": 7
+  },
+  "proper_scores": {
+    "candidate": {
+      "brier": 0.1422511754540695,
+      "log_loss": 0.4304016742340949
+    },
+    "actual_C7_parent": {
+      "brier": 0.14195410408172784,
+      "log_loss": 0.4288860887954059
+    },
+    "raw_market": {
+      "brier": 0.14195252900323282,
+      "log_loss": 0.4296707847132428
+    },
+    "ordinary_reference": {
+      "brier": 0.14548231253271718,
+      "log_loss": 0.43992197245621956
+    },
+    "v0_state_reference": {
+      "brier": 0.16068099016465245,
+      "log_loss": 0.4711973192666776
+    }
+  },
+  "paired_parent_delta": {
+    "brier": 0.00029707137234166736,
+    "log_loss": 0.0015155854386890155
+  },
+  "paired_market_delta": {
+    "brier": 0.00029864645083668706,
+    "log_loss": 0.000730889520852096
+  },
+  "next_feedback_packet_sha256": "bbda9c7e67d4e4d97053ef1717b4e5e3f49e50235e78942aed1cdcbfdd8329e9",
+  "next_handoff_status": "Prepared but not executed; approval reviewer rejected2preprocess attempts; explicit trusted user reconfirmation requested asynchronously. No transport or reservation exists. Do not bypass or change originalclock.",
+  "next_handoff_id": "market-rsi-learning-checkpoint-pilot-controller-c1-feedback-20261005-01",
+  "shared_counts": {
+    "candidate_attempts": 1,
+    "real_fits": 4,
+    "completed_account_calls": 1,
+    "paid_provider_calls": 0,
+    "paid_provider_spend_usd": "0"
+  },
+  "unchanged_caps": {
+    "attempts": 3,
+    "fits": 12,
+    "account_calls": 3,
+    "selection_cutoff_utc": "2026-10-05T22:24:55Z",
+    "deadline_utc": "2026-10-05T22:39:55Z"
+  },
+  "claims": {
+    "autonomous_predictor_choice_implemented_and_trained": true,
+    "prior_negative_evidence_reuse_observed": true,
+    "new_predictive_improvement": false,
+    "research_workflow_self_modified": false,
+    "matched_evolving_vs_fixed_mechanism_comparison": false,
+    "untouched_OOS": false,
+    "real_time_edge": false
+  },
+  "human_coordination": {
+    "actual_human_scope_authorizations_observed": 2,
+    "human_scientific_hypothesis_algorithm_repair_continuation_choices": 0,
+    "new_exact_payload_question": "pending, not yet counted as granted",
+    "AI_supervisor_implementation_review_overhead": "Substantial; not unassisted end-to-end autonomous execution or fit time"
+  },
+  "limitations": [
+    "Valid negative exact recipe, not whole down/PBP family refutation.",
+    "No C1-result-dependent next candidate has yet been selected or trained.",
+    "One first attempt uses entire available exploratory selection so far; cannot claim achieved30percent longrun allocation.",
+    "Approval denies transfer despite previously storedpilotyes; no alternate channel or transport used.",
+    "No actual failed-run recovery path tested thispilot; broad legacy suite not certified allgreen."
+  ]
+}

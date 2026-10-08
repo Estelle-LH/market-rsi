@@ -1,0 +1,65 @@
+{
+  "schema": "market_rsi_independent_candidate_scope_review_v1",
+  "passed": true,
+  "verdict": "PASS",
+  "observed_utc": "2026-10-05T17:44:51.410188+00:00",
+  "scope": "D3 implementation scope only; no exact-source or real-fit admission",
+  "contract_sha256": "ec11f7b854adf241e0b93f02a803ba875991d58be8b52015928ae9b68a12fbf9",
+  "original_response_sha256": "1f6c3acd64eff77f0d9a4ee97b8224b0acb3164b2b0de357bb524a39bb8eb6cf",
+  "decision_canonical_sha256": "0c1033da22119791922cb425e6afd5210ce965b199f25e37f686e5931003c0dc",
+  "feedback_sha256": "538ebff0f5c9695f70069cf1bd27bd2c4c51eab351eed63968dad513389ec469",
+  "candidate_id": "InGameTemperatureInterceptJointOffset-v1",
+  "question_id": "ingame-temperature-conditional-global-intercept-v1-q1",
+  "actual_parent_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+  "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+  "recipe": {
+    "eta": "(1+beta)*market_logit+gamma",
+    "constraint": "beta>=-1; gamma unrestricted",
+    "second_column": "Exactly one for every fit/check row",
+    "loss": "Unweighted summed NLL+8*(beta^2+gamma^2); alpha16",
+    "warm_start": "Original same-fold C7 beta and gamma0",
+    "solver": "Existing unchanged generic D1 solve_joint; not pressure-specific predictor",
+    "coordinate_derivative_tolerance": 1e-10,
+    "joint_kkt_tolerance": 1e-8,
+    "max_coordinate_steps": 200,
+    "max_sweeps": 100,
+    "fit_only_brackets": "beta[-1,1+sum|l|/16]; gamma[-(1+n/16),1+n/16]"
+  },
+  "math_admissibility": "For finite logits and binary outcomes, NLL Hessian X' diag(q(1-q)) X+16I is positive definite. Since |sum(q-y)|<=n, the gamma endpoints at +/-G, G=1+n/16 have strict opposite derivative signs. The beta upper bound exceeds the absolute data gradient bound. Boundary KKT and independent final stationarity remain required; implementation is not admitted by this algebra alone.",
+  "evidence_verified": {
+    "D2_parent_brier_delta": -5.2354410895461e-7,
+    "D2_parent_log_loss_delta": 0.000003051921064756158,
+    "D2_parent_brier_blocks_won": 2,
+    "D2_consequence": "Stop tested exact age slope; preserve archive and no global age-absence claim",
+    "D1_consequence": "Avoid another tested native-pressure interaction",
+    "C7_calibration_intercept": -0.0024641133052663022,
+    "C7_intercept_present_in_supplied_history": true,
+    "C7_intercept_not_positive_new_recipe_evidence": true,
+    "C7_review_sha256": "301743d9b74cfbedda3ac210789741caae576977c8724963afb24bf053470075"
+  },
+  "active_pool": [
+    {
+      "method_family": "restricted_market_calibration",
+      "parent_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+      "reason": "Retain C7 for one distinct calibration-shape question; stop the tested pressure and age interactions."
+    },
+    {
+      "method_family": "nonlinear_causal_state_representation",
+      "parent_sha256": "376b34c656e5a70666e8863b507f518675858011c3da6530cf592a0e192957fe",
+      "reason": "Preserve method diversity and the unresolved B2–B1 conditional state finding; no descendant recipe is selected for this slot."
+    }
+  ],
+  "activation_conditions": [
+    "Freeze exact one new C module/test; preserve original response and old helpers/H/R/scorer/worker/recorder/source/data.",
+    "Independent exact source plus synthetic derivatives/ones-column bounds/KKT/state replay/gamma0/C7 equivalence/full195=193+2/87/four-fit/failure tests before live fit. Above200 production lines requires an explicit semantic inseparability ruling.",
+    "No age/PBP/new-data features, normalization, unpenalized intercept, relaxed tolerance, restart, control refit or protected operation.",
+    "Same source-backed C7/alpha16 H1 admission; own primitive affine prediction/replay rather than pressure-specific guard; gamma0 reproduces C7.",
+    "Freeze separate parent both-loss and>=3/4 Brier-block annotation before scores; unchanged primary KEEP and full population/chronology/calibration/date-week scorer.",
+    "Supervisor rechecks fresh source/runtime/memory/request, actual shared6/24/2 budget, cutoff19:12:11 and deadline19:27:11UTC; model response is not execution authority."
+  ],
+  "attribution": "Calibration shape and parameter count change jointly; no new data, positive prediction result, R-source modification, automatic coordination gain, untouched OOS or same-model fixed-flow superiority certified.",
+  "reviewer_model_calls": 0,
+  "reviewer_train_fits": 0,
+  "reviewer_optimizer_calls": 0,
+  "reviewer_source_edits": 0
+}

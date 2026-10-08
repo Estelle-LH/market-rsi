@@ -1,6 +1,653 @@
 # Market RSI — human progress
 
+## 2026-10-07 17:29 NY — 对应输入修复完成，真实循环仍未完成
+
+- 仅修改既有v2prompt的12行，明确提供父版本hash、组件标签和原有证据白名单；validator、schema、冻结评分器和数据权限不变。
+- 完整本地441项回归通过49.13秒；独立80项通过0.594秒并给出PASS_CODE_ONLY。最初测试fixture失败和sandbox进程检查失败均留档。
+- 原真实输入的本地只读render验证通过：56970bytes、26个既有可引用hash，无调用或训练；没有修改/接收旧Controller原件。
+- checkpoint51b69a8 / b6d14ce；现有入口不变。不称这些本地测试为自主R/H收益。
+- 已一次性请求fresh03整批授权，用修复后的入口做“agent提出R或研究侧H修改→独立匹配测试→真实价格候选使用反馈”。未启动新窗口，不重复追问或新增无关框架。
+
+## 2026-10-07 17:24 NY — fresh02真实运行，NOT COMPLETE
+
+- 真实独立输入审核PASS，42.70秒；真实Controller完成，175.85秒，没有再次超时。
+- 它自主提出R1-VerifiedRecipeEvidenceIndex研究记忆/证据索引改进，但在实现前被语义校验拒绝；不是训练负结果。
+- 根因是输入契约未清楚给出校验器要求的父版本组合hash、组件标签及可引用证据hash；保留原决定，未重写、重采样或放宽校验。
+- 本批2次账户original完成；0候选实现、0拟合、0新预测，第二轮没有发生。887.58秒含权限等待、执行和终结核验；57276已知账户token，订阅美元未知，paidprovider0。
+- exact closeout879406cf / ledger0c77f78d 已永久保存；旧额度、价格任务与评分器、B0最佳及B0/B1探索池不变，无重试、返还或延长。
+- 仅对下一次输入做12行prompt修复，显示现有元数据契约；80项本地针对性测试通过，独立审查及完整回归进行中。这是Supervisor修复，不是已经成功的自主R/H演化。
+
+原始证据在永久artifacts/market-rsi-coevo-price-connected-pilot-20261007-02；
+正式入口仍run_price_discovery。新实际pilot需新整批授权，不能重开本ID。
+这次仍未证明co-evolution、预测改善或同预算研究流程优势。
+
+## 2026-10-07 17:10 NY — fresh02 launch rejected before process
+
+Fresh02 preparation/checks and independent source review completed; fixed
+17:09:50–17:54:50NY window,27sourcepins,51692renderedinputbytes,0calls/fits.
+Actual formal launch was rejected beforeprocess: approval checker did not
+accept "try again co-evo" as explicit fresh-batch privatefeedback/history/source
+payload and signed-in-account destination consent. Prior approval was anotherID.
+No live process, Controller/author/review original, training or prediction ran.
+One exact combined explicit question now pending; no workaround/retry/clock
+extension or more harness work. This is authorization-blocked, not failed
+science or proven co-evolution. Existing prepared artifacts/history preserved.
+
+## 2026-10-07 16:59 NY — complete timeout chain repaired; no new live batch
+
+- 实际阻断已按整条调用链修复，不再只修审核：Controller、预测候选实现和R/H实现都读取本批明确授权的等待时间；新授权可到300秒，旧授权仍120秒。
+- 两个小源码checkpoint f1be520/849b842，保留测试路径失败后以9fd2f7f纠正；评分、数据、旧结果和所有已关闭额度不变。
+- 433项继承回归测试通过；独立81项核验通过，verdict PASS_CODE_ONLY。均为合成/本地inert测试，不是新实验或co-evolution证据。
+- 正式入口已测试负结果继续、新最佳、执行失败、两种实现路径以及重启不新增调用；具体失败和修复保留在现有worklog。
+- 本轮0账户科学调用、0真实拟合、0新预测；没有重试旧失败Controller或启动新科学计时。
+
+本地修复已ready。下一项是收到已经发出的fresh20261007-02整批授权后，
+用同一正式入口真实运行；不再以新增框架建设为前置条件。没有回复前不能把
+“开始修”解释为私有反馈账户传输/新批次授权。工程修复不算自主R/H提升。
+
+## 2026-10-07 16:06 NY — fresh connected pilot NOT COMPLETE
+
+- 真实独立输入审核PASS并有原生完成回执，97.625s；不是模拟审核。
+- 下一阶段Controller120.106s超时，只有reasoning事件，没有候选决定或完成回执；首个阻断是Controller等待限时。
+- 2次账户original启动/1次完成；0实现、0候选尝试、0拟合、0新预测或scorecard；第二轮未发生。
+- 20:06:47UTC关闭，634.235s含执行及终结核验/记账；没有延长原窗口、自动重试或退还额度。已核验原进程退出。
+- 审核已知token24087input/1900output；Controller和总token/订阅美元未知，paidprovider0。不是已证实的co-evolution。
+- 永久closeoutc0e14d05/ledgerdc63bcea绑定全部原始证据；旧两批账本、runner/scorer和B0/B1池保持原样。
+
+正式启动命令在既有AGENT_LOG_PRICE_LOOP_REPAIR_2026-10-06.md。剩余具体阻断：
+本次仅审核等待可到300s，Controller仍120s；下一次需要新的prospective授权和
+相应Controller等待配置，不得重跑本ID。未把工程完成替代真实循环验收。
+
+## 2026-10-07 15:57 NY — fresh connected pilot running
+
+Independent source review50f30633 passed; official entry started exact new
+20261007-01,19:56:13–20:41:13UTC /15:56:13–16:41:13NY,cutoff16:36:13NY.
+Actual no-environment runtime-policy probe PASS; R/H bootstrap hooks executed.
+First real independent input review running with300s cap; at snapshot no
+Controller/author/candidate/fit yet. Seedafafce2b/launch6ef1fc44/grant4c253535.
+No streamed response accepted without terminal receipt; no deadline/cap change.
+This is running status, not completed research/capacity gain.
+
+## 2026-10-07 15:49 NY — fresh connected pilot preparation
+
+Exact new20261007-01 whole-batch structured grant received;45min clock not started.
+Reviewer wait repair version7b7a234 keeps old120s grants/no-retry/final receipts,
+newgrant explicitly reviews<=300s,Controller/author<=120s and refresheddeadline.
+50focused/420integrated synthetic or inert tests pass; new reused preparer022bb7c
+checks27committed sources with0accountcalls/0fits. Independent source review
+underway; no new framework/scorer/data task. Next: one genuine reviewed R/H
+proposal/test, then price predictor chosen from its actual feedback/output.
+User-directed Supervisor repair is not autonomous R/H gain. All old results,
+caps, raw/protected data and external spending/publication boundaries unchanged.
+
+## 2026-10-07 14:58 NY — connected pilot 实际尝试，未完成
+
+- 正式 v2 入口和真实账户工具关闭预检通过；两个初始 R/H hook 实际执行。
+- 第一个独立输入审核已调用，但120秒内缺少原生完成回执，被限时终止；流式 PASS JSON 仅用于诊断，不能当成已完成审核。
+- 本次1次审核调用、0次 Controller、0候选/0拟合；没有新分数或 co-evolution 证据。不自动重试、不退款、不重开旧批次。
+- 451.77176秒后关闭；原有 B0/B1 活跃池、B0 最佳和全部历史结果不变。tokens/订阅美元成本未知，付费 provider0。
+- 永久证据：artifacts/market-rsi-coevo-price-connected-pilot-20261006-01/closeout.json，SHA87a586a7；完整启动命令和失败在现有 price-loop worklog。下一项明确阻断是审核原生完成等待限时，不是数据或评分器。
+
+## 2026-10-07 14:15 NY — verified pipeline source pushed
+
+Published eight pipeline source/test files to public branch
+market-rsi-pipeline-integration-20261007 at47ea0fc. Exact clean code-only export
+passed369relevant tests54.592s. Its sole parent is already-publicmain6978e089;
+private research history, reports, data and approvals remain local. Remote SHA
+verified; main/tags unchanged, no PR or merge performed. Current dirty user work
+preserved. The temporary clean export is recoverable from this Git commit.
+
+This publishes the connected implementation, not new research evidence.
+Current priority is one real reviewed R/H change, measured benefit and actual
+next-step use; only the predictor loop has prior live evidence. Fresh pilot
+approval remains pending. General known pre-author failure continuation,
+credit1 archived-branch eligibility and hard arbitrary-code containment remain
+limitations, not reasons to keep rebuilding before a bounded pilot. Later:
+matched-budget process comparison, then a separately defined equities earnings
+task with point-in-time data. No new live account calls, Train fits or protected
+data access occurred in this publication block.
+
+## 2026-10-06 22:10 NY — full production-service route verified locally
+
+Fresh-entry testing found and fixed two concrete integration blockers: timing
+was written to a recovery-only directory, and capacity reconciliation hid the
+last scientific experiment from the next selected hook. Whole-batch role/grant,
+write-namespace and committed-source preparation checks now run before account
+metadata admission. Source checkpointsd521fc0/f911fc3/e56a089; failed snapshots
+66703db andf911fc3 preserve the evidence that led to each bounded repair.
+
+The actual formal entry constructs production Controller transport, capacity
+and candidate authors, separate reviewers, native worker/scorer and journals.
+Five engineering paths PASS12.932s: accepted/rejected capacity continuation,
+KEEP, known worker failure and uncertain-author no-retry; cold replay preserves
+the ledger and makes no extra calls. Full24-module regression369PASS56.029s.
+Account stdio and training outputs are inert/synthetic fixtures; source tests,
+temporary Git and measured matched hook children are real local processes.
+These are Supervisor-directed integration repairs, NOT autonomous R/H learning,
+actual new Train prediction evidence, profitability or mechanism superiority.
+
+Actual new account model calls0 and resident Train fits0. Frozen runner/scorer,
+old closed ledger and authorization retain their recorded hashes. Independent
+snapshot reviewPASS_CODE_ONLY,29focusedPASS23.838s; no fresh batch opened or old
+batch renewed. After code review, the next step is a separately authorized
+live feedback-linked cycle through the same entry, not more harness expansion.
+Equities earnings remains next, after the pipeline; price-reaction versus
+EPS/surprise target and new data scope remain unresolved.
+
+## 2026-10-06 21:46 NY — pipeline first, equities afterwards
+
+The same formal price entry now supports opt-in v2 with actual capacity author,
+independent reviewer, matched trial and selected-version hooks. Default v1 and
+all closed experiments remain unchanged. Typed predictor implementation uses
+the actual saved Controller packet, including hook outputs; the worker's native
+pair must match that original. Source checkpoints1acfef1/30393af/a454143 include
+preserved failed fixture/verification-command checkpoints rather than overwrites.
+
+Corrected24-module regression363PASS41.877s. A two-round engineering check feeds
+verified REVERT into real pure-hook outputs in the next Controller packet and
+keeps the selected pair in native predictor preparation; restart makes no new
+calls/workers. Its Controller/author/training are synthetic. Actual production
+service construction is separately verified. No new real account calls or Train
+fits; frozen runner/scorer and closed ledger/grant SHA256 unchanged. These fixes
+are local, not yet on public main. Integrated independent review and a freshly
+authorized live capacity-to-prediction cycle are still pending. Do not claim
+new co-evolution from these engineering tests or make every remaining failure
+path/general research gap a prerequisite for running that bounded pilot.
+
+Next priority: verify the connected live path, then add a separate equities
+earnings task using the same pipeline. Price reaction versus EPS/surprise is a
+pending user choice. No new data acquisition, protected evaluation opening,
+new spending, old-rule change or framework rebuild is authorized here.
+
+## 2026-10-06 20:00 NY — capacity implementation and source-review path connected locally
+
+R/H originals can now reach a real text-only implementation adapter, generate fresh
+versioned source/test, preserve the parent and produce a local Git checkpoint.
+Existing independent source reviewer verifies saved Controller/author provenance,
+scope and single-axis identity; self-signature and drift reject. Only after PASS
+does a bounded real Python smoke run. Author itself never imports or activates code.
+A sandbox RSS failure exposed missing child reap; cleanup/failure preservation is
+now covered. Failed snapshots0791027/a964aee retained; fixture-only fixes separate.
+Final relevant regression398PASS27.450s, with mocked account decisions/reviews and
+real temporary Python/Git. This is local engineering, not a real model-generated
+improvement. Actual accountcalls/Trainfits0; frozen price sources and old closed
+ledger/grant unchanged. Matched capacity benefit, activation and formal downstream
+hook use remain unconnected; default official entry stays on its old v1 path.
+
+## 2026-10-06 19:41 NY — typed R/H decisions and input review wired locally
+
+Prospective v2 allows one prediction, one researcher-policy or one research-tool
+change without a fake prediction candidate or forced R/H rewrite. Original response,
+scope, parent version, evidence and resource bindings survive once-only replay.
+The existing separate input reviewer now binds this exact protocol/context and
+keeps generated changes in versioned research-side sources, not trusted kernel.
+Legacy official entry and all old experiments retain v1. Local334-test price-path
+regression passes; account calls and resident Train fits0. Protocol first fixture
+failure preserved806fe77, correction2888e30. This is Supervisor engineering, not
+co-evolution completed. F3 source/benefit implementation-review and F4 actual
+accepted-version invocation/accounting remain next; activation not yet enabled.
+
+## 2026-10-06 19:30 NY — fixed32KiB research-context restriction removed
+
+All modern price-loop stages now use the explicit per-destination max_input_bytes
+in the bound batch authorization, including the actual rendered Controller/role
+prompts. They no longer require the number32768. Local64KiB/256KiB tests cover
+larger aggregate context, implementation, review and inert-native wire/replay;
+324 relevant regressions pass. Old32KiB grants stay unchanged and enforced.
+No larger live grant, account transfer, fresh batch or Train fit was created.
+This is human-requested Supervisor H engineering, not measured researcher gain.
+One test-isolation failure is preserved at8e86d57; the correction changes only its
+fixture. Frozen task/scorer, old closed ledger and authorization are unchanged.
+Source chunks dbe0bf3/de8eff0/2ecb912/8e86d57; detailed verification in the existing
+repair worklog. Continue typed R/H routing next; input-size tuning is not a new
+research prerequisite. Independent prospective activation review remains pending.
+
+## 2026-10-06 19:22 NY — first item-wise co-evolution wiring repair
+
+F1 now sends factual process observations and numeric implementation capabilities
+in the next Controller input: bound stage timings, reserved/actual fits, reviewed
+execution outcome and the configured R/H pair. Missing measurements remain unknown;
+configured capacities are explicitly not claimed to be resolved or used. Full old
+histories remain immutable. The initial three-round fixture exceeded the old batch's
+32KiB transfer grant because repeated timing snapshots were duplicated; the compact
+projection removes that duplication, not scientific findings or failure evidence.
+Growing records are not a scientific problem or a model context limit. A future
+larger input budget must come from that batch's actual authorization, not a permanent
+hardcoded research restriction or a retroactive change to the closed batch.
+
+Local 78-test services/handoff/reviewer/entry/driver regression passed in17.664s;
+no account call, resident Train fit or protected-source/closed-ledger change.
+This is user-directed Supervisor H engineering at L1, not an autonomous R/H
+improvement. Independent integration review and real downstream capacity use remain
+pending. The six-item executable plan is COEVO_LIVE_ROUTE_FIX_PLAN_2026-10-06.json;
+plan checkpoint c2d63ef. Next bounded source item is prospective action/review routing,
+not a new harness or a renewed scientific batch.
+
+## 2026-10-06 — price pilot closed without a Controller continuation
+
+User `yes` approved the pending exact compact account transfer, but the original
+20:56UTC selection cutoff passed before independent input review finished.
+The queued command exited without an original call/reservation, account transfer,
+candidate or extra fits. Root closed at20:56:46UTC,40min47s inclusive:
+1actual attempt/4completed fits/0Controller decisions. Original45min/2attempt/
+8fit limits and all previous histories remain unchanged; unused capacity expired.
+No-change MSE0.002893108 versus fixed HGB0.003151650 (+8.94%) remains the only
+price experiment. B0 incumbent and valid negative B1 branch retained. The
+prediction experiment ran, but the autonomous price feedback loop did not.
+This is an execution/coordination timing failure, not scientific evidence against
+the next method. Frozen code, feedback and memory are ready for a separately
+bounded continuation; input review after cutoff does not grant later authority.
+See `PRICE_PILOT_CLOSEOUT_2026-10-06.json` and the append-only Supervisor log.
+Independent20:58UTC input review confirms the static payload/source checks but
+correctly refuses late admission. Hard runtime tool disable remains unverified;
+prompt restrictions and post-response checks must not be described as containment.
+
+## 2026-10-06 — first real five-minute trade-price baseline
+
+Separate price task `MarketTradeVWAPChange300sTrainDiagnostic-v1` implemented,
+67 relevant tests independently pass; local checkpoints d1c4b22/3a7b18c/7b168d3.
+One real fixed-reference run completed four chronological Train fits,
+1,356 forecasts and991 observed labels on87 check games; full195-game population
+retained. No-change MSE0.002893108; fixed HGB0.003151650 (+8.94%, REVERT).
+Independent direct-CSV numeric/source review confirms the negative result.
+B0 stays incumbent; HGB remains eligible for distinct exploratory descendants.
+Worker2.634s/thread1/sampled168.5MiB; implementation/review overhead is additional.
+Verified aggregate feedback and memory are saved locally. No scientific Controller
+decision/candidate or account transfer occurred; one exact transfer question is
+pending. Do not call this autonomous price optimization or co-evolution yet.
+Price/fill/profit/OOS and fixed-versus-evolving-process superiority unproven.
+Old settlement/legacy scores, rules and closed budgets unchanged; no protected,
+external, paid, release, push or promotion operation. This pilot's absolute
+selection cutoff20:56UTC and hard deadline21:01UTC remain; unused caps expire.
+See `PRICE_PILOT_RESULTS_2026-10-06.json` and permanent pilot ledger for exact
+artifacts/status; this entry does not renew old authority or repair any historical
+global-document binding.
+
+## 2026-10-06 — new ten-hour implementation and real Discovery window
+
+04:54UTC update: source repairs are local `a7a7a2d` and `a9a22b6`, independently
+48 targeted and263 relevant test executionsPASS/1opt-in skip. Eleven-roleN2 input
+reproduced; archivecopy preserves sixparents/consumedC2 with sixthN2proof admitted.
+First actual account launch was rejected BEFOREprocess by auto-review: ten-hour
+message did not explicitly name private Train-derived payload/destination. Root's
+renewal interpretation was insufficient; source review cannot grant consent.
+One explicit same-account reviewedpayload question is pending. No new account
+call/candidate/fit consumed, no bypass/indirect transfer. Deadline unchanged.
+Do not describe this as a real scientific loop or predictive improvement yet.
+Exact current state: `WINDOW_10H_RUNTIME_STATUS_2026-10-06.json`.
+
+User granted ten hours and experiments after fixes. New window begins04:36:33UTC
+and ends14:36:33UTC (10:36:33a.m.NewYork); new-selection cutoff14:21:33UTC.
+Supervisor conservatively allocates12attempts/48fits/12original scientific
+Controller decisions; initial segment3/12. These are Supervisor ceilings, not
+quoted user numeric approval or renewal of old consumedcaps. PriorN2 results,
+memory, two-family selection and2/8/2 consumption remain immutable.
+
+Small repairs are an exact fresh envelope and reviewed source/decision-to-native
+handoff, separate H checkpoints. Bound source code authoring and independent
+metric/learning reviews remain. No scorer/KEEP/data/protected/model/tool changes.
+Global scientific activepool2–3 is distinct from per-attempt native execution
+subledgers(max1,v4,final-singleton-v1), all sharing one exact globalID/clock.
+Root holds sole outerbudgetlock through each short training completion and
+reconciles durable claims before any nextlaunch; max2training is a ceiling,
+not a claim of paralleltraining. Implementation and reviews can overlap.
+
+Actual N2 feedback will drive the first original scientific decision, and each
+accepted new result the next. At this entry no new real calls or fits have run.
+ResidentTrain boundaries hold; external acquisition/literature, paidprovider,
+Dev/Final, publishing and promotion remain closed. Account evidencetool runtime
+parity remains unverified/closed. Human-directed H repairs and AI Supervisor
+coordination are not autonomous R evolution or same-budget researcher gains.
+Bounded15-minute heartbeat `market-rsi-bounded-10-hour-discovery` continues only
+within the same deadline/counters, never duplicates an active Supervisor, and
+is removed at closeout. Unchanged healthy state stays quiet.
+
+## 2026-10-06 — native candidate handoff and evidence semantics repaired
+
+Two separate user-directed H checkpoints, not prediction or researcher-policy
+changes. First, parent `484ab30` -> local `10965ae`: new reviewed native dispatcher
+(`172bb564`) connects an original verified Controller decision and independently
+admitted request to the existing worker, preserves actual parent versus incumbent,
+permits two distinct IDs to overlap, fences duplicate launches and recovers a
+completed execution receipt after interruption without reopening expired budgets.
+Stale outer snapshots cannot reuse locally consumed four-fit reservations; outer
+cross-batch synchronization remains Supervisor-owned. Root229 executions passed
+4.284s/one opt-in skip; independent229 passed4.516s. Independent receipt
+`CANDIDATE_DISPATCH_INDEPENDENT_REVIEW_2026-10-06.json` (`23cccdbf`) explicitly
+accepts the206-line single-component exception. Initial native process/type and
+stale-snapshot gaps were repaired before source freeze; fixture errors are retained
+in the implementer log, not counted as scientific refutations.
+
+Second, parent `10965ae` -> local `85d0dc4`: existing evidence verifier changes only11 additions/2
+removals. Root reproduced three actual broker/native-consumer counterexamples:
+empty EOF-only source citation, read after final decision, read after terminal.
+External matched matrix improved12/15 to15/15; all permissive controls remain
+valid (provided-memory citation with EOF, intermediate JSON note, informative
+read followed by EOF). Eight new focused tests and237 relevant executions passed
+4.836s/one opt-in skip; independent237 passed4.713s and external15 passed0.648s.
+The separate scope/verification/review files preserve exact identities, commands,
+failure outcomes and limits; earlier frozen review receipts are not rewritten.
+Machine trajectory: `CONTROLLER_ENABLEMENT_TRAJECTORY_2026-10-06.jsonl`; same two
+H steps and outcomes as this human view, with separate K/M/C/H/R identities.
+
+Observed H benefits are native execution handoff/receipt reconciliation and
+correct source-citation/order admission in synthetic matched traces (at most L2).
+No new real model/account call, Train/protected read, training fit, provider,
+scientific external acquisition, release or promotion occurred. Tests script
+model/subprocess/clock behavior but use native consumer/broker/recorder/worker
+code; they do not prove unattended scientific execution. Original scoring,
+KEEP/REVERT, incumbent, candidate code, researcher eligibility and exhausted
+batch ledgers remain unchanged. This work does not establish C or R gains.
+
+Two material limits remain explicit: dispatch recovery is original execution
+receipt reconciliation, not authenticated original prediction replay (the worker
+receipt does not commit the original manifest); independent output/metric review
+is still mandatory. Reviewed code authoring, recipe/question-to-source semantics
+and next-round pool selection remain caller-owned, not automatically solved by
+the helper. Account evidence tools remain hard-blocked pending runtime parity;
+nonempty delivery does not prove whole-document reading, truth or learning.
+Plain-text intermediate commentary is not yet supported by the native consumer.
+
+Root supplied boundary repairs and coordination; delegated implementer and
+independent reviewer did engineering, not scientific candidate selection. User
+said continue, not a new algorithm. Tokens/CPU/full AI cost are unmetered, not
+zero. Exact test/resource timings are in each verification and worker log.
+Current next step is the actual code-authoring/scheduling handoff plus a fresh
+bounded real feedback pilot; one async3-attempt/12-fit/90-minute account-payload
+question is pending, not an activated window or extension of any old batch.
+
+## 2026-10-05 — first scoped Controller evidence-tool checkpoint independently verified
+
+Following the approved priorities saved in documentation checkpoint `709bb38`, completed one user-directed H component under `CONTROLLER_ENABLEMENT_P0_TOOL_READ_SCOPE_2026-10-05.json`, originating from production parent `938f696`. New production file `controller_research_evidence_tools.py` (SHA `01980b4117b5242a16728bc60392623a5efd13dd48e0390ebf29fd810404f7c4`) and test file `test_controller_research_evidence_tools.py` (SHA `84cb98d6b43fe3c6e13b16fd6dd43ebb6d974a4790ed3b33611e7beb9da056d8`) provide approved-ID UTF-8 evidence retrieval, hash-bound policy/source, no-symlink descriptor reads, shared serialized-payload/call limits and durable audit before a prepared response. No model-controlled path or execution command exists. This is an unactivated sidecar, not removal of the current consumer's tool prohibition.
+
+Focused 33 tests passed. Root's seven-suite combined run passed 172 executions in 2.219 seconds and a post-ready-gate rerun in 2.229 seconds; independent review reran the same suite successfully in 2.223 seconds. Counts may include inherited repeated tests, not 172 unique tests. All 1,039 previously tracked research Python files were byte-for-byte unchanged before adding new files. Root verification `5eacae66` records the exact command, scope, resource accounting and protected-source hash; final independent receipt `1ceb2fd8` explicitly accepts the 284-line one-component inseparability warning. L1 is the earned evidence level, not a matched live operational effect. Preliminary malformed RPC-ID/overflow and exhausted-budget pre-read defects were repaired before source freeze, with regression tests; these are engineering repairs, not scientific discoveries.
+
+Actual Train/Dev/Final reads, fits, live Controller transport calls, paid providers and external scientific data/literature requests were zero. Official runtime documentation was consulted separately; it is not new scientific literature discovery. Root test wall time totaled 4.448 seconds; helper/overall model tokens, CPU, elapsed engineering time and monetary cost are unmetered, not zero. Synthetic stdio testing used a local subprocess, not a model call. Implementation and independent preflight overlapped; final review followed Root integration. No new dependencies, historical scores, incumbent, budget ledger, release or promotion changed. Existing unrelated dirty files remain preserved.
+
+Root also inspected and reran the independent testing chat's external black-box suite: 16 stdio-server behavior tests passed in 0.427 seconds, with both deliberate disposable source-hash/call-counter regressions caught. Exact command: `/Users/estelle/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -I -S -B /Users/estelle/.codex/worktrees/3c5e/self-evolving-v18-local/research/controller_behavior_acceptance_20261006/test_expected_behavior.py --source-root /Users/estelle/Developer/market-rsi/research/market_rsi --check-sensitivity`. External test SHA `9315d75ec765ae91893b9451b10d10e4ede727573ae224421674d2a1beb51554`; acceptance matrix SHA `483912326d284b93337012e6e5425061ea494163802994abd72f60df5beda10e`, preserved in testing checkpoint `60dbb12`. No external test source or production source was edited by Root. Its nine later integration cases remain NOT RUN, not extra passing reader tests.
+
+Next is a separate consumer-integration checkpoint: connect the reader, verify the actual effective tool catalog and deny other access channels before execution. Native seams inspected: `_command` at consumer line 209 lacks the tool binding; `_transport` line 231 still instructs no tools; `_recover` line 253 rejects every tool item after the fact. `prepare_input` line 138 requires all eleven success-artifact roles including scorecard/predictions/supplement, so pre-fit failure cannot become factual next-input feedback through it yet. Prioritize B01 evidence-to-decision and B03 failure-to-feedback at these existing seams, not a second driver. MCP allowlisting alone and a read-only filesystem sandbox are insufficient. Same audit-path exclusion prevents silent counter reset but does not implement recovery; payload limits exclude framing/control traffic; prepared audit does not prove consumer receipt; Supervisor must vet content before manifest admission. No live Controller enablement, unattended continuation, predictor improvement or researcher-process superiority is claimed. No fresh account payload or expired batch was launched. Rollback is to leave the component unconfigured and preserve history, not rewind old consumption.
+
+## 2026-10-05 — Controller enablement priorities added to approved Word plan
+
+User instructed “add this to the doc. start.” Appended prospective P0–P4 priorities to `plans/MARKET_RSI_REPAIR_DISCOVERY_APPROVED_2026-10-05.docx`, retaining the 105 historical paragraphs and three tables from source `938f696`. A front-page note and current addendum distinguish historical approvals from renewed budgets. The reproducible helper is `plans/append_controller_enablement_priorities_20261005.py`. All 12 final pages were visually checked; final pages 1–10 were pixel-identical to the already inspected render, and final pages 11–12 were inspected again after moving the execution section to its own page. No QA images or raw data are committed.
+
+Immediate order is scoped Controller capabilities, then unattended feedback-dependent real experiments; memory/recovery and matched research-process comparisons follow. E2B stays retired and Tinker optional, not a mainline prerequisite. Binary settlement Brier is MSE under the same weighting; future-price MSE remains a different task. Research eligibility, learning credit and incumbent replacement remain separate. The source check confirms v4 already allows one justified zero-credit REVERT follow-up; this plan does not claim that capability was absent or redo its historical repair.
+
+This is user-directed planning/documentation, not an autonomous R change, prediction gain or fresh account-payload/batch authorization. Earlier closed 2-candidate/8-fit/2-decision results and clocks remain unchanged. Implementation starts with one unactivated evidence-reading component and synthetic tests; consumer integration and effective tool-access verification remain the next executable checkpoint. No training, paid provider, protected-data access, external scientific acquisition, release or promotion is performed by this document checkpoint.
+
+## 2026-10-05 18:36 EDT — fresh two-candidate continuation explicitly approved
+
+User “approve” answered the combined fresh-window and same-account reviewedresearch-payload question. Newprospective batch `market-rsi-learning-checkpoint-continuation-20261005-01` is bounded at18:32:32–20:02:32NewYork, selection19:47:32, atmosttwo newcandidates/eightfits/two once-onlyaccountdecisions/max2live/thread1. Oldpilot1candidate/4fits/1decision andclosedselectioncutoff remain unchanged; the freshcap allocates its unused2/8/2, not a C1rerun or an implicit oldclock reset. Freshapprovalcf673127 is persisted locally outsideGit.
+
+Current executableconsumer accepts only the previous exactexpired envelopes; one minimal staticnew-envelope addition is directly required, with originaldefaults/old3/12binding preserved. Registeredproducer, mechanicalopshelper andindependentreadonlypreflight are runningdisjointly afterpassingdispatch/ready gates; expectedbinding<30productionlines1module, no newframeworkservice. Rootownsactualaccountcall andledger; helpers do notpick science orfitTrain. ExistingactualC1feedbackab621/result753c/learning565a will drive thenextControllerdecision. Freshcandidate/controller/fits countsare0atthisscopecheckpoint. Paidproviders/externalacquisition/protectedDevFinal/publish/promotion remainclosed.
+
+## 2026-10-05 18:26 EDT — continuation checked after original selection cutoff
+
+The user said “continue.” First observed clock was22:25:01UTC, after the frozen22:24:55 selection cutoff. Existing guard independently of transport rejects `outer selection stop`; no active pilot child remains. This is not a negative-score stop or an exhausted attempt cap. The original hard18:39:55 finish deadline and1/3attempts/4/12fits/1of3completed account calls remain preserved. No next Controller call, descendant training, permission bypass or clock reset occurred.
+
+Current evidence remains the one valid C1 negative experiment, unchanged REVERT, verifiedlearning2/branch and observedD5evidence use with unmeasured benefit. Detailed paired results and trace remain in `CHECKPOINT_PILOT_C1_REPORT_2026-10-05.md`; closure pointers are in `CHECKPOINT_PILOT_CLOSEOUT_2026-10-05.json`. Scope continuation now needs a fresh bounded window; one combined question requests<=90minutes/two remaining candidates/eightfits/two original decisions and same-account reviewed scores/memory/history/metadata transfer. No algorithm/menu is asked of the human; all protected/externaldata/paid/release/promotion boundaries hold. Pending authorization is not a launched batch.
+
+## 2026-10-05 18:08 EDT — real C1 result and separated learning accepted; next transfer blocked before launch
+
+The new down×market candidate completed four real local fits/87 same-key forecasts: Brier0.142251175/log0.430401674, worse than C7 and market, so frozen REFUTED/REVERT remains. Independent reconstruction753c31ca passed. Separate learning565a14ef accepts2/nonduplicate for a valid negative hypothesis test; branch eligibility survives without forcing pool membership. D5 negative evidence use is observed, benefit unmeasured. Actual feedbackab6211ab and nextpacketbbda9c7e are ready.
+
+The approval reviewer blocked the next ChatGPT-account handoff twice before any process or outer reservation, despite read-only checks of prior explicit pilot approval. Supervisor requested direct exact-payload reconfirmation, did not change channel/provider or invent another Controller choice. Current1/3attempts,4/12fits,1/3completed account calls; no paid/external/protected operation. Original18:24:55selection/18:39:55deadline unchanged. See `CHECKPOINT_PILOT_C1_REPORT_2026-10-05.md` for paired scores, block results and trace. Local code/evidence acceptance is not prediction gain or matched RSI superiority.
+
+## 2026-10-05 17:42 EDT — fresh account approval received; actual Controller selected down-dependent calibration
+
+The user's explicit “yes” approved the exact fresh account payload question (`cb50a794`); it did not supply a hypothesis or algorithm. One original, no-tools/no-retry `gpt-6.1-sol` decision completed (`ddc4bfac`, serving snapshot unknown;121898 input/1985 output tokens, USD unknown). D5's reviewed possession-only negative result led it to a different down×market-logit calibration question, `InGameTemperatureDownSlopeJointOffset-v1`, actual research parent C7, raw-market incumbent. The Controller retained two distinct global branches C7 calibration and B3 nonlinear state; no second experiment was preselected.
+
+Independent original-decision review and exact mechanical contract/operation preparation are running in parallel. New actual Train fits remain0 at this checkpoint. No external/protected/paid-provider/publication actions. Original cutoff18:24:55/deadline18:39:55 New York and3attempt/12fit caps are unchanged; old6/24 remains closed. This is an actual feedback-dependent scientific proposal, not yet an executed result, predictive gain, learning benefit or self-evolution success.
+
+## 2026-10-05 17:24 EDT — fresh pilot binding verified; actual Controller launch awaits account-payload authorization
+
+The user said “go ahead” after the checkpoint upgrade. A fresh conservative local pilot was bounded prospectively at **17:09:55–18:39:55 New York**, selection cutoff18:24:55, at most3candidate attempts/12actual fits, max2live children/one thread each. The old six-attempt/24-fit batch remains closed and unchanged. Waiting does not reset this clock.
+
+The direct execution blocker was the numerical consumer's intentionally expired old window. Source checkpoint `948c897` adds one explicit exact prospective binding, sealed into input and once-only claim, while preserving the legacy defaults and14otherfunctions, model/schema/CLI/no-tools/fees/source guards. Production change42additions/9removals in one module; no new framework or dependency. This is user-directed Supervisor H work, not autonomous R modification.
+
+Two disjoint helpers overlapped implementation and read-only provenance work. Root's **229 unique full relevant synthetic tests** passed15.738s; the independent reviewer reran229 in15.795s and reproduced the exact prepared input. Focused81 are included in229, not added. The historical D5 request's68sourcefiles were verified against its original `d7d4a0b` checkout without weakening source checks or instantiating/recovery-writing its old recorder. Original feedback `46248f57`, original activation memory `31708df6`, final memory and consumedC2 remain preserved. A new eleven-role input `98ee0c8e` includes the completed D5 evidence and last actually selected C7/B3 pool; no new scientific hypothesis or pool selection was invented.
+
+**New candidate attempts0; real Train fits0; account Controller calls0; paid provider0/$0.** No protected Dev/Final, external acquisition, publication or promotion. All-agent tokens/CPU/USD and a serial scheduling counterfactual are unmetered; preparation elapsed about15minutes, not training time. A synthetic test-fixture write-once error was repaired only in the temporary test fixture; initial log timestamp corrections are retained. The existing dashboard endpoint was unavailable, so live display was not claimed or rebuilt.
+
+The remaining boundary is specific: the previous explicit permission to send private Train scores/memory/history/run metadata to the ChatGPT account said **“existing batch only.”** The fresh asynchronous question requests that transfer for this pilot, once per reviewed feedback/no retries/no tools/no paid provider. It has not yet received a reply. Local Train research is already authorized; this is not a new per-round algorithm or training approval. The Supervisor will not substitute its own scientific decision to bypass this gate.
+
+Final independent receipt `8049faa1` and frozen reviewer log `a021eaad` admit this source/immutable bootstrap only. VerifiedCLI/Python hashes remain `6b582e88`/`80ee2dd9`; no livechild was found at21:24UTC. The preserved checkpoint trajectory is `CHECKPOINT_PILOT_TRAJECTORY_2026-10-05.jsonl`; this permission stop is not a resolved scientific milestone.
+
+Independent code/input review supports L2 only. Actual v4 Train checkpoint feedback, failed-run-to-Controller transport, predictive improvement, demonstrated learning benefit and fixed-versus-evolving superiority are still untested here. KEEP/scorer and old results remain unchanged. Next action: after the fresh transfer approval and within the original remaining window, obtain one actual evidence-cited Controller choice, implement/review/run it, then return its real feedback for continuation. If the fixed window expires first, preserve it rather than silently extending.
+
+## 2026-10-05 17:05 EDT — Word plan saved; prospective learning-checkpoint fix independently reviewed
+
+The approved plan is saved as `plans/MARKET_RSI_LEARNING_CHECKPOINT_UPGRADE_2026-10-05.docx` (four pages, all visually inspected, accessibility audit zero findings; SHA `6e642e59c6288b709b7280d02dcf85ce398f62f172fed3c849581ebb893b8755`). Reproducible builder and plan are retained. Local source checkpoints are `ebb739d` (document/scope), `79efe01` (recorder core), and `9dbf1df` (separate feedback consumer). Nothing was pushed or released.
+
+Implemented explicit opt-in v4 separation of original performance validity, unchanged forecast KEEP/REVERT, independently reviewed learning0/1/2, and exploration disposition. A valid zero-credit REVERT can receive one justified distinct follow-up without prior improvement; scheduling consumes its allowance even if execution later fails. Findings are deduplicated; proposed/observed/validated reuse and measured benefit remain different claims. Credit influences existing budget hints but never Brier, incumbent replacement or mandatory active membership. Global2–3 capacity, lineage and archive/restart guards remain.
+
+Two concrete pre-admission design findings were fixed: validity must precede any KEEP; a bounded allowance may leave its question pending until the Controller sees feedback, with its actual decision/question/hypothesis/rule frozen before execution. These were Supervisor-directed H repairs, not autonomous R evolution or scientific method choices. Core393 changed production lines/two modules triggered explicit independent semantic inseparability admission (`277944b0`); consumer34 changed lines/one module is a separate checkpoint.
+
+Full relevant **222 unique synthetic tests** passed on root15.451s and independent15.581s; focused74 are included, not extra tests. Final review `2773be0a` admits code-only L2. All45 historical journal events and45 prefixes reproduce unchanged old states. Scorer, probability contract, training worker, frozen D5 review, six-attempt/24-fit authority and previous results remain unchanged. This is not a claim that every legacy repository suite is green.
+
+About30 minutes elapsed for document, implementation, testing and review; implementer coordination about12 minutes. New real Train fits/predictions, scientific Controller/provider/network calls, protected-data reads and publication: **zero**. Agent-wide tokens/CPU/USD were not metered. Existing best predictor and real scorecards did not change.
+
+Remaining limits: trusted Supervisor still verifies semantic novelty, evidence contents and truthful archive consumption; hashes alone do not prove these. Failed-run learning can be recorded/projected, but the numerical consumer requires completed real scorecard/CSV/supplement roles, so end-to-end real failed-run recovery is not implemented. Its intentionally unchanged expired window and consumed6/24 cap prohibit new live calls. Next: a separately bounded, prospectively bound Train pilot should demonstrate actual evidence affecting the next candidate, then compare fixed/evolving processes under matched budgets. No researcher-capacity, predictive, transfer, untouched-OOS, real-time or process-superiority success is inferred from this engineering PASS.
+
+## 2026-10-05 15:10 EDT — bounded batch complete: five real scientific experiments, no incumbent improvement
+
+The authorized fresh replacement `market-rsi-repair-d4-controller-continuation-policyfix-20261005-01` ran exactly once. Its actual possession-only proposal D5 was implemented, tested, independently source-admitted, trained once, independently scored and accepted. D5's four fits completed at source checkpoint `d7d4a0b`; card `89e5e3d4`, predictions `d34a4fe3`, result review `f09af4cb`, accepted state `fecb9e06`, feedback `46248f57`. Final independent closure at 19:09:08 UTC is in [the existing D5 reviewer log](AGENT_LOG_REPAIR_D5_REVIEWER_2026-10-05.md), SHA `efcba3eb78b5c8f9113e158b110ba32c0ae2c3f3b37120b2d94f5156f419a288`.
+
+The batch stopped at **six selected attempts / 24 actual fits**: five new scientific candidates and one unchanged held-C7 engineering parity run. All six runs completed; all five scientific candidates are operational **REVERT**, frozen scientific **REFUTED**. These recipe-specific labels do not prove absence of an information family or statistical significance. Market remains the incumbent. There was no D5-feedback Controller call, seventh run, same-ID retry, protected Dev/Final access, new external data/literature, paid provider, release or promotion. Earlier expired windows and consumed C2 remain closed.
+
+### Comparable results
+
+Same historical ingame task, same 87 check games, same four expanding checks and scorer throughout. Lower losses are better. Parent comparison is C7 for every D1-D5; the feedback chain is not their code ancestry. Rounded values below; immutable cards/CSV retain full precision.
+
+| Scheme | Equal-event Brier | Log loss | Brier minus C7 | Parent-block Brier wins | Decision |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Raw market incumbent | 0.141952529 | 0.429670785 | -0.000001575 | — | unchanged |
+| C7 temperature calibration parent | 0.141954104 | 0.428886089 | 0 | — | retained research branch |
+| Ordinary market-only reference | 0.145482313 | 0.439921972 | +0.003528208 | — | reference, not Strong-Baseline-1 |
+| Existing v0 market + state model | 0.160680990 | 0.471197319 | +0.018726886 | — | reference |
+| D1 native pressure joint offset | 0.142202465 | 0.428919170 | +0.000248361 | 1/4 | REVERT |
+| D2 trade-age slope joint offset | 0.141953581 | 0.428889141 | -0.000000524 | 2/4 | REVERT |
+| D3 constant intercept joint offset | 0.143662768 | 0.433157208 | +0.001708664 | 0/4 | REVERT |
+| D4 odd-confidence/tanh joint offset | 0.142060246 | 0.429093622 | +0.000106142 | 1/4 | REVERT |
+| D5 possession-only joint offset | 0.143445455 | 0.430244119 | +0.001491351 | 1/4 | REVERT |
+
+D2 is the lowest-Brier new candidate, but is still `+0.000001051534386` worse than raw market and slightly worse than C7 in log loss. C7 still has the best log loss; no one candidate has replaced the market under the pre-existing judge. No relaxed or retrospective KEEP rule was applied.
+
+### What evidence actually changed the next choice
+
+| Evidence returned to the actual Controller | Actual subsequent choice and execution | Interpretation |
+| --- | --- | --- |
+| D1 pressure offset lost both parent losses, 1/4 blocks; older C7 and age-route memory retained | D2 tested age × market-logit conditional on C7; four fits completed | Stop this pressure recipe, test observation-reliability route; not new source discovery |
+| D2 nearly null/mixed losses and 2/4 parent wins; D1 negative preserved | D3 tested a fixed penalized constant intercept; four fits completed | Test residual calibration without repeating pressure/prior grids |
+| D3 lost both losses and all four parent blocks | D4 tested a token-complement-preserving tanh confidence basis; four fits completed | Abandon this global-intercept recipe, change calibration shape |
+| D4 lost both losses, 1/4 blocks; D1 pressure negative also available | The original Controller chose an unsupported voluntary stop. It remains preserved. After one user-approved fresh replacement and minimal H-policy repair, the actual Controller selected D5 possession-only; four fits completed | Isolate existing pre-play possession, remove pressure-composite weights and confidence basis; no assumed benefit |
+| D5 lost both parent losses, 1/4 blocks | Accepted feedback and accumulated memory saved; no further decision at exhausted cap | Valid negative for this exact recipe. Next hypothesis is not preselected or fabricated |
+
+Scientific hypotheses and method choices D2-D5 came from the original account Controller responses, requested `gpt-6.1-sol`; exact serving snapshot unknown. Initial D1 was already frozen before this batch. Supervisor transcribed the recipes and provided dispatch, runtime scripts, ledger updates, repairs and continuation coordination; implementer/reviewer/math helpers did not originate the scientific selections. Feedback-dependent steps followed actual completed results, rather than being three independent preplanned models. Source/math/review work was parallelized, but the actual real-training runs were sequential; there were not two simultaneously trained branch trajectories.
+
+### Final D5 paired blocks and findings
+
+D5 uses only market logit and the already available strict binary **pre-play possession** orientation, jointly fitting a temperature coefficient and signed-possession coefficient. No new PBP fields, future play, final-score features or extra market inputs were added. Four old-past fits converged, and the fitted possession coefficients were positive across folds (`0.1392, 0.1631, 0.1419, 0.1439`); stable signs and improved fit objectives did not translate into better check predictions. This is a valid negative experiment, not trainer failure.
+
+| Chronological check block | Games | D5 minus C7 Brier | D5 minus C7 log loss | D5 minus market Brier |
+| --- | ---: | ---: | ---: | ---: |
+| 1 | 26 | -0.000816376 | -0.005500407 | -0.000414530 |
+| 2 | 16 | +0.003387626 | +0.005707781 | +0.004298452 |
+| 3 | 28 | +0.000057788 | -0.001970667 | -0.000380394 |
+| 4 | 17 | +0.005597249 | +0.013236080 | +0.004855184 |
+
+D5 aggregate minus market is Brier `+0.001492925979`, log loss `+0.000573333867`. Parent correction energy `0.000601013784` plus signed residual alignment `0.000890337116` explains the Brier deterioration. D5-minus-C7 descriptive Brier intervals are date-block `[-0.001456727, +0.005072836]` and week-block `[-0.001207034, +0.004125932]`; they cross zero. Repeatedly inspected Train checks support Discovery only, not independent confirmation or a possession-family falsification. Independent review recomputed the locked scalar predictions/metrics and verified all four past optimizer states, without refitting.
+
+### Incumbent, active pool and archive
+
+Raw market remains the separate incumbent. The last actual Controller-selected global pool has **two** routes, not score-top-three: C7 restricted calibration/conditional causal state (strongest retained calibration parent), and B3 nonlinear causal-state representation (method diversity; no B3 descendant trained in this batch). No new pool selection is claimed after D5. All valid D1-D5 code, predictions, failures and lessons remain in archive with independently verified question-level credit 2/refute/branch. This credit rewards tested negative evidence, does not add to Brier, override REVERT or require continuing a refuted exact recipe. A different justified question can still reuse an archived parent. C7 and B3 are the current pool, not three branches per parent.
+
+### What changed where, and what did not evolve
+
+- **C / predictor:** five small versioned two-parameter experiments, actual per-sample predictions and frozen scores; new D5 source `a9679dc9` is 213 lines. Its >200-line checkpoint triggered explicit semantic admission of one inseparable C component plus validation/replay/direct entry, not an automatic unsafe-or-safe LOC conclusion. Root, implementer and reviewer passed the same relevant 148-method synthetic suite; focused subsets overlap, not additional unique tests. This is not a claim that every legacy repository test passes.
+- **H / execution:** one source-bound reusable candidate evidence adapter demonstrated exact held-C7 parity. The numerical feedback consumer, typed-schema repair and three-location continuation-contract guard repaired concrete execution blockers; the final guard source `b0c4c7a2` and independent review `c221caca` were fixed before the fresh replacement. Budget, validators, frozen scorer, chronology and protected boundary were not changed. These were user/Supervisor-directed engineering repairs, not autonomous researcher self-modification.
+- **Memory / selection:** accumulated valid negatives demonstrably affected D2-D5 choices. This is observed continuation and reuse, not a counterfactual proof that memory improved prediction or research efficiency. R-policy source was not changed; no foundation-model weight post-training occurred. A changing context/pair hash alone is not research-capacity improvement.
+
+### Resources, intervention and failures
+
+Terminal records closed at 19:05:00 UTC: **3h 37m 49s** since the fixed start15:27:11UTC; final independent closure completed19:09:08UTC. The original selection cutoff19:12:11 and hard stop19:27:11 were not extended. Statistical-child wall across all six runs was only **26.4902 seconds**, sampled peak RSS **146,912 KiB** (about143.5 MiB), thread counts1; D5 alone4.4867 seconds/142,080KiB. The large difference is real implementation, account, review, permission and Supervisor coordination overhead, not fitting time or an execution-efficiency success. All six Train and six account PIDs were independently absent at closure. RSS sampling is not OS-hard memory/network containment.
+
+Paid-provider calls/spend were **0 / $0**. Five successful account completions reported **488,283 input / 8,901 output tokens**, including664 reasoning tokens within output; cached0. The sixth known submission was the preserved original HTTP400, whose usage is unknown. Account USD cost and all-agent tokens/CPU/total USD are unknown; provider zero does not mean the entire workflow was free. Original unsupported-stop response is preserved and rejected for continuation scope, not silently overwritten or automatically retried.
+
+Four human permission interventions occurred: batch repair addendum, account payload/destination approval, schema-failure fresh replacement approval, continuation-policy fresh replacement approval. There were no per-round human algorithm choices, but substantial AI Supervisor integration and repair; this is **not fully unattended execution**. All source/test/claim/proof invocation mistakes remain in timestamped logs; none was relabelled a scientific negative or hidden additional fit. During final closure a terminal field mistakenly paired the scientific label with operational REVERT. Original `batch_terminal.json` remains immutable; `batch_terminal_v2.json` changes terminology/provenance only, with no score/rule/budget/state change. Its as-of pending-closure field remains historical; this completed plan and final reviewer log record the later PASS. A selective Git-stage precheck initially assumed the newer H agent-index row was already in HEAD; it was not. The assertion stopped before any index write; the corrected scoped staging adds that owned row and preserves the older same-ID historical row and unrelated edits.
+
+### Supported conclusions and next bounded batch
+
+1. **Loop:** actual feedback-dependent predictor optimization and ordinary negative-memory reuse ran, with Supervisor-led repair and coordination. Completed-history replay is verified; deliberately interrupting and recovering a real fit was not tested here.
+2. **Prediction:** no new candidate improves on the market under the frozen selection rule. These 435 new prediction rows cover the same87 distinct games, not435 independent events. Population remains195 on42dates,193 materialized and two explicit exclusions (`2025_04_GB_DAL` unresolved outcome; `2025_05_TEN_ARI` stale market trade). Checks have20dates/seven observed weeks, including a partial week—not a sufficiency guarantee.
+3. **Research mechanism:** no equal-budget fixed-versus-evolving process comparison, incentive ablation, independent repetitions, transfer or causal researcher-capacity gain was tested. Engineering completion and valid negative credit do not establish RSI superiority.
+
+For the next separately bounded batch, Supervisor recommends reducing execution/coordination overhead and presenting these negatives plus the diverse C7/B3 pool to the actual Controller, rather than prescribing another scalar route. It should choose and execute a prediction experiment under the unchanged task/boundaries. Then run the same-base-model, same-starting-information, same-permissions, equal-total-budget fixed-versus-evolving research-process pilot, including implementation/review overhead; memory and exploration-incentive effects need separate controls. These are recommendations, not a claimed D6 decision or authority to exceed the consumed batch cap.
+
+Strict availability, paired comparisons, grouped uncertainty and separation of adaptive Discovery from independent evaluation are evaluation principles; the Q3<=08:00 sampling, 300-second staleness, 22+4x5 dates, alpha16, seed and KEEP cutoffs are this project's frozen choices, not claimed paper consensus. No new literature search occurred. Actual data-availability timestamps remain insufficient for a live edge claim; future independently confirmed gains need candidate/model freezing before new events happen and settle. Historical LLM knowledge, protected Dev/Final, prospective evaluation, publication and promotion remain unresolved/closed as previously scoped. NFL remains the seed domain, not a permanent research restriction.
+
+Artifacts remain in the non-cloud, persistent local `MarketRSI` artifact directory. Final memory SHA `eb023a54`; accepted D5 result review `f09af4cb`; final terminal-v2 SHA `7ef60d99`. The completed [D5 execution plan](REPAIR_D5_EXECUTION_2026-10-05-v1.json) binds the final reviewer log. No new harness or standalone design document was built for this closeout.
+
+## 2026-10-05 14:45 EDT — actual feedback-selected D5 enters final slot
+
+One explicitly approved fresh replacement call completed once, original response `385accf2`, independent transaction/scope receipt `4637f12a`, requested `gpt-6.1-sol`/serving snapshot unknown. It selected `InGameTemperaturePossessionOnlyJointOffset-v1`: conditional on C7, use only existing pre-play binary possession orientation, not D1 pressure weights or D4 tanh. Actual D4/D1 negatives alter this first representation test; no improvement is presumed. Research parent C7 remains distinct from latest feedback D4 and raw-market incumbent. Actual global active pool has two branches: C7 conditional calibration/state and B3 nonlinear causal-state representation; not score-top3, all valid archives preserved. Original unsupported stop remains immutable. The user/Supervisor-directed three-location H continuation-contract repair enables this proposal; it is not autonomous R modification or predictive evidence.
+
+Compiled contract `9649b501`, unchanged scoring/population/chronology/data/fees. Shared ledger now six selected/24 fits reserved/20 actual; no candidate source/fit admission yet. Final D5 implementation and independent review run in parallel with synthetic math/mechanical launch preparation; only Supervisor launches real fits. Original start15:27:11/cutoff19:12:11/deadline19:27:11UTC remain fixed. At cap, save final feedback for a later bounded batch without sampling another Controller decision. Five successful account completions report488,283 input/8,901 output/664 reasoning (within output); original400 usage and account USD/all-agent CPU/tokens unknown. Paid provider0/$0. Root initially used system Python for reservation and got missing sklearn before any write; corrected to the pinned runtime, no fit/retry/result change.
+
+## 2026-10-05 14:28 EDT — unsupported Controller early stop preserved; one fresh repair decision explicitly approved
+
+D4 result review `10297dae` accepted exactly once with credit2/refute/branch; feedback `02faff3c`, numerical input `72ee17c6`, journalstate `d76e62ec`. Original once-only Controller returned `stop_in_scope/none_selected`, leaving one slot unused voluntarily because of negatives, insufficiently distinct hypotheses and overhead. Original transport is valid, but independent `8972c6ae` explicitly denies scientific-scope/continuation/batch-completion authority: five selections/20fits remain below shared6/24, clock is before19:12:11UTC, no verified missing permission/repeatedexecutionblock/userstop exists. Root did not invent D5 or silently replace the response. Requestedgpt-6.1-sol/servingunknown; reported110,403 input/1,445 output/55reasoning tokens, no paidprovider; accountUSD unknown. Four successful account calls total376,018 input/6,956 output/603reasoning; failedHTTP400 usage unknown and all-agent tokens not included.
+
+This exposes a real H continuation-contract defect: strict schema admitted a voluntary early-stop action despite user-governed stop conditions; it is not scientific refutation or evidence of researcher evolution. User directly authorized exactly one fresh replacement `market-rsi-repair-d4-controller-continuation-policyfix-20261005-01`, not an automatic retry. Permanent explicit approval `96193e6b` preserves the original. Minimal prospective scope `63b27460` is three production edit locations only (scope hash, action enum, prompt); keep evaluator, budget, typed schema shape, validator/recovery/CLI and original artifacts fixed. Existing check_budget already refuses exhausted/cutoff decisions, so Supervisor owns lawful batch stops. A reasonable untested prediction hypothesis need not have positive prior evidence; methods remain open. Genuine necessary closed-operation requests still require independent verification. Code-only scope/finalsource review and bounded tests precede this fresh call. No new scientific candidate or fits selected yet, no caps/clock extension; this extra human approval is another intervention and Supervisor's repair is H, not autonomous R self-modification.
+
+## 2026-10-05 14:20 EDT — D4 real training completed; final feedback-dependent slot remains
+
+Predictor checkpoint `d1214bd` contains one198-line Cmodule/287-line test, no existing source change. Worker10focused/137integrated, root137 and independent137 checks passed; unique relevant methods137, not sums of overlapping runs. Semantic source admission `4a7d36b1` accepted the18-line target overrun, no>200 trigger or line compression. Admission checkpoint `967107b` preceded the unchanged execution gate and one real worker launch. Request `3ed6d4eb`, pair `ba8bd3c0`, memory `66155457`; four real fits completed in4.595896seconds with138,848KiB sampledpeak and PID87742 absent. Root observation `c617f729`, locked parent supplement `24a255d3`; full195=193+2 population and87 check predictions preserved.
+
+D4 Brier/log `0.14206024560389235 / 0.42909362166006026`; minusC7 `+0.00010614152216451012 / +0.00020753286465435838`. Parent Brier deltas by26/16/28/17-event blocks: `+0.000228302340`, `+0.000043523100`, `+0.000099387572`, `−0.000010633530` (1/4 wins); corresponding log deltas `+0.000471765769`, `+0.000126414804`, `+0.000187968949`, `−0.000088018717`. Minusraw `+0.00010771660065952982 / −0.0005771630531825611`, rawBrier2/4/ordinary4/4. FrozenREVERT/REFUTED remains provisional pending independent actual numerical review; raw incumbent unchanged. Exact tanh shape is not improvement conditional on C7, not universal rejection of nonlinear calibration. Parent correction energy8.9796e−7 and signed alignment1.05244e−4 account for Brier loss; reusedTrain intervals remain descriptive.
+
+Five selected attempts/20 actualfits now mean parity control plus four scientific candidates. Completed fitting-child wall22.003476seconds; elapsed coordination/implementation/review/model overhead is much larger. Same19:12:11 selection cutoff/19:27:11 hardstop, one final slot/four fits. Root's D3 resolution command initially omitted PYTHONPATH; its corrected read-only check passed. D4 source-ready gate initially rejected root's out-of-plan-directory implementation evidence reference; the now-final local log reference was corrected before dispatch, preserving guard/source/test/fit/results. Neither was a scientific retry or R improvement. D3 evidence really selected D4; next choice remains actual Controller-owned after independent review, not prescribed here. No new data, provider, protected access, release or promotion.
+
+## 2026-10-05 14:12 EDT — verified D3 feedback chose D4; real execution next
+
+Independent D3 result `45f5a7f9` accepted once; feedback `2566d785` reached the actual account Controller. Original response `b692b41a`, reviewed `2856d6bd`, stops the penalized global-intercept recipe after worse proper losses/all four parent blocks and proposes `InGameTemperatureOddConfidenceJointOffset-v1`: fixed `tanh(market logit)` conditional on C7. No new data or presumed success. Requested `gpt-6.1-sol`, serving snapshot unknown; 98,911 input/1,806 output tokens, 182 reasoning tokens within output accounting. Account USD remains unknown, paid provider calls zero. Original failed schema transaction and prior successes are preserved.
+
+Frozen contract `91f85ded`, implementation-only scope `608593af` and synthetic math `3483ae82` passed; source and real-result admission remain separate. Root recorded D4 immediately: five selected/20 reserved/16 actual fits, one final selection slot remains, same19:12:11 cutoff/19:27:11 hard stop. Pool is C7 calibration plus B3 state representation, raw incumbent separate. D1/D2/D3 valid negative evidence and credit remain archived; C2 consumption is not reset. Implementation/review/math were delegated in parallel; Supervisor still supplies substantial coordination, not autonomous research-process superiority. This is C optimization plus observed negative-memory reuse, no R-policy rewrite or causal mechanism-improvement claim. D3 review had a read-only provenance assertion mismatch corrected before its receipt; no extra fit or model sample.
+
+## 2026-10-05 13:56 EDT — D3 actually trained once; strong recipe-specific negative, verification active
+
+Source checkpoint `a93598a` and independent admission `e256f351` were followed by source-admission checkpoint `bfdaac3`, execution ready-step PASS and exactly one worker launch. Request `c88ed927`, pair `2e9d5d04`, accumulated memory `06a0a586`; four fits entered/completed, exit0, 4.1955 seconds and sampled peak140,768KiB. Exact child PID85075 is absent. Root's first read-only PID command was blocked by the sandbox before observation-file creation; scoped read-only verification then succeeded. No fitting or scientific retry. Original 68 source bindings and 195=193+2/87 same-key check geometry remain fixed. Card `56072755`, CSV `52d45d5f` and separate supplement `ec124620` are immutable. The copied plan's expected-artifact directory typo was corrected before its checkpoint, not a source/evaluator change.
+
+D3 Brier/log loss `0.14366276834137964 / 0.43315720828696813` is worse than C7 by `+0.0017086642596517987 / +0.004271119491562225`, losing all four parent blocks. Parent Brier block deltas: `+0.002770189210`, `+0.002638183190`, `+0.001009342651`, `+0.000362137991`; log deltas are also positive in every block. Market remains `0.14195252900323282 / 0.4296707847132428`; D3−market `+0.0017102393381468184 / +0.0034864235737253058`, rawBrier wins1/4. It still beats ordinary in aggregate, not every block. Fixed judge returns REVERT/REFUTED, so raw incumbent is unchanged. Parent Brier date/week descriptive intervals `[0.000108810322,0.003171008110] / [0.000774483623,0.002803138440]`; these reused Train intervals are not independent confirmation. Fitted gamma changes sign across past folds; interpretation is this exact penalized global-intercept recipe's negative, not universal absence of intercept/market-calibration information.
+
+Four completed runs/16 actual fits now mean one engineering parity control plus three scientific candidates. Candidate fitting child wall totals17.4076 seconds, not total CPU cost or end-to-end efficiency; wall-clock coordination/implementation/review/security/model-use costs are substantial. Original shared6/24/time limits leave two slots/eight fits. D3 changed C only; H1/worker/scorer/Rpolicy sources stayed fixed. Existing evidence genuinely selected D2 and D3, with useful negative-memory reuse; no matched-process superiority or researcher-source modification claim. Distinct no-refit result review is underway and must precede the actual next Controller decision. No next candidate is preselected, and scores/KEEP/old histories remain unchanged.
+
+## 2026-10-05 13:47 EDT — actual D2 feedback selected D3; small predictor-only implementation
+
+The first actual D2 account call completed once: original response `1f6c3acd`, canonical decision `0c1033da`, completion `2db199b5`. Requested `gpt-6.1-sol`, exact serving snapshot unknown; reported 87,930 input/1,849 output tokens, 184 reasoning tokens included in reported output accounting; no paid-provider call, account USD cost unknown. Independently checked original completion has one scientific response/turn and no observed tool use; original failed schema call and D1 corrected call remain immutable.
+
+Actual feedback dependency is explicit: D2's tiny mixed proper-score change/2-of-4 parent wins stopped its exact age interaction; D1's negative pressure result avoided another pressure/prior grid; C7's past evidence and an unproven small intercept diagnostic motivated a distinct fixed-intercept question. `InGameTemperatureInterceptJointOffset-v1` uses only existing market logit, adding a penalized constant-column intercept to C7 under the same alpha16, solver/warm states, chronology and judge. Contract `ec11f7b8` and independent code-only scope `91b10df4` admit implementation, not performance. Auxiliary six-case synthetic math `1f08cc40` passed. New C code is provisionally 196 lines, with tests underway; no D3 training or prediction has happened yet.
+
+Root counted the selected attempt immediately: four selected/16 reserved/12 actual fits, including one unchanged engineering control. Last actual globally chosen pool remains two branches, C7 restricted calibration and B3 nonlinear causal state representation, not score-top-three; raw incumbent stays separate. Negative D1/D2 code, results and credit remain archived. Root transcribed science, coordinated implementation/review, and adapted existing operational scripts; these are substantial Supervisor work, not autonomous researcher-source modification. The ready-step implementation check passed after the initial code-only-message dispatch/receipt recording, so it is not claimed as a pre-dispatch automated gate. Source and execution gates still precede real fits. A file-search glob also failed before read/write; the exact gate path was then discovered. Same original deadline, data/fee/permission boundaries and immutable history.
+
+## 2026-10-05 13:40 EDT — original batch-wide payload approval verified; first D2 account call underway
+
+Automatic security review rejected the initial D2 launch before process creation, citing insufficient destination/payload authorization. No D2 launch-admission file or feedback-key call claim existed. Root did not route around it. A trusted `read_thread` retrieval then established the original exact question (message `msg_03453b018fecee25016ac3d2211ff887d19376b4e5b02a1ffb`) authorizing this batch's existing Train scores, research memory/history and run metadata to the user's existing ChatGPT account, one per independently reviewed feedback, and the direct human `yes` (message `01a10cf0-96a1-7ea0-97bd-9db4a861bf91`). The permission layer accepted the narrowly justified first actual D2 launch after this evidence was supplied. Permanent `account-payload-authorization-trusted-history.json` and `account-controller-d2-launch-admission.json` preserve the provenance and once-call identity. No extra human approval, scientific choice or fee/data authority was inferred.
+
+The original reviewed D2 numerical packet `314b698a` / fresh feedback `538ebff0` is now in the unchanged pinned account consumer. Actual completion and independent decision review are still pending. Three selected attempts / twelve actual fits remain the total; no fourth candidate has yet been selected. Original 19:12:11 UTC selection cutoff and 19:27:11 hard stop remain fixed. Authorization recovery and the pre-process rejection are Supervisor/security coordination overhead, not C/H/R research improvement, scientific failure or model resampling. Root initially guessed a nonexistent installed patch executable; that command made no write. The observed executable was then used.
+
+## 2026-10-05 13:34 EDT — D2 feedback accepted; first subsequent Controller handoff
+
+Independent D2 receipt `4e5b473c` admits the actual result and credit 2/refute/branch: the exact prospective directional recipe failed, while the negative finding and distinct-question archive eligibility are preserved. Original scores/KEEP are unchanged. Accepted journal state `b3bc143b` and fresh feedback `538ebff0` include D2 among 15 eligible archive/baseline parents; raw is still incumbent. Fresh numerical input `314b698a` contains actual D2 scores, paired evidence, coefficients, D1→D2 decision and history/ordinary memory, current C7/B3 pool, shared three remaining slots/12 fits, and real coordination overhead. Next method has not been preselected.
+
+Root's acceptance operation initially passed an unset pre-credit authority field after saving the valid result review; the recorder rejected it before credit. The input-preparation script also had a hyphenated keyword typo and failed parsing before artifacts or a model claim. Root performed explicit recovery from the exact saved `result_reviewed` state, using a permanent observed authority reference: no duplicate bundle, result review, credit, model call or fit. Both errors are retained in overhead. The corrected existing consumer validated the completed feedback and bound files; these fixes are Supervisor glue, not C/H/R scientific improvement.
+
+The next ordinary fresh-feedback transaction uses the already authorized existing ChatGPT account/payload scope, once with no retry. No paid provider/new data/protected evaluation/release/promotion or clock/cap expansion. Original failed D1 transaction stays terminal. A real subsequent decision must still be independently scoped and actually executed before another continuation claim.
+
+## 2026-10-05 13:24 EDT — D2 actually trained once; verification and feedback next
+
+The admitted candidate ran once under source `e7a8273`, request `efdecd98`, actual H/R-context pair `eb20da83` and memory `7a503f94`. Four Train fits entered and completed, exit 0, 4.310 seconds, sampled peak 140,592 KiB; exact child PID 82407 is absent. It produced all 87 frozen check predictions, with 195 original events/193 materialized/two unchanged exclusions. Card `d4c4de0b` and CSV `ec0b6208` are immutable; separate no-refit parent supplement is `c8220100`. Three selected attempts and 12 actual fits now include one engineering control and two scientific candidates.
+
+D2 Brier/log loss is `0.1419535805376189 / 0.42888914071647066`; C7 is `0.14195410408172784 / 0.4288860887954059`; raw market is `0.14195252900323282 / 0.4296707847132428`; ordinary reference is `0.14548231253271718 / 0.43992197245621956`. D2−C7 is Brier `−0.000000523544109`, log `+0.000003051921065`, with two of four parent blocks won. Parent correction energy is `3.21357038e−8`, signed alignment `−5.55679813e−7`; date/week intervals cross zero. The frozen judge returns REVERT/REFUTED. This is a near-null, mixed result for this exact fixed-divisor/prior recipe, not proof that age carries no information. Raw incumbent remains separate; code, predictions and findings are preserved.
+
+Source H1/worker/scorer/R policy did not change this round. D1's earlier thin entry was tagged in its H manifest; D2's direct entry belongs to its C module and is not in the H manifest. Thus H-manifest packaging and pair hashes differ, but this does not establish a behavioral H improvement. Memory/context hashes changed and evidence actually selected D2; no researcher-policy self-modification or counterfactual benefit is claimed. Substantial Supervisor coordination remains visible.
+
+The result-review ready-step passed before dispatch. Independent no-refit numerical checks have reported agreement for all 68 current/Git source bindings, 193 features, four optimizer states, 87 predictions, five-arm scores/calibration and 16 grouped intervals; final receipt/credit is pending. Next is existing-recorder acceptance, the actual numerical Controller handoff and its next executed choice, not a preplanned third model. Protected evaluation, external retrieval, paid providers, publishing and promotion remain closed.
+
+## 2026-10-05 13:20 EDT — D2 source checkpoint, before actual fits
+
+Checkpoint `885dd62` contains one new C component: 204 production lines `f00c1586` and 268 test lines `378e47af`. It reuses all six original helpers without editing them; the transitive A2 import is pinned only for provenance, not used as a feature. Worker focused 10 checks passed; its integrated 117 passed in 8.980 seconds, and root independently ran the same relevant 117 in 8.986 seconds. Root also ran 88 unchanged Supervisor-path checks in 1.152 seconds. These overlapping suites are not additive unique-test counts and are not real Train fits. The whole legacy repository is not claimed green.
+
+Root's first integrated command guessed a nonexistent probability test module: 99 checks succeeded plus one import error in 9.026 seconds. The actual path was discovered, then the corrected suite passed. This is a Supervisor invocation error and coordination overhead, not scientific negative evidence or a candidate retry. The parallel operational check also found two missing hash checks in root's read-only result supplement operation; root added them before any derivation. No scoring change or new fit occurred.
+
+Source review ready-step passed before distinct reviewer dispatch. The 204-line component crosses the review trigger and needs explicit semantic inseparability admission; no guards were removed to meet a cosmetic limit. Runtime launcher and pre-score research rule are prepared, not executed. Three selected/12 reserved/eight actual fits, original deadline and permissions unchanged. The source checkpoint is not D2 performance or autonomous-loop completion.
+
+## 2026-10-05 13:12 EDT — actual feedback selected D2; implementation underway
+
+The explicitly authorized fresh transaction succeeded once. Original response `630d8032`, strict acknowledgement and independent decision review `e1e76e4c` preserve a real feedback-dependent selection: D1's valid negative stopped the exact pressure recipe, prior C7 gains restored C7 as the research parent, and existing age-route memory led to `InGameTemperatureReceiptAgeSlopeOffset-v1`. This is selection/refinement of an already recorded route, not a newly discovered source. Requested model was `gpt-6.1-sol`; exact serving snapshot is unknown. Reported account usage was 78,774 input/1,856 output tokens; account USD cost is unknown. No paid-provider call occurred and the original HTTP400 remains terminal.
+
+D2 freezes `z=(historical causal trade age/300)*market_logit`, two-parameter ridge calibration, free gamma, C7 warm beta, the same four expanding fits and 87 check games. Contract `c4f1df26` received independent scope PASS `485cd398`; read-only synthetic math preflight `7956cb2c` confirms the generic solver can accept z outside pressure bounds. Existing H1/scorer/helpers remain unchanged. The implementation ready-step passed before dispatch. Root reserved the third selected attempt/four additional fits: 3 selected, 12 reserved, 8 actually fitted so far. No D2 predictions or performance conclusion yet.
+
+The pool contains two Controller-chosen families: C7 conditional observation reliability and archived B3 nonlinear causal state representation. Raw market remains the separate incumbent; valid negative D1 stays in the archive with credit 2/refute/branch. Actual hypothesis belongs to the account Controller; scientific transcription, dispatch, ledger and integration belong to Supervisor. These handoffs and the fresh-call human approval are coordination overhead, not researcher self-modification. The next milestone is actual D2 training followed by its verified numerical feedback—not another plan.
+
+One Supervisor ledger write initially used the immutable artifact writer on an existing ledger and correctly failed without overwriting it. The before-D2 snapshot was preserved; root then updated the mutable ledger atomically under its existing lock. This operational error did not execute a candidate, reset caps or change scientific evidence.
+
+## 2026-10-05 12:56 EDT — one fresh corrected-schema handoff explicitly authorized
+
+User replied `yes` to the exact fresh ID `market-rsi-repair-d1-controller-schemafix-20261005-01`, followed by training its chosen candidate within unchanged boundaries. Permanent authorization saved outside Git. Original HTTP400 transaction remains terminal; this is one explicit fresh replacement, not an automatic retry. New source is independently reviewed `d6b72f61`/receipt `576e93b4`. Same 15:27:11–19:27:11 UTC window, six selected attempts/24 fits, two selected/eight actual fits before handoff; no external/protected/provider/release expansion. This authorization is another human permission intervention, not R improvement. Existing-information experimentation only; scientific choice remains Controller-owned.
+
+## 2026-10-05 12:52 EDT — schema repair independently admitted; replacement call not authorized yet
+
+Independent receipt `576e93b4…82450` binds source checkpoint `74688e1`, compares all 34 schema nodes and the complete production AST, and confirms exactly ten consistent type additions with all other logic/values unchanged. Its 57 distinct tests passed in 0.716 seconds. Original failure hashes and actual PID absence were independently verified. The next fresh transaction still needs the separately requested human authorization; the original claim is terminal. No new model decision, scientific candidate or fit has occurred. Gate result fields are reconciled after the observed source review, not falsely claimed as a prior ready-step check. The implementation ready-step check did pass before worker dispatch.
+
+The attempted post-result `--ready-step source_review` check correctly rejected `already has a result; version plan before retry`. Root did not clear the result, rerun review or weaken the checker; source review was already complete, and this command was an operational misuse rather than additional source failure. Minute-labelled worklog headings are approximate working notes, not physical dispatch timestamps; the immutable worker/independent receipts provide exact observed times. No fresh transaction is selected or called while replacement authorization remains pending.
+
+## 2026-10-05 12:50 EDT — narrow schema fix checkpointed
+
+Actual source diff is only five replaced production lines: ten explicit schema types and v2 scope binding. Source `d6b72f61…f3ae`/test `b2aea883…7e08` are checkpointed at `74688e1`; root read the whole diff and 57 named targeted/inherited methods passed in 0.732 seconds. Worker reported 82 executions including inherited overlap, not 82 distinct tests. Production remains 255 lines; decision fields/values, validator, once-only transport and all scientific scoring remain unchanged. Independent final review and fresh replacement-ID permission are separate unfinished gates, so this is not live API acceptance or another experiment.
+
+Root’s two partial-index staging commands also failed (empty patch, then insufficient hunk context); neither changed the index or unrelated existing dirty history. The resulting commit `8996f7e` contains the four explicitly listed failure/scope/worklog files, not the unstaged task-index rows. These operational mistakes add coordination overhead and are not Controller scientific evidence. All original failed call artifacts and D1 scores remain immutable.
+
+## 2026-10-05 12:47 EDT — actual Controller transport failed before generation
+
+The authorized once-only transaction actually launched with source `b8c2824`, consumer `cd0f0a75`, pinned CLI and independently reviewed D1 input `28407eed`. It returned exit 1 / HTTP 400 `invalid_json_schema`: the response-schema `boundary` property lacked an explicit `type`. Events SHA `b738dc361b1b8bdb8a553f2b2ee283210271335d36f92ab183e94e234ec40a38` has no final scientific response or observed tool call; exact account token/cost usage is unavailable, not invented zero. This is an H service-interface failure missed by mocked tests and prior source review, not scientific negative evidence or Controller weakness. The original call’s claim, input, schema, events, completion and failure are preserved and will not be retried.
+
+A bounded v2 scope changes only explicit schema type declarations and its scope binding. The compact four-step existing bottleneck manifest passes dispatch; independent scope approval admits implementation only. No new framework, data, scorer, permissions or model change. Root requested separate explicit approval for one fresh corrected-schema handoff ID, not automatic resampling. The first attempted scope/index patch also failed atomically because root guessed an index header; no source or history was changed by it. This additional Supervisor command/coordination error remains part of actual overhead. Two real runs/eight fits and all historical decisions remain unchanged; no subsequent candidate has been selected.
+
+## 2026-10-05 12:42 EDT — bounded account-packet transmission authorized
+
+The user replied `yes` to the exact question authorizing existing Train scores, research memory/history and run metadata to their existing ChatGPT account for this batch’s Controller decisions: one per reviewed feedback, no retries or paid provider. The original rejected command did not execute. This explicit destination/payload approval is saved in the existing permanent batch artifact store as `account-payload-authorization.json`; it does not reset the four-hour clock, six-attempt/24-fit limits or reopen external retrieval, Dev/Final, release or promotion. Root will use the reviewed pinned consumer once, validate the original response, and proceed to actual implementation/training rather than stop at the decision. This is a human permission intervention, not autonomous researcher improvement.
+
+## 2026-10-05 16:36 UTC — transmission authorization blocker, no account feedback call executed
+
+Exact feedback-consumer source was independently admitted by receipt `ab513d5577de947de3967427b186645abe49134b848e6ef8bb63e5bbd9667c3e` and checkpointed at `944ea9a`. The attempted live command was rejected by automatic security review BEFORE process creation: it would transmit a large internal research packet (scores, historical memory, experiment history and metadata) to the existing ChatGPT account, and destination-specific human authorization was not established. Read-only checks confirmed no account launch-admission artifact and no once-call claim for D1 feedback `7ce35a90…10a16`. Thus there is no live scientific response or new selected descendant from this attempt. The earlier transport probe is separate historical evidence, not this scientific call. No retry, alternate route or indirect native-model handoff will bypass the rejection.
+
+Completed evidence is preserved: two actual runs/eight fits (one unchanged held-C7 engineering control and one new D1 scientific candidate). D1’s Brier `0.14220246486710142` is worse than C7 `0.14195410408172784` and raw market `0.14195252900323282`; frozen REVERT/REFUTED with credit 2/refute/branch is unchanged. No paid-provider calls/spend, new data, Dev/Final, publishing or promotion occurred. The four-hour clock still starts at 15:27:11 UTC and ends at 19:27:11 UTC, with no selection after 19:12:11; awaiting authority does not reset it or create more attempts. This is a real permission blocker, not a reason to do unrelated framework work. Next step requires explicit authorization for this bounded packet/destination; then run one accepted-feedback decision and its actual admitted descendant. Automatic continuation plus useful accumulation, researcher superiority and independently confirmed prediction gains remain unproved.
+
+## 2026-10-05 16:33 UTC — once-only numerical feedback handoff checkpoint
+
+The user’s four additions are preserved in both plan DOCX files and the worklog. D1 is a completed, independently reviewed negative Train experiment, not an execution failure; REVERT leaves valid branches eligible. The remaining immediate blocker was child cleanup after a post-spawn receipt error. Independent review reproduced it using synthetic processes, and the bounded fix is checkpointed as `3d44ae3`; no live account decision was sampled during the repair. Communication is bounded at 120 seconds plus one five-second cleanup; this is not OS-hard filesystem/scheduler isolation. Controller scientific choice and a real descendant experiment remain necessary before claiming continuation and useful accumulation.
+
+Root verification: the exact consumer and existing worker test modules passed 56 executions in 0.700 seconds. An earlier command guessed a nonexistent third journal module and consequently reported one import error after the same 56 actual tests; this was a Supervisor command mistake, not a scientific result or source failure. The corrected command used observed module paths. Implementation, review, command corrections and coordination are included in batch overhead; no evidence of researcher-process superiority is inferred from this repair.
+
 This is an append-only plain-language summary, separate from engineering logs.
+
+- 2026-09-29 — 今晚要求的真实自主预测迭代已在约 46 分钟内完成，不是新一轮框架建设。Controller 首代并行提出两个候选：120 秒 momentum offset 在拟合前发现 3 个必需 fit game 的 reference age 超出冻结的 300 秒上限，因此 0 fit fail-closed；identity-anchored market calibration 完成 4 fits/87 predictions，但 Brier/log loss `0.143650/0.433565` 均差于 raw market，0/4 raw-Brier fold wins，REVERT。两项经核验的反馈随后实际改变了第二代选择：Controller 不再延续失效路线，改用全 193 场有覆盖的 prior-play success × market-uncertainty offset。该候选也完成 4 fits/87 predictions，Brier `0.1419536874` 只比 raw market 差 `0.0000011584`，log loss 好 `0.0000377670`，但 raw-Brier 仅赢 1/4 folds，日期与周区间均跨零，所以按预先冻结规则 REFUTED/REVERT。独立复核重算了 87 行、四折与区间；raw market incumbent 不变。总计 3 attempts、2 个真实 scored candidates、8 fits、174 candidate prediction rows、零网络/付费/Dev/Final。闭环证明了“已有证据→Controller 选修改→实际训练预测→独立评分→反馈改变后续选择”能跑通；它没有证明历史 Train 上的预测改善，也没有同预算固定流程对照，因此不能声称 self-iteration 优于固定研究流程或系统自我进化。
+
+- 2026-09-29 — 第一批连续自主 Discovery 已经实际跑完 5 个真实 Train 候选，而不是停在计划或审计。Controller 逐轮用上一轮证据改变下一轮：宽 offset 失败后压缩路径；符号不稳后只看最近三周；aggregate 改善但 fold 不稳后加入固定 recency 权重，得到首个 **KEEP** 的 `MarketRecencyWeightedCompositePath-v3`；全历史衰减变差后回到 v3，并只增加正交化 dispersion。当前最佳 v3 的 Brier/log loss 是 `0.203857/0.595837`，相对 market 改善 `-0.001677/-0.002614`，赢 3/4 folds。第五轮 aggregate 更好（`0.202260/0.591819`），也胜 v3 三个 folds，但只胜 market 2/4 folds，因此按事先冻结的规则 **REVERT**，没有用总分覆盖稳定性门槛。5/5 次运行和结果都独立复核；零付费、零网络、未读 Dev/Final，无逐轮人工选题。所有失败分支保留，下一批优先解释 dispersion 的符号/折间不稳定，而不是改评分规则。结果仍是反复查看的 Train Discovery，不支持正式 OOS、promotion、盈利、跨域或 RSI 自迭代结论。
+
+- 2026-09-29 — 按用户要求，offset 完成后由同一 `gpt-6-astra`/high Controller 选择并执行了下一项 `MarketOnlyRidgeCalibration-v1`，结果也通过独立复核（0 P0 / 0 P1）。在完全相同的 87 场/20 个赛程日上，past-only market calibration 的 Brier/log loss 为 `0.205852/0.599385`，比 raw market 差 `+0.000318/+0.000934`，只赢 market 2/4 folds，因此 **REVERT**；它仍明显胜过 ordinary。archived full offset 又比 calibration 差 `+0.003599/+0.008883`，完整赛程日重采样区间为 `[0.000630,0.006695] / [0.001335,0.016623]`，说明在这套相同 penalty/solver recipe 下，额外 16 个 residual 特征带来的是可测损害，而不是市场之外的增量收益；这不等于所有特征都无效。market 继续是当前最佳，calibration/offset/HGB 分支全部保留。Controller 已把经验写入下一轮 `MarketOrthogonalPricePath-v1`：将既有因果价格路径压缩为两个有方向的 feature family，并在每折用过去数据对 market logit 正交化，再做四参数 offset ridge。该第三轮 recipe 已冻结但尚未实现或运行。没有 Dev/Final、网络、付费 provider、发布或 promotion。
+
+- 2026-09-29 — 第二张真实 Train scorecard `MarketOffsetRidgeLogistic-v1` 已完成并通过独立结果复核。第一次 `-01` 在拟合后、评分前因 mask 哈希使用折顺序而非 scorer 规范顺序 fail-closed；它没有 predictions、scorecard 或 KEEP/REVERT。最小修复经独立复核后，fresh `-02` 在相同 195→194 分母和 87 场/20 个赛程日上完成。full offset 的 Brier/log loss 为 `0.209451/0.608268`，优于 ordinary Logistic 的 `0.235605/0.675948`，但差于 raw market 的 `0.205533/0.598451`，且四个 fold 的 Brier 全部输给 market，因此 **REVERT**，当前最佳仍是 market；offset 与 HGB 分支都保留。按完整赛程日重采样并在每次抽样内重算等比赛 delta 后，offset-minus-market 的 Brier/log 95% 描述区间为 `[0.000845,0.007130] / [0.001584,0.018286]`；第 14 周只有 1 场，周结果明确只是含右边界部分周的敏感性分析。Astra/high Controller 已冻结下一项 `MarketOnlyRidgeCalibration-v1`：只用过去 market logit 拟合两参数 ridge calibration，并与 archived full offset 比较，以拆分市场校准和额外特征效果；实现正在进行。没有 Dev/Final、网络、付费 provider、发布或 promotion。
+
+- 2026-09-29 — 主线已切为 `SettlementProbabilityTrainDiagnostic-v0`，旧 60/300 秒价格变化 + MSE 只保留为 legacy。第一张真实本地 Train scorecard 已完成并独立复核：2025 NFL moneyline 完整分母 195 场/42 日，194 场二元可评分，唯一排除是 GB–DAL 40-40 对应的 0.5/0.5；四个 expanding checks 共 87 场/20 个已查看 Train 赛程日。decision-time market 的 Brier/log loss 为 0.205533/0.598451，ordinary LogisticRegression 为 0.235605/0.675948，HGB 为 0.269768/0.779223；HGB 只赢 1/4 folds，结论 REVERT。第一次 `-01` 因把 schedule date 误作 UTC cutoff date 而在 fit 前 fail-closed，只有 failure.json；修复并独立复核后 `-02` 完成 8 次拟合，零 provider、未读 Dev/Final。更强的 `gpt-6-astra`/high Controller 已写出下一轮 memory：只测试 `MarketOffsetRidgeLogistic-v1`，并在下次 lock 加入 inclusive 600 秒 staleness gate。当前结果只支持 Train Discovery 的负结论，不支持 untouched OOS、正式 benchmark、promotion、publication、PnL 或跨域提升。
+
+- 2026-09-29 — 按 synthetic-only 边界完成了本地候选 adapter 的四轮独立复核闭环。最终 exact v4 快照为 0 P0 / 0 P1：85/85 专项与相邻测试、516/516 全仓测试（2 个设计性 skip）通过，11/11 额外 claim/journal/checkpoint/completion/staged-source 篡改攻击均 fail-closed。候选每次只能收到一条 synthetic public row；没有 outcome、scorer、Train/Dev/Final、provider、网络或可写 host mount。这个 PASS 仍只是静态/离线 readiness；没有运行 live Docker canary，也没有真实预测分数。下一步必须使用新 ID、单次、zero-provider、synthetic-only 的 Docker 隔离 canary，并在结果进入后再次独立复核。
+
+- 2026-09-29 — 最小 prediction-first 合成闭环已通过独立复核：严格 cutoff 概率、逐行无标签提交、相对市场概率的 Brier/log loss、一次性 Dev、KEEP/REVERT、聚合记忆和崩溃恢复已经在同一 exact-hash v4 快照跑通。第一轮 KEEP，第二轮 REVERT；54/54 专项、33/33 相邻测试通过，独立攻击复核为 0 P0 / 0 P1。复核期间发现并修复了六个真实的绑定/恢复漏洞，包括 outcome 与冻结 Dev 不一致、完整评分未持久化、以及完整评分应 REVERT 但精简指标伪造为 KEEP。这个结果只证明合成编排，不是现实数据预测提升，也没有网络、付费、受保护 Dev/Final、训练、PMB、PnL、发布或推送。下一步改为盘点已打开的本地数据是否满足新合同，并另做真实隔离 canary。
+
+- 2026-09-29 — 主线纠偏：撤回“以 PredictionMarketBench 为主底座”的假设。源码/论文审计表明 PMB 是公开、同进程、只有四个高度相关事件的早期交易回放器；它没有 Brier/log loss/calibration、严格 Train/Dev/Final 或开放 Agent 的可信 hidden-eval 边界。现有 PMB v4 PASS 只证明本地合成合同能 fail closed，不证明科学有效性。PMB 代码冻结为非生产 smoke/compatibility prototype，后续 intake、episode、adapter、hidden evaluator、Controller Swap 和治理扩建停止。核心改为 probability-first：严格 cutoff 概率、相对 market probability 的 proper score、隔离 Dev 评分、KEEP/REVERT 和聚合记忆；prediction 冻结后才另测 PnL。v0.1.26 本地 release candidate 完整保留但策略性暂停，因为发布它不能关闭当前三个科学 blocker。本次没有 fetch、provider、付费、真实训练、Dev/Final 读取或预测分数。
 
 - 2026-09-19 — Supervisor 不再只靠文档判断“卡住”。新增了一个本机 watchdog：它分别检查进程是否还活着、有没有真正的新结果、数据门槛是否失败、预算和日志是否完整。零费用故障测试已经证明：任务可以继续发 heartbeat，但如果 30 秒没有有效进展，系统仍会主动建立故障记录；重启后不会忘记；修好并通过 canary 前不会恢复；恢复必须使用新 ID。Dashboard 已显示这套状态。下一步是把现有 Controller、取数、Docker、训练和评估 runner 全部接入它；在接入前，它还不能自动接管真实任务。
 - 2026-09-20 — 第一个真实步骤已经接入 watchdog：Gate 1 查官方数据来源的 runner。它开始时登记任务，拿到有效输入和数据快照时分别登记真实进展；成功才关闭。超时或返回错误格式时会自动生成故障记录，不能直接重跑。30 项相关检查通过。现在还差最外面的独立 monitor：即使内部 runner 自己卡死，外层也要能发现、只停准确的进程，并把故障交给 Controller 调查。
@@ -977,3 +1624,1719 @@ untouched test.
 - Receipt SHA-256 `187c819a42a90361956145017d34a87f788f83026decfdfa5adc8d3b9e47671f` binds annotated v0.1.25, release commit `ed4048e55096b763ba763526e768057b5180cdeb`, tag object `67b8e4a88e22c1f00e60850f521b26282517d682`, 339-file controlled digest `c61f48e21084671c1ff1257639f6a5d5ccfc8c1a64065e02157c5eb75c10a2d4` and runtime digest `1faf044ade2390b0d4cdbc18605bb8851f84fb57951849400bed92e0025c83a3`.
 - Independent review and Supervisor verifier replay passed all 30 evidence hashes and terminal cleanup. Provider calls and real provider cost were zero; no public fetch, formal data admission, sealed Train/Dev/Final access, compiled task/plan or training occurred. The isolated `$0.00005103` metering is synthetic only. The authoritative paid journal remained unchanged.
 - This is infrastructure evidence, not a Controller-authored research decision or prediction experiment. The next discriminating step is one separately authorized paid v0.1.25 D0 under a fresh permanent ID, followed by independent review before any separately authorized fetch.
+
+## 2026-09-28 — paid v0.1.25 D0 authorized, held before claim on a budget-allocation mismatch
+
+- The user authorized one paid D0 under fresh ID `market-rsi-v0125-gate1-controller-d0-20260928-01`, at most one sample, no retry, no fetch, no Train/Dev/Final and no training. Two independent read-only preflights ran in parallel; neither read the credential, claimed/reserved the ID or called a provider.
+- Release/source/runtime/canary/packet bindings and the dormant production argv passed. Pinned local encoding is 4,020 input plus 1,600 maximum output tokens, exact request upper `$0.0389772`.
+- The production outer nevertheless hard-codes a `$0.05` setup reservation. Authoritative setup availability is `$0.044036812`, so it is short `$0.005963188`. The ID remains unused, `active_cycle=null`, run/claim paths are absent and exact process/container checks are clear.
+- The budget implementation requires explicit authority for an append-only bucket allocation transfer. Execution is therefore held before any mutable or paid boundary. After authority, transfer at least the shortfall from an eligible non-Final bucket, bind the paid authorization in durable state, rerun all preflights and invoke the exact ID once only.
+
+## 2026-09-28 — v0.1.25 operational D0 passed and closed
+
+- **Goal:** Execute and independently review exactly one authorized v0.1.25 Controller D0 without granting fetch, data-admission or training authority.
+- **Actions:** Simulated and appended the authorized `$0.006` `repair`-to-`setup` allocation transfer; rebound the durable decision state; ran two independent launch rechecks plus a final Supervisor replay; invoked the production parent once; independently audited the terminal run, budget, state and cleanup.
+- **Why:** The prior v0.1.24 response exposed a model-visible schema gap. v0.1.25 repaired only that interface, and this single live D0 was the cheapest discriminating test of whether the model could now return one valid scientific scope choice.
+- **Actual learning:** The model returned a valid `scope_only_non_executable` source-scope decision. It selected the registered official Polymarket market-scoped-trade response class for private research, future role `unassigned_candidate`, descriptive/no-forecast semantics and one first-party-document-review proposal. This demonstrates valid D0 contract use, not data access or prediction gain.
+- **Outcome:** **Improved operationally; no experiment result yet.** Exactly one terminal provider sample used 4,020 input, 511 output and 0 cached tokens at metered `$0.02574585`; no retry, catalog, fetch, purchase, Train/Dev/Final access, data admission, training or evaluation occurred. The permanent ID is consumed.
+- **Evidence:** `SUPERVISOR_GATE1_V0125_D0_2026-09-28-v3.json` passes the full resolve gate. Execution evidence SHA-256 is `c6166ea807fbae2ccdb8d85f9a90ad240b8965073a6ef11e0fb14daf6e3e2dc3`; independent terminal-review log SHA-256 is `b8d76898f8f7e68673b66c8d039fe25367c009f4210e24c0185695596f138857`. Budget head is `e2566dff000fd3a91025734107a9438ca14bcd3860f05b2d6796b1d834e70a34`; post-review decision/state hashes are `a727445ba25b372eae71e23a21a8f8a0c749435b1b955a7393632e11a8e5f417` / `3b4eff7c056452ddc319333541e6a8e24902e0752ca650d400fb136ba3bc86ca`.
+- **Approximate effort:** One bounded allocation/state preparation, two parallel read-only audits, one paid sample and one independent terminal audit; no retry.
+- **Remaining blocker:** There is no reviewed executable bridge from the prospective D0 decision to one exact request manifest, and no real Train catalog or source-rights/admission evidence. Fetch remains separately unauthorized.
+- **One next action:** Audit and plan the smallest offline D0-to-exact-request bridge for the selected fixed official documentation page. Any source change needs targeted/full tests and independent review; publication/canary and actual fetch each remain separate authorization gates.
+- **Confidence:** High for the operational D0, cost, closure and cleanup facts; low that the selected source will solve multi-season data coverage until an authorized document/source investigation returns evidence.
+
+### 2026-09-28：D0 到 exact-request 的离线桥接完成独立终审
+
+- **Goal:** 只把唯一已复核 D0 选择编译成确定的非执行文档请求计划，不联网、不把 scope 决定升级为 fetch 权限。
+- **Actions:** 两位独立审计先分别确认 decision/capability 缺口和 fetch/watchdog/rights 边界；Supervisor 随后加入纯离线桥接与对抗测试，并把源码和测试纳入受控发布清单。另一位 reviewer 用真实不可变 D0 制品连续编译两次并独立复测。
+- **Outcome:** **PASS as unpublished offline release candidate.** 固定 request-plan hash `34b45266df887dbf308b196eac865bfc5a3a6b65257c667849605e5a8b9b812c`；341-file candidate digest `c80531648d07f83ff73c1c70c3a8c0d5fd5d02459bb1957c875959daa51faee2`。focused 12/12、pinned-runtime full 516/516（2 个既有 skip）和非作者终审通过。
+- **Actual learning:** D0 的 opaque pair 现在只能通过 code-owned injective mapping 到完整 `polymarket_official_trades` registry/capability；caller 无法提供 URL、参数、headers、limits、retry 或权限。现有 fetch/admission schema 不能直接消费 bridge 输出。
+- **Boundary:** 没有 provider/source contact、credential、network、external bytes、retention、catalog/Train/Dev/Final、data admission、training、evaluation、commit/tag/push/release/canary。所有这些权限仍为 false。
+- **Next blocker:** 先另行授权发布新版本，再另行授权该版本的 fresh zero-provider canary。实际文档/public-data fetch 仍须其后的独立 fresh-ID 授权。
+- **Evidence:** integration/test/review logs SHA-256 分别为 `7208847b04ebea6e8de64873e50b646dce78584329ef2c3fdadc9297611c9c3d`、`e050d1828ac70f11aab1c7667d09e6e69b536417177d949d0c517b160e4143ad`、`10dceb089ad0c4b59b0c0ced82a0962fbe3e9ed13e2f324467f1c3715f825bb1`。
+
+### 2026-09-29：赛中 Discovery 小批次完成 4/4，raw market 仍为 incumbent
+
+- **执行：** 在已有 opened-Train 权限内完成 scheduler-v2 两代、四次真实尝试；实际探索/利用为 2/2，约 49 分钟，零 provider、零联网、零费用。批次因 `max_attempts_reached` 正常关闭。
+- **同信息结果：** raw market Brier/log loss `0.1419525290/0.4296707847`；market-only Logistic `0.1454823125/0.4399219725`；market + static state/PBP Logistic `0.1606809902/0.4711973193`。固定 PBP 表示没有显示增量，但不能否定整类信息。
+- **研究闭环：** prior-play signal、market-uncertainty split 和 120 秒 pre-anchor market momentum 都得到有效但 inconclusive 的证据；nested shrinkage 在预注册收敛门槛 fail closed，不算科学反证。信用 `[1,0,1,1]` 实际影响下一代 parent 选择，所有 REVERT 只是不更新 incumbent。
+- **当前路线：** 下一批保留 raw-market incumbent 和 market-momentum bounded follow-up 两条，不机械补第三条。momentum 总体方向与 3/4 folds 为正，但日期/周区间跨零；还不是概率改善结论。
+- **独立终审：** 27 条 journal 精确重放 PASS，head `8b2339a8…17845e`，state `3204552e…ed7c3`；4/4 branches 均 feedback-ready，权限边界未扩大。终审日志 SHA `8fb61d058e2b9feefed2a977e9cc5fd047205c9e3ca2e925f138e82f155c6935`。
+- **仍未证明：** untouched OOS、实时可用性、PnL、多域迁移，以及固定研究流程和可自迭代流程的匹配预算 A/B。详细报告见 `INGAME_DISCOVERY_SMALL_BATCH_REPORT_2026-09-29.md`。
+
+### 2026-10-01: Preserve the working research loop; optional small-step controls
+
+- **Goal:** Build on September 15's working research capabilities, repair the demonstrated final-slot scheduler dead end, and constrain harness/researcher evolution without adding gates to ordinary legacy research.
+- **Changes:** Added an opt-in `final-singleton-v1` policy for fresh batches; added pure small-step transitions in the existing co-evolution module and durable events in the existing Discovery journal. Separate harness/researcher identities, fixed context, exact write scope, one pending change, reviewed idle-boundary acceptance/rollback and execution-pair/memory bindings are checked. Legacy defaults remain unchanged.
+- **Actual verification:** 75 focused tests passed. Journals generated by the saved pre-change implementation replayed to identical complete v1/v2 states and hashes under the changed implementation. Synthetic integration completed two parent-pair attempts plus a final singleton under a reviewed pair and rolled back without erasing attempts or feedback.
+- **Outcome:** Local implementation ready for independent integration review; not published, not activated in a live research batch, not autonomous self-evolution or prediction gain. Review evidence remains a trusted-supervisor responsibility; hashes/identity strings are not OS isolation or independent proof of test truth.
+- **Boundaries:** No model/provider/network/data acquisition, protected-data read, empirical training, release or Git publication. Existing experiment/budget/global-state artifacts and scientific `RESEARCH_STATE.md` remain unchanged. Unrelated dirty work preserved.
+- **Next action:** Review the scoped diff, then bind the actual existing worker's measured pair and memory identities to the new opt-in claim path before a separately bounded operational batch. Do not rebuild the research engine.
+- **Evidence:** `SMALL_STEP_COEVOLUTION_2026-10-01.md`; `test_micro_evolution.py`; `test_continuous_discovery_small_steps.py`; audit worktree `research/harness_continuity_audit_20261001/legacy_compatibility_final.json`.
+
+### 2026-10-01: User-requested local version-control checkpoints
+
+- **Goal:** Preserve all pending project source, tests, plans and curated reports while separating the earlier research work from the new small-step controls.
+- **Action:** Created `codex/market-rsi-coevolution-checkpoint-20261001` without moving `main`. Baseline `793c30248b085edd673fd95472db91d2d4efe973` captures the earlier 247-file change set; the new control implementation is a separate follow-on commit. The verified pre-control scheduler was staged from saved bytes without altering working files.
+- **Verification:** The 75 focused tests passed again. Python/JSON syntax and credential-pattern checks passed for the pending source/report inventory. Historical Markdown whitespace warnings are preserved. This is not a new independent review of every baseline file.
+- **Scope:** Local Git only, no push/tag/release/live experiment. Raw data, credentials, runtime files, budget/global-state ledgers and raw run artifacts are excluded. Task-local reports and audit evidence use a separate research-records branch in the existing task repository.
+- **Next:** The live worker binding and bounded operational trial remain unperformed; checkpointing does not authorize deployment or establish autonomous improvement.
+
+### 2026-10-01: Standing checkpoint rule for replayable history
+
+- **User direction:** Make a Git checkpoint at every meaningful stage going forward, not just this one-time preservation pass.
+- **Parent/source:** `baa6b36`, repository `/Users/estelle/Developer/market-rsi`, branch `codex/market-rsi-coevolution-checkpoint-20261001`.
+- **Changed scope:** Project `AGENTS.md` and Supervisor procedure now require bounded source commits, result/failure commits, replay provenance, preservation of rejected candidates and append-only corrections. This progress entry and the human-direction log record the change.
+- **Verification/outcome:** Scoped documentation diff reviewed; `git diff --check` passed. No executable behavior changed. Runtime/model/data/configuration/seed/output identities are not applicable to this policy edit; no empirical replay is claimed.
+- **Evidence:** Main source/control checkpoints `793c302` and `baa6b36`; task-repository design/evidence checkpoints `81d0542` and `bd4a0ac`. The commit containing this entry is the policy checkpoint.
+- **Boundary/next:** No new hook, service, release gate, paid call, experiment or deployment. Apply this rule to the next existing-worker integration change and its subsequent verification.
+
+### 2026-10-03: Attributable small-change rule added
+
+- **Goal:** Make every co-evolution checkpoint show what changed, where it changed, who proposed it and whether the evidence concerns prediction, Harness operation or researcher capacity.
+- **Rule:** The governing instructions now require separate `K/M/C/H/R` identities, one declared `C/H/R` axis and one named effect for an attributable comparison, exact allowed/protected paths, measured-diff and runtime verification, fixed resource ceilings, matched replay, independent review, idle activation and one-step rollback. Composite Discovery changes remain allowed but are labelled `COMPOSITE_UNATTRIBUTABLE`.
+- **Smallness:** Causal and authority blast radius controls acceptance. More than two production modules or about 200 changed lines triggers splitting or an explicit inseparability review; it is not a safe-harbor threshold. Any permission, protected-data, evaluator, model/runtime, network, budget or authority change outside the contract fails closed.
+- **Evidence:** Each trajectory step records exact commits/files, before/after identities, triggering evidence, execution/review receipts, prediction and capacity metrics, resources, decision and evidence level `L0` through `L5`. Final reports separate predictor, Harness and researcher-capacity conclusions.
+- **Verification/outcome:** Documentation-only policy change; scoped diff and whitespace checks required before the local checkpoint. No runner, evaluator, data, experiment, provider, release or deployment changed. Apply the rule first to the worker-binding checkpoint and the bounded co-evolution pilot.
+
+### 2026-10-03: Immediate implementation dispatched
+
+- User requested immediate implementation and persistence for five hours. Actual clock start is 19:10:37 UTC; outer end 00:10:37 UTC on October 4. A nested pilot keeps the earlier small scope: at most three prediction attempts, twelve fits, ninety minutes from first pilot action. Engineering does not consume prediction fits.
+- Starting source: `26d7121`, clean current Developer checkout; historical September 29 scores and rules remain unchanged. New jobs use reviewed trusted host code, not a claimed arbitrary-code sandbox. Protected Dev/Final, external fetch, paid providers, push/release and promotion remain closed.
+- Registered independent Controller, candidate researcher and reviewer before assignment. Controller froze freshness and a distinct pre-play possession-pressure branch from actual evidence; next-generation scientific choice is pending verified feedback. Exact serving model version unavailable and not invented.
+- Existing feature receipts independently covered all 193 materialized games; baseline 87-row metrics and complete 195-event denominator reproduced. No real new fit yet. Worker adapter synthetic suite passed 82 checks, including nine new adapter checks; initial test fixture used incompatible v1 and was corrected to the existing v3 policy. No production scheduler/scorer modification.
+- First checkpoint preserves scoped contracts/registration. A separate source checkpoint will isolate worker binding and tests, followed by source-frozen candidate runs and result checkpoints. No empirical or researcher-capacity gain is claimed from engineering.
+
+### 2026-10-03: H worker-binding source checkpoint
+
+- Parent `c6661a9`; change axis H, component feedback delivery. Exactly one new production module `opened_train_discovery_worker.py` (164 lines) and its synthetic test module. Existing scheduler, micro-evolution controls, data readers, candidates and scorers unchanged. Human-directed integration, not system self-evolution.
+- Effect: reviewed request verifies exact source/HEAD/runtime/memory, conservatively reserves fits, atomically claims before spawn, caps two jobs, runs one-thread candidate, polls child RSS, kills group at timeout/RSS excess, hashes outputs, and records execution terminal in existing scheduler. A restart refuses a claimed ID; unresolved interrupted claims require independently reviewed closure, not automatic retry.
+- Verification: 127 relevant tests passed; independent reviewer reproduced 47 focused tests. Initial broader invocation used two nonexistent test module names and failed import, then corrected to actual `tests.test_minimal_probability_contract`; no scoring source change. Final adapter SHA `512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360`; tests SHA `00f4bd421d8fe0098d24bfa2bb092231da71b5cc5b9580a85e1044e76119c60e`.
+- Limits: trusted host code only, not network/arbitrary-code isolation. Sampled parent RSS is not OS-hard or aggregate-descendant memory enforcement. Child success is not independent scientific acceptance. Evidence L1 and matched synthetic terminal/restart checks; opened-Train operational L3 remains pending.
+- Runtime: Python3.12.3 binary `80ee2dd97bc26259d4e30853336f72ad38aa4aa0531bb196cc444d899422689d`, numpy1.26.4/scipy1.14.0/sklearn1.6.1, thread cap1 and hashseed0. No fit/provider/data acquisition. Next: freeze candidate source and data/memory identities, run reviewed pilot.
+
+### 2026-10-03: H explicit valid-negative branch retention
+
+- Parent `22ecd45`; frozen contract `COEVO_BRANCH_RETENTION_2026-10-03.json`. Static evidence revealed archive restoration admitted credit2/refute/branch while live results could not preserve that parent. Corrected one v3 scheduling effect, before pilot initialization or new scoring.
+- Scope: exactly 10 added/1 removed production lines in `continuous_discovery_batch.py`, plus six new synthetic tests. V3 alone can explicitly retain a succeeded, independently reviewed refuted recipe for a different research question. REVERT still leaves incumbent unchanged; failed/unreviewed runs cannot obtain positive credit; question duplication and global capacity remain enforced. V1/v2 remain unchanged and reject the new live route.
+- Verification: 149 integrated tests passed; independent reviewer reproduced 78 relevant checks. Test-only API-name mistakes were corrected and preserved as development failures, not empirical outcomes. Scheduler SHA `1b3065ea2990e886ff05869d5c6afd39bc0e80ebb053436f51fd9d9cee0d148c`; test SHA `675976511122192be61aa074fe51a48831119afa635cbc14eac7209e4180d7d5`. Candidate/scorer/runtime/data bytes unchanged.
+- Level: L2 eligibility/restart replay; no L3 or prediction gain yet. Human-directed H repair, not researcher self-evolution. Refresh final H/pair identity before any actual claim. No fits, network, provider, protected-data access, push or release.
+
+### 2026-10-03: Real pilot generation 1 results
+
+- Pre-run source `422c75dff716b71ca8ef7d9dcc9ba3f4c3ca2e42`; immutable run root `/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-01`. Actual start 19:29:45.858449 UTC; nested deadline 20:59:45.858449 UTC. Commands, source/dependency/runtime/memory commitments in `launch_manifest.json` and `worker/*.request.json`; child logs/receipts retained. K/M/H/R unchanged for both C trials.
+- Both candidates completed four fits and 87 predictions on exact same rows/folds: full195=193+2,20 checkdates/7 weeks. Concurrent worker wall4.364s and4.298s; sampled peak RSS137232/137872KiB. Eight fits actual/reserved, no candidate retry/control refit. Paid-provider calls/spend0; Codex token/cost not metered here. Child PIDs45313/45315 independently checked absent with actual kill0; an initial placeholder filesystem probe was invalid and excluded from evidence.
+
+| Trajectory | Brier | Log loss | Delta Brier vs market | Market Brier fold wins | Decision |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Fixed raw market | 0.1419525290 | 0.4296707847 | 0 | — | Incumbent |
+| C0-to-freshness-NLL | 0.1419584856 | 0.4295469775 | +0.0000059566 | 2/4 candidate wins | REVERT; retain new-question eligibility |
+| archive-state-to-pressure-NLL | 0.1421913272 | 0.4296628599 | +0.0002387982 | 1/4 candidate wins | REVERT; retain new-question eligibility |
+
+- Distinct reviewer reconstructed all predictions, causal features, fit stationarity, calibration, paired folds/dates and complete-day/week intervals without fitting. Both Brier intervals crosszero. Exact review artifacts `COEVO_RESULT_REVIEW_A1_2026-10-03.json` and `COEVO_RESULT_REVIEW_A2_2026-10-03.json` bind source/receipt/artifact hashes. Valid negative discoveries earn credit2 without scorebonus or incumbent replacement; Controller determines future branch investment.
+- A2's verified packet was delivered first, before A1 review completed. Controller identified NLL/Brier alignment vs weak-information ambiguity and explicitly waited for verified A1 because final-budget allocation depended on it. A1 packet then caused Controller to choose a distinct descendant trainer objective on the freshness branch, not a preplanned third model. New contract/source/review precede its run.
+- Broader legacy test attempts did not pass: pinned Train runtime lacks Harbor/PyArrow and some tests assume different importpaths/runtime or missing legacy locks. Compact diagnosis is `legacy_full_suite_diagnostic.json` at runroot (separate historical test runtime; actual Train runtime unchanged).149 current integrated checks pass. No dependency installation, score-policy relaxation or claim that full repository is green.
+- Evidence: real C prediction effect and H worker-binding operation atL3; still no autonomous R change, matched mechanism advantage, untouched OOS, realtime/PnL, release or promotion. Machine records and this human table use the same named trajectory steps.
+
+### 2026-10-03: Feedback-dependent descendant executed; review pending
+
+- Pre-run source `35e4c0303cf317289c5070e1b61efe171a5c921e`; actual research parent is A1 freshness, not the raw-market incumbent. Only candidate training objective changed NLL→Brier, with numeric penalty16, feature/scaling/folds/scorer unchanged. Different loss units change effective shrinkage; do not infer pure objective-alignment causality. Source309lines received explicit independent inseparability review; root159 current synthetic/inherited tests pass, reviewer158 pass using its separate scope.
+- Pre-score review SHA `f6e6ef2845ab02f688362503e5dc0b8b803c88fcd49297e127a0b0cc6d4d99f0`; immutable evidence memory `generation2_memory.json` SHA `e1d39bf8ff7194c0a437a279bc79653bcf04a77f6fdb31b0429f79071cbdbe6f`. Exact request/launch/source/receipt saved at existing pilot root. One launch, no retry; four fits and87 predictions completed in4.087569s, sampled137008KiB. Pilot now has3claims/12reservedfits; no additional attempt in this pilot.
+- Preliminary candidate Brier/log loss `0.1419817703/0.4296664713`; raw `0.1419525290/0.4296707847`; actual A1 parent `0.1419584856/0.4295469775`. REVERT under frozen judge. Result is not yet independently accepted or delivered as verified Controller feedback. Reviewer is active; code worker completed. Source/negative result retained, no new R policy or prediction-gain claim.
+- Existing read-only loopback dashboard was offline and restored with unchanged server source. Three stale September29 active registrations were labelled historical, not falsely counted as current agents. Supported state-table fields now expose the actual current question. Initial replay lock permission failure was rerun with scoped local access; both replayed states exactly matched `100b1de4…a72`, with no fits or relaunch. Available legacy test runtimes still lack Harbor/PyArrow; no dependency install or broad-suite PASS claim.
+
+### 2026-10-03: First pilot closed; next Controller-selected data-increment pair
+
+- All three results independently verified, including C3 review SHA `87fc1782636a3b55d4ee06ed4fb0cffa925a814ed0ded71ba07fb9c3121f0217`. C3−market Brier/log deltas `+0.0000292413/−0.0000043134`; C3−actualA1 `+0.0000232846/+0.0001194938`, with2/4 market Brier wins and all paired market/parent intervals crossingzero. Unchanged REVERT; no incumbent update. Credit2 records a verified negative hypothesis test, not prediction credit.
+- Machine step `freshness-NLL-to-freshness-Brier` is the same event as this human view. K/M/H/R policy unchanged; C changed objective only. The evidence memory accumulated both verified results normally; this is not a new R policy. No gain is attributed solely to objective alignment because numeric16 penalizes a differently scaled data loss.
+- Existing pilot stopped at `max_attempts_reached`,3/3 claims,12 actualfits,261 candidate prediction rows, all stages feedback-ready and no active attempt. Exact restarted state `8f161427db1accbe040ba100458abb5f93ed605ee1ea7bad3d315a398a489cbe`; immutable terminal SHA `f12c136f240a673e1424960be0465d957de1794bb33a619dfd7edc37441fe000`. Sum worker-wall12.749571s is not total research time or parallel elapsed time; paidcalls/spend0, Codex cost unmetered. Each child independently absent. Old pilot budget will not be expanded.
+- Controller now retains two QUESTIONS: nonlinear market residual calibration from A1, and nonlinear causal-state increment from A2. Exact failed recipes stop, but source/evidence remain archived. The next separate bounded batch is proposed as a matched HGB residual pair: market-only versus same trainer+frozen causal state/PBP, to measure data increment. Third choice awaits newly verified feedback. No R modification is proposed without evidence; no mechanism-superiority claim. Outer five-hour work remains active until00:10:37UTC, with conservative totalnewattemptcap10 and protected boundaries unchanged.
+- Independent whole-pilot resolution SHA `a3bc72f42616b20f80e8f265cf9e77faee6790fcf8fac96f40b40117fec6a35a`:22 exact hash-chained events, terminal state/restart/history/capacity/lineage/source scope verified. `bottleneck_gate.py COEVO_IMPLEMENTATION_2026-10-03.json --phase resolve` passes all5steps. An initial command wrongly used unsupported `--plan` and failed argument parsing; corrected positional invocation passed, no source or experiment change. This resolves the missing-worker operational bottleneck only.261 rows are three versions of the same87 games, not261 independent games; deliberately interrupted real-Train recovery remains untested.
+
+### 2026-10-03 20:09 UTC — next matched predictive pair ready for source review
+
+- The Controller-selected market-only and market-plus-state residual HGB recipes are implemented in two new candidate modules. Supervisor read all new production/test code and ran174 relevant synthetic tests (5.336s,PASS). Both complete synthetic195→193+2/87/four-fit pipelines pass. No new real fit has happened at this checkpoint.
+- Independent review additionally walks numeric trees; fitted-state artifacts must be verified before real feedback. The387-line shared runner exceeds the small-step warning and requires explicit inseparability review, not automatic acceptance by line count. Exact K/M/H/R, scorer and old artifacts stay fixed. Parent effects are composite C recipe changes; only the matched2-versus11-column pair isolates this data-input increment. Old pilot remains closed and its budget is never extended.
+- One progress patch used an incorrect header anchor and was rejected before any edit; the corrected append preserves existing history. No experiment attempt was consumed.
+
+### 2026-10-03 20:12 UTC — actual HGB pair completed, independent result review pending
+
+- Exactsource `8a3102b125f714493394443f975bb4570e401ed8`, pre-score review SHA `a7b8083fd7f240fe6ac13992cd847e537d976742bf6003ac5ddc951ede1797ff`; newbatch `market-rsi-coevo-train-hgb-pilot-20261003-02` started20:11:56.530771Z, deadline21:41:56.530771Z (outer deadline remains00:10:37Z). Two one-thread jobs launched once;8 actual/reservedfits,174 candidate predictions on the same87games. Memory SHA `43225955a425569c4517babf70f44a78c1d644a520d5c646759c64bcbd574e94`; H/R runtimepair remains`ad5bbccc…fad7`.
+- Preliminary B1 market-only HGB Brier/log`0.1528189331/0.4562724957`, B2 same HGB+state`0.1479352069/0.4405907925`; raw`0.1419525290/0.4296707847`. Both frozenjudge REVERT. B1 clips5 probabilitybounds; B2 clips9, no rowsremoved. Parent A1/A2 comparisons remain composite C recipe changes. No matched data-increment conclusion before both independent result reviews.
+- B1 wall4.242267s/samplepeak138464KiB, B2 wall4.275376s/138384KiB; provider0/$0, Codex cost unmetered. Supervisor checked all6manifest artifacts, four state digests,87unique keys, aggregate scores and exactchildabsence (48514/48516). Independent reviewer is reconstructing predictions/chronology/calibration/folds/intervals without refits. Incumbent stillraw; nextchoice awaits verified feedback. Outerclaims now5/10, totalactualfits20. No protected/paid/network/release action.
+
+### 2026-10-03 20:20 UTC — verified matched information result delivered
+
+- B1 review SHA `37213fcba838be60009eed50ea753d96bcade9e0a4312769996807ed5be24ed0`; B2 `4703575bbd7502e4eb328699686a889c321842bfaf893938dd635ecf7c87f597`. All87predictions each independently reconstruct with zeroerror from256numeric trees, correct fractional event-clock age and strict-prior fit means. All core plus fitted-state hashes, pairedscoring/calibration/16groupedintervals and childabsence pass. Both validREVERT; exactrecipes refuted, broaderfamilies notrefuted. Supervisor recordedcredit2 each under frozencontract questions, explicitly mapping descriptive reviewquestion aliases, with no scorebonus. Each verifiedfeedback was delivered when available.
+- Matched B2−B1 Brier`−0.0048837262`, log`−0.0156817032`,3/4Brier blocks improved. Predeclared directionaldata-input support=true; strongerinterval support=false: dateBrier95%`[−0.010663665,+0.003077423]`, week`[−0.012073847,+0.002200128]`, fourthblock worsens. Pairartifact SHA`1ea2c805…17efd`, independentreview`e1a89fbb…deaa8`. This is conditional nine-field data evidence under the same fixedtrainer, not marketoutperformance or isolated HGBgain versus changedlinearparents. Judge/incumbent unchanged.
+- Optional existingprediction decomposition and treeusecounts independently checked, no extra candidate/fits/credit. Correction energy plus signedalignment exactly equals existingBrierdelta; B1alignment harmfulall4blocks, B2helpfulonlyfold3. Clippedexamples are correct-sided, so clipping is not shown as the cause. Splitfrequency is not featureimportance. Initial Supervisor extra replay incorrectly rounded eventclock and failedbeforeartifactwrites; correction uses the alreadyfrozen fractionalPBPevenclock, no candidate or evaluation edit. Bothpilot artifacts occupy about3.9MiB in permanentlocal ApplicationSupport storage, notcloud/temp.
+- Controller is choosing one attributable descendant from verifiedfeedback. Its preliminary confidence-linked outputmap holds all B2features/training/trees fixed; not preplanned beforefeedback, no fitted shrinkage grid, no R-change claim. Finalcontract must be frozen before implementation/fit; currentbatch has oneattempt/fourfits left,deadline21:41:56Z. No per-round user intervention.
+
+
+### 2026-10-03: Feedback-selected confidence link executed and independently verified
+
+- Same machine step `state-residual-HGB-to-confidence-link`: Controller chose B3 only after verified B1/B2 and matched-information diagnostics. Actual parent B2 differs from raw-market comparison incumbent. Contract1676d24e…83414 preceded sourcead5d2a8 and one actual four-fit execution; no per-round human algorithm selection.
+- C-only change: q=clip(sigmoid(logit(raw)+4f)) instead of additive raw+f. All four fitted-state hashes and87 pre-link residuals/oldparent probabilities match B2 exactly;31 source/runtime/memory bindings and7 output hashes checked. Supervisor replay error0; independent scalar error<=5.56e-17. K/M/H/R remained fixed. Factor4 is a project choice; unchanged residual training does not optimize linked Brier directly.
+
+| Same87 opened-Train checks | Brier | Log loss | New minus reference Brier |
+| --- | ---: | ---: | ---: |
+| Raw-market incumbent | 0.1419525290 | 0.4296707847 | +0.0049026889 |
+| Ordinary market-only reference | 0.1454823125 | 0.4399219725 | +0.0013729054 |
+| Actual B2 parent | 0.1479352069 | 0.4405907925 | -0.0010799890 |
+| B3 confidence-link candidate | 0.1468552179 | 0.4397028035 | — |
+
+- Parent Brier block deltas: -0.0019945400/-0.0014841930/-0.0003984941/-0.0004232985,4/4wins; raw deltas +0.0082016371/+0.0040465023/-0.0021479193/+0.0122758279,1/4wins. Parent and raw grouped intervals crosszero. No statistically sufficient/untouched-OOS claim.
+- Correction energy0.00306432→0.00180547 while signed alignment harm0.00291836→0.00309722: smaller corrections helped the parent, aggregate direction was not repaired. Clipping count0; prior correct-sided clipping was not blamed.
+- Final synthetic/adjacent suite177passed12.846s, candidate8synthetic cases portable. Independent result `COEVO_RESULT_REVIEW_B3_2026-10-03.json` SHAcb8cdc80…8f637; validREVERT/credit2/refute/branch only for a distinct new question. Incumbent unchanged; all failed directions/code/evidence preserved.
+- Secondpilot closed20:40:50Z at3uniqueclaims/12fits/261rows on SAME87games, no child present; terminal SHA7b6420aa…81461/state1fa93ceb…c9330. Worker-wall12.702687s; peak sampled139808KiB. Outer6attempts/24fits/522rows, fourattempts remain before00:10:37Z; provider0/$0, Codex usage unmetered. Separate independent closure receipt pending. Caps never expanded; no retry.
+- Extra Supervisor reconstruction initially used a nonexistent parent CSV alias and failed beforewrites; corrected to existing frozen_actual_parent_probability. This was a verification-script failure, not a new candidate attempt, fit or scorer change. Unit private-artifact dependency was replaced before activation, with original test/preflight hashes preserved. Prior source/receipts/results unchanged.
+- Next Controller now owns scientific choice for a fresh separately bounded batch. No R tool/workflow change so far; ordinary autonomous predictor optimization and conditional state-input evidence do not prove self-evolution superiority, realtime/PnL or promotion. Protected Dev/Final/network/paid/fetch/release remain closed.
+
+### 2026-10-03: Third batch C1 verified and returned asynchronously
+
+- Machine step `market-residual-HGB-to-monotone-calibration`: after verified B3 damping-without-direction-repair, Controller chose increasing market-only isotonic calibration with a fixed 25% identity blend. Actual parent is archived REVERT B1, not raw-market incumbent. Contract c4fc188d…0b7f preceded source4bd926a; one bounded four-fit run completed. Source258lines received explicit independent inseparability review. Candidate-local evidence helper reused; no old H/R/scorer changes.
+- C1 Brier/log loss0.1454626479/0.4388601515; raw delta+0.0035101189/+0.0091893668; actual B1 delta-0.0073562852/-0.0174123442. All4 blocks beat the poor B1 parent, but all4 Brier blocks lose to raw; raw week Brier interval is entirelypositive. Linear calibration slope near1 is not a substitute for proper scores. Thresholdcounts14/16/18/24 do not prove lower effective complexity or variance.
+- Independent result receipt93400e97…09f24 reconstructed all87 probabilities exactly from numeric thresholds, full195=193+2,20dates/7weeks, all metrics/calibration/16intervals and fixedKEEP; no refits. ValidREFUTED/REVERT, credit2/refute/branch only for a distinctquestion. Feedback7de9d3dd…b8f9e delivered before the sibling's final result receipt; Controller alone chooses the feedback-dependent descendant.
+- Workerwall4.041903s, sampledpeak138720KiB, fourfits, zero retries/controlrefits/provider/network/protected actions. C2 separately completed once and is undergoing independent result review; totalouter8attempts/32fits on SAME87games, not696independentgames. Firstgeneration implementation/review overlapped; their independent runs were launched as each source cleared, without waiting for the sibling's result.
+- Supervisor feedback adapter initially assumed the old review field and failed after the durable result-reviewed event. Resumed from that checkpoint with the exact new receipt field; no fit rerun, result rewrite or lost attempt. Immutable repair note is at batch03 root. This was bookkeeping recovery, not scientific failure or autonomous research-policy modification.
+- C1 comparison to B1 changes algorithm/representation/blend together: COMPOSITE_UNATTRIBUTABLE C recipe, not isolated isotonic model benefit. No raw edge, untouched OOS, realtime/PnL or self-evolution mechanism claim. Incumbent, K/M/H/R policy and protected boundary unchanged.
+
+### 2026-10-03: C2 inconclusive information experiment verified and fed back
+
+- Machine step `pressure-NLL-to-prior-play-volume-NLL`: Controller explored strictly-prior eligible-play imbalance using the archived REVERT A2's exact scalar NLL/Newton/L2=16 trainer. One121-line new C module; unchanged C1 helper and old causal validators. Different feature scale changes effective penalty exposure, so this is a frozen representation comparison, not pure data gain or a trainer upgrade.
+
+| Same87 opened-Train checks | Brier | Log loss | C2 minus reference Brier |
+| --- | ---: | ---: | ---: |
+| Raw-market incumbent | 0.1419525290 | 0.4296707847 | -0.0000044513 |
+| Ordinary market-only reference | 0.1454823125 | 0.4399219725 | -0.0035342348 |
+| Actual A2 parent | 0.1421913272 | 0.4296628599 | -0.0002432494 |
+| C2 prior-play-volume candidate | 0.1419480777 | 0.4295777827 | — |
+
+- Market Brier block deltas -0.0000743432/+0.0001738033/+0.0001244213/-0.0002775874:2/4 wins. Raw date95%[-0.0002360025,+0.0001830592], week[-0.0001896945,+0.0002009669]; all raw log intervals also crosszero. Parent wins3/4, fourthlisted is winning block4; no confirmed edge. Fixedjudge INCONCLUSIVE/REVERT, incumbent unchanged; statistical significance is not required for a next Discovery attempt.
+- Independent receipt a8ff65b8…05cb8 verifies195anchors/193count rows/six old feature hashes/current source-cohort-PBP/fourstationary betas/87predictionreplay<=1.12e-16/allmetrics+16intervals/36bindings/caps/PIDabsence. Source50895c7; fourfits, wall4.463971s/peak139424KiB/no retry. Feedback b5b47a47…6b26f returned immediately to Controller after verification; no invented parallel result.
+- Scientific evidence credit2 follows the user's valid-experiment rubric. Existing frozen recorder only admits1/inconclusive/bounded_followup; both values and exact mapping are explicit in review/feedback/credit-mapping artifact13f9e47a…5da8f. Do not label support/refute falsely or silently change H after scoring. Controller reads scientific evidence2 as well as the scheduling limitation; credit never changes Brier.
+- Supervisor's final print assumed a nonexistent snapshot field after successful feedback writes. Confirmed actual stage/packet/state by readback; did not repeat the writes or training. All firstgeneration branches are feedback-ready; one candidate/fourfits remain in this batch, outer8/10attempts/32fits. Closed earlier batches/caps unchanged. Two active questions and all archives remain separate from raw incumbent.
+- Evidence supports a valid but uncertain causal count-feature question. It does not establish general PBP benefit, model superiority, real-time availability, untouched OOS or research-mechanism success. Controller determines the feedback-dependent next experiment; no per-round human scientific intervention.
+
+### 2026-10-03: Feedback-selected joint candidate executed; third pilot closed
+
+- Machine step `volume-NLL-to-joint-volume-freshness-NLL`: Controller used independently verified C1 failure and C2 uncertain mixed-block gains to test whether C2 count imbalance complements A1 freshness. Actual parent C2, A1 secondary and raw incumbent are separate. Contracta8d6d356 preceded source0af8ebd and one real four-fit run. One346-line C module received explicit independent inseparability review; no old production/helper/scorer or K/M/H/R change.
+
+| Same87 opened-Train checks | Brier | Log loss | C3 minus reference Brier |
+| --- | ---: | ---: | ---: |
+| Raw-market incumbent | 0.1419525290 | 0.4296707847 | +0.0000057146 |
+| Ordinary market-only reference | 0.1454823125 | 0.4399219725 | -0.0035240690 |
+| Actual C2 volume parent | 0.1419480777 | 0.4295777827 | +0.0000101658 |
+| A1 freshness secondary | 0.1419584856 | 0.4295469775 | -0.0000002421 |
+| C3 joint candidate | 0.1419582436 | 0.4294636054 | — |
+
+- Raw Brier block deltas+0.0010648402/-0.0010359386/-0.0004913852/+0.0001850074; actual C2 deltas+0.0011391834/-0.0012097419/-0.0006158065/+0.0004625948. Only2/4 wins versus raw/C2/A1. Raw date95%[-0.0007988553,+0.0007556066], week[-0.0006278696,+0.0007644624]; all raw/C2/A1 proper-loss intervals crosszero. C3 logloss improves raw/C2, but Brier does not. Exact complementarity annotation fails and never changes the frozen judge: valid REFUTED/REVERT. Raw incumbent unchanged.
+- Independent receiptc055b99f verifies all193 causal features, four strictly-prior fit-only normalizers and joint stationary/Hessian states,87 scalar predictions<=5.56e-17, C2/A1 controls and6-arm metrics/calibration/reliability/all20 grouped intervals;40source/runtime/memory bindings and PIDabsence. Supervisor numeric replay<=2.23e-16. Evidencecredit2/refute/branch, not a prediction score bonus; no exact-recipe repetition. C2's one bounded followup has now been consumed and must not be reset on archive restoration.
+- Fourfits/no retries/controlrefits; worker4.447733s/peak142528KiB. Batch03 closed21:30:39Z at3uniqueclaims/12fits/261rows on SAME87games,22events/stateabceff11; terminalb1553233. All three previous pilot caps/results immutable. Outer9attempts/36fits/783candidate rows, worker-wall sum38.405865s, not total research elapsed; provider0/$0, Codex cost unmetered. One new attempt remains under retained10 ceiling before00:10:37Z. Whole-pilot independent closure review is separate from already accepted candidate scores.
+- Initial Supervisor replay command omitted a required strict source-validator keyword and failed before writes/fits; corrected the verification script only. Reviewer read-only probes initially assumed wrong launch filename and newer A1 field; corrected metadata inspection only. Original failures preserved; no Train retry, scoring relaxation or result overwrite.
+- Evidence is a negative joint C recipe test; added information/parameter capacity/covariance are inseparable, not pure-data/model or R research-process gain. Autonomous feedback-driven predictor optimization ran; no matched fixed-process control, untouched OOS, realtime/PnL, promotion or self-evolution superiority. Controller receives exact feedbackb1fc10d5 before choosing the final scientific attempt; Supervisor prescribes no algorithm.
+
+### 2026-10-03: Final feedback-selected effective-prior candidate verified
+
+- Same machine step `joint-native-volume-to-fit-unit-prior`: Controller read actual C3 negative feedback and saved fit geometry, then selected C4. Actual parent C3 and raw incumbent remain separate. Contractc40d9c30/checkpoint92c5966 preceded exact sourcef55bff8 and one four-fit run. One313-line candidate received explicit independent inseparability acceptance, not a safety claim based on line count.
+- C changed only native volume x to x/std(pastfit,ddof0), with no centering/floor/check scaling. Freshness statistics, data/information, two-coordinate model, analytic NLL/Newton/lambda16, scorer and K/M/H/R stayed fixed. The native volume prior changed from16 to0.278–0.341 and native coefficients from~0.033–0.049 to0.634–1.197. This is effective-prior/representation change, not new data or equivalent conditioning.
+
+| Same87 Train checks | Brier | Log loss | C4 minus reference Brier |
+| --- | ---: | ---: | ---: |
+| Raw-market incumbent | 0.1419525290 | 0.4296707847 | +0.0007260055 |
+| Ordinary market-only reference | 0.1454823125 | 0.4399219725 | -0.0028037780 |
+| Actual C3 parent | 0.1419582436 | 0.4294636054 | +0.0007202909 |
+| C4 fit-unit prior candidate | 0.1426785345 | 0.4291441157 | — |
+
+| Check block | Games | C4 minus market Brier | C4 minus C3 Brier |
+| --- | ---: | ---: | ---: |
+| 2025-10-23–11-02 | 26 | -0.0004707441 | -0.0015355843 |
+| 2025-11-03–11-13 | 16 | +0.0038565126 | +0.0048924512 |
+| 2025-11-16–11-24 | 28 | +0.0031190056 | +0.0036103909 |
+| 2025-11-27–12-04 | 17 | -0.0043314430 | -0.0045164504 |
+
+- Only2/4 raw/parent Brier wins. Raw date95%[-0.0041649731,+0.0044869881], week[-0.0028341429,+0.0046877072]; all raw/C3 proper-loss intervals crosszero. Logloss improves but primary Brier worsens, so exact question fails and fixedjudge yields REFUTED/REVERT. Credit2/refute/branch records a valid distinct negative predictive experiment; it does not modify Brier or admit more runs.
+- Correction energy0.00006835→0.00080204, helpful signedalignment-0.00006263→-0.00007603: helpful alignment grew less than correction energy. Bigger coefficients are not evidence of better predictions. General volume/freshness/PBP information is not refuted by this one recipe.
+- Independent result66b05545…091c9 verifies193 causal inputs/four fit-only scales and unchanged C3normalizers/native+scaleddesignhashes/gradient<=2.93e-9/HessianPD/87scalar C4predictions<=1.12e-16 and parent<=2.23e-16/fivearm scores+calibration/16 intervals/44source-runtime-memory-request bindings/PID56473absent. Root solver-disabled replay and scores agree. Final root suites:179in-game tests/12.538s,123candidate+execution-boundary/1.379s,34probability+scoring/0.011s, allPASS. Suites overlap; counts are not a sum of unique tests. Broad legacy diagnostic remains920tests/45errors/1failure/1skip, notgreen; no unrelated dependency install.
+- Final pilot04 closed22:02:23.284805Z at original1attempt/4fits,9events/statef138424c/terminal3bf25e88. Feedback3bd8a899 is independently accepted and ready for Controller. Old three3/12 pilots unchanged. Allten real runs succeeded with no automaticretry/controlrefit; synthetic, metadata and bookkeeping errors remain preserved separately. Root read-only scorecard probe first used malformed quoting; corrected inspection only. Review probe schema/variable errors were similarly read-only, never fit reruns.
+
+### 2026-10-03: Ten-candidate comparable window scorecard
+
+Lower is better; every row uses identical87 unique games/20 dates/7 weeks, not870 independent games. Complete population stays195=193+2 explicit exclusions.
+
+| Attempt | Candidate recipe | Brier | Log loss | Brier wins vs market |
+| --- | --- | ---: | ---: | ---: |
+| reference | Decision-time market | 0.1419525290 | 0.4296707847 | — |
+| reference | Ordinary market-only Logistic | 0.1454823125 | 0.4399219725 | — |
+| A1 | Freshness interaction offset/NLL | 0.1419584856 | 0.4295469775 | 2/4 |
+| A2 | Causal possession-pressure offset | 0.1421913272 | 0.4296628599 | 1/4 |
+| A3 | A1 basis with Brier objective | 0.1419817703 | 0.4296664713 | 2/4 |
+| B1 | Market-only residual HGB | 0.1528189331 | 0.4562724957 | 0/4 |
+| B2 | Same HGB plus causal state | 0.1479352069 | 0.4405907925 | 1/4 |
+| B3 | B2 fixed-tree confidence link | 0.1468552179 | 0.4397028035 | 1/4 |
+| C1 | Identity-blended isotonic | 0.1454626479 | 0.4388601515 | 0/4 |
+| C2 | Prior-play volume offset | 0.1419480777 | 0.4295777827 | 2/4 |
+| C3 | Joint volume/freshness offset | 0.1419582436 | 0.4294636054 | 2/4 |
+| C4 | C3 fit-unit volume prior | 0.1426785345 | 0.4291441157 | 2/4 |
+
+- All10 independently verified;9REFUTED/1INCONCLUSIVE and10REVERT under unchangedrule. Lowest observed candidate Brier isC2, rawdelta-0.0000044513; its intervals crosszero and it did not passKEEP. Lowest logloss isC4 but Brierworse. Raw remains incumbent. Cross-window root CSV verification recomputed all10scores and exactkeys/labels/raw/ordinary/state controls withoutfitting.
+- Four genuine feedback-selected descendants ran: A1/A2→A3 loss; verified B1/B2→B3 link; verified C1/C2→C3 joint; verified C3 failure/geometry→C4 effectiveprior. B1/B2 andC1/C2 firstgeneration pairs are parallel search, not themselves a fabricated sequential trajectory. Actualsource/parent/trigger/feedback and before/afterK/M/C/H/R are in the machine journal.
+- Matched B2−B1 isolates added causal state under one fixed HGB recipe: Brier-0.0048837262/log-0.0156817032,3/4wins, but grouped Brier intervals crosszero and both candidates lose raw. This supports a conditional directional input effect, not confirmed marketedge or universal PBP benefit. Other composite recipe comparisons do not isolate data/model causes.
+- Total10uniqueattempts/40actualfits/870predictionversions on SAME87games. Sum worker-wall42.696988s, sampled peak142528KiB perchild, oneprocess/thread perbranch and at mosttwo concurrent. These seconds are not full research elapsed. Project provider0/$0, Codex usage/cost unmetered. No user per-round method selection; Supervisor performed execution coordination and explicit bookkeeping recovery, so this is not zero-intervention engineering.
+- Retained earlier10attempt ceiling is reached before the five-hour00:10:37UTC deadline. No claim that five hours elapsed; asynchronous question asked whether latest five-hour instruction supersedes that ceiling. No reply/extension is assumed. No more fits launch under current cap; all source/results/failed branches remain preserved. Formal independent final closure and Controller result-bound memory are next bookkeeping steps.
+- Implemented Harness benefit: real bounded worker/source-runtime-memory binding and explicitREVERT-branch retention worked in realpilot; their initial Hcheckpoints retain their original evidencelevels. Candidate updates areC. Research-policy/tool/workflow modificationsR=0, matchedmechanism comparison=0. RepeatedTrain isDiscovery, notOOS; no confirmed predictiongain, realtime/PnL, exactController/Astra identity or self-evolution superiority. Native crossbatch consumed-followup persistence remains a reported gap with Supervisor C2exclusion, not a silently fixed feature.
+
+## 2026-10-03 — Ten-candidate segment closed; prospective continuation
+
+- Independent final closure `COEVO_BATCH4_OPERATIONAL_RESOLUTION_2026-10-03.json`, SHA `c8bcc3fcfed07cdb0785bcbecf2a1cbaec8bd105b886ee900540cf515e8678c3`, passed: all ten actual source/runtime/memory/prediction/review bindings, final nine journal events and pure replays, unchanged old caps and no live worker PIDs. Source/result checkpoint parent `6bf66af477126ffaf15cfd88062c1e8747bf67fa`.
+- Controller window memory `COEVO_CONTROLLER_WINDOW_MEMORY_2026-10-03.json`, SHA `fd3e2e3a251f808a96fa00e4f630c229b9537bb84760373f1d4090217e599e37`, preserves all ten results and selects two method-diverse families: C4 proper-score alignment and B3 nonlinear causal-state information. C2 stays consumed/reference-only. Larger corrections and lower log loss did not establish lower Brier.
+- The next proposed C4 descendant tests Brier training with a predeclared past-fit local-curvature prior-unit convention. At memory creation it was only a proposal, not implemented or run. Root now asks Controller to freeze the prospective executable contract, including limitations of diagonal local matching and nonconvex stationarity.
+- Latest five-hour request still runs until `2026-10-04T00:10:37Z` (20:10:37 New York). Root has revised its conservative interpretation prospectively: a NEW bounded max3-attempt/12-fit continuation, 90 minutes clipped to that deadline, may run under the latest instruction. This is not a user answer to the async question, not expansion of four closed batches, not retrospective score/credit editing and not R self-modification. No new fit has occurred at this entry. Data/scorer/provider/protected/release boundaries remain fixed.
+
+## 2026-10-03 — C5 frozen before implementation
+
+- Controller contract `COEVO_BATCH5_CONTRACT_2026-10-03.json`, SHA `2da17c7c181ad3ffe050ac9c926bf3c0e27128f7d3a7e5aba2f1a9aca4b2f852`, source parent `5ef954200a3a223c76d235c6915ec55853eaf82a`, selects exactly one next recipe: `InGameCurvatureUnitMatchedBrierJointOffset-v4`, actual C4 parent rather than raw incumbent. Trigger is verified C4 Brier/log divergence, with A3's earlier naive loss-unit confound as retained context.
+- One C objective-plus-prior-unit recipe on identical features/scales/rows; K/M/H/R remain fixed. Local expected-curvature data/prior ratios are a project convention, not full Hessian matching or a theorem. Predeclared one-start L-BFGS followed by bounded same-objective modified-Newton continuation preserves strict final gradient/actual-Hessian checks; it is not a hidden refit or post-score relaxation. Parent-replay and derivative checks precede true training.
+- Controller chose no forced second model; global C4 proper-score and B3 nonlinear-state families remain, incumbent separate. Worker newsource/test and independent mathematical review run in parallel. This contract is L0 proposal evidence only; real C5 results are still pending.
+- Registration-time erratum: root manually wrote22:18UTC before clock observed22:14:32UTC in the new registration note. That timestamp was not a launch or execution claim. Contract binds actual system-clock runstart and original deadline; prior manual entry is preserved with this correction. Local dashboard verified new active Controller log at22:15:36UTC; sandboxed localhost probe failed before approved read-only probe succeeded, no external network call.
+
+## 2026-10-03 — C5 source and tests ready; no Train score yet
+
+- Frozen production SHA `021e347fce1692189dbe666c7367a833b83dc61c31f957a81fe95f0e7f08256b` (418 lines), test SHA `5f656f5f8b9a1a5662957df86b05e7d608615daf9a232a89c5bc859b0f1d6a6a` (16 synthetic tests), contract remains `2da17c7c…b2f852`. Parent checkpoint `532dad2`; only the declared two new Python paths changed. The >200-line warning requires independent inseparability review, not an automatic waiver.
+- Controller/testowner and worker finished disjoint files; independent reviewer read exact finalsource/test and found no launch-critical issue, final receipt still pending. Root ran195in-gamePASS12.277s,111candidate/execution-boundaryPASS1.365s,50candidate/scoringPASS0.080s; these overlap and do not establish legacy full-suite green. Synthetic full195/193+2/87 cases and first/post-optimization failure receipts pass, but are not real Train results.
+- Preserved errors: two atomic source/log-context patch rejections (no bytes or fits), initial synthetic array/Armijo fixture issues, missing-PYTHONHASHSEED test launch rejected by old fail-closed checks, and read-only wrong-path probes. Corrected before realfit; no scores/rules/oldsource rewritten. Pre-run source checks now reject nonfinite optimizer-return fields and preserve converged-optimizer truth if later predictions fail.
+- Fresh pilot05 initialized `2026-10-03T22:32:16.099335Z`, original inner deadline `2026-10-04T00:02:16.099335Z`, max1attempt/4fits and zero claimed at this entry. Initialmemory SHA `27eddae73bdba82f84841ea69b642c5c653e9b25eee75ad1e9c60406634ae5bd` contains alltenverifiedfeedback,9eligiblearchives and consumedC2exclusion. Original outerdeadline00:10:37Z/fourclosedcaps unchanged. No newprovider/network/protected/release or realC5fit yet.
+
+## 2026-10-03 — C5 independent pre-score admission
+
+- Source checkpoint `8f7263b6e7f3500d60664961309fa42bee8a45cc` preserves exact C5 source/test. Independent receipt `COEVO_CANDIDATE_REVIEW_C5_2026-10-03.json`, SHA `1bde2345c74dbeac1f91e2bfbf91bec22d26d405135e9cd517664e25f934d64b`, PASS at observed22:41UTC:16focused/195in-game/78boundary/34scoring synthetic tests and exact87 archived C4 probabilities without fitting. Explicit418-line candidate-local inseparability accepted; fixed scorer/K/M/H/R unchanged. Counts overlap.
+- This checkpoint adds admission evidence and completed reviewer log only, not scientific results. Next is exactly one source/runtime/memory-bound pilot05 execution, max4fits, no automatic retry. Any actual result will be independently recomputed before Controller receives verified feedback. Source/test/contract immutable after launch.
+
+## 2026-10-03 — C5 actual experiment accepted; negative feedback advances the loop
+
+- Controller selected this C4 descendant only after verified C4's log-loss/Brier divergence and retained A3's loss-unit confound. Exactly C4 inputs/scales and two fitted parameters; combined C Brier objective/local-prior-unit/continuous-optimizer recipe, not isolated loss/data/R gain. Actual pre-run source `2d04e7c9f403c504f6afb338de9ac7bf314fd8ef`,48committed/current file bindings, activationmemory `b99954ce12350dcf5f60e5a9e9cbe7673f106c089144d9885a58f95344cccb99`. No H/K/M/R-policy change.
+- Exact command in pilot05 worker request/process/receipt: pinned ds-py312 Python -B -m experiments.nfl_ingame_curvature_unit_matched_brier_joint_offset, resident source nfl-2025-train-refresh-20260922-01, exclusive pilot05/runs/attempt-01 output, research/market_rsi cwd. Same Python3.12.3/numpy1.26.4/scipy1.14.0/sklearn1.6.1, seed23/hashseed0/thread1; source/model/data/memory/request refs in manifest/launchreceipt. Permanent artifact root `/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-05`.
+
+| Arm | Equal-event Brier | Log loss | C5 minus arm Brier |
+| --- | ---: | ---: | ---: |
+| Market / incumbent | 0.1419525290 | 0.4296707847 | +0.0009779861 |
+| Ordinary market-only Logistic | 0.1454823125 | 0.4399219725 | -0.0025517975 |
+| Frozen v0 market + state | 0.1606809902 | 0.4711973193 | -0.0177504751 |
+| Actual research parent C4 | 0.1426785345 | 0.4291441157 | +0.0002519806 |
+| New C5 Brier/local-prior recipe | 0.1429305151 | 0.4297779729 | — |
+
+| Check block / games | C5 minus market Brier | C5 minus C4 Brier |
+| --- | ---: | ---: |
+| 1 / 26 | +0.0002473151 | +0.0007180592 |
+| 2 / 16 | +0.0035534865 | -0.0003030261 |
+| 3 / 28 | +0.0025787504 | -0.0005402553 |
+| 4 / 17 | -0.0029650705 | +0.0013663725 |
+
+- Valid4fits/87samegames,195complete denominator193+2,20checkdates7weeks. C5 wins raw1/4 and C4 2/4; both aggregateproper losses worsenraw/C4. Frozenjudge REFUTED/REVERT and primaryalignmentannotationfalse. Raw Brierdateinterval[-0.003343994,+0.004139366],week[-0.002083704,+0.004261732]; C4paired date[-0.000441663,+0.001041882],week[-0.000539063,+0.000988520],allcross0. All16proper-score CIs/date deltas/calibration bins in scorecard; these reusedTrain blocks areDiscovery,notOOS.
+- Rootno-fit numericreplay `4cf4c0eb…85bde0`, independent result `b5434529b172ec90f7c3e65ff6714b20efa6f3e75bd780a0438594fad68a0333` PASS:193causal inputs/four exactdesigns+fitunits/actualgradient-Hessian/finalstrictstationarity/87scalarprobs<=2.22e-16/fivearm scores/calibration/fourfold/16CIs/48source-runtime-memory-request/PID60721absent. Initial L-BFGS relative-ftol gradients in folds3/4 ~1.40e-6/1.63e-6 received one predeclared samefit Newton step each, final<=1e-8; counts0/0/1/1, no restart/retry/prior/tolerance change. Localvalidity,notglobaloptimum.
+- Similar correctionenergy0.0008003335 versusC4 0.0008020377, but alignment flipped helpful-0.0000760322→harmful+0.0001776526. This exact recipe did not solve prediction direction; no general information-family refutation. Negative evidence earns independently checked researchcredit2/refute/branch, not score compensation or automatic recipe repetition. Exact route stopped, code/results archived; distinct newquestions remain eligible.
+- Actualchildwall4.993536s/sampleRSS140096KiB, fourfits/no controlrefits/no retry; total11attempts44fits957predictionversions on SAME87uniquegames, workerwallsum47.690524s notfullresearchtime, maxchildpeak142528KiB. Provider0/$0, Codexusage/costunmetered. No user per-round sciencechoices; Supervisor scoped integration/verification remained explicit. No newnetwork/protected/push/release/promotion.
+- Pilot05 closed22:49:25.473645UTC at original1/4,9events/statefad3dc6d/terminal98df1971; feedback `c11f459e1d5723413ad7592af28a4eea6d67a798b3fc8b325d7be03b84bc96e5` ready. Oldfourclosedcaps unchanged; prospectivecontinuation1/3 used,2attempts8fits remain beforeoriginal00:10:37UTC. Root registers Controller to decide nextscience from verifiedevidence, not a preselected algorithm. Machine trajectory adds14threcord for this same C5event; legacyfullsuite stillnotgreen, no RSImechanism/control/futureconfirmation claim.
+
+## 2026-10-03 — C5 feedback changes allocation; C6 archived branch restored
+
+- Controller contract `COEVO_BATCH6_CONTRACT_2026-10-03.json`, SHA `dc6b34a1ef0dadb744345bc34d7c200088c637c01e4fe73b80ec05ef1119d753`, frozen checkpoint `44765e9c1499166bf5242bbc4c0fa4bc6318f8d9` from actualresultparent481ca42, stops exactC4/C5 loss/prior route after C5's harmful correctionalignment. It restores eligible REVERT B3 (notincumbent) because earlier matchedstate evidence and dampingwithoutdirectionrepair leave a distinct trainer question. TriggerfeedbackC5 and actualresearchparentB3 are deliberately different; this is actualfeedback-driven branchselection, not threepreplanned models.
+- New `InGameMarketStateRidgeResidualLink-v1` keeps exactly B3's11causalinputs/y-minus-market target/factor4confidence link. Combined C fixedlineartrainer+strictpast-fit centering/population scaling/alpha16/unpenalizedpastresidualmeanintercept; exactconstantfitcolumns remain withscale1, not imputation/drop. Directsolve/normal-equation gradient<=1e-8, fourfits/no controls/refits/grid. Same numeric16 does not make priorunits equivalent to HGB. No data gain/puremodel/R self-modification assumed.
+- Production worker, disjoint Controller synthetic-test owner and independent source/math/B3archive reviewer registered then dispatched in parallel. Worker pinned transform/solve/replay/callback APIs immediately; old source/contracts/data/scorer unchanged. Only candidate/test paths are new; no generalharness addition. Original deadline00:10:37UTC and remainingprospective2/8 stayfixed. The final choice remains null until actualC6feedback.
+- Fresh pilot06 initialized22:56:54.741933UTC with original00:10:37UTC deadline/max1attempt4fits, state7bc74283 and initialmemory `b990740fb2c090482cf9aada62de326b8636c8b353b6e75fcf1b85de613d2918`. All11verifiedfeedback/10eligiblearchives imported, consumedC2excluded, oldfivecapsunchanged. Zero claims/newfits at this entry. Source/runtime/activation/review binding and actualtraining still pending; currentevidence is proposal/implementation work, not a newscore.
+
+## 2026-10-03 — C6 final source/test freeze before actual training
+
+- Final joint source `ef699e85feb678578e2673da3e515298ccafd57ddc5672fd0a2d7b00dd6c0801` (431 lines), tests `06b3bc3d907f0d2eee6ee0419f44bfa39a97884c43ab3ac899168cf7fe20413b`. Earlier419/422-line snapshots remain in append-only owner logs. Two pre-score reporting fixes preserve physical solve-return truth and add the contract-required per-date correction identity; no algorithm/judge/data change or actual score preview. Supervisor requested the receipt fix; worker found the date-reporting omission. Not autonomous research-process self-modification.
+- Controller14focusedPASS0.098s/209in-gamePASS12.568s; root209in-gamePASS12.374s and44micro/probability/settlement testsPASS0.214s, plus earlier99candidate/boundary/branch testsPASS1.405s. Counts overlap; the known unrelated legacy full-suite failures remain, not silently called green. Per-date20/eventsum87 and candidate/B3 energy+alignment identities are checked synthetically.
+- Independent final-source/parent/math/boundary/inseparability admission is being completed; actual pilot06 still0claims at this entry. Next is one four-fit run on committed exact source/runtime/memory, no retries. All oldcaps, original00:10:37UTC deadline and protected/provider boundaries remain fixed.
+
+- Final independent admission `COEVO_CANDIDATE_REVIEW_C6_2026-10-03.json`, SHA `a6da0f08bc9592cb75050e990721f672a736d656b0d8ebd250c53c6660baa8ea`, PASS: exact431/401-line source/tests read, explicit one-module inseparability accepted,14focused/209in-game/112boundary-scoring tests passed and existingB3all87 predictions replayed withoutfit. Completed owner logs/source/test/review now form a narrow local pre-run checkpoint. This is admission, not a C6score.
+
+## 2026-10-03 — C6 actual training complete; final result receipt pending
+
+- Single pilot06 run completed23:08:48.556992UTC, exactsource checkpoint `6e686cc837262b0e6834bd8dcab5b3206bda95b9`,52current+committed file bindings, request `93e51fbe…cfa096e`, activationmemory `803548f6…0bb471`. Exactlyfourfits/87predictions, no controlrefits/retries. ParentB3 is restored archived REVERT branch; latestfeedbacktriggerC5 and rawincumbent are separate. Originaldeadline00:10:37UTC and alloldcaps unchanged.
+
+| Arm | Equal-event Brier | Log loss | C6 minus arm Brier |
+| --- | ---: | ---: | ---: |
+| Market / incumbent | 0.1419525290 | 0.4296707847 | +0.0081312702 |
+| Ordinary market-only Logistic | 0.1454823125 | 0.4399219725 | +0.0046014866 |
+| Frozen v0 market + state | 0.1606809902 | 0.4711973193 | -0.0105971910 |
+| Actual archived parent B3 | 0.1468552179 | 0.4397028035 | +0.0032285812 |
+| New C6 linear residual ridge | 0.1500837992 | 0.4442664509 | — |
+
+| Check block / games | C6 minus market Brier | C6 minus B3 Brier |
+| --- | ---: | ---: |
+| 1 / 26 | +0.0169360848 | +0.0087344476 |
+| 2 / 16 | +0.0015726506 | -0.0024738517 |
+| 3 / 28 | -0.0031013346 | -0.0009534153 |
+| 4 / 17 | +0.0193386624 | +0.0070628344 |
+
+- Root no-fit numeric replay `697680fb…d8d4` verifies193nativeinputs/fourFIT-onlymeans-scales/designs/A/rhs/F/gradients/nativecoefficients/fourcanonicalstates/87scalar+vectorprobabilities/fivearmmetrics/calibration/16date-weekintervals/20dateidentities/judge, candidate fits and np.linalg.solve disabled. Gradients<=5.58e-14/minA approximately16. Binding replay `b8a495a5…77aef` verifies52current+Gitfiles/executable/memory/request/eightoutputs and PID62934absent. This did not refit any Train/control model.
+- Numericallyvalid candidate energy0.0027587684/alignment+0.0053725018 versusB3 0.0018054676/+0.0030972214; larger harmful correction. Parentdirectional/repair annotations false. RawBrierdateCI[-0.001298882,+0.020363526],week[-0.002716048,+0.020448219]; parentdate[-0.004060285,+0.011182104],week[-0.003739352,+0.009587224],allcross0. PreliminaryfixedjudgeREFUTED/REVERT, rawstillincumbent; no generalstate/linearmodelrefutation. Independentnumeric/scoring/PID checks agree; finalresultcreditreceipt and Controllerfeedback stillpending atthisentry.
+- Workerwall4.121693s/sample140064KiB, total12actualattempts48fits/1044predictionversions on SAME87games; workerwallsum51.812217s is notfullresearchelapsed. Provider0/$0,Codexusageunmetered. Prospective2/3attempts8/12fits physicallyused; onefreshstep onlyafter independentlyacceptedfeedback, not preplanned. C2followupconsumption remains excluded bySupervisor, no nativecrossbatchguarantee. RepeatedTrainDiscovery only, K/M/H/R/judgefixed, no network/protected/push/promotion or mechanismadvantage claim.
+
+- Final actualresult receipt `COEVO_RESULT_REVIEW_C6_2026-10-03.json`, SHA `fdd8c61f4ef17b3698bd5fd219f80296091e53bfb9e8e91774bdea40bb8ca8ca`, PASS/validnegative accepted23:16:30.919565UTC, credit2/refute/branch. All52bindings/9artifact hashes/4states/193inputs/87predictions/fivearmcalibration250bins/16CIs/date20identities/currentjournal/oldcaps/C2consumption/PIDabsence independently verified withoutsolve/fits. Pilot06 closes original1/4,9events/statedf39596b/terminala60f167d/exactrestart/noactive. Feedback `ec82b6920167c984b52ec8f3ab1c2e740f5200a0c3e3283c0987a10a58a6e555` delivered to Controller before any next scientific choice. All12now independentlyverified:11REFUTED/1INCONCLUSIVE,12REVERT; raw remainsincumbent. Machinejournal adds15th same-event record, realC6 archived-parent restoration counts sixthfeedback-dependent descendant. Controller chooses one final prospective actual experiment; no preplanned algorithm, oneattempt/fourfits remain beforeoriginal00:10:37UTC.
+
+## 2026-10-03 — Accepted C6 evidence selects final C7 calibration recipe
+
+- Controller contract `COEVO_BATCH7_CONTRACT_2026-10-03.json`, SHA `f0d925977ef45677a557e2be18d6ec30ac56fe6fc8e9980df6a518a48b4b132b`, sourceparentb1257d2, freezes `InGameMarketTemperatureOffset-v1` only after acceptedC6feedback. Restored archivedC1isotonic is actualparent; C6latesttrigger/rawincumbent separate. Methodfamily switches to restricted marketcalibration after validstatecorrectiondirection failure, not a preplanned thirdmodel or generalstate refutation.
+- One scalar beta>=-1 gives q=sigmoid((1+beta)*marketlogit), zero beta returnsraw exactly. Past-fit summedNLL+8beta²/nointercept/state/preprocessing; deterministic fit-only bracket/bisectionmax200 and strictgradient/interior-or-boundaryKKT<=1e-8/finiteH>=16. Projectparameters, not consensus or samepriorunits asridge/HGB. Combined calibration shape/capacity/loss/prior C recipe, not purecapacity/newdata/R gain. Fourfits/same195=193+2/87/oldjudge; currentglobalfamilies restrictedcalibration and archivedcausal-state remain, exactfailedrecipes stopped.
+- Production/disjointsynthetic tests/independent math-C1sevenfile/fourstate/87parentreplay registered then dispatched inparallel. No generalharness expansion or paid/newdata/protected operation; no C7Trainfit or score atthisentry. Finalprospectiveoneattempt/fourfits and original00:10:37UTCdeadline fixed; source/test/checkpoint/admission precedeactualrun.
+
+## 2026-10-03 — C7 exact implementation admitted before its one real run
+
+- At23:36UTC source `f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085` (419lines/oneproductionmodule), test `04c99f64d9ecbb1333bb6f0cca9a4548a867462d2732cb8783ca9d440308bc36` (424lines) are jointly frozen. Independent admission `843a84ea3d16e80803504bce3e99fc60f366d5aebcbbc2c42b138d1f7c617258` explicitly accepts >200line inseparability for one bounded scalar recipe plus mandatory frozen-parent/output checks; below-threshold is never a safety proof.
+- Root independently ran224 in-game tests PASS12.423s; reviewer15focused/224in-game/112boundary-proper-score PASS. Earlier synthetic fixture error and eight malformed-receipt assertion failures were repaired before scoring and retained in owner logs; no candidate attempt or Train fit consumed by synthetic testing. Final returned-invalid-beta guard is tested; oldjudge, scientificrecipe, solver tolerance and existing sources remain unchanged.
+- C1's sevenfiles/fourstates/87predictions and all193causalinputs replayed without fitting or previewing C7Train predictions. Separate actual-result review still required. One fresh ID/four fits/900s/sampled1GiB/one-thread, no retry; original00:10:37UTCdeadline and all six oldcaps unchanged. This checkpoint is implementation/pre-score validation, not forecasting success or research-workflow self-modification.
+
+## 2026-10-03 — Final C7 real training completed; independent result review pending
+
+- Actual source checkpoint `9481f77275459dabb350f53b77b191e89d449f10`, once-only pilot07/attempt-01/request `26dab031…77be3`, activationmemory `6faa9616…92501`,56committed+current source bindings. Exactlyfourfits/87predictions, no controlrefit/retry, source195=193+2 and oldjudge unchanged. ArchivedC1 actualresearchparent and latestC6 feedbacktrigger remain distinct fromrawincumbent.
+
+| Arm | Equal-event Brier | Log loss | C7 minus arm Brier |
+| --- | ---: | ---: | ---: |
+| Market / incumbent | 0.1419525290 | 0.4296707847 | +0.0000015751 |
+| Ordinary market-only Logistic | 0.1454823125 | 0.4399219725 | -0.0035282085 |
+| Frozen v0 market + state | 0.1606809902 | 0.4711973193 | -0.0187268861 |
+| Actual archived parent C1 | 0.1454626479 | 0.4388601515 | -0.0035085439 |
+| New C7 scalar temperature | 0.1419541041 | 0.4288860888 | — |
+
+| Check block / games | C7 minus market Brier | C7 minus C1 Brier |
+| --- | ---: | ---: |
+| 1 / 26 | +0.0004018468 | -0.0029182762 |
+| 2 / 16 | +0.0009108263 | -0.0037843962 |
+| 3 / 28 | -0.0004381823 | -0.0054653193 |
+| 4 / 17 | -0.0007420647 | -0.0009287562 |
+
+- Root no-fit numeric replay `ca13001a…aec44c` verifies193inputs/fourstrictpast designs/raw-logithashes/recorded beta/F/g/h/KKT/Fzero/brackets/87scalar+vectorpredictions/fivearmcalibration/16whole-date-weekintervals/date20identities/originaljudge. Fits/solver/parentfits disabled; scalarprediction maxerror0 and scalarderivative maxerror1.42e-14. Temperatures1.04468764/1.04869245/1.03173923/1.04557221, KKT<=9.97736e-9 under unchanged1e-8 threshold, h>=38.6466;34/36/36/34 bisection steps are solver evaluations, not extra experiments/fits. Zero clipping or rows removed. Binding replay `055ec2b7…2bf7bf` confirms56files/runtime/memory/sevenmanifest outputs/PID65466absent.
+- Candidate-minus-market Brier+0.0000015751/log-0.0007846959,raw2/4Brierwins; Brier dateCI[-0.000763113,+0.000707184],week[-0.000485319,+0.000586802], bothcross0. C7 beats actualC1bothlosses/all4blocks, parentBrierdate[-0.005387565,-0.000244689],week[-0.004850949,-0.002082351]. These describe a better local calibration recipe than this C1, notmarketedge or untouchedOOS. Parent annotation true does not override unchanged REFUTED/REVERT/rawincumbent.
+- Correctionenergy0.0000433830 plus helpfulalignment-0.0000418080 nearlycancel; C1 energy0.0003799021 plus harmfulalignment+0.0031302169. Restrictedrecipe repairs C1's harmfulalignment, but smallremainingenergy outweighs benefit under Brier. Combined shape/capacity/loss/prior C change, not data increment or purecapacity ablation; K/M/H/R fixed.
+- Workerwall4.063088s/sample143088KiB. Physically13attempts52fits/1131candidatepredictionversions on SAME87games, sumworkerwall55.875305s/notfullresearchduration. Prospectivecontinuation3/3attempts12/12fits used, no furtherfits intheseclosedcaps. Provider0/$0,Codexusageunmetered; no protected/network/release/promotion. Independent result receipt/credit/Controller finalmemory still pending atthisentry; no premature all-results-accepted claim.
+
+## 2026-10-03 — All thirteen actual results accepted; final window consolidation
+
+- C7 actualresultreview `301743d9b74cfbedda3ac210789741caae576977c8724963afb24bf053470075` PASS accepted23:42:54.104466UTC, credit2/refute/branch. Positive C1 comparison and negative market KEEP finding both retained; no whole calibration-family refutation. Feedback `79ef2f34da500756bd427231b67497a070bc3861ed0452c48c806f77d328a4f9` delivered to registered Controller only after acceptance. Pilot07 closes original1/4,9journalrecords/state4ed46bd5/terminale34d5e57/exactrestart/PID65466absent/noactive. All13results independentlyaccepted,12REFUTED/1INCONCLUSIVE and13REVERT; rawincumbent unchanged.
+
+| Candidate | Brier | Log loss | Candidate minus market Brier | Decision |
+| --- | ---: | ---: | ---: | --- |
+| A1 · freshness NLL | 0.1419584856 | 0.4295469775 | +0.0000059566 | REFUTED / REVERT |
+| A2 · possession pressure | 0.1421913272 | 0.4296628599 | +0.0002387982 | REFUTED / REVERT |
+| A3 · freshness Brier | 0.1419817703 | 0.4296664713 | +0.0000292413 | REFUTED / REVERT |
+| B1 · market residual HGB | 0.1528189331 | 0.4562724957 | +0.0108664041 | REFUTED / REVERT |
+| B2 · same HGB + causal state | 0.1479352069 | 0.4405907925 | +0.0059826779 | REFUTED / REVERT |
+| B3 · state HGB confidence link | 0.1468552179 | 0.4397028035 | +0.0049026889 | REFUTED / REVERT |
+| C1 · identity-blended isotonic | 0.1454626479 | 0.4388601515 | +0.0035101189 | REFUTED / REVERT |
+| C2 · prior-play volume | 0.1419480777 | 0.4295777827 | -0.0000044513 | INCONCLUSIVE / REVERT |
+| C3 · volume + freshness | 0.1419582436 | 0.4294636054 | +0.0000057146 | REFUTED / REVERT |
+| C4 · fit-unit prior | 0.1426785345 | 0.4291441157 | +0.0007260055 | REFUTED / REVERT |
+| C5 · curvature-unit Brier | 0.1429305151 | 0.4297779729 | +0.0009779861 | REFUTED / REVERT |
+| C6 · linear state residual ridge | 0.1500837992 | 0.4442664509 | +0.0081312702 | REFUTED / REVERT |
+| C7 · scalar market temperature | 0.1419541041 | 0.4288860888 | +0.0000015751 | REFUTED / REVERT |
+
+- Same market reference0.1419525290/0.4296707847; same87games/20dates/7weeks, not thirteen independentdatasets or1131independentgames. C2 has best observed Brier by4.4513e-6 but uncertain2/4blocks and consumedfollowup; C7 has best observed logloss but primaryBrier worse by1.5751e-6. Neither is a KEEP, confirmededge or uninspectedOOS. Ordinary remains an ordinary reference, no Strong-Baseline-1selection claim.
+- Sixteen machineevents contain two human H implementation fixes, thirteen actual C candidates and one matched B2/B1 evidenceanalysis, with changedpaths/checkpoint/author/actualparent/feedbacktrigger/unchanged K/M/H/R/scorer and paired artifact IDs. Seven accepted-feedback descendants: A1/A2→A3; B1/B2→B3; C1/C2→C3; C3→C4; C4→C5; C5→C6; C6→C7. Initial pairs are parallel search, not fabricated sequential iteration; later choices genuinely follow actual reviewed feedback. Candidate internalrepresentation/trainer/loss changes are not R research-policy modification; normal memory accumulation is not Rchange.
+- Original first-ten40fit segment/caps/history unchanged; separately declared prospectivecontinuation3newattempts/12fits now exhausted. No furthercandidate fits or cap expansion. Originalfive-hourwindow ends00:10:37UTC; remaining time is actualresult/pure recovery/source-bound trajectory verification and Controller finalmemory/report consolidation, not moreharness. Provider0/$0;52actualfits/55.875305s sumworkerwall/samplepeak143088KiB, researchtime is muchlarger and Codexusageunmetered. Parallelimplementation/test/review reduced waiting, atmosttwo concurrentcandidatebranches; perchildthread1, no actualtrainingfailure/retry. Synthetic fixture/guard repairs preserved before scores; broadlegacy920diagnostic still45errors/1failure/1skip, not whole-repo green.
+- Scientificclassification: B2−B1 is same-model/samebudget conditional state-input comparison (Brier−.0048837262/log−.0156817032,3/4blocks,groupedintervalscross0). Other C recipes are model/training/representation or combinedchanges with attribution limits; no causal claim that swapping baseLLM improved RSI. H receipt/worker/scheduler integration is humanengineering, not automated scientific gain. No same-model/same-budget fixed-versus-selfmodifying workflow control or prospectivefutureconfirmation ran.
+- Remaininglimits: repeatedTrainselection,87events/7weeks, historicaleventtime≠proven receive-time, exact Controller servingversionunknown/notauthenticatedAstra, provider-publish/rights/formalconfirmation incomplete, nativecrossbatchfollowupconsumption persistence absent (Supervisor excludesconsumedC2), inconclusiveusercredit2 versus frozenrecorder1mappinggap, trusted-host/sampleRSS worker≠network/arbitrary-code/OS-hardmemorysandbox. Allprotecteddata/network/provider/push/release/promotion boundaries remain closed. No zero-humanengineering, marketedge/PnL/promotion or selfevolution-mechanismsuccess claim.
+
+- Verified per-candidate resourcecollector `window_summary_after_feedback.json` atpilot07, SHA `308dc78c2bec6ce4352c9a1da64d7a578fc5e74b1f78af6d5ec6c958c7e49ca3`, confirmsall13feedback/source/review/card IDs andeachfourfit receipt: total55.875305126959574s/samplemax143088KiB. Eight ofthirteen attempts taggedexploration (61.5% ofattempts), not30%actualCPU/fee spend;30%remains adjustableinitialreserve, notquota or scientificreward. Everyvalidquestion earneduser-rubric2;C2recorded1/inconclusive remains explicit. Collector firstread assumedflatlegacyfeedback andfailedKeyError before anywrite; corrected read-only normalization forA1/A2 scheduler_packet wrappers, source/results unchanged, nofit/retry.
+
+- Final result-bound Controller memory `COEVO_CONTROLLER_WINDOW_MEMORY_FINAL_2026-10-03.json` SHA `d7bd0a67d2efb0fe084838365ce0a31d4030762ac178257463285c1442b8648e`, ownlogf3f41792, preserves oldten-onlyfd3e2e3a unchanged. All13source/review/card/feedback metrics match acceptedactualruns. Currentpool reselects two globalfamilies: C7restrictedcalibration (positiveC1comparison retained despite primaryREVERT) and archivedB3/A2causal-state representation family (earlier matchedB2/B1 uncertainty unresolved). Incumbent remainsraw, allhistory archived; noforcedscoretop-three or per-parentmultiplication.
+- Controller's next concrete but UNEXECUTED recommendation `InGameTemperaturePossessionPressureJointOffset-v1`: q=sigmoid((1+beta)*marketlogit+gamma*exactnativeA2possessionpressure), sumNLL+8(beta²+gamma²), beta>=-1/nointercept/noscaling. Samepast-onlydata/judge/checks, C7actualparent/exactgamma-zero mathematicalcontrol, A2onlybasiscontributor, acceptedC7feedbacktrigger distinct. Expect fourfits/onefuturefreshattempt/no realcontrolrefits in a separatelyboundednextbatch; no execution inside exhaustedcurrentcap. Extra coefficient plus representation means notpuredata/capacitygain. This is ordinary feedback-driven predictoroptimization, no implementedRselfmodification.
+- Root pure recovery evidence `supervisor_final_recovery_verification.json`, SHA `9eb48f5ad2bb0902cdfe0bcfcbe3e51ab6840afe7d980b1a45e0be3ddc2b92d8`, verifiesseven freshinstances/currentterminal hashes/closedoriginalcaps3,3,3,1,1,1,1/rawincumbent/noactive/alljournalbytes unchanged and thirteenactualcandidate K/M/H/Rfixed. Firstcollectorassertion counted14axisCevents as13fits because originalmatched-HGBanalysis itself is C-tagged; correctedexplicitanalysis-versus-candidate filter only, no historicalaxisrewrite, writes or fits. Sixteenevents are2H +13actualcandidateC +1existingC-taggedanalysis. Restartverified; deliberate interruptedrealfitrecovery stillnot tested. Finalindependentclosure review remainspending atthisentry.
+
+### Final independent operational closure accepted
+
+- Independent receipt `COEVO_WINDOW_FINAL_OPERATIONAL_REVIEW_2026-10-03.json`, SHA `cbc9c5e7494fc668967d6cdc4fbf55291f184f731bb77d2d5caf028df696dbd4`, reviewed23:56:41UTC, exact ownlog `c2136feff7ea6ec121dce7eaece37eb6b9a8cedfdb5e6880bf29ff03226e8508`. Root completed fullreceipt read, verified exact hashes and accepts OPERATIONAL_PASS_NOT_PREDICTIVE_OR_MECHANISM_SUCCESS. All13current/Git/runtime/request/result/review/credit/feedback bindings and originalCSV scoring reconciled; same87keys/folds/labels/controls, seven originalclosedcaps,102canonicaljournalprefixes/14freshpure-replays/finalmemory and all13childPIDsabsent. No newfit, optimizer, paidcall, network/protected access or sourcechange occurred during closure.
+- Supplemental no-fit all13 directscore certificate `supervisor_window_score_reconciliation.json`, SHA `02379cf850894e0077614bd48c4425aba5e9c19a7835f38083ee76fda7b3612a`, independently recomputes every aggregate/time-block properloss and same sample/control inputs. Root certificates supplement, not replace, independent result reviews. OperationalPASS does not alter13REVERT/rawincumbent, predictivesignificance, Trainstatus, scorer or authority.
+- Reviewer read-only probe failures remain disclosed: pilot01 legacyterminal lacks a newer optional reviewflag, and pre-registration prefixes lack micro_evolution; corrected schema-aware assertions only, immutable receipts untouched. Earlier stale ten-result Detailed-report pointer was corrected in currentstate23:55:47UTC; independent signed snapshot retains its original observation. Nativecrossbatchconsumption gap, C2creditmapping gap, unknownexact Controller version, historicaltime caveat, trustedhost/sampleRSS limits and untested interrupted-real-fit recovery remain explicit. Oldbroad920diagnostic is notgreen; no install or unrelated harnessfix.
+- Allthree currentagent roles DONE. Only currentstate/index/roadmap/bottleneck and this append-only progress entry are reconciled after finalreceipt acceptance; candidate/source/scorer, oldresults/caps/history and sixteen-event trajectory remain frozen. Remainingoriginalwindow is final localcheckpoint preservation, not more candidate experiments or a new reward/harness layer.
+
+### Five-hour implementation window — final handoff
+
+The original window was 15:10:37–20:10:37 New York time on October 3. It has ended. The terminal receipt was saved at 20:10:45, eight seconds after the cutoff, for final bookkeeping only; no candidate fit ran after the attempt caps were exhausted. Receipt SHA: `246147ec0ccd28ecb4475fc1d174f3b44d454b7c4f28c75aa1aee821629ccf4d`, permanent local file `artifacts/market-rsi-coevo-train-pilot-20261003-07/supervisor_five_hour_window_terminal.json`. It binds closure checkpoint `6dc0cfbc9b51d543faa91b7bbba09de813a309eb`, unchanged source/runtime/evidence and all thirteen recorded child PIDs absent. Later report-only checkpointing does not change that recorded checkpoint.
+
+- **Implemented and exercised:** a reviewed local worker connected to the existing scheduler, two concurrent candidate slots, exact source/runtime bindings, durable no-repeat execution receipts, bounded resources, independently verified feedback and reusable REVERT branches. These were human H integration changes. Each scientific candidate retained fixed task/data/scorer/permission identities; larger indivisible candidate modules received explicit independent scope review rather than being declared small solely by line count.
+- **Actual research:** thirteen distinct candidates, fifty-two chronological fits, seven feedback-selected descendants, on the same 87 Train check games. The initial ten-attempt segment and its caps remain intact; a separately declared three-attempt continuation was used. Pure parallel siblings were not counted as sequential iteration. No actual candidate execution failed or automatically retried; pre-score fixture/numeric-guard and read-only verification-script failures and repairs are preserved.
+- **Prediction result:** no KEEP. Raw market remains incumbent at Brier/log loss 0.1419525290/0.4296707847. C2 has the lowest observed Brier, 0.1419480777, a tiny uncertain improvement with 2/4 block wins. C7 has the lowest observed log loss, 0.4288860888, but Brier 0.1419541041 is slightly worse than market. C7 improves its C1 parent on both losses and all four blocks; this positive finding is retained despite primary REVERT.
+- **Attribution:** matched HGB plus causal game state improved Brier by 0.0048837262 over the same market-data-only HGB, but grouped intervals cross zero and both trail market. This is conditional, uncertain input evidence. Other recipes changed predictor representation/training/loss or combined components. No scientific R workflow self-modification or same-budget fixed-versus-evolving research control was run; predictor optimization is not proof of self-evolution.
+- **Verification and resources:** final 34 synthetic worker/scheduler tests passed in 0.486s, with subprocesses mocked and no Train fits. Earlier exact-source candidate/proper-score suites and final independent operational review passed; the older broad suite is still not green. Summed actual child wall time was 55.875305s, sampled peak child RSS 143088KiB, provider calls/spend 0/$0; this is not five hours of continuous training or a complete CPU/Codex cost measure. Supervisor engineering and coordination occurred, although no new per-round user algorithm choice was recorded.
+- **Next research, not executed:** preserve the global C7 calibration and B3/A2 game-state families. Controller recommends `InGameTemperaturePossessionPressureJointOffset-v1`: test existing native possession pressure conditional on C7 calibration, with C7 as actual parent and accepted C7 feedback as trigger. A new bounded batch is needed; existing Train research authority does not authorize protected Dev/Final, external acquisition, paid calls, publication or promotion. All results remain repeated-Train Discovery; confirmed market edge, real-time availability, transfer, prospective OOS and research-mechanism superiority remain unsupported.
+
+## 2026-10-05 — Eight-hour iteration started
+
+- Goal: continue real local Train prediction experiments and show separately measured C predictor, H harness and R researcher-policy changes. The new user-authorized window is04:37:44–12:37:44UTC/00:37:44–08:37:44NewYork; cleanstartingc979577/noactivecandidate/24GiBavailable verified. Prior thirteen candidates, scores, source commits and closed caps remain historical and unchanged.
+- All three available worker slots dispatched after unique log registration and ready-step checks: Controller freezes next science/global ranked three branches; researcher checks thin reuse path; independent reviewer verifies actual old source/runtime/controls. Four concurrent agents including Supervisor, not eight simultaneous workers. At most two training children, one thread each, permanent local artifacts, no paid/provider/network/protected operations.
+- Registration failure preserved: first parallel-plan grouping incorrectly included its final reviewer as an implementation worker. Existing gate rejected before any dispatch. New v2 groups only Controller/reuse as write workers and keeps independent reviewer outside that set; dispatch/readinessPASS with guard unchanged. This is Supervisor coordination repair, not scientific failure or H/R improvement.
+- Actual reuse finding: immutable C1 fold callbacks can support short scientific D1 math, but old full entrypoints hardwire old contracts. Copying another200–400line runner would violate the requested small-step intent. Researcher is proposing one minimal versioned H admission/evidence adapter; no source implemented or Hgain claimed. Hold actual C7/K/M/R fixed for matched replay and one bounded live trial whenidle; only then run Controller-confirmed D1 via that frozen H. No large framework rewrite.
+- Independent preflight reports old56source bindings/runtime/scorer/probability unchanged. Synthetic worker/scheduler/retention suite65executions/40unique test methods PASS1.042s (inheritedfixtures duplicated); no realfits/optimizer. Each existing worker pilot still has12reserved-fit cap. Outer64attempts/256fits is a prospective cumulative Supervisor ceiling, not nativeglobalenforcement; use fresh≤3attempt/12fit pilots, hard originaldeadline, and explicit actual/reserved totals. Three-branch pool concerns exploration priority, not number of simultaneously executing children or scoretop-three.
+- Current learning/claims: no new Train score yet; initial three branches await actual Controller choice, historical memory hadtwofamilies and consumedC2 excluded. Code changes, memory accumulation and human orchestration instructions are not proven H/R improvement. Exact serving modelversion unknown; repeatedTrainDiscovery remainsnotOOS. Next action: accept concrete Controller/adapter contracts and immediately implement/test/review/execute the smallest runnable step.
+
+## 2026-10-05 11:05 EDT — Repair and Discovery plan approved and saved
+
+- **User approval:** the current-chat message `put this in a document, worklog, approve` approves the immediately preceding full plan. Approval observed at 2026-10-05 15:00:28 UTC / 11:00:28 EDT. Plan ID: `market-rsi-repair-discovery-20261005-01`. Status: **APPROVED_NOT_STARTED**; execution start and deadline remain unset. The four-hour clock begins at actual P0 execution preflight, not document preparation. No new per-round method approval is required inside this scope.
+- **Approved limits:** one fresh four-hour window; at most six selected experiment attempts and 24 statistical fits; controls, implementation failures and pre-fit execution failures consume attempts. At most two candidate processes, one training thread each, at most 900 seconds per execution clipped to the remaining deadline, sampled child RSS stop at 1 GiB. Paid provider calls/spend remain zero; Codex usage is recorded separately. Prior expired batches and consumed allowances are not extended or reset.
+- **Execution sequence:** reconcile state and working Controller/reviewer; finish the existing adapter and one unchanged four-fit C7 parity trial; bind and execute D1 through the actual worker; connect verified numerical results back to Controller and its next selection using a minimal bounded recoverable coordinator; aim for two to three feedback-dependent prediction experiments; consider one Controller-authored R trial only if actual evidence justifies it. First new scorecard around minute 90 is a target, not a result or guarantee.
+- **Threshold separation:** preserve the scorer and historical KEEP/REVERT/REFUTED records. Track descriptive Discovery ranking, evidence validity and development decisions separately. REVERT does not automatically revoke exploration eligibility. Maintain a global two-to-three-branch pool and full archive; verified research credit informs exploration, never Brier. The current human direction and Supervisor repairs are not autonomous self-evolution.
+- **Boundaries:** resident opened-Train Discovery only, unchanged 195-event population/193 materialized plus two exclusions/87 check games/20 dates/seven weeks/folds/time semantics/scorer/baselines. Protected Dev/Final, new external acquisition, paid providers, remote publication, release and promotion remain closed. A later equal-budget fixed-versus-evolving mechanism-comparison batch is not authorized by this document.
+- **Permanent document:** `plans/MARKET_RSI_REPAIR_DISCOVERY_APPROVED_2026-10-05.docx`, SHA256 `2e049f3d9fda71906a3f78d0fe958afe49566d3fb5ceeb5f454b2dfcc172d347`. Structured approved source: `plans/MARKET_RSI_REPAIR_DISCOVERY_APPROVED_2026-10-05.json`, SHA256 `fad6e5d0b2eadadb5e407c3da92d2eaf4bd746f716a53ab2d6db30a250e1520a`. Both are under `/Users/estelle/Developer/market-rsi/research/market_rsi/supervisor_harness`, a permanent local non-cloud repository.
+- **Verification and actual work:** the seven-page Word document was rendered and every final page visually inspected. An inherited title border was removed; the final accessibility audit reports zero high/medium/low findings. Existing dirty agent logs, H1 records and the untracked adapter are preserved. This checkpoint changes documents and approval records only: no scientific implementation, agent dispatch, Train fits, new predictions, provider calls or publication occurred. Runtime/claim-boundary checks remain execution preflight work, not passed by documentation.
+- **Next authorized action:** P0 initializes the fresh execution window and verifies the actual current process/source/model route. Preserve the approved plan as history; record operational start and subsequent results separately rather than rewriting this approval or old scores.
+
+## 2026-10-05 11:29 EDT — Exact original proposal saved separately
+
+- User clarified that the pasted original proposal, not only the later approved execution summary, must be saved as a Word document. The original review-stage wording is preserved; the approved DOCX and JSON are unchanged.
+- Created `plans/MARKET_RSI_REPAIR_DISCOVERY_PROPOSAL_FOR_REVIEW_2026-10-05.docx` in the permanent local repository. Source attachment SHA256 `d8ba117dca703d13a9124c923a54b9ba81dbae0c0c24338a899706b81ab33975`; DOCX SHA256 `0869345bc1f0d88b59451713c0eb6b15b718a0dc6aac719b472b0fe629d3b958`.
+- Verification: all 200 source content blocks preserved in order, with native headings, lists, two tables and source hyperlinks; all six final rendered pages visually inspected; accessibility audit has zero high/medium/low findings. Artifact builder uses bundled Python/runtime 26.904.11930. Source checkpoint parent `897c933`; scope is this document and this appended worklog entry only.
+- Outcome: original proposal is recoverable separately from approval. No prediction or harness-improvement evidence is earned by document formatting; no experiment ran in this document checkpoint. Next action follows the user's separate instruction to continue repairs, under the approved P0 clock, not the original proposal's historical waiting sentence.
+
+## 2026-10-05 11:32 EDT — Approved repair batch P0 passed
+
+- User explicitly requested `and continue your fixing`. Fresh P0 began 15:27:11 UTC /11:27:11EDT; hard deadline19:27:11UTC /15:27:11EDT and no-new-selection cutoff19:12:11UTC. Limits remain six selected attempts/24fits, max two single-thread children,900s per execution and sampled1GiB; provider0/$0. No expired window or historical allowance reset.
+- Actual Controller replied15:29:41UTC and distinct independent reviewer replied within P0; both can read current source/evidence and the reviewer launched the pinned runtime read-only. Exact serving model versions remain unknown, not authenticatedAstra. Capacity-error history retained. P0 gate resolution PASS verifies availability only, not source or science.
+- Process check found no matching local training child. Starting source b9bf347 after document-only checkpoint; dirty source/history preserved. Pre-existing partial H adapter97641cd9/220lines is explicitly preserved as an UNADMITTED local source checkpoint before repair; no matching tests or live parity yet.
+- Prospective H1v3 contract9317c9d2 changes operational window/log binding only, preserving old contract and exact numeric parity. Independent proposal review is dispatched before implementation. Shared budget is in the permanent local artifact directory `market-rsi-repair-discovery-20261005-01/batch_authority.json` outside Git; one held-C7 control selected/reserved4fits, actual0. All subsequent fits/attempts count against the same outercap.
+- Verification: P0 ready-step/resolve and H1proposal ready-step actually PASS; no optimizer, training, prediction, network acquisition or publication. Existing RESEARCH_STATE old-running entries are stale historical text, not current authority; current approved envelope and actual role logs supply the truthful operational status. Next action: bounded adapter/test completion after scope review, then independent integrated-source review and one real parity control, before D1.
+
+## 2026-10-05 11:44 EDT — Continuation and accumulation addendum
+
+- Appended the user's four additions verbatim as a dated addendum to both Word documents; every pre-existing body XML element was preserved. Approved document now8pages SHA256 `87fde22cfcd2691f2c82a28e3a32074c02ba714d258656d337f773c48cb1bdb9`; original proposal now7pages SHA256 `4e64c90c7e43ef527a3656d3c60940d9245709194efba3da08c119aaa552ffcb`. All15 rendered pages inspected and both accessibility audits report zero findings. Frozen approved JSON remains `fad6e5d0b2eadadb5e407c3da92d2eaf4bd746f716a53ab2d6db30a250e1520a`; limits and scoring did not change.
+- Next milestone requires automatic continuation AND a concrete prior finding influencing the next experiment. Useful memory, selection and reuse of negative findings are mechanisms to test; no researcher-code change is forced. This user-supplied rule addition and Supervisor coordination are not autonomous system evolution.
+- Existing logs must identify hypothesis/data/repair/continuation ownership, manual handoffs and total time to a valid experiment, including implementation/review overhead. New literature/data acquisition remains closed; current claim scope is experimentation on existing information. Later process comparisons require same model/information/permissions/total budget, capable fixed baseline and multiple trajectories.
+- H1 implementer finished synthetic verification only. Root's first independent synthetic test command omitted frozen thread settings:84 tests,5 fail-closed environment errors, no real Train fit. Corrected command with all five thread variables1 and PYTHONHASHSEED0 passed84 tests in6.087s without source changes. Two relative-path diagnostic searches used the wrong working directory and failed harmlessly; corrected to the permanent source root. These are Supervisor execution mistakes, not scientific counterevidence.
+- Read-only account-backed CLI transport probe completed once with requested `gpt-6.1-sol`; actual serving snapshot unknown, no tool calls or scientific decision. Reported14549 input/53 output tokens, paid provider0/$0; account monetary cost unknown. A responding transport is not yet an automatic research consumer.
+
+## 2026-10-05 12:00 EDT — First real repair control verified
+
+- Held-C7 ID `repair-h1-held-c7-01` executed once through existing worker at source3b03164/newpair7953e6e3/memory6faa9616. Four chronological real Train fits completed in4.3729s; sampled peak146912KiB, exit0/empty stderr. Worker receipt6435eba6. No source or score rule changed and no retry.
+- Independent actual result reviewc619bca9 verifies all60 source/runcommit bindings, seven manifest outputs, exact87 five-arm CSV, four saved canonical states, all34 original scorecard fields, proper losses/fourblocks/calibration/16grouped intervals and absent childPID. C7 remains Brier0.14195410408172784/logloss0.4288860887954059/REVERT, raw market Brier0.14195252900323282; this is operational parity, not a new scientific candidate or prediction gain.
+- Root accepts the engineering control in its existing journal and separate operational closure. No new scientific credit is fabricated for repeating C7, and no Controller scientific decision call occurs in this held comparison. H entry can now be used after separate D1 entry/source admission. This does not establish automatic continuation or improved R.
+- D1 entry envelopefb968b7f and independent scope953f3fc6 are frozen; worker implements one small entry/test without changing239line scientificsourcec57ed002 or contract36f69b70. Current shared budget2selected/8reserved/4actual fits; D1 not launched. P3 numerical modelconsumer separately scoped8ffb8445, not a recorder/worker/R rewrite. Actual accepted feedback and a fresh prediction experiment are still required.
+- Total wall time from P0 to completed independent H parity about32minutes, versus4.37s fitting: inspection, repairs, tests, operational source checks, manual Supervisor/native-role handoffs and review dominate. User's addition is a human intervention; scientificmethod/D1 choice remains Controller-authored, data previously human-authorized, implementationworker and supervisionroot. Additional root relative-path lookup and read-only journal snapshot mutex permission errors were resolved by explicit permanent paths/direct saved-JSON reading; no Train experiment or source repair was needed.
+# 2026-10-05 12:06 EDT — D1 integrated source ready; H1 closure clerical repair
+
+Root inspected frozen91line D1 entry38387cdb and248line testeacf1eed; original239line sciencec57ed002, Hf62a5459 and worker512176a1 remain unchanged. Root first invoked one guessed nonexistent scorer test module:79 real methods passed, one import error; corrected to the worker's explicit existing suite,106 synthetic methods PASS7.695s. This Supervisor command error is not an invalid scientific attempt or evidence against D1. No real D1 fits yet; selected D1 still counts under outer2selected/8reserved/4actualfits.
+
+H1 whole-bottleneck resolve initially rejected a missing top-level resolution summary although every source/live evidence step already passed. Added only a summary referencing actual independent13913664/c619bca9 receipts; unchanged gate now reports5steps/resolvePASS. No control rerun, score alteration or checker weakening. H1 controls remain engineering parity evidence, not prediction/researcher improvement.
+
+P3 prospective consumer scope independently admitted e5510b87. Reused Controller role dispatched to its exact new module/test and own log, synthetic-only20minute bounded implementation, in parallel with D1 source review. Root retains every handoff as Supervisor coordination; new account transport is gpt-6.1-sol alias/exact servingunknown, not authenticated matched Astra or an RSI gain. User addition calls for both useful accumulation and automatic next actual experiment, neither certified by tests or queue alone.
+# 2026-10-05 12:11 EDT — first new real D1 completed, result verification active
+
+Controller's frozen D1 conditional-pressure recipe ran once through reviewed entry38387cdb, sciencec57ed002, source-admission8f7db3f5, actual launchHEAD1791eac and requestfc1e9186. Four real candidate fits completed in4.529s, sampled139312KiB; no parent refits/retries, stderr empty. Output is the permanent repair batch d1/runs/repair-d1-joint-pressure-01. Outer budget now2selected/8reserved/8actualfits; held-C7 consumes one engineering control slot, D1 is one new scientific candidate. Shared deadline unchanged19:27:11UTC.
+
+Provisional frozen scorecardd2a94edc: D1 equal-event Brier0.14220246486710142, logloss0.4289191704565473; parentC7 0.14195410408172784/0.4288860887954059, raw0.14195252900323282/0.4296707847132428. D1-parent Brier+0.00024836078537357476/log+0.00003308166114140976;1/4 parent blockwins and2/4 raw blockwins. Frozen judge REVERT/REFUTED; no current incumbent update. Neither run failure nor allPBP refutation. Actual distinct result verification not yet accepted; no fabricated feedback-dependent descendant.
+
+Separate no-fit locked-CSV supplement4bde4a10 preserves originals and reports parent energy0.000021300524676592425 plus signedalignment0.00022706026069695872, summing to observed parent Brier worsening, by aggregate/fold/date. Parent directional/stronger annotations false. Root first used a guessed shorter parent-arm key, got KeyError before any artifact write or fit, corrected actual named arm; operational analysis repair retained. Initial process inspection was sandbox-denied, repeated only scoped relevant-process read with approval, no existing training child found. Source/score/runtime/data boundaries unchanged.
+
+Authorship: native Controller supplied hypothesis/combination and continuation premise from priorA2/C7; existing human-authorized frozen source supplied data; worker implemented entry; root coordinated source admission/launch and corrected two command/analysis issues; independent reviewer now owns actual result/credit admission. Total elapsed since15:27:11 includes docs/availability/entry/tests/reviews/coordination, not just4.529s fit. No per-round human algorithm choice. Account feedback consumer still implements separately; exact native serving version unknown. Current H admits C1/C7 parents and alpha16 only: this is a real entry-capability limitation, not unrestricted open-method support. It must not silently relabel future actual parents or narrow Controller hypotheses to hide this limitation.
+# 2026-10-05 12:20 EDT — D1 accepted feedback; new numerical consumer ready for review
+
+Independent D1 result6dced80a is final and accepted:68 source bindings/seven output hashes/193 inputs/four joint scalar F-g-H-KKT/87 candidate-and-parent predictions/five-arm calibration/16 whole-date-week intervals/locked supplementary identities reproduced without refitting, child73925 absent. Existing recorder durably recorded REVERT, credit2/refute/branch and actual feedback-ready state2175d3f2. Exact feedback file7ce35a90; canonical packetcc8482d3. Credit recognizes a valid distinct conditional test, not a Brier improvement;14 eligible parent records include archive routes, global active capacity remains3. Initial root cooldown suggestion corrected before any record because it would wrongly cancel valid negative-parent eligibility. First feedback export had a Path/string precedence error AFTER journal completion; recovered only original saved packet, did not repeat credit/review/fit.
+
+Independent ledger check confirms2selected/8reserved/8actualfits. Earlier original-byte before-ledger hash differs from separately reserialized semantic snapshot; no byte-equality claimed. Updated live accounting prose from stale no-D1-fit to actual completed totals without changing cap/claims; original proof preserved. No retroactive scientific change.
+
+One new H numerical consumer source66c53470 has234lines/test8ff1a7cf326lines, exceeds180 target/200 warning and awaits explicit semantic inseparability/source review before account call. Author18focused+inherited execution77PASS1.068s; root named two-module52distinct methodsPASS0.655s, no model calls. Root review caught real status-name gap, existing-ack recovery wrongly dependent on changed budget, guessed supplement field, missing named candidate/question fields and improper restriction to current active parents; all repaired before independent activation, earlier provisional hashes logged. It now uses actual accepted numerical feedback, restores eligible archive routes, saves once-call claim/completion/response/ack, recovers original response after cap changes without resampling, and keeps fresh-call outer guards. Tests are not actual continuation proof. Research policy/old scorer/recorder/worker unchanged; account route explicitlygpt-6.1-sol alias/servingunknown, not authenticated nativeAstra or base-model-controlled mechanism evidence.
+# 2026-10-05 12:25 EDT — real numerical preflight passed, no account call yet
+
+First real11-role consumer input preparation rejected immutablecard cost type: original provider_cost_usd is string"0", not root's assumed numeric0. Card/scorer remained unchanged; unadmitted consumer revised from66c53470 checkpoint to99f86b54, testd8364dc2. Two additional pre-call safeguards supply exact input/feedback digests in the tool-free model prompt and bind consumer/source/scope hashes in claim/process/completion; no model asked to calculate a223KB SHA and no live call consumed on this mismatch. Tests check actual transport stdin with fake Popen, not solely an entirely mocked transport.
+
+Final241line consumer remains one reviewed-prospective H component, not R mechanism;20focused+inherited79executionsPASS1.098s/54distinct. Root54distinctPASS0.686s. Actual independently accepted D1 feedback, card, CSV, supplement, memory/history/pool, shared authority, ownership/overhead and request now pass prepare_input in0.6417s with no modelcall/no newfits. Permanent controller_input file28407eed, canonical acc8f1d2,223326bytes; all14 eligible archived/current/baseline parent records retained. Overhead has human scientific interventions0/governance addendum1, explicit Supervisor failures/hand-offs and complete batch wall—not just8.902s cumulative two workers. Scope/source independent receipt still required before actual call; no completed loop or researcher superiority claim.
+
+Additional read-only lookup: root guessed BOTTLENECK_STATE.json filename absent, rg found actual BOTTLENECK_STATE_2026-09-18.json. No state written on guessed path. This is an operational lookup issue, not another scientific candidate.
+
+## 2026-10-05 21:50 EDT — Controller capability implementation
+
+User requested `implement` after the approved enablement plan. Root coordinated
+three disjoint workers: actual runtime probe, failure adapter, independent review.
+H1 scoped evidence session is independently accepted and locally committed401a311:
+actual broker results must match completed tool events/audit before source citations
+are accepted; listing alone is insufficient; original response recovery is once-only.
+H2 native factual failure input is implemented: actual v4 failed recorder branch,
+independent stage/actual-fit review, numerical=null, no scorecard/prediction/supplement
+files, valid saved parents retained. Legacy mandatory scorecard hash is explicitly
+the same nonpredictive failure receipt, not a made-up score. Prompt distinguishes
+execution failure from scientific refutation; helper-only drift blocks recovery.
+
+Root206relevant synthetic test executions3.513s PASS/1intentional opt-in skip;
+separate final actualCLI2tests0.683s/3localhost requests PASS. Native combined
+failure+audited retrieval also passes. Exact sources/limitations are in
+CONTROLLER_ENABLEMENT_INTEGRATION_VERIFICATION_2026-10-05.json; final independent
+verdict lives in its separate review receipt, not assumed by implementation.
+
+Real account/protected/Train reads, fits, scientific provider/external requests0.
+Actual CLI catalog has two reader tools plus four native resource/input adapters;
+unapproved URI denied, approved synthetic text reached programmed next input.
+This is not a real scientific Controller or account-parity proof. Live evidence
+activation is hard blocked before claim; new field strings cannot unlock it.
+Old batch caps, scientific scores/incumbent/scorer/learning/parent rules and protected
+RESEARCH_STATE unchanged. Historical original receipts remain pinned to old source.
+
+This is user-directed H engineering, not R self-evolution or new predictive evidence.
+No per-round human hypothesis/model choice occurred; engineering trigger1,
+Supervisor repairs/handoffs logged. Runtime worker16local fixture requests/7sessions
+plus Root3/one session; model-assisted engineering cost unknown, not claimed free.
+E2B/Tinker are not new execution dependencies, but no services/history were deleted.
+Next gaps: real account runtime boundary with fresh budget, generic candidate
+implementation/dispatch and two-real-round acceptance; then same-model mechanism
+controls. Do not revive exhausted authority or call these partial repairs full autonomy.
+
+## 2026-10-06 10:36 EDT — Ten-hour window closed; zero new scientific experiments
+
+Goal was repaired execution followed by real feedback-dependent Train candidates.
+The original window04:36:33–14:36:33UTC has expired; the window heartbeat was
+deleted through the app after deadline observation14:36:44UTC. Final actual
+process query14:37:23UTC found no window Controller/training process.
+
+Actual result:0new account calls,0candidate attempts,0fits,0new predictions.
+The first launch was rejected beforeprocess because private Train-derived
+feedback/history/memory transfer to the signed-in account lacked explicit
+payload/destination consent. One permission question stayed unanswered; no
+same-ID retry, alternative-model/agent workaround or further substitute harness
+work was performed while pending. Already-authorized local Train research was
+not revoked; the missing permission was account transfer.
+
+Preserved engineering: exact-window bindinga7a7a2d and reviewed source/native
+handoffa9a22b6; earlier Root/independent263 relevant test executionsPASS with
+one opt-in skip, plus serial bookkeeping7PASS and matched baseline2PASS/5FAIL
+to7PASS. These are prior verified human-directed H improvements, not new
+prediction evidence or autonomous researcher evolution. No tests were rerun
+merely for deadline closure. Full10h is elapsed allocation, not active compute;
+scientific worker time0, paid provider$0, AI engineering cost unmetered.
+
+Raw-market incumbent historicalBrier/log0.1419525290/0.4296707847, C7calibration
+and B3nonlinear-state research pool, archive and closedprior2/8/2 remain unchanged.
+No new KEEP/REVERT, Controller pool selection, feedback reuse or scientific
+negative result was manufactured. Dev/Final/external/paid/release/promotion
+stayed closed. New predictive gains, autonomousRchanges and same-budget fixed
+versus evolving superiority are unsupported.
+
+Outcome: experimental objective NOT achieved; permission-blocked and deadline
+closed, not a performance failure. Evidence:WINDOW_10H_CLOSEOUT_2026-10-06.json
+and immutable permanent window_deadline_terminal.json. Next: a separately
+bounded future window with explicit account payload consent and fresh exact
+input/operation review; this expired window cannot be resumed or reset.
+
+## 2026-10-06 17:02 UTC — source checkpoint and co-evolution pilot redirect
+
+Four separately versioned H components are independently reviewed: accepted
+comparison-only parent loader4f13fb9, production preflight2d0b0e5,
+versioned candidate entrya5ede88, and fresh native handoffcc5937f. Root's combined
+154 relevant synthetic/import-only tests passed in18.796s. Archived nonlinear
+and valid negative parents can reach synthetic four-fit/87-row fixed scoring;
+matched legacy scores remain identical. Failed prerequisites stop before native
+selection and completed/uncertain originals are not retried. This is engineering
+capacity evidence, not real Train gain or autonomous researcher improvement.
+
+The user explicitly redirects from indefinite gap repair to one agent-proposed,
+tested, versioned cycle demonstrating both R(researcher capacity) and H(harness
+capacity), with downstream effects separated. Full global scheduler work is
+deferred before assignment. These instructions are a human intervention, not R
+self-evolution. Do not force a stale/unnecessary researcher rewrite or call a
+predictor-only change co-evolution. A new bounded45min/2candidate/8fit/2original
+Controller pilot question is pending, including exact private compact
+Train-derived payload and signed-in account destination. Prior batch caps stay
+closed; no new account calls, real fits, predictions or live ledger changes in
+this repair turn. A supervised pilot does not require all remaining gaps closed
+and cannot establish same-budget fixed-versus-evolving superiority.
+
+## 2026-10-06 19:54 UTC — loop-closing code implemented and independently checked
+
+Implemented four small, separately checkpointed components: once-only feedback
+stage coordinator, adapter to the existing original transaction/native worker and
+sole budget ledger, separate predictor/researcher/harness/memory identities, and
+idle reviewed R/H version selection through the existing native micro journal.
+No scorer, old scores, KEEP/REVERT, incumbent, pool or history changed.
+
+An actual synthetic two-round test executes a negative candidate, separately
+tests/accepts R then H, restores the registry/journal and uses both accepted
+versions in the next callbacks. R avoids a repeated failure; H keeps parent/cause
+in feedback. This is a synthetic plumbing/behavior test, not agent-scientific
+authorship, a real Train gain or research-process superiority.
+
+First independent review found three real defects despite green tests: stale
+activation evidence, ignored tighter resource grants and impossible fit counters.
+Failed review is preserved. Narrow fixes c56c4b2/620e612 correct each, plus actual
+rollback evidence.224relevant tests PASS6.537s; reviewer independently48focused
+PASS0.880s and adversarial probes. Final verdict PASS_CODE_ONLY; existing native
+contract, transport, worker and scorer unchanged. Full repository suite not run.
+
+Zero new Controller-account calls, residentTrain fits, protected reads, paid or
+external operations. Closedpilot04 ledger remains unchanged. Trusted input,
+implementation, independent review and reconciliation services still have to be
+registered for a live unattended route; callback support is not a deployed
+science service. A fresh exact live pilot/window/account/source admission is
+needed; old exhausted/expired caps are not renewed. Literature/tools and matched
+fixed/evolving-process experiments remain bounded future work, not claimed gains.
+
+Detailed source trajectory, first FAIL, correction tests and final PASS:
+LOOP_CLOSURE_IMPLEMENTATION_RESULT_V2_2026-10-06.json,
+LOOP_CLOSURE_IMPLEMENTATION_REVIEW_V2_2026-10-06.json and
+AGENT_LOG_LOOP_INTEGRATION_2026-10-06.md. This was human-requested Supervisor/
+implementation-agent engineering; no human scientific hypothesis or algorithm
+choice and no new autonomous researcher-capacity result are asserted.
+
+## 2026-10-06 20:07 UTC — price/tradeability reassessment, proposal only
+
+Human requested a new price-and-tradeability direction; this is not a Controller
+self-selected task change. Inspected actual source/Git, last permanent closed04
+ledger and process names. No matching native Controller/training process observed.
+Closed ledger0e950a5e remains unchanged; no expired grant reused.
+
+Read the user-linked Optiver/Susquehanna descriptions and the full-text methods/
+limitations of Market Maker's Dilemma; these support direction/separate fill and
+markout targets, not proprietary strategy, NFL transfer or project profitability.
+Reviewed existing price-MSE scorer, horizon-screen source, in-game materializer,
+memory/feedback history and loop code. Old scores/KEEP/rules/archives untouched.
+
+Read-only zero-fit audit checks530222filtered taker trade rows from195games,
+42dates/14NFLweeks. No invalid numeric/condition/token/index/duplicate row found;
+CSV and stored/raw catalog hashes checked. Not a complete order-event feed.
+Integer-second trade times, no local-receive/publication proof, no historical BBO/
+depth or own order/fill records. Retrospective catalog bid/ask fields are NOT
+decision-time quotes. PBP/time evidence exists but historical availability remains
+unverified; omit PBP from first price-only task.
+
+First audit assertion failed because receipt token order was assumed to equal
+raw market order. Corrected only new audit helper and preserved the failure in
+its evidence:115/195receipts reorder token sets; raw selected market token0
+matches outcome_index. Five focused synthetic audit tests pass. This is a
+Supervisor implementation finding, not accepted autonomous R/H evolution.
+
+Fixed300sgrid/30s strictly-trailing same-token windows yields4485population
+anchors,2721forecastable,1848paired endpoint labels across190games. Preserve all
+195games and873future-label-missing forecasts; score conditionally, never carry
+prices/labels forward. Check folds have991rows/87games/20dates/7weeks; week14
+has1authorizedgame.60s has1903labels vs300s1848, so5minutes is not selected for
+better coverage or scores: deliberately coarser timing/less window overlap.
+
+Saved proposed MarketTradeVWAPChange300sTrainDiagnostic-v1: no-change, fixed
+ordinary HGB regression, and original Controller-selected same-information
+candidate; equal-game MSE, MAE/correlation/period diagnostics, paired whole-observed-
+week resampling. Reuse22initialdates+4x5expanding checks as Discovery, not untouched
+OOS. Initial future batch proposal45min inclusive/2attempts8fits/1original decision.
+Matched fixed/evolving researcher arms are a separately authorized follow-up,
+45min/3attempts12fits/2decisions each, including implementation/review. Both capable
+of memory and multi-branch search; C/R/H/M/K attribution and feedback dependencies
+separate. One pair is pilot evidence, not process superiority.
+
+Only new feasibility helper/tests, aggregate evidence/proposal and existing logs
+were changed. No Train fits, account Controller calls, protected reads, new market
+data, paid calls, release/push/promotion or authority change. New task entrypoint
+is planned, not implemented. First price scorecard requires fresh exact admission;
+formal prospective evaluation/trading collection do not block authorized Train
+research, but cannot be inferred from this planning request.
+
+Evidence: TRADE_PRICE_FEASIBILITY_AUDIT_2026-10-06.json;
+proposal: PRICE_PREDICTION_PILOT_PLAN_2026-10-06.json.
+
+Final five focused tests PASS; a second independently implemented timestamp-set
+occupancy calculation reproduces4485/2721/1848/190coverage in0.666s. Plan/audit
+source hashes, fold totals and unchanged closed ledger checked. This is independent
+algorithm verification by Supervisor, not a separate agent/human review. Full
+repository suite not run because existing experiment/harness code was not changed.
+
+## 2026-10-07 — bounded developer-entry cleanup (human-directed, pending verification)
+
+Observed problem: the root README has no current pipeline map, the project
+README leads with the September 16 setup, and its advertised test command does
+not exercise the current price/co-evolution services. This pass changes one
+component: developer navigation and the explicit synthetic regression entry.
+Expected effect: a developer can identify the current services and run a named
+regression suite without constructing a live research batch.
+
+Parent and rollback source: `7b6da3527eb5b77c4692adc8d8051006cbf3e063`.
+Author: human-requested Codex cleanup; axis H/developer tooling, not autonomous
+R/H evolution. Isolated branch `codex/market-rsi-cleanup-20261007`; the shared
+Supervisor checkout and its uncommitted work are not changed.
+
+Exact allowed files: `README.md`, `DEVELOPMENT.md`, `tools/check.py`,
+`tools/tests/test_check.py`, `research/market_rsi/README.md`, and this progress
+file. Protected: every production service, evaluator, candidate, dataset,
+runtime/dependency specification, source pin, immutable experiment record,
+authority and budget file. K/M/C and operational H/R remain at the parent
+source identities; no new scientific identity or activated runtime is claimed.
+
+Reuse: the already-implemented production-entry and synthetic service tests;
+this introduces no new scientific method or changed data assumption requiring
+literature research. Planned checks: new test-wrapper unit tests, an explicit
+small smoke suite, the existing 24-module price/capacity regression set, and
+`git diff --check`. Test ceiling: one run per suite, at most five minutes each,
+single numerical-library thread; no Train fits, account calls, downloads,
+installation, push, deployment or live launch. Synthetic test runtime: existing
+Python 3.12.3; research model/data/memory manifests and live receipts: N/A.
+
+Initial verification: `git diff --check` passes. With the existing Python
+3.12.3 runtime, `python -B -m unittest discover -s tools/tests -v` passes all
+eight new wrapper tests (0.001s reported test time). These test explicit module
+selection, list-only behavior, interpreter/cwd/environment handling, failure
+status, timeout and invalid-suite rejection; subprocess execution is mocked.
+Inherited smoke/price suites remain pending. Next step: checkpoint this source,
+run the selected inherited suites, and append their measured results.
+
+### Verification checkpoint — source `940f42fe730de631017f81e6683e83373fac1b8a`
+
+Commands used the existing
+`/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python`
+with `-B` and `PYTHONDONTWRITEBYTECODE=1`:
+
+- From `/private/tmp`, the absolute `tools/check.py --suite smoke` command:
+  64 tests PASS, 0.615s. This also verifies checkout-independent working directory.
+- From the isolated checkout, `tools/check.py --suite price`: 369 tests ran in
+  38.900s, FAILED (8 failures, 22 errors), exit 1. The host sandbox denies
+  `/bin/ps`, which the inherited synthetic child/RSS tests require. Several
+  later role fixtures also fail; these are not yet independently diagnosed.
+  Preserve this failure rather than skipping assertions or claiming a green run.
+
+No production module or selected test was modified. Add the observed host
+requirement to the developer guide. One additional run of the identical price
+selection with explicit host permission is planned to distinguish environmental
+denial from source defects; it stays within the same five-minute ceiling and
+synthetic-only scope. The original one-run test plan is amended for this measured
+environmental failure only, with no automatic retry behavior in the check tool.
+
+Host-permitted rerun of the same `tools/check.py --suite price` at source
+`e9a6d70`: 369 tests PASS, 60.544s. A deliberately invalid fixture Git source
+prints a fatal diagnostic, but its rejection test passes; process exit is 0.
+This establishes the selected current regression baseline, not the full legacy
+repository suite or live research performance. The first cleanup pass is L1
+developer verification; no runtime activation or external write occurred.
+
+### Second bounded cleanup contract — nested synthetic test-fixture lifecycle
+
+Trigger: the sandbox-denied run produced cascading role-test failures after
+earlier nested fixture setup errors. Inspection finds child cleanups registered
+after `setUp()` in ten current price-test call sites. A setup error can therefore
+leave a child's already-started patches active in later tests. Change one named
+component: nested fixture ownership. Register child `doCleanups` before calling
+its `setUp`; add synthetic failure-injection tests to measure restoration.
+
+Parent: the first-pass verification checkpoint; rollback restores that source.
+Human-directed developer-test change, not an operational R/H proposal. Exact
+allowlist: this progress file; `tools/tests/test_fixture_cleanup.py`; and these
+files under `research/market_rsi/supervisor_harness/`:
+`test_run_price_discovery.py`, `test_price_loop_services.py`,
+`test_price_loop_handoff.py`, `test_price_independent_review.py`,
+`test_price_candidate_author.py`, `test_price_capacity_services.py`,
+`test_price_capacity_review.py`, `test_price_capacity_trial.py`,
+`test_price_capacity_loop.py`. All production modules and experiment/runtime/
+data/authority identities remain protected and unchanged. No new dependencies.
+
+Expected effect: a deliberately failing child setup cannot leave its registered
+mock active after parent cleanup. Reuse standard unittest cleanup semantics and
+the existing synthetic fixtures; no new scientific method or data assumption.
+Plan: run new failure-injection tests once before the fix (expected failure),
+once after, and the unchanged 369-test host-permitted price selection once after
+the fix. Each run has a five-minute ceiling, with no live account calls or Train
+fits. Keep the pre-fix failure and post-fix results as separate local checkpoints.
+
+Pre-fix source `3493916` (parent plan `6970eb2`):
+`python -B -m unittest discover -s tools/tests -p test_fixture_cleanup.py -q`
+ran two tests/ten failing subcases in 0.835s, exit 1. Each injected child setup
+starts a synthetic `_recover` patch, registers its cleanup and raises before
+filesystem, account or worker activity. All ten parent call sites failed to
+restore that patch. The regression itself restores its patches even on failure.
+This independently confirms the cleanup-order defect rather than assuming all
+sandbox-run failures have the same cause.
+
+Implementation: move child cleanup registration before setup in those ten call
+sites across the declared nine price-test files. No production source or test
+assertion is relaxed. Post-fix verification is pending at this source checkpoint.
+
+### Final cleanup verification — source `ce80f5cf20ec0793dd85a530dd92c70a6a290c41`
+
+- Existing Python 3.12.3, `PYTHONDONTWRITEBYTECODE=1`, from the isolated root:
+  `python -B -m unittest discover -s tools/tests -v`: 10 tests PASS, 0.558s,
+  including the ten previously failing child-setup subcases.
+- Same interpreter, `python -B tools/check.py --suite price`, with explicit host
+  process-inspection permission: all 369 inherited tests PASS, 58.523s. The
+  expected invalid-source Git diagnostic is unchanged; final process exit 0.
+- `git diff 7b6da3527eb5b77c4692adc8d8051006cbf3e063 --check`: PASS. The total
+  changed path set is exactly the union of the two declared allowlists (16
+  paths). Production services, evaluators, dependency pins, research candidates,
+  raw data, live ledgers and immutable experiment records are unchanged.
+
+Outcome: clearer current/historical navigation, one explicit synthetic test
+entry, and measured elimination of ten nested-fixture patch leaks. This is
+developer-only L1 evidence. The restricted sandbox still cannot satisfy the
+inherited RSS checks; that host limitation was documented, not bypassed in code.
+No full-legacy-suite, live autonomy, forecast gain or co-evolution claim.
+
+Checkpoint history retains the initial source, sandbox failure, host baseline,
+pre-fix red regression, test-only fix and measured green result. The canonical
+Supervisor checkout advanced independently during this work and was not edited
+or committed by this cleanup. All commits stay on the isolated local branch;
+no push, merge, experiment launch or runtime activation. Next: integration owner
+reviews these source-only changes, then chooses one recovery/scheduler boundary
+for the next bounded cleanup; defer historical file moves until references and
+source commitments are audited.
+
+## 2026-10-07 — remove redundant entry material and retired leaf probes
+
+User instruction: remove redundant material while keeping core code intact.
+Parent/rollback source: `202bc8c6ecbae76e879134a025c859ceda201295`, isolated
+branch `codex/market-rsi-cleanup-20261007`. This is human-directed repository
+pruning, not an activated R/H change or a new research experiment.
+
+Read-only inventory: no byte-identical tracked files >=100 bytes. A conservative
+AST import/string-reference traversal from the price entry and capacity services
+reaches 54 modules, including several old-looking harness dependencies; preserve
+them. Six removable leaf CLI probes have zero external filename/stem/SHA256
+references in tracked source, docs or records in both this checkout and the
+canonical repo at `1db89c923c8b45b537f5b26cd3ff8f8c62786d58`. Their old network/
+SDK checks are superseded by the current account-backed price entry and retained
+local regression tests. This does not establish that all unused files are redundant.
+
+Exact allowlist: `research/market_rsi/README.md`,
+`research/market_rsi/supervisor_harness/README.md`, this progress file, and these
+six deletions under `research/market_rsi/` (pre-delete SHA256):
+
+- `audit_tools/canary_finding_aliases.py`:
+  `1d7641b718da2279b08204c942dbbd25912e40142c44573a9f4d4025db6f2b4a`
+- `audit_tools/canary_json_text_argument.py`:
+  `7936543a07f87690776f93d24a169b25c6f04c5e82bbf0dc2a9450a1bef30b03`
+- `audit_tools/canary_public_links.py`:
+  `78caa78cc65140a28ce4cb28a8a06bce8152a3b449cc48e8afcd80ef250b35e8`
+- `list_e2b_sandboxes.py`:
+  `8b454c4122fd24569577fa8ff9997cc399c7ced751f1329a2caaef046f7c9062`
+- `polymarket_runtime_probe.py`:
+  `9859962605bb700e701b88a66486486201e6afc513d2db4049c704cbf792bbae`
+- `codex_mcp_wire_canary.py`:
+  `cca90db420ee6bf3fbb3983db4868fb4bd86082216f67a291570eaef4b1c4eb3`
+
+Protected: every other Python module and test, current pipeline/worker/scorer,
+data/runtime/dependency specifications, instructions, state, authority/ledger,
+approved plans and dated immutable results/logs. Keep useful SQL-decode and
+Docker-control fixtures even though the current price entry does not import
+them. Remove the repeated historical walkthroughs from the two entry READMEs;
+their old bytes and all deleted scripts remain recoverable at the parent commit.
+
+Split checkpoints: concise README entries; three obsolete broker network probes
+(146 code lines); two retired E2B utilities (113 lines); one old GLM MCP-wire
+probe (137 lines). No retained core behavior is changed. Plan: verify exact
+deleted set and unchanged retained Python bytes, doc links and whitespace, then
+run ten developer tests and the unchanged 369-test host-permitted price suite.
+At most five minutes per test command, no live model/provider/network probes,
+Train fits, installation, push, merge or activation. Runtime is the existing
+Python 3.12.3; scientific model/data/memory manifests: N/A. Verification pending.
+
+Verified at source `6c6ba374a3a2270a47c2800ff899e15adb565fa3`:
+
+- Git blob comparison to the parent confirms exactly the six declared Python
+  deletions (396 lines) and all 1,118 retained Python files byte-identical.
+  The total changed path set equals the nine-path allowlist.
+- Both concise entry READMEs pass all 22 local-link checks. Their rewrite removes
+  238 lines of repeated historical walkthrough and adds 39 navigation lines.
+  Detailed protocols and original experiment records remain unchanged.
+- Existing Python 3.12.3, `PYTHONDONTWRITEBYTECODE=1`,
+  `python -B -m unittest discover -s tools/tests -v`: 10 tests PASS, 0.797s.
+- Same interpreter, `python -B tools/check.py --suite price`, explicit host
+  process-inspection permission: 369 tests PASS, 57.646s. The inherited deliberate
+  invalid-source fixture diagnostic is unchanged; final exit 0.
+- `git diff 202bc8c6ecbae76e879134a025c859ceda201295 --check`: PASS.
+
+Outcome: redundant leaf launchers and duplicated README prose removed from the
+isolated branch; retained core code, tests, data and experiment history intact.
+Source checkpoints: `73e52d9` README pruning, `509ebf6` broker probes,
+`e31cc35` E2B utilities, `6c6ba37` old MCP-wire launcher. Deleted content is
+recoverable from the recorded parent or earlier Git history. No push, merge,
+live run or activation; the Supervisor checkout was not edited. Next: review
+and integrate the bounded cleanup branch when the integration owner is ready.
+
+## 2026-10-07 — local historical-log archive
+
+User requested moving logs into a local archive. Parent/rollback source:
+`36f301b4130e2b65f89833c1d05395bc82db03a5`. Preserve every retained Python byte, active/recent
+log, code/machine-referenced record, JSONL trajectory, current state/progress,
+authority, runtime and dataset. This is local record housekeeping, not an
+activated research or harness change.
+
+Frozen selection: the 107 exact paths and pre-move SHA256/bytes in
+`../LOCAL_LOG_ARCHIVE_2026-10-07.json`: dated before October1, inactive in both
+this checkout and the canonical index, with no tracked code/JSON/JSONL/TOML/TXT
+reference outside the mutable dashboard index. All107bytes also match the
+canonical checkout. Preserve125recent/active logs and102older referenced logs.
+This is a safe subset, not all project records.
+
+Archive target: `/Users/estelle/Library/Application Support/MarketRSI/archive/market-rsi/logs-20261007-36f301b`, a fresh
+private local directory outside Git. Copy original paths unchanged under that
+root, retain the full original dashboard index as `index-snapshot.json`, and
+verify all hashes before deleting originals from the isolated branch. Then
+remove only the49inactive archived entries from this branch's active dashboard
+index; keep every retained entry unchanged. The shared dirty index and logs
+remain untouched in the canonical Supervisor checkout.
+
+Exact allowlist: the107manifested log removals, the new archive manifest,
+`AGENT_LOG_INDEX_2026-09-17.json`, this progress file, and the project,
+Supervisor and local-dashboard READMEs. No Python/source/runtime or scientific
+record changes. Immutable old document references retain their original meaning;
+the manifest maps their old log names to the preserved local files, with the
+pre-archive Git source available for historical replay.
+
+Plan: checkpoint the manifest; copy to the fresh archive with no overwrite;
+verify107hashes plus the original index; remove originals and prune only selected
+inactive index entries; verify all retained Python blobs and index records,
+dashboard reads, local doc links, ten developer tests and369synthetic price
+regressions. At most five minutes per test command, no live account/provider
+calls, fitting resident Train, downloads, push, merge or activation. Numerical
+runtime: existing Python3.12.3; research model/data/memory manifests: N/A.
+Verification pending. This bulk step only relocates closed textual records;
+no operational co-evolution attribution or safety gain is claimed.
+
+Archive verification source: `08d46a11b755988fec32f005146234284f2098bc`.
+All107archived files (1,009,418bytes) and the full original index pass byte/hash
+checks; their originals are removed from this branch. All139retained index
+objects equal their original values, with49inactive entries retained in the
+archive snapshot. The retained dashboard view is unchanged (99valid entries);
+two pre-existing unavailable untracked recent logs remain unavailable, with no
+additional missing logs. Every1,118Pythonfile matches its parent Git blob.
+Exact113-path scope, all current README links and whitespace checks PASS.
+
+Existing Python3.12.3, `PYTHONDONTWRITEBYTECODE=1`,
+`python -B -m unittest discover -s tools/tests -v`: ten tests PASS,0.728s.
+Same interpreter, `python -B tools/check.py --suite price`, with explicit host
+process-inspection permission:369tests PASS,55.026s, exit0. The inherited
+deliberate invalid-source diagnostic remains expected. No full-legacy-suite or
+live research claim; no real account/provider calls, Train fits or core changes.
+
+Set the archive manifest to `archived_verified` and mirror that final manifest
+into the persistent archive. Source checkpoint8005497 freezes selection;
+08d46a1 records the move; the next local result commit records this verification.
+Original log bytes and registry remain recoverable from both the local archive
+and the pre-move Git source. Canonical Supervisor files, including its dirty
+registry and ongoing logs, are untouched. No push/merge/activation. Integration
+owner must reconcile its newer registry when adopting this cleanup branch.
+
+## 2026-10-07 — RSIBench-Data repository-layout adoption plan
+
+User requested following the reference paper's Git layout. Inspected official
+`https://github.com/evolvent-ai/RSIBench-Data` at source
+`4c807610243e7b481d382c5ed360c71c79a22f61`, accessed October7. Read its
+README Repository Layout and Artifacts and Accounting, `.gitignore`,
+`tools/README.md`, benchmark spec and runner output placement. The source
+separates runner, backend services, benchmark profiles, docs, tests and tools;
+generated runs and closed artifacts are ignored. It also commits selected
+baseline diagnostics under benchmarks, so this is not a logs-free source repo.
+Reuse these organizational principles; do not adopt Tinker/E2B, old benchmark
+tasks, service permissions or training budgets.
+
+Local parent/rollback source: `11c1ed74cc6fb62adf0f340f0f65896264bef77f`, branch
+`codex/market-rsi-cleanup-20261007`. This is human-authored developer housekeeping,
+not an activated H/R change or research improvement. Freeze production Python,
+imports, source identities, scientific records, archived logs, dashboard index,
+current state, data and all live accounting. Canonical Supervisor remains untouched.
+
+Exact change allowlist: add root `.gitignore`; move `DEVELOPMENT.md` to
+`docs/DEVELOPMENT.md`; move `tools/tests/test_check.py` and
+`tools/tests/test_fixture_cleanup.py` byte-for-byte into root `tests/`; update
+the root, project and Supervisor README navigation; append this progress entry.
+Document the future runner/backend/benchmarks mapping in the existing guide.
+Do not add placeholder services, duplicate code or redirect production imports.
+
+Verification plan: inspect exact changed paths; verify all project Python and
+the two moved tests against parent Git blobs; resolve current navigation links;
+check representative generated/secret paths are ignored and source/fixtures
+remain visible; run root developer tests and the synthetic smoke and price suites.
+Use existing Python3.12, single numerical-library threads, no installs, live
+account calls, resident Train fits, paid providers, push, merge or activation.
+Scientific configuration, model, data and memory manifests: not applicable.
+Tests and final layout verification are pending at this planning checkpoint.
+
+Layout source checkpoint: `371216736e1b0554219ddb2da7cad4591e4a9565`, following
+plan checkpoint `eb85bde`. Seven logical files changed: root ignore policy,
+guide relocation/update, three navigation updates and two byte-identical test
+relocations. The source comparison
+`git diff --exit-code eb85bde -- ':(glob)research/market_rsi/**/*.py' tools/check.py`
+returns0: no project Python or developer runner changes. Both moved tests pass
+`cmp` against their parent Git blobs.
+Updated current navigation targets resolve; representative credentials, caches,
+raw data and generated output paths are ignored while source, docs, tests and
+the synthetic fixture task remain visible. Ignore rules do not untrack existing
+curated evidence. Staged scope and whitespace checks pass.
+
+Exact verification commands, from `/private/tmp/market-rsi-cleanup-IYDuCk`,
+using `/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python`
+(Python3.12.3), without installs:
+
+- `python -B -m unittest discover -s tests -v`: 10 PASS,0.806s.
+- `python -B tools/check.py --suite smoke`: 64 PASS,0.609s.
+- `python -B tools/check.py --suite price`: 369 PASS,58.392s, under explicit
+  host process-inspection permission; numerical-library threads capped by
+  the existing check runner. Its intentional invalid-source Git diagnostic
+  is unchanged and the suite exits0.
+
+No live model/provider calls, resident Train fits, data acquisition, source-path
+activation, push or merge. Root tests moved; existing colocated production
+regressions and all machine-bound records stay put. Runtime artifacts and the
+107-log archive remain at their existing locations. Developer layout is now
+verified locally; runner/backend/benchmarks source migration remains planned
+pending import and source-binding inventory. Integrating this branch with the
+Supervisor's newer work is a separate source review, not implied by these tests.
+
+## 2026-10-07 — Package-first developer layout plan
+
+User requested applying the reviewed popular-repository layout. Parent/rollback
+source is `41bfdaf2f733109e91f869262b46e805e6322f8f`, isolated local branch
+`codex/market-rsi-cleanup-20261007`; the canonical Supervisor checkout has newer
+commits and unrelated dirty work and will not be modified or merged here.
+
+Reuse the October7 source inspection: OpenEvolve
+`9196d8763300d1e46cc8b48cb0dc987966db3d48` separates its importable package,
+configs, examples and tests; AutoResearch
+`228791fb499afffb54b46200aca536f79142f117` separates fixed preparation/evaluation,
+editable training and research instructions; AI Scientist v2
+`96bd51617cfdbb494a9fc283af00fe090edfae48` has structured journals/reporting;
+DGM `a565fd2d1dca504ef5104a7cc0f3bdc4ab9b4fd2` separates agents, benchmarks and
+initial evidence. These are organizational references, not measured framework
+performance. Their relevant source files and ignore/checkpoint policies were
+read; no repository code was installed or executed. No new method, evaluator,
+permission or scientific assumption is being introduced.
+
+Observed problem: the developer runner still embeds its suite configuration,
+and newcomers must traverse the historical research tree to find the active
+task and launch command. Many production paths are literal frozen source names;
+the native preflight rejects symlinks/noncanonical paths and changed committed
+source bytes. A mass relocation would invalidate bindings. This is human-led
+developer organization, not autonomous H/R evolution or activation.
+
+One bounded component: the developer-facing source layout. Exact allowlist:
+`market_rsi/__init__.py`, `market_rsi/__main__.py`, `market_rsi/cli.py`,
+`market_rsi/checks.py`, `configs/checks.json`, `benchmarks/nfl_price/profile.json`,
+`benchmarks/nfl_price/README.md`, `tools/check.py`, `tests/test_check.py`,
+`tests/test_fixture_cleanup.py`, `tests/test_cli.py`, `tests/test_layout.py`,
+`README.md`, `docs/DEVELOPMENT.md`, and this append-only progress file.
+
+Move the existing developer check implementation into the importable package;
+keep its old script as a compatibility entry, and move the exact suite lists
+into configuration. Add a thin package CLI that delegates price work to the
+unchanged native module in its existing working directory, preserving explicit
+arguments, caller-relative input paths, interpreter and exit status. Add a
+read-only active-task profile pointing to existing data/target/scorer sources;
+it is not a batch grant or new benchmark implementation. No dependency installs,
+network/provider calls, data reads, Train fits, permission changes or live runs.
+Protected: every existing project Python file, source-bound JSON/JSONL/history,
+scientific config/scorer/data, state/ledgers, archive and canonical checkout.
+K/M/C/R and native H bytes stay fixed; new launcher is unactivated human tooling.
+
+Expected effect: checks run from the package and old script identically, and
+the current task is discoverable at the top level. Verify unchanged suite
+selection, commands, timeouts, thread caps and status propagation; mocked price
+success/failure and no retry; real help/list from root and another cwd; profile
+references and all native Python bytes; root, smoke and full price regressions.
+Use existing Python3.12, five-minute suite bound, no empirical/model budget.
+Model/data/memory manifests and empirical replay are not applicable. Preserve
+failed checks as results. Tests pending at this planning checkpoint.
+
+Initial candidate check: existing Python3.12.3, from the isolated checkout,
+`python -B -m unittest discover -s tests -v` ran21tests in0.178s and FAILED with
+10nested fixture subtest errors. The new package shadowed the existing
+`research/market_rsi/market_rsi.py`; native imports of `market_rsi.digest` failed
+when developer and native fixtures shared a process. No native source changed,
+and no live launch/data/fit occurred. Preserve this failed source as a local
+checkpoint; do not activate it. CLI unit and profile checks passed, but that
+does not make the candidate acceptable. An earlier combined move/add patch
+was rejected by the patch tool before edits; splitting its operations succeeded.
+
+Next bounded repair within the same declared paths: forward the existing
+legacy module API from package `__init__` without copying helpers, changing
+their source paths or injecting native directories into global `sys.path`.
+Add root/legacy import compatibility checks and inspect the unchanged module
+before importing it. Re-run all root and relevant native regressions. This
+repair is developer compatibility only, not scientific or R/H improvement.
+
+Failed candidate checkpoint: `52be511`. Compatibility repair uses package
+attribute forwarding to the existing stdlib-only control-plane module under
+its repository namespace. It copies no helper body and does not change native
+source files, global import search paths or production child cwd. New regression
+checks every top-level legacy function/class is the original object from its
+original source file, plus missing-attribute behavior. Native subprocess imports
+remain separate from the developer API bridge. Full legacy serializer/global
+patch semantics and live execution are not claimed. Verification pending.
+
+Repaired candidate focused verification: existing Python3.12.3,
+`python -B -m unittest discover -s tests -v`:22PASS,0.812s. Native fixture
+imports now work in the same process as the package; CLI price launches remain
+mocked. `python -B -m market_rsi --help` and `price --help` expose options only.
+AST/literal comparison confirms the5smoke/24price module lists equal parent
+`41bfdaf` exactly, including order. The measured15-path diff matches the frozen
+allowlist. `git diff --exit-code 41bfdaf -- ':(glob)research/market_rsi/**/*.py'`
+returns0; all1,118native Python files retain their tracked bytes and paths.
+Whitespace checks pass. Save this repaired source before full regression.
+
+Verified source checkpoint: `f77c1290a9f575da539fbe0f8b9274925d870aba`.
+Plan `10a142d` -> failed candidate `52be511` -> compatibility repair `f77c129`;
+failed history is preserved, not reset. Count correction to the focused entry:
+1,115Python files are under `research/market_rsi/`;1,118was the previous total
+including developer files. All1,115native sources retain exact bytes/paths.
+
+Exact final regression commands, cwd `/private/tmp/market-rsi-cleanup-IYDuCk`,
+using `/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python`
+(Python3.12.3), no installs:
+
+- `python -B -m unittest discover -s tests -v`:22PASS,0.812s.
+- `python -B -m market_rsi check --suite smoke`:64PASS,0.550s.
+- `python -B -m market_rsi check --suite price`:369PASS,56.420s, with explicit
+  host process-inspection access required by inherited synthetic tests. Expected
+  invalid-source `fixed.py` diagnostic remains unchanged; overall exit0.
+- From `/private/tmp`, `python -B /private/tmp/market-rsi-cleanup-IYDuCk/tools/check.py
+  --suite smoke`:64PASS, proving the compatibility entry's real external-cwd
+  launch. The22root tests also check both external-cwd listing interfaces.
+
+The64smoke tests are a subset of369price tests:391distinct root+price tests,
+not455independent tests. Native source/data boundaries, scientific JSON/JSONL
+and archive manifests compare unchanged against `41bfdaf`. New navigation
+links resolve; generated artifacts/credentials stay ignored and package,
+config, profile and tests remain visible. Exact15-path scope and whitespace
+checks pass; working tree will be clean after this result checkpoint.
+
+Versioned config SHA256:
+`configs/checks.json` = `949fa15f33668fbb67fbd4c0f6e63b63e2b531c2c4b6b507b50fcab7a3f55a10`;
+`benchmarks/nfl_price/profile.json` = `7335c62e0ba090f2f92f6caa7df4de6850b4ccab3587af28fbdc012bce99e4af`.
+No model, Train-data, held-out or memory inputs were used; fixture seeds remain
+in the unchanged test sources. Test output is in this chat's command receipts;
+no separate immutable raw-output artifact/hash was saved. Source recovery and
+synthetic regressions are verified; empirical or live-wrapper replay is not.
+
+Outcome: package-first developer organization is locally verified. It relocates
+the existing check implementation instead of copying it, centralizes suite
+selection, exposes one thin CLI and indexes the current task. Existing core
+imports/source bindings/history and permanent artifact/archive roots stay put.
+No raw log/data deletion, new dependencies/services/gates, live calls/fits,
+remote push, merge, release, authority renewal or activation. This is not a
+completed migration of the core into `market_rsi/loop`, `roles`, `services` or
+`history`, nor an earnings implementation or research-performance result.
+Next integration action: review this exact local branch against Supervisor's
+newer source/dirty registry before adopting developer changes. Migrate a bound
+core component only with separate prospective bindings and replay evidence.
+
+## 2026-10-07 — Reusable repository-hygiene skill plan
+
+User requested saving the package-first cleanup as a skill or harness guidance.
+Parent/rollback `cc11784db766ee33a7dda113e4f983f47e980785`, same isolated cleanup
+branch. Use the skill-creator instructions for concise, scoped, instruction-only
+guidance. Official OpenAI skills documentation, fetched October7 from
+`https://developers.openai.com/codex/skills`, documents repository discovery
+under `.agents/skills` and explicit/implicit invocation. No user-global install,
+plugin configuration, runtime service or account call is needed.
+
+Exact allowlist: root `AGENTS.md`,
+`.agents/skills/market-rsi-repo-hygiene/SKILL.md`,
+`.agents/skills/market-rsi-repo-hygiene/agents/openai.yaml`, root `README.md`,
+and this progress file. Add one skill with a narrow cleanup/refactoring trigger;
+link it from root repository instructions rather than copying a second policy
+into runtime prompts. Read the developer guide only when the task applies.
+Preserve nested research instructions and all core sources/evidence; existing
+cleanup scope and source-binding rules remain authoritative. This is Supervisor
+maintenance guidance, not a scientific Controller policy or automatic runtime
+admission gate, and grants no cleanup/run/push authority by itself.
+
+Verify frontmatter and UI metadata, local links, exact changed paths, unchanged
+native/developer executables, root regression tests and synthetic smoke. No
+full price rerun needed if executable/config/task bytes remain unchanged from
+the verified `f77c129` source. No live activation, merge or remote push. Source,
+model/data/memory inputs and empirical replay: not applicable to this
+instruction-only work. Validation pending at this planning checkpoint.
+
+Skill implementation/verification follows plan checkpoint `592d25a`.
+Created one instruction-only `market-rsi-repo-hygiene` skill with concise
+frontmatter and optional UI metadata; normal implicit selection stays enabled.
+Root `AGENTS.md` and README link the skill for cleanup/refactoring tasks, while
+nested research instructions and runtime prompts remain unchanged. No copied
+policy, validation service, script scaffold or automatic cleanup task was added.
+Skill-creator influenced the narrow trigger, progressive reference to the
+existing development guide, and instruction-only design. OpenAI Docs confirmed
+the repository-local `.agents/skills` location; actual UI discovery in a new
+chat has not been tested. This skill is available to checkouts carrying this
+branch, not asserted installed in the active canonical Supervisor or globally.
+
+Existing Python3.12.3, cwd `/private/tmp/market-rsi-cleanup-IYDuCk`:
+- `python -B /Users/estelle/.codex/skills/.system/skill-creator/scripts/quick_validate.py
+  .agents/skills/market-rsi-repo-hygiene`:PASS, Skill is valid.
+- UI YAML policy/prompt/description and skill/root local link checks:PASS.
+- `python -B -m unittest discover -s tests -q`:22PASS,0.752s.
+- `python -B -m market_rsi check --suite smoke`:64PASS, no model/data/fit calls.
+- Diff against `cc11784` shows no Python, native scientific JSON/JSONL,
+  development config, task profile or nested `AGENTS.md` changes; whitespace
+  checks PASS. Prior369price regression result remains applicable to identical
+  executable/config/task bytes and was not rerun for instruction-only edits.
+
+Inspect/stage exactly the five planned files and save the result as a local
+checkpoint. No behavioral subagent evaluation was needed for this small skill;
+frontmatter validation does not establish future agent compliance or research
+improvement. No live run, release, global install, merge, push or activation.
+Use `$market-rsi-repo-hygiene` when asking an agent working in this checkout for
+repo cleanup; integrate the branch with the canonical owner before claiming the
+active Supervisor has adopted it. Instruction/runtime activation remains a
+separate integration action.
+
+## 2026-10-07 — Authorized cleanup-branch publication
+
+User explicitly requested pushing and inspecting the GitHub presentation.
+Starting local source `7e023369e89d1bf3dea0e138a89cb86363983fe1`, clean branch
+`codex/market-rsi-cleanup-20261007`, remote
+`https://github.com/Estelle-LH/market-rsi.git` (public). Publish only this new
+branch, with no force, tags, merge, release or active Supervisor modification.
+Remote main at inspection: `6978e08947992173fb6b29cb260fc1c4e0320618`.
+The cleanup branch includes242commits not reachable from remote main, including
+prior research checkpoints; it is not a24-commit cleanup-only diff. User was
+informed before publication. Local canonical Supervisor has newer concurrent
+source/dirty registry work and is excluded from this push/integration.
+
+Read-only prepublication checks: correct remote/branch, clean candidate tree,
+no tracked `.env`, runtime/artifact/budget authority directories or key files,
+no `.github` push workflow in this source. Targeted scan of1,405new-history
+blobs (including Word XML) found no API/GitHub/AWS-key/private-key patterns or
+excluded operational paths. This is not a complete secret audit. Net cleanup
+diff whitespace checks pass; remote-main comparison reports inherited research
+whitespace findings, preserved rather than rewriting bound historical source.
+Prior22developer/64smoke/369price results remain tied to unchanged executables.
+
+Next: commit this publication scope, push exact HEAD only to
+`refs/heads/codex/market-rsi-cleanup-20261007`, verify the remote SHA and unchanged
+main, then inspect GitHub root/README/guide/skill rendering. Publication outcome
+pending here. Local log archive stays local; earlier source checkpoints preserve
+recovery history. Git publication does not activate code or prove research gains.
+
+Publication attempt was BLOCKED by automatic approval review before the
+combined commit/push command executed. No remote branch, tag, push or merge was
+created, and that planned commit was not made. The reviewer requires explicit
+human approval for the242inherited unpublished research commits and public
+destination; approval to push cleanup alone did not establish that broader
+publication authority. The targeted credential scan cannot establish that the
+research history is suitable for public disclosure. Do not retry through another
+tool or indirect route. Preserve this status in a local documentation checkpoint
+only, open the current README locally for review, and ask the user to choose
+full-history public publication or preparation of a narrowly scoped alternative.
+Existing core, active Supervisor, remote main and local archive remain unchanged.
+
+## 2026-10-07 — Synchronize committed Supervisor work before publication
+
+User instructed pulling Supervisor changes. Local cleanup parent/rollback
+`15ab824953b00be050b4aafbc3e57c0b9ea12f27`; Supervisor branch
+`market-rsi-coevolution-checkpoint-20261001` in
+`/Users/estelle/Developer/market-rsi` currently has12new commits through
+`f1be52021a29927306b31e625532269a6b93f1fa`, relative to shared base
+`7b6da3527eb5b77c4692adc8d8051006cbf3e063`. Snapshot this exact committed tip;
+its uncommitted launch/test, registry/trajectory/H1 edits and untracked records
+remain owned by the Supervisor and will not be staged, copied or reset here.
+This is a local merge into the cleanup candidate, not a pull/merge into active
+Supervisor or remote main. Public publication remains blocked pending approval
+of the inherited research history; this sync does not grant that approval.
+
+Apply the repository-hygiene skill: merge without rewriting either history,
+inspect conflicts and retain both append-only progress sections. Preserve
+Supervisor source bytes, except independently review any collision with the
+already committed nested-fixture cleanup. Keep current archive selections and
+newer research state; restore a newly referenced record if the merge exposes
+an archive/delete conflict rather than discarding current Supervisor evidence.
+Imports are Supervisor-authored engineering, not new autonomous H/R changes.
+
+Import allowlist is the18paths changed by Supervisor since the shared base:
+seven connected-pilot capacity/preparation/closeout scripts, two new review
+logs, the updated price-loop repair log, progress/state, three native
+transaction/role/review modules and their three tests. Local edits additionally
+allow only this progress file and the repository skill's sync-before-publication
+paragraph. No data, scorer, evaluator, model/dependency, runtime permission,
+budget/ledger, archived log bytes, scientific configuration or live run changes
+are initiated here. Preserve all bound historical receipts; merged code needs
+fresh prospective bindings before a later authorized live use.
+
+Verification: exact Supervisor ancestry/source comparison, clean merge diff,
+scope/conflict checks, root22developer checks, smoke and full relevant price
+regressions with the existing Python3.12runtime. Recheck the Supervisor committed
+tip at close and report any later commits/uncommitted work not included. No live
+launch, fits, provider call, automatic repair/retry, activation, push or release.
+Save a plan checkpoint before merge and a merge/result checkpoint after actual
+verification. Tests and merge outcome pending at this planning checkpoint.
+
+Plan checkpoint `c26e452`; merge of frozen Supervisor `f1be520` completed
+without unresolved conflicts. Three imported production modules and current
+research state match Supervisor exactly. The review-test merge preserves the
+Supervisor's new cases plus only the existing cleanup-before-setup fixture
+fix. Both progress branches remain recorded. Root22tests PASS,0.608s; current
+smoke69tests PASS,0.626s (five more inherited checks than the prior64).
+Updated skill with sync-before-publication guidance, using skill-creator's
+narrow instruction-only approach; its validator PASS. Save this merge source
+before the full regression. No live call/fit or accounting change.
+
+Supervisor advanced during integration to `9fd2f7f25eb50a8f6bc4cb900bcec47adc684bf1`:
+two additional commits `849b842` and `9fd2f7f`. They add explicit grant-bound
+timeouts to both candidate/capacity author construction and strengthen actual
+native-service/cold-replay tests; correct a disposable test authorization path.
+Read the exact diff. Extend import scope only to the two additional native
+entry/test paths and the already allowed price-loop repair log; freeze this
+new committed tip for a second local merge after preserving the first.
+Do not copy remaining dirty Supervisor files. Full final price regression will
+run on the integrated source; these imported timeout changes do not enlarge
+existing grants or create a new experiment authority.
+
+First merge checkpoint `5ed4516` includes Supervisor `f1be520` plus the scoped
+skill update. Second merge of `9fd2f7f` is conflict-free and adds only the three
+reviewed entry/test/repair-log paths. Imported native entry and timeout service
+bytes match the frozen Supervisor source; test merges retain only the earlier
+cleanup-before-setup adjustment in addition to its new cases. Commit this
+integrated source before final synthetic regression; public push remains held.
+
+Integrated source checkpoint `811ccc43ce6cc37d7bc0aba6953a4564ea3c4831`;
+includes14Supervisor commits through
+`9fd2f7f25eb50a8f6bc4cb900bcec47adc684bf1`, with both parent histories intact.
+Supervisor tip recheck at verification close is still9fd2f7f, with no later
+committed source omitted. Its dirty registry/trajectory/H1/controller log and
+untracked review/researcher records were not copied, staged or reset here.
+Launch/test edits it subsequently committed were imported only via its commits.
+
+Exact verification, cwd `/private/tmp/market-rsi-cleanup-IYDuCk`, existing
+`/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python`
+(Python3.12.3), no dependency changes:
+- `python -B -m unittest discover -s tests -q`:22PASS,0.595s.
+- `python -B -m market_rsi check --suite smoke`:69PASS,0.626s.
+- `python -B -m market_rsi check --suite price`:389PASS,61.683s, explicit host
+  process-inspection access for inherited synthetic tests. Expected invalid
+  `fixed.py` source diagnostic unchanged; final exit0.
+- Skill-creator `quick_validate.py .agents/skills/market-rsi-repo-hygiene`:PASS.
+
+Smoke is a subset of price:411distinct developer+price tests, not480independent
+tests. The21-path integration diff equals20imported Supervisor paths plus the
+scoped skill paragraph; whitespace/conflict/ancestry checks PASS. Imported four
+native production modules, seven pilot scripts and research state match the
+Supervisor commit exactly. Two merged test files differ only by retained
+cleanup-before-setup lines from the earlier cleanup; all new Supervisor cases
+are present. Data/target/scorer, benchmark profile, developer configs/package,
+archive manifest and other protected cleanup boundaries compare unchanged from
+`15ab824`. Historical run bindings remain original; prospective live execution
+must use newly bound committed source, not assume old receipts admit this merge.
+
+Result: local cleanup branch synchronized and regression-verified. The skill's
+narrow maintenance rule now requires checking/importing committed Supervisor
+changes and reporting unfinished work before publication/integration; no new
+runtime gate or scientific decision rule was added. Command receipts are in
+this chat; no separate raw-output artifact/hash is claimed. No live model call,
+real Train fit, operational ledger change, active-checkout activation, merge to
+remote main, public push or release. Public research-history approval remains
+pending. Recheck Supervisor once more if publishing later, since it is active.
+
+Final canonical-check correction after result checkpoint `1264844`: Supervisor
+advanced to `bc70adf02008fa3edebcf99ea9deb35b3eccc3a8` while the result entry was
+being written. Its one new commit is documentation/evidence only: new call-chain
+review log, repair log, human intervention/progress and state; no executable,
+configuration or task changes. The earlier no-later-commit observation applies
+only to its preceding check, not this newer tip. Extend import scope to the
+new call-chain review and human intervention files; merge this exact committed
+tip too, preserve both progress histories and confirm production bytes stay
+identical to verified `811ccc4`. Prior389regressions remain applicable if that
+comparison passes. Publication hold and ownership of dirty records stay fixed.
+
+Final documentation merge is conflict-free. Diff against tested `811ccc4`
+confirms all Python, task/developer configuration and updated skill bytes are
+unchanged; state, intervention and new review-log bytes equal `bc70adf` exactly.
+Both human progress histories remain intact and whitespace checks PASS. Save
+this final merge/result checkpoint:15Supervisor commits are included through
+`bc70adf`, with22developer+389price distinct tests verified on identical
+executable bytes (69smoke overlapping). Reused results are not a fresh rerun.
+No active Supervisor files or public remote were changed. This is source sync
+and engineering verification, not live co-evolution or research improvement.
+
+## 2026-10-07 — Approved full-history public draft PR to main
+
+The human replied "yes" to the explicit choice of a full Supervisor + cleanup
+PR versus a smaller cleanup-only PR, after being told that the destination is
+the public Estelle-LH/market-rsi repository and the comparison spans834files
+and unpublished Supervisor history. Treat this as approval for that full public
+branch/history and a draft PR targeting main, not a merge, release, activation
+or live experiment. Prior publication rejection remains preserved above; this
+new direct reply supplies the missing broad publication authority.
+
+Starting cleanup checkpoint0a6fdbb9ea8e521715ea0e130cda963b115b66ab.
+Supervisor now has two newer commits through
+8dc5eb4fd7667ec9dc10776fe15758a6ce992d14. Reviewed exact335-line/five-path diff:
+new fresh02 prepare_pilot.py, independent operations-review log, repair log,
+human intervention and research state. Freeze that committed tip for import;
+its dirty/untracked controller/index/trajectory/H1/researcher/reviewer records
+remain untouched in the active checkout. Repository hygiene skill supplies
+sync-before-publication and historical-source preservation. Earlier RSIBench
+origin text in legacy instructions is superseded by the user's active
+market-rsi repository identification.
+
+Allowed writes: this progress entry plus the five committed Supervisor paths
+via a history-preserving merge. Root package/config/task and native core,
+runtime/dependencies, historical artifacts/data/scorer, archive manifest and
+operational ledgers remain fixed. Verification: exact imported source and
+unchanged previously tested production/configuration bytes; AST-only compile
+of the new preparation script without importing/executing it; root developer
+tests, smoke, whitespace and staged scope, targeted credential/excluded-path
+checks for newly imported material. The earlier22developer/389price tests are
+reusable only where executable bytes remain identical; fresh results will be
+labelled separately. No new scientific source change or price run is intended.
+
+After verification, preserve source/result checkpoints, push only the cleanup
+branch (no tags/force/main update), verify its exact remote SHA, create one draft
+PR to main, attach its URL to this chat and inspect published README/PR metadata.
+Recheck Supervisor tip at close and name any later work not included rather
+than chasing an active branch indefinitely. Publication and PR outcome pending
+at this planning checkpoint. Existing targeted history scan is not a complete
+confidentiality audit; full-history public disclosure was explicitly described.
+
+Frozen8dc5eb4 import completed without conflict. All five imported paths match
+that commit exactly; all Python/config/task bytes from tested811ccc4 remain
+identical except the new batch-specific preparation script. Existing Python
+3.12.3: root22tests PASS1.023s, smoke69PASS0.955s; new preparer AST-only
+compile PASS, no import or execution. Prior389price PASS61.683s applies to
+unchanged suite/executable bytes, not a fresh full-suite rerun. Staged scope and
+whitespace checks PASS; targeted key/private-key scan of newly imported files
+returns no hits (git grep exit1); no excluded artifact path imported. Repository
+metadata confirms public Estelle-LH/market-rsi/default main; no open PR exists.
+Remote main refreshed unchanged6978e08947992173fb6b29cb260fc1c4e0320618.
+
+Supervisor advanced to c9666601f2ec654a559fac4cbc4097a6d4b55215 at close.
+Preserve this first integration checkpoint, inspect the later committed diff
+before deciding a final bounded import; dirty work remains with its owner.
+No push, PR, main update or live run has occurred at this checkpoint.
+
+First integration checkpointf276a57. Final bounded import of c966660 is
+documentation-only:96lines in repair log, progress and state, recording a
+pre-process launch rejection and later explicit consent in the Supervisor's
+separate experiment. Import does not initiate that experiment here or transfer
+private payload/artifact bytes. All three paths already fall within this PR's
+approved progress/status scope. Merge preserves both progress histories; no
+Python/configuration/task/test bytes changed, so fresh22/69 and unchanged-suite
+389 results above remain applicable without another rerun. Reuse is explicit.
+
+Freeze final included Supervisor tip c9666601f2ec654a559fac4cbc4097a6d4b55215
+for this draft publication. Later active-checkout commits and its unfinished
+records remain pending rather than extending this publication indefinitely.
+Final pre-push checks: whitespace, clean staged scope, exact source/state
+comparison, full PR comparison inventory, public destination and no duplicate
+PR. Push/PR outcome will be recorded separately; remote main remains untouched.
+
+Public source checkpoint ecc257e831760a54bd5ac3b5f0d89977f16259e3 pushed
+successfully to only codex/market-rsi-cleanup-20261007; remote main remains
+6978e08947992173fb6b29cb260fc1c4e0320618, no tags/force/main push. Draft PR2
+created and attached: https://github.com/Estelle-LH/market-rsi/pull/2,
+OPEN/draft/base main/exact head verified. Published root README blob
+6d0ddcede9f75d3d1e2079c130572abde31f105e exists. First README API read had
+unquoted ?ref shell-glob failure; corrected read succeeded without mutation.
+Incremental history scan68blobs (including DOCX XML), no credential-pattern or
+excluded operational-path hits; earlier full1405blob scan still scoped and
+not a complete confidentiality audit. Supervisor close recheck stillc966660,
+same seven dirty/untracked records untouched. No later committed work omitted.
+
+GitHub PR mergeability initially CONFLICTING. Read-only merge-tree diagnostic
+finds18add/add conflicts (seven native modules/eleven tests), and no other
+tree change compared with current HEAD. Public main commitfdb36e6 explicitly
+exported224source/test files from local b5a2e70546b9d7cde4cbbf1f01f7818f6941e9e9
+with public main as its only parent. Verified all18conflicting main blobs equal
+that original b5a2e705 source exactly; b5a2e705 is an ancestor of this branch.
+Therefore main contains no unincorporated competing source in this boundary;
+conflicts arise from the deliberate source-only history discontinuity.
+
+Bounded integration plan: preserve a checkpoint for this finding, merge exact
+public main6978e08 as a second parent using the current tested source tree
+(-s ours) only because the complete tree diagnostic and18exact blob comparisons
+above prove no unrelated main changes would be discarded. No source file
+replacement, scorer/configuration/runtime change or history rewrite. Allow only
+this progress record beyond the existing identical tree. Verify unchanged full
+tree before result entry, main ancestry/whitespace and clean source, then push
+this merge to the PR branch and verify GitHub mergeability. This is branch
+integration, not merging/deploying main or modifying the active Supervisor.
+
+Conflict-audit plan checkpoint89ae60912dc49bdc65c3389dfe09b28f7412d9a7.
+Exact6978e08 merge opened successfully; staged and unstaged full-tree comparisons
+to that parent both exit0 before this result entry. Thus integration changes no
+source/config/test/data/document bytes except this explicit progress entry.
+Commit the two-parent merge with unchanged tested core; all prior regression
+results remain applicable, no new run or unrelated source selected. Final PR
+comparison will now use public main as an ancestor rather than their older
+common base. Earlier836file comparison remains historical, not its new count.
+Remote branch update and GitHub mergeability recheck pending; main unchanged.
+
+Publication verification COMPLETE: merge checkpoint
+dee0acbda204f1b5cb1472f268f34b1826f8fb03 pushed to PR branch; GitHub PR2
+OPEN/draft/base main,630changedfiles,MERGEABLE/CLEAN. Exact remote main remains
+6978e08947992173fb6b29cb260fc1c4e0320618. Native core unchanged; history retained.
+PR description now separates pipeline, package cleanup, verification, review
+order and remaining work, with accurate630file count and conflict provenance.
+gh pr edit failed on deprecated Projects-classic GraphQL lookup; authorized
+REST body update succeeded, no scope change. Attached PR2 to this chat;
+browser open returned queued, so no rendered-page inspection is claimed.
+Final Supervisor committed-tip check stillc966660, all unfinished work untouched.
+Save/push this documentation-only result checkpoint; no merge to main, tag,
+release, deployment, live experiment, new data/model call or source activation.
+
+## 2026-10-07 — Merge Supervisor co-evolution fixes before PR handoff
+
+Human requests Supervisor fixes merged first, then PR to main. Starting/source
+rollback0432f05f514756d3fce633f8ee674f0eb618c70e; existing public PR2 is OPEN,
+draft/main, exact remote head matches. Main remains6978e08947992173fb6b29cb260fc1c4e0320618.
+Freeze four new committed Supervisor checkpoints through
+99c4be95af4cd4490973ddd27948fe046d67fa91. Read the complete changed source,
+tests and independent reviews. Its seven unfinished log/index/trajectory/H1
+records remain in the active checkout and must not be copied or staged.
+
+Import scope is exactly nine paths: fresh02 closeout_pilot.py; new capacity
+metadata and terminal review logs; existing repair log, human interventions,
+progress and state; account_controller_feedback_consumer.py; and existing
+test_coevo_pilot_transaction.py. The production repair exposes the existing
+pair digest/component labels/citation eligibility to v2 Controller input;
+the semantic validator and frozen K/data/scorer/permissions remain unchanged.
+This is Supervisor engineering; original failed proposal is not accepted or
+relabelled as an R/H improvement. Reuse the existing independent80-test source
+review and mechanical-merge evidence; no new scientific method/literature choice.
+
+Use repository-hygiene sync/preservation guidance. Plan checkpoint before merge,
+history-preserving merge/source checkpoint before tests, then result checkpoint.
+Verify imported production bytes exactly, preserve earlier fixture-cleanup
+changes, AST-only compile the new closeout script without import/execution,
+run focused consumer/transaction tests plus root developer/smoke/full price
+regressions in existing Python3.12.3. Local synthetic tests only; no live pilot,
+private artifacts, original response, budget/journal or model/runtime mutation.
+Scope/whitespace and incremental history credential/excluded-path checks before
+public push. The raw data, runtimes and live ledgers remain excluded.
+
+Update the same approved public PR2 (not a duplicate), keep main untouched,
+and mark ready for review only after verification. Retain main ancestry and
+both checkpoint histories, no squash/rebase/force/tags. Recheck Supervisor tip
+at close and report any later committed work separately. Fetch succeeded;
+one local tracking-ref check failed because this origin has no PR-branch ref,
+so exact gh PR head and ls-remote comparisons were used instead. Outcome pending.
+
+Plan checkpointbc16b71; conflict-free source merge
+a5b243b9b53ba98676afe196b9dc8826d3b7229e includes all four Supervisor commits
+through99c4be9, preserving both histories. Measured nine-path merge equals the
+declared scope. Consumer, corrected transaction tests, closeout and current
+research state match Supervisor exactly. Root package/config/task/developer
+tests/guide/skill/archive manifest, price data/target/scorer and semantic
+validator/micro-component policy compare byte-identical to0432f05.
+
+Actual fresh verification on a5b243b, pinned Python3.12.3, no installation:
+- Cwd cleanup root, `python -B -m unittest discover -s tests -q`:
+  22tests PASS0.977s.
+- Same cwd, `python -B -m market_rsi check --suite smoke`:69PASS0.864s.
+- Cwd cleanup research/market_rsi, `python -B -m unittest
+  supervisor_harness.test_account_controller_feedback_consumer
+  supervisor_harness.test_coevo_pilot_transaction -q`:80PASS0.843s.
+- Cleanup root, `python -B -m market_rsi check --suite price`:
+  397PASS62.758s/exit0 with host-process inspection; expected invalid fixed.py
+  fixture stderr is not a failure. Counts overlap and are not additive. The
+  Supervisor's separately reported441enumeration is not substituted for this
+  actual developer-command result; focused consumer checks were run explicitly.
+- New closeout script AST-only parse/compile PASS, no import/execution.
+
+Scope/whitespace/ancestry checks PASS. Incremental15Git blobs checked for
+credential/private-key patterns and excluded operational paths: no hits;
+targeted scan is not a complete confidentiality audit. No old artifact, private
+response/Train data, grant, budget or global journal was read/modified here.
+Supervisor final tip recheck is still99c4be9, no newer committed fixes omitted;
+same seven unfinished records preserved. Original actual pilot remains
+NOT_COMPLETE; imported repair is not R1 implementation or a research-gain claim.
+
+Save this result checkpoint, then push exact PR branch and update PR2's scope,
+fresh test results and latest Supervisor SHA; mark ready for review. Public
+main stays fixed, no deployment/release/live experiment implied. PR publication
+result pending here; command outputs are recorded in this chat, not a separately
+saved raw verification artifact. This doc-only result does not invalidate the
+just-tested executable snapshot.
+
+## 2026-10-07 — Isolate concurrent staging from the pipeline PR
+
+During result publication, another chat had staged two new data-audit logs,
+18registry lines and its progress section in the shared cleanup checkout.
+The staged-stat inspection exposed four paths, but this integration command
+incorrectly continued to commit/push instead of rejecting the unexpected scope.
+Actual published checkpointfaf1875 retains that history; this is recorded as
+an integration mistake, not a nine-path-only result or a secret-purge claim.
+
+Both audit logs are public-document/source/curated-aggregate analyses, not raw
+payloads. They belong to a separate completed data-centric diagnostic and were
+not part of the requested co-evolution pipeline fix. Preserve their exact bytes
+and registry/progress in the original cleanup checkout atfaf1875. Do not reset
+or delete that owner's checkout or rewrite published history.
+
+Correction occurs only in a new isolated checkout/branch
+codex/market-rsi-pr2-sync-20261007 at /private/tmp/market-rsi-pr2-final-hB2rDy:
+remove the two sidecar logs and their18registry lines from this PR's final
+tree, and remove only their separate progress section. The original branch
+and historical checkpoint remain recoverable. Allowed correction set is those
+two log paths, AGENT_LOG_INDEX_2026-09-17.json and this progress file; no code,
+task/scorer, archive or operational changes. A deletion here is scope isolation
+from the PR tip, not erasure of the public Git ancestry.
+
+Use exact path-only staging/commit plus a fail-closed staged-list equality
+check, so any other owner's staged work cannot be published again. Verify
+the resulting tree equals tested a5b243b except this progress record, then
+update the same PR branch without force and save actual publication outcome.
+Previous22/69/80/397 test results remain tied to identical executable bytes.
+PR stays unmerged; original Supervisor and cleanup owner work stay untouched.
+
+Scope correction50ea6d74fac0e6d7b18c4e7e507fa60c8c97a90d verified: only this
+progress file differs from tested a5b243b; new isolated checkout22developer
+tests PASS0.680s. All20new-history blobs, including the retained concurrent
+documentation checkpoint, scanned with no credential/excluded-path hits;
+not a complete confidentiality audit. Original audit files/index/progress
+remain intact in /private/tmp/market-rsi-cleanup-IYDuCk atfaf1875 and Git history.
+No history rewrite or deletion in their owner's checkout occurred.
+
+PR2 updated and marked READY_FOR_REVIEW: OPEN/non-draft/base main,
+634changedfiles,MERGEABLE/CLEAN at exact50ea6d7. Description identifies
+Supervisor99c4be9, fresh22/69/80/397 checks and preserved staging-collision
+correction. Main verified unchanged6978e08947992173fb6b29cb260fc1c4e0320618.
+Save/push this documentation-only publication result with exact path-only
+staging and fail-closed scope check. No main merge, release, activation or new
+live science; original actual co-evolution pilot remains NOT_COMPLETE.
+
+## 2026-10-07 — Local agent settings and unbranded publication branch
+
+User requested removing `codex/` from the current published branch and keeping
+local `.agents/` material out of Git. Parent91dcca4; maintenance checkpoint791c586
+changes only `.gitignore`, root AGENTS.md/README.md and the two tracked skill
+paths. Both files remain on disk, are ignored, and have no tracked paths at the
+new tip. Shared AGENTS.md remains versioned and records unbranded branch names;
+cleanup guidance falls back to the development guide when the local skill is
+absent. Earlier Git history is preserved, not purged or renamed retrospectively.
+
+Publication sync found new committed Supervisor source0251b67740918c39c018f8c4e49990fb74fa8530.
+Merge8d900f4411d5b4aff939719b47c4f283c9cb9038 includes its five-path capacity-input
+and first-launch/replay-preflight repair. Original source, schema and tests were
+reviewed from the committed snapshot; pending Supervisor edits were not copied.
+Existing research instructions and state are unchanged. Reuse their previously
+read protocols and the repair log's source-specific contract; no new method,
+data, model/runtime, permission, budget or evaluator change is introduced here.
+
+Actual verification on8d900f4 using the existing Python3.12.3 CPU runtime:
+`python -B -m unittest discover -s tests -v`:22PASS0.780s;
+`python -B -m market_rsi check --suite price`:402PASS66.428s,24modules.
+These are synthetic/inert engineering tests, not live research; counts overlap.
+Ignored-file existence/tracking checks, exact changed-scope review and whitespace
+checks pass. Raw command outputs are in this chat, not a saved replay artifact;
+no account/model call, fit, Train read, global-state or live-ledger action here.
+
+GitHub native rename succeeded: `market-rsi-cleanup-20261007` retains the old
+remote head91dcca4 and closes PR2 automatically. Local integration branch is now
+`market-rsi-pr2-sync-20261007`. Publish the verified source and this doc-only
+result checkpoint to the renamed branch, then create a replacement PR to main
+referencing PR2. Main remains6978e08947992173fb6b29cb260fc1c4e0320618; no merge,
+release, deployment or Supervisor activation is implied. Publication pending.
+
+Final synchronization froze Supervisorbbd8d4e722a3626c3ccaf34b2bf33ab6e69ed3aa,
+including bd4f244's matched evidence-return measurement and bbd8d4e's verified
+aggregate feedback/memory/history attachment. Merge sourceb3a742b2a46681039f39147199c4cf4ae24088e7
+preserves those committed bytes and the existing fixture cleanup; unfinished
+Supervisor files remain outside the integration. Exact committed contracts and
+diffs reviewed; source-specific tests run again rather than reusing older results.
+On this final frozen executable snapshot:22developerPASS0.762s and
+407price-suitePASS69.799s, same commands/runtime as above. No raw data or live
+research action. Whitespace, ignored-local-file preservation and staged scope
+checks pass; targeted key-pattern scan of new history reports no hits, not a
+complete confidentiality audit. Final Supervisor tip recheck is stillbbd8d4e.
+Current comparison to main spans633files. Save this doc-only result checkpoint
+and publish the replacement PR with the verified final snapshot and PR2 link.
+Actual co-evolution effectiveness still requires live scientific evidence.
+
+Publication verified ataa32c0461703befb5bbe7c4ac7b5fb590cf0e255: renamed remote
+head matches local source; old remote `codex/market-rsi-cleanup-20261007` is absent.
+PR3 already existed with an empty description, so create returned exit1 rather
+than creating a duplicate. Preserve its title and populate its empty body with
+the prior scope, current633-file comparison, final22/407 checks and PR2 history
+link. PR3 is OPEN/non-draft, base main, MERGEABLE/CLEAN, attached to this chat.
+Published recursive tree contains0 `.agents/` paths; both local files still
+exist ignored. Main remains unchanged6978e08. Save/push this doc-only actual
+publication result; no additional scientific work or active-checkout mutation.

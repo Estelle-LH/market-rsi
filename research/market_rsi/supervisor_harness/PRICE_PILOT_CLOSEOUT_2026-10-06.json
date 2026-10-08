@@ -1,0 +1,61 @@
+{
+  "schema": "market_rsi_price_pilot_repository_closeout_v1",
+  "batch_id": "market-rsi-price-pilot-20261006-01",
+  "starting_checkpoint": "0311244",
+  "baseline_source_commit": "7b168d3b496714e5da5357c9c239862591f49cf8",
+  "parent_result_commit": "9c3473f8063324e8944627c59bf8ca3d675bf0c6",
+  "change_scope": "Permission reply and bounded operational closeout only; no predictor, researcher, harness, scorer or data change",
+  "permanent_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-pilot-20261006-01",
+  "closed_utc": "2026-10-06T20:56:46.962404+00:00",
+  "selection_cutoff_utc": "2026-10-06T20:56:00Z",
+  "hard_deadline_utc": "2026-10-06T21:01:00Z",
+  "inclusive_elapsed_seconds": 2446.962404,
+  "actual": {
+    "attempts": 1,
+    "reserved_fits": 4,
+    "completed_fits": 4,
+    "original_controller_decisions": 0,
+    "account_transfers": 0,
+    "new_controller_candidates": 0,
+    "paid_provider_calls": 0,
+    "worker_seconds": 2.6342733339988627,
+    "worker_sampled_peak_kib": 172544,
+    "total_AI_cost": "unmetered"
+  },
+  "evidence_sha256": {
+    "closed_ledger": "97599916f13423c8dc8832f9767ebb8961dac309fb62744edfa28b37d683c6da",
+    "authorization": "e4b6f9e6f627caca4b6318f10548b20f9e99354fb0196a43530f8894ce1815ec",
+    "local_controller_input": "26d73bd847b93033ca3f48fb03bfc7bfa269285aee37b7030510732aa57a7a0c",
+    "verified_feedback": "cdc42290a0c4f418c53ffad21f5bb079e9b5365da3d2859b4e643d93e39e33f9",
+    "memory": "2a92cd65aba94cdd88e197d8a131099315f82b2d6ca4c56fc355b9091d9da499",
+    "global_pool": "bf8f278826f6e7b81de9f8a8b192c2b61f7afe925235402ebaf41e2d7e4aa6c3",
+    "baseline_independent_review": "1c0c5d8c57e26bae40e1c646dcaaa27171942544d0e9593ec5a9509cc9761cf9"
+  },
+  "comparison": {
+    "task": "MarketTradeVWAPChange300sTrainDiagnostic-v1",
+    "primary": "equal-game MSE on identical observed-label checks",
+    "no_price_change": 0.0028931083700612786,
+    "fixed_HGB": 0.0031516502765572,
+    "HGB_minus_no_change": 0.00025854190649592156,
+    "whole_observed_week_95pct_interval": [0.00008380709382966692, 0.0004261711854291393],
+    "incumbent": "B0-NoPriceChange",
+    "prediction_decision": "REVERT fixed HGB; retain exploratory eligibility",
+    "check_games": 87,
+    "check_dates": 20,
+    "check_weeks": 7,
+    "population_games": 195,
+    "fold_deltas": [0.0004812144262976671, -0.000033367837111487626, 0.00020796816008015334, 0.00027602045252619585]
+  },
+  "execution_failure": "Independent exact outbound review did not finish before original selection cutoff; queued operation exited20:56:00.171UTC without calling the Controller",
+  "post_cutoff_input_review": {
+    "sha256": "8770a1cf08a20588b2e5e2a1af499cf7116cb2b77c14494b301344a5b90bb6e0",
+    "reviewed_utc": "2026-10-06T20:58:12.745Z",
+    "static_contract_checks": "PASS",
+    "launch_admission_passed": false,
+    "reason": "Original selection cutoff elapsed before completed review; no transfer authorized by this late review",
+    "runtime_uncertainty": "Prompt-level no-tools and post-response tool-event rejection verified in source; a hard runtime tools-disabled setting not verified. No actual Controller or tool process launched."
+  },
+  "claims_not_supported": ["autonomous price optimization", "researcher or harness self-evolution", "fixed-versus-evolving process superiority", "executable profitability", "untouched OOS"],
+  "next": "Reuse frozen price runner/scorer, negative feedback and memory in a fresh authorized bounded continuation; Controller must choose method after reading the evidence. No new algorithm is preselected here.",
+  "permission_limits": "This closeout and any post-cutoff review grant no future budget or transfer; no raw Train, protected evaluation, external acquisition, paid provider, release, push or promotion. Historical settlement-probability records unchanged."
+}

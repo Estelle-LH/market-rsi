@@ -1,0 +1,158 @@
+{
+  "schema": "market_rsi_real_candidate_execution_observed_v1",
+  "observed_utc": "2026-10-05T18:57:12.798962+00:00",
+  "candidate_id": "InGameTemperaturePossessionOnlyJointOffset-v1",
+  "attempt_id": "repair-d5-possession-only-joint-01",
+  "actual_four_fits_completed": true,
+  "source_commit": "d7d4a0be2c3d0af98a097ecd2fb8d9f359d6ef9c",
+  "source_review_sha256": "4ddb6a14e0999ba43d03adb3272c21bcc5b20d493451bfa3588549dc0878dda7",
+  "receipt": {
+    "attempt_id": "repair-d5-possession-only-joint-01",
+    "command": [
+      "/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python",
+      "-B",
+      "-m",
+      "experiments.nfl_ingame_temperature_possession_only_joint_offset",
+      "--source-root",
+      "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/nfl-2025-train-refresh-20260922-01",
+      "--output",
+      "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/d5/runs/repair-d5-possession-only-joint-01"
+    ],
+    "error": null,
+    "exit_code": 0,
+    "fits_reserved": 4,
+    "memory_sha256": "31708df6e99aca7f2ce7d9d85e13c04748c3f81f5e5cff39655dec4303fba3eb",
+    "metrics_independently_reviewed": false,
+    "network_isolation_enforced": false,
+    "outcome": "succeeded",
+    "output": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/d5/runs/repair-d5-possession-only-joint-01",
+    "provider_calls_requested": 0,
+    "request_sha256": "f8940e0bab9847415b9105de73df5515e587788d08b11071fe98c0038581c775",
+    "rss_limit_enforcement": "one-second polling; not OS-hard isolation",
+    "rss_limit_kib": 1048576,
+    "runtime_pair_sha256": "a1c4e54939a3fc4b1a50005f85558a60b80cd4be381a94fc47938997b324bc06",
+    "sampled_peak_rss_kib": 142080,
+    "source_commit": "d7d4a0be2c3d0af98a097ecd2fb8d9f359d6ef9c",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "2e47b3873b16875e85b8acc342c296542dad64dc4cd44b1bf9ab7ad0243839f1",
+    "wall_seconds": 4.486724750022404
+  },
+  "worker_receipt_sha256": "a764d892dfcc89e40dd1fba597e9ab5b6e8c9abc4e8c31851bd3ff34c7f736e7",
+  "request_sha256": "f8940e0bab9847415b9105de73df5515e587788d08b11071fe98c0038581c775",
+  "process_sha256": "79788d68aafdfb2ca4152ce4b859a447a289a41e70ca086156cd088511085f6c",
+  "child_pid": 93326,
+  "child_absent": true,
+  "current_outer_selected": 6,
+  "current_outer_actual_fits": 24,
+  "source_population": 195,
+  "materialized": 193,
+  "explicit_exclusions": 2,
+  "check_events": 87,
+  "check_dates": 20,
+  "observed_check_weeks": 7,
+  "artifact_hashes": {
+    "exclusions.json": "e6b19b230318dc9daf89e6495504c93996f49b3245415a14a45144fece81fdfb",
+    "fit_progress.json": "b473e9a0c4f109118159663e0e048126747b1564abf0c1075c3013d2fa0e23d2",
+    "input_receipts.json": "303065ec36c8013d55ba84aba79b42d11c8a8c394dae0827dfb78bac8be0390e",
+    "manifest.json": "2e47b3873b16875e85b8acc342c296542dad64dc4cd44b1bf9ab7ad0243839f1",
+    "pre_score_lock.json": "fbd74f4439109430e372405d4984bd83c3b2119d81caafdc5fb28eaca33a3c9b",
+    "predictions.csv": "d34a4fe3d01c20153951dbb45132d5d4260ba12f50231589dda0344137085dff",
+    "predictor_states.json": "e6330f7166a3e1a6c26565d532bd72179ae270c641324f469cbafed0c994e6df",
+    "scorecard.json": "89e5e3d4d13e11d8a20ba0a6d60309f378100d83db370985394c9e294bee9e1b"
+  },
+  "parent_supplement_sha256": "718850405778b6351a12b59d69a3c3df3029674f070a183f003e9a227afc8024",
+  "aggregate": {
+    "arms": {
+      "candidate": {
+        "brier": 0.14344545498213596,
+        "log_loss": 0.43024411858047473
+      },
+      "ordinary": {
+        "brier": 0.14548231253271718,
+        "log_loss": 0.43992197245621956
+      },
+      "parent": {
+        "brier": 0.14195410408172784,
+        "log_loss": 0.4288860887954059
+      },
+      "raw_market": {
+        "brier": 0.14195252900323282,
+        "log_loss": 0.4296707847132428
+      }
+    },
+    "candidate_minus_market": {
+      "brier": 0.0014929259789031313,
+      "log_loss": 0.0005733338672319066
+    },
+    "candidate_minus_parent": {
+      "brier": 0.0014913509004081116,
+      "log_loss": 0.001358029785068826
+    },
+    "events": 87,
+    "parent_brier_identity_residual": 3.469446951953614e-18,
+    "parent_correction_energy": 0.0006010137842017399,
+    "parent_correction_signed_alignment": 0.0008903371162063683
+  },
+  "paired_parent_blocks": [
+    {
+      "fold": 1,
+      "events": 26,
+      "candidate_minus_parent": {
+        "brier": -0.0008163763740976077,
+        "log_loss": -0.005500406954058457
+      },
+      "candidate_minus_market": {
+        "brier": -0.0004145296134617643,
+        "log_loss": -0.006080672309330459
+      }
+    },
+    {
+      "fold": 2,
+      "events": 16,
+      "candidate_minus_parent": {
+        "brier": 0.0033876256069199917,
+        "log_loss": 0.005707780609542357
+      },
+      "candidate_minus_market": {
+        "brier": 0.004298451895618144,
+        "log_loss": 0.007985546393602827
+      }
+    },
+    {
+      "fold": 3,
+      "events": 28,
+      "candidate_minus_parent": {
+        "brier": 5.7788437207551e-05,
+        "log_loss": -0.00197066735406487
+      },
+      "candidate_minus_market": {
+        "brier": -0.00038039385301402717,
+        "log_loss": -0.0029336852027977978
+      }
+    },
+    {
+      "fold": 4,
+      "events": 17,
+      "candidate_minus_parent": {
+        "brier": 0.005597248712324199,
+        "log_loss": 0.01323608048633218
+      },
+      "candidate_minus_market": {
+        "brier": 0.0048551839805341945,
+        "log_loss": 0.009550115874850662
+      }
+    }
+  ],
+  "operational_decision": "REVERT",
+  "scientific_decision": "REFUTED",
+  "metrics_independently_reviewed": false,
+  "no_same_id_retry": true,
+  "boundary": {
+    "external_fetch": false,
+    "paid_provider": false,
+    "promotion_authorized": false,
+    "route_dev_opened": false,
+    "sealed_final_opened": false
+  },
+  "claims": "Actual historical Train run only; negative possession-only correction, not whole-state-family absence or R/mechanism superiority. At6/24 stop new experiments/accountcalls; independent result review pending."
+}

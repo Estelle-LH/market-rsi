@@ -1,0 +1,84 @@
+{
+  "schema": "market_rsi_independent_exact_H_source_review_v1",
+  "passed": true,
+  "verdict": "PASS_EXACT_SOURCE_FOR_ONE_SEPARATELY_AUTHORIZED_FRESH_REPLACEMENT_ONLY",
+  "observed_utc": "2026-10-05T18:36:00Z",
+  "source_commit": "b799214a184aa55e3e2fba14773e3f844cbb33b2",
+  "source_sha256": "b0c4c7a28f2eeb333587b9a53faa230a3b751d707433c0dc3b6f4d3e78e0e68e",
+  "test_sha256": "304801701b69dd37912c903b4e5a46fd7ea36b1d55b12bd89535223df7ea455a",
+  "scope_sha256": "63b2746021625c40198815439fcde4e6fe0b9f878f86ed05a3b6249bec248f58",
+  "scope_review_sha256": "fd4594f73da60245fbad8e0d144fad413240be169151f7635c58ae5a4c320773",
+  "prior_consumer_sha256": "d6b72f610a3842b113d78582bb73d13641ba86174d787e168df0777ccb85f3ae",
+  "original_transaction_review_sha256": "8972c6ae1b6848e0edf5b7fb495198cec3de212b17bced1598699636fbb8743b",
+  "fresh_authorization_sha256": "96193e6b1ec563524d96d3dad12acf9ffaeca4ea7894486da29ad4b350b6a12d",
+  "fresh_authorized_id": "market-rsi-repair-d4-controller-continuation-policyfix-20261005-01",
+  "axis": "H",
+  "diff": {
+    "production_lines": 255,
+    "test_lines": 450,
+    "added": 3,
+    "removed": 3,
+    "locations": [
+      "Compiled scope SHA",
+      "Remove voluntary stop_in_scope from action enum; retain propose_candidate/request_closed_authority",
+      "Prompt clarifies open small hypotheses, no negative-score/overhead-only stop, Supervisor-owned stops and genuinely necessary closed requests"
+    ],
+    "rest_of_source_byte_exact_after_reversing_three_lines": true,
+    "AST_exact_after_reversing_three_lines": true,
+    "all34_schema_nodes_explicit_typed": true,
+    "current_and_checkpoint_source_test_scope_review_exact": true
+  },
+  "smallness": "One previously admitted 255-line feedback-consumer component; this checkpoint changes only three bounded contract lines, not a new 255-line implementation. Scope/schema enum/prompt form one inseparable continuation-contract correction. No cosmetic compression, H1/worker/recorder/scorer/predictor/R-policy changes.",
+  "independent_tests": {
+    "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONHASHSEED=0 DS_PYTHON -B -m unittest supervisor_harness.test_account_controller_feedback_consumer supervisor_harness.test_continuous_discovery_batch supervisor_harness.test_continuous_discovery_branch_retention supervisor_harness.test_continuous_discovery_small_steps -v",
+    "passed": 69,
+    "seconds": 1.155,
+    "focused_consumer_methods_included": 25,
+    "overlapping_counts_not_added": true,
+    "checks": [
+      "Actual fake-Popen stdin/header/guidance/schema",
+      "Voluntary stop response preserved/rejected once; no ack/no resample",
+      "Proposal and closed request retain strict boundary/resources; no authority mutation",
+      "Onceclaim/concurrency/partial failure/timeout/cleanup/ack recovery/source drift",
+      "Archive restoration, consumed followup exclusion, branch capacity, credit versus incumbent",
+      "Deadline/attempt/reserved fits/small-step recovery/history"
+    ]
+  },
+  "read_only_actual_binding": {
+    "proof_seconds": 0.696792791,
+    "input_sha256": "72ee17c6d8439b3ee36472687adbe5ae0546d662f15035e3a6c1a4ec82680f9d",
+    "input_canonical_sha256": "1a53f3f76497d9e95393a7fb0ff9d7a1f1c2d5d060d37ddd571b44a71bf0767a",
+    "prepare_input_exact_same_packet": true,
+    "roles": 11,
+    "current_and_runGit_files": 68,
+    "pure_journal_events": 9,
+    "accepted_state_sha256": "d76e62ecccad69f0fc340ebeff06b0c6510a87ba960d130d1c90bd96f67dbb4d",
+    "old_original_output_hashes_unchanged": 9,
+    "original_v4_receipt_unchanged": true,
+    "selected": 5,
+    "reserved_fits": 20,
+    "actual_fits": 20,
+    "remaining_attempts": 1,
+    "remaining_fits": 4,
+    "eligible_parents": 17,
+    "C2_consumed_excluded": true,
+    "selection_cutoff_utc": "2026-10-05T19:12:11Z",
+    "deadline_utc": "2026-10-05T19:27:11Z"
+  },
+  "reviewer_errors_preserved": [
+    "Initial command guessed two wrong test-module names: 50 successful methods plus 2 import errors, 0.708 s; corrected to rg-discovered names, 69 PASS. Not a source/scientific failure.",
+    "First read-only diff proof used ndiff prefix slicing [1:] instead of [2:]; assertion failed after actual packet/source pins passed. Corrected verifier only; full proof PASS, no writes/calls/fits/source edits."
+  ],
+  "admission_limits": [
+    "Exactly one explicitly approved fresh ID/root; never retry/relabel original stopped transaction. Supervisor must recheck authority/source/clock immediately before submission.",
+    "request_closed_authority is syntactically allowed but actual necessity must be independently reviewed; it grants no permission and cannot disguise voluntary stopping.",
+    "Fresh service acceptance/valid scientific choice/automatic next actual fit remain unproved until the original completed fresh transaction and separately admitted candidate are inspected.",
+    "Only H execution-contract repair, directed by human/Supervisor; no R self-evolution, predictive improvement, lower overhead, matched-model/fixed-flow superiority, realtime/OOS/PnL claims.",
+    "Requested gpt-6.1-sol; exact serving snapshot unknown. No-tools prompt/observed checks are not OS/network isolation. Communication120s+one cleanup wait5s, not OS-hard fsync wall.",
+    "No new provider/data/protected DevFinal/release authority, budget reset or deadline extension; old records immutable."
+  ],
+  "reviewer_train_fits": 0,
+  "reviewer_optimizer_calls": 0,
+  "reviewer_model_calls": 0,
+  "reviewer_production_edits": 0
+}

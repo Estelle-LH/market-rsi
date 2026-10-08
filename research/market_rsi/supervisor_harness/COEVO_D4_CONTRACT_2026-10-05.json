@@ -1,0 +1,120 @@
+{
+  "schema": "opened_train_small_candidate_contract_v1",
+  "candidate_id": "InGameTemperatureOddConfidenceJointOffset-v1",
+  "question_id": "ingame-temperature-conditional-odd-confidence-v1-q1",
+  "author": "Actual account Controller, requested gpt-6.1-sol, exact serving snapshot unknown",
+  "decision_file_sha256": "b692b41a235c2fa9d644c72e708878bb662e62f6eb1adf4dbeb49d5f84a7522b",
+  "decision_canonical_sha256": "c823899b37f8f0abb17527839d30af087a1a1345c9578edc26ece6af01928162",
+  "decision_file": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/account-controller/2566d7852eae4d839de66a74efe2feb99795d128f746e9777d7728cccf939622/response.json",
+  "axis": "C",
+  "component": "temperature_conditional_odd_confidence_predictor",
+  "allocation": "exploration",
+  "method_family": "restricted_market_calibration",
+  "question": "Does a bounded odd confidence basis add useful calibration conditional on C7's global temperature? The basis permits different effective slopes near even odds and at extreme probabilities while preserving home/away complement symmetry. D3 supplies negative intercept evidence, not positive evidence for this hypothesis.",
+  "hypothesis": "A bounded odd basis tanh(l) changes effective calibration shape near even odds vs extremes while preserving complement symmetry. D3 negative intercept evidence motivates this distinct test, not a presumed positive effect.",
+  "trigger": "Accepted D3 hurts both proper losses/all four parent blocks; actual Controller stops exact affine/intercept and chooses orientation-symmetric confidence shape, retaining C7 parent and B3 diversity",
+  "trigger_review_sha256": "45f5a7f9e6091f123973801021af62320ff90ddea5f2dd621c191f111a48b542",
+  "feedback_sha256": "2566d7852eae4d839de66a74efe2feb99795d128f746e9777d7728cccf939622",
+  "research_parent": {
+    "candidate_id": "InGameMarketTemperatureOffset-v1",
+    "runner_path": "research/market_rsi/experiments/nfl_ingame_market_temperature_offset.py",
+    "runner_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+    "controller_contract_sha256": "f0d925977ef45677a557e2be18d6ec30ac56fe6fc8e9980df6a518a48b4b132b",
+    "artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-07/runs/attempt-01",
+    "artifact_hashes": {
+      "exclusions.json": "e6b19b230318dc9daf89e6495504c93996f49b3245415a14a45144fece81fdfb",
+      "fit_progress.json": "e4a2a97ef6f158667f0454904caa2ba3bf4dcbeadb17e4d2ff82ff8002bed38a",
+      "input_receipts.json": "77e970806c4e14333d09047a353a305209a4fbb2ab8c03c0061d3ad9e53ab032",
+      "manifest.json": "7e49ff2af477d3362e22b4347fa9c0c6c7ad7648b544d6cb34297f756308f6c0",
+      "pre_score_lock.json": "2d387a00d25b0aa32c24dcd04e94c2068c33b08db5a981792832b4597e32677a",
+      "predictions.csv": "d31adca8574a908573a49bee2c8447d23062376f60a46287b75e954bc0d50fbf",
+      "predictor_states.json": "fb15ae99d79a448e59822bf14eabe4a347b75292784ed10a1fa40e865caf7ce9",
+      "scorecard.json": "a6835a0df4d2e4eee8ebde8da3b16f37f730b614a0d6a953a5db9bcdf421a07b"
+    },
+    "state_schema": "market_temperature_offset_numeric_state_v1",
+    "state_sha256_by_fold": [
+      "9e654f3d74fcd6353a176efb0b7b5cca38c6e90dea3c6d0f3debf47fadb505d2",
+      "3f0b68472d9a2ba70b9ca8db99a93a09585b3b37735c022065a89a683c0588e6",
+      "8483dfe83fb36735e89085e421b1124ef5ab039b13799f8bb08f7c4f6f78f235",
+      "e50bb267034c0b931707d9a02255e6979ab1e9c62b12addd9c8dd36b112995d5"
+    ],
+    "beta_by_fold": [
+      0.044687640807370366,
+      0.04869244933276986,
+      0.031739226027776284,
+      0.04557220791738257
+    ]
+  },
+  "comparison_incumbent": {
+    "candidate_id": "InGameWinProbabilityTrainDiagnostic-v0-raw_market",
+    "sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f"
+  },
+  "predictive_information": {
+    "feature_names": [
+      "market_logit",
+      "tanh_market_logit"
+    ],
+    "transform": "z=tanh(l) rowwise, no estimated scale/intercept/age/state inputs",
+    "availability": "Same193 resident causal market receipts, no deletion/imputation",
+    "intercept": 0,
+    "normalization": "none; fixed unscaled tanh transform",
+    "ignored": "Check labels, game identifiers, future plays and terminal scores"
+  },
+  "recipe": {
+    "eta": "(1+beta)*l+gamma*tanh(l)",
+    "constraints": "beta>=-1,gamma unrestricted; odd link complement symmetry, monotonicity neither imposed nor claimed",
+    "objective": "unweighted summed NLL+8*(beta^2+gamma^2)",
+    "alpha": 16,
+    "parameters": 2,
+    "optimizer": "Reuse unchanged generic D1 solve_joint(l,tanh(l),y,C7beta), cyclic beta-then-gamma coordinate bisection",
+    "initial_state": "Verified samefold C7beta/gamma0",
+    "coordinate_derivative_tolerance": 1e-10,
+    "joint_KKT_tolerance": 1e-8,
+    "max_sweeps": 100,
+    "max_coordinate_steps": 200,
+    "brackets": "Beta[-1,1+sum(abs(fit_logits))/16]; gamma[-G,G],G=1+sum(abs(tanh(fit_logits)))/16; verify fit-only endpoint signs, Hessian>=16 and objective<=warm+1e-8; no restart/fallback/grid/tolerance relaxation",
+    "probability": "Original epsilon/policy bounding with counts; exact gamma0 delegates C7 helper; own odd-confidence predictor and no pressure/age feature-specific predictor",
+    "fits": 4,
+    "control_refits": 0,
+    "automatic_retries": 0
+  },
+  "reuse_helpers": {
+    "research/market_rsi/experiments/nfl_ingame_temperature_possession_pressure_joint_offset.py": "c57ed002b507e219c788c256b33e0f853fc418ea41713fbfbc845bcb7782d838",
+    "research/market_rsi/experiments/nfl_ingame_candidate_evidence_adapter.py": "f62a5459a8e3c78bcdd7810e25291d1ef164ccc2d41f876fa37fb166f9dcc8bc",
+    "research/market_rsi/supervisor_harness/opened_train_discovery_worker.py": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360"
+  },
+  "evaluation_fixed": "InGameWinProbabilityTrainDiagnostic-v0:195/42=193+2,87/20/7,fit106132148176/check26162817,22+4x5datechronology,Q3preplay/strictpriortrade/max300s/home orientation,unchanged equal-event Brier/log/calibration/10000 date-week resamples seed20260929/KEEP/scientific judge",
+  "increment_annotation": "Both aggregate proper losses beat C7 and>=3/4 parent Brier wins; never modifies incumbent KEEP",
+  "K_sha256": "c94492041d5c331a2cc31c4d6cd529984742ce200e1b9365e3fb7d07e5b1ce64",
+  "M_sha256": "32d09dd7c177b30932b9a0619b60246ba574f8989c9eac80869aff134cded58d",
+  "R_policy_reference_sha256": "5bc2d879b4030190e3a6b17ddd186379b153c112ad1a5f58f5d571c9660bccf8",
+  "allowed_production_paths": [
+    "research/market_rsi/experiments/nfl_ingame_temperature_odd_confidence_joint_offset.py"
+  ],
+  "allowed_test_paths": [
+    "research/market_rsi/experiments/test_nfl_ingame_temperature_odd_confidence_joint_offset.py"
+  ],
+  "allowed_log": "research/market_rsi/supervisor_harness/AGENT_LOG_REPAIR_D4_IMPLEMENTER_2026-10-05.md",
+  "protected": "All existing source/helpers/scorer/worker/recorder/H/R/contracts/history/data/runtime/authority and original responses",
+  "entry": "Direct candidate main uses unchanged H1 C7parent/alpha16 adapter. Explicit ownrequest/compiledcontract/helper/runtime/clock/source and admittedH review guards before Train access; use existing worker.validate, no new H module or modeltext execution",
+  "smallness": "One new predictive component/module target<=180lines; report actual. >200 changed production lines triggers explicit independent inseparability review, no mechanical compression",
+  "tests": "Synthetic derivatives/tanh fit-only brackets/zero-column/gamma0/boundary KKT; odd-link complement symmetry including beta=-1 without monotonicity claim; no age/PBP/checklabel dependence; strict numeric state/source/recipe replay; same195/193+2/87/fourfits/controls; partialfailure/no overwrite/no fallback; targeted+full relevant+independent source before real fit",
+  "resources": {
+    "attempts": 1,
+    "fits": 4,
+    "seconds": 900,
+    "threads": 1,
+    "sampled_rss_bytes": 1073741824,
+    "provider_calls": 0,
+    "retries": 0,
+    "start_utc": "2026-10-05T15:27:11Z",
+    "deadline_utc": "2026-10-05T19:27:11Z",
+    "selection_cutoff_utc": "2026-10-05T19:12:11Z",
+    "python": "/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python",
+    "python_sha256": "80ee2dd97bc26259d4e30853336f72ad38aa4aa0531bb196cc444d899422689d"
+  },
+  "attribution": "This changes calibration shape and parameter count together. Any improvement would support only this recipe on adaptively reused Train, without establishing new information, prospective edge or research-process superiority.",
+  "literature": "No new retrieval. Reuse actual reviewed local C7/D1 solver and past-only proper-score principles; alpha/cutoff/folds/solver are project choices, not paper consensus.",
+  "rollback": "Raw incumbent unchanged unless frozenKEEP; preserve failed/REVERT code/evidence and distinct-branch eligibility, stop exactnegative recipe without wholefamily deletion",
+  "next": "Actual execution/result review -> verified evidence returned to Controller for next free scientific choice, not preplanned independent models"
+}

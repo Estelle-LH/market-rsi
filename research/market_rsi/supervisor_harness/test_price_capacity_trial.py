@@ -13,7 +13,9 @@ class TrialTests(TestCase):
         original = fixtures.fixtures.CapacityAuthorTests.start
         with patch.object(fixtures.fixtures.CapacityAuthorTests, 'start',
                 new=lambda instance, **kwargs: original(instance, axis='harness', replay_cases=cases)):
-            self.f = fixtures.CapacityReviewTests(); self.f.setUp(); self.addCleanup(self.f.doCleanups)
+            self.f = fixtures.CapacityReviewTests()
+            self.addCleanup(self.f.doCleanups)
+            self.f.setUp()
         self.runtime = self.f.f.runtime
         self.scope = self.f.review()
         from supervisor_harness.continuous_discovery_batch import ContinuousDiscoveryBatch
@@ -38,6 +40,11 @@ class TrialTests(TestCase):
         self.assertTrue(all(evidence['checks'].values())); self.assertEqual(len(evidence['outputs']), 13)
         self.assertEqual(evidence['outputs']['failure-before']['output'], {})
         self.assertEqual(evidence['outputs']['failure-after']['output']['remaining_questions'], ['failure'])
+        metrics = evidence['benefit_measurement']
+        self.assertEqual((metrics['parent'], metrics['candidate'], metrics['direct_lookup_reference']), (0., 1., 1.))
+        self.assertEqual(metrics['candidate_minus_parent'], 1.)
+        self.assertEqual(metrics['candidate_minus_reference'], 0.)
+        self.assertEqual(metrics['probe_sha256'], trial.t.c._digest(trial.t.c._read(prepared['request'])['benefit_probe']))
         expected, account, checks = trial.result_material(self.runtime, measured, self.f.reviewer)
         self.assertEqual(account['measurement'], evidence); self.assertEqual(checks, evidence['checks'])
         self.assertEqual(expected['execution_outcome'], 'succeeded')
@@ -53,6 +60,107 @@ class TrialTests(TestCase):
         measured['measurement'] = self.f.f.h.write('tampered-measurement', evidence)
         with self.assertRaisesRegex(ValueError, 'actual measured child'):
             trial.result_material(self.runtime, measured, self.f.reviewer)
+
+    def test_forged_named_metric_rejected_before_independent_result_call(self):
+        measured = trial.execute(self.runtime, self.prepare(), self.adapter)
+        evidence = trial.t.c._read(measured['measurement'])
+        evidence['benefit_measurement']['parent'] = .25
+        measured['measurement'] = self.f.f.h.write('forged-named-benefit', evidence)
+        calls = len(self.f.calls)
+        with self.assertRaisesRegex(ValueError, 'named benefit measurement differs'):
+            self.f.reviewer.review('result', measured)
+        self.assertEqual(len(self.f.calls), calls)
+
+    def test_probe_missing_truth_and_effect_drift_rejected_before_pending_trial(self):
+        receipt = trial.t.c._read(self.scope)
+        for field in ('missing', 'truth_path', 'effect', 'edited_output_path'):
+            changed = deepcopy(receipt)
+            if field == 'missing': changed.pop('benefit_probe')
+            elif field == 'truth_path': changed['benefit_probe']['cases']['failure']['context_path'] = ['unknown']
+            elif field == 'effect': changed['benefit_probe']['expected_effect'] = 'not the original effect'
+            else: changed['benefit_probe']['cases']['failure']['after_output_path'] = ['author_claimed_accuracy']
+            binding = self.f.f.h.write('bad-probe-' + field, changed)
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                trial.prepare(self.runtime, self.f.material, binding, self.f.reviewer, self.adapter)
+            self.assertIsNone(self.batch.snapshot()['micro_evolution']['pending'])
+
+    def test_perfect_parent_no_measured_gain_cannot_adopt_despite_reviewer_boolean(self):
+        # Pure measurement counterfactual: identical correct outputs cannot be a
+        # capacity improvement. The real output-provenance path is tested above.
+        measured = trial.execute(self.runtime, self.prepare(), self.adapter)
+        actual = trial.t.c._read(measured['measurement'])
+        account = {'measurement': deepcopy(actual), 'authored_by_call_id': self.f.author_result['call_id']}
+        account['measurement']['benefit_measurement'].update(parent=1., candidate_minus_parent=0.)
+        expected = {'authorization_sha256': self.runtime.authority['sha256'], 'request': measured['request'],
+                    'measurement': measured['measurement'], 'execution_outcome': measured['execution_outcome']}
+        with patch.object(trial, 'result_material', return_value=(expected, account, actual['checks'])):
+            receipt = trial.t.c._read(self.result_review(measured, observed=True))
+        self.assertFalse(receipt['benefit_observed'])
+        self.assertEqual(receipt['capacity_decision'], 'reject')
+
+    def test_other_named_effect_preserves_matched_output_review_without_accuracy_gate(self):
+        # A synthetic original source review opts out before trial, with both
+        # response and receipt bound. No real model or scientific claim here.
+        source = trial.t.c._read(self.scope)
+        response = trial.t.c._read(source['original_account_call']['response_binding'])
+        response['benefit_probe'] = None; source['benefit_probe'] = None
+        source['original_account_call']['response_binding'] = self.f.f.h.write('null-probe-original', response)
+        self.scope = self.f.f.h.write('null-probe-source-review', source)
+        measured = trial.execute(self.runtime, self.prepare(), self.adapter)
+        expected, account, checks = trial.result_material(self.runtime, measured, self.f.reviewer)
+        metrics = account['measurement']['benefit_measurement']
+        self.assertEqual(metrics['status'], 'independent_named_effect_review_only')
+        self.assertIsNone(metrics['metric_name']); self.assertNotIn('candidate_minus_parent', metrics)
+        self.assertTrue(all(checks.values())); self.assertEqual(expected['execution_outcome'], 'succeeded')
+        receipt = trial.t.c._read(self.result_review(measured))
+        self.assertEqual(receipt['capacity_decision'], 'accept')
+        self.assertEqual(receipt['named_benefit_measurement'], metrics)
+
+    def test_posthoc_null_probe_cannot_evade_original_accuracy_probe(self):
+        changed = trial.t.c._read(self.scope); changed['benefit_probe'] = None
+        self.scope = self.f.f.h.write('posthoc-null-probe', changed)
+        with self.assertRaisesRegex(ValueError, 'differs from original independent source response'):
+            self.prepare()
+        self.assertIsNone(self.batch.snapshot()['micro_evolution']['pending'])
+
+    def test_null_probe_does_not_fabricate_gain_for_already_correct_parent(self):
+        cases = {name: {'truth': name} for name in trial.CASES}
+        outputs = {name + '-' + phase: {'succeeded': True, 'output': {'answer': name}}
+                   for name in trial.CASES for phase in ('before', 'after')}
+        metrics = trial.measure_probe(trial.validate_probe(None, 'bounded recovery benefit', cases), cases, outputs)
+        self.assertEqual(metrics['status'], 'independent_named_effect_review_only')
+        self.assertNotIn('parent', metrics); self.assertNotIn('candidate', metrics)
+        for malformed in (False, 0, '', [], {}):
+            with self.subTest(probe=malformed), self.assertRaises(ValueError):
+                trial.validate_probe(malformed, 'bounded recovery benefit', cases)
+
+    def test_probe_missing_output_is_incorrect_and_json_types_are_distinct(self):
+        cases = {name: {'truth': False} for name in trial.CASES}
+        probe = {'metric_name': 'exact_evidence_match_fraction', 'expected_effect': 'synthetic evidence equality',
+            'cases': {name: {'context_path': ['truth'], 'before_output_path': ['answer'], 'after_output_path': ['answer']}
+                      for name in trial.CASES}}
+        trial.validate_probe(probe, probe['expected_effect'], cases)
+        outputs = {name + '-' + phase: {'succeeded': True, 'output': {'answer': 0} if phase == 'before' else {}}
+                   for name in trial.CASES for phase in ('before', 'after')}
+        self.assertEqual(trial.measure_probe(probe, cases, outputs)['candidate_minus_parent'], 0.)
+        self.assertEqual(trial.measure_probe(probe, cases, outputs)['parent'], 0.)
+        cases['success']['replay_case'] = 'success'
+        probe['cases']['success']['context_path'] = ['replay_case']
+        with self.assertRaisesRegex(ValueError, 'scenario labels are not factual'):
+            trial.validate_probe(probe, probe['expected_effect'], cases)
+
+    def test_equivalent_parent_output_under_different_key_is_not_false_improvement(self):
+        cases = {name: {'verified': {'answer': name}} for name in trial.CASES}
+        probe = {'metric_name': 'exact_evidence_match_fraction', 'expected_effect': 'same semantic evidence answer',
+            'cases': {name: {'context_path': ['verified', 'answer'], 'before_output_path': ['direct_answer'],
+                'after_output_path': ['index', 'answer']} for name in trial.CASES}}
+        outputs = {}
+        for name in trial.CASES:
+            outputs[name + '-before'] = {'succeeded': True, 'output': {'direct_answer': name}}
+            outputs[name + '-after'] = {'succeeded': True, 'output': {'index': {'answer': name}}}
+        metrics = trial.measure_probe(trial.validate_probe(probe, probe['expected_effect'], cases), cases, outputs)
+        self.assertEqual(metrics['parent'], 1.)
+        self.assertEqual(metrics['candidate_minus_parent'], 0.)
 
     def test_missing_frozen_context_and_foreign_source_verdict_do_not_propose(self):
         bad = trial.t.c._read(self.scope); bad['implementation_sha256'] = 'f' * 64

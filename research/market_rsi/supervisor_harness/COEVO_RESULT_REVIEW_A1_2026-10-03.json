@@ -1,0 +1,320 @@
+{
+  "actual_research_parent_comparator": "raw_market; frozen_state_reference is an additional control, not actual A1 lineage",
+  "artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-01/runs/attempt-01",
+  "artifact_sha256": {
+    "exclusions.json": "e6b19b230318dc9daf89e6495504c93996f49b3245415a14a45144fece81fdfb",
+    "input_receipts.json": "a105a8dc20a2eb6e4e96e5a77359bf7c82ca41bbc0417da10c37810a918dce6a",
+    "manifest.json": "a94d14816dd21a55d0f6cb666e6004443c1fcfaa23a3b3a385016ad191ac2530",
+    "pre_score_lock.json": "c04526491dc4db4cf7a90c2ed6f969a341ffc3053650aaea9e44a551541adaae",
+    "predictions.csv": "0ebc0fefc058949ee202eaae58ffaeec6c1a3482c511cb00af1ecf7075c37a04",
+    "scorecard.json": "c5f658f2721b3ba500bfa37f775205b1b6cad6b80291595d910666d97cd186b9"
+  },
+  "attempt_id": "attempt-01",
+  "candidate_id": "InGameMarketFreshnessInteractionOffset-v1",
+  "checks": {
+    "all87_frozen_comparators_and_labels_match": true,
+    "all87_predictor_reconstructions": true,
+    "all_paired_folds_dates_and_bootstrap_intervals": true,
+    "causal_inputs_and_strict_prior_labels": true,
+    "committed_source_and_current_bytes_match": true,
+    "equal_event_scores_calibration_reliability": true,
+    "exact_Controller_recipe_and_lineage_match": true,
+    "fit_only_scaling_reconstructed": true,
+    "four_optimizer_stationarity_checks": true,
+    "full195_denominator": true,
+    "manifest_and_log_hashes_match": true,
+    "no_score_policy_change": true
+  },
+  "claim_limits": [
+    "Repeatedly_inspected_Train_Discovery_only",
+    "Historical_event_time_not_actual_publish_receive",
+    "No_general_freshness_information_claim",
+    "No_mechanism_superiority",
+    "No_authenticated_exact_Controller_version_or_arbitrary_code_isolation"
+  ],
+  "comparison_incumbent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+  "evidence_level": "L3_opened_Train_predictive_effect",
+  "execution_receipt_sha256": "f08bf106cd6860c7444827295e5d05fe810254b424c2515b2c1af9c8ad768e82",
+  "folds": [
+    {
+      "candidate_minus_market": {
+        "brier": 0.0011367832241294257,
+        "log_loss": 0.0023624199729394
+      },
+      "check_events": 26,
+      "fit_events": 106,
+      "fold": 1,
+      "metrics": {
+        "candidate": {
+          "brier": 0.12561521434032968,
+          "log_loss": 0.3803743826161928
+        },
+        "frozen_state_reference": {
+          "brier": 0.15019918218394343,
+          "log_loss": 0.43593711570560223
+        },
+        "ordinary": {
+          "brier": 0.13061710877713692,
+          "log_loss": 0.39656213359146736
+        },
+        "raw_market": {
+          "brier": 0.12447843111620026,
+          "log_loss": 0.3780119626432534
+        }
+      }
+    },
+    {
+      "candidate_minus_market": {
+        "brier": -0.0012112256586762626,
+        "log_loss": -0.003676486147951352
+      },
+      "check_events": 16,
+      "fit_events": 132,
+      "fold": 2,
+      "metrics": {
+        "candidate": {
+          "brier": 0.17175232049160488,
+          "log_loss": 0.5001512893773579
+        },
+        "frozen_state_reference": {
+          "brier": 0.1673579315846153,
+          "log_loss": 0.5021972845123244
+        },
+        "ordinary": {
+          "brier": 0.17589549592451675,
+          "log_loss": 0.5127619202842759
+        },
+        "raw_market": {
+          "brier": 0.17296354615028114,
+          "log_loss": 0.5038277755253092
+        }
+      }
+    },
+    {
+      "candidate_minus_market": {
+        "brier": -0.0006204224593229501,
+        "log_loss": -0.0011560310462254697
+      },
+      "check_events": 28,
+      "fit_events": 148,
+      "fold": 3,
+      "metrics": {
+        "candidate": {
+          "brier": 0.1487522579865548,
+          "log_loss": 0.4590417389608034
+        },
+        "frozen_state_reference": {
+          "brier": 0.16613856976689173,
+          "log_loss": 0.48697318908653625
+        },
+        "ordinary": {
+          "brier": 0.15180591666281168,
+          "log_loss": 0.4660691786040406
+        },
+        "raw_market": {
+          "brier": 0.14937268044587776,
+          "log_loss": 0.4601977700070289
+        }
+      }
+    },
+    {
+      "candidate_minus_market": {
+        "brier": 0.00045372364803430987,
+        "log_loss": 0.0011175588686616056
+      },
+      "check_events": 17,
+      "fit_events": 176,
+      "fold": 4,
+      "metrics": {
+        "candidate": {
+          "brier": 0.1277230779639739,
+          "log_loss": 0.3897213984407664
+        },
+        "frozen_state_reference": {
+          "brier": 0.16143885580678952,
+          "log_loss": 0.46996446595500513
+        },
+        "ordinary": {
+          "brier": 0.12917780945822577,
+          "log_loss": 0.3946157885206703
+        },
+        "raw_market": {
+          "brier": 0.12726935431593958,
+          "log_loss": 0.3886038395721048
+        }
+      }
+    }
+  ],
+  "launch_manifest_sha256": "524ae337fe9cb1d38c452cacd07952b768c4d6e00a9155fa34dce7e21cc317f5",
+  "memory_sha256": "2df4c830673a56354cd48979d4e776527ac33e0db6477e3436f2500f6904884d",
+  "metrics": {
+    "candidate": {
+      "brier": 0.1419584856290269,
+      "calibration_intercept": -0.011020450029667339,
+      "calibration_slope": 1.0326254247199125,
+      "log_loss": 0.4295469774994743
+    },
+    "frozen_state_reference": {
+      "brier": 0.16068099016465245,
+      "calibration_intercept": 0.04813167873790908,
+      "calibration_slope": 0.9186856458868063,
+      "log_loss": 0.4711973192666776
+    },
+    "ordinary": {
+      "brier": 0.14548231253271718,
+      "calibration_intercept": -0.023504802267641844,
+      "calibration_slope": 1.0568122659695651,
+      "log_loss": 0.43992197245621956
+    },
+    "raw_market": {
+      "brier": 0.14195252900323282,
+      "calibration_intercept": -0.011806646530491793,
+      "calibration_slope": 1.0370387494646494,
+      "log_loss": 0.4296707847132428
+    }
+  },
+  "operational_decision": "REVERT",
+  "optimizer_reconstruction": [
+    {
+      "beta": -0.06915301791959155,
+      "fit_age_mean": 25.80781135694036,
+      "fit_age_std_ddof0": 31.674980238848484,
+      "fit_objective": 44.81755207124026,
+      "fold": 1,
+      "gradient_absolute": 5.628237875754394e-10,
+      "max_probability_reconstruction_error": 0
+    },
+    {
+      "beta": -0.04653351426367254,
+      "fit_age_mean": 24.114962156974908,
+      "fit_age_std_ddof0": 30.61088796265004,
+      "fit_objective": 54.70142144552368,
+      "fold": 2,
+      "gradient_absolute": 2.1116441928370477e-13,
+      "max_probability_reconstruction_error": 0
+    },
+    {
+      "beta": -0.0660410593176806,
+      "fit_age_mean": 23.73604733396221,
+      "fit_age_std_ddof0": 29.801606713461496,
+      "fit_objective": 62.69011170673128,
+      "fold": 3,
+      "gradient_absolute": 8.538703077931586e-10,
+      "max_probability_reconstruction_error": 5.551115123125783e-17
+    },
+    {
+      "beta": -0.06796232193622621,
+      "fit_age_mean": 22.70846026187593,
+      "fit_age_std_ddof0": 28.617136849478204,
+      "fit_objective": 75.54576364571815,
+      "fold": 4,
+      "gradient_absolute": 7.057834316981371e-9,
+      "max_probability_reconstruction_error": 0
+    }
+  ],
+  "paired": {
+    "frozen_state_reference": {
+      "brier": {
+        "delta_equal_event": -0.01872250453562555,
+        "game_date_interval_95": [
+          -0.03571526535764632,
+          -0.0027144686955165157
+        ],
+        "game_week_interval_95": [
+          -0.03523587864895616,
+          -0.0022600307431753603
+        ]
+      },
+      "log_loss": {
+        "delta_equal_event": -0.04165034176720329,
+        "game_date_interval_95": [
+          -0.08415842185480149,
+          -0.0030488512061758216
+        ],
+        "game_week_interval_95": [
+          -0.08134055776182195,
+          -0.004020804308950255
+        ]
+      }
+    },
+    "ordinary": {
+      "brier": {
+        "delta_equal_event": -0.003523826903690258,
+        "game_date_interval_95": [
+          -0.0057536675340380365,
+          -0.0014119867991921292
+        ],
+        "game_week_interval_95": [
+          -0.005288079479975571,
+          -0.0021557897540581037
+        ]
+      },
+      "log_loss": {
+        "delta_equal_event": -0.010374994956745227,
+        "game_date_interval_95": [
+          -0.016617285303518185,
+          -0.005040492290568335
+        ],
+        "game_week_interval_95": [
+          -0.01550143436292321,
+          -0.006093492083226224
+        ]
+      }
+    },
+    "raw_market": {
+      "brier": {
+        "delta_equal_event": 0.00000595662579408819,
+        "game_date_interval_95": [
+          -0.0008910915854993312,
+          0.0008817557619741339
+        ],
+        "game_week_interval_95": [
+          -0.000799049183805424,
+          0.000875416131507115
+        ]
+      },
+      "log_loss": {
+        "delta_equal_event": -0.00012380721376853068,
+        "game_date_interval_95": [
+          -0.003150480193230954,
+          0.002400331750127063
+        ],
+        "game_week_interval_95": [
+          -0.0026549213711236797,
+          0.0022083417184447286
+        ]
+      }
+    }
+  },
+  "population": {
+    "check_events": 87,
+    "check_key_sha256": "2e35779fdbb4b83e129758008338b0c778d7f6281682118ad8d26d21293cc9f9",
+    "dates": 20,
+    "excluded_events": 2,
+    "materialized_events": 193,
+    "source_events": 195,
+    "weeks": 7
+  },
+  "raw_brier_fold_wins": 2,
+  "request_sha256": "a1cda8f590a5b914932e371e05b8a3ed1d263f137e9e9aba9a20984fc18000e8",
+  "research_credit_recommendation": {
+    "branch_eligibility": "A distinct causal representation may be tried if Controller specifies a new hypothesis; do not retest unchanged exact recipe.",
+    "credit": 2,
+    "evidence": "Valid negative prediction experiment; all coefficients negative but paired losses/fold breadth do not support this exact recipe. No incumbent update."
+  },
+  "research_parent_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+  "resources": {
+    "model_fits_in_run": 4,
+    "provider_calls_requested": 0,
+    "review_fits": 0,
+    "run_wall_seconds": 4.364484291989356,
+    "sampled_peak_rss_kib": 137232
+  },
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "runtime_pair_sha256": "ad5bbccc2bbd16c4dd06d355fddb5310176a10a4f39ecc5052a3516a4b55fad7",
+  "schema": "market_rsi_independent_candidate_result_review_v1",
+  "scientific_decision": "REFUTED_exact_recipe",
+  "source_commit": "422c75dff716b71ca8ef7d9dcc9ba3f4c3ca2e42",
+  "verdict": "PASS_valid_completed_prediction_experiment",
+  "review_observed_utc": "2026-10-03 19:34:31 UTC"
+}

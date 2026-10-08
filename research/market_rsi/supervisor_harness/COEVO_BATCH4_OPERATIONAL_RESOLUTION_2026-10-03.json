@@ -1,0 +1,495 @@
+{
+  "schema": "coevo_batch_independent_operational_resolution_v1",
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "passed": true,
+  "verdict": "PASS_EXECUTED_CANDIDATE_LOOP_AND_IMMUTABLE_CAP_CLOSURE_NOT_PREDICTION_OR_R_SUCCESS",
+  "batch_id": "market-rsi-coevo-train-pilot-20261003-04",
+  "artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-coevo-train-pilot-20261003-04",
+  "C2_consumed_and_excluded_from_8_archive_parents": true,
+  "all10_execution_audit": [
+    {
+      "PID": 45313,
+      "actual_fits": 4,
+      "attempt_id": "attempt-01",
+      "batch_id": "market-rsi-coevo-train-pilot-20261003-01",
+      "brier": 0.1419584856290269,
+      "candidate_id": "InGameMarketFreshnessInteractionOffset-v1",
+      "log_loss": 0.4295469774994743,
+      "manifest_sha256": "a94d14816dd21a55d0f6cb666e6004443c1fcfaa23a3b3a385016ad191ac2530",
+      "request_sha256": "a1cda8f590a5b914932e371e05b8a3ed1d263f137e9e9aba9a20984fc18000e8",
+      "review_decision": "REVERT",
+      "review_sha256": "f327f4457a3801a661adfdfd8b15c01c5b83dafee39fbc38b2547729744b38a2",
+      "sampled_peak_rss_kib": 137232,
+      "scorecard_sha256": "c5f658f2721b3ba500bfa37f775205b1b6cad6b80291595d910666d97cd186b9",
+      "source_commit": "422c75dff716b71ca8ef7d9dcc9ba3f4c3ca2e42",
+      "source_files": 23,
+      "wall_seconds": 4.364484291989356
+    },
+    {
+      "PID": 45315,
+      "actual_fits": 4,
+      "attempt_id": "attempt-02",
+      "batch_id": "market-rsi-coevo-train-pilot-20261003-01",
+      "brier": 0.14219132715636526,
+      "candidate_id": "InGameCausalPossessionPressureOffset-v1",
+      "log_loss": 0.4296628599298944,
+      "manifest_sha256": "a2841bdc479fe9d62a98856848a980c5a4c35dbeda269c985264ca85faa4c7f9",
+      "request_sha256": "db4c85b978133d798eec675630ba44ff9e9726cccef172d6b3c320ee1b25c7b8",
+      "review_decision": "REVERT",
+      "review_sha256": "048d4f643a5c0ed494947c4b70935104fd861058fca93d3fde5379a494265a8e",
+      "sampled_peak_rss_kib": 137872,
+      "scorecard_sha256": "88e25742b991cba0d41f8909850c95a2204879dd9be7d5af4e5f6f07e7fcb9c0",
+      "source_commit": "422c75dff716b71ca8ef7d9dcc9ba3f4c3ca2e42",
+      "source_files": 23,
+      "wall_seconds": 4.297517708997475
+    },
+    {
+      "PID": 46930,
+      "actual_fits": 4,
+      "attempt_id": "attempt-03",
+      "batch_id": "market-rsi-coevo-train-pilot-20261003-01",
+      "brier": 0.1419817702645588,
+      "candidate_id": "InGameMarketFreshnessBrierOffset-v2",
+      "log_loss": 0.4296664712947707,
+      "manifest_sha256": "37fc016f4e772111d267d57ee69416d5e424ac77267be1c9e1a2f2424f43abad",
+      "request_sha256": "5d5127b088ddb3ea5a57d21b1241e53307ffd1a7fc1cce8fd431918312e583c3",
+      "review_decision": "REVERT",
+      "review_sha256": "87fc1782636a3b55d4ee06ed4fb0cffa925a814ed0ded71ba07fb9c3121f0217",
+      "sampled_peak_rss_kib": 137008,
+      "scorecard_sha256": "09fc03c5407c349ebe50547a203e0b95dd9793dbcf7608d0c647e266bb78bd94",
+      "source_commit": "35e4c0303cf317289c5070e1b61efe171a5c921e",
+      "source_files": 26,
+      "wall_seconds": 4.0875693329871865
+    },
+    {
+      "PID": 48514,
+      "actual_fits": 4,
+      "attempt_id": "attempt-01",
+      "batch_id": "market-rsi-coevo-train-hgb-pilot-20261003-02",
+      "brier": 0.15281893309736092,
+      "candidate_id": "InGameMarketResidualHGB-v1",
+      "log_loss": 0.4562724957206233,
+      "manifest_sha256": "abd68898fbe5be3ec3b85fa183a93833288f7767ec45934bb8bf554e38ab2904",
+      "request_sha256": "ccc9d55f32d6e70d9528894f5471d7d4428ec16d130fdd86028b09ca138f210f",
+      "review_decision": "REVERT",
+      "review_sha256": "37213fcba838be60009eed50ea753d96bcade9e0a4312769996807ed5be24ed0",
+      "sampled_peak_rss_kib": 138464,
+      "scorecard_sha256": "39ef6a2f5d4905672429bdafbdcb5aeffcef378d05b62d68a44e87242786fd77",
+      "source_commit": "8a3102b125f714493394443f975bb4570e401ed8",
+      "source_files": 27,
+      "wall_seconds": 4.242267207999248
+    },
+    {
+      "PID": 48516,
+      "actual_fits": 4,
+      "attempt_id": "attempt-02",
+      "batch_id": "market-rsi-coevo-train-hgb-pilot-20261003-02",
+      "brier": 0.1479352068900177,
+      "candidate_id": "InGameMarketStateResidualHGB-v1",
+      "log_loss": 0.44059079248182575,
+      "manifest_sha256": "dfe2324daac2c8e8c5c7d33934c038de919f272a0d5c823e67f413773c884156",
+      "request_sha256": "73aefff4a71b4e52b46018d4551819630929ade751dc441ceef2db3a9901cb31",
+      "review_decision": "REVERT",
+      "review_sha256": "4703575bbd7502e4eb328699686a889c321842bfaf893938dd635ecf7c87f597",
+      "sampled_peak_rss_kib": 138384,
+      "scorecard_sha256": "3234deb34d797b7a7bd787a30d01514f9684f193c059feda000c1c866edcd86d",
+      "source_commit": "8a3102b125f714493394443f975bb4570e401ed8",
+      "source_files": 27,
+      "wall_seconds": 4.275375999990501
+    },
+    {
+      "PID": 50437,
+      "actual_fits": 4,
+      "attempt_id": "attempt-03",
+      "batch_id": "market-rsi-coevo-train-hgb-pilot-20261003-02",
+      "brier": 0.14685521793761888,
+      "candidate_id": "InGameMarketStateConfidenceLinkHGB-v2",
+      "log_loss": 0.43970280354554125,
+      "manifest_sha256": "0abc3c7c9280cc16c7d2197dc4adbdbdd0048c48e8de870828c47561e45e923d",
+      "request_sha256": "4be1d0d74ef36910e41c26ba8877f20d1c18df2baece5fc06b8c59b801813026",
+      "review_decision": "REVERT",
+      "review_sha256": "cb8cdc801a2a921bbcd8c4c7619de8490ad45ecbab27a785307fef3c0fd8f637",
+      "sampled_peak_rss_kib": 139808,
+      "scorecard_sha256": "46fcfc3f5fe69952e37aa1e7f0a008b5c39a47e01e6741432077f1674ba5d06d",
+      "source_commit": "ad5d2a8bb98b3841b5d22008d25bc46487237412",
+      "source_files": 31,
+      "wall_seconds": 4.18504362499516
+    },
+    {
+      "PID": 52057,
+      "actual_fits": 4,
+      "attempt_id": "attempt-01",
+      "batch_id": "market-rsi-coevo-train-pilot-20261003-03",
+      "brier": 0.1454626479403298,
+      "candidate_id": "InGameIdentityBlendedIsotonic-v1",
+      "log_loss": 0.4388601515199571,
+      "manifest_sha256": "803edc240d6b702aa4ecc9dc666d9afe0f9bc7d0543cd0bf4e62ae0a103b5321",
+      "request_sha256": "de5e50e7c94e7b75bb0736fa8d14269d6fbc3d713ff5a6463f5861035359e3ff",
+      "review_decision": "REVERT",
+      "review_sha256": "93400e9757c41d461bfdd1840d9b62bc30843e23d82c4accc969cfe5a9609f24",
+      "sampled_peak_rss_kib": 138720,
+      "scorecard_sha256": "8f2002cf8c13c45756f1c691b8407e32d9110c04bdeb0f533e24b07a975d9bf9",
+      "source_commit": "4bd926a40bb099e548be7c1d53aea2a05125538d",
+      "source_files": 35,
+      "wall_seconds": 4.041902917000698
+    },
+    {
+      "PID": 52740,
+      "actual_fits": 4,
+      "attempt_id": "attempt-02",
+      "batch_id": "market-rsi-coevo-train-pilot-20261003-03",
+      "brier": 0.14194807773589316,
+      "candidate_id": "InGamePriorPlayVolumeOffset-v1",
+      "log_loss": 0.42957778268391095,
+      "manifest_sha256": "19300efb81f9b17666531599e6a3b5d470dc21bf94b544f8e3d0c85278db5bf3",
+      "request_sha256": "9820e3be81ed1015a7a20315d8091995d16c7e29ae11add6ef6b3ded5647c1dd",
+      "review_decision": "REVERT",
+      "review_sha256": "a8ff65b8abd5c78c911ff7a2e3b758d7e9440bbfea309b045bdc3fd707305cb8",
+      "sampled_peak_rss_kib": 139424,
+      "scorecard_sha256": "e52c39ca3d4d585f0bb7f0f20b905a6bbfda435027ad9703202ef65b4e9f26c0",
+      "source_commit": "50895c74f93dd8f3def9cf2e4d6144dec9b10c7b",
+      "source_files": 36,
+      "wall_seconds": 4.46397137499298
+    },
+    {
+      "PID": 54371,
+      "actual_fits": 4,
+      "attempt_id": "attempt-03",
+      "batch_id": "market-rsi-coevo-train-pilot-20261003-03",
+      "brier": 0.14195824357373463,
+      "candidate_id": "InGamePriorPlayVolumeFreshnessJointOffset-v2",
+      "log_loss": 0.42946360535319034,
+      "manifest_sha256": "a111ba3fc79684ee3b6002d1e6152fe0d7669a850609450e154e94fc4f513672",
+      "request_sha256": "723e2b7142242f71d728777dcb4f93ccae7b90b4648dc12a31e41951c8d5e427",
+      "review_decision": "REVERT",
+      "review_sha256": "c055b99fb38c60f9a0869061072a5679ceb695c28488591d72613ff07f41edc0",
+      "sampled_peak_rss_kib": 142528,
+      "scorecard_sha256": "21371f48004a1ae0739012072c5b3a3285f4b566ed3ab47d7de7a36491477914",
+      "source_commit": "0af8ebd2bab55b8c19a4ab73f9ec757331a9aa71",
+      "source_files": 40,
+      "wall_seconds": 4.447732874992653
+    },
+    {
+      "PID": 56473,
+      "actual_fits": 4,
+      "attempt_id": "attempt-01",
+      "batch_id": "market-rsi-coevo-train-pilot-20261003-04",
+      "brier": 0.14267853451809134,
+      "candidate_id": "InGamePriorPlayVolumeUnitScaleJointOffset-v3",
+      "log_loss": 0.4291441156534457,
+      "manifest_sha256": "c697428bbd44098c3c3ae7cc7c6fd35d74c7cf3465dcb0e024cfbbac1099f93b",
+      "request_sha256": "c53483288cc89ec0a14c852cf38b9413b8b7c533246a5912876f399eccb63b19",
+      "review_decision": "REVERT",
+      "review_sha256": "66b055451d32c32a983d15de39695b5fb1765ca428ccafae0aeba01ad38091c9",
+      "sampled_peak_rss_kib": 139408,
+      "scorecard_sha256": "3166644d997eb4ba4196ec87f5952ac92364789d7878eb3c4bc3cf031672fdb6",
+      "source_commit": "f55bff87598a25fabb6da5c1513a5384694bfc7c",
+      "source_files": 44,
+      "wall_seconds": 4.291123041999526
+    }
+  ],
+  "all_nine_history_feedback_verified": true,
+  "all_prefixes": [
+    {
+      "active": [],
+      "claims": 0,
+      "event": "initialize_v3",
+      "sequence": 1
+    },
+    {
+      "active": [],
+      "claims": 0,
+      "event": "micro_evolution",
+      "sequence": 2
+    },
+    {
+      "active": [
+        "attempt-01"
+      ],
+      "claims": 0,
+      "event": "controller_pool_selected",
+      "sequence": 3
+    },
+    {
+      "active": [
+        "attempt-01"
+      ],
+      "claims": 0,
+      "event": "implementation_ready",
+      "sequence": 4
+    },
+    {
+      "active": [
+        "attempt-01"
+      ],
+      "claims": 1,
+      "event": "execution_claimed",
+      "sequence": 5
+    },
+    {
+      "active": [
+        "attempt-01"
+      ],
+      "claims": 1,
+      "event": "execution_terminal",
+      "sequence": 6
+    },
+    {
+      "active": [
+        "attempt-01"
+      ],
+      "claims": 1,
+      "event": "result_reviewed",
+      "sequence": 7
+    },
+    {
+      "active": [
+        "attempt-01"
+      ],
+      "claims": 1,
+      "event": "research_credit_recorded",
+      "sequence": 8
+    },
+    {
+      "active": [],
+      "claims": 1,
+      "event": "controller_feedback_ready",
+      "sequence": 9
+    }
+  ],
+  "all_prefixes_verified": true,
+  "artifact_sha256": {
+    "activation_memory.json": "5b1e131c55604d4ff71e109fe9b04107a7c2bac399e4eefb6df0e20e9c243b4f",
+    "batch.json": "059f2a963e89d853ae21c91421c2ad634edbca7906f58230c03b0e0fe381e787",
+    "feedback-attempt-01.json": "3bd8a89936325fe9f08e3b23af0d70fffa6cba399745c2abe28c3f7df655fe9a",
+    "initial_memory.json": "448b5923257c7f8b341a7b12399c72150f783381562f7fe186ecf52ee2a181b4",
+    "launch_manifest.json": "1da68a7a4f711807e14906aafc5d19fe64de27fbdc38c4a9001207baec8b2b5e",
+    "pilot_terminal.json": "3bf25e888ff4c7c97570d2a683725946b788703a6bbfc3c2a0322c5f3737c833"
+  },
+  "credit": {
+    "outcome": "refute",
+    "predeclared_rule_sha256": "2caa0e05ce534795beae886da3d30b1df5dcef47449a38cae2ecd959bceb9372",
+    "question_digest_sha256": "d64d9f0cb81163c0612b5045dfbb3aa25a7492f4f0fe28cf17961c1fbef369a3",
+    "question_id": "ingame-prior-play-volume-fit-unit-ridge-v3-q1",
+    "route_action": "branch",
+    "value": 2
+  },
+  "feedback_dependent_descendants": [
+    "freshness-NLL-to-freshness-Brier",
+    "state-residual-HGB-to-confidence-link",
+    "volume-NLL-to-joint-volume-freshness-NLL",
+    "joint-native-volume-to-fit-unit-prior"
+  ],
+  "hardstop_verified": true,
+  "human_machine_C4_trajectory_matches": true,
+  "incumbent": {
+    "candidate_id": "InGameWinProbabilityTrainDiagnostic-v0-raw_market",
+    "candidate_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+    "review_sha256": "6e4a29ea73573dae441ace79900e7cfee2da01aa217f8c6b6dcd705298668824",
+    "scorecard_sha256": "74c2f23de2ae129ead4d7def1a692d69240ac799582e54db3623865c3525de87",
+    "source": "batch_start",
+    "updated_by_attempt_id": null
+  },
+  "journal_event_counts": {
+    "controller_feedback_ready": 1,
+    "controller_pool_selected": 1,
+    "execution_claimed": 1,
+    "execution_terminal": 1,
+    "implementation_ready": 1,
+    "initialize_v3": 1,
+    "micro_evolution": 1,
+    "research_credit_recorded": 1,
+    "result_reviewed": 1
+  },
+  "journal_head_sha256": "048bd312eafe9da515910811080d2183c31090b8a660b07eddbe99b41a491f7e",
+  "journal_records": 9,
+  "matched_HGB_information_analysis_not_additional_attempt": true,
+  "max_active_slots_seen": 1,
+  "micro_evolution": {
+    "active_pair": {
+      "harness_sha256": "50d32690f488a583b705d23d114091326af17ec8afab9343283c0f28b8514df0",
+      "researcher_sha256": "5bc2d879b4030190e3a6b17ddd186379b153c112ad1a5f58f5d571c9660bccf8"
+    },
+    "allowed_write_paths": {
+      "harness": [
+        "research/market_rsi/supervisor_harness/opened_train_discovery_worker.py"
+      ],
+      "researcher": [
+        "research/market_rsi/supervisor_harness/coevo_research_policy_v1.json"
+      ]
+    },
+    "anchor_pair": {
+      "harness_sha256": "50d32690f488a583b705d23d114091326af17ec8afab9343283c0f28b8514df0",
+      "researcher_sha256": "5bc2d879b4030190e3a6b17ddd186379b153c112ad1a5f58f5d571c9660bccf8"
+    },
+    "fixed_context": {
+      "authority_sha256": "37fecab6489e44e7e0ab498aa5fe5e57735b97801f10e09e4a158d2956fe0578",
+      "data_scope_sha256": "c94492041d5c331a2cc31c4d6cd529984742ce200e1b9365e3fb7d07e5b1ce64",
+      "evaluation_sha256": "c94492041d5c331a2cc31c4d6cd529984742ce200e1b9365e3fb7d07e5b1ce64",
+      "model_sha256": "32d09dd7c177b30932b9a0619b60246ba574f8989c9eac80869aff134cded58d",
+      "resource_policy_sha256": "ac2c76027c7085038cbc0a1be0063260f1024a09f23af419753ae27cb07b43bf"
+    },
+    "history": [],
+    "pending": null,
+    "previous_pair": null,
+    "protected_paths": [
+      ".agents",
+      ".codex",
+      ".git",
+      "artifacts",
+      "data_scientist_harness/co_evolution_loop.py",
+      "paid_budget.py",
+      "research/market_rsi/experiments",
+      "research/market_rsi/minimal_prediction_loop",
+      "research/market_rsi/supervisor_harness/continuous_discovery_batch.py",
+      "supervisor_harness/global_state_gate.py"
+    ],
+    "record_sha256": "7f0d3021f6b5d82efb93ea9ce6a396a19fe3d1d68fda1b201dd4f13dcff18965",
+    "reviewer_id": "coevo_independent_review_20261003",
+    "schema": "market_rsi_micro_evolution_v1",
+    "used_candidate_ids": []
+  },
+  "native_cross_batch_consumption_enforcement_claimed": false,
+  "no_second_attempt_or_repeat": true,
+  "old_closed_caps_results_unchanged": true,
+  "pool_generation_sizes": [
+    1
+  ],
+  "pure_replays": 2,
+  "python_diff": [
+    "313\t0\tresearch/market_rsi/experiments/nfl_ingame_prior_play_volume_unit_scale_joint_offset.py",
+    "281\t0\tresearch/market_rsi/experiments/test_nfl_ingame_prior_play_volume_unit_scale_joint_offset.py"
+  ],
+  "resources": {
+    "PIDs": [
+      45313,
+      45315,
+      46930,
+      48514,
+      48516,
+      50437,
+      52057,
+      52740,
+      54371,
+      56473
+    ],
+    "batch_attempts": 1,
+    "batch_fits": 4,
+    "failed_attempts": 0,
+    "outer_attempts": 10,
+    "outer_fits": 40,
+    "outer_prediction_versions": 870,
+    "outer_sampled_peak_child_rss_kib": 142528,
+    "outer_sum_worker_wall_seconds": 42.696988375944784,
+    "prediction_rows": 87,
+    "provider_calls": 0,
+    "provider_cost_usd": 0,
+    "unique_check_games": 87
+  },
+  "result_review_sha256": "66b055451d32c32a983d15de39695b5fb1765ca428ccafae0aeba01ad38091c9",
+  "reviewed_utc": "2026-10-03T22:05:58.729233+00:00",
+  "terminal_state_sha256": "f138424cb269195034bad970213ac7c9c2cc9e64bb0cdcbcec360b2c4c3817a4",
+  "trajectory_records": 13,
+  "process_checks": {
+    "45313": "absent",
+    "45315": "absent",
+    "46930": "absent",
+    "48514": "absent",
+    "48516": "absent",
+    "50437": "absent",
+    "52057": "absent",
+    "52740": "absent",
+    "54371": "absent",
+    "56473": "absent"
+  },
+  "process_check_method": "Scoped escalated read-only os.kill(pid,0) checks for all ten identified completed workers; every PID returned ProcessLookupError, no signal sent.",
+  "operational_resolution": {
+    "resolved": "Real local candidate execution and evidence-return loop is operationally demonstrated, including bounded final child, accepted independent review, separate research credit, feedback, exact completed-history replay and cap stop.",
+    "evidence_level": "L3 actual opened-Train predictions and operational artifacts; completed-history restart proof, not deliberately interrupted real-fit recovery.",
+    "framework_effect": "Bounded source/runtime/memory/request-linked child execution and REVERT-as-distinct-question-parent retention actually used. Initial H changes were Supervisor implementation; H and R stayed frozen across all ten candidate executions.",
+    "candidate_effect": "Four genuinely feedback-selected descendants A3/B3/C3/C4 were trained after accepted prior evidence. This is autonomous predictor optimization, not an R/tool/workflow self-modification experiment.",
+    "not_resolved": [
+      "Confirmed market improvement",
+      "Research-mechanism superiority under matched budget",
+      "Prospective/untouched final evaluation",
+      "OS-hard or network/arbitrary-code isolation",
+      "Native cross-batch consumed-followup persistence"
+    ]
+  },
+  "checks": {
+    "canonical_journal": "All nine sequential canonical records, SHA chaining, snapshot digest and event order verified; no history rewrite. One claim/one completion/one accepted result/one credit/one feedback, no repeated qualified ID.",
+    "all_prefixes": "Every prefix independently replayed; max one active slot within capacity2, original max1 never exceeded, incumbent unchanged. At every prefix with one claim, pure _assert_live_batch rejects a second admission without mutation.",
+    "recovery": "Two fresh pure replay objects produce byte-equivalent actual terminal state; completed-history restart only. No simulated interruption or actual rerun.",
+    "stop": "Actual terminal closed 2026-10-03T22:02:23.284805Z at original max1/fourfits; stopped_reason max_attempts_reached, no active attempt, no attempt-02 or second request/run. Outer ten-attempt cap consumed before unchanged 00:10:37Z deadline; five hours not claimed elapsed.",
+    "bindings": "C4 accepted result SHA66b05545..., exact question/hypothesis/rule/source/runtime/memory/spec/request/receipt/stdout/stderr/seven outputs/four fitted primitive states and credit/feedback/terminal bindings verified. Current source exactly matches 44 committed bindings.",
+    "parent_and_incumbent": "C3 actual research parent7a3175c1... and raw comparison incumbent89a8ef92... are separate and correctly persisted. Negative branch credit cannot overwrite incumbent or grant authority.",
+    "credit": "Recorded value2/outcome refute/route branch agrees independent actual-prediction review and frozen recorder. Identical question digest/rule/review/evidence bundle retained; no Brier bonus or failed-recipe repetition.",
+    "history_and_consumption": "Full nine prior accepted feedback packets bound in unchanged initial/activation memory. C2 evidence2/recorder1 mapping and one consumed C3 followup preserved; C2 excluded from eight imported archive parents. Supervisor enforces exclusion; native cross-batch guarantee not claimed.",
+    "old_caps_and_results": "All three previous terminal hashes/state digests/original max3/12/no-active states preserved. All ten result/review/manifest/artifact bindings rechecked against committed and current source, source-runtime-memory/request and child receipts without fits.",
+    "cross_window_arithmetic": "All ten 87-row CSVs share exact keys/labels/clock orientation/raw/ordinary/v0-state controls; candidate Brier/log-loss recomputed and matched saved scores. 870 versions are the same 87 independent game identities, not 870 distinct games.",
+    "resources": "Exactly ten unique candidate attempts and40fits, zero retry/control refit/failed actual run/provider. Summed worker-wall42.696988375944784s, sampled peak142528KiB per child. This is not total research elapsed or full Codex cost.",
+    "source_scope": "Only new C4 module313lines and test281lines added between C3 and C4 source checkpoints; old production/scorer/scheduler/worker immutable. Explicit pre-score inseparability decision already accepted; line count alone not proof.",
+    "fixed_context": "K/M/H/R micro-evolution identities remained anchored, empty history/pending, model/data/evaluation/resource context unchanged. No Controller exact-version authentication inferred.",
+    "trajectory": "13 machine records checked; C4 source/parent/verified C3 trigger/result/feedback/terminal/credit and before/after identities match human progress. Four feedback descendants distinguish real sequential evidence use from parallel generation-one searches; matched HGB information analysis adds no fit.",
+    "protected_boundary": "No Dev/Final, external fetch/provider/release/promotion/source/FSM/artifact mutation by reviewer; original boundary flags unchanged."
+  },
+  "scientific_outcome": {
+    "all_candidates_REVERT": true,
+    "raw_incumbent_retained": true,
+    "lowest_observed_candidate_brier": {
+      "candidate": "InGamePriorPlayVolumeOffset-v1",
+      "brier": 0.14194807773589316,
+      "market_brier": 0.14195252900323282,
+      "delta_brier": -0.000004451267339672211,
+      "scientific_decision": "INCONCLUSIVE",
+      "formal_gain": false
+    },
+    "final_candidate": {
+      "candidate": "InGamePriorPlayVolumeUnitScaleJointOffset-v3",
+      "brier": 0.14267853451809134,
+      "log_loss": 0.4291441156534457,
+      "scientific_decision": "REFUTED",
+      "operational_decision": "REVERT",
+      "primary_prediction_gain": false
+    },
+    "attribution": "Same-information/effective-prior C change; log-loss improvement is not primary Brier or framework superiority. Matched HGB input effect is directional historical diagnostic, not established market information.",
+    "flow": "Closed-loop predictor generation/execution/review/feedback demonstrated; no same-budget fixed-process comparison or actual research policy/tool/workflow modification.",
+    "next_method": "Controller owns future evidence-based memory/recommendations. Current cap prohibits executing those recommendations; reviewer neither chooses a scientific recipe nor extends budget."
+  },
+  "limitations": {
+    "exact_Controller_serving_version": "unknown; GPT-6 family is not authenticated Astra identity",
+    "Train_validation": "Repeatedly inspected Discovery, not untouched OOS; historical event time does not prove live source availability",
+    "isolation": "Trusted-host child with minimal environment, timeout and sampled RSS; not network/arbitrary-code isolation or OS-hard memory ceiling",
+    "legacy_suite": "Broad legacy suite not green; focused and relevant suites pass but overlap, not additive unique test counts",
+    "cross_batch_consumption": "Explicit Supervisor exclusion used; scheduler counts children within current batch and must not restore consumed C2 as fresh parent",
+    "recovery": "Canonical completed-history replay is not deliberately interrupted real-fit recovery validation",
+    "evolution": "No R modification or matched-budget mechanism study; manual Supervisor rule implementation not system self-evolution",
+    "cost": "Provider0/$0; Codex model usage/cost not metered, worker seconds omit implementation/review/research elapsed",
+    "outer_cap": "Conservatively retained ten-attempt cap pending any user clarification; no implicit extension, no claim that five-hour window fully elapsed"
+  },
+  "verification_reuse": {
+    "independent_C4_result_review": "66b055451d32c32a983d15de39695b5fb1765ca428ccafae0aeba01ad38091c9",
+    "independent_C4_focused_synthetic_tests": 8,
+    "independent_C4_adjacent_pre_score_tests": 175,
+    "root_reported_final_suites": {
+      "ingame": 179,
+      "candidate_boundary": 123,
+      "probability_scoring": 34,
+      "overlap": true
+    },
+    "new_Train_fits": 0
+  },
+  "reviewer_actions": {
+    "new_files": [
+      "COEVO_BATCH4_OPERATIONAL_RESOLUTION_2026-10-03.json"
+    ],
+    "append_only_log": "AGENT_LOG_COEVO_INDEPENDENT_REVIEW_2026-10-03.md",
+    "actual_Train_fits": 0,
+    "new_candidate_predictions": 0,
+    "source_edits": 0,
+    "old_receipt_edits": 0,
+    "FSM_or_artifact_edits": 0,
+    "commits": 0,
+    "paid_or_external_operations": 0
+  }
+}

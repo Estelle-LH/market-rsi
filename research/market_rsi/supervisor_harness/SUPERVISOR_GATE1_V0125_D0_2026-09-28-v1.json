@@ -1,0 +1,94 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "market-rsi-v0125-gate1-controller-d0-20260928-01-plan-v1",
+  "symptom": "The published v0.1.25 zero-provider canary passed, but no live GLM response has tested whether the repaired model-visible mode rules produce a valid source-scope decision. P0 data admission therefore remains blocked.",
+  "source_evidence": "GATE1_V0125_FIRST_CANARY_2026-09-28.md and the explicit 2026-09-28 user authorization for one paid D0.",
+  "objective": "Execute and independently review exactly one bounded paid v0.1.25 Controller D0 without granting any fetch, data-admission or training authority.",
+  "boundary": "Permanent ID market-rsi-v0125-gate1-controller-d0-20260928-01; at most one GLM/Tinker sample; no automatic retry; exact frozen-rate request upper USD 0.0389772 within the user's USD 0.05 ceiling; no public fetch; no Train/Dev/Final read or admission; no training. Preserve any semantic failure and never resample for formatting or score.",
+  "resolution_check": "Supervisor and an independent reviewer must verify exact release/source/runtime/prior-canary lineage, unique ID, one provider sample at most, returned-token metering, immutable raw response, honest parse outcome, authoritative budget/global-state terminal closure and exact process/container cleanup before any later action.",
+  "supervisor_owner": "Supervisor · Market RSI",
+  "steps": [
+    {
+      "id": "budget_state_preflight",
+      "owner": "d0_budget_state_audit",
+      "action": "Read-only verify the fresh ID across run roots, authoritative budget and global state; confirm exact setup capacity, decision hash/head, v0.1.25 prior canary and no matching process/container.",
+      "depends_on": [],
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0125_D0_BUDGET_STATE_PREFLIGHT_2026-09-28.md"
+      ],
+      "expected_artifact": "Exact PASS/REPLAN budget/state preflight with hashes and capacity.",
+      "verification": "Supervisor replays authoritative snapshots, ID searches and exact_clear immediately before launch.",
+      "pass_condition": "ID unused, run path absent, active_cycle null, decision document bound, setup available at least USD 0.0389772, prior canary verified and no matching process/container.",
+      "failure_action": "Do not claim or reserve; record REPLAN and repair only the causal gate under fresh authority if needed.",
+      "time_bound_minutes": 15,
+      "result": {
+        "verdict": "replan",
+        "observed": "ID, global state, v0.1.25 canary and process/container checks passed, but setup available USD 0.044036812 cannot satisfy the production fixed USD 0.05 reservation; exact shortfall USD 0.005963188.",
+        "reviewer": "d0_budget_state_audit",
+        "evidence_path": "AGENT_LOG_GATE1_V0125_D0_BUDGET_STATE_PREFLIGHT_2026-09-28.md",
+        "evidence_sha256": "0cda767ba2ec0bbcbcf4cc9187e0ca1410ca5a9925c4bfd23b54e65f4fe620d2"
+      }
+    },
+    {
+      "id": "launch_binding_preflight",
+      "owner": "d0_launch_runbook_audit",
+      "action": "Read-only derive the exact production entry and arguments from current source and prior terminal run, then verify source/runtime/canary, packet/token/cost, credential, single-sample/no-retry and terminal-receipt bindings.",
+      "depends_on": [],
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/AGENT_LOG_GATE1_V0125_D0_LAUNCH_BINDING_PREFLIGHT_2026-09-28.md"
+      ],
+      "expected_artifact": "One exact launch recipe or a blocking REPLAN verdict.",
+      "verification": "Supervisor independently checks every argument against the v0.1.25 production CLI and current immutable receipts without constructing a provider.",
+      "pass_condition": "Recipe can make at most one sample, cannot retry/fetch/admit/train, uses exact v0.1.25 publication and passed canary, and caps reservation at USD 0.0389772.",
+      "failure_action": "Do not launch; preserve authorization but require a new versioned plan after fixing the launch boundary.",
+      "time_bound_minutes": 15,
+      "result": {
+        "verdict": "replan",
+        "observed": "Exact release/source/runtime/canary/packet and dormant argv passed, with 4020 input and 1600 maximum output tokens, but the fixed USD 0.05 production reservation exceeds setup capacity and the paid authorization still needs a durable state revision.",
+        "reviewer": "d0_launch_runbook_audit",
+        "evidence_path": "AGENT_LOG_GATE1_V0125_D0_LAUNCH_BINDING_PREFLIGHT_2026-09-28.md",
+        "evidence_sha256": "be2d5b431504badfb1bd648465e4d8dcfef5506ddaacd2998665f9bd8f9253be"
+      }
+    },
+    {
+      "id": "authorized_one_shot_execution",
+      "owner": "Supervisor · Market RSI",
+      "action": "After both preflights pass, revise and bind the durable decision state, repeat the exact launch checks, then execute the production D0 once and preserve every terminal artifact.",
+      "depends_on": [
+        "budget_state_preflight",
+        "launch_binding_preflight"
+      ],
+      "expected_artifact": "One immutable terminal D0 artifact root plus execution log, regardless of semantic PASS or failure.",
+      "verification": "Count provider samples, validate cost and all receipt hashes, inspect authoritative budget/global-state terminal events and exact cleanup; reject any retry or boundary expansion.",
+      "pass_condition": "Exactly zero or one provider sample terminates inside USD 0.0389772, no retry/fetch/data/training occurs, the response is preserved without rewriting, and all operational state is closed or explicitly fail-closed.",
+      "failure_action": "Stop permanently for this ID, close any safely closable state, preserve evidence and send the terminal outcome to independent review; never retry.",
+      "time_bound_minutes": 20
+    },
+    {
+      "id": "independent_terminal_review",
+      "owner": "Independent D0 terminal reviewer",
+      "action": "Read-only audit the one terminal run, including immutable raw response, semantic parse result, provider/sample/cost, release/source/runtime/canary lineage, budget/state closure, cleanup and absence of downstream actions.",
+      "depends_on": [
+        "authorized_one_shot_execution"
+      ],
+      "write_paths": [],
+      "expected_artifact": "Independent PASS or REPLAN verdict with exact hashes and claim boundary.",
+      "verification": "Supervisor reproduces cited hashes and checks that no fetch or later work was started before the verdict.",
+      "pass_condition": "Reviewer can account for the sole sample and every terminal boundary and states whether the Controller decision is valid, failed or non-executable without inflating it into a research result.",
+      "failure_action": "Keep all downstream work closed, preserve the ID as consumed and create a fresh plan only after diagnosing the exact evidence gap.",
+      "time_bound_minutes": 20
+    }
+  ],
+  "parallel_work": {
+    "base_source_sha256": "c61f48e21084671c1ff1257639f6a5d5ccfc8c1a64065e02157c5eb75c10a2d4",
+    "worker_step_ids": [
+      "budget_state_preflight",
+      "launch_binding_preflight"
+    ],
+    "integration_step_id": "authorized_one_shot_execution",
+    "review_step_id": "independent_terminal_review"
+  },
+  "resolution": null,
+  "superseded_by": "SUPERVISOR_GATE1_V0125_D0_2026-09-28-v2.json",
+  "replan_reason": "Production requires a fixed USD 0.05 setup reservation; the current setup bucket is USD 0.005963188 short and an allocation transfer requires explicit authority. No ID, state claim, reservation or provider action occurred."
+}

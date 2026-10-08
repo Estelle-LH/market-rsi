@@ -1,0 +1,41 @@
+{
+  "schema": "market_rsi_independent_proposal_review_v1",
+  "review_id": "repair-d1-entry-scope-v1-20261005",
+  "observed_at_utc": "2026-10-05T15:53:19Z",
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "passed": true,
+  "verdict": "SCOPE_PASS_ONLY_BEFORE_IMPLEMENTATION",
+  "envelope_sha256": "fb968b7ff45b22211d4de581cdf43784bc7b734e7eef7348adaff8bf9761cab0",
+  "candidate_source_sha256": "c57ed002b507e219c788c256b33e0f853fc418ea41713fbfbc845bcb7782d838",
+  "scientific_contract_sha256": "36f69b7006c341133665c3393c1a71c4e1ff2677e677685081b95f50910eb6e7",
+  "adapter_source_sha256": "f62a5459a8e3c78bcdd7810e25291d1ef164ccc2d41f876fa37fb166f9dcc8bc",
+  "source_review_sha256": "13913664f1f24590adcbd265f5d39121e95f2e71615651795242b87d372dd4cb",
+  "implementation_scope_admitted": true,
+  "integrated_source_admitted": false,
+  "real_D1_launch_admitted": false,
+  "H_live_parity_already_verified_by_this_receipt": false,
+  "axis": "H",
+  "component": "one thin explicit D1 worker entry and fresh operational authority binding",
+  "allowed_paths": [
+    "research/market_rsi/experiments/nfl_ingame_temperature_possession_pressure_entry.py",
+    "research/market_rsi/experiments/test_nfl_ingame_temperature_possession_pressure_entry.py"
+  ],
+  "scope_findings": [
+    "The wrapper only constructs fixed direct D1 callback/source/contract/parent/features bindings and invokes unchanged D1.run(binding=...). It adds no science, solver, scorer, data, callback selection menu, dynamic imports/eval or old-global mutation.",
+    "Fresh approved operational15:27:11–19:27:11UTC/cutoff19:12:11/outer6attempts24fits envelope is distinct from immutable old scientific12:37:44 deadline. Old source/contracts/history/consumedfollowups remain unchanged; selected implementation/pre-fit failures consume a slot.",
+    "Actual UTC, compiled envelope hash, exact source/request/currentHEAD/runtime and review predicates must reject before H reads Train or fits. Request is existing <pilot>/worker/<attempt>.request.json matching CLI/module/path/attempt; use existing immutable worker.validate, not a new authority service.",
+    "Actual C7 parent/A2 native basis/raw incumbent/latest C7 trigger remain separate. Eight parent artifacts/four state hashes/betas copied from hash-verified scientificcontract and replayed without parent fits.",
+    "H source and live-parity receipt hashes must appear in request.files and their actual fields pass. Future unknown review hashes not fabricated; exact source13913664 and future actual parity must agree on adapterf62a5459.",
+    "H/raw score diagnostics remain untouched. Additional parent-relative energy/alignment/Brier identity can be derived in separate read-only result supplement from87CSV before feedback; no entry scorer change."
+  ],
+  "mandatory_next_checks": [
+    "Implement only named wrapper/test; actual size <=100 anticipated, measure semantic blast radius and >200 warning if applicable; no forced compression.",
+    "Read exact integrated entry/math/test bytes and perform239line D1 objective/derivatives/brackets/KKT/failure/state replay inseparability review. Earlier unbound science is not fully admitted by scope.",
+    "Portable full195/193+2/87/fourfit pipeline, parent/control/time/checklabel isolation, hash/request/review/expiredauthority mutations and failure/no-retry/no-overwrite checks; relevant integrated suite.",
+    "Independent completed real H1 exact parity receipt must pass before D1 launch. Fresh request/runtimepair/currentUTC/sourcecommit and reserved outer attempts/fits/caps source-bound.",
+    "One D1 attempt/fourfits/900s/thread1/sampleRSS1GiB/provider0; actual independently verified feedback then Controller selects next method. No promised prediction success or automaticcontinuation from a wrapper."
+  ],
+  "claims": "Implementation scope only. Human-directed H repair not scientific C gain or autonomous R improvement. Memory/negative evidence reuse may be meaningful without rewriting code, but must influence observed actual later decision. Exact serving model unknown; historicalTrain Discovery/noOOS/realtime/PnL/promotion/transfer/mechanism superiority.",
+  "reviewer_actions": "Read complete envelope, compare actual protected source/contract hashes and registration. No new entry code reviewed/executed, real fits/optimizer/source edits/provider/network/protected reads/commits.",
+  "registration_note": "At first read exact new reviewer registration/log absent; held formal writes until Supervisor corrected actual index and dedicated log at15:52. No source or scientific change due to this bookkeeping correction."
+}

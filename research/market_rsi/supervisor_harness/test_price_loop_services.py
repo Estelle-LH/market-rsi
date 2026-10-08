@@ -71,7 +71,9 @@ def write_result(output, rows, columns, candidate_id, *, source='fixture-commit'
 
 class PriceServiceTests(TestCase):
     def setUp(self):
-        self.h = handoff_fixtures.HandoffTests(); self.h.setUp(); self.addCleanup(self.h.doCleanups)
+        self.h = handoff_fixtures.HandoffTests()
+        self.addCleanup(self.h.doCleanups)
+        self.h.setUp()
         self.root, self.runtime = self.h.root, self.h.runtime
         self.rows = population()
         self.reference = write_result(self.root / 'ordinary', self.rows,

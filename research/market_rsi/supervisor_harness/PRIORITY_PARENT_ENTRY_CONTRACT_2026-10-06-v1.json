@@ -1,0 +1,22 @@
+{
+  "schema":"market_rsi_small_change_contract_v1",
+  "id":"priority-parent-entry-20261006-v1",
+  "parent_commit":"bfdb2a1",
+  "trigger":"Current frozen H1 entry hardcodes C1/C7 state replay; new accepted-reference loader is comparison-only and needs a directly runnable candidate entry.",
+  "axis":"H",
+  "component":"Versioned accepted-reference candidate execution entry",
+  "author":"User-directed AI Supervisor",
+  "allowed_write_paths":["research/market_rsi/experiments/nfl_ingame_candidate_evidence_adapter_v2.py","research/market_rsi/experiments/test_nfl_ingame_candidate_evidence_adapter_v2.py"],
+  "protected":"Original adapter and all frozen runners/contracts/helpers/scorer unchanged; no operational ledger or real data changes; no automatic parent parameter inheritance.",
+  "K":"c94492041d5c331a2cc31c4d6cd529984742ce200e1b9365e3fb7d07e5b1ce64",
+  "M":"0b8373494be4e8401d9bec1de1057ee95fd8fe39f039cd45b65828ce9c44d313",
+  "C":"unchanged in matched synthetic tests",
+  "R":"unchanged",
+  "H_before":"f62a5459a8e3c78bcdd7810e25291d1ef164ccc2d41f876fa37fb166f9dcc8bc",
+  "expected_effect":"Four synthetic fits and exact frozen masks/scores use arbitrary valid accepted parent predictions without fitting/loading parent states; failed parent verification enters zero fits.",
+  "interfaces":"run_recipe(source_root, output, binding, prepare_features, fit_predict, replay_predictor, *, allow_test_paths=False); callbacks receive no parent weights. Fixed scorer and existing primitive-state replay reused.",
+  "tests":"Matched synthetic195/193+2/87/fourfold runner, nonlinear/negative parent references, zero parent refits, no inherited params, partial failure/no overwrite; unchanged original adapter parity.",
+  "resources":"Synthetic fitting only, thread1; no account/Train/Dev/Final reads; no real budget activation",
+  "rollback":"Keep new entry unused; original adapter bytehash and all operational history preserved",
+  "requested_level":"L2 synthetic replay; no Train operational or prediction gain claim"
+}

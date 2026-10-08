@@ -50,7 +50,9 @@ class FitBudgetTests(TestCase):
 
 class IndependentReviewTests(TestCase):
     def setUp(self):
-        self.s = fixtures.PriceServiceTests(); self.s.setUp(); self.addCleanup(self.s.doCleanups)
+        self.s = fixtures.PriceServiceTests()
+        self.addCleanup(self.s.doCleanups)
+        self.s.setUp()
         self.runtime = self.s.runtime
         self.calls = []
         self.transport = Mock(side_effect=self.synthetic_role)
@@ -131,6 +133,14 @@ class IndependentReviewTests(TestCase):
         with self.assertRaises(FileExistsError): self.reviewer.review('input', material)
         self.assertEqual(len(self.calls), 1)
 
+    def test_review_uses_explicit_prospective_grant_wait(self):
+        material = self.input_material()
+        self.reviewer.grant = self.s.h.f.write('prospective-review-time-grant', {
+            'account_roles': {'max_input_bytes': 32768, 'max_call_seconds': 300,
+                'call_seconds': {'author': 120, 'input_review': 300, 'source_review': 300, 'result_review': 300}}})
+        self.reviewer.review('input', material)
+        self.assertEqual(self.calls[-1][2]['timeout_seconds'], 300)
+
     def test_typed_unbound_scope_or_permission_drift_rejected_before_role(self):
         original = self.typed_input_material()
         for field in ('unbound', 'authority', 'resources', 'kernel', 'foreign_batch', 'protected', 'composite'):
@@ -165,6 +175,7 @@ class IndependentReviewTests(TestCase):
         self.assertEqual(receipt['input_sha256'], material['input']['sha256'])
         self.assertEqual(receipt['account_role'], 'input_review')
         self.assertEqual(self.calls[0][2]['operation_id'], receipt['original_account_call']['call_id'])
+        self.assertEqual(self.calls[0][2]['timeout_seconds'], 120)
         self.assertEqual(review.t._review(review.t.c._read(material['input']), material['input'],
             self.runtime.authority, binding, self.runtime.repo, configuration_binding=self.runtime.configuration,
             config=self.runtime.config), receipt)

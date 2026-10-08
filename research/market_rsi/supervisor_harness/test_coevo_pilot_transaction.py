@@ -58,7 +58,7 @@ class PilotTests(unittest.TestCase):
 
     def transport(self, directory, packet, timeout, *, mutate=None, extra_event=None):
         self.calls += 1; response = self.response(packet)
-        self.assertLessEqual(timeout, 120)
+        self.assertLessEqual(timeout, self.authorization['account_transfer'].get('max_call_seconds', 120))
         if mutate: mutate(response)
         c.save(directory / "process.json", {"pid": 123, "command": c._command(directory),
             "cli_sha256": c.CLI_SHA, "input_sha256": c._digest(packet), **c._identity()})
@@ -106,6 +106,76 @@ class PilotTests(unittest.TestCase):
         with self.assertRaises(KeyboardInterrupt): self.call(interrupted)
         with self.assertRaises(FileNotFoundError): self.call()
         self.assertEqual(self.calls, 1)
+
+    def prospective_wait(self, value=300):
+        self.authorization['account_transfer']['max_call_seconds'] = value
+        self.authorization_binding = self.write('authorization', self.authorization)
+        self.packet['authority'] = self.authorization
+        self.rebind()
+
+    def test_explicit_controller_wait_reaches_transport_and_cold_replay(self):
+        self.prospective_wait(); waits = []
+        def late(directory, packet, timeout):
+            waits.append(timeout)
+            if timeout < 180:
+                raise TimeoutError('Virtual late completion, not actual model latency')
+            self.transport(directory, packet, timeout)
+        first = self.call(late)
+        self.assertEqual(waits, [300]); self.assertEqual(self.call(), first)
+        self.assertEqual(self.calls, 1)
+        directory = next((self.root/'decisions').iterdir())
+        self.assertEqual(p._file(directory/'claim.json')['allowed_timeout_seconds'], 300)
+        self.assertEqual(p._file(directory/'timeout.json')['allowed_seconds'], 300)
+
+    def test_invalid_controller_wait_rejected_before_original_claim(self):
+        for value in (None, True, 0, -1, 301, 300., '300'):
+            self.prospective_wait(value)
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'Controller timeout'):
+                self.call()
+        self.assertEqual(self.calls, 0); self.assertFalse((self.root/'decisions').exists())
+        self.assertEqual(p._file(self.root/'ledger.json')['controller_decisions'], [])
+
+    def test_controller_wait_clips_to_fresh_deadline(self):
+        self.prospective_wait(); deadline = c._time(p.TIMES['deadline_utc'])
+        cutoff = datetime.fromtimestamp(deadline.timestamp()-1, timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+        self.authorization['selection_cutoff_utc'] = cutoff
+        self.authorization_binding = self.write('authorization', self.authorization); self.rebind()
+        waits = []
+        def recorded(directory, packet, timeout):
+            waits.append(timeout); self.transport(directory, packet, timeout)
+        with patch.dict(p.TIMES, selection_cutoff_utc=cutoff), patch.object(p, 'datetime') as clock:
+            clock.now.return_value = datetime.fromtimestamp(deadline.timestamp()-40, timezone.utc)
+            self.call(recorded)
+        self.assertEqual(waits, [40])
+
+    def test_slow_review_crossing_cutoff_rejects_before_original_reservation(self):
+        actual = p._review
+        with patch.object(p, 'datetime') as clock:
+            clock.now.return_value = Clock.now()
+            def slow_review(*args, **kwargs):
+                result = actual(*args, **kwargs)
+                clock.now.return_value = c._time(p.TIMES['selection_cutoff_utc'])
+                return result
+            with patch.object(p, '_review', side_effect=slow_review), \
+                    self.assertRaisesRegex(ValueError, 'selection window closed'):
+                self.call()
+        self.assertEqual(self.calls, 0)
+        self.assertEqual(p._file(self.root/'ledger.json')['controller_decisions'], [])
+        self.assertFalse((self.root/'decisions').exists())
+
+    def test_deadline_crossed_after_claim_stays_reserved_without_process_or_retry(self):
+        self.prospective_wait(); deadline = c._time(p.TIMES['deadline_utc'])
+        cutoff = datetime.fromtimestamp(deadline.timestamp()-1, timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+        self.authorization['selection_cutoff_utc'] = cutoff
+        self.authorization_binding = self.write('authorization', self.authorization); self.rebind()
+        with patch.dict(p.TIMES, selection_cutoff_utc=cutoff), patch.object(p, 'datetime') as clock:
+            clock.now.side_effect = [datetime.fromtimestamp(deadline.timestamp()-2, timezone.utc), deadline]
+            with self.assertRaisesRegex(TimeoutError, 'before original Controller process'):
+                self.call()
+        self.assertEqual(self.calls, 0)
+        self.assertEqual(p._file(self.root/'ledger.json')['controller_decisions'][0]['status'], 'reserved')
+        with self.assertRaises(FileNotFoundError): self.call()
+        self.assertEqual(self.calls, 0)
 
     def test_strict_r_h_fields_and_unknown_events_fail_without_second_call(self):
         with self.assertRaisesRegex(ValueError, "strict response fields"):
@@ -291,6 +361,61 @@ class TypedActionTests(unittest.TestCase):
         self.assertIs(p.response_schema(self.legacy), p.SCHEMA)
         drift = deepcopy(self.legacy); drift['action_context'] = self.packet['action_context']
         with self.assertRaisesRegex(ValueError, 'explicit v2'): p.response_schema(drift)
+
+    def prompt_metadata(self):
+        prefix = 'Capacity metadata contract: '
+        lines = [line for line in c._prompt(self.packet).splitlines() if line.startswith(prefix)]
+        self.assertEqual(len(lines), 1)
+        return json.loads(lines[0][len(prefix):])
+
+    def test_prompt_exposes_exact_existing_validator_metadata(self):
+        from data_scientist_harness import co_evolution_loop as micro
+        context = p.action_context(self.packet)
+        expected_hashes = ({item['sha256'] for item in self.packet['bindings'].values()}
+            | c._hashes(self.packet['memory']) | c._hashes(self.packet['history'])
+            | set(self.packet['provided_source_sha256']) | c._hashes(context) | c._hashes(self.packet['overhead']))
+        self.assertEqual(self.prompt_metadata(), {
+            'parent_pair_sha256': c._digest(context['identity_configuration']['pair']),
+            'components_by_axis': {axis: sorted(labels) for axis, labels in micro.MICRO_COMPONENTS.items()},
+            'eligible_evidence_sha256': sorted(expected_hashes),
+            'required_current_feedback_sha256': self.packet['bindings']['feedback']['sha256'],
+            'source_test_pairs_by_axis': {'researcher': [], 'harness': []}})
+
+    def test_copied_prompt_metadata_passes_without_relaxing_bad_metadata(self):
+        metadata = self.prompt_metadata()
+        response = self.response(self.packet)
+        response['capacity'].update(parent_pair_sha256=metadata['parent_pair_sha256'],
+            component=metadata['components_by_axis']['researcher'][0])
+        response['capacity']['evidence_used'][0]['sha256'] = metadata['eligible_evidence_sha256'][0]
+        self.assertEqual(p.validate_response(response, self.packet), response)
+        for field, value in (('parent_pair_sha256', 'f' * 64), ('component', 'arbitrary component prose')):
+            bad = deepcopy(response); bad['capacity'][field] = value
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, 'capacity parent'):
+                p.validate_response(bad, self.packet)
+
+    def test_supplied_nested_receipt_does_not_expand_citation_eligibility(self):
+        self.packet['feedback']['supplied_unlisted_receipt_sha256'] = 'f' * 64
+        self.packet['overhead']['verified_observation_sha256'] = 'd' * 64
+        hashes = self.prompt_metadata()['eligible_evidence_sha256']
+        self.assertIn('d' * 64, hashes); self.assertNotIn('f' * 64, hashes)
+        response = self.response(self.packet)
+        response['capacity']['evidence_used'][0]['sha256'] = 'd' * 64
+        self.assertEqual(p.validate_response(response, self.packet), response)
+        response['capacity']['evidence_used'][0]['sha256'] = 'f' * 64
+        with self.assertRaisesRegex(ValueError, 'capacity parent'): p.validate_response(response, self.packet)
+
+    def test_metadata_render_is_deterministic_inert_and_legacy_prompt_unchanged(self):
+        import hashlib
+        original = deepcopy(self.packet)
+        self.assertEqual(c._prompt(self.packet), c._prompt(self.packet))
+        self.assertEqual(self.packet, original)
+        legacy = c._prompt(self.legacy)
+        self.assertEqual(hashlib.sha256(legacy.split('input_sha256=', 1)[0].encode()).hexdigest(),
+            'b72863fd3e7d5d689f4102732f356ec4a428c8ae294e58f4c771e61ca031058e')
+        self.assertIn('input_sha256=' + c._digest(self.legacy)
+            + ' feedback_sha256=' + self.legacy['bindings']['feedback']['sha256'], legacy)
+        self.assertTrue(legacy.endswith(json.dumps(self.legacy, allow_nan=False)))
+        self.assertNotIn('Capacity metadata contract:', legacy)
 
 
 if __name__ == "__main__": unittest.main()

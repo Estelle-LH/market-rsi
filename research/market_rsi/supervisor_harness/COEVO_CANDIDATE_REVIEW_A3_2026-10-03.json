@@ -1,0 +1,113 @@
+{
+  "schema": "coevo_candidate_independent_review_v1",
+  "reviewed_utc": "2026-10-03T19:48:20Z",
+  "reviewer": "/root/coevo_independent_review_20261003",
+  "candidate_id": "InGameMarketFreshnessBrierOffset-v2",
+  "attempt_id": "attempt-03",
+  "axis": "C",
+  "component": "candidate_training_objective",
+  "verdict": "PASS_PRE_SCORE_EXACT_SNAPSHOT",
+  "launch_critical_findings": [],
+  "source_checkpoint_observed": "d9cfd53dd5821e8ec2cfe886785d2362d1d7a171",
+  "source_commit_requirement": "Supervisor must commit and freeze exact source/runtime/request identities before the one remaining real attempt.",
+  "source_sha256": {
+    "experiments/nfl_ingame_market_freshness_brier_offset.py": "a2e78cfc2c7dd21790b3d709dc8ff4bc1ae3f399e38a4fc31818e363d054602b",
+    "experiments/test_nfl_ingame_market_freshness_brier_offset.py": "cbfc11c4f729567340da314d64d19b65bb37fd5537ab9d6f3cb426a4aee86b0c",
+    "experiments/nfl_ingame_market_freshness_interaction_offset.py": "d7e16a2d745f6440fe84b97aba54950b2c78a23428172b6002b187b385f057cd",
+    "experiments/nfl_ingame_causal_possession_pressure_offset.py": "4ea2935fb896397b4d21125bb040a0f82ff82be01abd2779717378d3465a0ab3",
+    "supervisor_harness/continuous_discovery_batch.py": "1b3065ea2990e886ff05869d5c6afd39bc0e80ebb053436f51fd9d9cee0d148c",
+    "supervisor_harness/opened_train_discovery_worker.py": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360"
+  },
+  "controller_contract_sha256": "a177b01df267879275b337e73a86ee87c5a7c2e45da6312976ec2732d6f90fa2",
+  "generation2_memory_sha256": "e1d39bf8ff7194c0a437a279bc79653bcf04a77f6fdb31b0429f79071cbdbe6f",
+  "triggering_verified_feedback_sha256": [
+    "812cd7b0adba76e7de15b5216dbf9d9bffb0e356c42e8cac333a57adb65b7a0f",
+    "812250d571f956b58ae7c6768be35cf1b9a6dd182d25372445170fd24f108fbc"
+  ],
+  "actual_parent_artifact_sha256": {
+    "manifest.json": "a94d14816dd21a55d0f6cb666e6004443c1fcfaa23a3b3a385016ad191ac2530",
+    "scorecard.json": "c5f658f2721b3ba500bfa37f775205b1b6cad6b80291595d910666d97cd186b9",
+    "predictions.csv": "0ebc0fefc058949ee202eaae58ffaeec6c1a3482c511cb00af1ecf7075c37a04"
+  },
+  "reviewed_checks": {
+    "sum_brier_ridge16_objective_and_analytic_gradient": true,
+    "synthetic_finite_difference": true,
+    "single_start_analytic_LBFGSB_exact_frozen_options": true,
+    "strict_success_finite_and_gradient_convergence_fail_closed": true,
+    "no_automatic_retry": true,
+    "zero_beta_exact_raw_probability_identity": true,
+    "exact_A1_feature_helper_and_fit_only_age_scaling": true,
+    "all193_causal_age_coverage": true,
+    "actual_A1_all87_feature_parity_before_real_fit": true,
+    "actual_parent_manifest_scorecard_predictions_hashes": true,
+    "actual_parent_keys_labels_cutoffs_outcome_availability_and_control_probabilities": true,
+    "unchanged_22plus4x5_chronology_and_strict_prior_fit_labels": true,
+    "unchanged_population_195_equals193plus2": true,
+    "exact_frozen_check_mask": true,
+    "frozen_scorer_KEEP_and_control_refit_policy_unchanged": true,
+    "actual_parent_additional_paired_comparator_not_new_KEEP_judge": true,
+    "new_output_only_failure_preserved_and_no_overwrite": true,
+    "synthetic_full_population_four_fit_prediction_manifest_pipeline": true,
+    "old_candidate_harness_and_scoring_production_bytes_unchanged": true,
+    "genuinely_feedback_dependent_C_choice_not_preset_parallel_candidate": true,
+    "no_reviewer_actual_Train_fit": true,
+    "no_protected_data_network_paid_or_release_action": true
+  },
+  "read_only_population_check": {
+    "source_events": 195,
+    "source_dates": 42,
+    "materialized_events": 193,
+    "excluded_events": 2,
+    "actual_parent_check_predictions": 87,
+    "check_key_sha256": "2e35779fdbb4b83e129758008338b0c778d7f6281682118ad8d26d21293cc9f9",
+    "fit_event_counts": [
+      106,
+      132,
+      148,
+      176
+    ],
+    "check_event_counts": [
+      26,
+      16,
+      28,
+      17
+    ],
+    "all_parent_features_equal_exact_float": true,
+    "actual_Train_fits": 0
+  },
+  "independent_tests": {
+    "current_candidate_scheduler_adapter_small_step": {
+      "passed": 103,
+      "unittest_seconds": 1.51
+    },
+    "frozen_probability_settlement_ingame_identity_stratified": {
+      "passed": 55,
+      "unittest_seconds": 3.962
+    },
+    "total_distinct_tests_passed_final_snapshot": 158,
+    "C3_targeted_tests_included": 9,
+    "data": "Synthetic only for test fits; resident opened Train read-only for actual parent/mask/feature binding.",
+    "interpreter": "/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python",
+    "thread_environment": "OMP/OPENBLAS/MKL/NUMEXPR/VECLIB=1; PYTHONHASHSEED=0; Python -B",
+    "initial_review_probe_error": "Read-only helper invocation omitted required allow_test_paths keyword. Corrected probe only; no source or policy edit and no fit occurred."
+  },
+  "small_step_review": {
+    "production_modules_added": 1,
+    "production_lines": 309,
+    "explicit_inseparability_accepted": true,
+    "rationale": "One executable Brier training recipe plus its frozen A1 parent/hash/output binding. Immutable run checks are repeated because the pinned A1 runner binds generation1. Shared feature, probability, score and KEEP implementations are reused without editing old modules. Splitting this recipe solely by line count would not isolate another scientific effect.",
+    "expanded_harness_or_research_policy": false,
+    "evidence_accumulation_is_not_R_policy_change": true,
+    "K_M_H_R_identities_must_remain_frozen_for_real_comparison": true
+  },
+  "scientific_claim_limits": [
+    "Pre-score implementation readiness only; no C3 prediction result yet.",
+    "Repeatedly inspected historical Train Discovery, not untouched OOS.",
+    "Historical event clocks do not establish actual publish/receive availability.",
+    "Brier-in-logit objective is not claimed globally convex or globally optimized.",
+    "Fixed numeric ridge16 with changed loss units changes effective shrinkage; any improvement alone cannot isolate target alignment from penalty/data balance.",
+    "One feedback-driven trajectory cannot prove research-mechanism superiority.",
+    "Controller exact serving model version remains unknown; do not claim authenticated Astra identity.",
+    "Trusted source/host child execution and sampled RSS are not arbitrary-code isolation or an OS-hard memory sandbox."
+  ]
+}

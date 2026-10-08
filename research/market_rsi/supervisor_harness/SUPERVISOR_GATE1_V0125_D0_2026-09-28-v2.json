@@ -1,0 +1,81 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "market-rsi-v0125-gate1-controller-d0-20260928-01-plan-v2",
+  "symptom": "Both authorized D0 preflights passed the immutable launch bindings but independently found that the production outer reserves fixed USD 0.05 while the setup bucket has only USD 0.044036812 available.",
+  "source_evidence": "AGENT_LOG_GATE1_V0125_D0_BUDGET_STATE_PREFLIGHT_2026-09-28.md and AGENT_LOG_GATE1_V0125_D0_LAUNCH_BINDING_PREFLIGHT_2026-09-28.md.",
+  "objective": "Resolve only the USD 0.005963188 setup-allocation shortfall under explicit authority, then rebind state, repeat all gates, execute the already authorized D0 once and independently review it.",
+  "boundary": "No increase to the USD 200 cap and no transfer from the Final bucket. The D0 remains at most one GLM/Tinker sample with no retry; request upper USD 0.0389772 and production reservation USD 0.05; no fetch, Train/Dev/Final read or admission, or training. ID remains permanent and may be consumed only once.",
+  "resolution_check": "Append-only budget transfer and durable decision revision must validate; fresh ID/budget/state/source/runtime/canary/process checks must pass immediately before launch; terminal artifacts and cleanup require independent review before any downstream action.",
+  "supervisor_owner": "Supervisor · Market RSI",
+  "steps": [
+    {
+      "id": "authorized_setup_allocation_transfer",
+      "owner": "Supervisor · Market RSI",
+      "action": "After explicit user authority, append exactly USD 0.006 allocation transfer from repair to setup without changing the USD 200 cap or spending money.",
+      "depends_on": [],
+      "external_blockers": [
+        "Explicit user authority for a USD 0.006 repair-to-setup allocation transfer"
+      ],
+      "expected_artifact": "Validated new budget snapshot and append-only journal head showing setup availability at least USD 0.05.",
+      "verification": "PaidBudget replay must preserve total allocation USD 200, reduce repair and increase setup by exactly USD 0.006, leave every job unchanged and add no reservation/dispatch/cost.",
+      "pass_condition": "Setup available is USD 0.050036812, global cap and effective cost are unchanged, and only one allocation_transfer event was appended.",
+      "failure_action": "Do not alter state or launch; preserve the fresh ID and report the exact journal or authority failure.",
+      "time_bound_minutes": 10
+    },
+    {
+      "id": "paid_authorization_state_rebind",
+      "owner": "Supervisor · Market RSI",
+      "action": "Revise the durable control document to record the one-shot paid authorization and allocation repair, then append the matching idle decision_revision and capture fresh hashes.",
+      "depends_on": [
+        "authorized_setup_allocation_transfer"
+      ],
+      "expected_artifact": "Decision document and global-state journal with matching SHA-256 and active_cycle null.",
+      "verification": "Simulate the revision first, then require SupervisorGlobalState.snapshot() to return the new document hash/head and no active cycle.",
+      "pass_condition": "The protected decision record truthfully binds the authorized ID and unchanged no-fetch/data/training boundary.",
+      "failure_action": "Do not claim or reserve; restore consistency and independently audit before any new plan.",
+      "time_bound_minutes": 10
+    },
+    {
+      "id": "fresh_launch_preflight",
+      "owner": "Supervisor · Market RSI",
+      "action": "Repeat exact publication/source/runtime/canary/packet/token/budget/state/ID/path/claim/process/container and credential-file metadata checks using the fresh journal heads.",
+      "depends_on": [
+        "paid_authorization_state_rebind"
+      ],
+      "expected_artifact": "One immediate pre-dispatch PASS record with exact hashes and dormant argv.",
+      "verification": "All checks must be repeated from authoritative sources; provider object must not exist yet and the credential contents remain unread.",
+      "pass_condition": "ID unused, paths absent, setup available at least USD 0.05, state bound and idle, v0.1.25 canary current, exact_clear true and request upper USD 0.0389772.",
+      "failure_action": "Stop without consuming the ID and create a new plan version for the exact failed gate.",
+      "time_bound_minutes": 10
+    },
+    {
+      "id": "authorized_one_shot_execution",
+      "owner": "Supervisor · Market RSI",
+      "action": "Invoke the exact production Supervisor parent once under permanent ID market-rsi-v0125-gate1-controller-d0-20260928-01 and preserve its terminal outcome without rewriting or resampling.",
+      "depends_on": [
+        "fresh_launch_preflight"
+      ],
+      "expected_artifact": "One immutable terminal D0 root, authoritative budget/global-state outcome, Supervisor receipt and cleanup evidence.",
+      "verification": "At most one provider sample, metered cost at most USD 0.0389772 when terminal metering exists, no retry/fetch/data/training, and exact cleanup.",
+      "pass_condition": "The only response or pre-provider failure is preserved, all operational state is safely terminal or explicitly fail-closed, and the permanent ID is never retried.",
+      "failure_action": "Stop permanently for this ID, reconcile only proven terminal state, preserve the failure and route it to independent review.",
+      "time_bound_minutes": 20
+    },
+    {
+      "id": "independent_terminal_review",
+      "owner": "Independent D0 terminal reviewer",
+      "action": "Read-only audit the exact one-shot run, immutable raw response and semantic outcome, provider/sample/cost, lineage, state/budget closure, cleanup and absence of downstream action.",
+      "depends_on": [
+        "authorized_one_shot_execution"
+      ],
+      "write_paths": [],
+      "expected_artifact": "Independent PASS or REPLAN verdict with exact evidence hashes and claim boundary.",
+      "verification": "Supervisor reproduces every cited hash and keeps fetch/data/training closed until the verdict.",
+      "pass_condition": "The reviewer can account for the sole sample and honestly classify the Controller output without calling it an experiment result.",
+      "failure_action": "Keep downstream work closed and preserve the consumed ID; diagnose under a new plan only.",
+      "time_bound_minutes": 20
+    }
+  ],
+  "parallel_work": null,
+  "resolution": null
+}

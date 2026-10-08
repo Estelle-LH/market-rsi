@@ -1,0 +1,159 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "opened-train-eight-hour-20261005-01",
+  "symptom": "Prior five-hour batch closed. No R change was tested; cross-batch consumed-followup handling remains Supervisor-managed and candidate implementation/review dominates actual runtime.",
+  "source_evidence": "Clean c979577; actual local process check found no candidate. Accepted final memory d7bd0a67 and operational review cbc9c5e7, not stale design alone.",
+  "objective": "Continuous real Train experiments with small separate C/H/R checkpoints, actual feedback dependencies and ranked global three-branch snapshots at each accepted step.",
+  "boundary": "Opened resident local Train only; reused Discovery folds. Protected Dev/Final, external acquisition/new papers/network, paid providers, publication/deployment/promotion closed. No old results/caps rewrites.",
+  "resolution_check": "Actual prediction experiments and result-bound next decisions; measured H/R changes only at earned evidence level; complete source/metric/resource/parent/branch trace.",
+  "supervisor_owner": "root",
+  "window": {
+    "start_utc": "2026-10-05T04:37:44Z",
+    "deadline_utc": "2026-10-05T12:37:44Z",
+    "seconds": 28800,
+    "max_candidate_attempts": 64,
+    "max_actual_fits": 256,
+    "max_fits_per_attempt": 4,
+    "max_seconds_per_attempt": 900,
+    "threads_per_child": 1,
+    "max_live_candidate_children": 2,
+    "sampled_rss_bytes_per_child": 1073741824,
+    "provider_calls": 0,
+    "provider_cost_usd": 0,
+    "stop_rules": [
+      "original_deadline",
+      "candidate_safeguard64",
+      "fit_safeguard256",
+      "unavailable authority",
+      "bounded repair exhausted",
+      "user stop"
+    ],
+    "parameter_status": "Prospective local safety ceilings, not scientific acceptance standards. Old batches remain closed."
+  },
+  "smallness": {
+    "target_changed_production_lines_per_step": 120,
+    "production_modules_per_step": 1,
+    "warning_threshold": 200,
+    "over_threshold": "Split before scoring or explicit independent inseparability review; never automatic acceptance.",
+    "axes": [
+      "C",
+      "H",
+      "R"
+    ],
+    "fixed": "K/M/authority/data/scorer; non-target C/H/R",
+    "activation": "H/R only while batches idle after static/tests/matched success-failure-restart-history replay and distinct review.",
+    "claims": "Code or policy change is not improvement; measure expected effect. Candidate change is C, normal memory accumulation is not R."
+  },
+  "branch_reporting": {
+    "capacity": 3,
+    "training_capacity": 2,
+    "ranking": "Controller research priority, current evidence, distinct hypothesis, method diversity, verified credit and expected cost; not mechanical validation-score top3.",
+    "each_step": [
+      "rank",
+      "branch_id",
+      "actual_parent",
+      "candidate_source",
+      "latest_scores",
+      "KEEP_or_REVERT",
+      "exploration_eligibility",
+      "verified_research_credit",
+      "selection_reason",
+      "next_test",
+      "lineage"
+    ],
+    "vacancies": "Explicit null if third defensible eligible branch absent; no fabricated candidate."
+  },
+  "identities": {
+    "base_commit": "c979577",
+    "base_source_tree_manifest_sha256": "ec146dae92b0a32d11b1bc3669c1bc0b7bbb3a2c7c28f5e0e666a97db95db68c",
+    "base_source_hash_method": "sha256 of git ls-tree -r HEAD research/market_rsi bytes",
+    "worker_sha256": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360",
+    "scheduler_sha256": "1b3065ea2990e886ff05869d5c6afd39bc0e80ebb053436f51fd9d9cee0d148c",
+    "Controller_exact_serving_version": "unknown; no specific Astra or model-upgrade claim"
+  },
+  "parallel_work": {
+    "base_source_sha256": "ec146dae92b0a32d11b1bc3669c1bc0b7bbb3a2c7c28f5e0e666a97db95db68c",
+    "worker_step_ids": [
+      "controller",
+      "reuse",
+      "baseline_review"
+    ],
+    "integration_step_id": "integration",
+    "review_step_id": "final_review"
+  },
+  "steps": [
+    {
+      "id": "controller",
+      "owner": "coevo_controller_20261003",
+      "action": "Choose scientific candidates from accepted prior evidence, return feedback-dependent decisions and global ranked three-branch snapshots; propose one small R change only with a problem-bound contract and matched evidence.",
+      "depends_on": [],
+      "expected_artifact": "AGENT_LOG_COEVO_CONTROLLER_2026-10-05.md",
+      "verification": "Inspect actual source, accepted artifacts and exact hashes. Preserve October3 history. Explicit unknown exact model version.",
+      "pass_condition": "Concrete bounded output with no protected/network/paid/source modification or invented results.",
+      "failure_action": "Record factual failure and return bounded repair information; do not weaken fixed scoring or retry any used run ID.",
+      "time_bound_minutes": 15,
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/AGENT_LOG_COEVO_CONTROLLER_2026-10-05.md",
+        "research/market_rsi/supervisor_harness/COEVO_D1_CONTRACT_2026-10-05.json",
+        "research/market_rsi/supervisor_harness/COEVO_BRANCH_POOL_INITIAL_2026-10-05.json"
+      ]
+    },
+    {
+      "id": "reuse",
+      "owner": "coevo_predictor_worker_20261003",
+      "action": "Inspect minimal reuse path for prior recommended joint offset; then implement only a Supervisor-admitted exact Controller contract. Isolated new candidate source/tests; do not rewrite frozen runners.",
+      "depends_on": [],
+      "expected_artifact": "AGENT_LOG_COEVO_RESEARCHER_2026-10-05.md",
+      "verification": "Inspect actual source, accepted artifacts and exact hashes. Preserve October3 history. Explicit unknown exact model version.",
+      "pass_condition": "Concrete bounded output with no protected/network/paid/source modification or invented results.",
+      "failure_action": "Record factual failure and return bounded repair information; do not weaken fixed scoring or retry any used run ID.",
+      "time_bound_minutes": 15,
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/AGENT_LOG_COEVO_RESEARCHER_2026-10-05.md"
+      ]
+    },
+    {
+      "id": "baseline_review",
+      "owner": "coevo_independent_review_20261003",
+      "action": "Verify fixed scorer/runtime/data identities and audit candidates plus H/R microsteps independently; no algorithm selection, implementation, fits or commits.",
+      "depends_on": [],
+      "expected_artifact": "AGENT_LOG_COEVO_REVIEWER_2026-10-05.md",
+      "verification": "Inspect actual source, accepted artifacts and exact hashes. Preserve October3 history. Explicit unknown exact model version.",
+      "pass_condition": "Concrete bounded output with no protected/network/paid/source modification or invented results.",
+      "failure_action": "Record factual failure and return bounded repair information; do not weaken fixed scoring or retry any used run ID.",
+      "time_bound_minutes": 15,
+      "write_paths": [
+        "research/market_rsi/supervisor_harness/AGENT_LOG_COEVO_REVIEWER_2026-10-05.md"
+      ]
+    },
+    {
+      "id": "integration",
+      "owner": "root",
+      "action": "Accept exact contracts, freeze declared candidate implementation paths and initialize fresh eight-hour budget/trajectory; launch only independently reviewed source.",
+      "depends_on": [
+        "controller",
+        "reuse",
+        "baseline_review"
+      ],
+      "expected_artifact": "COEVO_TRAJECTORY_2026-10-05.jsonl",
+      "verification": "Scope/diff/runtime/source commits, no current Train child, old control boundaries unchanged, all proposed branches and credit sources genuine.",
+      "pass_condition": "Controller-selected executable recipe and existing source/replay/worker path, exact pre-score independent approval.",
+      "failure_action": "Preserve rejected proposal and feed failure to Controller for a distinct corrected step.",
+      "time_bound_minutes": 15
+    },
+    {
+      "id": "final_review",
+      "owner": "coevo_independent_review_20261003",
+      "action": "Independently review frozen integrated changes, paired results and H/R attribution.",
+      "depends_on": [
+        "integration"
+      ],
+      "expected_artifact": "COEVO_EIGHT_HOUR_CLOSURE_REVIEW_2026-10-05.json",
+      "verification": "No refits; recompute original prediction scores, check actual parents/feedback/top-three snapshots and fixed identities/caps/PID absence.",
+      "pass_condition": "Operational and scientific claims match actual evidence; no fabricated H/R improvement.",
+      "failure_action": "Block affected claim or execution, preserve results and narrow repair.",
+      "time_bound_minutes": 20,
+      "write_paths": []
+    }
+  ]
+}

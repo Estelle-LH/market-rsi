@@ -1,0 +1,232 @@
+{
+  "schema": "market_rsi_independent_actual_controller_decision_review_v1",
+  "passed": true,
+  "verdict": "PASS_ORIGINAL_TRANSACTION_ONLY_CONTINUATION_POLICY_REJECTED",
+  "scientific_scope_pass": false,
+  "observed_utc": "2026-10-05T18:26:01.166631+00:00",
+  "scope": "Original once-only D4-feedback account transaction/evidence verified; voluntary early-stop action rejected by authorized continuation policy. No next candidate or batch-completion admission.",
+  "source_commit": "967107b8dca1c8cce21af2b39209078bc660306b",
+  "consumer_source_sha256": "d6b72f610a3842b113d78582bb73d13641ba86174d787e168df0777ccb85f3ae",
+  "source_review_sha256": "576e93b4c93327794cc0a28d1f18bd103da7e407f4a724428d6b85a614282450",
+  "launch_admission_sha256": "bc51af2d4fd8f5869420cb1301fdf510e5df59b6f6574786d87edcc6687792f7",
+  "authorization_sha256": "aea9b8783ee67a0791ec96cf5931751548cb24117624a923a5402053747a6346",
+  "authorization_evidence": {
+    "kind": "Trusted original read_thread human authorization record, inspected read-only",
+    "question_message_id": "msg_03453b018fecee25016ac3d2211ff887d19376b4e5b02a1ffb",
+    "reply_message_id": "01a10cf0-96a1-7ea0-97bd-9db4a861bf91",
+    "permission": "Original trusted human batch-wide authorization for existing Train scores/memory/history/run metadata to the user's ChatGPT account, one call per accepted feedback, no retries or paid provider. This is the first call for D3 feedback, not a retry."
+  },
+  "artifact_root": "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-repair-discovery-20261005-01/account-controller/02faff3cd86a1b213bd288766abbb59b5f15b8ec18f47dce52c670a1c0d2f275",
+  "artifacts_sha256": {
+    ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ack.json": "9d4a3c2cca6481b54f6b796b803ff66f5653f4c90ab7ba225f12e966dd54b263",
+    "claim.json": "97ad55404a175a1ac674932f86e4febd4464f69c497bb416c318b58f2956db69",
+    "completion.json": "bda60677193736443630a00460d8054c111543f8f14e70ac983ed924cea7f5fe",
+    "events.jsonl": "5f84ae1cf65c3bf2f3122736289246133f2f7c7ef85d26a7030da8915c1251a4",
+    "input.json": "72ee17c6d8439b3ee36472687adbe5ae0546d662f15035e3a6c1a4ec82680f9d",
+    "process.json": "3db9d5aeaa64171d1a707aecb8abb49f8ddc70616a05caab570f896dfaecd910",
+    "response.json": "876d09a2ad96499c29d33d8aeebe212453e5dd41e8cf1f646d41446da4a90552",
+    "schema.json": "5cef43dfd43b12561b695b9d061bddea6ad279e024d6b0e304a6564f1fd471bf",
+    "stderr": "6b0a96c796790fd3fe715abc892781685ec820afab5ead3249a4e2c9fcc1ee30"
+  },
+  "response_sha256": "876d09a2ad96499c29d33d8aeebe212453e5dd41e8cf1f646d41446da4a90552",
+  "decision_canonical_sha256": "6c4b515099e387a3b1a2b84bc97e6b4be0aa5f46221bd1bf2adf27b8783082b3",
+  "input_sha256": "72ee17c6d8439b3ee36472687adbe5ae0546d662f15035e3a6c1a4ec82680f9d",
+  "input_canonical_sha256": "1a53f3f76497d9e95393a7fb0ff9d7a1f1c2d5d060d37ddd571b44a71bf0767a",
+  "bound_roles_sha256": {
+    "authority": "e021a89ca5e22668a9841e8f7db477231e0a6713624f116f4734095a3a337112",
+    "feedback": "02faff3cd86a1b213bd288766abbb59b5f15b8ec18f47dce52c670a1c0d2f275",
+    "history": "7e5cf0599c24f6a7901d52eca26c723f8b2519c4e4376c4b96b850573c62d9cc",
+    "memory": "66155457843b3908b16d9ef7920825c42a57fd1a253fcbe4fd409d8d950337c9",
+    "overhead": "24fc9211adb3bd969fa21e665074b3d970a0e93ebe30c10b8d099c710f71e02d",
+    "pool": "0c1a6eb9589a52a35c5ac78230b2a3f9317ed1e04f74409e4c881e2f28a98859",
+    "predictions": "0944f5aaeedbe8f3a20d554c480c8920257eaa6544f97096f11508c953568d1e",
+    "request": "3ed6d4eb71858513914c31a33f71909cc5af6dfb7812954f9b3b044ac9ef2ed5",
+    "review": "10297dae02ffb5ae1034bca74f6631b71e3023f4bfd4a45a8d8e15ce7ee8400a",
+    "scorecard": "be8eac8616894b011c128a91da356ec392efc0d64c04e884be6f862db2da31ff",
+    "supplement": "24a255d39ad703023a31aa4ae4cb1ab84126adf64ad5ed28d28e254d70d8e72d"
+  },
+  "binding_checks": {
+    "all_six_completion_outputs_exact": true,
+    "claim_process_completion_source_scope_exact": true,
+    "current_consumer_equals_caller_Git_and_feedback_run_Git": true,
+    "all_68_feedback_run_source_bindings_exact": true,
+    "runtime_cli_command_schema_exact": true,
+    "pure_nine_event_journal_replay_equals_snapshot": true,
+    "original_prepared_input_reconstructed_exact": true,
+    "prepared_input_reconstruction_used_read_only_replayed_public_state": true,
+    "recovery_with_save_transport_disabled": true,
+    "original_agent_message_equals_strict_response": true,
+    "existing_ack_equals_recomputed_ack": true,
+    "original_transaction_files_unchanged": true,
+    "same_feedback_resampling_observed": false,
+    "no_observed_tool_events": true,
+    "pid": 88462,
+    "process_absent": true,
+    "process_absence_observed_utc": "2026-10-05T18:26:01.166631+00:00",
+    "event_counts": {
+      "item.completed": 1,
+      "thread.started": 1,
+      "turn.completed": 1,
+      "turn.started": 1
+    },
+    "item_types": [
+      "agent_message"
+    ],
+    "agent_messages": 1,
+    "prior_three_successful_calls_and_failed400_hashes_unchanged": true
+  },
+  "requested_model": "gpt-6.1-sol",
+  "exact_serving_snapshot": "unknown",
+  "actual_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 0,
+    "input_tokens": 110403,
+    "output_tokens": 1445,
+    "reasoning_output_tokens": 55
+  },
+  "usage_caveat": "Service-reported token usage only; no USD inference or all-agent token total. Reasoning token count is not a disclosure of reasoning text. Provider0 is the separate Market RSI provider budget, not zero ChatGPT-account consumption.",
+  "candidate_id": "none_selected",
+  "question_id": "post-d4-scientific-allocation-stop",
+  "actual_research_parent": {
+    "label": "C7 InGameMarketTemperatureOffset-v1",
+    "source_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085"
+  },
+  "latest_feedback_trigger": {
+    "label": "D4 accepted valid exact tanh-confidence negative,1/4 parent Brier wins",
+    "review_sha256": "10297dae02ffb5ae1034bca74f6631b71e3023f4bfd4a45a8d8e15ce7ee8400a",
+    "feedback_sha256": "02faff3cd86a1b213bd288766abbb59b5f15b8ec18f47dce52c670a1c0d2f275"
+  },
+  "comparison_incumbent": {
+    "label": "Raw decision-time market",
+    "source_sha256": "89a8ef92c9cf4844b99e0136c51a1f8b896cdd66afcd23e8b8a23499859ffc7f",
+    "unchanged": true
+  },
+  "active_pool": [
+    {
+      "method_family": "restricted_market_calibration",
+      "parent_sha256": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+      "reason": "Retain C7's verified improvement over C1 as archived research value; no further calibration recipe selected."
+    },
+    {
+      "method_family": "nonlinear_causal_state_representation",
+      "parent_sha256": "376b34c656e5a70666e8863b507f518675858011c3da6530cf592a0e192957fe",
+      "reason": "Preserve method diversity and the uncertain B2–B1 conditional state finding; no descendant model preselected."
+    }
+  ],
+  "eligible_parent_count": 17,
+  "C2_consumed_source_sha256": "45d1e7f2ef2de62102f115816db9d90e0249d169722700df3d5cc6000704c1ca",
+  "C2_excluded_without_reset": true,
+  "evidence_to_choice_verified": [
+    {
+      "source_sha256": "10297dae02ffb5ae1034bca74f6631b71e3023f4bfd4a45a8d8e15ce7ee8400a",
+      "finding": "D4-C7 Brier+0.00010614152216451012/log+0.00020753286465435838,1/4parentwins; positive descriptive grouped parent intervals; valid exact-negative REVERT",
+      "observed_consequence": "Stop exact D4 repetition/prior search; returned no next predictor."
+    },
+    {
+      "source_sha256": "301743d9b74cfbedda3ac210789741caae576977c8724963afb24bf053470075",
+      "finding": "C7 improves C1 bothlosses/allfourblocks but rawKEEP fails",
+      "observed_consequence": "Retain C7 local research value and raw incumbent; preserve distinct B3 state family."
+    },
+    {
+      "source_sha256": "7e5cf0599c24f6a7901d52eca26c723f8b2519c4e4376c4b96b850573c62d9cc",
+      "finding": "Provided exact accepted D3 bothlossregression/0of4 and D2 tinyBriergain+logregression/2of4",
+      "observed_consequence": "Returned judgment that no sufficiently distinct next hypothesis warrants additional calibration search; no family-absence conclusion."
+    },
+    {
+      "source_sha256": "24fc9211adb3bd969fa21e665074b3d970a0e93ebe30c10b8d099c710f71e02d",
+      "finding": "Bound5selected20actual/one slot remains;22.003475625941064s cumulative training childwall versus10533.619579s elapsed at input capture",
+      "observed_consequence": "Explicit voluntary scientific allocation stop, NOT cap/deadline exhaustion; rejected operationally because negatives/overhead are not authorized batch-stop conditions."
+    }
+  ],
+  "scientific_scope": {
+    "new_candidate_selected": false,
+    "new_implementation_scope_admitted": false,
+    "new_source_contract_admitted": false,
+    "returned_action": "stop_in_scope",
+    "returned_question_id": "post-d4-scientific-allocation-stop",
+    "returned_specification": "Conclude allocation without new predictor/implementation/fits; keep2researchfamilies and archive. Original response preserved verbatim.",
+    "no_D5_recipe_exists": true,
+    "resource_constants": "Schema4fits/900s/thread1/RSS1GiB/provider0 are existing ceilings, not a reservation or request.",
+    "scientific_evidence_accuracy": "Returned factual D4/D3/D2/C7 findings and reported overhead are supported; allocation judgment is not a tested scientific claim.",
+    "execution_policy": "Only time/attempt caps, next required unauthorized operation, unrepaired repeated execution block or user stop authorize ending the continuous batch. At observation5/6attempts20/24fits and time before19:12:11; no such stop condition demonstrated.",
+    "continuation_policy_admitted": false,
+    "batch_completion_authorized": false,
+    "required_next_action": "Supervisor preserves original result and diagnoses versioned continuation-policy handling. Any fresh account replacement/resampling requires direct authority; do not silently replay, fabricate D5, change old scores or mark budget exhausted. User replacement permission pending as reported, not granted by this receipt."
+  },
+  "source_hashes_unchanged": {
+    "experiments/nfl_ingame_candidate_evidence_adapter.py": "f62a5459a8e3c78bcdd7810e25291d1ef164ccc2d41f876fa37fb166f9dcc8bc",
+    "experiments/nfl_ingame_market_temperature_offset.py": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+    "experiments/nfl_ingame_temperature_odd_confidence_joint_offset.py": "ecec43a881ab2d145165ee7d0f641559e46d43bd05876a381e1d300f44173068",
+    "experiments/nfl_ingame_temperature_possession_pressure_joint_offset.py": "c57ed002b507e219c788c256b33e0f853fc418ea41713fbfbc845bcb7782d838",
+    "supervisor_harness/continuous_discovery_batch.py": "1b3065ea2990e886ff05869d5c6afd39bc0e80ebb053436f51fd9d9cee0d148c",
+    "supervisor_harness/opened_train_discovery_worker.py": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360"
+  },
+  "observed_capability": {
+    "D3_verified_feedback_to_actual_D4_predictions_and_review_completed": true,
+    "D4_numeric_feedback_actually_received_by_Controller": true,
+    "D4_evidence_cited_in_returned_allocation_decision": true,
+    "new_predictor_chosen": false,
+    "new_predictor_source_admitted": false,
+    "new_training_available": false,
+    "continuation_policy_satisfied": false,
+    "researcher_R_source_modified": false,
+    "same_model_fixed_flow_superiority_proved": false
+  },
+  "resource_accounting": {
+    "input_snapshot_selected": 5,
+    "input_snapshot_reserved_fits": 20,
+    "input_snapshot_actual_fits": 20,
+    "remaining_attempts": 1,
+    "remaining_unreserved_fits": 4,
+    "live_selected_at_observation": 5,
+    "live_reserved_fits": 20,
+    "live_actual_fits": 20,
+    "live_authority_sha256": "e021a89ca5e22668a9841e8f7db477231e0a6713624f116f4734095a3a337112",
+    "outer_limits": "6attempts/24fits/2candidate children;900s/thread1/sampleRSS1GiB/provider0",
+    "selection_cutoff_utc": "2026-10-05T19:12:11Z",
+    "deadline_utc": "2026-10-05T19:27:11Z",
+    "window_elapsed_seconds": 10708.634793,
+    "cumulative_completed_training_child_wall_seconds": 22.003475625941064,
+    "known_account_submission_attempts": 5,
+    "returned_scientific_decisions": 4,
+    "failed_original_request_usage": "Unavailable",
+    "current_turn_reported_usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 0,
+      "input_tokens": 110403,
+      "output_tokens": 1445,
+      "reasoning_output_tokens": 55
+    },
+    "cumulative_successful_reported_input_tokens": 376018,
+    "cumulative_successful_reported_output_tokens": 6956,
+    "cumulative_successful_reported_reasoning_tokens_in_output": 603,
+    "account_usd": "unknown",
+    "human_interventions_from_bound_overhead": "One governance addendum, one destination approval, one fresh failed-schema replacement approval; no per-round human continue/algorithm choice reported before this call. Any pending new replacement authorization is not assumed.",
+    "coordination": "Substantial AI Supervisor/worker/reviewer source/gate/dispatch/ledger/handoff overhead remains, not zero coordination or pure researcher autonomy.",
+    "measurement": "Account totals cover4completed successful consumer calls only; failed-schema usage/all-agent tokens/CPU/account USD unavailable. Training childwall not total loop cost.",
+    "reviewer_train_fits": 0,
+    "reviewer_optimizer_calls": 0,
+    "reviewer_model_calls": 0,
+    "reviewer_transport_calls": 0,
+    "reviewer_source_edits": 0,
+    "reviewer_commits": 0
+  },
+  "reviewer_operational_notes": [
+    "Preflight0.637s reconstructed original packet from pure9-event replay with save/transport/snapshot writes prohibited. Original completion was actually present; read final response only then.",
+    "Full original transaction proof0.852s PASS first command; no reviewer source repair or fitting. Scoped signal-zero verifies PID88462absent18:26:01UTC.",
+    "The admitted schema's stop_in_scope enum does not itself confer human stop authority. Supervisor independently confirmed original continuation-stop conditions; preserve this invalid continuation choice rather than change its text or invent a next model."
+  ],
+  "attribution_limits": [
+    "Transaction PASS means original transport/strictresponse/evidence/bindings valid, not early-stop, batch-completion or future-predictor admission.",
+    "D1–D4 exact negative findings do not refute whole PBP/state/calibration families or prove research capacity lacks information. No next hypothesis was returned.",
+    "One remaining slot/fourfits is unused, not consumed or exhausted. No user stop/cap/deadline/unauthorized-data need/unrepaired execution block shown at this observation.",
+    "No same-feedback retry, silent account/native fallback or fabricated D5 authorized by this receipt. Any fresh replacement requires authorized prospective handling; preserve all old artifacts and counters.",
+    "Requestedgpt-6.1-sol exact serving unknown; no matched-model fixed-flow/process superiority, R-source evolution or model-upgrade-to-RSI claim.",
+    "No observed tools/read-onlyprompt is not OS/network/protected-file isolation proof; account text never executed.",
+    "RepeatedTrain Discovery is not untouched OOS, prospective/realtime/PnL or promotion. Raw incumbent and research archives unchanged."
+  ],
+  "continuation_policy_admitted": false,
+  "batch_completion_authorized": false,
+  "action": "stop_in_scope"
+}

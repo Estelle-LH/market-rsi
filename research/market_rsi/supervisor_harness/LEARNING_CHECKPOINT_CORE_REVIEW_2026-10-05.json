@@ -1,0 +1,93 @@
+{
+  "schema": "market_rsi_learning_checkpoint_core_review_v1",
+  "passed": true,
+  "verdict": "EXACT_OPT_IN_CORE_ADMITTED_FOR_CONSUMER_INTEGRATION_ONLY",
+  "reviewed_at_utc": "2026-10-05T20:57:09Z",
+  "reviewer": "coevo_independent_review_20261003",
+  "source_commit": "79efe01913610c8f128802a41a797392f9970cfb",
+  "parent_commit": "83461bd6d0011b72d6e364bde684b7f4a378331b",
+  "scope_review_sha256": "df8d31e0528efffd9203d6d9e19fcf8e24bbd1f44f6a57fd80507802678636d6",
+  "plan_sha256": "4b78057cab730e2b4ad4428e2823e8186c0e2b4a809096cdb3658c2ed9bcbded",
+  "implementation_log_sha256": "baa4d2a3f5680ba25b211dc45beb67224e738456f51764e8aadce6ebb48b1ce7",
+  "source_hashes": {
+    "learning_checkpoint_assessment.py": "a53d348a9b3c09306bb7bf24e4960ee3233eb955b82733612c11277d02219926",
+    "continuous_discovery_batch.py": "3d0c0508cda74948119da9bd353cb326dd35b9ed8bcf9e42fb35b9862fee8183",
+    "test_learning_checkpoint_assessment.py": "b704bfe471a365fff82d19de4a0023b900bcdc0fbeeaf7c3204cc7138a11566d",
+    "test_continuous_discovery_batch.py": "d7b68dfd40d04d67103a23c3120fbfd99881991e0ab811eba326c1fc858c9e59"
+  },
+  "small_step": {
+    "change_axis": "H",
+    "production_modules": 2,
+    "recorder_added": 206,
+    "recorder_removed": 9,
+    "helper_added": 178,
+    "changed_production_lines": 393,
+    "threshold_triggered": true,
+    "judgment": "SEMANTIC_INSEPARABILITY_ACCEPTED",
+    "reason": "One prospective assessment component must validate original validity before KEEP, persist normalized independent learning, replay identical projections, seal feedback, and consume the same bounded allowance across live selection and archive restoration. A detached helper or log-only recorder would leave eligibility/consumption/replay inconsistent. No scorer, scientific predictor, worker, consumer or research-policy rewrite is included. This ruling does not equate line count with safety; consumer integration requires its separate checkpoint."
+  },
+  "verification": {
+    "full_changed_source_and_tests_read": true,
+    "current_bytes_equal_reviewed_git_bytes": true,
+    "independent_synthetic_tests": {
+      "passed": 43,
+      "unique_methods": 43,
+      "elapsed_seconds": 0.912,
+      "real_fits": 0,
+      "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONHASHSEED=0 '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python' -B -m unittest supervisor_harness.test_learning_checkpoint_assessment supervisor_harness.test_continuous_discovery_batch -v"
+    },
+    "validity_before_keep_and_original_classification_locked": true,
+    "valid_zero_credit_revert_bounded_parent": true,
+    "pending_question_does_not_preselect_supervisor_science": true,
+    "later_controller_decision_question_hypothesis_rule_hashes_frozen": true,
+    "explicit_question_commitment_repeat_alias_and_cap_rejected": true,
+    "scheduling_consumes_allowance_before_execution_failure": true,
+    "archive_consumption_and_restart_preserved": true,
+    "invalid_or_leaked_prediction_never_eligible_parent": true,
+    "independently_bound_failure_learning_metadata_supported": true,
+    "canonical_duplicate_new_credit_zero": true,
+    "reuse_status_not_assumed_benefit": true,
+    "credit_changes_budget_hint_not_score_or_required_membership": true,
+    "global_capacity_two_or_three_and_final_singleton_preserved": true,
+    "legacy_default_v1_v2_v3_tests_pass": true,
+    "historical_v3_pure_replay": {
+      "pilots": 5,
+      "events": 45,
+      "prefixes": 45,
+      "filesystem_recovery_writes": 0,
+      "exact_saved_state_hashes": [
+        "2175d3f28b589c504f00f1db89e4e6a369bab3eb2641cdedca6293fda8539a42",
+        "b3bc143b55b172e5b89b6cb39f677a792ab52a0414abfb9d6e124563c0d5d932",
+        "441289f08abbfa9267fa3f3f19ce760c942a14d92355d453f7ab8f370b171bd8",
+        "d76e62ecccad69f0fc340ebeff06b0c6510a87ba960d130d1c90bd96f67dbb4d",
+        "fecb9e06827c66b002d37eb0cdc60a992df2850516caa295c441beb5f712ea60"
+      ]
+    },
+    "diff_check_note": "Full checkpoint diff-check flagged only the prior scope reviewer log's trailing blank line; no production/test whitespace error or scientific failure. The allowed append below retains history and makes that blank line interior."
+  },
+  "unchanged": {
+    "consumer_sha256": "b0c4c7a28f2eeb333587b9a53faa230a3b751d707433c0dc3b6f4d3e78e0e68e",
+    "scorer_sha256": "64165cbceb4bcba6d03b6b42402ea7a47790c9a57f9280b15bfe2fe57becc06b",
+    "probability_sha256": "7ba4a32d3c3a2ab80ac17ca6c18ea29fe864b958de8a81ac2be59dba121e9d74",
+    "worker_sha256": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360",
+    "frozen_d5_review_log_sha256": "efcba3eb78b5c8f9113e158b110ba32c0ae2c3f3b37120b2d94f5156f419a288",
+    "old_caps_and_journals": true,
+    "protected_data_and_authority": true
+  },
+  "limitations": [
+    "Hashes bind trusted independent Supervisor review; schema checks alone cannot prove artifact contents, semantic novelty, useful repair, alias-free canonical finding assignment, or truthful cross-batch consumption receipts.",
+    "The core can retain failed-run diagnosis/repair learning in its metadata and feedback projection. The unchanged numerical consumer still requires completed scorecard, prediction CSV and supplement roles. End-to-end real failed-run-to-Controller recovery is not implemented or certified; no scorecard may be fabricated.",
+    "Invalid forecasts remain ineligible research parents. Any repaired scientific candidate needs an eligible valid/baseline parent and independently checked failure reference; this review does not certify a real repaired child.",
+    "Later opt-in consumer integration, once-only recovery and actual use of learning evidence are pending a separate exact-source review. No live batch, new fit or model call is admitted.",
+    "This is user/Supervisor-directed H repair, not autonomous R evolution, predictive improvement, mechanism superiority, transfer, untouched OOS, real-time edge, or authenticated exact serving-model identity.",
+    "No Word layout or broad legacy-suite success is certified by this core review."
+  ],
+  "resources": {
+    "opened_train_prediction_or_feature_reads": 0,
+    "real_fits": 0,
+    "optimizers": 0,
+    "model_provider_calls": 0,
+    "network_calls": 0,
+    "commits": 0
+  }
+}

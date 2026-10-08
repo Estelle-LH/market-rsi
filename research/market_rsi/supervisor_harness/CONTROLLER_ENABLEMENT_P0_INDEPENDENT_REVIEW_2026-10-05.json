@@ -1,0 +1,106 @@
+{
+  "schema": "market_controller_enablement_independent_review_v1",
+  "checkpoint": "controller-enablement-p0-evidence-tools-20261005-01",
+  "reviewer": "/root/controller_enablement_independent_review",
+  "reviewed_at_utc": "2026-10-06T01:25:12Z",
+  "client_date": "2026-10-05",
+  "verdict": "PASS_STANDALONE_SYNTHETIC_COMPONENT_NOT_LIVE_ACTIVATION",
+  "passed": true,
+  "unresolved_p0_p1_findings_in_changed_component": [],
+  "change_axis": "H",
+  "authorship": "User-directed Supervisor repair; independent AI source and boundary review, not autonomous researcher evolution",
+  "parent_commit": "938f6960471167b6dc0d21093c240873b3ccfbc4",
+  "integration_receipt": {
+    "path": "research/market_rsi/supervisor_harness/CONTROLLER_ENABLEMENT_P0_VERIFICATION_2026-10-05.json",
+    "sha256": "5eacae66d9d831db37063d1da90e82fb3abfe6f98c184b58005b2ff474f0d663"
+  },
+  "source_snapshot": {
+    "production_path": "research/market_rsi/supervisor_harness/controller_research_evidence_tools.py",
+    "production_sha256": "01980b4117b5242a16728bc60392623a5efd13dd48e0390ebf29fd810404f7c4",
+    "production_lines": 284,
+    "test_path": "research/market_rsi/supervisor_harness/test_controller_research_evidence_tools.py",
+    "test_sha256": "84cb98d6b43fe3c6e13b16fd6dd43ebb6d974a4790ed3b33611e7beb9da056d8",
+    "hashes_rechecked_after_independent_tests": true
+  },
+  "smallness": {
+    "warning_triggered": true,
+    "inseparability_accepted": true,
+    "reason": "One standalone evidence-reader boundary combines exact policy admission, descriptor-relative no-symlink reads, shared limits, durable prepared-response audit and local stdio framing. Mechanically splitting at 200 lines would add interfaces without reducing authority or causal blast radius. No second production module, consumer integration, data permission, evaluator or budget rule changed. Acceptance applies only to this reviewed 284-line snapshot."
+  },
+  "independent_verification": {
+    "cwd": "/Users/estelle/Developer/market-rsi/research/market_rsi",
+    "command": "/Users/estelle/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -B -m unittest supervisor_harness.test_controller_research_evidence_tools supervisor_harness.test_account_controller_feedback_consumer supervisor_harness.test_opened_train_discovery_worker supervisor_harness.test_continuous_discovery_batch supervisor_harness.test_continuous_discovery_branch_retention supervisor_harness.test_continuous_discovery_small_steps supervisor_harness.test_learning_checkpoint_assessment",
+    "exit_code": 0,
+    "test_executions": 172,
+    "seconds": 2.223,
+    "scope": "Synthetic fixtures and local broker protocol subprocess only; imported inherited unittest classes can repeat, so this is not a claim of 172 unique tests.",
+    "preflight_inherited_test_executions": 51,
+    "preflight_inherited_seconds": 0.335,
+    "tracked_python_count": 1039,
+    "tracked_python_mapping_sha256": "995611b2da6322d070c0f6c16ddf0b4149b5f691b72778f32844d204a1c84c80",
+    "tracked_python_method": "Independently recomputed SHA256 of sorted compact JSON mapping git-ls-files research/market_rsi Python paths to file SHA256 before new files were staged.",
+    "protected_source_diff_against_head": "No changes in experiments, account consumer, worker, batch recorder or learning assessment."
+  },
+  "boundary_checks": [
+    "Approved identifiers and exact policy/source hashes gate returned evidence; tool calls cannot supply filesystem paths.",
+    "Descriptor-relative directory traversal and final open use O_NOFOLLOW; source bytes are read from the pinned descriptor and hashed before any text is returned, avoiding a hash-then-reopen disclosure race.",
+    "Unlisted IDs, model-supplied paths, symlink parents/leaves, traversal, FIFO/nonregular sources, oversized files and invalid UTF-8 are denied with no evidence text returned.",
+    "Exhausted calls and exactly consumed output budget are rejected before subsequent reads; serialized tool-payload accounting includes successful and denied tool values.",
+    "One process lock serializes concurrent calls. Atomic exclusive creation of the same approved audit path rejects another instance or silent same-policy restart; no cross-policy shared global-budget service is claimed.",
+    "Prepared responses are durably audited before broker return; fsync failure, zero write or replaced audit inode poisons the session and emits no result. Receipts explicitly do not confirm consumer delivery.",
+    "Strict JSON rejects duplicate keys, nonfinite constants and overflowing float literals. Invalid JSON-RPC IDs are normalized to null before tool dispatch; oversized/incomplete frames stop without executing a trailing request.",
+    "Local newline JSON-RPC subprocess roundtrip passes without a model session. Production imports are exclusively argparse, hashlib, json, math, os, re, stat, sys and threading; no E2B, Tinker, provider, network or hidden training path exists."
+  ],
+  "resolved_preliminary_findings": [
+    {
+      "id": "RPC_NONFINITE_ID_DISPATCH",
+      "original_observation": "In-memory NaN-ID request invoked Probe.call and then failed response serialization.",
+      "resolution": "Strict parsing and legal ID validation prevent dispatch; explicit regression also covers numeric overflow, container/boolean IDs and duplicate keys."
+    },
+    {
+      "id": "FULLY_CONSUMED_OUTPUT_PREREAD",
+      "original_observation": "Output exhaustion could be discovered only after another evidence read.",
+      "resolution": "Exact exhaustion is checked before policy or source reads and verified by a zero-reader-call regression."
+    }
+  ],
+  "existing_policy_correction": {
+    "already_working": "Opt-in v4 admits valid zero-credit REVERT as a parent for a specifically bounded first follow-up, including input and original-response recovery tests.",
+    "remaining_restrictions_not_changed": "Bounded follow-up is exactly one; zero/duplicate-credit forecasts cannot continue/branch; parents must be ranked eligible evidence; consumed C2 remains excluded. These are future policy decisions, not missing sidecar features."
+  },
+  "account_cli_preflight": {
+    "path": "/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex",
+    "version": "codex-cli 0.160.0",
+    "sha256": "6b582e8813ce7e8ed4c52814ee5cf230dba647bf2292df747a4003f2657ef201",
+    "matching_consumer_pin": true,
+    "correct_diagnostic": "codex exec --ignore-user-config --help",
+    "advertised_flags": ["-c TOML config overrides", "--strict-config", "--sandbox", "--ignore-user-config"],
+    "model_session_started": false,
+    "official_reference": "https://learn.chatgpt.com/docs/extend/mcp",
+    "integration_uncertainty": "Help and feature listings establish advertised flags only; they do not verify MCP configuration acceptance, actual tool catalog, built-in tool absence or effective protected-read isolation in a live account session."
+  },
+  "claim_boundary": {
+    "evidence_level": "L1",
+    "accepted": "Implemented and independently tested standalone approved-evidence retrieval component, suitable for a separately reviewed integration checkpoint.",
+    "not_established": [
+      "Live Controller capability or account transport integration",
+      "Arbitrary-code OS sandbox, protected-read isolation or disabling CLI built-ins",
+      "Automatic two-round continuation or interruption recovery",
+      "Whole-process traffic/CPU/memory bound; cap covers tool payloads, not MCP control metadata or framing",
+      "Content classification from hashes; trusted Supervisor must vet each approved payload",
+      "Research-process improvement, predictor improvement, market edge or self-evolution superiority"
+    ]
+  },
+  "resources": {
+    "resident_train_reads": 0,
+    "protected_dev_final_reads": 0,
+    "statistical_fits": 0,
+    "live_controller_model_calls": 0,
+    "paid_provider_calls": 0,
+    "scientific_external_data_or_literature_requests": 0,
+    "official_documentation_tool_requests": 2,
+    "commits_releases_promotions": 0,
+    "reviewer_test_wall_seconds": 2.558,
+    "reviewer_total_model_and_engineering_cost": "unknown; not metered by the experiment runner"
+  },
+  "next_checkpoint": "Bind the reviewed reader to the consumer under an exact fresh source and payload manifest; verify effective tool catalog and denial of other access channels before any live activation. Do not recycle exhausted batch authority or alter protected scoring/history."
+}

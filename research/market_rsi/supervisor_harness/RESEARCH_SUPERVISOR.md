@@ -101,6 +101,92 @@ push. If scope or provenance is ambiguous, keep the candidate local and state
 the exact uncertainty. Git publication does not itself admit real data, permit
 a provider call, or establish prediction improvement.
 
+### Replayable local checkpoints — 2026-10-01 user override
+
+In addition to the release process above, make a local checkpoint at every
+meaningful bounded change, experiment outcome, and acceptance/rollback. Do not
+wait for a release or a positive result. This later instruction permits clearly
+labelled local preservation checkpoints without treating them as independently
+reviewed release candidates. Keep the source and result history small and
+append-only; do not bundle weeks of work again.
+
+1. **Starting point:** identify the repository, branch and parent commit. Preserve
+   any relevant uncommitted starting work separately before changing it, after
+   inspecting its scope. Do not stage another owner's concurrent edits silently.
+2. **Source checkpoint:** commit each coherent change and its tests/configuration
+   before an authorized run uses it. Record separate harness/researcher identities
+   where applicable. No need for an empty commit if that exact source is already
+   committed; reuse its ID. A documentation-only checkpoint needs no model run.
+3. **Run/result checkpoint:** append a compact entry to the existing progress log
+   or run report and commit it. Include the immutable pre-run source commit,
+   exact command and working directory, configuration and seeds, model/runtime/
+   dependency versions, data/split/evaluator and memory manifest hashes, output
+   locations/hashes, tests actually run, result/failure and next decision. Link
+   existing manifests rather than duplicating raw artifacts. Use not-applicable
+   for non-executable work and explicitly identify missing provenance.
+4. **Replay status:** distinguish source recoverability, deterministic journal or
+   artifact replay actually tested, and empirical rerun not tested or dependent
+   on unavailable data/providers. Preserve original model responses and tool
+   observations in the existing artifact store; another LLM call is not guaranteed
+   to reproduce them. Never reacquire protected data or spend money just to claim
+   replay. Record missing evidence instead.
+5. **Preserve the chain:** never amend/squash/rebase an already referenced
+   checkpoint without the user's request. Retain failed/rejected candidates.
+   Represent a correction or source rollback with a new commit and explanation;
+   do not rewind consumed budgets, exposed data or external actions.
+6. **Close the checkpoint:** inspect the full staged scope/diff, check for secrets
+   and excluded artifacts, run proportional verification, and confirm the commit
+   exists and remaining work is accounted for. Report its short SHA to the user.
+   A report's containing Git commit supplies its result-checkpoint ID; do not
+   create an endless extra commit just to insert its own hash. Cross-repository
+   work must identify both repositories and their relevant source/evidence refs.
+
+This uses existing Git and reports: no new service, hook or per-round release
+gate. The Supervisor remains the integration/commit owner. Ordinary opened-Train
+research retains its existing authority; commits grant no new execution rights.
+Keep data, keys, local runtimes and live ledgers outside Git. Remote publication
+and release tags remain separate actions, not implied by this standing rule.
+
+### Small-change and attribution gate — 2026-10-03 user instruction
+
+Before dispatching a candidate change, the Supervisor freezes a compact change
+contract and rejects implementation until it is complete. Required fields are:
+
+1. step and parent IDs; triggering evidence and its hash; proposal author;
+2. exactly one change axis (`C`, `H`, or `R`), one component and one observable
+   expected effect;
+3. before/after commitments for protected kernel `K`, base model/runtime `M`,
+   prediction candidate `C`, Harness `H` and researcher policy `R`;
+4. exact allowed write paths, protected paths and interfaces that must not move;
+5. resource ceiling, matched replay inputs, tests, rollback parent and requested
+   evidence level.
+
+The Supervisor verifies the actual Git diff and runtime manifest rather than
+trusting proposal metadata. Unexpected files or changes to dependencies,
+permissions, evaluator, data boundary, model/runtime, network, authority, budget
+or protected state reject the proposal. More than two production modules or
+about 200 changed lines is a split/review trigger, not a safe-harbor rule. Any
+permission expansion is broad regardless of line count.
+
+Use these axis-specific checks:
+
+- `C`: identical population, row keys, target, folds, scorer and comparison
+  baselines; report paired prediction metrics. A combined candidate is permitted
+  in Discovery but cannot identify which internal component caused its result.
+- `H`: hold `K/M/C/R` fixed; measure the named operational benefit on matched
+  success, failure, restart and history-replay tasks before one live trial.
+- `R`: hold `K/M/C/H`, tool permissions and initial evidence fixed; measure valid
+  experiments per budget, explicit feedback use, executable-result rate,
+  recovery, repetition and research credit separately from prediction score.
+
+At each gate, append one trajectory record with exact files/commit, execution and
+review receipts, metrics, resource use, accept/reject/rollback and the earned
+level `L0` through `L5` defined in `AGENTS.md`. If multiple axes moved, label the
+step `COMPOSITE_UNATTRIBUTABLE`. Do not patch a failed proposal in place; archive
+it and create a new child step. Activation and rollback occur only while the
+batch is idle. The trajectory must support both a machine-readable append-only
+view and a concise human table without inventing missing provenance.
+
 ## Before each work block
 
 Read `RESEARCH_STATE.md`. Identify the most important gate or bottleneck and

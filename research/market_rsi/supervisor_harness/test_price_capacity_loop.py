@@ -10,13 +10,15 @@ from supervisor_harness import test_price_capacity_trial as fixtures
 
 class HookTests(TestCase):
     def setUp(self):
-        self.f = fixtures.TrialTests(); self.f.setUp(); self.addCleanup(self.f.doCleanups)
+        self.f = fixtures.TrialTests()
+        self.addCleanup(self.f.doCleanups)
+        self.f.setUp()
         trial = fixtures.trial
         runtime = self.f.runtime
         config = {'schema': 'price_capacity_loop_configuration_v1', 'baseline': self.f.f.f.before,
             'entrypoints': self.f.f.f.entrypoints, 'replay_cases': self.f.f.f.packet['source_context']['capacity_replay_cases'],
             'hook_seconds': 2}
-        binding = self.f.f.f.h.write('hook-config', config)
+        binding = self.f.f.f.h.write('capacity-configuration', config)
         def save(ctx, role, value): return self.f.f.f.h.write('hook-round-' + role, value)
         self.service = SimpleNamespace(runtime=runtime, base={'identity_configuration': self.f.f.f.packet['action_context']['identity_configuration'],
             'python_binding': config['baseline']['runtime']['python']}, _save=save)
@@ -48,6 +50,28 @@ class HookTests(TestCase):
             packet = self.hooks.packet({'round_index': 1}, self.packet())
         self.assertFalse(child.called); self.assertFalse(packet['overhead']['capacity_hooks_resolved'])
         self.assertEqual(packet['schema'], 'controller_price_feedback_input_v2')
+
+    def test_invalid_baseline_fails_before_real_native_initialization(self):
+        from unittest.mock import patch
+        value = deepcopy(self.hooks.config)
+        name = value['entrypoints']['H']
+        value['baseline']['components']['H']['sources'][name] = 'f' * 64
+        value['baseline'] = fixtures.trial.cs.identity.manifest(
+            kernel=value['baseline']['components']['K'], predictor=value['baseline']['components']['C'],
+            harness=value['baseline']['components']['H'], researcher=value['baseline']['components']['R'],
+            memory=value['baseline']['memory_sha256'], model=value['baseline']['model'], runtime=value['baseline']['runtime'])
+        self.service.base['identity_configuration']['pair'] = fixtures.trial.cs.activation.pair(value['baseline'])
+        changed = self.f.f.f.h.write('capacity-configuration', value)
+        with patch.object(hooks.native, 'ContinuousDiscoveryBatch') as journal:
+            with self.assertRaises(ValueError): hooks.PriceCapacityLoop(self.service, changed, self.hooks.author, self.hooks.reviewer)
+        self.assertFalse(journal.called)
+
+    def test_foreign_configuration_path_rejects_before_native_creation(self):
+        from unittest.mock import patch
+        foreign = self.f.f.f.h.write('foreign-capacity-configuration', self.hooks.config)
+        with patch.object(hooks.native, 'ContinuousDiscoveryBatch') as journal:
+            with self.assertRaisesRegex(ValueError, 'batch-local'): hooks.PriceCapacityLoop(self.service, foreign, self.hooks.author, self.hooks.reviewer)
+        self.assertFalse(journal.called)
 
     def test_capacity_execute_uses_global_attempt_and_zero_fits_not_free_operation(self):
         prepared = self.f.prepare()

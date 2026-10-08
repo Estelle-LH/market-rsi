@@ -1,0 +1,22 @@
+{
+  "schema": "market_rsi_small_change_contract_v1",
+  "step_id": "P3-H-feedback-schema-service-compatibility-v2",
+  "axis": "H",
+  "component": "explicit JSON Schema type annotations for the existing once-only feedback consumer",
+  "author": "Supervisor operational failure recovery, not researcher self-modification",
+  "parent_source_commit": "b8c2824",
+  "parent_consumer_source_sha256": "cd0f0a75de395aa619428d10612897a8be260ac3e28334f8b85bd42b171a9c69",
+  "trigger": "First account request returned HTTP400 invalid_json_schema: boundary schema must have a type key; no final message or scientific decision",
+  "trigger_events_sha256": "b738dc361b1b8bdb8a553f2b2ee283210271335d36f92ab183e94e234ec40a38",
+  "expected_effect": "Explicit types for every response property, including const/enum properties, without changing accepted scientific fields, constants, permissions or once-only recovery",
+  "allowed_source_paths": ["research/market_rsi/supervisor_harness/account_controller_feedback_consumer.py", "research/market_rsi/supervisor_harness/test_account_controller_feedback_consumer.py"],
+  "allowed_log": "research/market_rsi/supervisor_harness/AGENT_LOG_REPAIR_FEEDBACK_SCHEMA_2026-10-05.md",
+  "protected": "All other source/scorer/worker/recorder/data and historical call input/schema/claim/events/failure. No original call relaunch, model/provider fallback or new model call by implementer",
+  "fixed": "K, M runtime, C D1 evidence, R policy, decision payload fields and permissions. Requested account alias gpt-6.1-sol/serving unknown unchanged",
+  "change_limit": "One source component, only explicit schema types and compiled scope binding. Add service-shape regression; no framework expansion, validator loosening or compatibility retry",
+  "tests": "Walk all schema nodes and require explicit supported type; const types must match values, enum string. Strict shape and inherited once-only/timeout/drift/cap tests unchanged. Mocked checks are not API acceptance",
+  "resources": "Repair target5minutes plus independent focused review; no model calls/fits, same outer19:27:11UTC deadline/19:12:11UTC selection cutoff",
+  "activation": "Exact source checkpoint and independent review, plus explicit fresh-human replacement-handoff authorization before new call ID; previous failed claim terminal",
+  "rollback": "Preserve cd0f0a75 at immutable3d44ae3 and actual failure; do not activate failed v2",
+  "claim": "H operational repair only, not C gain, R evolution, automatic continuation or useful accumulation"
+}

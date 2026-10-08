@@ -1,0 +1,171 @@
+{
+  "schema": "supervisor_bottleneck_plan_v1",
+  "id": "market-rsi-prediction-first-minimal-loop-20260929-01",
+  "symptom": "The programme accumulated pre-experiment governance and briefly treated PredictionMarketBench as a primary foundation, while no settlement-probability KEEP/REVERT loop had run end to end.",
+  "source_evidence": "PREDICTIONMARKETBENCH_ROLE_CORRECTION_2026-09-29.md SHA 83ca286e97f249e039d710570f61c07851d90c4267f50b12e084e3a9ab90417a; PREDICTION_FIRST_MINIMAL_LOOP_2026-09-29.md SHA b06adbbb58f7ee1d068eabedf8bd6371c1f6e2e08408d2ae87c44a2502cde057; two fresh independent read-only audits recorded in AGENT_LOG_PREDICTION_FIRST_RESET_2026-09-29.md.",
+  "objective": "Build and independently review the smallest local prediction-first loop: frozen-cutoff binary probabilities, proper-score comparison with the market, one-shot diagnostic Dev KEEP/REVERT, and bounded aggregate memory, with PMB absent from all promotion and evaluator paths.",
+  "boundary": "Local source, synthetic binary fixtures and pure tests only. No PMB/source/episode intake, network, provider, payment, real data, protected Dev/Final, real training/evaluation, Docker canary, release, commit, tag, push or publication. A fixture subprocess may test the label-free protocol but cannot establish untrusted-code filesystem isolation.",
+  "resolution_check": "One exact integrated snapshot must complete two synthetic rounds (KEEP then REVERT), preserve lineage across restart, score identical rows with Brier/log loss/calibration and paired market deltas, keep Final unreachable, mark real isolation and real-data authority false, and pass fresh non-author attack review.",
+  "supervisor_owner": "Supervisor · Market RSI",
+  "parallel_work": {
+    "base_source_sha256": "507d818d9dc6f408c1a6ffe3874dfb059750cf2fd3d72c80a8c17b0ff4810c33",
+    "worker_step_ids": [
+      "probability_contract_and_scorer",
+      "label_free_prediction_protocol",
+      "keep_revert_lineage"
+    ],
+    "integration_step_id": "integrate_two_round_synthetic_loop",
+    "review_step_id": "independent_minimal_loop_review"
+  },
+  "steps": [
+    {
+      "id": "record_pmb_role_correction",
+      "owner": "Supervisor · Market RSI",
+      "action": "Supersede the PMB-primary architectural role without mutating historical hash-bound plans; freeze pmb_simple_lane as optional non-promotional smoke compatibility only and update current architecture/state/roadmap.",
+      "depends_on": [],
+      "write_paths": [
+        "research/market_rsi/PREDICTIONMARKETBENCH_ROLE_CORRECTION_2026-09-29.md",
+        "research/market_rsi/PREDICTION_FIRST_MINIMAL_LOOP_2026-09-29.md",
+        "research/market_rsi/pmb_simple_lane/README.md",
+        "research/market_rsi/ARCHITECTURE.md",
+        "research/market_rsi/supervisor_harness/RESEARCH_STATE.md",
+        "research/market_rsi/supervisor_harness/SUPERVISOR_ROADMAP_2026-09-21.md"
+      ],
+      "expected_artifact": "One authoritative role correction, one compressed minimal-loop design and explicit preservation of rejected/superseded historical assumptions.",
+      "verification": "Rehash both old PMB plans unchanged, hash new decisions, search current authoritative documents for an active PMB-primary claim, and confirm PMB files remain outside the public release manifest.",
+      "pass_condition": "Current authority says PMB is smoke-only with zero promotion authority and the next milestone is the prediction-first loop.",
+      "failure_action": "Do not dispatch implementation; preserve both conflicting texts and request a single explicit strategy decision.",
+      "time_bound_minutes": 25,
+      "result": {
+        "verdict": "pass",
+        "observed": "Two independent audits confirmed PMB is an isolated untracked island and identified the three true prediction-loop gaps. The new role correction and minimal-loop design supersede PMB as an architecture driver while preserving all historical hashes.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "AGENT_LOG_PREDICTION_FIRST_RESET_2026-09-29.md",
+        "evidence_sha256": "864dc3cac0fb763bf458325746b0d0c69e406c7367e70144d46b224864a3eb31"
+      }
+    },
+    {
+      "id": "probability_contract_and_scorer",
+      "owner": "prediction_probability_worker_20260929",
+      "action": "Implement the exact settlement-probability row contract and a trusted proper scorer over identical complete rows, with market baseline, Brier, bounded log loss, calibration, breadth, concentration and paired event/date-block evidence.",
+      "depends_on": ["record_pmb_role_correction"],
+      "write_paths": [
+        "research/market_rsi/minimal_prediction_loop/probability_contract.py",
+        "research/market_rsi/minimal_prediction_loop/proper_scoring.py",
+        "research/market_rsi/tests/test_minimal_probability_contract.py"
+      ],
+      "expected_artifact": "Small deterministic contract/scorer and adversarial tests for cutoff, availability, row identity, endpoint probabilities, missingness and market comparison.",
+      "verification": "Use synthetic rows to reject future-available features/outcomes, cross-split events, incomplete/mismatched masks and malformed probabilities; reproduce hand-calculated proper scores.",
+      "pass_condition": "Candidate and market are scored on the exact same complete events and every leakage/mask mutation fails before a score receipt.",
+      "failure_action": "Keep the loop blocked at objective/scoring; do not compensate by changing execution or memory policy.",
+      "time_bound_minutes": 45,
+      "result": {
+        "verdict": "pass",
+        "observed": "The strict settlement-probability contract and trusted scorer enforce cutoff/availability chronology, identical complete masks, bounded probabilities, market baselines, proper scores, calibration, breadth and paired event/date evidence. The final integrated snapshot passed the focused and independent attack suites.",
+        "reviewer": "Supervisor · Market RSI plus independent_prediction_loop_reviewer",
+        "evidence_path": "PREDICTION_FIRST_MINIMAL_LOOP_INTEGRATION_2026-09-29.md",
+        "source_test_aggregate_sha256": "26059d5ce860e12b3f8c3e66466c78895a9431831d1ad08c1b978c0402707839"
+      }
+    },
+    {
+      "id": "label_free_prediction_protocol",
+      "owner": "prediction_protocol_worker_20260929",
+      "action": "Implement a minimal sequential candidate protocol that exposes only as-of public rows, durably commits each probability before the next row and never accepts outcomes, future rows or evaluator paths; explicitly keep real isolation authority false without a later container canary.",
+      "depends_on": ["record_pmb_role_correction"],
+      "write_paths": [
+        "research/market_rsi/minimal_prediction_loop/prediction_protocol.py",
+        "research/market_rsi/tests/test_minimal_prediction_protocol.py"
+      ],
+      "expected_artifact": "Label-free prediction journal protocol with restart-safe IDs and fixture-subprocess tests, but no claim of untrusted filesystem isolation.",
+      "verification": "Reject labels/future/evaluator fields, duplicate or skipped row IDs, prediction rewrites and restart replay; prove the trusted fixture sees only the public row schema.",
+      "pass_condition": "The protocol is deterministic and fail-closed, and every receipt states real_isolation_admitted=false until a separately authorized canary.",
+      "failure_action": "Keep scoring and lineage disconnected; preserve the exact leaked field or replay case and repair narrowly.",
+      "time_bound_minutes": 40,
+      "result": {
+        "verdict": "pass",
+        "observed": "The sequential label-free protocol uses an exact public schema, one-row durable commits, deterministic identities and restart/replay failure closure. Candidate records used by the scorer come from the verified journal. Every receipt keeps real_isolation_admitted=false.",
+        "reviewer": "Supervisor · Market RSI plus independent_prediction_loop_reviewer",
+        "evidence_path": "PREDICTION_FIRST_MINIMAL_LOOP_INTEGRATION_2026-09-29.md",
+        "prediction_protocol_sha256": "eb6bdc1367f62c2910225218389d7381cebb2477e92a523c83f0693ae21a5dd3"
+      }
+    },
+    {
+      "id": "keep_revert_lineage",
+      "owner": "prediction_lineage_worker_20260929",
+      "action": "Implement one append-only parent lineage binding changed stage, candidate, prediction journal, one-shot Dev score, KEEP/REVERT and bounded aggregate memory, without row-level labels or Final feedback.",
+      "depends_on": ["record_pmb_role_correction"],
+      "write_paths": [
+        "research/market_rsi/minimal_prediction_loop/lineage.py",
+        "research/market_rsi/tests/test_minimal_prediction_lineage.py"
+      ],
+      "expected_artifact": "Small restart-safe lineage whose parent advances only on the preregistered KEEP rule and whose failed candidates remain auditable.",
+      "verification": "Replay KEEP, REVERT, crash/restart, duplicate score, memory overshare and Final-feedback attacks over synthetic hashes.",
+      "pass_condition": "KEEP advances exactly once, REVERT never advances, consumed Dev IDs cannot replay and memory contains aggregates/facts only.",
+      "failure_action": "Do not run an integrated loop; preserve the bad transition and repair the lineage state machine only.",
+      "time_bound_minutes": 40,
+      "result": {
+        "verdict": "pass",
+        "observed": "The append-only lineage advances only on the preregistered KEEP rule, keeps memory aggregate-only and code-derived, blocks Final feedback and replay, checkpoints the whole ledger, and binds the compact score exactly to the frozen Dev commitment and persisted full-score artifact.",
+        "reviewer": "Supervisor · Market RSI plus independent_prediction_loop_reviewer",
+        "evidence_path": "AGENT_LOG_PREDICTION_FIRST_MINIMAL_LOOP_REVIEW_2026-09-29.md",
+        "lineage_sha256": "7ef2a6742f96cf11e6a43f693d36761082db1e4ab7f8fc34b8825f03ddde3cff"
+      }
+    },
+    {
+      "id": "integrate_two_round_synthetic_loop",
+      "owner": "Supervisor · Market RSI",
+      "action": "Merge the three components into one small package and run two synthetic rounds: a preregistered proper-score KEEP followed by a REVERT, then restart and verify parent, used IDs, receipts, memory and sealed-Final invariants.",
+      "depends_on": [
+        "probability_contract_and_scorer",
+        "label_free_prediction_protocol",
+        "keep_revert_lineage"
+      ],
+      "write_paths": [
+        "research/market_rsi/minimal_prediction_loop/__init__.py",
+        "research/market_rsi/minimal_prediction_loop/loop.py",
+        "research/market_rsi/tests/test_minimal_prediction_loop_integration.py",
+        "research/market_rsi/supervisor_harness/PREDICTION_FIRST_MINIMAL_LOOP_INTEGRATION_2026-09-29.md"
+      ],
+      "expected_artifact": "One exact synthetic loop snapshot, full focused tests and a receipt that makes every absent external authority explicit.",
+      "verification": "Run focused discovery, compile/diff/static scans and exact restart/KEEP/REVERT probes; prove PMB imports and PnL are absent.",
+      "pass_condition": "The two-round synthetic loop is reproducible, Final is unreachable, PMB is absent and real data/isolation/promotion authority remains false.",
+      "failure_action": "Do not add another control layer; identify the single failed causal stage and repair only that component.",
+      "time_bound_minutes": 50,
+      "result": {
+        "verdict": "pass",
+        "observed": "The exact v4 snapshot reproducibly completes synthetic KEEP then REVERT, promotes consumed Dev only after a durable score, recovers both cross-ledger crash windows without rescoring, preserves the parent after REVERT, and keeps Final, PMB, PnL and every external authority absent. Focused 54/54 and adjacent 33/33 passed.",
+        "reviewer": "Supervisor · Market RSI",
+        "evidence_path": "PREDICTION_FIRST_MINIMAL_LOOP_INTEGRATION_2026-09-29.md",
+        "evidence_sha256": "869c81fe4ad5cbf4973d92676ce3c75123bff4af5a06e2b5bfb7524990b11c35",
+        "receipt_body_sha256": "bfcc249db331b290881f24e8a8d4dd5ead711b4453b65b6090fef3acee385a4b"
+      }
+    },
+    {
+      "id": "independent_minimal_loop_review",
+      "owner": "independent_prediction_loop_reviewer",
+      "action": "Fresh read-only attack review of the exact integrated hashes, focusing on future/outcome leakage, row/mask substitution, duplicate Dev use, KEEP/REVERT corruption, memory overshare and PMB re-entry.",
+      "depends_on": ["integrate_two_round_synthetic_loop"],
+      "write_paths": [],
+      "expected_artifact": "Exact-hash PASS or REPLAN with one canonical adversarial probe and explicit scientific/authority limits.",
+      "verification": "Supervisor reproduces every source/test/evidence hash and the full canonical probe before updating the bottleneck state.",
+      "pass_condition": "No P0/P1 in the synthetic scope and no false claim of real isolation, data admission, prediction improvement or promotion.",
+      "failure_action": "Keep the exact failed snapshot and version one narrow repair; do not proceed to real data or release.",
+      "time_bound_minutes": 35,
+      "result": {
+        "verdict": "pass",
+        "observed": "Fresh non-author review reproduced every exact identity and returned 0 P0 / 0 P1 after attacking outcome substitution, journal/score mismatch, caller memory, ledger truncation, artifact corruption and compact/full-score contradiction before and after lifecycle completion.",
+        "reviewer": "independent_prediction_loop_reviewer",
+        "evidence_path": "AGENT_LOG_PREDICTION_FIRST_MINIMAL_LOOP_REVIEW_2026-09-29.md",
+        "evidence_sha256": "158861c84645e16ebaaa9322206186a61d9628b9a1cd6afadb069ed379a00302"
+      }
+    }
+  ],
+  "resolution": {
+    "verdict": "pass",
+    "resolved_utc": "2026-09-29",
+    "result": "The missing synthetic prediction-first junction is closed on one exact independently reviewed v4 snapshot. It proves deterministic label-free probability submission, trusted proper scoring, one-shot Dev KEEP/REVERT, restart-safe lineage and aggregate-only memory with PMB absent.",
+    "source_test_aggregate_sha256": "26059d5ce860e12b3f8c3e66466c78895a9431831d1ad08c1b978c0402707839",
+    "review_verdict": "PASS_0_P0_0_P1",
+    "external_authority": "none; real data, genuine isolation, provider, protected splits, promotion, PnL, release and publication remain separate gates"
+  }
+}

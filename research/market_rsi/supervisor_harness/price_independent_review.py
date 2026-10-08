@@ -296,8 +296,10 @@ class IndependentPriceReviewer:
             "reviewer_id": packet["action_context"]["identity_configuration"]["reviewer_id"],
             "proposer_id": "controller-" + t.c._digest(decision)[:20]}
         account = {"candidate_source": source.read_text(), "candidate_test_source": test.read_text(),
+            "parent_capacity_source": (self.runtime.repo / receipt['parent_entrypoints'][axis]).read_text(),
             "authored_by_call_id": author["call_id"], "original_controller_response": decision,
             "before_identity": before, "after_identity": after, "entrypoints": entries, "source_commit": material["source_commit"],
+            "frozen_replay_cases": packet['source_context'].get('capacity_replay_cases'),
             "author_receipt": material["author_receipt"], "claim_boundary": "Static source/smoke review only; no matched benefit or activation"}
         return expected, account, checks
 
@@ -411,12 +413,27 @@ class IndependentPriceReviewer:
             raise ValueError("unknown independent review stage")
         expected, account, checks = getattr(self, "_" + stage)(material)
         capacity_result = stage == "result" and material.get("kind") == "capacity_result"
+        capacity_probe = stage == 'source' and material.get('kind') == 'capacity' and account.get('frozen_replay_cases') is not None
         packet = {"schema": "market_rsi_independent_price_review_input_v1", "stage": stage,
             "question": "Independently PASS or REJECT the supplied material. Judge consistency, leakage, boundary and evidence; do not author source or choose the next candidate.",
             "trusted_checks": checks, "material": account,
             "limitations": "Repeated historical Train Discovery; no untouched OOS, executable fills/profit or researcher superiority. Research credit is evidence quality, never added to MSE. Failed execution is not scientific refutation."}
         if capacity_result:
             packet["question"] = "Independently judge the predeclared named capacity benefit on actual matched outputs. PASS is not acceptance: benefit and compatibility must both be demonstrated. Reject unsupported claims; a valid no-benefit result is useful negative evidence, not a prediction failure. No requirement of MSE gain. Replay fixtures do not establish researcher superiority or full-driver recovery."
+        if capacity_probe:
+            packet['question'] += (' Select benefit_probe only if the ORIGINAL expected_effect explicitly concerns factual '
+                'evidence-return correctness and this metric is applicable. Otherwise set benefit_probe=null, explain the '
+                'limitation in finding, and retain review of the original named effect on actual matched outputs. Recovery, '
+                'efficiency, selection and workflow improvements are NOT required to improve evidence accuracy. Do not '
+                'recast their proposal as an accuracy claim. For an applicable probe, freeze it BEFORE execution: for each original case name, '
+                'select context_path to factual truth already in that case, before_output_path and after_output_path '
+                'to the SAME semantic answer in actual parent and candidate outputs, respecting their possibly different representations. '
+                'Paths are lists of dictionary keys or decimal list indices. Justify applicability to the original expected_effect; '
+                'reject unrelated, author-self-attested, trivial constant or scenario-label-only truth. Do not invent truth, modify the '
+                'proposal or choose the next scientific method. A direct same-information lookup reference is a retrieval ceiling, not '
+                'proof of researcher superiority. Merely renaming a field or repackaging already accessible correct parent evidence '
+                'is not improved accuracy. Null is not proof of benefit; final independent named-effect and compatibility '
+                'review remain required. Do not invent a quantitative measure for an unsupported effect.')
         if len((json.dumps(packet, sort_keys=True, indent=2, allow_nan=False) + "\n").encode()) > t.input_limit(t.c._read(self.grant), "account_roles"):
             raise ValueError("review payload exceeds authorized input byte budget before account call")
         role_id = "price-" + stage + "-review-" + t.c._digest(packet)[:20]
@@ -428,11 +445,19 @@ class IndependentPriceReviewer:
         schema = json.loads(json.dumps(SCHEMA))
         schema["properties"]["input_sha256"] = {"type": "string", "const": t.c._digest(packet)}
         schema["properties"]["stage"] = {"type": "string", "const": stage}
+        if capacity_probe:
+            from supervisor_harness import price_capacity_trial as trial
+            schema['properties']['benefit_probe'] = {'anyOf': [{'type': 'null'},
+                trial.probe_schema(account['original_controller_response']['capacity']['expected_effect'])]}
+            schema['required'].append('benefit_probe')
         if capacity_result:
             schema["properties"].update(benefit_observed={"type": "boolean"},
                 compatibility_checks=t.c._object({name: {"type": "boolean"} for name in checks}))
             schema["required"] += ["benefit_observed", "compatibility_checks"]
-        call = self.role_call(stage + "_review", packet, schema, operation_id=role_id, timeout_seconds=120)
+        # Only a new explicit per-role grant can enlarge this wait; legacy stays120.
+        limits = t.c._read(self.grant)["account_roles"].get("call_seconds", {})
+        timeout = limits.get(stage + "_review", 120)
+        call = self.role_call(stage + "_review", packet, schema, operation_id=role_id, timeout_seconds=timeout)
         response = call["response"]
         t.c._validate(response, schema)
         if (type(response["research_credit"]) is not int or not 0 <= response["research_credit"] <= 2
@@ -443,6 +468,9 @@ class IndependentPriceReviewer:
             raise ValueError("independent verdict needs actual role identity and bounded verified metadata")
         if response["input_sha256"] != t.c._digest(packet) or response["stage"] != stage:
             raise ValueError("independent original response does not bind reviewed material")
+        if capacity_probe and response['verdict'] == 'PASS':
+            trial.validate_probe(response['benefit_probe'], account['original_controller_response']['capacity']['expected_effect'],
+                                 account['frozen_replay_cases'])
         if capacity_result and call["call_id"] in {account["authored_by_call_id"],
                 t.c._read(t.c._read(material["request"])["source_review"])["original_account_call"]["call_id"]}:
             raise ValueError("capacity benefit needs a distinct original reviewer call")
@@ -463,12 +491,16 @@ class IndependentPriceReviewer:
                 "process_binding", "completion_binding", "usage", "serving_snapshot")},
             "independence": "Separate original account reviewer; not candidate author self-signature"}
         if response["verdict"] == "PASS" and stage == "source":
+            if capacity_probe: receipt['benefit_probe'] = response['benefit_probe']
             receipt["generated_test_receipt"] = self._tests(material, directory)
         if capacity_result:
             from supervisor_harness import price_capacity_replay as replay
             request = t.c._read(material["request"]); binding = request["binding"]
             verified = {name: value is True and response["compatibility_checks"][name] is True for name, value in checks.items()}
-            observed = response["benefit_observed"] and material["execution_outcome"] == "succeeded"
+            measured = account['measurement']['benefit_measurement']
+            observed = (response["benefit_observed"] and material["execution_outcome"] == "succeeded"
+                        and (request['benefit_probe'] is None or measured['candidate_minus_parent'] > 0))
+            receipt.update(benefit_observed=observed, reviewer_reported_benefit=response['benefit_observed'])
             accept = response["verdict"] == "PASS" and observed and all(verified.values())
             compatibility = replay.save(directory / "compatibility.json", {"binding": binding, "checks": verified,
                 "measurement": material["measurement"], "review_response": call["response_binding"]})
@@ -477,6 +509,7 @@ class IndependentPriceReviewer:
                 "effect": request["decision"]["capacity"]["expected_effect"], "benefit_observed": observed,
                 "matched_outputs_sha256": compatibility["sha256"], "measurement": material["measurement"],
                 "independent_response": call["response_binding"]})
+            receipt['named_benefit_measurement'] = measured
             native_review = {"reviewer_id": t.c._read(request["source_review"])["reviewer_id"],
                 "proposal_sha256": binding["proposal_sha256"], "decision": "accept" if accept else "reject",
                 "reason": response["finding"], "tested_pair_sha256": binding["tested_pair_sha256"],

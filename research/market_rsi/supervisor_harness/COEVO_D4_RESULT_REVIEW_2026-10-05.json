@@ -1,0 +1,517 @@
+{
+  "schema_version": 1,
+  "review_id": "market-rsi-repair-d4-independent-result-20261005-v1",
+  "reviewed_at_utc": "2026-10-05T18:21:05.365735+00:00",
+  "verdict": "PASS",
+  "passed": true,
+  "candidate_id": "InGameTemperatureOddConfidenceJointOffset-v1",
+  "attempt_id": "repair-d4-odd-confidence-joint-01",
+  "question_id": "ingame-temperature-conditional-odd-confidence-v1-q1",
+  "question_digest": "2f5de6b65e372e83e1caaf4902d37596783f97097e7603e45296344ccf59877e",
+  "predeclared_rule_sha256": "85bc6e9d9cbcbd891858cda85cf9467b3f46b5f549d9789fa64539fcb66f2410",
+  "scorecard_sha256": "be8eac8616894b011c128a91da356ec392efc0d64c04e884be6f862db2da31ff",
+  "predictions_sha256": "0944f5aaeedbe8f3a20d554c480c8920257eaa6544f97096f11508c953568d1e",
+  "supplement_sha256": "24a255d39ad703023a31aa4ae4cb1ab84126adf64ad5ed28d28e254d70d8e72d",
+  "source_commit": "967107b8dca1c8cce21af2b39209078bc660306b",
+  "source_hashes": {
+    "research/market_rsi/data_scientist_harness/__init__.py": "9b90cd16949d5ce70cc5cf6971cabd7534ebe389d873642fee270dba73cb99a4",
+    "research/market_rsi/data_scientist_harness/co_evolution_loop.py": "24842f81375dabbdf4f821fd84115bf13193957236ed4e5de8345fe4bf83b038",
+    "research/market_rsi/experiments/__init__.py": "1eca25dfe82ba87f68a1f995968a29399c8ac0b7598d8c2938d8abe592a50a9c",
+    "research/market_rsi/experiments/nfl_ingame_candidate_evidence_adapter.py": "f62a5459a8e3c78bcdd7810e25291d1ef164ccc2d41f876fa37fb166f9dcc8bc",
+    "research/market_rsi/experiments/nfl_ingame_causal_possession_pressure_offset.py": "4ea2935fb896397b4d21125bb040a0f82ff82be01abd2779717378d3465a0ab3",
+    "research/market_rsi/experiments/nfl_ingame_curvature_unit_matched_brier_joint_offset.py": "021e347fce1692189dbe666c7367a833b83dc61c31f957a81fe95f0e7f08256b",
+    "research/market_rsi/experiments/nfl_ingame_identity_anchored_market_calibration.py": "dc4e372440dc3f29091770394a8989c3602e83c37f0909367a5ce321bc614b05",
+    "research/market_rsi/experiments/nfl_ingame_identity_blended_isotonic.py": "489d8268bd5243d94df9396f6dd5d616acfeab2d23f29d0e9e5903b7f156cce5",
+    "research/market_rsi/experiments/nfl_ingame_market_freshness_interaction_offset.py": "d7e16a2d745f6440fe84b97aba54950b2c78a23428172b6002b187b385f057cd",
+    "research/market_rsi/experiments/nfl_ingame_market_offset_score_time_train_diagnostic.py": "6194d25712df0e251fe0c56c671557967f8c7f5f7e62c28ca9981c09a3adf120",
+    "research/market_rsi/experiments/nfl_ingame_market_residual_hgb.py": "a17220dea91373b73c3f2e3a5d6e36f2b3e1b2866c8714cdc292dd921aefad79",
+    "research/market_rsi/experiments/nfl_ingame_market_state_confidence_link_hgb.py": "376b34c656e5a70666e8863b507f518675858011c3da6530cf592a0e192957fe",
+    "research/market_rsi/experiments/nfl_ingame_market_state_residual_hgb.py": "ef77c1134207b47eb2040e83e0169f2d7bd0e8dfca7a529c003bd0ed708a54c4",
+    "research/market_rsi/experiments/nfl_ingame_market_state_ridge_residual_link.py": "ef699e85feb678578e2673da3e515298ccafd57ddc5672fd0a2d7b00dd6c0801",
+    "research/market_rsi/experiments/nfl_ingame_market_temperature_offset.py": "f5a80888069140a78ab637cf0e03a7bf3df3da2458151323a43e696bf88b8085",
+    "research/market_rsi/experiments/nfl_ingame_prior_play_success_market_uncertainty_audit.py": "e51f85ed368c53545369dfdd7505dcee3331917cba115ebacb5194290808e745",
+    "research/market_rsi/experiments/nfl_ingame_prior_play_success_residual_audit.py": "a612371ae77a78441c2d9416d6edc035a916879057fed9ef731de46476a07bcb",
+    "research/market_rsi/experiments/nfl_ingame_prior_play_success_uncertainty_stratified_offset.py": "b827eecdd669451d92a24a1023e2407a10ddebd26585f4515e395c0f486ff589",
+    "research/market_rsi/experiments/nfl_ingame_prior_play_volume_freshness_joint_offset.py": "7a3175c1ec75465e2b71816260d7ef2d8fd75bfd6a854da6276d619271c046ce",
+    "research/market_rsi/experiments/nfl_ingame_prior_play_volume_offset.py": "45d1e7f2ef2de62102f115816db9d90e0249d169722700df3d5cc6000704c1ca",
+    "research/market_rsi/experiments/nfl_ingame_prior_play_volume_unit_scale_joint_offset.py": "ff251b120bd80dbcaf7846f830cb0c065d3abb15bb9bc769b9826d09e63c32da",
+    "research/market_rsi/experiments/nfl_ingame_static_state_nested_shrinkage_train_diagnostic.py": "a3026d5a12fa0028087f470e44b71f4e6eb9de1432e351e415e72a039b83f65b",
+    "research/market_rsi/experiments/nfl_ingame_temperature_odd_confidence_joint_offset.py": "ecec43a881ab2d145165ee7d0f641559e46d43bd05876a381e1d300f44173068",
+    "research/market_rsi/experiments/nfl_ingame_temperature_possession_pressure_joint_offset.py": "c57ed002b507e219c788c256b33e0f853fc418ea41713fbfbc845bcb7782d838",
+    "research/market_rsi/experiments/nfl_ingame_win_probability_train_diagnostic.py": "e61668c7e29cf4dda95f6cc315b248dbe6744a9dcc0ae0cd6077d880ca6265b7",
+    "research/market_rsi/experiments/nfl_settlement_probability_train_diagnostic.py": "1f1bdccd69d799be1af99ece4ee6198ffbd02f3a4550e651936fb3edfa83fb8b",
+    "research/market_rsi/experiments/test_nfl_ingame_curvature_unit_matched_brier_joint_offset.py": "5f656f5f8b9a1a5662957df86b05e7d608615daf9a232a89c5bc859b0f1d6a6a",
+    "research/market_rsi/experiments/test_nfl_ingame_market_state_confidence_link_hgb.py": "c28d1fc0ab88c9a63c70212670fa0d26e0db3df95685e93f7ad4614f8add06f8",
+    "research/market_rsi/experiments/test_nfl_ingame_market_state_ridge_residual_link.py": "06b3bc3d907f0d2eee6ee0419f44bfa39a97884c43ab3ac899168cf7fe20413b",
+    "research/market_rsi/experiments/test_nfl_ingame_market_temperature_offset.py": "04c99f64d9ecbb1333bb6f0cca9a4548a867462d2732cb8783ca9d440308bc36",
+    "research/market_rsi/experiments/test_nfl_ingame_prior_play_volume_freshness_joint_offset.py": "d18078d83404cab66a067feb0d7276654ced6242100e64a6b53c2eaaecc752a3",
+    "research/market_rsi/experiments/test_nfl_ingame_prior_play_volume_offset.py": "774e69025e16b345b0c1cc5a6a70c8c95242956f312cdcd8bc84e0fb690a6cd8",
+    "research/market_rsi/experiments/test_nfl_ingame_prior_play_volume_unit_scale_joint_offset.py": "b91a62170e8586b71d4c280e4f9b362c19bc19b895374118d24bd43798b0beef",
+    "research/market_rsi/experiments/test_nfl_ingame_temperature_odd_confidence_joint_offset.py": "24943de3b6235555ed171113b5d7f27f3ec77def52f87a8acf4167fe69d92759",
+    "research/market_rsi/market_rsi.py": "d41946e8798f8799c36910f9d88c327f4899b0c13b9a8926dbde539703993a5f",
+    "research/market_rsi/minimal_prediction_loop/__init__.py": "74168733688dbe7299e6bf85f86d18de477ea985175b13c8bfd42bc8d380e620",
+    "research/market_rsi/minimal_prediction_loop/lineage.py": "7ef2a6742f96cf11e6a43f693d36761082db1e4ab7f8fc34b8825f03ddde3cff",
+    "research/market_rsi/minimal_prediction_loop/prediction_protocol.py": "eb6bdc1367f62c2910225218389d7381cebb2477e92a523c83f0693ae21a5dd3",
+    "research/market_rsi/minimal_prediction_loop/probability_contract.py": "7ba4a32d3c3a2ab80ac17ca6c18ea29fe864b958de8a81ac2be59dba121e9d74",
+    "research/market_rsi/minimal_prediction_loop/proper_scoring.py": "64165cbceb4bcba6d03b6b42402ea7a47790c9a57f9280b15bfe2fe57becc06b",
+    "research/market_rsi/supervisor_harness/COEVO_ACTUAL_CONTROLLER_DECISION_REVIEW_2026-10-05-v3.json": "2856d6bd823c42d375d3fa5f9a624801404f6667cbdfc0c1d985200670a98e16",
+    "research/market_rsi/supervisor_harness/COEVO_BATCH3_CONTRACTS_2026-10-03.json": "c4fc188d525e87fdf1d84efc127ab7bf7a122eedf722db139f4f8fcd9f700b7f",
+    "research/market_rsi/supervisor_harness/COEVO_BATCH3_GENERATION2_CONTRACT_2026-10-03.json": "a8d6d35671ef3daf537067159b1b75ee79bada910ece9b0d114b973f74ae5a0c",
+    "research/market_rsi/supervisor_harness/COEVO_BATCH4_CONTRACT_2026-10-03.json": "c40d9c30dadab9c46d307a7f23ff697e911d5673f2b39e2ab1c24297b05c9394",
+    "research/market_rsi/supervisor_harness/COEVO_BATCH5_CONTRACT_2026-10-03.json": "2da17c7c181ad3ffe050ac9c926bf3c0e27128f7d3a7e5aba2f1a9aca4b2f852",
+    "research/market_rsi/supervisor_harness/COEVO_BATCH6_CONTRACT_2026-10-03.json": "dc6b34a1ef0dadb744345bc34d7c200088c637c01e4fe73b80ec05ef1119d753",
+    "research/market_rsi/supervisor_harness/COEVO_BATCH7_CONTRACT_2026-10-03.json": "f0d925977ef45677a557e2be18d6ec30ac56fe6fc8e9980df6a518a48b4b132b",
+    "research/market_rsi/supervisor_harness/COEVO_CANDIDATE_CONTRACTS_2026-10-03.json": "e3b7bac05aeef4376674e8bbf01832e75f7ea6b6c8a6613d541fae01896ffa39",
+    "research/market_rsi/supervisor_harness/COEVO_CANDIDATE_REVIEW_B1_B2_2026-10-03.json": "a7b8083fd7f240fe6ac13992cd847e537d976742bf6003ac5ddc951ede1797ff",
+    "research/market_rsi/supervisor_harness/COEVO_CANDIDATE_REVIEW_B3_2026-10-03.json": "8e6cf385e58b1bebb6eadfa4e38e95783f3cc7d05d025c7ca8c960f95b2a6696",
+    "research/market_rsi/supervisor_harness/COEVO_CANDIDATE_REVIEW_C2_2026-10-03.json": "8c2342914aefa4eb757abef6d3a9c8b6d82999fe177fb982ff85a1a568e264b0",
+    "research/market_rsi/supervisor_harness/COEVO_CANDIDATE_REVIEW_C3_2026-10-03.json": "a1c0f65b2aeb41de439ce433c9dfc4a2e670d9b0eca6b04da3e26462f3b06867",
+    "research/market_rsi/supervisor_harness/COEVO_CANDIDATE_REVIEW_C4_2026-10-03.json": "4a6646108dfc8255b246d143aea8174a40648ea133d9af939201ac85d4e972b0",
+    "research/market_rsi/supervisor_harness/COEVO_CANDIDATE_REVIEW_C5_2026-10-03.json": "1bde2345c74dbeac1f91e2bfbf91bec22d26d405135e9cd517664e25f934d64b",
+    "research/market_rsi/supervisor_harness/COEVO_CANDIDATE_REVIEW_C6_2026-10-03.json": "a6da0f08bc9592cb75050e990721f672a736d656b0d8ebd250c53c6660baa8ea",
+    "research/market_rsi/supervisor_harness/COEVO_CANDIDATE_REVIEW_C7_2026-10-03.json": "843a84ea3d16e80803504bce3e99fc60f366d5aebcbbc2c42b138d1f7c617258",
+    "research/market_rsi/supervisor_harness/COEVO_D4_CONTRACT_2026-10-05.json": "91f85dedb2fbc9a47d8b4ebc492c66792f51977caf104c8cf21db8c69d8e18b1",
+    "research/market_rsi/supervisor_harness/COEVO_D4_MATH_PREFLIGHT_2026-10-05.json": "3483ae82bf8d417612c317cb88f2bb1deb9768f5e5166c9733442464d69d2012",
+    "research/market_rsi/supervisor_harness/COEVO_D4_SCOPE_REVIEW_2026-10-05.json": "608593af2a2401c3c7b2b685ad2af9a13346c9a115d6869cc36e8ce78da5228a",
+    "research/market_rsi/supervisor_harness/COEVO_D4_SOURCE_REVIEW_2026-10-05.json": "4a7d36b1bb0f3b399f7e77b0d7ef3da1642365ff0352efa8f31239eab70196d7",
+    "research/market_rsi/supervisor_harness/COEVO_H1_CONTRACT_2026-10-05-v3.json": "9317c9d2e888cc8b6ca4a65bb8fe361a2493472eca37bbbad25bd462dfb39e3b",
+    "research/market_rsi/supervisor_harness/COEVO_H1_LIVE_PARITY_REVIEW_2026-10-05.json": "c619bca98e52d1947b542647644500838dfb1dcdbb3eea803dc5a0b0c0ee9db0",
+    "research/market_rsi/supervisor_harness/COEVO_H1_SOURCE_REVIEW_V3_2026-10-05.json": "13913664f1f24590adcbd265f5d39121e95f2e71615651795242b87d372dd4cb",
+    "research/market_rsi/supervisor_harness/COEVO_HGB_GENERATION2_CONTRACT_2026-10-03.json": "1676d24e3815f50cc65692320eda833007f4e6df6ea95238fcd820153b183414",
+    "research/market_rsi/supervisor_harness/COEVO_NEXT_BATCH_CONTRACTS_2026-10-03.json": "b6942eb906344b9acc97950f1c72c14024e981792744ed2bc83ca7944e6406b8",
+    "research/market_rsi/supervisor_harness/COEVO_PILOT_FIXED_IDENTITIES_2026-10-03.json": "348baa2d4b77c1588fee4863eef136fa12cb733a3305e82aa1e247c9021eba42",
+    "research/market_rsi/supervisor_harness/continuous_discovery_batch.py": "1b3065ea2990e886ff05869d5c6afd39bc0e80ebb053436f51fd9d9cee0d148c",
+    "research/market_rsi/supervisor_harness/opened_train_discovery_worker.py": "512176a1cb84ad81383e7e890abf9b2058ee66e7a8a643e3549fd5ec4c0db360"
+  },
+  "source_bindings_verified": 68,
+  "request_sha256": "3ed6d4eb71858513914c31a33f71909cc5af6dfb7812954f9b3b044ac9ef2ed5",
+  "worker_receipt_sha256": "a341bc134a0ef3aa8eefb1fbe3abd64e776c23421af4029cf44ca632a0ff4c15",
+  "process_sha256": "d7a66257a493913148724e5c1f9b781b063ac0533544c2429683b05a89f76232",
+  "memory_sha256": "66155457843b3908b16d9ef7920825c42a57fd1a253fcbe4fd409d8d950337c9",
+  "runtime_pair_sha256": "ba8bd3c001cdd082b0f9bcb94240831b6e312e769bd6b3a112749fc6c4c915e7",
+  "pair_manifest_sha256": "c99615cd7056007793ddd9c03a6283db4cd7ae995df92b5a2eee82d18288f013",
+  "source_review_sha256": "4a7d36b1bb0f3b399f7e77b0d7ef3da1642365ff0352efa8f31239eab70196d7",
+  "actual_controller_decision_review_sha256": "2856d6bd823c42d375d3fa5f9a624801404f6667cbdfc0c1d985200670a98e16",
+  "artifact_hashes": {
+    "exclusions.json": "e6b19b230318dc9daf89e6495504c93996f49b3245415a14a45144fece81fdfb",
+    "fit_progress.json": "96de0be2e6f41eb99a0c6d63c3986d6890c6686615085a402730b5434e417b39",
+    "input_receipts.json": "1ce201f73be4b840458638afb29b5ff1b9366aea05cd1c25d616fb276f385abd",
+    "manifest.json": "1fd127020b73869a74eaf080911d862891b86350a19c7ec96b128ac455cef829",
+    "pre_score_lock.json": "90604e24f7757ad7b220bae946ea047bcd7cf65c8fd03bebf626db9331b3df3a",
+    "predictions.csv": "0944f5aaeedbe8f3a20d554c480c8920257eaa6544f97096f11508c953568d1e",
+    "predictor_states.json": "d510fadb5c9b760f4debe7578e9aa5933b4a9f3e2a358fcb57ef8e683bf51b48",
+    "result_parent_supplement.json": "24a255d39ad703023a31aa4ae4cb1ab84126adf64ad5ed28d28e254d70d8e72d",
+    "scorecard.json": "be8eac8616894b011c128a91da356ec392efc0d64c04e884be6f862db2da31ff"
+  },
+  "fits_completed": 4,
+  "fit_calls_entered": 4,
+  "fit_calls_completed": 4,
+  "boundary": {
+    "opened_Train_only": true,
+    "route_dev_opened": false,
+    "sealed_final_opened": false,
+    "external_fetch": false,
+    "paid_provider": false,
+    "promotion_authorized": false,
+    "release_authorized": false,
+    "scorer_KEEP_fold_masks_unchanged": true,
+    "historical_reused_discovery_not_untouched_OOS": true,
+    "network_isolation_enforced": false
+  },
+  "fits": {
+    "actual_entered": 4,
+    "actual_completed": 4,
+    "control_refits": 0,
+    "reviewer_refits": 0,
+    "same_id_retries": 0,
+    "solver_calls_per_fold": 1,
+    "optimization_successes": 4
+  },
+  "verification": {
+    "method": "Read-only recorded-parameter reconstruction; candidate fit_predict/solve_joint, D1 generic solver,C7 fit/solver,parent fits,HGB fitter,np.linalg.solve explicitly disabled. No refit or bisection rerun.",
+    "all68_current_and_run_Git_bindings": true,
+    "request_launch_process_receipt_stdout_stderr_exe_memory_pair_exact": true,
+    "seven_manifest_output_hashes_exact": true,
+    "population": {
+      "source": 195,
+      "source_dates": 42,
+      "materialized": 193,
+      "exclusions": [
+        [
+          "2025_04_GB_DAL",
+          "unresolved_outcome"
+        ],
+        [
+          "2025_05_TEN_ARI",
+          "market_trade_too_stale"
+        ]
+      ],
+      "checks": 87,
+      "check_dates": 20,
+      "check_weeks": 7
+    },
+    "all193_raw_logits_and_causal_market_receipts_exact": true,
+    "auxiliary_market_age_range_seconds": [
+      1,
+      147
+    ],
+    "no_age_PBP_extra_data_or_scaling_used": true,
+    "feature_receipt_hash_and_four_fit_design_hashes_exact": true,
+    "four_strict_prior_fit_and_label_availability_exact": true,
+    "fit_counts": [
+      106,
+      132,
+      148,
+      176
+    ],
+    "check_counts": [
+      26,
+      16,
+      28,
+      17
+    ],
+    "four_state_optimizer_canonical_hashes_and_C7_warm_bindings_exact": true,
+    "independent_scalar_F_g_H_KKT_fit_only_brackets_and_coordinate_trace": true,
+    "maximum_scalar_calculus_error": 1.4210854715202004e-14,
+    "all87_candidate_scalar_and_original_C7_CSV_parent_probabilities_verified": true,
+    "maximum_scalar_probability_error": 1.1102230246251565e-16,
+    "frozen_keys_labels_cutoffs_availability_and_raw_ordinary_v0_controls_exact": true,
+    "independently_recomputed_equal_event_Brier_logloss_linear_calibration_and_10bins": true,
+    "four_fold_five_arm_metrics_verified": true,
+    "paired_dates_and_independent_complete_day_week_intervals_verified": 16,
+    "bootstrap": {
+      "replicates": 10000,
+      "seed": 20260929,
+      "estimand": "Resample complete schedule dates or observed weeks and pool event losses each draw; not equal-date scoring."
+    },
+    "raw_and_parent_energy_alignment_identities_all_aggregate_folds_20dates": true,
+    "frozen_scientific_and_operational_judge_exact": true,
+    "parent_annotation_false_without_overriding_KEEP": true,
+    "held_K_M_H_Rpolicy_verified": true,
+    "seven_old_maxima_still_closed": true,
+    "C2_consumed_excluded_from_imported_archives": true,
+    "one_request_one_output_one_journal_claim_and_terminal": true,
+    "pure_six_event_journal_replay_exact": true,
+    "current_child_absent": true,
+    "pid": 87742,
+    "pid_absence_checked_utc": "2026-10-05T18:21:05.365735+00:00",
+    "original_scorecard_unchanged": true,
+    "all193_fixed_rowwise_tanh_and_own_feature_digest_verified": true,
+    "gamma_alpha16_penalized_tanh_coefficient_no_intercept": true,
+    "fit_absolute_z_sum_and_gamma_G_exact": true,
+    "odd_complement_symmetry_not_monotonicity": "Frozen mathematical property and pre-run synthetic tests; no artificial monotonicity constraint or claim.",
+    "activation_memory_actual_D3_feedback_and_original_account_decision_exact": true
+  },
+  "numerical_folds": [
+    {
+      "F": 44.88043378370089,
+      "KKT": 2.0001872380603913e-9,
+      "beta": 0.0361726666163679,
+      "coordinate_steps": 827,
+      "fold": 1,
+      "gamma": 0.02828362812843667,
+      "hessian_min_eigenvalue": 16.668655836476315,
+      "sweeps": 11
+    },
+    {
+      "F": 54.7006950212299,
+      "KKT": 6.557650200633702e-9,
+      "beta": 0.04679115179576748,
+      "coordinate_steps": 885,
+      "fold": 2,
+      "gamma": 0.0057818556729272025,
+      "hessian_min_eigenvalue": 16.82891516426233,
+      "sweeps": 11
+    },
+    {
+      "F": 62.79040338131372,
+      "KKT": 2.935279908022892e-9,
+      "beta": 0.035576655035602145,
+      "coordinate_steps": 1053,
+      "fold": 3,
+      "gamma": -0.01113171353563747,
+      "hessian_min_eigenvalue": 16.924420534406494,
+      "sweeps": 13
+    },
+    {
+      "F": 75.64364569876534,
+      "KKT": 4.1790741978076085e-9,
+      "beta": 0.04139932708394199,
+      "coordinate_steps": 1129,
+      "fold": 4,
+      "gamma": 0.011490305495051933,
+      "hessian_min_eigenvalue": 17.06613204553066,
+      "sweeps": 14
+    }
+  ],
+  "aggregate": {
+    "frozen_actual_research_parent": {
+      "brier": 0.14195410408172784,
+      "calibration_intercept": -0.0024641133052663022,
+      "calibration_slope": 1.018681140256926,
+      "log_loss": 0.4288860887954059,
+      "rows": 87
+    },
+    "frozen_v0_market_plus_state_parent": {
+      "brier": 0.16068099016465245,
+      "calibration_intercept": 0.04813167873790908,
+      "calibration_slope": 0.9186856458868063,
+      "log_loss": 0.4711973192666776,
+      "rows": 87
+    },
+    "frozen_v0_ordinary_market_only": {
+      "brier": 0.14548231253271718,
+      "calibration_intercept": -0.023504802267641844,
+      "calibration_slope": 1.0568122659695651,
+      "log_loss": 0.43992197245621956,
+      "rows": 87
+    },
+    "raw_market": {
+      "brier": 0.14195252900323282,
+      "calibration_intercept": -0.011806646530491793,
+      "calibration_slope": 1.0370387494646494,
+      "log_loss": 0.4296707847132428,
+      "rows": 87
+    },
+    "temperature_odd_confidence_joint_offset": {
+      "brier": 0.14206024560389235,
+      "calibration_intercept": -0.0018355597499304377,
+      "calibration_slope": 1.0173185193453111,
+      "log_loss": 0.42909362166006026,
+      "rows": 87
+    }
+  },
+  "paired_fold_deltas": [
+    {
+      "candidate_minus_parent": {
+        "brier": 0.00022830233967154057,
+        "log_loss": 0.00047176576855734176
+      },
+      "candidate_minus_raw": {
+        "brier": 0.0006301491003073839,
+        "log_loss": -0.00010849958671466098
+      },
+      "events": 26,
+      "fold": 1
+    },
+    {
+      "candidate_minus_parent": {
+        "brier": 0.00004352310001592974,
+        "log_loss": 0.0001264148038102597
+      },
+      "candidate_minus_raw": {
+        "brier": 0.0009543493887140819,
+        "log_loss": 0.00240418058787073
+      },
+      "events": 16,
+      "fold": 2
+    },
+    {
+      "candidate_minus_parent": {
+        "brier": 0.00009938757152844202,
+        "log_loss": 0.00018796894904260508
+      },
+      "candidate_minus_raw": {
+        "brier": -0.00033879471869313615,
+        "log_loss": -0.0007750488996903226
+      },
+      "events": 28,
+      "fold": 3
+    },
+    {
+      "candidate_minus_parent": {
+        "brier": -0.000010633529776510331,
+        "log_loss": -0.00008801871715974352
+      },
+      "candidate_minus_raw": {
+        "brier": -0.0007526982615665145,
+        "log_loss": -0.0037739833286412616
+      },
+      "events": 17,
+      "fold": 4
+    }
+  ],
+  "paired_intervals": {
+    "candidate_minus_frozen_actual_research_parent": {
+      "brier": {
+        "game_date": [
+          0.000025781256398358558,
+          0.0001798153341035092
+        ],
+        "game_week": [
+          0.0000392630311421426,
+          0.00017770985227711188
+        ]
+      },
+      "log_loss": {
+        "game_date": [
+          0.000004793243664734349,
+          0.00037965576182630577
+        ],
+        "game_week": [
+          0.00005539538678374922,
+          0.0003552548854590773
+        ]
+      }
+    },
+    "candidate_minus_frozen_v0_market_plus_state_parent": {
+      "brier": {
+        "game_date": [
+          -0.03659192686416471,
+          -0.0017356887558161785
+        ],
+        "game_week": [
+          -0.036068796810317,
+          -0.001346360942228763
+        ]
+      },
+      "log_loss": {
+        "game_date": [
+          -0.08784637515753564,
+          -0.0007639299244556111
+        ],
+        "game_week": [
+          -0.08444340914071632,
+          -0.0014656751818360487
+        ]
+      }
+    },
+    "candidate_minus_frozen_v0_ordinary_market_only": {
+      "brier": {
+        "game_date": [
+          -0.00602991723813244,
+          -0.0016034560790610677
+        ],
+        "game_week": [
+          -0.0056189323763554495,
+          -0.002059165476279056
+        ]
+      },
+      "log_loss": {
+        "game_date": [
+          -0.018255621573504556,
+          -0.006112007479927269
+        ],
+        "game_week": [
+          -0.01748145723854054,
+          -0.006524035424860979
+        ]
+      }
+    },
+    "candidate_minus_raw_market": {
+      "brier": {
+        "game_date": [
+          -0.0007084440900006847,
+          0.000828929718213235
+        ],
+        "game_week": [
+          -0.00041987989286842764,
+          0.0007081191400865727
+        ]
+      },
+      "log_loss": {
+        "game_date": [
+          -0.0033858419077669745,
+          0.0017199791197632002
+        ],
+        "game_week": [
+          -0.0023198877736278862,
+          0.0014670765875455952
+        ]
+      }
+    }
+  },
+  "actual_parent_correction": {
+    "arms": {
+      "candidate": {
+        "brier": 0.14206024560389235,
+        "log_loss": 0.42909362166006026
+      },
+      "ordinary": {
+        "brier": 0.14548231253271718,
+        "log_loss": 0.43992197245621956
+      },
+      "parent": {
+        "brier": 0.14195410408172784,
+        "log_loss": 0.4288860887954059
+      },
+      "raw_market": {
+        "brier": 0.14195252900323282,
+        "log_loss": 0.4296707847132428
+      }
+    },
+    "candidate_minus_market": {
+      "brier": 0.00010771660065952982,
+      "log_loss": -0.0005771630531825611
+    },
+    "candidate_minus_parent": {
+      "brier": 0.00010614152216451012,
+      "log_loss": 0.00020753286465435838
+    },
+    "events": 87,
+    "parent_brier_identity_residual": 1.1424780392566003e-17,
+    "parent_correction_energy": 8.97959528546715e-7,
+    "parent_correction_signed_alignment": 0.00010524356263595197
+  },
+  "parent_comparison_annotation": {
+    "both_proper_losses_below_parent": false,
+    "changes_KEEP": false,
+    "directional_increment": false,
+    "parent_brier_fold_wins": 1
+  },
+  "scientific_decision": "REFUTED",
+  "operational_decision": "REVERT",
+  "interpretation": "Valid negative for this exact fixed tanh-confidence extension of C7 with alpha16. Parent Brier+0.00010614152216451012/log+0.00020753286465435838,1/4 parent blocks; parent date/week proper-loss intervals positive descriptively. Raw Brier+0.00010771660065952982 but log−0.0005771630531825611,2/4 raw Brier blocks: mixed vsmarket, not market advantage. Parent BOTH-loss/3-block annotation false and unchanged primary REFUTED/REVERT. Not implementation failure, whole confidence-calibration-family refutation, new-information or research-capacity conclusion.",
+  "credit_recommendation": {
+    "evidence_value_under_user_rubric": 2,
+    "problem_id": "historical-ingame-settlement",
+    "question_id": "ingame-temperature-conditional-odd-confidence-v1-q1",
+    "question_digest_sha256": "2f5de6b65e372e83e1caaf4902d37596783f97097e7603e45296344ccf59877e",
+    "predeclared_rule_sha256": "85bc6e9d9cbcbd891858cda85cf9467b3f46b5f549d9789fa64539fcb66f2410",
+    "value": 2,
+    "outcome": "refute",
+    "route_action": "branch",
+    "frozen_recorder_admissible": {
+      "value": 2,
+      "outcome": "refute",
+      "route_action": "branch"
+    },
+    "reason": "Distinct predeclared odd-confidence/tanh question conditional on C7 tested with four valid real past-only fits and87 independently reconstructed keyed predictions. Both parent proper losses worsen (+0.000106141522 Brier,+0.000207532865 log),only1/4 parent Brier wins; descriptive parent day/week loss intervals positive. Fixed BOTH-loss/3-block annotation and rawKEEP fail despite raw log improvement. Refutes only this exact tanh/alpha16 recipe on adaptively reused Train, not all confidence-shape calibration or research capacity. Preserve code/results and distinct-question archive eligibility; stop exact repetition and send evidence to Controller for pool/next-science. Credit neither alters Brier/KEEP nor grants authority or resets consumedC2.",
+    "reason_characters": 750,
+    "mapping": "User rubric2 and schedulingv3 credit2/refute/branch agree for this independently valid distinct exact-negative experiment. Branch eligibility allows new questions; not forced pool retention, incumbent update, exact repeats or authority expansion."
+  },
+  "resources": {
+    "worker_wall_seconds": 4.595896165992599,
+    "sampled_peak_rss_kib": 138848,
+    "one_second_sampling_not_OS_hard_limit": true,
+    "runtime_versions": {
+      "numpy": "1.26.4",
+      "python": "3.12.3",
+      "scipy": "1.14.0",
+      "sklearn": "1.6.1"
+    },
+    "threads": 1,
+    "provider_calls": 0,
+    "provider_cost_usd": "0",
+    "reviewer_model_calls": 0,
+    "reviewer_optimizer_calls": 0,
+    "current_outer_selected_attempts": 5,
+    "current_outer_reserved_fits": 20,
+    "current_outer_actual_fits": 20,
+    "remaining_selection_slots": 1,
+    "remaining_unreserved_fits": 4,
+    "max_attempts": 6,
+    "max_fits": 24,
+    "selection_cutoff_utc": "2026-10-05T19:12:11Z",
+    "deadline_utc": "2026-10-05T19:27:11Z",
+    "no_same_ID_retry": true,
+    "overhead_note": "4.595896s is training-child wall, not total loop cost; considerable source/tests/review/account/coordination overhead remains. Requested gpt-6.1-sol serving unknown."
+  },
+  "retained_limits": [
+    "Actual accepted D3 feedback and original account decision selected this distinct D4, now implemented, really trained and independently scored. Return verified negative to actual Controller before next science; reviewer selects no next algorithm.",
+    "One198line C component admitted before fit; H1/helpers/worker/scorer/old results unchanged. Source admission137 scoped methods PASS; not broad legacy universally green.",
+    "Historical87checks/20dates/7weeks repeatedly used for Discovery. Positive parent-loss intervals are descriptive, not untouchedOOS confirmation or absence of all confidence-shape effects.",
+    "Calibration shape and parameter count change jointly; no new data/R-source rewrite/matched fixed-flow/prospective/realtime/PnL/promotion or OS/network isolation claim.",
+    "This result verification succeeded first command; supplementary pure memory/pair/six-journal/old-cap checks and independent PIDabsence succeeded without writes, optimizer or model calls."
+  ]
+}
