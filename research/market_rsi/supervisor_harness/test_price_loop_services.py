@@ -474,12 +474,39 @@ class PriceServiceTests(TestCase):
 
     def test_missing_active_continuation_provenance_rejected_before_original(self):
         pool = t.c._read(self.seed['pool'])
-        pool['archive'][0]['native_parent'] = None
+        pool['archive'][1]['native_parent'] = None
         self.seed['pool'] = self.h.f.write('missing-baseline-provenance', pool)
         calls = self.h.f.calls
         with self.assertRaises(loop.LoopHalted): self.run_service(rounds=1)
         self.assertEqual(self.h.f.calls, calls)
         self.assertEqual(t._file(self.root / 'ledger.json')['attempts'], [])
+
+    def test_reviewed_incumbent_without_imported_branch_provenance_is_eligible(self):
+        pool = t.c._read(self.seed['pool'])
+        pool['archive'][0]['native_parent'] = None
+        self.seed['pool'] = self.h.f.write('reviewed-direct-incumbent', pool)
+        packet = self.service().prepare_packet({'round_index': 1, 'previous_result': self.seed})
+        self.assertEqual(packet['pool']['active_pool'], pool['active_pool'])
+        self.assertIn(pool['incumbent']['candidate_sha256'], packet['provided_parents'])
+        self.assertEqual(self.h.f.calls, self.calls_before)
+        self.assertEqual(t._file(self.root / 'ledger.json')['attempts'], [])
+
+    def test_incumbent_without_completed_manifest_cannot_bypass_provenance(self):
+        pool = t.c._read(self.seed['pool'])
+        pool['archive'][0].update(native_parent=None, manifest=None)
+        self.seed['pool'] = self.h.f.write('unsupported-incumbent', pool)
+        with self.assertRaises((ValueError, TypeError)):
+            self.service().prepare_packet({'round_index': 1, 'previous_result': self.seed})
+        self.assertEqual(self.h.f.calls, self.calls_before)
+
+    def test_incumbent_with_failed_review_cannot_bypass_provenance(self):
+        pool = t.c._read(self.seed['pool'])
+        pool['archive'][0].update(native_parent=None,
+            review=self.h.f.write('failed-incumbent-review', {'passed': False}))
+        self.seed['pool'] = self.h.f.write('unreviewed-incumbent', pool)
+        with self.assertRaisesRegex(ValueError, 'independently reviewed'):
+            self.service().prepare_packet({'round_index': 1, 'previous_result': self.seed})
+        self.assertEqual(self.h.f.calls, self.calls_before)
 
     def test_result_research_credit_binds_actual_question(self):
         original = self.reviewer

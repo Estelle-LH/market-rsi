@@ -25,6 +25,12 @@ htmlcov/
 /research/market_rsi/experiments/price_candidates/**/author_receipt.json
 /research/market_rsi/research_capacities/**/author_receipt.json
 
+# Reviewed superseded local plans/status, retained in private history.
+/research/market_rsi/ADVISOR_EXPERIMENT_DESIGN_V1.md
+/research/market_rsi/ROUND1_EXECUTION_PLAN.md
+/research/market_rsi/LINODE_FEED_STATUS.md
+/research/market_rsi/SELF_EVOLVING_HARNESS_V1.md
+
 # Generated session material.
 /artifacts/
 /archived_artifacts/

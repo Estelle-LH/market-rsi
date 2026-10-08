@@ -482,7 +482,10 @@ class ProductionEntryTests(TestCase):
     def test_explicit_waits_reach_all_actual_native_services_and_cold_replay(self):
         self.actual_path(wait_seconds=300)
 
-    def actual_path(self, *, benefit=True, amplitude=.04, failed_worker=False, uncertain_author=False, wait_seconds=120):
+    def test_capacity_round2_certain_output_reuse_keeps_H_and_never_resamples(self):
+        self.actual_path(admission_failure=True)
+
+    def actual_path(self, *, benefit=True, amplitude=.04, failed_worker=False, uncertain_author=False, wait_seconds=120, admission_failure=False):
         from contextlib import ExitStack
         import json
         import subprocess
@@ -650,7 +653,49 @@ class ProductionEntryTests(TestCase):
                 with self.assertRaises(entry.s.loop.LoopHalted): entry.run(launch, seed)
                 self.assertEqual(len(calls), count)
                 return
-            result = entry.run(launch, seed)
+            if admission_failure:
+                original_validate = author.validate_source
+                def rejected(source, *, is_test=False):
+                    if is_test:
+                        raise ValueError('non-numeric NumPy call')
+                    return original_validate(source)
+                with patch.object(author, 'validate_source', side_effect=rejected), self.assertRaises(entry.s.loop.LoopHalted):
+                    entry.run(launch, seed)
+                self.assertEqual(len(calls), 8); self.assertEqual(workers, [])
+                old_ledger = entry.r.t._file(root / 'ledger.json')
+                self.assertEqual(len(old_ledger['attempts']), 1)
+                original_pair = entry.r.t._file(root / 'price-capacity-native/batch.json')['micro_evolution']['active_pair']
+                completed = entry.s.loop._read_pair(root / 'price-loop/round-0002-controller.done.json')['output']['decision']
+                digest = entry.r.t.c._digest(completed); ident = 'author-r0002-' + digest[:12]
+                directory = root / 'role_calls/author' / ident
+                failure = entry.r.pin(root / ident / 'failure.json')
+                completion = entry.r.pin(directory / 'completion.json')
+                failure_bytes = Path(failure['path']).read_bytes()
+                proof = self.f.h.f.write('synthetic-independent-recovery-review', {'passed': True,
+                    'entry_source_sha256': entry.r.w.sha(entry.__file__),
+                    'author_source_sha256': entry.r.w.sha(author.__file__), 'no_new_model_call': True,
+                    'original_failure_sha256': failure['sha256'], 'original_completion_sha256': completion['sha256'],
+                    'original_decision_sha256': digest})
+                recovery = self.f.h.f.write('completed-round2-author-recovery', {
+                    'schema': 'price_completed_author_admission_recovery_v1', 'round_index': 2,
+                    'original_decision_sha256': digest, 'original_author_id': ident,
+                    'fresh_local_id': ident + '-admission-v3', 'original_failure': failure,
+                    'original_input': entry.r.pin(directory / 'input.json'),
+                    'original_response': entry.r.pin(directory / 'response.json'),
+                    'original_completion': completion, 'review': proof})
+                prefix = self.f.h.f.write('completed-round2-prefix-recovery', {
+                    'schema': 'price_certain_completed_capacity_round2_prefix_recovery_v1',
+                    'authorization': authority, 'original_manifest': entry.r.pin(root / 'price-loop/manifest.json'),
+                    'original_failed_stage': entry.r.pin(root / 'price-loop/round-0002-implement.failed.json'),
+                    'original_author_recovery': recovery, 'review': proof})
+                resumed = entry.r.t.c._read(launch); resumed['recovery'] = prefix
+                launch = self.f.h.f.write('synthetic-capacity-recovery-launch', resumed)
+                result = entry.run(launch, seed)
+                self.assertEqual(len(calls), 10)  # Only two remaining reviews; no author/Controller resampling.
+                self.assertEqual(Path(failure['path']).read_bytes(), failure_bytes)
+                self.assertEqual(entry.r.t._file(root / 'price-capacity-native/batch.json')['micro_evolution']['active_pair'], original_pair)
+            else:
+                result = entry.run(launch, seed)
             self.assertTrue(result['complete']); self.assertEqual(len(calls), 10); self.assertEqual(len(workers), 1)
             self.assertEqual(len(waits), 10)
             self.assertEqual({role for role, _ in waits}, roles.ROLES | {'controller'})

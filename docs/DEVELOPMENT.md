@@ -78,6 +78,20 @@ quotes or PnL.
 
 ## Code, state and history
 
+### Private research and source-only publication
+
+The active Supervisor checkpoint branch stays local with its full research
+history. CandidateAuthor requires immutable `author_receipt.json` files in its
+local Git source bindings; the private branch keeps these versionable.
+The public `market-rsi-supervisor-clean-20261007` snapshot starts from published
+main and carries reviewed source changes, shared assets and documentation.
+Its ignore rules exclude new runtime receipts and logs. Publish that snapshot
+without pushing the private research ancestry. Complete Git bundles and record
+archives stay in the local MarketRSI archive for recovery.
+
+Apply tracking-only cleanup at an idle checkpoint: an active worker can bind
+its exact HEAD. Preserve original file bytes and literal paths throughout.
+
 ### Repository layout
 
 The layout adopts package/config/task/test separation from

@@ -73,6 +73,18 @@ class HookTests(TestCase):
             with self.assertRaisesRegex(ValueError, 'batch-local'): hooks.PriceCapacityLoop(self.service, foreign, self.hooks.author, self.hooks.reviewer)
         self.assertFalse(journal.called)
 
+    def test_exact_versioned_configuration_preserves_original_and_hash_binding(self):
+        original = deepcopy(self.hooks.binding)
+        changed = self.f.f.f.h.write('capacity-configuration-v2', self.hooks.config)
+        selected = hooks.PriceCapacityLoop(self.service, changed, self.hooks.author,
+            self.hooks.reviewer, _test_adapter=self.f.adapter)
+        self.assertEqual(selected.config, self.hooks.config)
+        self.assertEqual(fixtures.trial.t.c._read(original), self.hooks.config)
+        changed['sha256'] = 'f' * 64
+        with self.assertRaises(ValueError):
+            hooks.PriceCapacityLoop(self.service, changed, self.hooks.author,
+                self.hooks.reviewer, _test_adapter=self.f.adapter)
+
     def test_capacity_execute_uses_global_attempt_and_zero_fits_not_free_operation(self):
         prepared = self.f.prepare()
         ctx = {'outputs': {'source_review': prepared}, 'round_index': 1}

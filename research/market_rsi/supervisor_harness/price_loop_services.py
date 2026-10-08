@@ -194,7 +194,11 @@ class PriceLoopServices:
                             ("source_batch_id", "source_attempt_id", "question_digest_sha256", "evidence_bundle_sha256",
                              "research_credit", "research_outcome", "route_action"))):
                     raise ValueError("archive eligibility does not bind actual reviewed evidence")
-        if any(records[p["parent_sha256"]]["native_parent"] is None for p in active):
+        # The independently scored incumbent is a direct native parent, not an
+        # imported credit-2 research branch. It still needs completed evidence.
+        _evidence(records[pool["incumbent"]["candidate_sha256"]])
+        if any(p["parent_sha256"] != pool["incumbent"]["candidate_sha256"]
+                and records[p["parent_sha256"]]["native_parent"] is None for p in active):
             raise ValueError("active branch needs original reviewed continuation provenance before starting")
         ledger = t._file(self.runtime.root / "ledger.json")
         process = _process_evidence(data["history"].get("process_feedback"))
