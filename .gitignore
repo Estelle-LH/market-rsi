@@ -31,6 +31,17 @@ htmlcov/
 /research/market_rsi/LINODE_FEED_STATUS.md
 /research/market_rsi/SELF_EVOLVING_HARNESS_V1.md
 
+# Archived legacy experiment components; originals stay local for recovery.
+# Current price-loop/R/H controls and shared validators remain tracked.
+/research/market_rsi/memory_pilot/
+/research/market_rsi/memory_policy/
+/research/market_rsi/memory_replication/
+/research/market_rsi/pmb_simple_lane/
+/research/market_rsi/tests/test_pmb_simple_lane_episode_lease.py
+/research/market_rsi/tests/test_pmb_simple_lane_experiment_spec.py
+/research/market_rsi/tests/test_pmb_simple_lane_integration.py
+/research/market_rsi/tests/test_pmb_simple_lane_upstream_manifest.py
+
 # Generated session material.
 /artifacts/
 /archived_artifacts/

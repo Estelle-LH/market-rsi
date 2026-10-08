@@ -142,7 +142,6 @@ research/market_rsi/                 Source-bound native implementation
   data_scientist_harness/            Co-evolution controls and earlier research tools
   ds_harness_core/                   Domain-neutral feature/quality validators
   quote_source/                     Separate causal source-quote reconstruction
-  pmb_simple_lane/                   Separate immutable episode/specification lane
   minimal_prediction_loop/           Earlier probability protocol/scoring components
 ```
 
@@ -152,6 +151,9 @@ from its original working directory. Core implementation remains under
 The directory split reflects source-binding and compatibility constraints, not
 a completed migration into the root package. Earlier/adjacent lanes are not
 additional stages of the current price entry.
+
+Retired memory-study runners and the PMB prototype are available through the
+[history and recovery guide](HISTORY.md#recover-retired-experiment-components).
 
 Runtime configuration, authority, ledgers and immutable outputs use the
 configured local artifact store. Some historical records remain tracked in
