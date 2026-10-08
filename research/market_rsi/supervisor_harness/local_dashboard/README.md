@@ -24,7 +24,7 @@ index as evidence of currently running tasks.
 
 Use [History and record recovery](../../../../docs/HISTORY.md#recover-records-removed-from-the-public-file-tree)
 for the parent snapshot and recovery boundary. The earlier
-[archive manifest](../../LOCAL_LOG_ARCHIVE_2026-10-07.json) still records the
+[archive manifest](https://github.com/Estelle-LH/market-rsi/blob/cd778704138489ebb71da009b41d7b9e8223907f/research/market_rsi/LOCAL_LOG_ARCHIVE_2026-10-07.json) still records the
 October 7 archive's original paths/hashes and preserved `index-snapshot.json`.
 
 These logs are curated work records, not private reasoning, uncaptured tool
