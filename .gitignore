@@ -42,6 +42,13 @@ htmlcov/
 /research/market_rsi/tests/test_pmb_simple_lane_integration.py
 /research/market_rsi/tests/test_pmb_simple_lane_upstream_manifest.py
 
+# Retired two-E2B diagnostic; restore its complete parent for historical replay.
+/research/market_rsi/supervisor_harness/dual_e2b_canary.py
+/research/market_rsi/supervisor_harness/test_dual_e2b_canary.py
+
+# Historical 60-second development benchmark; complete snapshot remains recoverable.
+/research/market_rsi/prediction_benchmark_v0/
+
 # Generated session material.
 /artifacts/
 /archived_artifacts/

@@ -128,3 +128,45 @@ current pipeline. Its old runtime, data and authorization requirements still
 apply; source recovery does not authorize a rerun. Archive local changes before
 pulling these tracking deletions into any existing research checkout. This
 maintenance branch does not activate changes in the Supervisor workspace.
+
+## Recover the retired two-E2B diagnostic
+
+The next reviewed cleanup batch retires the standalone `dual_e2b_canary.py` and
+its exclusive test together. The September 17 local-B decision had already
+retired this symmetric two-E2B admission route; the protocol source list also
+labels that CLI retired. Its source/test pair is outside the retained release
+selectors. The dashboard still recognizes its process name for observation;
+that string does not import or launch it.
+
+The complete source/test pair is preserved at the immutable
+[parent snapshot](https://github.com/Estelle-LH/market-rsi/tree/efd4b3817f50976ccb4b80d6067b642b62b3449c),
+with original-path/SHA-256 copies and a complete history bundle in the local
+archive. Restore that entire parent into a separate checkout for old diagnostics;
+do not copy the old CLI alone into a running research workspace. Archive local
+changes before applying tracking deletions. These files remain local and ignored
+in the cleanup checkout; the active Supervisor checkout is unchanged.
+
+The earlier `e2b_coder_probe.py` remains tracked because the legacy release
+selector includes root-level Python files dynamically. Other E2B protocol
+components have explicit source pins, and Harbor has retained consumers and
+fixture imports. Their retirement requires separate component-level review.
+
+## Recover the historical 60-second benchmark
+
+A separate reviewed batch retires the complete three-file
+`prediction_benchmark_v0` package, including its nine exclusive synthetic test
+cases. This was September's fixed 60-second development contract. The current
+300-second evaluator and its tests are separately implemented and unchanged;
+retiring the old package does not declare the two contracts equivalent.
+
+The [original package](https://github.com/Estelle-LH/market-rsi/tree/efd4b3817f50976ccb4b80d6067b642b62b3449c/research/market_rsi/prediction_benchmark_v0)
+is preserved in the immutable published parent, exact-path local copies and a
+complete recovery bundle. The historical design and recorded test commands
+retain their original meaning. Recover the whole old snapshot to replay those
+commands; do not substitute the current scorer or rewrite frozen source hashes.
+
+The old Supervisor README still links this scorer. Any later integration into
+that private checkout must route its navigation to the historical snapshot and
+review private frozen source maps first. This public cleanup does not pull,
+activate or overwrite the Supervisor workspace. Archive local changes before
+applying tracking deletions; originals remain local and ignored here.
