@@ -49,6 +49,52 @@ htmlcov/
 # Historical 60-second development benchmark; complete snapshot remains recoverable.
 /research/market_rsi/prediction_benchmark_v0/
 
+# Reviewed retired manual audit workflows; exact originals remain local.
+# Keep other audit helpers and their regression tests tracked.
+/research/market_rsi/audit_tools/assemble_source_followup.py
+/research/market_rsi/audit_tools/audit_conditional_diagnostic.py
+/research/market_rsi/audit_tools/audit_direction_input_extension.py
+/research/market_rsi/audit_tools/audit_direction_pairing.py
+/research/market_rsi/audit_tools/audit_grid_learning_result.py
+/research/market_rsi/audit_tools/audit_historical_exposure.py
+/research/market_rsi/audit_tools/audit_json_text_failure.py
+/research/market_rsi/audit_tools/audit_raw_field_availability.py
+/research/market_rsi/audit_tools/audit_source_request_feasibility.py
+/research/market_rsi/audit_tools/audit_validation_inventory.py
+/research/market_rsi/audit_tools/canary_capture_etl_semantics.py
+/research/market_rsi/audit_tools/capture_inventory_metadata.py
+/research/market_rsi/audit_tools/capture_schema_probe.py
+/research/market_rsi/audit_tools/diagnose_learning_startup.py
+/research/market_rsi/audit_tools/dispatch_learning_after_startup_failure.py
+/research/market_rsi/audit_tools/dispatch_prepared_learning.py
+/research/market_rsi/audit_tools/explain_learning_trials.py
+/research/market_rsi/audit_tools/pinned_source_document.py
+/research/market_rsi/audit_tools/public_recursive_metadata.py
+/research/market_rsi/audit_tools/public_revision_metadata.py
+/research/market_rsi/audit_tools/reconcile_historical_transfer.py
+/research/market_rsi/audit_tools/reconstruct_selected_candidate.py
+/research/market_rsi/audit_tools/record_direction_provenance.py
+/research/market_rsi/audit_tools/replay_unsubmitted_controller.py
+/research/market_rsi/audit_tools/review_single_object_audit.py
+/research/market_rsi/audit_tools/run_capture_inventory.py
+/research/market_rsi/audit_tools/selected_source_document.py
+/research/market_rsi/audit_tools/test_audit_grid_learning_result.py
+/research/market_rsi/audit_tools/test_capture_schema_probe.py
+/research/market_rsi/audit_tools/test_conditional_audit.py
+/research/market_rsi/audit_tools/test_direction_pairing.py
+/research/market_rsi/audit_tools/test_historical_exposure.py
+/research/market_rsi/audit_tools/test_pinned_document.py
+/research/market_rsi/audit_tools/test_raw_field_availability.py
+/research/market_rsi/audit_tools/test_reconcile_historical_transfer.py
+/research/market_rsi/audit_tools/test_recursive_metadata.py
+/research/market_rsi/audit_tools/test_review_single_object_audit.py
+/research/market_rsi/audit_tools/test_revision_metadata.py
+/research/market_rsi/audit_tools/test_selected_reconstruction.py
+/research/market_rsi/audit_tools/test_selected_source_document.py
+/research/market_rsi/audit_tools/test_source_followup.py
+/research/market_rsi/audit_tools/test_source_request_feasibility.py
+/research/market_rsi/audit_tools/test_validation_inventory.py
+
 # Generated session material.
 /artifacts/
 /archived_artifacts/

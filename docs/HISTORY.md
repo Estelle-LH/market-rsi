@@ -195,3 +195,18 @@ navigation, not the active Supervisor workspace, code, source bindings, test
 selection, scorer, data, budgets or permissions. No scientific rerun or
 co-evolution improvement is implied. Remaining records and legacy workflows
 still require separately bounded review; the 200–400-file goal is unfinished.
+
+## Recover retired manual audit workflows
+
+The next reviewed batch retires **43 files across 23 historical workflows**:
+27 manual inspection, diagnostic, replay or dispatch tools and 16 exclusive
+test modules. Retained consumers, source selectors and their required helpers
+remain byte-identical; their tests stay tracked. The retired tests cover their
+old workflows, and are not claimed equivalent to current tests.
+
+All 43 originals remain local and ignored, with exact-path/hash/mode backups,
+independently restored copies and a verified full parent Git bundle. Recover
+the complete [original snapshot](https://github.com/Estelle-LH/market-rsi/tree/70364d02334066fb9aa0a033c89356523fb65ab4)
+for old commands and source bindings. Archive local modifications before
+applying tracking deletions. This batch does not activate or modify the private
+Supervisor workspace, runtime pins, data, scoring or execution authority.
