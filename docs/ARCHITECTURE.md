@@ -68,7 +68,7 @@ flowchart TD
   end
   D -->|prediction| C
   C --> SC
-  RC -->|KEEP or UNCHANGED; retain evidence| F
+  RC -->|KEEP or REVERT; retain evidence| F
   D -->|researcher or harness| RH
   RH --> SH
   RHReview -->|accept child| Selected
@@ -80,8 +80,9 @@ flowchart TD
 comparison incumbent. The author creates source-bound material; review admits
 the fixed worker operation. Results compare the candidate, parent, incumbent
 and ordinary reference on identical rows. `KEEP` updates the prediction
-incumbent; `UNCHANGED` retains it. The archive preserves failed candidates and
-reviewed findings. A separate research-credit route can retain useful branches
+incumbent; `REVERT` retains it. Failed or unscored candidate attempts can return
+`UNCHANGED`, also retaining the incumbent. The archive preserves failed candidates
+and reviewed findings. A separate research-credit route can retain useful branches
 for further exploration without declaring them the best predictor.
 
 **Capacity route (R/H).** The Controller selects one researcher or harness
