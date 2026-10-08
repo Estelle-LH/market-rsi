@@ -29,8 +29,9 @@ The [Data Scientist Harness](../research/market_rsi/data_scientist_harness/READM
 contains both reused controls and an earlier standalone research workflow;
 its older broker is a separate entry path.
 
-The [PMB compatibility lane](../research/market_rsi/pmb_simple_lane/README.md)
-is a historical prototype, not the current benchmark. The
+The [archived PMB compatibility lane](https://github.com/Estelle-LH/market-rsi/blob/330f2953d63c1b261b49b7db3e1405515e49e9db/research/market_rsi/pmb_simple_lane/README.md)
+is a historical prototype, not the current benchmark. Its source and exclusive
+tests are recovered from the parent snapshot described below. The
 [quote-source adapter](../research/market_rsi/quote_source/README.md) and
 [pinned shared checks](../research/market_rsi/ds_harness_core/README.md) have
 their own source contracts; their presence does not imply that every mainline
@@ -83,10 +84,10 @@ applying this tracking change. A Git checkout of deletions can remove old
 tracked files; ignore rules alone do not preserve those files during a pull.
 The local archive manifest identifies the independently saved originals.
 
-**235 ignored-but-tracked references remain intentionally retained.** They
+That tracking checkpoint intentionally retained **235 ignored-but-tracked references**. They
 include files named by existing code/tests, pinned contracts and their reference
 closure, protocol documentation and linked historical notes. Reusable source,
-configuration, fixtures and scorers retain their original paths and bytes.
+configuration, fixtures and scorers retained their original paths and bytes.
 The retained `RESEARCH_STATE.md` supports an existing fixture default; its
 published historical snapshot is not a live status feed or a new run grant.
 
@@ -94,3 +95,36 @@ Further removal needs a separate consumer/binding review. Historical source
 checkpoints, exposed-data history, consumed budgets and old authority remain
 unchanged; this cleanup provides source/record recovery, not a new empirical
 rerun guarantee.
+
+## Recover retired experiment components
+
+The later October 8 component cleanup removes **104 files** from the current
+public tree: the three earlier `memory_pilot`, `memory_policy` and
+`memory_replication` packages, the PMB prototype, its four exclusive test
+modules, and 14 associated memory-study records. These packages have no retained
+Python imports or executable path references in the audited published source
+or the separately inspected committed Supervisor snapshot. Current suite
+selectors do not select their tests. Shared R/H controls, current memory
+components, scorers and data adapters remain at their existing paths.
+
+The [September memory pilot postmortem](../research/market_rsi/MEMORY_PILOT_POSTMORTEM_2026-09-14.md)
+remains available because the earlier status page links its result and
+limitations. Retained historical PMB plans and source-hash records still
+describe their original snapshots; recover that snapshot before checking or
+executing their old paths. Their presence is not current execution authority.
+
+All 104 original files remain local and ignored. A separate non-iCloud archive
+contains their original-path/size/SHA-256 manifest and a complete published-parent
+Git bundle. Every file was restored independently and hash-checked. The complete
+source before this component cleanup is the immutable
+[parent snapshot](https://github.com/Estelle-LH/market-rsi/tree/330f2953d63c1b261b49b7db3e1405515e49e9db):
+
+```sh
+git worktree add --detach ../market-rsi-legacy-recovery 330f2953d63c1b261b49b7db3e1405515e49e9db
+```
+
+Recover the whole old source snapshot, not an isolated package copied into the
+current pipeline. Its old runtime, data and authorization requirements still
+apply; source recovery does not authorize a rerun. Archive local changes before
+pulling these tracking deletions into any existing research checkout. This
+maintenance branch does not activate changes in the Supervisor workspace.
