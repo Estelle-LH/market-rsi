@@ -51,7 +51,7 @@ Those local records can be newer than published main. Old copies in a remote
 snapshot are historical evidence rather than a live status feed.
 
 The existing
-[local archive manifest](../research/market_rsi/LOCAL_LOG_ARCHIVE_2026-10-07.json)
+[local archive manifest](https://github.com/Estelle-LH/market-rsi/blob/cd778704138489ebb71da009b41d7b9e8223907f/research/market_rsi/LOCAL_LOG_ARCHIVE_2026-10-07.json)
 maps previously archived records to original paths and hashes. Full local Git
 bundles and immutable run artifacts are needed for recovery; another model call
 is not guaranteed to reproduce an earlier response.
@@ -170,3 +170,28 @@ that private checkout must route its navigation to the historical snapshot and
 review private frozen source maps first. This public cleanup does not pull,
 activate or overwrite the Supervisor workspace. Archive local changes before
 applying tracking deletions; originals remain local and ignored here.
+
+## Keep generated operational records local
+
+The next log-cleanup batch removes **32 generated JSON/JSONL records** from the
+public tree: closed-window status/closeouts, operational plans/resolutions,
+independent reviews, selected trajectories and the earlier local-archive map.
+Retained default execution and source selectors do not require these exact
+files; historical tools can still read supplied local paths. The review also
+retains every dated record referenced by retained Python or another retained
+JSON, including source-bound contracts and H1 proof records. Shared configuration,
+the benchmark profile and synthetic fixture remain tracked and byte-identical.
+
+All 32 originals stay at their ignored local paths. An exact-path, size, mode
+and SHA-256 archive, independently restored copies and full published-parent
+Git bundle preserve them. Their immutable
+[original snapshot](https://github.com/Estelle-LH/market-rsi/tree/cd778704138489ebb71da009b41d7b9e8223907f)
+contains the complete historical record/reference context. Read old report paths
+in that snapshot; do not reinterpret a dated plan as current authority.
+
+Archive local modifications before applying these tracking deletions in any
+existing checkout. This batch changes only public tracking and this history
+navigation, not the active Supervisor workspace, code, source bindings, test
+selection, scorer, data, budgets or permissions. No scientific rerun or
+co-evolution improvement is implied. Remaining records and legacy workflows
+still require separately bounded review; the 200–400-file goal is unfinished.
