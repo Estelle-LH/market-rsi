@@ -1,47 +1,54 @@
 # Market RSI
 
-Market RSI studies whether a research agent can improve through experiment
-feedback, including small, separately reviewed changes to its researcher
-workflow (R) and execution harness (H).
+Market RSI is an experimental system for feedback-driven automated research.
+A Controller chooses the next hypothesis, an implementation role builds it,
+and independent review and measurement return evidence to the next decision.
+The research question is whether this process improves when the researcher
+workflow and its execution hooks can also evolve in small, reviewed steps.
 
-The source-checkout command is `python -m market_rsi`. Its price command
-delegates to the existing native entry,
-[`run_price_discovery.py`](research/market_rsi/supervisor_harness/run_price_discovery.py).
-It connects account-backed research roles, candidate implementation, source
-review, execution, result review and durable feedback. R/H proposal and
-activation hooks are integrated and covered by synthetic tests; live
-co-evolution and performance gains remain research questions.
+## How the system works
 
-Start with [the development guide](docs/DEVELOPMENT.md) for the code map and
-compatibility boundaries. The [current task profile](benchmarks/nfl_price/README.md)
-indexes the existing data, target, baseline and scorer. The
-[historical project README](research/market_rsi/README.md) retains earlier designs.
+Each round carries forward its verified results, memory and candidate history.
+The Controller can propose a prediction recipe (**C**), a researcher-workflow
+change (**R**), or a research-side harness change (**H**). Candidate changes
+are evaluated on the task; R/H changes have their own review and trial path
+before an accepted version can be used in later research.
 
-```text
-market_rsi/             Importable developer checks and thin native-launch CLI
-configs/                Development-suite selection
-benchmarks/             Read-only task/source profiles
-tests/                  Developer interface and layout regressions
-tools/                  Compatibility scripts
-docs/                   Development guide
-research/market_rsi/    Existing source-bound core and research evidence
-```
+Read [Architecture](docs/ARCHITECTURE.md) for the round flow, the co-evolution
+branch and the single current code map.
+
+## Where to start
+
+- **Understand the system:** [Architecture and code ownership](docs/ARCHITECTURE.md).
+- **Work on the code:** [Environment, checks and commands](docs/DEVELOPMENT.md).
+- **Understand the current task:** [Historical NFL price-change profile](benchmarks/nfl_price/README.md).
+- **Find older designs and records:** [Research history and compatibility notes](docs/HISTORY.md).
+
+## Run developer checks
+
+Use the existing Python 3.12 CPU environment, from the checkout root:
 
 ```sh
 python3 -B -m market_rsi check --suite smoke
-python3 -B -m market_rsi check --suite price
 python3 -B -m unittest discover -s tests -v
 ```
 
-Use the existing Python 3.12 CPU test environment. These commands run selected
-synthetic regression tests, not a live batch. Equities/earnings is the planned
-next data adapter; the current implementation still uses the NFL price task.
+These commands exercise synthetic engineering regressions.
+[Development](docs/DEVELOPMENT.md) describes the broader price suite and the
+separate, explicitly authorized native launch command.
 
-`python3 -B -m market_rsi price --help` shows the native launch arguments.
-Launching requires a separately authorized, fresh bound batch and feedback;
-cleanup tests do not activate a run. No package installation is required.
-The old `python3 -B tools/check.py ...` command remains supported.
+## Published implementation status
 
-[AGENTS.md](AGENTS.md) records shared maintenance and branch-naming guidance.
-Local agent configuration under `.agents/` is ignored; runtime research policy
-and scientific evaluation remain versioned with the core.
+The published pipeline uses historical NFL five-minute trade-VWAP changes as
+its current task. R/H proposal, trial and activation paths are present in
+source and have synthetic regression coverage. Continuous live co-evolution,
+matched improvement over a fixed research process and trading profitability
+still need their own experimental evidence. Equities/earnings is the planned
+next task adapter.
+
+The top-level `market_rsi/` package provides developer commands and a thin
+native-launch bridge. Core implementations remain under `research/market_rsi/`.
+This documentation describes the published source; active Supervisor work and
+private run status can be newer.
+
+[AGENTS.md](AGENTS.md) records contribution and branch-naming guidance.
