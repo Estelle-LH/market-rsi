@@ -50,11 +50,14 @@ def load(segment):
         prior = t.ROOT.parent / SEGMENTS[segment - 2]
         ledger = t._file(prior / 'ledger.json')
         if ledger['status'] == 'closed_at_attempt_cap':
-            manifest = entry.s.loop._read_pair(prior / 'price-loop/manifest.json')
+            previous_launch = prior / 'launch-admission-v3.json'
+            if not previous_launch.exists(): previous_launch = prior / 'launch.json'
+            previous_config, previous_service, _ = entry.build(r.pin(previous_launch))
+            directory = previous_service.recovery_directory
+            manifest = entry.s.loop._read_pair(prior / directory / 'manifest.json')
             if manifest['max_rounds'] != 2: raise ValueError('Original two-round scope drift')
-            seed = entry.s.loop._read_pair(prior / 'price-loop/round-0002-reconcile.done.json')['output']
+            seed = entry.s.loop._read_pair(prior / directory / 'round-0002-reconcile.done.json')['output']
             entry.s.loop._artifacts(seed)
-            previous_config, previous_service, _ = entry.build(r.pin(prior / 'launch.json'))
             if previous_service.identity() != manifest['handler_identity']:
                 raise ValueError('Prior completed source/handler drift')
             selected = previous_service.capacity.validate()
