@@ -1,31 +1,36 @@
-# Research supervisor services
+# Research loop and supervisor services
 
-This directory connects research decisions, candidate implementation, independent
-review, bounded execution and durable feedback. Its price-task services also
-support reviewed R/H proposals and activation.
+This is the current price-discovery orchestration layer. It connects Controller
+decisions to implementation, independent review, bounded execution and durable
+feedback. R/H proposals use a separate capacity-review and activation path.
+The directory also retains earlier operating protocols and experiment records.
 
-## Start here
+See the [current architecture](../../../docs/ARCHITECTURE.md) for the full flow
+and code map, the [development guide](../../../docs/DEVELOPMENT.md) for checks
+and commands, and the [history guide](../../../docs/HISTORY.md) for older work.
 
-- [Current code map and test commands](../../../docs/DEVELOPMENT.md)
-- [Operating protocol](RESEARCH_SUPERVISOR.md)
-- [Current decision state](RESEARCH_STATE.md)
-- [Original supervision charter](USER_SUPERVISION_CHARTER_2026-09-16.txt)
+## Inputs and outputs
 
-## Main components
+Input is a bound batch configuration, initial feedback and source/runtime
+identities. A round records seven stages:
+`input → controller → implement → source_review → execute → result_review → reconcile`.
+Reconciliation produces the feedback, memory, history, candidate pool and source
+context consumed by the next round; failed attempts remain in the history.
 
-- [Production entry and recovery](run_price_discovery.py)
-- [Durable round transitions](feedback_linked_loop.py)
-- [Price-task services](price_loop_services.py)
-- [R/H integration](price_capacity_loop.py)
-- [Capacity activation and identity](research_capacity_activation.py)
-- [Worker scheduling and history](continuous_discovery_batch.py)
+## Local entry points
 
-[Human progress](HUMAN_PROGRESS.md), [interventions](HUMAN_INTERVENTIONS.md) and
-[agent logs](AGENT_LOG_INDEX_2026-09-17.json) retain the research trajectory.
-Dated canary, E2B and GLM designs describe their original experiments; their
-records are preserved alongside the current services. Execution authority comes
-from the explicitly bound batch configuration, not from a README example.
+Start at [run_price_discovery.py](run_price_discovery.py), the native launch,
+preflight and recovery entry. It assembles services in
+[price_loop_services.py](price_loop_services.py) around the stage driver in
+[feedback_linked_loop.py](feedback_linked_loop.py). For R/H changes, follow
+[price_capacity_loop.py](price_capacity_loop.py) into the capacity trial and
+activation services.
 
-Closed logs archived outside Git are mapped by the
-[local archive manifest](../LOCAL_LOG_ARCHIVE_2026-10-07.json). Their original
-dashboard entries are preserved in the archive's `index-snapshot.json`.
+Role models, launch limits and executable services are supplied by explicit
+configuration. Passing regression tests establishes behavior on their fixtures;
+live autonomy or researcher improvement needs separate experiment evidence.
+
+The [operating protocol](RESEARCH_SUPERVISOR.md) and
+[decision-state record](RESEARCH_STATE.md) preserve research governance and
+checkpoint context. Dated model, E2B and canary records describe their original
+work; use the current architecture to identify the published code path.
