@@ -14,9 +14,18 @@ remains. The supervisor updates the index when the task completes or blocks.
 The dashboard discovers registered entries without another code change. An
 absent log is shown as absent, never inferred from agent activity.
 
-The current index excludes historical entries moved to the private local
-archive. Use [the archive manifest](../../LOCAL_LOG_ARCHIVE_2026-10-07.json)
-for their original paths/hashes and the preserved full `index-snapshot.json`.
+The index, bottleneck board, progress/intervention records and unbound agent
+logs are local-only after the October 8 tracking cleanup. They remain present
+in the existing local Supervisor workspace. A fresh source checkout does not
+contain those private observation records; the server reports missing logs or
+empty state rather than manufacturing activity. Restore original records only
+from your own archive or the matching historical snapshot; do not use an old
+index as evidence of currently running tasks.
+
+Use [History and record recovery](../../../../docs/HISTORY.md#recover-records-removed-from-the-public-file-tree)
+for the parent snapshot and recovery boundary. The earlier
+[archive manifest](../../LOCAL_LOG_ARCHIVE_2026-10-07.json) still records the
+October 7 archive's original paths/hashes and preserved `index-snapshot.json`.
 
 These logs are curated work records, not private reasoning, uncaptured tool
 events or model trajectories. Do not put credentials, raw private data or

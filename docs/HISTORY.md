@@ -55,8 +55,42 @@ maps previously archived records to original paths and hashes. Full local Git
 bundles and immutable run artifacts are needed for recovery; another model call
 is not guaranteed to reproduce an earlier response.
 
-This documentation pass leaves the remaining records, source files and archive
-locations in place. Removing tracked logs is a separate, inventory-based cleanup:
-preserve local originals, check machine references, and publish only the reviewed
-tracking changes. No historical checkpoint, consumed budget or old authority is
-rewound.
+## Recover records removed from the public file tree
+
+The October 8 tracking cleanup removes **245 generated/local records** from the
+current Git tree: 121 Markdown files, 122 JSON files, one JSONL file and one
+generated Word document. This includes 106 agent logs and the old local task
+index, bottleneck board, human progress and intervention snapshots. The same
+paths remain ignored, so new local records do not enter ordinary commits.
+
+Their original bytes were copied to a local archive with an original-path,
+size and SHA-256 manifest. Every archived file was restored to a separate
+directory and checked against that manifest; a complete published-history Git
+bundle was also verified. Originals remain in the cleanup checkout and the
+active Supervisor workspace was not modified.
+
+The complete pre-cleanup public tree is available at the immutable
+[parent snapshot](https://github.com/Estelle-LH/market-rsi/tree/ec5122bef5675e864ed4c3ca6fd42a5ad8a6f7b8).
+For bulk recovery, create a separate checkout at that commit rather than
+restoring an old state into a running research workspace:
+
+```sh
+git worktree add --detach ../market-rsi-record-recovery ec5122bef5675e864ed4c3ca6fd42a5ad8a6f7b8
+```
+
+Existing research checkouts should archive their own local records before
+applying this tracking change. A Git checkout of deletions can remove old
+tracked files; ignore rules alone do not preserve those files during a pull.
+The local archive manifest identifies the independently saved originals.
+
+**235 ignored-but-tracked references remain intentionally retained.** They
+include files named by existing code/tests, pinned contracts and their reference
+closure, protocol documentation and linked historical notes. Reusable source,
+configuration, fixtures and scorers retain their original paths and bytes.
+The retained `RESEARCH_STATE.md` supports an existing fixture default; its
+published historical snapshot is not a live status feed or a new run grant.
+
+Further removal needs a separate consumer/binding review. Historical source
+checkpoints, exposed-data history, consumed budgets and old authority remain
+unchanged; this cleanup provides source/record recovery, not a new empirical
+rerun guarantee.
