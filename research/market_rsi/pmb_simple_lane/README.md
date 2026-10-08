@@ -14,8 +14,8 @@ Supporting modules validate source/file identities, episode roles and immutable
 artifact/specification records. They provide no live research execution path.
 
 The [role correction](../PREDICTIONMARKETBENCH_ROLE_CORRECTION_2026-09-29.md)
-records the decision to freeze this lane. Real PMB intake, downloads, execution
-and hidden evaluation require a later reviewed decision defining a narrow need.
+records the decision to freeze this lane. Extending the prototype requires a
+later reviewed decision defining a narrow public smoke-test need.
 Any diagnostic PnL, Sharpe, fill or replay result is not evidence of improved
 prediction.
 
