@@ -150,3 +150,23 @@ The earlier `e2b_coder_probe.py` remains tracked because the legacy release
 selector includes root-level Python files dynamically. Other E2B protocol
 components have explicit source pins, and Harbor has retained consumers and
 fixture imports. Their retirement requires separate component-level review.
+
+## Recover the historical 60-second benchmark
+
+A separate reviewed batch retires the complete three-file
+`prediction_benchmark_v0` package, including its nine exclusive synthetic test
+cases. This was September's fixed 60-second development contract. The current
+300-second evaluator and its tests are separately implemented and unchanged;
+retiring the old package does not declare the two contracts equivalent.
+
+The [original package](https://github.com/Estelle-LH/market-rsi/tree/efd4b3817f50976ccb4b80d6067b642b62b3449c/research/market_rsi/prediction_benchmark_v0)
+is preserved in the immutable published parent, exact-path local copies and a
+complete recovery bundle. The historical design and recorded test commands
+retain their original meaning. Recover the whole old snapshot to replay those
+commands; do not substitute the current scorer or rewrite frozen source hashes.
+
+The old Supervisor README still links this scorer. Any later integration into
+that private checkout must route its navigation to the historical snapshot and
+review private frozen source maps first. This public cleanup does not pull,
+activate or overwrite the Supervisor workspace. Archive local changes before
+applying tracking deletions; originals remain local and ignored here.
