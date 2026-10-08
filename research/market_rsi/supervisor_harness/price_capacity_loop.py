@@ -17,7 +17,9 @@ t, r, w = trial.t, trial.r, trial.w
 class PriceCapacityLoop:
     def __init__(self, service, configuration, author, reviewer, *, _test_adapter=None):
         self.service, self.runtime, self.author, self.reviewer = service, service.runtime, author, reviewer
-        if configuration.get("path") != str(self.runtime.root / "capacity-configuration.json"):
+        allowed = {str(self.runtime.root / name) for name in
+            ("capacity-configuration.json", "capacity-configuration-v2.json")}
+        if configuration.get("path") not in allowed:
             raise ValueError("capacity configuration must be the exact batch-local file")
         self.binding, self.config = configuration, t.c._read(configuration)
         value = self.config
