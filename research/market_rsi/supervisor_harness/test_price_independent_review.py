@@ -222,6 +222,25 @@ class IndependentReviewTests(TestCase):
         self.assertTrue(self.calls[0][1]['trusted_checks']['actual_native_no_environment_preflight'])
         self.assertEqual(self.calls[0][1]['material']['runtime_policy']['path'], str(self.runtime.root / 'account-runtime-preflight.json'))
 
+    def test_wire_budget_counts_actual_envelope_not_unused_pretty_indentation(self):
+        from supervisor_harness.price_account_roles import _prompt
+        import json
+        account = {'synthetic_nested': [{'x': {'y': 0}} for _ in range(600)]}
+        with patch.object(self.reviewer, '_input', return_value=({}, account, {})):
+            self.reviewer.review('input', {})
+        role, packet, kwargs = self.calls[0]
+        envelope = {'role': role, 'role_id': kwargs['operation_id'], 'payload': packet,
+            'requested_model': review.t.c.MODEL, 'serving_snapshot': 'unknown'}
+        self.assertLess(len(_prompt(envelope).encode()), 32768)
+        self.assertGreater(len(json.dumps(packet, indent=2).encode()), 32768)
+
+    def test_actual_oversize_envelope_rejects_before_role_or_review_directory(self):
+        with patch.object(self.reviewer, '_input', return_value=({}, {'synthetic': 'x' * 32768}, {})):
+            with self.assertRaisesRegex(ValueError, 'input byte budget'):
+                self.reviewer.review('input', {})
+        self.assertEqual(len(self.calls), 0)
+        self.assertFalse((self.runtime.root / 'independent-reviews').exists())
+
     def test_drift_bad_hash_extra_raw_evidence_fails_before_role(self):
         original = self.input_material()
         for field in ('authority', 'provided_parents', 'schema', 'bindings'):

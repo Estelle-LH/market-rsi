@@ -434,9 +434,12 @@ class IndependentPriceReviewer:
                 'proof of researcher superiority. Merely renaming a field or repackaging already accessible correct parent evidence '
                 'is not improved accuracy. Null is not proof of benefit; final independent named-effect and compatibility '
                 'review remain required. Do not invent a quantitative measure for an unsupported effect.')
-        if len((json.dumps(packet, sort_keys=True, indent=2, allow_nan=False) + "\n").encode()) > t.input_limit(t.c._read(self.grant), "account_roles"):
-            raise ValueError("review payload exceeds authorized input byte budget before account call")
         role_id = "price-" + stage + "-review-" + t.c._digest(packet)[:20]
+        from supervisor_harness.price_account_roles import _prompt
+        envelope = {"role": stage + "_review", "role_id": role_id, "payload": packet,
+            "requested_model": t.c.MODEL, "serving_snapshot": "unknown"}
+        if len(_prompt(envelope).encode("utf-8")) > t.input_limit(t.c._read(self.grant), "account_roles"):
+            raise ValueError("review payload exceeds authorized input byte budget before account call")
         directory = self.runtime.root / "independent-reviews" / role_id
         if directory.exists():
             raise FileExistsError("review operation already exists; inspect without resampling")
