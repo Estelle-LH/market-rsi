@@ -237,3 +237,17 @@ bundle. The cleanup changes public tracking and navigation only; it does not
 claim scientific equivalence, change the active price/co-evolution checks, or
 alter the private Supervisor workspace. Recover the archived parent snapshot
 and local archive together to replay a retired experiment.
+
+## Keep superseded audit workflows local
+
+The following bounded cleanup moves **143 historical `audit_tools` modules** out
+of remote tracking. These are standalone capture, replay, comparison, repair,
+and test workflows that are not in the current release source set. The six
+release-bound audit inputs remain tracked: the two NFL feedback preparation
+controllers, direction-field canary, public source metadata, and the Vantage
+coverage/metadata auditors.
+
+The 143 originals remain at their local paths and in an exact-path archive with
+independent restore checks and a complete published-parent Git bundle. This is
+remote organization only: no live data, scoring, provider, runtime, or private
+Supervisor workspace was changed.
