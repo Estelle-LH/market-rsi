@@ -251,3 +251,15 @@ The 143 originals remain at their local paths and in an exact-path archive with
 independent restore checks and a complete published-parent Git bundle. This is
 remote organization only: no live data, scoring, provider, runtime, or private
 Supervisor workspace was changed.
+
+## Keep non-active Supervisor entrypoints local
+
+The next bounded cleanup moves **33 non-active Supervisor Python entrypoints**
+out of remote tracking. Current protocol sources, check-suite modules, price
+capacity services, feedback-loop services, and research-capacity entrypoints
+remain tracked. The removed files are older canaries, screeners, dispatch
+helpers, and their standalone tests that are not part of those current paths.
+
+Exact local copies, restore checks, and a complete published-parent Git bundle
+preserve every removed file. This is a tracking-only cleanup; no Supervisor
+runtime or active co-evolution path was changed.
