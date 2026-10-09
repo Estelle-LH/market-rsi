@@ -263,3 +263,16 @@ helpers, and their standalone tests that are not part of those current paths.
 Exact local copies, restore checks, and a complete published-parent Git bundle
 preserve every removed file. This is a tracking-only cleanup; no Supervisor
 runtime or active co-evolution path was changed.
+
+## Keep superseded research notes local
+
+The next documentation cleanup moves **105 dated research notes and historical
+Supervisor contracts/logs** out of remote tracking. Canonical instructions,
+architecture, current state, protocol, scoring, current prediction-market
+direction notes, and the approved repair plan remain tracked. The removed notes
+are preserved at their original local paths with an exact archive, restore
+verification, and a complete published-parent Git bundle.
+
+This is documentation organization only; it does not change executable source,
+active checks, runtime configuration, research data, or the private Supervisor
+workspace.
