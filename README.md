@@ -16,6 +16,9 @@ before an accepted version can be used in later research.
 
 Read [Architecture](docs/ARCHITECTURE.md) for the round flow, the co-evolution
 branch and the single current code map.
+Read [Repository structure](docs/REPOSITORY_STRUCTURE.md) before adding or
+moving files; it explains the boundary between the public CLI and research
+implementation.
 
 ## Where to start
 
