@@ -221,3 +221,19 @@ its local path and in a separate archive with an independent restore check and
 complete parent-history bundle. Use the immutable parent snapshot above for
 historical reading. This changes record visibility only; it does not alter the
 Supervisor runtime, model, scorer, data or authority.
+
+## Keep superseded experiments and tests local
+
+The next bounded cleanup moves **303 historical experiment and standalone test
+modules** out of remote tracking. The batch covers superseded NFL research
+variants, their exclusive regression tests, older root-level Market RSI tests,
+and Supervisor tests that are not selected by the current protocol or check
+suites. The current price/evidence adapter and price-candidate artifacts are
+explicitly retained.
+
+Every removed path remains at its local working-tree path and in an exact-path
+archive with independent restore checks and a complete published-parent Git
+bundle. The cleanup changes public tracking and navigation only; it does not
+claim scientific equivalence, change the active price/co-evolution checks, or
+alter the private Supervisor workspace. Recover the archived parent snapshot
+and local archive together to replay a retired experiment.
