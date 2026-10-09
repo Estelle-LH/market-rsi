@@ -9,7 +9,7 @@ policy (**R**), and a research-side harness/tool policy (**H**). Co-evolution me
 that reviewed R/H versions can influence later scientific decisions, alongside
 the ordinary candidate-development loop.
 
-This page describes published `main` at `03d31a0` (October 8, 2026 UTC). Its
+This page describes published `main` at `67255ef` (October 9, 2026 UTC). Its
 native price entry supports the `price_discovery_launch_v1` and `v2` schemas,
 both bounded to **two rounds**. Version 2 adds the R/H capacity route. Newer
 Supervisor checkpoints remain a separate local development history; this map
