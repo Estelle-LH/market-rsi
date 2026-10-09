@@ -180,3 +180,13 @@ htmlcov/
 /research/market_rsi/experiments/*.py
 /research/market_rsi/tests/*.py
 /research/market_rsi/supervisor_harness/test_*.py
+
+# Superseded audit workflows are kept in the local recovery archive. The
+# release-bound inputs below remain tracked explicitly.
+/research/market_rsi/audit_tools/*.py
+!/research/market_rsi/audit_tools/canary_direction_fields.py
+!/research/market_rsi/audit_tools/prepare_nfl_60s_baseline_feedback_controller.py
+!/research/market_rsi/audit_tools/prepare_nfl_full_cohort_feedback_controller.py
+!/research/market_rsi/audit_tools/public_source_metadata.py
+!/research/market_rsi/audit_tools/vantage_coverage_conclusion.py
+!/research/market_rsi/audit_tools/vantage_metadata_audit.py
