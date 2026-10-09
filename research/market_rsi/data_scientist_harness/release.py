@@ -21,10 +21,45 @@ ORIGIN = "https://github.com/Estelle-LH/RSIBench-Data.git"
 TAG = "dsh-v" + VERSION.rsplit("-v", 1)[1]
 CHANGE_ORIGIN = "human_directed_engineering"
 
+# Explicit root-level compatibility/runtime source boundary.  The previous
+# root glob silently published every historical helper in this directory.  A
+# module must be added here only when an active release entrypoint imports it;
+# historical scripts and one-off diagnostics stay outside the release.
+ROOT_SOURCE_FILES = (
+    "archive_snapshot.py", "audit_historical_objective_numerics.py",
+    "build_archive_continuation_data.py", "build_archive_formal_data.py",
+    "codex_glm_model_catalog.py", "codex_glm_provider.py",
+    "codex_glm_responses_adapter.py", "controller_activity_log.py",
+    "controller_candidate_harbor.py", "controller_execution_service.py",
+    "controller_harness_contract.py", "controller_provenance.py",
+    "controller_workspace.py", "data_discovery_activity.py",
+    "data_discovery_harness.py", "data_discovery_tools_mcp.py",
+    "data_discovery_workspace.py", "data_lifecycle.py",
+    "data_source_catalog.py", "formal_round_binding.py",
+    "glm_canary.py", "harness_evolution.py",
+    "historical_conditional_diagnostics.py", "historical_data_use_controller.py",
+    "historical_delta_evaluation.py", "historical_direction_fields.py",
+    "historical_feature_composition.py", "historical_grid_features.py",
+    "historical_grid_learning.py", "historical_grid_learning_controller.py",
+    "historical_grid_objective_controller.py", "historical_grid_objectives.py",
+    "historical_ingest_controller.py", "historical_input_compatibility.py",
+    "historical_learning_diagnostics.py", "historical_learning_recovery.py",
+    "historical_recorded_features.py", "historical_source_contract.py",
+    "historical_trade_windows.py", "literature_catalog.py", "market_harbor.py",
+    "market_rsi.py", "market_scoring.py", "materialize_selected_grid_objective.py",
+    "objective_contract.py", "objective_discovery_activity.py",
+    "objective_discovery_harness.py", "objective_discovery_tools_mcp.py",
+    "objective_discovery_workspace.py", "objective_train_audit.py",
+    "paid_budget.py", "polymarket_scoring.py", "prediction_stream.py",
+    "prospective_data_lifecycle.py", "run_codex_glm_controller.py",
+    "time_series_data_diagnostics.py", "time_series_research_harness.py",
+    "time_series_split_policy.py", "training_population_policy.py",
+)
+
 
 def source_files(root=ROOT):
     root = Path(root)
-    files = list(root.glob("*.py"))
+    files = [root / name for name in ROOT_SOURCE_FILES]
     for name in ("data_scientist_harness", "data_science_tools", "validation_tools",
                  "source_review_tools", "sports_event_research"):
         files.extend((root / name).glob("*.py"))

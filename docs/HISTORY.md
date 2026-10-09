@@ -276,3 +276,13 @@ verification, and a complete published-parent Git bundle.
 This is documentation organization only; it does not change executable source,
 active checks, runtime configuration, research data, or the private Supervisor
 workspace.
+
+## Make the root release boundary explicit
+
+The historical release used a root-level `*.py` glob, which made every
+one-off diagnostic and compatibility script part of the published source set.
+The release map now names the **59 root modules** required by active runtime,
+protocol, and compatibility imports. A first batch of **105 excluded legacy
+scripts** is kept locally with exact-path restore checks and a complete parent
+Git bundle. This narrows publication scope without moving active imports or
+changing the research runtime.

@@ -204,3 +204,7 @@ htmlcov/
 /research/market_rsi/supervisor_harness/*.md
 /research/market_rsi/supervisor_harness/*.json
 /research/market_rsi/supervisor_harness/*.jsonl
+
+# Root-level scripts outside the explicit release source map remain local for
+# replay and are not part of the public runtime surface.
+/research/market_rsi/*.py
