@@ -190,3 +190,8 @@ htmlcov/
 !/research/market_rsi/audit_tools/public_source_metadata.py
 !/research/market_rsi/audit_tools/vantage_coverage_conclusion.py
 !/research/market_rsi/audit_tools/vantage_metadata_audit.py
+
+# Reviewed non-active Supervisor Python entrypoints remain local for replay.
+/research/market_rsi/supervisor_harness/*.py
+/research/market_rsi/supervisor_harness/local_dashboard/*.py
+/research/market_rsi/supervisor_harness/plans/*.py
