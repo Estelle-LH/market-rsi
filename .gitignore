@@ -174,3 +174,9 @@ htmlcov/
 /research/market_rsi/supervisor_harness/GATE1_ORIGINAL_CONTROLLER_PROPOSAL_FEASIBILITY_2026-09-22.md
 /research/market_rsi/supervisor_harness/GATE1_PARALLEL_INTEGRATION_2026-09-22.md
 /research/market_rsi/supervisor_harness/P0_DATA_READINESS_DECISION_2026-09-21.md
+
+# Superseded experiment implementations and standalone regression tests reviewed
+# for the 2026-10-09 cleanup; originals remain in the local recovery archive.
+/research/market_rsi/experiments/*.py
+/research/market_rsi/tests/*.py
+/research/market_rsi/supervisor_harness/test_*.py
