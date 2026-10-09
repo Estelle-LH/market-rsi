@@ -1,5 +1,0 @@
-# S1 — Gate 1 发布前边界审查
-
-- 2026-09-21 21:24 ET — 总 Supervisor 注册任务。负责人是现有 Codex task `Gate 1 Independent Checkpoint Review`；只读核对当前主 checkout 的受控源码、两种 Controller 终态、生产入口和发布阻塞项。交付 P0/P1/P2 findings、实际测试/哈希和 PASS 或 REPLAN。不得改源码、发布、联网、调用 provider 或读取 Dev/Final。状态：待派发。
-- 2026-09-21 21:25 ET — 总 Supervisor 已向该 task 派发；已重命名为 `ACTIVE · Gate 1 release audit`。当前仅证明消息送达，尚未有审查结果。
-- 2026-09-21 21:33 ET — 独立 task 已完成并给出 **REPLAN，不可发布**。它只读核对主 checkout `b9095a7c8cafe60f3d8102ae7cc4fb2aa16db516`：319 文件受控清单（SHA-256 `de30436cf612967f988e832abf3e3cfe96db47de547ee5c71219d0785cb85226`）漏列 Wave 2 compiler/materializer/trade query/fixtures/runner，已有受控研究契约却 import 漏列模块；正式 Controller 路径目前只落 `task.json`/`proposal.json`，没有调用 exact-request compiler；trade query 只认合成目录，没有真实 Train catalog 承诺；当前 controlled source 仍有未提交改动，发布闸门不能通过。下一轮 proposal feedback 的认证尚未接入生产。独立测试：109/109 focused、479/479 不含 socket 的广域测试、34/34 攻击向量拒绝、26/26 编译后篡改拒绝；这些证明离线合成边界，不证明生产接线或真实数据。总 Supervisor 独立核对了被引源文件和当前 dirty 状态，接受 REPLAN。task 已更名为 `DONE · Gate 1 release audit`；没有 provider、数据抓取、提交或推送。

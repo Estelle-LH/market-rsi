@@ -210,3 +210,14 @@ the complete [original snapshot](https://github.com/Estelle-LH/market-rsi/tree/7
 for old commands and source bindings. Archive local modifications before
 applying tracking deletions. This batch does not activate or modify the private
 Supervisor workspace, runtime pins, data, scoring or execution authority.
+
+## Keep historical Supervisor records local
+
+The next bounded records cleanup moves **64 historical Supervisor records** out
+of remote Git tracking: old agent logs, co-evolution review JSON/JSONL, checkpoint
+contracts and superseded gate notes. No Python source imports these exact paths;
+current architecture/state references remain tracked. Every original stays at
+its local path and in a separate archive with an independent restore check and
+complete parent-history bundle. Use the immutable parent snapshot above for
+historical reading. This changes record visibility only; it does not alter the
+Supervisor runtime, model, scorer, data or authority.
