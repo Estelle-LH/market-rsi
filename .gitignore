@@ -195,3 +195,12 @@ htmlcov/
 /research/market_rsi/supervisor_harness/*.py
 /research/market_rsi/supervisor_harness/local_dashboard/*.py
 /research/market_rsi/supervisor_harness/plans/*.py
+
+# Superseded research notes and Supervisor contracts are retained locally in
+# dated recovery archives; canonical architecture/state/protocol docs stay tracked.
+/research/market_rsi/*.md
+/research/market_rsi/*.json
+/research/market_rsi/*.jsonl
+/research/market_rsi/supervisor_harness/*.md
+/research/market_rsi/supervisor_harness/*.json
+/research/market_rsi/supervisor_harness/*.jsonl
