@@ -12,8 +12,6 @@ defines rows, targets, baselines and scoring semantics.
   runner for the current NFL price-change task.
 - `nfl_ingame_price_score.py` — paired, game-equal scoring and baseline
   comparison.
-- `nfl_ingame_candidate_evidence_adapter*.py` — evidence/feature adapters used
-  by the price path.
 - `nfl_ingame_trade_price_feasibility_audit.py` — shared source/quote helpers
   imported by the current price-data adapter; it remains part of the task
   boundary even though it is not a standalone entrypoint.
