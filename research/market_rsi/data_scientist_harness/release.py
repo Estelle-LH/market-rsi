@@ -26,6 +26,8 @@ CHANGE_ORIGIN = "human_directed_engineering"
 # module must be added here only when an active release entrypoint imports it;
 # historical scripts and one-off diagnostics stay outside the release.
 ROOT_SOURCE_FILES = (
+    # Compatibility/runtime boundary: archive, controller transport and
+    # lifecycle/accounting primitives used by the current entrypoints.
     "archive_snapshot.py", "audit_historical_objective_numerics.py",
     "build_archive_continuation_data.py", "build_archive_formal_data.py",
     "codex_glm_model_catalog.py", "codex_glm_provider.py",
@@ -37,6 +39,8 @@ ROOT_SOURCE_FILES = (
     "data_discovery_workspace.py", "data_lifecycle.py",
     "data_source_catalog.py", "formal_round_binding.py",
     "glm_canary.py", "harness_evolution.py",
+    # Historical-task data, features, targets and scoring. These remain root
+    # modules because source-bound manifests and legacy imports use these paths.
     "historical_conditional_diagnostics.py", "historical_data_use_controller.py",
     "historical_delta_evaluation.py", "historical_direction_fields.py",
     "historical_feature_composition.py", "historical_grid_features.py",
@@ -47,12 +51,14 @@ ROOT_SOURCE_FILES = (
     "historical_recorded_features.py", "historical_source_contract.py",
     "historical_trade_windows.py", "literature_catalog.py", "market_harbor.py",
     "market_rsi.py", "market_scoring.py", "materialize_selected_grid_objective.py",
+    # Objective discovery and researcher-facing controls.
     "objective_contract.py", "objective_discovery_activity.py",
     "objective_discovery_harness.py", "objective_discovery_tools_mcp.py",
     "objective_discovery_workspace.py", "objective_train_audit.py",
     "paid_budget.py", "polymarket_scoring.py", "prediction_stream.py",
     "prospective_data_lifecycle.py", "run_codex_glm_controller.py",
     "time_series_data_diagnostics.py", "time_series_research_harness.py",
+    # Split, population and training policy shared by the active harness.
     "time_series_split_policy.py", "training_population_policy.py",
 )
 
