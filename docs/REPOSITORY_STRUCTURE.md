@@ -1,7 +1,9 @@
 # Repository structure
 
-This repository has one public execution surface and one research implementation
-surface. Keep that distinction stable when adding files.
+This repository has one public developer surface and one source-bound research
+surface. Organize files by responsibility, not by the date or experiment that
+first created them. A new reader should be able to find the current launch path
+without opening a historical log.
 
 ```text
 market-rsi/
@@ -33,6 +35,24 @@ market-rsi/
 | Researcher release/runtime contract | `research/market_rsi/data_scientist_harness/` | Keep source publication explicit and reproducible. |
 | Data/evidence materialization | `research/market_rsi/sports_event_research/` or the named task adapter | Keep raw inputs and receipts out of Git. |
 | Historical notes, logs, generated JSON/JSONL | local archive | Do not add them to the public tree unless a current source explicitly consumes them. |
+
+## Reading order inside `research/market_rsi`
+
+1. `supervisor_harness/` — the current round orchestration and co-evolution
+   control path.
+2. `data_scientist_harness/` — researcher runtime, release boundary and
+   controller-facing tools.
+3. `experiments/` and `sports_event_research/` — task-specific adapters and
+   candidate implementations.
+4. `validation_tools/`, `source_review_tools/`, `audit_tools/` and
+   `ds_harness_core/` — reusable checks and provenance boundaries.
+5. Root `*.py` — source-bound compatibility and historical-task modules listed
+   explicitly by the release map. They are not a second execution surface.
+
+Do not create another `market_rsi/` implementation directory inside a research
+subdirectory. If a module is task-specific, put it under `experiments/` or the
+named task adapter; if it is a round-control concern, put it under
+`supervisor_harness/`.
 
 ## Compatibility rule
 
