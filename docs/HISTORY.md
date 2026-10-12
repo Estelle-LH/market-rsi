@@ -15,7 +15,7 @@ that implementation from earlier designs and private operational records.
 - [Original development and migration notes](https://github.com/Estelle-LH/market-rsi/blob/03d31a01bcf7bab01534379acdc5cde6322377ed/docs/DEVELOPMENT.md):
   the proposed future package layout, compatibility rationale and staged cleanup
   plan before documentation was separated by responsibility.
-- [Harness version history](../research/market_rsi/HARNESS_VERSIONS.md):
+- [Harness version history at its archived snapshot](https://github.com/Estelle-LH/market-rsi/blob/487abec42cd1ade863690e2a52fee1e4251c4dc4/research/market_rsi/HARNESS_VERSIONS.md):
   source/version changes and evidence tied to their own experiments.
 
 These records explain their recorded source snapshots. Their old model names,
@@ -107,7 +107,7 @@ or the separately inspected committed Supervisor snapshot. Current suite
 selectors do not select their tests. Shared R/H controls, current memory
 components, scorers and data adapters remain at their existing paths.
 
-The [September memory pilot postmortem](../research/market_rsi/MEMORY_PILOT_POSTMORTEM_2026-09-14.md)
+The [September memory pilot postmortem at its archived snapshot](https://github.com/Estelle-LH/market-rsi/blob/35a1e94d7698a297a8d7f7d245599e835d0b09b5/research/market_rsi/MEMORY_PILOT_POSTMORTEM_2026-09-14.md)
 remains available because the earlier status page links its result and
 limitations. Retained historical PMB plans and source-hash records still
 describe their original snapshots; recover that snapshot before checking or
