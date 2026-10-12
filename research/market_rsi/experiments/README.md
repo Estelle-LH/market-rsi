@@ -14,10 +14,15 @@ defines rows, targets, baselines and scoring semantics.
   comparison.
 - `nfl_ingame_candidate_evidence_adapter*.py` — evidence/feature adapters used
   by the price path.
+- `nfl_ingame_trade_price_feasibility_audit.py` — shared source/quote helpers
+  imported by the current price-data adapter; it remains part of the task
+  boundary even though it is not a standalone entrypoint.
 - `price_candidates/` — versioned candidate sources and their local tests;
   these are experiment outputs, not another production entrypoint.
-- `extract_*.R` and feasibility audits — historical data preparation and
-  diagnostic support, not live acquisition.
+
+Historical extraction scripts are kept in the local recovery archive, not in
+the current task directory. They are not part of the reproducible release
+surface.
 
 ## Boundary
 
