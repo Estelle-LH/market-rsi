@@ -28,5 +28,6 @@ separate evidence.
   co-evolution controls from the earlier standalone research tools.
 - [Research contribution rules](AGENTS.md): source, data and attribution boundaries.
 
-Historical bindings and experiment records retain their original paths. Consult
-the history guide before treating a dated record as a current operating rule.
+Historical bindings and experiment records are preserved in the local recovery
+archive rather than mixed into the active source tree. Consult the history
+guide before treating a dated record as a current operating rule.
