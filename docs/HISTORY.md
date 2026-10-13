@@ -4,6 +4,15 @@ Use [Architecture](ARCHITECTURE.md) to understand the published price-research
 pipeline and [Development](DEVELOPMENT.md) to work on it. This page distinguishes
 that implementation from earlier designs and private operational records.
 
+## October 13, 2026: scenario transition
+
+The active research target moved from the NFL/prediction-market diagnostic to
+equities earnings-event research. The co-evolution engine remains shared; the
+old task adapters, Polymarket source paths and their evidence remain replayable
+legacy material until the earnings adapter has an equivalent tested boundary.
+See [Scenario migration](SCENARIO_MIGRATION.md) and the
+[earnings task boundary](../benchmarks/earnings/README.md).
+
 ## Read earlier designs in their original context
 
 - [Earlier architecture](../research/market_rsi/ARCHITECTURE.md): September's

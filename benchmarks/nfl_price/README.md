@@ -1,8 +1,8 @@
-# Historical NFL price-change task
+# Legacy NFL / prediction-market price-change task
 
-This directory is a read-only index of the current task implementation.
-It helps readers locate the data adapter, baseline and scorer; execution
-continues to use the existing source-bound implementation.
+This directory is a read-only index of the former task implementation. It is
+kept for replay and audit while research moves to the earnings-event boundary
+in [`../earnings/README.md`](../earnings/README.md).
 
 ## Prediction target
 
@@ -27,5 +27,5 @@ horizon and baseline IDs. The [Architecture code map](../../docs/ARCHITECTURE.md
 places these files in the research loop.
 
 The profile does not configure, authorize or launch a run. Existing batch and
-operation manifests remain authoritative. Equities/earnings is planned and
-has no implemented profile here.
+operation manifests remain authoritative. Equities/earnings is the active
+transition target and has no implemented profile yet.

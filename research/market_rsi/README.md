@@ -11,14 +11,15 @@ and evidence, use the [history guide](../../docs/HISTORY.md).
 
 ## What goes in and comes out
 
-The price-discovery entry consumes an explicitly bound batch configuration and
+The co-evolution entry consumes an explicitly bound batch configuration and
 initial feedback. Each round returns reviewed results and reconciled feedback,
 memory, research history and candidate-pool state for the next round. Execution
 rights and resource limits come from the bound configuration, not this index.
 
-The implemented task is historical NFL five-minute trade-VWAP change.
-Equities/earnings is a planned adapter; task scores and trading value require
-separate evidence.
+The active research target is equities earnings events. Its point-in-time data,
+forecast target, baselines and trading-value scorer are still being added. The
+implemented NFL/prediction-market task remains a legacy replay path; its scores
+and trading value do not transfer to the earnings claim.
 
 ## Where to start locally
 

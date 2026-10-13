@@ -9,17 +9,18 @@ policy (**R**), and a research-side harness/tool policy (**H**). Co-evolution me
 that reviewed R/H versions can influence later scientific decisions, alongside
 the ordinary candidate-development loop.
 
-This page describes the published `main` snapshot at `26d67ef` (October 12, 2026 UTC). Its
-native price entry supports the `price_discovery_launch_v1` and `v2` schemas,
-both bounded to **two rounds**. Version 2 adds the R/H capacity route. Newer
-Supervisor checkpoints remain a separate local development history; this map
-does not describe their prospective longer-loop or resume changes.
+This page describes the published `main` snapshot at `eb59ed9` (October 13,
+2026 UTC). The native engine supports bounded prediction and R/H capacity
+routes. The latest Supervisor research state has moved the scientific target to
+equities earnings; the earnings adapter and empirical scorer are still pending,
+so this is a scenario transition rather than a completed earnings experiment.
 
-The implemented price task is an opened-Train, historical NFL **300-second
-trade-VWAP-change diagnostic**. It compares predictions on the same rows with
-saved baselines. Trade prices are not executable quotes; the diagnostic does
-not establish profitability. Equities/earnings is a proposed next task, not an
-implemented entry profile in this snapshot.
+The former implementation is an opened-Train, historical NFL
+**300-second trade-VWAP-change diagnostic** with prediction-market data paths.
+It remains available for replay and source audit, but it is now a legacy task
+profile. Its trade prices are not executable quotes and its results do not
+establish profitability. The new task boundary is documented in
+[`benchmarks/earnings/README.md`](../benchmarks/earnings/README.md).
 
 ## One round, five logical roles
 
@@ -125,20 +126,22 @@ map; module READMEs describe only their own interfaces.
 | R/H source checks and measured replay | [`price_capacity_source.py`](../research/market_rsi/supervisor_harness/price_capacity_source.py), [`price_capacity_trial.py`](../research/market_rsi/supervisor_harness/price_capacity_trial.py), [`price_capacity_replay.py`](../research/market_rsi/supervisor_harness/price_capacity_replay.py) |
 | Identity, small-step journal and idle activation | [`research_capacity_identity.py`](../research/market_rsi/supervisor_harness/research_capacity_identity.py), [`research_capacity_activation.py`](../research/market_rsi/supervisor_harness/research_capacity_activation.py), [`co_evolution_loop.py`](../research/market_rsi/data_scientist_harness/co_evolution_loop.py) |
 | Native scheduling, execution and attempt history | [`continuous_discovery_batch.py`](../research/market_rsi/supervisor_harness/continuous_discovery_batch.py), [`opened_train_discovery_worker.py`](../research/market_rsi/supervisor_harness/opened_train_discovery_worker.py) |
-| Historical price rows, fixed task and scoring | [`nfl_ingame_price_data.py`](../research/market_rsi/experiments/nfl_ingame_price_data.py), [`nfl_ingame_price_change_train_diagnostic.py`](../research/market_rsi/experiments/nfl_ingame_price_change_train_diagnostic.py), [`nfl_ingame_price_score.py`](../research/market_rsi/experiments/nfl_ingame_price_score.py) |
+| Next task boundary | [`benchmarks/earnings/README.md`](../benchmarks/earnings/README.md) |
+| Legacy NFL/prediction-market rows and scoring | [`nfl_ingame_price_data.py`](../research/market_rsi/experiments/nfl_ingame_price_data.py), [`nfl_ingame_price_change_train_diagnostic.py`](../research/market_rsi/experiments/nfl_ingame_price_change_train_diagnostic.py), [`nfl_ingame_price_score.py`](../research/market_rsi/experiments/nfl_ingame_price_score.py) |
 
 ## Directory ownership
 
 ```text
 market_rsi/                         Thin developer CLI; forwards legacy helper APIs
 configs/                            Named developer-check suites
-benchmarks/nfl_price/                Task/source reading index, not another runner
+benchmarks/earnings/                 Active task boundary; adapter pending
+benchmarks/nfl_price/                Legacy task/source reading index
 tests/                              Developer interface/layout regression tests
 tools/                              Developer compatibility entry
 docs/                               Project architecture, development and history
 research/market_rsi/                 Source-bound native implementation
   supervisor_harness/               Loop services, roles, workers, review and state
-  experiments/                      Task definitions, diagnostics and candidates
+  experiments/                      Legacy task definitions and diagnostics
   data_scientist_harness/            Co-evolution controls and earlier research tools
   ds_harness_core/                   Domain-neutral feature/quality validators
   quote_source/                     Separate causal source-quote reconstruction
@@ -159,7 +162,9 @@ Runtime configuration, authority, ledgers and immutable outputs use the
 configured local artifact store. Some historical records remain tracked in
 this published snapshot; their presence does not make them current execution
 instructions. Local working logs and new run evidence belong outside the
-public source inventory.
+public source inventory. Prediction-market/NFL modules are retained only until
+the earnings adapter has an equivalent tested source boundary; new research
+logic belongs in the earnings adapter rather than the legacy task paths.
 
 For environment setup and exact checks, see [Development](DEVELOPMENT.md).
 For earlier designs and operational records, see [History](HISTORY.md).
