@@ -15,12 +15,9 @@ defines rows, targets, baselines and scoring semantics.
 - `nfl_ingame_trade_price_feasibility_audit.py` — shared source/quote helpers
   imported by the current price-data adapter; it remains part of the task
   boundary even though it is not a standalone entrypoint.
-- `price_candidates/` — versioned candidate sources and their local tests;
-  these are experiment outputs, not another production entrypoint.
-
-Historical extraction scripts are kept in the local recovery archive, not in
-the current task directory. They are not part of the reproducible release
-surface.
+Historical candidate sources, extraction scripts and their local tests are
+kept in the local recovery archive, not in the current task directory. They
+are not part of the reproducible release surface.
 
 ## Boundary
 
