@@ -21,6 +21,43 @@ bound input
 research-side harness/tool change. R/H changes are evaluated on their own
 matched replay path; they cannot rewrite the protected task, scorer or authority.
 
+## Why co-evolution?
+
+An automated researcher has two ways to improve. It can change **what it
+predicts**—the features, target, model or trading rule—or it can change **how it
+researches**—which evidence it seeks, how it uses memory, how it selects the
+next hypothesis, and how reliably it runs and interprets an experiment. The
+first is ordinary candidate optimization. The second is researcher-capacity
+improvement. **Co-evolution** keeps both loops connected while measuring them
+separately:
+
+```text
+prediction recipe C ──┐
+                      ├─> same task, same scorer, independent evidence
+researcher policy R ──┤
+harness/tool policy H ┘
+          ↑                    │
+          └── feedback, memory and reviewed decisions ──┘
+```
+
+The system therefore does not treat a better score from a larger model, a new
+dataset or a human-directed code repair as proof that the researcher learned.
+Each step records its parent, the observed problem, the single declared change,
+the expected effect and the next decision. The protected evaluation kernel and
+data boundary stay fixed when an R/H change is tested; a matched replay then
+asks whether the child changes a specified behavior such as evidence use,
+research completion, intervention count or decision quality. A prediction
+change is judged on the frozen task and baselines. A useful R/H step may be
+kept even when its first prediction is neutral, but it must produce reusable
+behavioral evidence rather than activity alone.
+
+This gives Market RSI a stronger research claim than “the model found a better
+number”: it tests whether a researcher can accumulate verified capabilities and
+use them on the next problem without silently changing the task, evaluator or
+authority. The current earnings transition applies this theory to a new task
+boundary; it does not inherit a performance claim from the legacy NFL or
+prediction-market experiments.
+
 ## Current published status
 
 The research scenario is now moving to **equities earnings-event research**.
