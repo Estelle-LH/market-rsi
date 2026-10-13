@@ -49,13 +49,13 @@ supported. From a different working directory, pass the absolute path to
 `tools/check.py`, or explicitly set `PYTHONPATH` to this checkout when using
 the module command.
 
-## Inspect the native launch interface
+## Inspect the legacy price launch interface
 
 ```sh
 python3 -B -m market_rsi price --help
 ```
 
-The price command requires `--batch-config` and `--initial-feedback`, and
+The legacy price command requires `--batch-config` and `--initial-feedback`, and
 accepts `--preflight`. It delegates to the existing native entry with the
 current interpreter and the original project working directory. Caller-relative
 input paths become absolute before delegation; the wrapper adds no defaults,
@@ -64,7 +64,8 @@ retries, permissions or accounting.
 A launch needs its own exact authorization, configuration, source and feedback
 bindings. Test success does not create those bindings. The wrapper has mocked
 launch coverage; live execution through the wrapper needs separate evidence.
-Consult the bound launch configuration and
+New research work should follow the [earnings scenario boundary](../benchmarks/earnings/README.md),
+not extend the legacy price command. Consult the bound launch configuration and
 [research instructions](../research/market_rsi/AGENTS.md) before operational work.
 
 ## Keep source identities stable

@@ -23,11 +23,19 @@ matched replay path; they cannot rewrite the protected task, scorer or authority
 
 ## Current published status
 
-- Current task: historical NFL five-minute trade-VWAP-change diagnostic.
-- Current evidence: synthetic engineering checks and opened-Train diagnostics;
-  no claim of live self-improvement or trading profitability.
-- Planned task: equities/earnings, with a new task adapter and evaluation
-  contract rather than a silent substitution of the NFL profile.
+The research scenario is now moving to **equities earnings-event research**.
+The repository currently contains the co-evolution engine and its offline
+verification, but the earnings adapter, data contract and empirical scorer are
+not yet active. The former NFL/prediction-market work remains recoverable
+historical evidence; it is no longer the next research target.
+
+- Active research target: earnings-event data, features, forecast and trading
+  evaluation, introduced through a new task adapter.
+- Active system core: Controller → Author → review → Worker → evaluation →
+  feedback/memory, with separate `C` (recipe), `R` (researcher) and `H`
+  (harness) changes.
+- Evidence boundary: offline co-evolution checks pass; no earnings prediction
+  improvement or trading profitability has been established yet.
 - Public source: the thin `market_rsi/` developer CLI plus the source-bound
   implementation under `research/market_rsi/`.
 
@@ -38,7 +46,8 @@ matched replay path; they cannot rewrite the protected task, scorer or authority
 | Understand the mechanism and co-evolution boundary | [Architecture](docs/ARCHITECTURE.md) |
 | Decide where a file belongs | [Repository structure](docs/REPOSITORY_STRUCTURE.md) |
 | Run checks or inspect the native launch | [Development](docs/DEVELOPMENT.md) |
-| Understand the active task and baselines | [NFL price profile](benchmarks/nfl_price/README.md) |
+| Understand the scenario transition | [Earnings task boundary](benchmarks/earnings/README.md) |
+| Recover the former task and baselines | [NFL price profile](benchmarks/nfl_price/README.md) |
 | Recover older designs and private archives | [History](docs/HISTORY.md) |
 
 ## Checks

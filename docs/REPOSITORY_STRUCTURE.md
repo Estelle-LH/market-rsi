@@ -18,8 +18,8 @@ market-rsi/
     ├── data_science_tools/     # review/report preparation utilities
     ├── validation_tools/       # source and evidence validators
     ├── source_review_tools/    # source-scope and provenance review
-    ├── sports_event_research/  # task-side event/PBP materialization
-    ├── experiments/            # retained active price/evidence candidates
+    ├── sports_event_research/  # legacy NFL/prediction-market materialization
+    ├── experiments/            # legacy task adapters and diagnostics
     ├── audit_tools/            # retained release-bound audit inputs only
     └── *.py                    # compatibility and release-bound research modules
 ```
@@ -30,7 +30,8 @@ market-rsi/
 | --- | --- | --- |
 | New CLI command or check-suite dispatch | `market_rsi/` | Keep it thin; delegate to research code. |
 | Check membership or suite selection | `configs/checks.json` | Do not duplicate suite lists in Python. |
-| Active task identity/baselines | `benchmarks/nfl_price/` | Update the profile and its README together. |
+| Active task identity/baselines | `benchmarks/earnings/` | Add the profile and adapter together; keep the contract point-in-time. |
+| Historical task recovery | `benchmarks/nfl_price/` and local archive | Do not treat the former NFL/prediction-market profile as the active target. |
 | Controller, worker, review or R/H capacity behavior | `research/market_rsi/supervisor_harness/` | Preserve the protocol source boundary. |
 | Researcher release/runtime contract | `research/market_rsi/data_scientist_harness/` | Keep source publication explicit and reproducible. |
 | Data/evidence materialization | `research/market_rsi/sports_event_research/` or the named task adapter | Keep raw inputs and receipts out of Git. |
@@ -42,11 +43,13 @@ market-rsi/
    control path.
 2. `data_scientist_harness/` — researcher runtime, release boundary and
    controller-facing tools.
-3. `experiments/` and `sports_event_research/` — task-specific adapters and
-   candidate implementations.
-4. `validation_tools/`, `source_review_tools/`, `audit_tools/` and
+3. `benchmarks/earnings/` — the current task boundary and evaluation contract;
+   the adapter is added here only when its data and scorer are ready.
+4. `experiments/` and `sports_event_research/` — historical task adapters and
+   recovery material for the former NFL/prediction-market work.
+5. `validation_tools/`, `source_review_tools/`, `audit_tools/` and
    `ds_harness_core/` — reusable checks and provenance boundaries.
-5. Root `*.py` — source-bound compatibility and historical-task modules listed
+6. Root `*.py` — source-bound compatibility and historical-task modules listed
    explicitly by the release map. They are not a second execution surface.
 
 Do not create another `market_rsi/` implementation directory inside a research
