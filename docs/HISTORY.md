@@ -15,9 +15,9 @@ See [Scenario migration](SCENARIO_MIGRATION.md) and the
 
 ## Read earlier designs in their original context
 
-- [Earlier architecture](../research/market_rsi/ARCHITECTURE.md): September's
+- [Earlier architecture](https://github.com/Estelle-LH/market-rsi/blob/eb59ed9fdc3b3f72c7aa2264b39cab479255cf56/research/market_rsi/ARCHITECTURE.md): September's
   probability/D0, GLM and local-B design, including its original trust boundaries.
-- [Prototype research protocol](../research/market_rsi/RESEARCH_PROTOCOL.md):
+- [Prototype research protocol](https://github.com/Estelle-LH/market-rsi/blob/eb59ed9fdc3b3f72c7aa2264b39cab479255cf56/research/market_rsi/RESEARCH_PROTOCOL.md):
   the archived three-arm study; its header records the superseded status.
 - [Data Scientist Harness original README](https://github.com/Estelle-LH/market-rsi/blob/03d31a01bcf7bab01534379acdc5cde6322377ed/research/market_rsi/data_scientist_harness/README.md):
   preserved tool capabilities, source semantics and older setup/canary commands.
