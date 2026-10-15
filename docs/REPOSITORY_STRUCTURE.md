@@ -43,8 +43,8 @@ market-rsi/
    control path.
 2. `data_scientist_harness/` — researcher runtime, release boundary and
    controller-facing tools.
-3. `benchmarks/earnings/` — the current task boundary and evaluation contract;
-   the adapter is added here only when its data and scorer are ready.
+3. Root `benchmarks/earnings/` — the current task boundary and evaluation
+   contract; the adapter is added there only when its data and scorer are ready.
 4. `experiments/` and `sports_event_research/` — historical task adapters and
    recovery material for the former NFL/prediction-market work.
 5. `validation_tools/`, `source_review_tools/`, `audit_tools/` and
@@ -77,3 +77,22 @@ Before moving or untracking a file, classify it as one of:
 Only categories 3 and 4 are cleanup candidates. Preserve the original locally,
 record an exact-path archive, and run the repository checks on a fresh tracked
 tree before opening a PR.
+
+## Known structural debt
+
+The published tree is readable at the responsibility level, but the source
+layout still reflects the migration history:
+
+- `research/market_rsi/supervisor_harness/` is the active co-evolution engine,
+  while many filenames still carry the legacy `price_*` prefix;
+- `research/market_rsi/*.py` mixes compatibility helpers, legacy task code and
+  release-bound sources, so a root-file listing overstates the active surface;
+- `configs/checks.json` calls the current regression group `price`, even though
+  most selected modules test task-neutral R/H behavior;
+- the earnings benchmark has a contract README but no adapter or scorer yet.
+
+The safe refactor order is: add the earnings adapter and tests, split task-
+neutral engine modules from legacy task modules, rename the suite only after
+compatibility coverage exists, then remove unused legacy paths in audited
+batches. Renaming or moving these modules before that sequence would break
+source hashes and replay bindings without improving the research loop.
