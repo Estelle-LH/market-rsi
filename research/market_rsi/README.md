@@ -23,8 +23,10 @@ and trading value do not transfer to the earnings claim.
 
 ## Where to start locally
 
-- [Research entry](supervisor_harness/run_price_discovery.py) and
-  [supervisor services](supervisor_harness/README.md): follow one complete round.
+- [Co-evolution entry](supervisor_harness/run_price_discovery.py) and
+  [supervisor services](supervisor_harness/README.md): follow one complete
+  round. The `price_*` filenames in that directory are historical names kept
+  for source and replay compatibility.
 - [Data Scientist Harness](data_scientist_harness/README.md): distinguish current
   co-evolution controls from the earlier standalone research tools.
 - [Research contribution rules](AGENTS.md): source, data and attribution boundaries.
@@ -32,3 +34,6 @@ and trading value do not transfer to the earnings claim.
 Historical bindings and experiment records are preserved in the local recovery
 archive rather than mixed into the active source tree. Consult the history
 guide before treating a dated record as a current operating rule.
+
+For ongoing refactors, classify a change before moving it and follow the
+[code-structure maintenance contract](../../docs/CODE_STRUCTURE_MAINTENANCE.md).

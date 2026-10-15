@@ -9,7 +9,7 @@ policy (**R**), and a research-side harness/tool policy (**H**). Co-evolution me
 that reviewed R/H versions can influence later scientific decisions, alongside
 the ordinary candidate-development loop.
 
-This page describes the published `main` snapshot at `eb59ed9` (October 13,
+This page describes the published `main` snapshot at `4c72bb1` (October 15,
 2026 UTC). The native engine supports bounded prediction and R/H capacity
 routes. The latest Supervisor research state has moved the scientific target to
 equities earnings; the earnings adapter and empirical scorer are still pending,
@@ -168,3 +168,5 @@ logic belongs in the earnings adapter rather than the legacy task paths.
 
 For environment setup and exact checks, see [Development](DEVELOPMENT.md).
 For earlier designs and operational records, see [History](HISTORY.md).
+During the earnings transition, apply the [code-structure maintenance
+contract](CODE_STRUCTURE_MAINTENANCE.md) before moving or renaming source.
