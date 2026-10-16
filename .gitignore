@@ -193,6 +193,7 @@ htmlcov/
 
 # Reviewed non-active Supervisor Python entrypoints remain local for replay.
 /research/market_rsi/supervisor_harness/*.py
+!/research/market_rsi/supervisor_harness/capacity_feedback_engine.py
 /research/market_rsi/supervisor_harness/local_dashboard/*.py
 /research/market_rsi/supervisor_harness/plans/*.py
 
@@ -208,3 +209,11 @@ htmlcov/
 # Root-level scripts outside the explicit release source map remain local for
 # replay and are not part of the public runtime surface.
 /research/market_rsi/*.py
+
+# Earnings run-specific authority, evidence and model-produced candidates stay
+# local. Only the generic bootstrap source belongs in the public source tree.
+/configs/earnings_coevolution/**
+!/configs/earnings_coevolution/program_R0.py
+!/configs/earnings_coevolution/program_H0.py
+!/configs/earnings_coevolution/researcher_v0.py
+!/configs/earnings_coevolution/harness_v0.py
