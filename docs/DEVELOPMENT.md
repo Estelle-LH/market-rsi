@@ -24,14 +24,16 @@ the measurement.
 Run from the checkout root:
 
 ```sh
-python3 -B -m unittest discover -s tests -v
+PYTHONPATH=tools:tests:research/market_rsi python3 -B -m unittest discover -s tests -v
 python3 -B -m market_rsi check --suite smoke
 python3 -B -m market_rsi check --suite price --list
 python3 -B -m market_rsi check --suite price
 ```
 
 - **Root developer tests:** command delegation, layout/API compatibility and
-  nested test-fixture cleanup.
+  nested test-fixture cleanup, plus the published earnings contracts. Their
+  explicit import path includes the source-bound tools, test fixtures and
+  legacy implementation root; no package installation is required.
 - **Smoke:** five control, identity and activation test modules.
 - **Price:** 24 selected modules covering native entry, feedback, R/H capacity,
   worker execution and price-task scoring.

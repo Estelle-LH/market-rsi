@@ -95,7 +95,7 @@ From the checkout root, using the existing Python 3.12 CPU environment:
 
 ```sh
 python3 -B -m market_rsi check --suite smoke
-python3 -B -m unittest discover -s tests -v
+PYTHONPATH=tools:tests:research/market_rsi python3 -B -m unittest discover -s tests -v
 ```
 
 These are synthetic regression checks. They do not authorize a live research
