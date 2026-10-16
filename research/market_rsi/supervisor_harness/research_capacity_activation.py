@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+from copy import deepcopy
 from pathlib import Path
 
 from market_rsi import digest
@@ -68,12 +69,15 @@ class CapacityActivation:
                 or receipt.get("identity_sha256") != digest(value) or receipt.get("entrypoints") != entrypoints):
             raise ValueError("independent exact source/scope review required before shadow use")
 
-    def _store(self, value, entrypoints, static_review=None):
+    def _validate_version(self, value, entrypoints):
         self._verify_files(value)
         if set(entrypoints) != {"H", "R"} or any(
                 name not in value["components"][axis]["sources"] or not name.endswith(".py")
                 for axis, name in entrypoints.items()):
             raise ValueError("entrypoints must belong to exact reviewed H/R sources")
+
+    def _store(self, value, entrypoints, static_review=None):
+        self._validate_version(value, entrypoints)
         body = {"manifest": value, "entrypoints": entrypoints, "static_review": static_review}
         target = self.registry / (digest(pair(value)) + ".json")
         data = json.dumps(body, sort_keys=True, separators=(",", ":"), allow_nan=False) + "\n"
@@ -118,7 +122,8 @@ class CapacityActivation:
         self._selected(state)
         return state
 
-    def propose(self, after, proposal, entrypoints, *, static_review, expected_state_sha256):
+    def preview_proposal(self, after, proposal, entrypoints, *, static_review, expected_state_sha256):
+        """Validate exact native admission without storing, journaling or using IDs."""
         state = self._state(expected_state_sha256)
         before = self._selected(state)["manifest"]
         axis = identity.change_axis(before, after)
@@ -131,21 +136,27 @@ class CapacityActivation:
                 or proposal["pair"] != pair(after)):
             raise ValueError("proposal differs from measured exact file delta")
         self._scope(static_review, after, entrypoints, proposal["proposer_id"])
+        self._validate_version(after, entrypoints)
+        projected = micro.propose_micro_evolution(state["micro_evolution"], proposal)
+        return {"before": deepcopy(before), "projected_pending": projected["pending"],
+                "state_sha256": state["state_sha256"]}
+
+    def propose(self, after, proposal, entrypoints, *, static_review, expected_state_sha256):
+        self.preview_proposal(after, proposal, entrypoints, static_review=static_review,
+                              expected_state_sha256=expected_state_sha256)
         self._store(after, entrypoints, static_review)
         return self.batch.record_micro_evolution("propose", proposal,
                     expected_state_sha256=expected_state_sha256)
 
-    def review(self, receipt, *, expected_state_sha256):
-        state = self._state(expected_state_sha256, idle=True)
-        envelope = json.loads(_read(receipt))
-        if set(envelope) != {"review", "evidence"}:
+    def _validated_review(self, envelope, state, before, after):
+        if (type(envelope) is not dict or set(envelope) != {"review", "evidence"}
+                or type(envelope["evidence"]) is not dict):
             raise ValueError("exact independent review/evidence envelope required")
         review, pending = envelope["review"], state["micro_evolution"]["pending"]
         if pending is None:
             raise ValueError("no pending proposal")
+        micro.review_micro_evolution(state["micro_evolution"], review)
         if review["decision"] == "accept":
-            after = self._version(pending["pair"])["manifest"]
-            before = self._selected(state)["manifest"]
             binding = {"proposal_sha256": pending["record_sha256"],
                 "before_identity_sha256": digest(before), "after_identity_sha256": digest(after),
                 "tested_pair_sha256": digest(pending["pair"]),
@@ -165,6 +176,27 @@ class CapacityActivation:
                     or benefit.get("effect") != pending["behavior_change"]
                     or benefit.get("benefit_observed") is not True):
                 raise ValueError("measured benefit does not bind exact before/after proposal")
+        return review
+
+    def preview_review(self, after, proposal, entrypoints, *, static_review, receipt, expected_state_sha256):
+        """Check an original review against a pure pending state, without adoption."""
+        preview = self.preview_proposal(after, proposal, entrypoints, static_review=static_review,
+                                         expected_state_sha256=expected_state_sha256)
+        state = self._state(expected_state_sha256, idle=True)
+        projected = dict(state, micro_evolution=micro.propose_micro_evolution(state["micro_evolution"], proposal))
+        review = self._validated_review(json.loads(_read(receipt)), projected, preview["before"], after)
+        return {"decision": review["decision"], "review_sha256": digest(review),
+                "proposal_sha256": preview["projected_pending"]["record_sha256"]}
+
+    def review(self, receipt, *, expected_state_sha256):
+        state = self._state(expected_state_sha256, idle=True)
+        envelope = json.loads(_read(receipt))
+        pending = state["micro_evolution"]["pending"]
+        after = (self._version(pending["pair"])["manifest"]
+                 if pending is not None and type(envelope) is dict
+                 and type(envelope.get("review")) is dict
+                 and envelope["review"].get("decision") == "accept" else None)
+        review = self._validated_review(envelope, state, self._selected(state)["manifest"], after)
         return self.batch.record_micro_evolution("review", review,
                     expected_state_sha256=expected_state_sha256)
 

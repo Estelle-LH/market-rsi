@@ -1191,6 +1191,37 @@ class ContinuousDiscoveryBatch:
                              accepted_finding_sha256s=sorted(set(findings)), bounded_followups_consumed=consumed)
         elif not state["initialized"]:
             raise DiscoveryBatchError("batch event precedes initialization")
+        elif event in {"capacity_work_claimed", "capacity_work_completed", "capacity_work_failed"}:
+            keys = {"work_id", "pair_sha256", "evidence_sha256", "event_time_utc"}
+            item = _exact_mapping(payload, keys, "external capacity work")
+            work_id = _identifier(item["work_id"], "capacity work ID")
+            pair_hash = _sha(item["pair_sha256"], "selected capacity pair")
+            _sha(item["evidence_sha256"], "capacity work evidence")
+            event_time = _utc(item["event_time_utc"], "capacity work time")
+            micro = state.get("micro_evolution")
+            if micro is None or pair_hash != _digest(micro["active_pair"]):
+                raise DiscoveryBatchError("capacity work selected pair changed")
+            work = state.get("capacity_work", [])
+            if event == "capacity_work_claimed":
+                self._assert_live_batch(state, event_time)
+                if (state["active_attempt_ids"] or len(work) >= state["max_attempts"]
+                        or any(row["work_id"] == work_id for row in work)
+                        or any(row["attempt_id"] == work_id for row in state["branches"])):
+                    raise DiscoveryBatchError("capacity work busy, exhausted or ID already claimed")
+                # Opt-in field only: old journals/snapshots retain their exact schema.
+                state["capacity_work"] = work + [dict(item, status="claimed")]
+                state["active_attempt_ids"] = [work_id]
+            else:
+                if (not work or work[-1]["work_id"] != work_id or work[-1]["status"] != "claimed"
+                        or state["active_attempt_ids"] != [work_id]):
+                    raise DiscoveryBatchError("capacity work has no exact active claim")
+                if event == "capacity_work_failed":
+                    work[-1].update(status="failed", failure_evidence_sha256=item["evidence_sha256"],
+                                    failed_at_utc=item["event_time_utc"])
+                else:
+                    work[-1].update(status="completed", output_evidence_sha256=item["evidence_sha256"],
+                                    completed_at_utc=item["event_time_utc"])
+                state["active_attempt_ids"] = []
         elif event == "micro_evolution":
             item = _exact_mapping(payload, {
                 "action", "arguments", "expected_evolution_sha256", "event_time_utc",
@@ -2204,6 +2235,39 @@ class ContinuousDiscoveryBatch:
                 "expected_evolution_sha256": current["record_sha256"] if current else ZERO_SHA256,
                 "event_time_utc": _utc_text(moment, "evolution time"),
             })
+            return self._public(state)
+
+    def record_capacity_work(
+        self, action: str, *, work_id: str, pair_sha256: str,
+        evidence_sha256: str, expected_state_sha256: str,
+        now: str | datetime | None = None,
+    ) -> dict[str, Any]:
+        """Trusted external worker occupancy; no fit, payment or retry authority.
+
+        Claim before dispatch. Complete only after verified success. Fail only
+        after independently verified stopped failure; uncertainty remains active.
+        This records caller evidence, never verifies process or fee cleanup.
+        Capacity-work count is separately bounded by the existing finite batch
+        max_attempts; it does not create or refund training attempts.
+        """
+        if action not in {"claim", "complete", "fail"}:
+            raise DiscoveryBatchError("capacity work action must be claim, complete or fail")
+        expected = _sha(expected_state_sha256, "expected batch state")
+        moment = self._trusted_now(now, "capacity work time")
+        payload = {"work_id": _identifier(work_id, "capacity work ID"),
+                   "pair_sha256": _sha(pair_sha256, "selected capacity pair"),
+                   "evidence_sha256": _sha(evidence_sha256, "capacity work evidence"),
+                   "event_time_utc": _utc_text(moment, "capacity work time")}
+        with self._locked():
+            records, state = self._load_locked()
+            if state["state_sha256"] != expected:
+                raise DiscoveryBatchError("stale batch state")
+            # Validate before append: an invalid request cannot poison the journal.
+            event = {"claim": "capacity_work_claimed", "complete": "capacity_work_completed",
+                     "fail": "capacity_work_failed"}[action]
+            self._replay(records + [{"event": event, "payload": payload,
+                                    "sequence": len(records) + 1, "event_sha256": ZERO_SHA256}])
+            _, state = self._commit(records, event, payload)
             return self._public(state)
 
     def _stop_locked(

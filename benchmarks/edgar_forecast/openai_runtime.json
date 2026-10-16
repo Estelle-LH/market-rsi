@@ -1,0 +1,24 @@
+{
+  "harness": "edgar-filing-tools-openai-v1",
+  "verified_at": "2026-10-07",
+  "pricing_source": "https://developers.openai.com/api/docs/pricing",
+  "token_count_source": "https://developers.openai.com/api/docs/guides/token-counting",
+  "function_call_source": "https://developers.openai.com/api/docs/guides/function-calling",
+  "max_input_tokens": 100000,
+  "max_output_tokens": 25000,
+  "max_turns_per_company": 24,
+  "request_timeout_seconds": 180,
+  "company_wall_seconds": 1800,
+  "service_tier": "default",
+  "models": {
+    "gpt-5.5": {"api_model": "gpt-5.5-2026-04-23", "effort": "xhigh", "input": "5", "cached": "0.5", "write": null, "output": "30"},
+    "gpt-5.4": {"api_model": "gpt-5.4-2026-03-05", "effort": "xhigh", "input": "2.5", "cached": "0.25", "write": null, "output": "15"},
+    "gpt-6-astra": {"api_model": "gpt-6-astra", "effort": "max", "input": "10", "cached": "1", "write": "12.5", "output": "50"},
+    "gpt-6.1-sol": {"api_model": "gpt-6.1-sol", "effort": "max", "input": "2", "cached": "0.1", "write": "2.5", "output": "10"},
+    "gpt-5.6-sol": {"api_model": "gpt-5.6-sol", "effort": "max", "input": "4", "cached": "0.4", "write": "5", "output": "20"},
+    "gpt-5.6-terra": {"api_model": "gpt-5.6-terra", "effort": "max", "input": "2", "cached": "0.2", "write": "2.5", "output": "12"},
+    "gpt-5.6-luna": {"api_model": "gpt-5.6-luna", "effort": "max", "input": "0.2", "cached": "0.02", "write": "0.25", "output": "1.2"},
+    "gpt-6-sol": {"api_model": "gpt-6-sol", "effort": "max", "input": "2", "cached": "0.2", "write": "2.5", "output": "10"},
+    "gpt-6-luna": {"api_model": "gpt-6-luna", "effort": "max", "input": "0.1", "cached": "0.01", "write": "0.125", "output": "0.5"}
+  }
+}

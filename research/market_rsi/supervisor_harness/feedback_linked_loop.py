@@ -167,3 +167,64 @@ def run(root, handlers, *, seed, admit, max_rounds, handler_identity):
             previous = outputs["reconcile"]
             completed += 1
         return {"status": "completed", "completed_rounds": completed, "result": previous}
+
+
+def replay_completed(root, *, manifest_binding):
+    """Cold completed-only verification: no handlers, admission or writes.
+
+    A claim without its exact durable completion stays uncertain. This API
+    never repairs seals, recovers a journal, creates a lock or resumes a stage.
+    """
+    root = Path(root)
+    manifest_path = root/'manifest.json'
+    if (not root.is_absolute() or root.resolve(strict=True) != root
+            or manifest_binding.get('path') != str(manifest_path)):
+        raise LoopHalted('Exact existing canonical replay root required')
+    descriptor = os.open(root/'.loop.lock', os.O_RDONLY | os.O_NOFOLLOW)
+    with os.fdopen(descriptor, 'rb') as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_SH | fcntl.LOCK_NB)
+        except BlockingIOError as error:
+            raise LoopHalted('Another process owns the loop; no cold replay') from error
+        manifest = c._read(manifest_binding)
+        if (_read_pair(manifest_path) != manifest or type(manifest) is not dict
+                or set(manifest) != {'schema', 'seed', 'seed_sha256', 'handler_identity', 'driver_source_sha256', 'max_rounds'}
+                or manifest['schema'] != 'feedback_linked_loop_v1'
+                or manifest['driver_source_sha256'] != c.sha(Path(__file__).resolve())
+                or manifest['seed_sha256'] != c._digest(manifest['seed'])
+                or type(manifest['max_rounds']) is not int or manifest['max_rounds'] < 1
+                or type(manifest['handler_identity']) is not dict
+                or set(manifest['handler_identity']) != set(STAGES)
+                or any(not v for v in manifest['handler_identity'].values())):
+            raise LoopHalted('Replay manifest/source/seed drift')
+        _artifacts(manifest)
+        previous, expected_paths = manifest['seed'], set()
+        for index in range(1, manifest['max_rounds']+1):
+            outputs = {}
+            for stage in STAGES:
+                current = {'round_index': index, 'seed': manifest['seed'], 'previous_result': previous,
+                    'previous_feedback_sha256': c._digest(previous), 'outputs': outputs}
+                _artifacts(current)
+                prefix = root/f'round-{index:04d}-{stage}'
+                claim, done = prefix.with_suffix('.claim.json'), prefix.with_suffix('.done.json')
+                expected_paths.update({claim.name, done.name, done.with_suffix('.binding.json').name})
+                expected = {'round_index': index, 'stage': stage, 'context_sha256': c._digest(current),
+                    'manifest_sha256': c.sha(manifest_path), 'previous_feedback_sha256': c._digest(previous)}
+                if (claim.is_symlink() or claim.resolve() != claim or not claim.is_file()
+                        or c._json(claim.read_bytes()) != expected):
+                    raise LoopHalted('Missing or changed completed claim')
+                result = _read_pair(done)
+                if (type(result) is not dict or set(result) != {'claim_sha256', 'output', 'output_sha256'}
+                        or type(result['output']) is not dict or result['claim_sha256'] != c.sha(claim)
+                        or result['output_sha256'] != c._digest(result['output'])):
+                    raise LoopHalted('Completed replay output drift')
+                _artifacts(result['output'])
+                outputs[stage] = result['output']
+            previous = outputs['reconcile']
+        if {p.name for p in root.glob('round-*')} != expected_paths:
+            raise LoopHalted('Missing, failed, orphaned or extra stage record; no recovery')
+        if (c._read(manifest_binding) != manifest or _read_pair(manifest_path) != manifest
+                or manifest['driver_source_sha256'] != c.sha(Path(__file__).resolve())):
+            raise LoopHalted('Source or manifest changed during cold verification')
+        _artifacts(manifest)
+        return {'status': 'completed', 'completed_rounds': manifest['max_rounds'], 'result': previous}
