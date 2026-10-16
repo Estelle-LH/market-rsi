@@ -257,7 +257,10 @@ class OpenAuthorSocketAssemblyTests(unittest.TestCase):
             forecast_init(instance, *args, **kwargs)
         sequence = [fixture.raw.research(), fixture.raw.final(), helper.choose(fixture, "continue"),
                     fixture.raw.research(), fixture.raw.final(), helper.choose(fixture, "continue")]
+        # This invented socket-policy fixture has no inherited research context;
+        # real grant admission is covered separately, not by a private JSON file.
         with helper.scope(fixture), fixture.exchange(sequence), \
+                patch('earnings_open_fresh_grant.policy', return_value={}), \
                 patch.object(roles.OpenAuthor, "__init__", new=author_spy), \
                 patch.object(roles.OpenController, "__init__", new=controller_spy), \
                 patch.object(module.assembly.CapacityForecast, "__init__", new=forecast_spy):

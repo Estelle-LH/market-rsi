@@ -1,7 +1,8 @@
 # Earnings research source and offline tests
 
-This publication preserves reviewed implementation source through private
-checkpoint `c1b644b`, on top of published main. It does not include that private
+This publication preserves the current population entry and its reviewed
+implementation dependencies through private checkpoint `c1b644b`, on top of
+published main. It does not include that private
 branch's ancestry, experiment records or later unfinished campaign work.
 Publication does not activate a run or establish predictive improvement.
 
@@ -19,6 +20,12 @@ Publication does not activate a run or establish predictive improvement.
   `feedback_linked_loop.py`: durable stage execution and receipt verification.
 - `tests/`: reusable synthetic unit/contract tests. Local historical-response
   regression fixtures remain in the private acceptance archive.
+
+The public set keeps population/feedback inheritance, Author delivery,
+source execution, filing-tool contracts, accounting and failure boundaries.
+Older candidate-transfer/followthrough entrypoints and nonessential historical
+test modules are retained locally rather than added to the current interface.
+Supporting test modules imported by those key tests remain required fixtures.
 
 ## Offline checks
 
