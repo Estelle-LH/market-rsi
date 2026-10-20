@@ -1,0 +1,17 @@
+{
+  "schema":"edgar25_offline_release_v1",
+  "evidence_archive":"round0-clean50-v2.tar.gz",
+  "archive_sha256":"8910db315a04cb45c5eeeb66d1d16b13ad51d761774d5204c89ddf7bacb51a46",
+  "manifest_sha256":"815a51b1fc3361f527b35b66e3cd89e52da1b0e79ade82fbe54050cf2da1de1b",
+  "evidence_replay_code_commit":"1d6b5f10f474be774c1ffc764d3f0d10b8737862",
+  "files":5471,
+  "archive_bytes":113340266,
+  "original_bytes":357061910,
+  "access":"PRIVATE, owner-authorized training evidence transfer only; not hosted or published by this task",
+  "dependencies":"CPython3.12 standard library; no pip install, model API, Docker or writable ledger required",
+  "command":"python3 -I -B repro/edgar25/replay.py --bundle /fresh/extracted/evidence --manifest-sha256 815a51b1fc3361f527b35b66e3cd89e52da1b0e79ade82fbe54050cf2da1de1b",
+  "acceptance":{"fresh_directory_extraction":true,"positive_exit":0,"seconds":1.0828003329224885,"negative_cli_cases":{"missing_file":2,"hash_tamper":2,"wrong_candidate":2,"wrong_trust_anchor":2},"unit_tests":11,"duplicate_company_and_incomplete_coverage_rejected":true,"no_network_models_or_ledger_writes":true},
+  "round0":{"scored":25,"targets":125,"points":75,"mean":3.0,"generations":597,"cost_nano_usd":10172265200,"failed_partial_attempts_retained":2},
+  "clean_slate":{"logical_round_attempt":1,"physical_run":"edgar-population-20261016-50","status":"REVIEW_REJECTED_BEFORE_FREEZE","scored":0,"not_measured":25,"mean":null,"selection":"INCOMPLETE_NO_SELECTION","generations":24,"cost_nano_usd":710898400,"full_feedback_physically_sent_C8_A8":true},
+  "limitations":["No GitHub push or access-channel publication yet; code can be delivered from this isolated Git ref/archive without private production ancestry.","Old experiment full bodies are not packaged; old47 exit remains UNKNOWN, archive-only.","Public awards are replayed, not independently rescored from protected answers.","Original OS exit is preserved as supervisor receipt, not an independent signed attestation.","Future repaired candidate and forecast waves require new immutable evidence packages; this release does not claim they ran.","A failed initial export directory is retained; only the namedv2 archive/hash is the accepted package."]
+}
