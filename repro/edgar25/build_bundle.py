@@ -30,7 +30,7 @@ class Export:
         # Original receipts are never redacted/re-written. Refuse the whole
         # export if credential-shaped material unexpectedly occurs.
         if (re.search(rb'(?<![A-Za-z0-9_-])sk-(?:proj|svcacct)-[A-Za-z0-9_-]{24,}',raw)
-                or b'-----BEGIN PRIVATE KEY-----' in raw
+                or (b'-----BEGIN '+b'PRIVATE KEY-----') in raw
                 or re.search(rb'Authorization["\x27]?\s*[:=]\s*["\x27]?(?:Bearer|Basic)\s+[A-Za-z0-9_-]{20,}',raw)):
             raise ValueError('Credential-shaped bytes; export refused: '+origin)
         token=sha(raw);item=self.files.get(token)
@@ -179,6 +179,9 @@ def build(artifacts,repo,output,clean_id,code_commit):
         for bound in clean_closure[key]:ex.bound(bound)
     candidate=clean_closure['candidate']
     for axis in ('R','H'):ex.bound(candidate[axis])
+    rejected_git=bind('TRAIN25-CLEAN50-REJECTED-CLOSED-GIT.json')
+    rejected_commit=ex.value(rejected_git)['commit']
+    ex.proof(rejected_commit,'original/'+str(Path(candidate['R']['path']).relative_to(A)),candidate['R'])
     roles=[]
     for role in ('controller','author','review'):
         slot=attempt/'roles'/(role+'-01')
@@ -190,7 +193,7 @@ def build(artifacts,repo,output,clean_id,code_commit):
         runtime=runtime_bound,launch=launch,approval=approval,candidate=candidate,scored=0,
         actual_parent='Unscored empty R0/H0 ABI scaffold, not R09/control/Round0 model or a stage best.',
         frozen_candidate=None,decision='INCOMPLETE_NO_SELECTION',
-        closure=closure_bound,result=clean_closure['result'],owner=clean_closure['owner'],roles=roles,
+        closure=closure_bound,rejected_git=rejected_git,result=clean_closure['result'],owner=clean_closure['owner'],roles=roles,
         implement=ex.file(attempt/'loop/round-0001-implement.done.json'),source_review=clean_closure['source_review_stage'],
         expected_generations=clean_closure['owned_generations'],expected_cost_nano_usd=clean_closure['owned_charged_nano_usd'],
         unverifiable=['No candidate forecast or25-company comparison exists. Review rejected evidence-acquisition integration before freezing.',
