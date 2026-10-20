@@ -94,6 +94,18 @@ class IntegrityAndSafetyTests(unittest.TestCase):
         self.asset.write_bytes(b'original evidence')
         with self.assertRaisesRegex(replay.Unverifiable,'Missing Git object'):replay.Bundle(self.root,replay.sha(raw))
 
+    def test_actual_relative_path_traversal_refused(self):
+        self.value['files'][self.token]['relative_path']='../outside'
+        raw=replay.canonical(self.value);(self.root/'manifest.json').write_bytes(raw)
+        with self.assertRaisesRegex(replay.Unverifiable,'Unsafe relative'):replay.Bundle(self.root,replay.sha(raw))
+
+    def test_full_feedback_match_is_structural_not_substring(self):
+        summary={'rows':[{'company_id':'CIK1','points':3}]}
+        payload={'input':[{'role':'user','content':json.dumps({'feedback':summary})}]}
+        self.assertTrue(replay.contains_feedback(payload,summary))
+        payload['input'][0]['content']=json.dumps({'feedback':{'rows':[]}})
+        self.assertFalse(replay.contains_feedback(payload,summary))
+
     def test_clean_subprocess_denies_network_process_write_and_original_path(self):
         for expression in ('__import__("socket").socket()',
                 '__import__("subprocess").run(["/bin/echo","forbidden"])',

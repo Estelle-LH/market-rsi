@@ -34,6 +34,10 @@ def canonical(value):
     return json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()
 
 
+def production_digest(value):
+    return sha(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode())
+
+
 class Bundle:
     def __init__(self, root, expected):
         self.root=Path(root).resolve();path=self.root/'manifest.json'
@@ -184,6 +188,8 @@ def replay_clean(bundle,manifest,baseline):
     require([r['company_id'] for r in feedback['rows']]==[r['company_id'] for r in baseline['rows']],'Incomplete next-researcher feedback input')
     for original,saved in zip(baseline['rows'],feedback['rows']):
         require(saved['points']==original['points'] and saved['targets']==original['targets'],'Round0 feedback substitution')
+    if manifest['state']=='PROPOSAL_REJECTED_CLOSED_NOT_A_COMPLETED_RESEARCH_ROUND':
+        return rejected_proposal(bundle,manifest,runtime,task,feedback)
     require(manifest['candidate'] is None and manifest['scored']==0,'Wrong/nonexistent candidate or fabricated coverage')
     require(manifest['state']=='PROPOSAL_AT_LAUNCH_UNCLOSED_SNAPSHOT','Cannot silently mark an incomplete proposal closed')
     require(manifest['decision']=='INCOMPLETE_NO_SELECTION','Incomplete25 cannot select/adopt')
@@ -193,6 +199,70 @@ def replay_clean(bundle,manifest,baseline):
         full_round0_feedback_saved_in_input=True,actual_model_receiving_verified=False,
         fees=None,unverifiable=manifest['unverifiable'],
         qualification='Prepared input is not physical model consumption; ongoing results/fees require a later immutable snapshot.')
+
+
+def contains_feedback(payload,feedback):
+    def visit(value):
+        if isinstance(value,dict):return value==feedback or any(visit(v) for v in value.values())
+        if isinstance(value,list):return any(visit(v) for v in value)
+        if isinstance(value,str):
+            start=value.find('{')
+            if start>=0:
+                try:return visit(json.JSONDecoder().raw_decode(value[start:])[0])
+                except (ValueError,RecursionError):return False
+        return False
+    return any(visit(row.get('content')) for row in payload.get('input',[]) if row.get('role')=='user')
+
+
+def rejected_proposal(bundle,manifest,runtime,task,feedback):
+    result=bundle.json(manifest['result']);owner=bundle.json(manifest['owner']);audit=bundle.json(manifest['closure'])
+    require(result['status']=='PROPOSAL_NOT_ACCEPTED' and result['retry_allowed'] is False,'Rejected result rewritten')
+    require(owner['status']=='COMPLETED_COMPONENT_CONTEXT' and owner['error_type'] is None and owner['runtime']==manifest['runtime'], 'Missing actual original owner closure')
+    require(audit['original_exec_true_exit']==0 and audit['original_exec_session']==21317,'Original exit unknown/mismatched')
+    child=bundle.json(manifest['implement'])['output']['candidate'];verdict=bundle.json(manifest['source_review'])['output']
+    require(child==manifest['candidate'] and child['id']==production_digest({a:child[a]['sha256'] for a in ('R','H')}),'Wrong candidate identity')
+    for axis in ('R','H'):bundle.read(child[axis])
+    require(child['parent']==task['scaffold']['stable_id'] and verdict['accepted_for_exploration'] is False,'Parent/review substitution')
+    require(manifest['scored']==0 and manifest['frozen_candidate'] is None and manifest['decision']=='INCOMPLETE_NO_SELECTION','Rejected proposal cannot be frozen/scored/adopted')
+    snapshot=bundle.json(bundle.manifest['ledger_snapshot']);ledger={r[1]:r for r in snapshot['rows']}
+    seen=set();total=0;receiving={};per_role={};rates=runtime['rates']
+    unit=lambda rate:int(Decimal(str(rate))*1000)
+    ceiling=max(unit(rates[k]) for k in ('input','cached','write') if rates[k] is not None)
+    for role in manifest['roles']:
+        values=[(b,bundle.json(b)) for b in role['physical_bindings'] if b['path'].endswith('.intent.json')]
+        role_total=0;reads=0
+        for generation in role['generations']:
+            request=bundle.json(generation['request']);response=bundle.json(generation['response']);uuid=request['request_id']
+            require(uuid not in seen and uuid in ledger,'Duplicate/missing clean request UUID');seen.add(uuid)
+            actual=[(b,v) for b,v in values if v.get('endpoint')=='/v1/responses' and v.get('budget_request_id')==uuid]
+            require(len(actual)==1,'Unique physical generation intent required');bound,intent=actual[0]
+            maximum=intent['payload']['max_output_tokens']
+            require(intent['complete_reservation']==request and intent['payload']==dict(request['payload'],max_output_tokens=maximum,service_tier='default',store=False)
+                and intent['request_receipt_sha256']==generation['request']['sha256'] and intent['retry_allowed'] is False,'Saved/actual HTTP request substitution')
+            prefix=bound['path'].removesuffix('.intent.json')
+            matches=[b for b in role['physical_bindings'] if b['path']==prefix+'.response.json']
+            require(len(matches)==1 and bundle.read(matches[0])==bundle.read(generation['response']),'Physical/numbered response mismatch')
+            raw=[b for b in role['physical_bindings'] if b['path']==prefix+'.raw.bin']
+            require(len(raw)==1 and len(bundle.read(raw[0]))>0,'Missing opaque physical response')
+            counts=[v for b,v in values if v.get('endpoint')=='/v1/responses/input_tokens' and v['payload']['input']==request['payload']['input']]
+            require(bool(counts),'Missing physical input-token request')
+            if role['role'] in ('controller','author'):
+                require(contains_feedback(intent['payload'],feedback),'Complete125 feedback not actually sent');reads+=1
+            row=ledger[uuid];usage=response['usage'];inp=usage['input_tokens'];out=usage['output_tokens'];cached=usage['input_tokens_details']['cached_tokens']
+            require(all(type(v) is int and v>=0 for v in (inp,out,cached)) and cached<=inp and usage['total_tokens']==inp+out,'Invalid saved clean usage')
+            charge=(inp-cached)*ceiling+cached*unit(rates['cached'])+out*unit(rates['output'])
+            require(row[2]==request['payload']['model']==response['model']==rates['api_model'] and row[3]==request['reserved_nano_usd']
+                and row[4]==charge and row[5]=='settled' and charge<=row[3],'Clean fee/usage/reservation mismatch')
+            role_total+=charge
+        total+=role_total;per_role[role['role']]=dict(generations=len(role['generations']),charged_nano_usd=role_total)
+        receiving[role['role']]=reads
+    require(len(seen)==manifest['expected_generations'] and total==manifest['expected_cost_nano_usd'],'Clean fee/count mismatch')
+    require(owner['budget_summary']==result['budget'] and abs(Decimal(str(result['budget']['night_charged_upper_bound_usd']))*Decimal(10**9)-total)<1,'Clean terminal fee mismatch')
+    return dict(trajectory='clean_slate',logical_round=1,physical_run_ids=manifest['physical_run_ids'],state=manifest['state'],
+        candidate=child,scored=0,not_measured=25,company_equal_mean=None,selection='INCOMPLETE_NO_SELECTION',next_mutation_allowed=False,
+        full_round0_feedback_saved_in_input=True,actual_model_receiving_verified=True,physical_full_feedback_generations=receiving,
+        fees=dict(generations=len(seen),charged_nano_usd=total,per_role=per_role),source_review_accepted=False,
+        original_exec_true_exit=0,unverifiable=manifest['unverifiable'])
 
 
 def replay(root,expected):

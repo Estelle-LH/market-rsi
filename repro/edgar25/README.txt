@@ -38,11 +38,12 @@ ROUND BOUNDARIES
 - Round0 is the ordinary25-company baseline,125 targets and mean3.0/5. Its597
   generations include the two retained failed partial attempts; costs are not
   dropped. Per-target awards and saved predictions are replayed, not rescored.
-- Clean slate is a separate logical round1, not physical run50 or inherited
-  R09/old control. This first package snapshots the running proposal's immutable
-  inputs:0/25 candidate scores, no candidate and no selection. Saved feedback
-  is checked but does not prove an actual model read. Later closure requires a
-  NEW immutable evidence version; do not overwrite the old manifest/package.
+- Clean slate is an attempted logical round1, not physical run50 or inherited
+  R09/old control. This package includes the normally exited but REJECTED
+  proposal:24 settled C/A/Review generations,0/25 candidate scores, no frozen
+  candidate and no selection. Actual C/A HTTP inputs are joined to complete125
+  feedback. Review rejection is not a forecast score or a completed round.
+  Later changes require a NEW immutable package; never overwrite old evidence.
 - Legacy experiments, including old47's UNKNOWN exit, remain archive-only and
   explicitly not included as new25-company panel results. Full legacy replay
   is a remaining gap, not silently claimed complete.

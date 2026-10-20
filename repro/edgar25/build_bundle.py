@@ -136,14 +136,21 @@ def build(artifacts,repo,output,clean_id,code_commit):
     # Explicit upper prefix, never a live SQLite copy or any database mutation.
     runtime_path=A/'inputs'/clean_id/'runtime-reviewed.json'
     runtime_bound=ex.file(runtime_path);runtime=ex.value(runtime_bound)
-    prefix=runtime['baseline']['max_rowid']
+    closure_bound=bind('TRAIN25-CLEAN50-REJECTED-CLOSURE.json')
+    clean_closure=ex.value(closure_bound)
+    if (clean_closure['status']!='PROPOSAL_NOT_ACCEPTED' or clean_closure['original_exec_true_exit']!=0
+            or clean_closure['runtime']!=runtime_bound or clean_closure['current_pending_count']!=0):
+        raise ValueError('Exact closed rejected proposal required')
+    prefix=clean_closure['current_ledger']['max_rowid']
     ledger=Path(runtime['ledger'])
     with sqlite3.connect(ledger.as_uri()+'?mode=ro',uri=True) as db:
         db.execute('BEGIN')
         rows=db.execute('SELECT rowid,id,model,reserved,charged,status FROM requests WHERE rowid<=? ORDER BY rowid',(prefix,)).fetchall()
     ledger_snapshot=ex.raw(encoded(dict(schema='edgar25_readonly_ledger_prefix_v1',max_rowid=prefix,rows=rows,
         prefix_sha256=sha(json.dumps(rows,separators=(',',':')).encode()),qualification='Historical selected financial columns, not a writable ledger or invoice audit.')),'generated:ledger-prefix')
-    if ex.value(ledger_snapshot)['prefix_sha256']!=runtime['baseline']['rows_sha256']:raise ValueError('Original ledger prefix changed')
+    if ex.value(ledger_snapshot)['prefix_sha256']!=clean_closure['current_ledger']['rows_sha256']:raise ValueError('Original ledger prefix changed')
+    earlier=[r for r in rows if r[0]<=runtime['baseline']['max_rowid']]
+    if sha(json.dumps(earlier,separators=(',',':')).encode())!=runtime['baseline']['rows_sha256']:raise ValueError('Preproposal ledger prefix changed')
     root0=dict(schema='edgar25_round_manifest_v1',trajectory='round0',logical_round=0,
         state='SCORED25_ORIGINAL_CLOSURE_RECEIPTS_PRESERVED',original_manifest=r0,summary=summary,
         physical_runs=runs,expected_generations=closure['accounting']['new_settled_generations'],
@@ -158,14 +165,37 @@ def build(artifacts,repo,output,clean_id,code_commit):
         ex.historical_source(runtime['source_commit'],relative,binding)
     launch=bind('TRAIN25-CLEAN50-LAUNCH-RECEIPT.json');approval=bind('TRAIN25-DIRECT-OPENAI-PAYLOAD-APPROVAL.json')
     for name in ('TRAIN25-CLEAN50-LAUNCH-BLOCKED.json','TRAIN25-CLEAN50-INPUT-GIT.json','TRAIN25-CLEAN50-APPROVAL-BLOCKED-GIT.json'):bind(name)
+    # Closed originals only, no snapshots of an active request and no follow of
+    # protected QA/score links. Physical raw responses remain opaque bytes.
+    attempt=Path(runtime['root'])
+    for path in sorted(attempt.rglob('*')):
+        if path.is_file():
+            if path.name in ('score.json','evaluation_qa.json'):
+                omitted.append(dict(binding=dict(path=str(path),sha256=sha(path.read_bytes())),reason='Protected answer/scorer material excluded.'))
+            else:ex.file(path)
+    for key in ('owner','claim','review','source_review_stage','audit_script'):ex.bound(clean_closure[key])
+    owner=ex.value(clean_closure['owner']);ex.bound(owner['clock'])
+    for key in ('native_evidence','financial_evidence'):
+        for bound in clean_closure[key]:ex.bound(bound)
+    candidate=clean_closure['candidate']
+    for axis in ('R','H'):ex.bound(candidate[axis])
+    roles=[]
+    for role in ('controller','author','review'):
+        slot=attempt/'roles'/(role+'-01')
+        generations=[dict(request=ex.file(p),response=ex.file(p.with_name(p.name.replace('-request','-response'))))
+            for p in sorted(slot.glob('[0-9][0-9]-request.json'))]
+        roles.append(dict(role=role,generations=generations,physical_bindings=clean_closure['actual_physical_roles'][role]['bindings']))
     clean=dict(schema='edgar25_round_manifest_v1',trajectory='clean_slate',logical_round=1,
-        state='PROPOSAL_AT_LAUNCH_UNCLOSED_SNAPSHOT',as_of_launch_utc=ex.value(launch)['observed_launch_utc'],physical_run_ids=[clean_id],
-        runtime=runtime_bound,launch=launch,approval=approval,candidate=None,scored=0,
+        state='PROPOSAL_REJECTED_CLOSED_NOT_A_COMPLETED_RESEARCH_ROUND',as_of_utc=clean_closure['created_utc'],physical_run_ids=[clean_id],
+        runtime=runtime_bound,launch=launch,approval=approval,candidate=candidate,scored=0,
         actual_parent='Unscored empty R0/H0 ABI scaffold, not R09/control/Round0 model or a stage best.',
         frozen_candidate=None,decision='INCOMPLETE_NO_SELECTION',
-        unverifiable=['Ongoing clean proposal model requests/results/fees not part of this immutable snapshot; export a new version at actual closure.',
-            'No new candidate, frozen descriptor, scored company, adoption or completed logical round exists in this snapshot.',
-            'Saved full feedback in inputs is not proof of actual model consumption.'])
+        closure=closure_bound,result=clean_closure['result'],owner=clean_closure['owner'],roles=roles,
+        implement=ex.file(attempt/'loop/round-0001-implement.done.json'),source_review=clean_closure['source_review_stage'],
+        expected_generations=clean_closure['owned_generations'],expected_cost_nano_usd=clean_closure['owned_charged_nano_usd'],
+        unverifiable=['No candidate forecast or25-company comparison exists. Review rejected evidence-acquisition integration before freezing.',
+            'Original EXIT0 is the supervising operator receipt of exec21317, not an independently signed OS attestation.',
+            'Native closure was metadata-audited at the source; offline replay verifies preserved bytes, not Docker or protected scorer execution.'])
     clean_manifest=ex.raw(encoded(clean),'generated:clean-slate-round1-manifest')
     archive_receipt=bind('TRAIN25-PANEL47-INCOMPLETE-EVIDENCE-GIT.json')
     code={}
@@ -182,7 +212,7 @@ def build(artifacts,repo,output,clean_id,code_commit):
             'No heldout bodies, QA/reference answer files, credentials, provider keys or writable ledger.',
             'Raw HTTP responses preserved as opaque bytes; hidden reasoning is not interpreted.',
             'Git/Merkle/hash integrity does not certify truthful original measurement or provider invoice.',
-            'This version deliberately snapshots Round0 and clean proposal inputs only; never marks ongoing execution closed.'])
+            'Clean proposal was genuinely rejected before forecasting;0/25 candidate coverage is not a completed research round.'])
     raw=encoded(manifest)
     fd=os.open(out/'manifest.json',os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
     with os.fdopen(fd,'wb') as stream:stream.write(raw)
