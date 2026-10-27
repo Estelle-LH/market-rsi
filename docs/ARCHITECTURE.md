@@ -9,18 +9,20 @@ policy (**R**), and a research-side harness/tool policy (**H**). Co-evolution me
 that reviewed R/H versions can influence later scientific decisions, alongside
 the ordinary candidate-development loop.
 
-This page describes the published `main` snapshot at `4c72bb1` (October 15,
-2026 UTC). The native engine supports bounded prediction and R/H capacity
-routes. The latest Supervisor research state has moved the scientific target to
-equities earnings; the earnings adapter and empirical scorer are still pending,
-so this is a scenario transition rather than a completed earnings experiment.
+Public main includes the shared native engine and a reviewed earnings adapter
+with offline tests. Later private experiment checkpoints and their reported
+scores are different artifacts. Start with the [offline quickstart](QUICKSTART.md);
+the [reproducibility guide](REPRODUCIBILITY.md) lists what is still needed to
+rerun the empirical experiment.
 
-The former implementation is an opened-Train, historical NFL
-**300-second trade-VWAP-change diagnostic** with prediction-market data paths.
-It remains available for replay and source audit, but it is now a legacy task
-profile. Its trade prices are not executable quotes and its results do not
-establish profitability. The new task boundary is documented in
-[`benchmarks/earnings/README.md`](../benchmarks/earnings/README.md).
+The current experiments forecast financial-statement targets from point-in-time
+filings; they do not measure trading returns. Their separate baselines, report
+provenance and prospective protocol are in the [experiment index](experiments/README.md).
+The [earnings task scope](../benchmarks/earnings/README.md) separates this task
+from future earnings-surprise or trading evaluation.
+
+The opened-Train NFL 300-second trade-VWAP-change diagnostic remains a legacy
+task and source-compatibility path. Its trade prices are not executable quotes.
 
 ## One round, five logical roles
 
@@ -37,7 +39,8 @@ machines. Account calls return structured text; trusted adapters decide what
 can be written or executed. Model responses do not become arbitrary host
 commands. Actual model and runtime identities belong in each run's bindings.
 
-Every round follows the same seven durable stages:
+A complete research cycle uses seven durable stages; an invalid or rejected
+proposal can close before execution or scoring:
 
 ```text
 input → controller → implement → source_review → execute → result_review → reconcile
@@ -95,7 +98,7 @@ accepts or rejects it. Acceptance changes the selected R/H pair while idle;
 rejection leaves the parent selected. Both outcomes return findings and the
 selected identity to the next round, which invokes the selected hooks.
 
-The current extensible interface is a restricted, pure `apply(context)` hook
+The shared/legacy extensible interface is a restricted, pure `apply(context)` hook
 that returns research advice/tool output. **H here is a research-side policy,
 not permission to rewrite the native runtime.** The proposal cannot change
 the candidate pool, protected data, scorer or authority. Capacity identity
@@ -109,10 +112,35 @@ general research ability or prediction gain. Source existence, passing tests,
 completed delivery, accepted capacity changes and sustained self-improvement
 are distinct evidence claims.
 
+The published earnings paths also include literal `PROFILE` adapters and an
+executable `PROGRAM` / `run(payload)` contract. Host parsing checks metadata;
+untrusted candidate execution belongs in its authorized isolated runtime.
+These interfaces are not interchangeable. A run must bind the exact version,
+inputs, review and execution contract it actually uses. The quickstart tests
+selected deterministic fixtures, not a live Controller/Author experiment.
+
 ## Code map
 
-Paths below are relative to the repository root. This is the full current code
-map; module READMEs describe only their own interfaces.
+Paths below are relative to the repository root. Module READMEs describe their
+own interfaces, not necessarily the current earnings launch.
+
+### Published earnings path
+
+| Responsibility | Source entry points |
+| --- | --- |
+| Research pool and evidence-linked retention | [earnings_population.py](../tools/earnings_population.py), [population loop](../tools/earnings_population_loop.py) |
+| Completed-window continuation | [population continuation](../tools/earnings_population_continuation.py), [runtime](../tools/earnings_population_runtime.py) |
+| Controller/Author/review delivery | [open roles](../tools/earnings_open_roles.py), [population roles](../tools/earnings_population_roles.py) |
+| Candidate metadata and isolated execution contract | [open program](../tools/earnings_open_program.py), [open researcher](../tools/earnings_open_researcher.py) |
+| Task/forecast integration | [population tasks](../tools/earnings_population_tasks.py), [forecast transport](../tools/edgar_forecast_openai.py) |
+| Portable demonstration | [common engine fixture](../tests/test_capacity_feedback_engine.py), [R/H fixture](../tests/test_earnings_capacity_adapter.py) |
+
+[Earnings development](EARNINGS_DEVELOPMENT.md) gives the selected test commands.
+These published files do not contain the complete later experimental state or
+its empirical data/scorer. The newer three-child search protocol is documented
+separately and is not a claim of activation in this public source snapshot.
+
+### Shared engine and retained legacy/compatibility paths
 
 | Responsibility | Source entry points |
 | --- | --- |
@@ -126,7 +154,7 @@ map; module READMEs describe only their own interfaces.
 | R/H source checks and measured replay | [`price_capacity_source.py`](../research/market_rsi/supervisor_harness/price_capacity_source.py), [`price_capacity_trial.py`](../research/market_rsi/supervisor_harness/price_capacity_trial.py), [`price_capacity_replay.py`](../research/market_rsi/supervisor_harness/price_capacity_replay.py) |
 | Identity, small-step journal and idle activation | [`research_capacity_identity.py`](../research/market_rsi/supervisor_harness/research_capacity_identity.py), [`research_capacity_activation.py`](../research/market_rsi/supervisor_harness/research_capacity_activation.py), [`co_evolution_loop.py`](../research/market_rsi/data_scientist_harness/co_evolution_loop.py) |
 | Native scheduling, execution and attempt history | [`continuous_discovery_batch.py`](../research/market_rsi/supervisor_harness/continuous_discovery_batch.py), [`opened_train_discovery_worker.py`](../research/market_rsi/supervisor_harness/opened_train_discovery_worker.py) |
-| Next task boundary | [`benchmarks/earnings/README.md`](../benchmarks/earnings/README.md) |
+| Current financial-task scope | [`benchmarks/earnings/README.md`](../benchmarks/earnings/README.md) |
 | Legacy NFL/prediction-market rows and scoring | [`nfl_ingame_price_data.py`](../research/market_rsi/experiments/nfl_ingame_price_data.py), [`nfl_ingame_price_change_train_diagnostic.py`](../research/market_rsi/experiments/nfl_ingame_price_change_train_diagnostic.py), [`nfl_ingame_price_score.py`](../research/market_rsi/experiments/nfl_ingame_price_score.py) |
 
 ## Directory ownership
@@ -134,10 +162,10 @@ map; module READMEs describe only their own interfaces.
 ```text
 market_rsi/                         Thin developer CLI; forwards legacy helper APIs
 configs/                            Named developer-check suites
-benchmarks/earnings/                 Active task boundary; adapter pending
+benchmarks/earnings/                 Current task scope; empirical inputs stay local
 benchmarks/nfl_price/                Legacy task/source reading index
 tests/                              Developer interface/layout regression tests
-tools/                              Developer compatibility entry
+tools/                              Earnings adapter/contracts and developer compatibility
 docs/                               Project architecture, development and history
 research/market_rsi/                 Source-bound native implementation
   supervisor_harness/               Loop services, roles, workers, review and state
@@ -148,9 +176,10 @@ research/market_rsi/                 Source-bound native implementation
   minimal_prediction_loop/           Earlier probability protocol/scoring components
 ```
 
-The root `market_rsi/` package delegates price execution to the native module
-from its original working directory. Core implementation remains under
-`research/market_rsi/`; many native `test_*.py` files remain beside their modules.
+The root `market_rsi/` package delegates legacy price execution to the native
+module from its original working directory. Earnings-specific published modules
+remain under `tools/`; shared implementation remains under `research/market_rsi/`.
+Many native `test_*.py` files remain beside their modules.
 The directory split reflects source-binding and compatibility constraints, not
 a completed migration into the root package. Earlier/adjacent lanes are not
 additional stages of the current price entry.
@@ -162,9 +191,9 @@ Runtime configuration, authority, ledgers and immutable outputs use the
 configured local artifact store. Some historical records remain tracked in
 this published snapshot; their presence does not make them current execution
 instructions. Local working logs and new run evidence belong outside the
-public source inventory. Prediction-market/NFL modules are retained only until
-the earnings adapter has an equivalent tested source boundary; new research
-logic belongs in the earnings adapter rather than the legacy task paths.
+public source inventory. Prediction-market/NFL modules remain for source-bound
+compatibility and historical checks; new earnings research should not extend
+those legacy task definitions.
 
 For environment setup and exact checks, see [Development](DEVELOPMENT.md).
 For earlier designs and operational records, see [History](HISTORY.md).

@@ -1,8 +1,21 @@
 # Research history and compatibility
 
-Use [Architecture](ARCHITECTURE.md) to understand the published price-research
-pipeline and [Development](DEVELOPMENT.md) to work on it. This page distinguishes
+Use [Architecture](ARCHITECTURE.md) to understand the published engine and
+earnings adapter, and [Quickstart](QUICKSTART.md) for the first offline checks.
+This page distinguishes
 that implementation from earlier designs and private operational records.
+
+## Current reading: earnings source and two experimental trajectories
+
+The reviewed earnings adapter and synthetic tests are now public. The
+[experiment index](experiments/README.md) separates the current advisor report
+(Experiment 1) from the independent restart (Experiment 2). Their later private
+checkpoints and the newly published protocol are not the same version as the
+public source. See [Reproducibility](REPRODUCIBILITY.md) for the exact boundary.
+
+The sections below are historical records of earlier transitions and cleanup
+batches. Their readiness statements describe their own dates, not today's
+publication or permission to execute.
 
 ## October 13, 2026: scenario transition
 
@@ -33,7 +46,7 @@ authorize a new run. Keep original experiment definitions and outcomes intact.
 
 ## Separate current services from compatibility packages
 
-The published mainline uses the price-discovery entry and its R/H hook services.
+The earlier published mainline used the price-discovery entry and its R/H hook services.
 The [Data Scientist Harness](../research/market_rsi/data_scientist_harness/README.md)
 contains both reused controls and an earlier standalone research workflow;
 its older broker is a separate entry path.

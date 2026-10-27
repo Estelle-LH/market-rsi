@@ -4,9 +4,15 @@ This guide covers the environment, developer checks and command behavior.
 [Architecture](ARCHITECTURE.md) owns the current system explanation and code map;
 [History](HISTORY.md) routes older designs and research records.
 
+New readers should begin with [Quickstart](QUICKSTART.md), which was verified in
+a clean standard-library Python 3.12 environment. See [Reproducibility](REPRODUCIBILITY.md)
+before interpreting offline checks as reproduction of an experiment result.
+
 ## Use the existing runtime
 
-Use Python 3.12 and the existing CPU environment described by
+Use Python 3.12. The quickstart smoke and synthetic two-round demonstration
+need no third-party packages. Broader numerical or legacy work uses the CPU
+environment described by
 [requirements-cpu.txt](../research/market_rsi/data_scientist_harness/requirements-cpu.txt).
 Commands below assume that environment's interpreter is `python3`.
 The check runner uses its own interpreter and does not install or upgrade
@@ -29,6 +35,12 @@ python3 -B -m market_rsi check --suite smoke
 python3 -B -m market_rsi check --suite price --list
 python3 -B -m market_rsi check --suite price
 ```
+
+The root suite is broader and may take several minutes; it is not required for
+the first quickstart. Run navigation checks alone with
+`PYTHONPATH=tools:tests:research/market_rsi python3 -B -m unittest test_public_docs -v`.
+They validate public reading entrypoints and local link paths without importing
+the research runtime.
 
 - **Root developer tests:** command delegation, layout/API compatibility and
   nested test-fixture cleanup, plus the published earnings contracts. Their

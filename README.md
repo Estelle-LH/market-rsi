@@ -1,114 +1,84 @@
 # Market RSI
 
-Market RSI is a research system for testing whether an automated researcher can
-improve both a prediction recipe and the way it conducts research. Each round
-turns verified feedback into one bounded next decision; the decision is reviewed,
-executed, scored, and recorded before it can influence the next round.
-
-## The shortest useful picture
-
-```text
-bound input
-  → Controller chooses C, R, or H
-  → Author implements one versioned change
-  → source review and bounded execution
-  → independent measurement
-  → reconcile feedback, memory, history and selected versions
-  → next round
-```
-
-`C` is a prediction recipe. `R` is a researcher-policy change. `H` is a
-research-side harness/tool change. R/H changes are evaluated on their own
-matched replay path; they cannot rewrite the protected task, scorer or authority.
-
-## Why co-evolution?
-
-An automated researcher has two ways to improve. It can change **what it
-predicts**—the features, target, model or trading rule—or it can change **how it
-researches**—which evidence it seeks, how it uses memory, how it selects the
-next hypothesis, and how reliably it runs and interprets an experiment. The
-first is ordinary candidate optimization. The second is researcher-capacity
-improvement. **Co-evolution** keeps both loops connected while measuring them
-separately:
-
-```text
-prediction recipe C ──┐
-                      ├─> same task, same scorer, independent evidence
-researcher policy R ──┤
-harness/tool policy H ┘
-          ↑                    │
-          └── feedback, memory and reviewed decisions ──┘
-```
-
-The system therefore does not treat a better score from a larger model, a new
-dataset or a human-directed code repair as proof that the researcher learned.
-Each step records its parent, the observed problem, the single declared change,
-the expected effect and the next decision. The protected evaluation kernel and
-data boundary stay fixed when an R/H change is tested; a matched replay then
-asks whether the child changes a specified behavior such as evidence use,
-research completion, intervention count or decision quality. A prediction
-change is judged on the frozen task and baselines. A useful R/H step may be
-kept even when its first prediction is neutral, but it must produce reusable
-behavioral evidence rather than activity alone.
-
-This gives Market RSI a stronger research claim than “the model found a better
-number”: it tests whether a researcher can accumulate verified capabilities and
-use them on the next problem without silently changing the task, evaluator or
-authority. The current earnings transition applies this theory to a new task
-boundary; it does not inherit a performance claim from the legacy NFL or
-prediction-market experiments.
-
-## Current published status
-
-The research scenario is now moving to **equities earnings-event research**.
-The repository now also publishes the reviewed earnings research adapter,
-version-pool continuation and offline tests. Original datasets, scorer checkout,
-run authorities, ledgers and experiment records stay local; the public source
-does not launch or activate those experiments. The former NFL/prediction-market work remains recoverable
-historical evidence; it is no longer the next research target.
-
-- Active research target: earnings-event data, features, forecast and trading
-  evaluation, introduced through a new task adapter.
-- Active system core: Controller → Author → review → Worker → evaluation →
-  feedback/memory, with separate `C` (recipe), `R` (researcher) and `H`
-  (harness) changes.
-- Evidence boundary: offline co-evolution checks pass; no earnings prediction
-  improvement or trading profitability has been established yet.
-- Public source: the thin `market_rsi/` developer CLI plus the source-bound
-  implementation under `research/market_rsi/`.
+Market RSI studies whether an automated researcher can improve both **what it
+predicts** and **how it researches**. Reviewed feedback drives the next bounded
+change; candidate code, actual parents, measurements and failures stay traceable.
 
 ## Start here
 
-| If you want to… | Read |
-| --- | --- |
-| Understand the mechanism and co-evolution boundary | [Architecture](docs/ARCHITECTURE.md) |
-| Decide where a file belongs | [Repository structure](docs/REPOSITORY_STRUCTURE.md) |
-| Run checks or inspect the native launch | [Development](docs/DEVELOPMENT.md) |
-| Inspect earnings source and run its offline checks | [Earnings development](docs/EARNINGS_DEVELOPMENT.md) |
-| Read the two earnings experiment tracks, current report provenance and continuation prompt | [Experiment index](docs/experiments/README.md) |
-| Understand the scenario transition | [Earnings task boundary](benchmarks/earnings/README.md) |
-| Recover the former task and baselines | [NFL price profile](benchmarks/nfl_price/README.md) |
-| Recover older designs and private archives | [History](docs/HISTORY.md) |
+- **New reader:** [five-minute offline quickstart](docs/QUICKSTART.md).
+- **What are we doing?** [Architecture](docs/ARCHITECTURE.md) explains the roles
+  and feedback loop; the [documentation map](docs/README.md) routes deeper reading.
+- **What have we observed?** [Two earnings experiments](docs/experiments/README.md)
+  separates the current report, the independent restart and their baselines
+  (Chinese reports/protocol).
+- **Can I reproduce it?** [Reproducibility and publication boundary](docs/REPRODUCIBILITY.md)
+  distinguishes runnable public checks from the still-local 25-company experiment.
 
-## Checks
+## One research cycle
 
-From the checkout root, using the existing Python 3.12 CPU environment:
-
-```sh
-python3 -B -m market_rsi check --suite smoke
-PYTHONPATH=tools:tests:research/market_rsi python3 -B -m unittest discover -s tests -v
+```text
+observed problem → Controller hypothesis → Author change → review
+       ↑                                              ↓
+next decision ← feedback, memory and selection ← execution and scoring
 ```
 
-These are synthetic regression checks. They do not authorize a live research
-run or open protected evaluation data. The broader price suite and native launch
-interface are documented in [Development](docs/DEVELOPMENT.md).
+Changes are classified as **C** (prediction recipe), **R** (research policy) or
+**H** (research-side tools/harness). A better prediction, a demonstrated R/H
+behavior and a human-directed engineering repair are reported separately.
+Not every proposal reaches scoring: rejected and failed branches remain evidence.
 
-## Source and archive boundary
+## Public source versus experiment results
 
-Keep executable source, task contracts, tests and release manifests in Git.
-Keep raw data, credentials, run logs, generated JSON/JSONL, and private research
-records in the local archive. Before moving a file, classify it as active source,
-compatibility source, historical evidence, or generated output; preserve an
-exact local copy and run the checks on the tracked tree.
+The public tree contains the reviewed earnings adapter, version-pool and
+feedback-continuation code, shared engine, and synthetic regression tests.
+The public source snapshot and the private experiment checkpoints are different
+versions; publishing a protocol does not make its latest tree policy implemented.
 
-Contribution and branch rules live in [AGENTS.md](AGENTS.md).
+The current advisor report comes from **Experiment 1**, whose recorded Round17
+scored **3.18/5** against its own **3.00/5** Round0. **Experiment 2** has its own
+**2.98/5** baseline and separate state and accounting. These are reused-training
+Discovery results, not established causal/generalization gains or trading profit.
+The [experiment index](docs/experiments/README.md) fixes the report provenance
+and the scope of these dated snapshots.
+
+A public clone can reproduce offline mechanics. It cannot yet reproduce the
+reported full25 scores from source alone: exact experiment candidates, task data,
+scorer, runtime/configuration bindings and original run evidence remain local.
+See the [reproduction levels and missing-material checklist](docs/REPRODUCIBILITY.md).
+
+## Try the public checks
+
+With Python 3.12, from this checkout:
+
+```sh
+python3.12 -m venv .venv
+. .venv/bin/activate
+python -B -m market_rsi check --suite smoke
+```
+
+The smoke suite uses synthetic fixtures: no API key, provider call, Docker or
+original dataset is needed. See [Quickstart](docs/QUICKSTART.md) for a small
+two-round R/H demonstration and [Development](docs/DEVELOPMENT.md) for wider checks.
+
+## Where does the code live?
+
+| Area | Purpose |
+| --- | --- |
+| [market_rsi/](market_rsi/) | Thin CLI and regression dispatch; not a second engine |
+| [tools/](tools/) | Published earnings population, roles, execution and source contracts |
+| [research/market_rsi/supervisor_harness/](research/market_rsi/supervisor_harness/) | Shared native engine, review, feedback, R/H identity and activation |
+| [tests/](tests/) | Public developer and synthetic earnings regressions |
+| [docs/](docs/README.md) | Architecture, setup, reproduction and experiment navigation |
+| [benchmarks/earnings/](benchmarks/earnings/README.md) | Current financial-forecast task scope and future trading boundary |
+
+[Repository structure](docs/REPOSITORY_STRUCTURE.md) explains active versus
+compatibility paths. NFL/prediction-market code is legacy material, not the
+current earnings benchmark; use [History](docs/HISTORY.md) for recovery.
+
+## Contributing safely
+
+Follow [AGENTS.md](AGENTS.md) and [Development](docs/DEVELOPMENT.md).
+Keep original data, credentials, ledgers and private run records local.
+Public tests and documentation do not grant paid execution or heldout access;
+do not pull this cleanup into a live experiment or move source-hashed modules.

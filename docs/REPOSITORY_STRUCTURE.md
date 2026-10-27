@@ -5,13 +5,19 @@ surface. Organize files by responsibility, not by the date or experiment that
 first created them. A new reader should be able to find the current launch path
 without opening a historical log.
 
+Use the [documentation map](README.md), [Quickstart](QUICKSTART.md) and
+[Reproducibility](REPRODUCIBILITY.md) before following individual legacy module
+READMEs. The public command surface does not launch the private earnings campaign.
+
 ```text
 market-rsi/
 ├── market_rsi/                 # public developer CLI and check dispatch
 ├── configs/                    # suite selection; no task logic
 ├── benchmarks/                 # active task profile and benchmark README
-├── tests/                      # small repository/layout/CLI regression suite
-├── docs/                       # architecture, development and history
+├── tools/                      # published earnings adapter/contracts and check shim
+├── tests/                      # public CLI/layout and synthetic earnings regressions
+├── docs/                       # navigation, setup, architecture, reproduction and history
+│   └── experiments/            # reviewed experiment summaries, protocol and comparison plan
 └── research/market_rsi/        # implementation and research-side adapters
     ├── supervisor_harness/     # active orchestration, review and capacity hooks
     ├── data_scientist_harness/ # release boundary and researcher runtime
@@ -30,7 +36,9 @@ market-rsi/
 | --- | --- | --- |
 | New CLI command or check-suite dispatch | `market_rsi/` | Keep it thin; delegate to research code. |
 | Check membership or suite selection | `configs/checks.json` | Do not duplicate suite lists in Python. |
-| Active task identity/baselines | `benchmarks/earnings/` | Add the profile and adapter together; keep the contract point-in-time. |
+| Active task scope/baselines | `benchmarks/earnings/` | Keep financial-forecast scope distinct from future trading tasks. |
+| Published earnings implementation | `tools/earnings_*.py`, `tools/edgar_forecast*.py` | Preserve the reviewed snapshot and source-bound paths; do not move during navigation cleanup. |
+| Public setup and experiment reading | `docs/`, `docs/experiments/` | Separate source availability, dated evidence and prospective policy. |
 | Historical task recovery | `benchmarks/nfl_price/` and local archive | Do not treat the former NFL/prediction-market profile as the active target. |
 | Controller, worker, review or R/H capacity behavior | `research/market_rsi/supervisor_harness/` | Preserve the protocol source boundary. |
 | Researcher release/runtime contract | `research/market_rsi/data_scientist_harness/` | Keep source publication explicit and reproducible. |
@@ -43,8 +51,9 @@ market-rsi/
    control path.
 2. `data_scientist_harness/` — researcher runtime, release boundary and
    controller-facing tools.
-3. Root `benchmarks/earnings/` — the current task boundary and evaluation
-   contract; the adapter is added there only when its data and scorer are ready.
+3. Root `benchmarks/earnings/` — the current task scope; the reviewed adapter
+   snapshot is under root `tools/`, with tests under root `tests/`. Original
+   empirical data/scorer and later campaign state are local.
 4. `experiments/` and `sports_event_research/` — historical task adapters and
    recovery material for the former NFL/prediction-market work.
 5. `validation_tools/`, `source_review_tools/`, `audit_tools/` and
@@ -89,10 +98,11 @@ layout still reflects the migration history:
   release-bound sources, so a root-file listing overstates the active surface;
 - `configs/checks.json` calls the current regression group `price`, even though
   most selected modules test task-neutral R/H behavior;
-- the earnings benchmark has a contract README but no adapter or scorer yet.
+- the reviewed earnings adapter is published under `tools/`, while its empirical
+  data/scorer and later experiment checkpoints are not a public reproduction bundle.
 
-The safe refactor order is: add the earnings adapter and tests, split task-
-neutral engine modules from legacy task modules, rename the suite only after
-compatibility coverage exists, then remove unused legacy paths in audited
-batches. Renaming or moving these modules before that sequence would break
-source hashes and replay bindings without improving the research loop.
+The earnings source/test publication is complete for its stated snapshot.
+Further source refactoring should split task-neutral and legacy components only
+with consumer/release-map coverage, preserve aliases before renaming suites,
+and archive unused paths in separately audited batches. This navigation cleanup
+does not move any source, change a source hash, or retire a legacy dependency.

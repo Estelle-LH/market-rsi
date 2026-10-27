@@ -1,5 +1,11 @@
 # Scenario migration: prediction markets → earnings events
 
+This is the historical scenario-transition plan, not the current implementation
+status. The reviewed earnings adapter/tests are now public, and the present
+financial-target experiments are separate from future market/trading work.
+Use [Architecture](ARCHITECTURE.md), [Earnings task scope](../benchmarks/earnings/README.md)
+and [Reproducibility](REPRODUCIBILITY.md) for the current reading path.
+
 ## Decision
 
 The next scientific task is equities earnings-event research. The shared

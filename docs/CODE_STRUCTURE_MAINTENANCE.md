@@ -4,12 +4,18 @@ This repository is maintained while the research supervisors continue to work.
 The contract keeps the active earnings transition readable without freezing
 research or deleting historical evidence.
 
+For newcomer navigation, use the [documentation map](README.md) and
+[reproduction boundary](REPRODUCIBILITY.md). The reviewed earnings adapter now
+exists under root `tools/`; this public snapshot is older than the later private
+experiments. Keep those existing source-bound paths during documentation cleanup.
+
 ## Ownership map
 
 | Area | Owner path | Maintenance rule |
 | --- | --- | --- |
 | Public commands and suite dispatch | `market_rsi/`, `configs/` | Keep thin; no task-specific research logic. |
-| Active task contract | `benchmarks/earnings/` | New earnings inputs, targets, baselines and scorers belong here. |
+| Active task scope | `benchmarks/earnings/` | Describe current financial targets and future task changes accurately. |
+| Published earnings adapter | `tools/earnings_*.py`, `tools/edgar_forecast*.py` | Keep reviewed source paths and tests stable; no move implied by a preferred future layout. |
 | Co-evolution engine | `research/market_rsi/supervisor_harness/` | Keep controller, worker, feedback and replay mechanics here. |
 | Researcher runtime/release | `research/market_rsi/data_scientist_harness/` | Keep release maps and source publication explicit. |
 | Reusable validation/provenance | `validation_tools/`, `source_review_tools/`, `data_science_tools/` | Preserve imports and release-map entries until a replacement is verified. |
@@ -34,7 +40,8 @@ Before editing, classify the change as **active**, **legacy**, or
 
 ## Safe refactor order
 
-1. Add the earnings adapter and its tests without moving the engine.
+1. Preserve the published earnings adapter/test snapshot; make any next adapter
+   change explicit without moving the engine.
 2. Separate task-neutral modules from legacy task modules, preserving imports
    and release hashes with compatibility shims where needed.
 3. Rename the misleading `price` suite only after an alias and regression

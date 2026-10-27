@@ -6,6 +6,12 @@ published main. It does not include that private
 branch's ancestry, experiment records or later unfinished campaign work.
 Publication does not activate a run or establish predictive improvement.
 
+For the first runnable path, use [Quickstart](QUICKSTART.md). For the difference
+between this source snapshot, the two private experiments and their score
+reports, read [Reproducibility](REPRODUCIBILITY.md) and the
+[experiment index](experiments/README.md). In particular, later experiment
+candidates and the prospective tree policy are not silently included here.
+
 ## Code map
 
 - `tools/earnings_population*.py`: bounded version pool, diagnostics, feedback
@@ -29,7 +35,10 @@ Supporting test modules imported by those key tests remain required fixtures.
 
 ## Offline checks
 
-Use the existing Python 3.12 environment; no provider calls are needed:
+Use Python 3.12; no provider calls are needed. The quickstart's smoke and
+sum/count/R/H fixtures were also verified in a fresh standard-library
+Python 3.12.3 venv. The broader source-contract tests below have their own
+mocked and explicit external opt-in boundaries:
 
 ```sh
 PYTHONPATH=tools:tests:research/market_rsi python3 -B -m unittest discover -s tests -p 'test_earnings_population*.py'
