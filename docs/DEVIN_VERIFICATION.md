@@ -54,21 +54,55 @@ The production engine, source-bound modules, scorer, data, model settings,
 admission guards, adoption rules, live ledgers and both experiments are unchanged.
 This is a portability repair, not an R/H scientific improvement.
 
-## Retest evidence and limits
+## Independent retest of the published repair
+
+Devin then cloned GitHub again into a new directory and detached at
+[`7a66ea0d4c977428ab9f883f64e4de37331931e2`](https://github.com/Estelle-LH/market-rsi/commit/7a66ea0d4c977428ab9f883f64e4de37331931e2).
+Nothing was copied from the original patched checkout. The new Python 3.12.16
+venv had only pip 25.0.1, no NumPy, and no inherited site packages. Git status
+was clean before and after; Docker/resident-data opt-ins remained unset.
+
+| Same minimal check | Published-source result | Wall time |
+| --- | --- | --- |
+| CLI help | Exit 0 | 0.05 s |
+| Smoke | Exit 0; 69 passed, zero skips | 1.46 s |
+| Two-round engine + R/H adapter | Exit 0; 17 passed, zero skips | 7.63 s |
+| Focused navigation/layout/structure/CLI/check runner | Exit 0; 27 passed, zero skips | 0.19 s |
+
+Each command had a 60–120 second bound. In an additional in-memory negative
+check, the control passed, intentionally restoring the generic fixture's
+private-loader call was rejected during setup, and restoring the proper method
+passed again. Spies recorded no call to the original loader or private scorer
+path. The expected inner rejection was a normal assertion failure, not the
+previously masked `TypeError`. No source edits, substituted scores or skipped
+cases were used to obtain these passes.
+
+Verdicts: **PUBLIC_QUICKSTART_PASS**, **SYNTHETIC_RH_EXAMPLE_PASS**,
+**FOCUSED_DEVELOPER_PASS**, and **REGRESSION_GUARD_NEGATIVE_CHECK_PASS**.
+
+[Published-source retest logs](https://app.devin.ai/attachments/5cebb0fc-19df-4f5e-910c-43d6d5acc87f/market-rsi-7a66ea0-retest-logs.tgz)
+include environment evidence, exact commands, per-command outputs, runner and
+reviewed test diff. Archive SHA-256 reported by Devin:
+`aa23085f97697956bb34477002cb856a9cbbe5fbaffd583689b78d88b0c078de`.
+This summary records Devin's returned evidence; the attachment bytes were not
+independently downloaded and rehashed locally.
+
+## Earlier patch checks and remaining limits
 
 Devin's proposed patch passed the two-round selection (17 tests, 7.25 s), with
 three additional successful reruns. Smoke (69) and focused developer checks
 (27) also passed. The reviewed integration additionally passed the 17-test
-selection locally on Python 3.12.3 without third-party packages. Those results
-must not be confused with an independent checkout of a later published commit;
-record that exact commit and fresh-clone result when retesting it.
+selection locally on Python 3.12.3 without third-party packages. Those earlier
+working-tree results are separate from the published-source retest above.
 
 The broader suite is **not green**. With Devin's proposed patch it ran 644
 tests with 190 errors, one failure and 11 skips. A separate pinned-CPU-dependency
 venv still had 180 errors, two failures and 11 skips. Known causes include
 private scorer/data/runtime paths, hardcoded temporary-directory assumptions
 and a floating-point exact-equality test that also failed on the unpatched
-checkout. Do not substitute a fake empirical scorer, silently skip these cases
+checkout. The published-source retest did not rerun this broader suite;
+**FULL_ROOT_FAIL** remains the known status from the preserved earlier logs.
+Do not substitute a fake empirical scorer, silently skip these cases
 or enable Docker/resident-data opt-ins to turn this into a full-suite claim.
 
 No LLM forecast, paid research batch, private-data evaluation or experiment

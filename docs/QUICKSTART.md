@@ -99,7 +99,9 @@ not establish portability. At `153b6b2`, Devin's fresh Ubuntu/Python 3.12.16
 environment passed smoke (69) and focused developer checks (27), but the
 two-round selection ran 16 tests with nine errors from an absolute private
 macOS scorer path. The repaired fixture passes 17 tests locally and in Devin's
-patch checkout. A regression guard now forbids that private loader in the
+independent fresh GitHub clone at `7a66ea0`; smoke (69) and focused developer
+checks (27) also pass there, with zero skips. A regression guard now forbids
+that private loader in the
 generic sum/count fixture; real earnings fixtures keep their original loader.
 These are separate selections, not a count of distinct tests.
 
