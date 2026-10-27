@@ -3,6 +3,7 @@ from copy import deepcopy
 import json
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 from supervisor_harness import capacity_feedback_engine as engine
 from market_rsi import digest
@@ -88,8 +89,18 @@ class LocalWorker:
 
 
 class CommonEngineTests(loop_fixture.CapacityLoopTests):
+    def setUp(self):
+        # Fail even on the original host if a generic fixture reads its scorer.
+        with patch.object(loop_fixture.transport, 'make_kernel',
+                          side_effect=AssertionError('Private earnings kernel forbidden in generic fixture')):
+            super().setUp()
+
+    # Generic sum/count tasks score locally; they bind no earnings scorer or QA.
+    def evaluation_kernel(self): return None
+
     def setup_task(self, kind='sum'):
         self.task = LocalTask(self, kind)
+        self.envelope.pop('evaluation_kernel')
         self.envelope.update(mode='offline_replay', task_kind=kind, initial_state=self.task.initial)
         self.bound = engine.save(self.root/'generic-envelope.json', self.envelope)
 
@@ -171,6 +182,19 @@ class CommonEngineTests(loop_fixture.CapacityLoopTests):
                 engine.run(self.bound, self.native.restore(), self.task, services=services)
         self.assertEqual((len(self.packets), len(self.task.calls)), (1, 1))
         self.assertTrue(Path(self.envelope['slots'][0]['forecast']).joinpath('failure.json').is_file())
+
+    def test_generic_envelope_binds_no_earnings_kernel_or_host_path(self):
+        self.setup_task()
+        envelope = engine.read(self.bound)
+        self.assertNotIn('evaluation_kernel', envelope)
+        root = Path(self.root).resolve()
+        for value in json.dumps(envelope).split('"'):
+            if value.startswith('/'): self.assertTrue(Path(value).resolve().is_relative_to(root), value)
+        # Earnings fixtures still delegate to the original, unchanged kernel loader.
+        marker = object()
+        with patch.object(loop_fixture.transport, 'make_kernel', return_value=marker) as loader:
+            self.assertIs(loop_fixture.CapacityLoopTests.evaluation_kernel(self), marker)
+            loader.assert_called_once_with(self.root)
 
     def test_missing_service_has_no_automatic_fallback(self):
         self.setup_task()

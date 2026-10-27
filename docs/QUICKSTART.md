@@ -18,9 +18,11 @@ python3.12 -m venv .venv
 python --version
 ```
 
-The smoke check and two-round example below use only the standard library. They were checked
-on macOS with Python 3.12.3 in a new venv without third-party packages. No
-credential, Docker or resident-data opt-in is needed. Broader numerical/legacy
+The smoke check and two-round example below use only the standard library. No
+credential, Docker or resident-data opt-in is needed. An independent Linux
+check found a hidden private-file dependency in the original two-round fixture;
+use the version containing the [portability repair](DEVIN_VERIFICATION.md), not
+the earlier `153b6b2` snapshot. Broader numerical/legacy
 work can require the pinned CPU dependencies described in
 [Development](DEVELOPMENT.md); it is not part of this first path.
 
@@ -50,7 +52,7 @@ it again. The
 [R/H adapter tests](../tests/test_earnings_capacity_adapter.py) check selected
 research instructions, tool bounds, rejected changes and rollback.
 
-Expected: the checked snapshot passes all 16 tests. Their temporary records are removed by the
+Expected: the repaired snapshot passes all 17 tests. Their temporary records are removed by the
 test fixtures. No real LLM generates a scientific candidate here, and passing
 does not demonstrate autonomous learning or financial prediction improvement.
 
@@ -61,9 +63,12 @@ PYTHONPATH=tools:tests:research/market_rsi python -B -m unittest discover -s tes
 ```
 
 This is the wider root developer/earnings suite, outside the minimal portable
-quickstart; it can take substantially longer. Follow the environment requirements
-in [Development](DEVELOPMENT.md) rather than treating the whole suite as validated
-by the standard-library demonstration above.
+quickstart. It is **known to fail in a public-only Linux clone**: many cases
+bind the private empirical scorer, original data or host-specific runtimes.
+Installing the numerical dependencies does not supply those materials. See the
+[independent test record](DEVIN_VERIFICATION.md) and
+[Development](DEVELOPMENT.md); the standard-library demonstration above does
+not validate this whole suite.
 Docker and original-resident-data cases have explicit opt-ins and are skipped
 by default. Keep them off for this quickstart; a skipped case is not a pass of
 that external execution boundary. See [Earnings development](EARNINGS_DEVELOPMENT.md)
@@ -88,14 +93,22 @@ PYTHONPATH=tools:tests:research/market_rsi python -B -m unittest test_public_doc
 
 ## Verification scope of this documentation cleanup
 
-In a clean standard-library Python 3.12.3 venv, the smoke suite passed 69 tests,
-the two-round/adapter example passed 16, and the navigation/layout/CLI/check-runner
-group passed 27. These are separate selections, not a count of distinct tests.
+The original Mac check used a clean standard-library Python 3.12.3 venv, but
+still had access to the host filesystem. Its 69/16/27 passing selections did
+not establish portability. At `153b6b2`, Devin's fresh Ubuntu/Python 3.12.16
+environment passed smoke (69) and focused developer checks (27), but the
+two-round selection ran 16 tests with nine errors from an absolute private
+macOS scorer path. The repaired fixture passes 17 tests locally and in Devin's
+patch checkout. A regression guard now forbids that private loader in the
+generic sum/count fixture; real earnings fixtures keep their original loader.
+These are separate selections, not a count of distinct tests.
 
-The broader root discovery was also attempted and stopped manually before
-completion because it was substantially more expensive than the targeted
-checks. No full-root-suite pass is claimed for this cleanup. No live experiment,
-provider call or private ledger was involved in these test runs.
+The initial broader root discovery failed on Linux, rather than timing out:
+643 tests, 199 errors and 11 skips. It remains outside the passing portable
+path. [The verification record](DEVIN_VERIFICATION.md) preserves the failure,
+repair scope and retest evidence. No financial result, autonomous learning,
+live experiment, provider call or private ledger write is established by these
+checks.
 
 Next read [Architecture](ARCHITECTURE.md), the
 [reproduction boundary](REPRODUCIBILITY.md), and the

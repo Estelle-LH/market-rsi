@@ -4,9 +4,11 @@ This guide covers the environment, developer checks and command behavior.
 [Architecture](ARCHITECTURE.md) owns the current system explanation and code map;
 [History](HISTORY.md) routes older designs and research records.
 
-New readers should begin with [Quickstart](QUICKSTART.md), which was verified in
-a clean standard-library Python 3.12 environment. See [Reproducibility](REPRODUCIBILITY.md)
-before interpreting offline checks as reproduction of an experiment result.
+New readers should begin with the repaired standard-library Python 3.12 path
+in [Quickstart](QUICKSTART.md). Read the
+[independent Linux verification record](DEVIN_VERIFICATION.md) for the original
+hidden-file failure and repair. See [Reproducibility](REPRODUCIBILITY.md) before
+interpreting offline checks as reproduction of an experiment result.
 
 ## Use the existing runtime
 
@@ -36,8 +38,12 @@ python3 -B -m market_rsi check --suite price --list
 python3 -B -m market_rsi check --suite price
 ```
 
-The root suite is broader and may take several minutes; it is not required for
-the first quickstart. Run navigation checks alone with
+The root suite is broader and is known to fail in a public-only Linux clone:
+it includes cases bound to a private empirical scorer, data and host runtimes,
+plus unresolved portability/numerical-test failures. Numerical package
+installation alone does not make it runnable. It is not required for the first
+quickstart; preserve these failures instead of weakening the scientific tests.
+Run navigation checks alone with
 `PYTHONPATH=tools:tests:research/market_rsi python3 -B -m unittest test_public_docs -v`.
 They validate public reading entrypoints and local link paths without importing
 the research runtime.

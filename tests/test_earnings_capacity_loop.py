@@ -17,7 +17,7 @@ class CapacityLoopTests(worker_fixture.CapacityWorkerTests):
     def setUp(self):
         super().setUp()
         self.axes=['R','H'];self.packets=[];self.executed=[];self.reviewed=[];self.authored=[]
-        self.fail=False;self.bad_controller=False
+        self.forecast_failure=False;self.bad_controller=False
         self.reject=False;self.fake_review=False
         questions='\n'.join(f'### T{i:03d} | invented amount' for i in range(1,6))
         q=Path(self.company['visible_root'])/'questions.md';q.write_text(questions)
@@ -27,12 +27,15 @@ class CapacityLoopTests(worker_fixture.CapacityWorkerTests):
         self.api=ResearchState(self.company,self.task)
         self.envelope={'root':str(self.root/'episode'),'id':self.task,'mode':'offline_replay','cik':self.company['cik'],'max_rounds':2,
             'source_commit':'b'*40,'initial_state':self.api.save(self.root/'initial-memory',self.api.empty()),
-            'evaluation_kernel':transport.make_kernel(self.root),
+            'evaluation_kernel':self.evaluation_kernel(),
             'slots':[{role:str(self.root/'episode/roles'/f'{role}-{n}') for role in ('controller','author','review','forecast')} for n in (1,2)]}
         self.bound=flow.save(self.root/'envelope.json',self.envelope)
         for fixture in (patch.object(flow.e,'preflight_capacity_episode',return_value=(self.company,self.api)),
                         patch.object(flow.policy,'capacity_sources',return_value=[])):
             fixture.start();self.addCleanup(fixture.stop)
+
+    def evaluation_kernel(self):
+        return transport.make_kernel(self.root)
 
     def record(self,slot,value):
         path=Path(slot);path.mkdir(parents=True,exist_ok=False)
@@ -145,7 +148,7 @@ class CapacityLoopTests(worker_fixture.CapacityWorkerTests):
                     action={'type':'function_call','call_id':'read','name':'read_file',
                             'arguments':json.dumps({'path':'filings/old.md','offset':0,'characters':5000})}
                 return {'status':'completed','output':[action]}
-            if self.fail:raise RuntimeError('fake uncertain provider failure')
+            if self.forecast_failure:raise RuntimeError('fake uncertain provider failure')
             return {'status':'completed','output':[{'type':'message','content':[{'type':'output_text','text':json.dumps({
                 'predictions':[{'target_id':f'T{i:03d}','predicted_value':100} for i in range(1,6)]})}]}]}
         try:
@@ -204,7 +207,7 @@ class CapacityLoopTests(worker_fixture.CapacityWorkerTests):
         self.assertTrue((self.root/'episode/roles/controller-1/response.json').is_file())
 
     def test_failed_forecast_preserves_fact_failure_and_blocks_second_controller(self):
-        self.fail=True
+        self.forecast_failure=True
         with self.assertRaises(flow.driver.LoopHalted):self.run_flow()
         with self.assertRaises(flow.driver.LoopHalted):self.run_flow()
         self.assertEqual((len(self.packets),len(self.executed)),(1,1))

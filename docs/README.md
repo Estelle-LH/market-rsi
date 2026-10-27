@@ -19,6 +19,7 @@ source, the latest local experiment and a dated report are separate artifacts.
 | Question | Canonical document |
 | --- | --- |
 | Which environment and test command should I use? | [Development](DEVELOPMENT.md) |
+| What really passed on an independent clean machine? | [Devin verification and portability repair](DEVIN_VERIFICATION.md) |
 | Which earnings modules and tests are published? | [Earnings development](EARNINGS_DEVELOPMENT.md) |
 | Where does a change belong? | [Repository structure](REPOSITORY_STRUCTURE.md) |
 | What may a cleanup safely change? | [Maintenance contract](CODE_STRUCTURE_MAINTENANCE.md) |

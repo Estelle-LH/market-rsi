@@ -66,9 +66,13 @@ model responses.
 ## Record your own offline reproduction
 
 Record the public commit, OS, Python version, exact command, exit status,
-test count and explicit skips. A clean standard-library Python 3.12.3 venv was
-used for this publication's quickstart checks; no provider calls or private
-experiment ledger writes were needed.
+test count and explicit skips. Environment isolation must include filesystem
+dependencies, not just Python packages: a fresh Mac venv initially hid a
+private scorer dependency that Devin's public-only Linux clone exposed.
+The [independent verification and repair record](DEVIN_VERIFICATION.md)
+preserves that failure and separates the repaired minimal path from the
+still-failing broader root suite. No provider calls or private experiment
+ledger writes were needed for these checks.
 
 If a command fails, preserve that result and report the missing dependency or
 binding. Do not substitute another scorer, fabricate zeros for missing companies,
