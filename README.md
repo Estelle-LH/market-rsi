@@ -85,6 +85,7 @@ historical evidence; it is no longer the next research target.
 | Decide where a file belongs | [Repository structure](docs/REPOSITORY_STRUCTURE.md) |
 | Run checks or inspect the native launch | [Development](docs/DEVELOPMENT.md) |
 | Inspect earnings source and run its offline checks | [Earnings development](docs/EARNINGS_DEVELOPMENT.md) |
+| Read the two earnings experiment tracks, current report provenance and continuation prompt | [Experiment index](docs/experiments/README.md) |
 | Understand the scenario transition | [Earnings task boundary](benchmarks/earnings/README.md) |
 | Recover the former task and baselines | [NFL price profile](benchmarks/nfl_price/README.md) |
 | Recover older designs and private archives | [History](docs/HISTORY.md) |
