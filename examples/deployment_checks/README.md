@@ -8,7 +8,7 @@ From the repository root:
 python3 -I -B -m unittest discover -s examples/deployment_checks -p 'test_*.py' -v
 ```
 
-The suite contains 30 guest-probe fixture tests, 13 identity-diagnostic fixture tests and 31 ordinary-file bundle tests (74 total). Tests mock Linux inspection; running this command does not inspect a live container or Docker daemon. Identity tests create and remove temporary receipt files under the current directory.
+The suite contains 30 guest-probe fixture tests, 13 identity-diagnostic fixture tests 31 ordinary-file bundle tests, 16 artifact-transport tests and 14 command-journal tests (104 total). Tests mock Linux inspection and cloud/network callbacks; running this command does not inspect a live container, Docker daemon or cloud account. Identity tests create and remove temporary receipt files under the current directory.
 
 ## Guest probe
 
@@ -31,6 +31,18 @@ Injected callbacks do not enforce an operating-system deadline. A real transport
 Successful installation writes and fsyncs files, reads them back, and publishes a fully written/fsynced completion receipt with a no-overwrite hard link. A failed installation retains its directory and cannot resume or overwrite it. The receipt records file integrity, not workload permission. A local completion marker cannot establish cross-host ownership or financial/research closure. Fault-injection tests do not establish physical power-loss durability or resistance to a malicious process with access to the trusted parent.
 
 Devin's first actual run found six failing cases across three defects: destination spelling normalization, a reserved namespace collision, and premature completion-marker publication. The corrected implementation passed all original cases plus two additional publication/sync failure cases: 31/31. No failed expectation was removed.
+
+## Artifact transport
+
+`artifact_transport.py` provides bounded binary/base64 parts, exclusive part-file writes, SHA256-checked ordered assembly, strict HTTPS fetching and bounded gzip/JSON decoding. Assembly accepts at most 512 parts; callers must choose an encoding chunk width that stays within that count. Fetching pins the exact HTTPS hostname and permits only the original final URL, rejects credentials and redirects, verifies byte count and SHA256, and suppresses exception text that could contain temporary URL credentials. Tests inject fake openers; they make no network requests.
+
+Devin's first 16-method run exposed two failing subcases: response userinfo and a changed same-host destination. The fix retained the original assertions. The unchanged suite then passed 16/16 both locally and on the exact cloud Python 3.12.3. The tested fetch/decode helper was also used in an actual private ordinary-code installation; private URLs and bindings are excluded here.
+
+## Command journal
+
+`command_journal.py` fsyncs a new per-key dispatch intent before calling the injected submitter. A duplicate key cannot submit again, including when the acknowledgement is missing or malformed. A persisted acknowledgement binds the original intent hash and command/target identity; observation checks the returned identity, state and real response code. Unknown acknowledgements remain unknown and do not invoke the observer or resubmit.
+
+Devin independently wrote and ran 14 tests for duplicate calls, uncertain acknowledgements, partial or modified journals, symlinks, sync ordering, status handling and exception redaction. The helper was then used for a real finite deployment-test dispatch and observation. These are local dispatch semantics, not cross-host ownership, physical crash durability or production scientific closure.
 
 ## Optional native numerical probe
 
