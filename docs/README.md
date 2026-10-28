@@ -22,6 +22,7 @@ source, the latest local experiment and a dated report are separate artifacts.
 | What really passed on an independent clean machine? | [Devin verification and portability repair](DEVIN_VERIFICATION.md) |
 | Which earnings modules and tests are published? | [Earnings development](EARNINGS_DEVELOPMENT.md) |
 | Where does a change belong? | [Repository structure](REPOSITORY_STRUCTURE.md) |
+| How should an AWS move preserve state and memory? | [Deployment and memory plan](deployment/README.md) |
 | What may a cleanup safely change? | [Maintenance contract](CODE_STRUCTURE_MAINTENANCE.md) |
 | What does the current task actually predict? | [Earnings task scope](../benchmarks/earnings/README.md) |
 
@@ -43,3 +44,4 @@ source, the latest local experiment and a dated report are separate artifacts.
 prediction markets. The [NFL source index](../benchmarks/nfl_price/README.md) and
 module READMEs describe their own legacy interfaces; their old launch commands,
 model names and grants are not current earnings instructions.
+
