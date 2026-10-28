@@ -8,7 +8,7 @@ From the repository root:
 python3 -I -B -m unittest discover -s examples/deployment_checks -p 'test_*.py' -v
 ```
 
-The suite contains 30 guest-probe fixture tests, 13 identity-diagnostic fixture tests 31 ordinary-file bundle tests, 16 artifact-transport tests and 14 command-journal tests (104 total). Tests mock Linux inspection and cloud/network callbacks; running this command does not inspect a live container, Docker daemon or cloud account. Identity tests create and remove temporary receipt files under the current directory.
+The suite contains 30 guest-probe fixture tests, 13 identity-diagnostic tests, 31 bundle tests, 16 artifact-transport tests, 14 command-journal tests and 16 stop-sequence tests (120 total). The complete revision passes under Python 3.12.3 locally. The earlier 104-test revision also passed on AWS; the added stop sequence has synthetic adapter coverage only. Tests mock inspection and cloud/network callbacks. Identity tests create and remove temporary receipt files under the current directory.
 
 ## Guest probe
 
@@ -43,6 +43,14 @@ Devin's first 16-method run exposed two failing subcases: response userinfo and 
 `command_journal.py` fsyncs a new per-key dispatch intent before calling the injected submitter. A duplicate key cannot submit again, including when the acknowledgement is missing or malformed. A persisted acknowledgement binds the original intent hash and command/target identity; observation checks the returned identity, state and real response code. Unknown acknowledgements remain unknown and do not invoke the observer or resubmit.
 
 Devin independently wrote and ran 14 tests for duplicate calls, uncertain acknowledgements, partial or modified journals, symlinks, sync ordering, status handling and exception redaction. The helper was then used for a real finite deployment-test dispatch and observation. These are local dispatch semantics, not cross-host ownership, physical crash durability or production scientific closure.
+
+## Stop sequence
+
+`stop_sequence.py` holds the caller's dispatch-exclusion context across two stable terminal/idle observations, an original-closure verifier callback, and journal-protected stop submission. It requires complete named receipt bindings for terminal, finance, requests, cleanup, private seal and memory. These digests are only adapter bindings: the callback must run the original validators. The module supplies no cloud client, real lock, state reader or default verifier, so it cannot establish real scientific closure or cross-host exclusion itself.
+
+Pre-submit errors remain blocked. If stop was submitted without a known acknowledgement, the state remains unknown and cannot resubmit. A late exclusion-release error after a known acknowledgement raises `StopReleaseFailed` carrying that exact acknowledgement, allowing observation of the existing request. Exception suppression by the context manager cannot silently turn a failure into success.
+
+The first 15-method test run retained one failure against an overbroad requirement that even a release error after submission must imply zero prior stop calls. That temporal requirement was corrected explicitly, with the first source/test/report preserved. The implementation now preserves the known/unknown outcome after late release errors. The other 14 original methods are unchanged; the corrected case and one small regression method bring this unit to 16/16. Tests use local fakes and ordinary journal I/O, with no cloud or research-state operations.
 
 ## Optional native numerical probe
 
