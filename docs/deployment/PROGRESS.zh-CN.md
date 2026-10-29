@@ -14,7 +14,8 @@
 | 原evaluation终态和请求 | 本地14项与终态20项回归通过 | 四个实际原面同runtime/manifest并持真实drain；raw只哈希不解码 |
 | 原财务与历史Reader | 核心12、请求行18、历史grant13、真实Reader13本地通过 | 固定历史前缀、固定split及授权未伪造，完整财务正例尚无 |
 | 五原面联合收尾 | 新本地10/10，变更后的Reader13/核心12回归通过 | memory/cleanup/terminal/requests实际通过后，真实财务按原规则拒绝虚构历史；无停机intent |
-| 规范五面与owner路径 | 新本地7/7，受影响的8组122项回归通过；native隔离6项及fixture10项通过 | 独立mount/network与临时文件系统探针已写好；尚未实际Linux云测 |
+| 规范五面与owner路径 | 新本地7/7，受影响的8组122项回归通过；native保护/原财务路由8项及fixture10项通过 | 独立mount/network与临时文件系统探针已写好；尚未实际Linux云测 |
+| 主进程内核退出码 | 新本地12/12，涉及原memory/五面接线的退出码一致性 | Mac实际子进程wait；Linux pidfd后端为模拟，后代/容器未据此推断清空 |
 | 私有Git回读适配 | 新本地14/14；实际原memory及新建Git仓库的真实blob回读 | 新只读工程实现，原归档写入器未在快照中；只核对明确声明的artifact，非真实科研归档准入 |
 
 ## 当前接线
@@ -27,11 +28,15 @@
 
 规范路径现同时接入memory、cleanup、公司/请求、finance及owner drain。原population回执和独立ledger目录保持原标签，财务使用artifact父目录manifest；其中population子集必须与其他四面逐行一致，遗漏、增加、哈希/大小变化及重复均拒绝。每个规范入口在Mac或不合格部署命名空间中先拒绝，再接触原路径。新的7项只验证这个契约及路由，没有在Mac探测或建立原目录，也没有冒称实际Linux文件系统通过。
 
-原规范路径的native探针和启动器已经写好：仅在独立Linux代码目录执行，必须处于隔离的mount和network namespace；全新临时文件系统承载合成ledger、claims及drain，退出后清除。探针要求同ledger的实际竞争进程无法拿锁，前四原面通过后真实财务拒绝虚构历史、数据库不变、停机intent为空。6项隔离保护和10项联合fixture回归本地通过；实际Linux执行待单独具体云测授权，旧文件包授权不扩为新包。
+原规范路径的native探针和启动器已经写好：仅在独立Linux代码目录执行，必须处于隔离的mount和network namespace；全新临时文件系统承载合成ledger、claims及drain，退出后清除。探针要求同ledger的实际竞争进程无法拿锁，前四原面通过后真实财务拒绝虚构历史、数据库不变、停机intent为空。8项隔离保护/原财务路由和10项联合fixture回归本地通过；实际Linux执行待单独具体云测授权，旧文件包授权不扩为新包。
 
 新增private-seal只读适配先运行真实原memory，再核对声明的实际Git ref/commit、Source祖先、每个明确artifact的blob类型/长度/字节，以及HEAD和无暂存更改的index前后不变。14项在全新合成仓库中通过，覆盖同尺寸篡改、缺blob、错ref、无Source祖先、漏清单、暂存index、变HEAD及外部Git存储。它可作为同一真实drain内的明确回调；当前仅支持自有工程目录，规范Linux路径未启用。保存的118文件不包含原归档写入器，所以这部分明确标为新工程只读实现，不声称原collector已验收，也不读取真实私有Git祖先。
 
+主进程退出码新增明确的父进程生产接口，只接受持有的真实Popen子进程，从内核wait状态取得退出码；不接受PID/JSON回执、不发信号、不启动进程。Linux实现要求pidfd并使用waitid(P_PIDFD)，缺少能力不降为按PID等待；Mac便携工程验证使用waitpid，不能算Linux原生通过。12项覆盖活动子进程、0/1/17和信号退出、别处已回收/缓存篡改/父进程身份改变，以及在真实drain下将实际退出码接入原memory和五面验证：真实0到达原财务拒绝，真实1不能复用成功memory。后代进程、Docker、账户结算和当前host身份仍明确待接。Python对进程返回码及wait接口的语义见[官方subprocess文档](https://docs.python.org/3.12/library/subprocess.html)和[官方os文档](https://docs.python.org/3.12/library/os.html#os.pidfd_open)。
+
 ## 已保留的工程故障
+
+父进程联测首次暴露native探针的异常分类错误：真实原代码抛BudgetStop（RuntimeError子类），且消息带完整“no refund/reset”后缀。旧探针按缩短消息和基础异常名称匹配，会误报真实原财务拒绝。首失败和旧代码/包完整留档；修复为原 subtype及完整消息，新8项实际原代码路由回归通过，无预算/历史规则改动。旧具体云测请求撤回执行，修复后的V2精确包与18+1检查单另列，等待具体授权，不扩大旧批准。
 
 原Reader发现此前把账本artifact父目录推断为源码仓库的错误：原Reader会把仓库内的回执当作未登记Git来源。新增11项首次1失败，原代码和日志保留；修复后11/11。源码仓库改为显式独立部署仓库，原ledger/population和历史Source绑定不改，原Source路由不作数据fallback。
 
