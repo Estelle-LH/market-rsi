@@ -17,6 +17,7 @@
 | 原evaluation请求与terminal联合接线 | 新本地14/14，修改入口的原20项回归通过，未云测 | 两公司wave/rolling4同一metadata/runtime下，实际原memory/cleanup/terminal/physical_requests与真实drain相连；财务/私有Git/OS来源仍未验 |
 | 原财务请求行检查 | 本地18/18，未云测 | 原只读SQLite请求行与原memory在新建合成DB上执行；完整历史grant/Source/prefix与finance关闭面仍未接通 |
 | 原完整预算核心接线 | 本地12/12；共享context18项回归通过 | 原完整函数及真实Git授权子检查执行，固定历史前缀拒绝虚构历史；规范只读profile已接线；原model/additional历史依赖另有13项本地验收，完整财务正例仍未取得 |
+| 原历史Reader与panel入口 | 本地13/13；规范profile修复后11/11；核心/历史grant25项回归通过 | 实际原class、epoch与冻结scope函数已接线；没有伪造固定历史或冻结划分，完整财务正例仍缺 |
 | 可选比较/停止观察05 | 独立离线9+9通过 | 原比较返回与原durable-stop提交位置，默认关闭；其余依赖明确stub，完整C3仍缺真实终点 |
 | Linux boot时钟候选 | 本地及AWS19/19；实际host/kernel/clock探针通过，已停机 | 原Mac接口在Linux实际失败；候选经原host守卫读取内核boot，原跨boot/不续期及回读字节检查通过；未安装完整三文件118候选或准入科研 |
 | owner-clock计时修订04 | 独立离线11+7通过，未云测 | 第四参数来自原checked owner.clock，不接受构造器自造时钟域；03及其AWS结果原样保留 |
@@ -62,4 +63,8 @@ Linux候选的118文件清单在实机回读时与本地预期一致。该候选
 
 规范财务只读路径profile现已接入原共享context、memory函数与受限Git入口，新增10项和请求行18/预算核心12/memory18回归通过。账本保持在原独立目录，population回执与账本收据使用同一精确artifact父目录manifest；不把fixture路径写回历史绑定。Mac和非独立部署命名空间会在原路径IO前拒绝。Linux正向仅做内存平台模拟与实际路由截点，尚未做该profile的Linux文件系统验收。原memory模块默认全局根与runtime/tasks根的差异已记录：只选用原函数并显式提供runtime根，不初始化原模块，不能据此授予Source准入。
 
-原model/additional历史财务函数新增13项本地检查通过，旧核心12项与规范profile10项回归通过；初版12项也单独留档。16文件模式实际执行原read_grant、历史授权、window及来源注册规则；新建合成Git上的模型授权子检查通过，required grant缺失、金额/类型/窗口改变、混合来源根和未注册Source均拒绝。真实只读SQLite上的完整16文件入口仍由原固定历史前缀拒绝虚构历史，数据库不变。原追加授权的固定人类确认没有伪造；额外路径集合不能扩大显式manifest范围。panel/training和原历史Reader身份仍明确阻断，未提供成功替身；完整财务/Source/C3/生产准入仍未通过。本单元没有云、Devin、模型或原Supervisor操作。
+原model/additional历史财务函数新增13项本地检查通过，旧核心12项与规范profile10项回归通过；初版12项也单独留档。16文件模式实际执行原read_grant、历史授权、window及来源注册规则；新建合成Git上的模型授权子检查通过，required grant缺失、金额/类型/窗口改变、混合来源根和未注册Source均拒绝。真实只读SQLite上的完整16文件入口仍由原固定历史前缀拒绝虚构历史，数据库不变。原追加授权的固定人类确认没有伪造；额外路径集合不能扩大显式manifest范围。16文件模式保持原边界；新的18文件模式已接原Reader、epoch与panel/training只读函数。完整财务/Source/C3/生产准入仍未通过。本单元没有云、Devin、模型或原Supervisor操作。
+
+原历史Reader增量采用真实原class实例，不使用继承或isinstance替身；原read/pin、来源注册、Git缓存、epoch边界与装饰器保持原定义，入口及IO依赖额外收窄到独立manifest/受限Git。13项检查覆盖当前/旧标签实际Git读回、commit切换清缓存、嵌套epoch深拷贝与退出变更拒绝、budget/clock/owner持续鲜读、extra不能扩大范围，以及18文件预算入口的原固定历史拒绝。正确合成目录中的原panel代码已越过真实Reader身份检查并读回登记Source，随后按缺失的固定授权拒绝；原training固定split也未伪造。没有读取真实QA、研究状态或旧路径。
+
+原Reader路由还发现并复现了此前规范profile的工程bug：源码仓库不能从账本artifact父目录推断，否则原Reader会把回执当作未登记Git来源。新增11项中这一项首次失败，原日志和代码保留；修复后11/11。源码仓库现显式位于独立部署目录，与原ledger/population标签分开，不改历史Source绑定或原Reader的路由规则。Mac原路径IO前拒绝仍保留；该profile尚未在实际Linux文件系统验收，完整财务和生产仍未准入。
