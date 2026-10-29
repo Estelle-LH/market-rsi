@@ -1,70 +1,45 @@
-# AWS 并行小步部署进度
+# AWS + Docker 迁移进度
 
-2026-10-28：独立代码与环境部署已到118个普通工程文件。原Supervisor继续自己的实验；部署不向该聊天发消息、不要求冻结，也不等待回复。真实状态接管后置。
+当前完成普通工程部署与独立接线验证；真实实验尚未迁移，生产停机未启用，没有实测科研提速。原 Supervisor 继续实验，本工程不读取或修改它的状态、进程或调度。
 
-| 工程块 | 已验证结果 | 验证边界 |
+| 工程部分 | 已有验收 | 实际边界 |
 | --- | --- | --- |
-| 普通源码与host | 118文件哈希、116 Python语法、原launcher host检查通过 | 独立Linux候选；完整资源与科研准入仍未完成 |
-| 原runner/guest | 三个实际公开用例及真实退出/清理回执 | 算术、安全探针、可恢复guest异常；无科研模型调用 |
-| 公开工具回归 | 本地及AWS的Python3.12.3均137/137 | 包含新Devin只读元数据17项；网络/云回调是合成fixture |
-| 原memory与Docker清理验证接入 | 本地合并38/38；相关检查也在AWS通过 | 原验证函数经来源校验后在独立合成目录实际执行；输入/源码/二进制输出哈希和清理条件均需满足 |
-| Linux Python声明兼容候选 | 本地源码级8/8；AWS与上述检查合并46/46，并实际通过Python3.12.3主机核验 | 候选恢复已测量的Linux字面量，同时保留实际解释器核验；原历史解析器未改 |
-| 原owner锁与持久停机屏障接入 | 本地及AWS新16/16，使用真实竞争进程与flock | 复用原全局锁位置；原函数的preflight为合成探针，停在claim/clock/budget/client之前；未启动科学owner |
-| 规范路径容器验收 | 本地与AWS新增7/7；4个实际容器场景通过 | 只读挂载新建合成材料，原memory函数在原规范绝对路径读回；两个接受、两个拒绝，全部字节保持不变 |
-| 原物理请求与完整反馈接入 | 本地及AWS新19/19 | 原生成/count/响应/raw哈希/完整user反馈与Controller公共panel恢复函数实际执行；只启用普通proposal，完整task与其他route尚未准入 |
-| 可选批次计时补丁离线审阅 | 独立本地及AWS11/11 | 默认关闭，原batch审计一次；回调位于原财务/清理/Native检查之后，依赖的合成stub明确标注，不能当作这些验证已接通 |
-| 原公司批次terminal接线 | 新本地20/20，未加入本次云包 | 完整wave2..4/rolling4原退出、checkpoint、UUID归属、physical interval/并发及持久事件验证；其他路由与实时OS来源仍待接入 |
-| 原evaluation请求与terminal联合接线 | 新本地14/14，修改入口的原20项回归通过，未云测 | 两公司wave/rolling4同一metadata/runtime下，实际原memory/cleanup/terminal/physical_requests与真实drain相连；财务/私有Git/OS来源仍未验 |
-| 原财务请求行检查 | 本地18/18，未云测 | 原只读SQLite请求行与原memory在新建合成DB上执行；完整历史grant/Source/prefix与finance关闭面仍未接通 |
-| 原完整预算核心接线 | 本地12/12；共享context18项回归通过 | 原完整函数及真实Git授权子检查执行，固定历史前缀拒绝虚构历史；规范只读profile已接线；原model/additional历史依赖另有13项本地验收，完整财务正例仍未取得 |
-| 原历史Reader与panel入口 | 本地13/13；规范profile修复后11/11；核心/历史grant25项回归通过 | 实际原class、epoch与冻结scope函数已接线；没有伪造固定历史或冻结划分，完整财务正例仍缺 |
-| 可选比较/停止观察05 | 独立离线9+9通过 | 原比较返回与原durable-stop提交位置，默认关闭；其余依赖明确stub，完整C3仍缺真实终点 |
-| Linux boot时钟候选 | 本地及AWS19/19；实际host/kernel/clock探针通过，已停机 | 原Mac接口在Linux实际失败；候选经原host守卫读取内核boot，原跨boot/不续期及回读字节检查通过；未安装完整三文件118候选或准入科研 |
-| owner-clock计时修订04 | 独立离线11+7通过，未云测 | 第四参数来自原checked owner.clock，不接受构造器自造时钟域；03及其AWS结果原样保留 |
-| 停机链路 | 原memory、清理或请求拒绝会阻止stop；执行身份不符会阻止验证；重复key不重复提交；丢ACK不重发 | 已接真实lease和持久屏障；普通proposal原请求及本地完整evaluation四原面分别有明确证据；finance/private-seal和真实OS来源仍未验，生产停机未启用 |
+| AWS 普通部署 | 118文件、116 Python语法检查；宿主Python3.12.3与固定Docker镜像验证 | 代码和持久卷保留；最后云端回读为stopped |
+| 公开通用工具 | 本地与AWS均137/137；Devin建立并执行其中17项元数据检查 | 公开合成输入，无真实科研/性能结论 |
+| 原memory/cleanup/Python接入 | 46项在AWS通过 | 已鉴别原函数与明确合成依赖，完整科学准入另需验证 |
+| 原owner派发排他 | 16项本地及AWS；真实竞争进程与原global flock | 耐久屏障、真实锁和相同身份恢复；无自动清除或另起owner |
+| 原规范路径平台探针 | 本地/AWS7项与4个实际容器 | 只读挂载新合成数据；guest3.12.14和host3.12.3分别记录 |
+| 原请求/可选计时03 | 用户具体批准后AWS19+11通过 | 计时默认关闭，完整依赖与最终端点未齐 |
+| 原Linux clock候选 | 本地/AWS各19项及真实host/boot/新clock探针通过 | 原Mac接口实际失败留档；跨boot/续期拒绝；非完整候选Source准入 |
+| 原evaluation终态和请求 | 本地14项与终态20项回归通过 | 四个实际原面同runtime/manifest并持真实drain；raw只哈希不解码 |
+| 原财务与历史Reader | 核心12、请求行18、历史grant13、真实Reader13本地通过 | 固定历史前缀、固定split及授权未伪造，完整财务正例尚无 |
+| 五原面联合收尾 | 新本地10/10，变更后的Reader13/核心12回归通过 | memory/cleanup/terminal/requests实际通过后，真实财务按原规则拒绝虚构历史；无停机intent |
+| 规范五面与owner路径 | 新本地7/7，受影响的8组122项回归通过 | Linux正向只做路由截点/平台模拟；实际原规范路径文件系统验收待做 |
 
-只读元数据适配器按独立manifest检查规范路径、文件大小和哈希，拒绝未列明/符号链接/重复JSON字段/非有限数字，不跟随JSON里的目标。Devin只获得这个通用工具与合成brief，不接触内部源码、状态、云绑定或凭据。
+## 当前接线
 
-原memory接入验证活动步骤、bookkeeping失败、较新terminal、防回滚、待结算/清理错误、private-seal来源和成员匹配等实际分支。输入全部为新建合成材料，这些检查不是实际费用结算或原始私有Git回读证明。完整生产接线仍须复用对应路由的真实原验证器和真实派发排他；不得把六个digest或结果JSON当作原协议。
+五面联合收尾由工程自己构造真实财务验证器，不接受一个返回成功的财务占位回调。相同root、runtime和terminal绑定先后用于原memory、cleanup、公司终态/物理请求和财务；原owner锁贯穿验证。终态和请求共用一次实际联合审计，避免两次公司扫描。其后仍须配置独立原private-seal适配器，以及真实OS观测与完整task/Source/Native准入。
 
-清理适配保留并修复了三个实际缺陷：已列入清单的调用目录消失后被当成零调用、悬空目录链接被当作不存在、后续memory失败时残留旧清理成功报告。原清理函数体保持不变；适配层要求清单内回执全部由原验证器消费，并在每次验证前清除旧报告。这仍不是实时Docker空闲扫描，停机前另需真实worker/容器检查。
+新增10项检查实际覆盖：前四面通过后，原财务固定历史拒绝和未结算行拒绝；runtime/terminal错接在财务前被拦截；active memory、缺raw、错误boot均不能提交停机；失败后清空所有可被误用的成功报告。数据库字节不变，持久drain保留，停机journal为空。私有seal和OS在这些输入中仍明确合成，没有完整财务成功替身。
 
-Linux候选的118文件清单在实机回读时与本地预期一致。该候选尚未获得新的受审私有Source身份，不能沿用旧Source身份进入科研。已有历史Mac字面量保持原身份；旧动态Python声明没有被重释，若正式接管遇到此类历史，仍需原执行主机依据。没有导入科研入口模块的初始化代码。
+18文件模式把原validation_epoch放在实际预算函数调用周围、同一把真实owner锁之内；拒绝后ContextVar恢复。原Reader是真实class实例，原方法/来源注册/缓存/装饰器保持原定义，入口与IO依赖额外收窄到独立manifest和受限Git。原32MiB/4096缓存上限不改；budget、clock、owner仍鲜读，extra集合不能扩大允许范围。12/16文件旧模式保留。
 
-新的两文件候选把屏障检查放在原全局owner锁获取之后、第二次preflight及任何claim/clock/budget/client之前，原flock和其他源码AST保持不变。停止适配器持同一锁先持久写入屏障，再验证和提交；释放lease、杀掉持锁进程、丢失ACK或校验失败都不会自动移除屏障。屏障与观察到的run/owner/boot/target身份必须一致；该绑定缺口的失败回执与修复已保留。新16项同时覆盖已经开始preflight的竞争进程，防止其在停机ACK之后进入owner。
+规范路径现同时接入memory、cleanup、公司/请求、finance及owner drain。原population回执和独立ledger目录保持原标签，财务使用artifact父目录manifest；其中population子集必须与其他四面逐行一致，遗漏、增加、哈希/大小变化及重复均拒绝。每个规范入口在Mac或不合格部署命名空间中先拒绝，再接触原路径。新的7项只验证这个契约及路由，没有在Mac探测或建立原目录，也没有冒称实际Linux文件系统通过。
 
-这是独立工程目录内的接入验收。所有获准派发的owner必须使用带屏障检查的新受审Source，屏障不能替代这项准入。未增加自动清除/恢复实验入口，也未验证真实财务或私有Git收尾。
+## 已保留的工程故障
 
-规范路径验收使用独立平台容器，原科学DockerRunner源码和参数未改。新增的唯一挂载是明确的新建合成目录，只读映射到容器内历史规范前缀；没有探测或创建原Mac路径。四次容器均通过实际参数检查、UID/GID65534、无有效capabilities、no-new-privileges、只读挂载及精确身份清理核验；活动memory和误用宿主路径绑定均由原函数拒绝。固定镜像内Python实测3.12.14，与已测宿主3.12.3分别记录；该平台探针不能替代原宿主或完整科研准入。
+原Reader发现此前把账本artifact父目录推断为源码仓库的错误：原Reader会把仓库内的回执当作未登记Git来源。新增11项首次1失败，原代码和日志保留；修复后11/11。源码仓库改为显式独立部署仓库，原ledger/population和历史Source绑定不改，原Source路由不作数据fallback。
 
-有限云端检查结束后按bootstrap空闲检查停机，保留卷和代码；存储继续计费。后续继续其余真实关闭验证接线和未来接管的路径配置。没有启动科学owner、复制memory/账本或改动原实验调度，也没有同规则完整科研轮次的提速倍数。
+此前也保留了输送校验、只读元数据、cleanup报告清理等首次失败和对应修复回执。不会用修改历史前缀、预算、模型、冻结划分、重试或科学断言取得合成通过。
 
-新请求适配层把原physical_requests、完整反馈包含检查、Controller严格JSON与panel恢复接入相同memory/runtime/manifest和真实owner drain。核对完整reservation与HTTP payload、唯一生成、连续编号、响应/raw及计数哈希和输入；仅assistant出现或部分user反馈会拒绝。raw仅哈希不解码。19项扩测发现并修复了boot身份提前拒绝后残留上次cleanup成功报告；测试fixture的共享反馈绑定也已补齐，原断言保留。该19项随后按用户批准的原清单在AWS通过。
+## 云端与恢复
 
-用户授权的可选计时补丁在独立副本审阅，基础Source与既有批准包哈希一致；没有覆盖现有两文件候选。默认关闭路径保持原结果、读取与调用顺序，计时写入/读取/clock失败保持原科研结果，输入通过深拷贝隔离，系统中断继续传播。独立本地与AWS11项的finance/Native/task/cleanup/physical-request依赖仍明确为合成stub。它只观察批次审计；完整25公司、归档、memory写回及最终财务关闭事件仍缺，不能据此声称科研提速。
+已完成的有限AWS检查在worker/容器/平台容器均0后停机，并实际回读stopped；EBS保留，BOOTSTRAP_ONLY和停止保护保留。最近这批五面/规范路径增量全部在本地执行，尚未上传或在AWS验收。旧clock探针只有host/config/clock树，未安装或准入完整三文件118候选；不把该探针当作新接线云测。
 
-新S3上传曾被自动审批拒绝；用户随后明确批准该精确清单，原包未改，已完成加密上传、AWS19+11项通过、代码哈希回验和空闲扫描后停机。新增公司20项不在获批包内，保持本地结果，未擅自扩大云测范围。
+命令先写耐久intent，未知ACK查询原命令身份，不重发或另起owner。公开PR保持草稿、不合并，只含脱敏通用工具与说明；内部Source包、状态、云标识和私有Git祖先不发布。Devin只接触公开通用工具与合成brief，本轮无新Devin、模型或云操作。
 
-公司terminal适配实际执行原八个批次函数，保留完整有序结果前提，拒绝PID/true-exit/checkpoint/UUID/预留/区间/事件不匹配。它与原memory/cleanup及真实drain共用执行身份；语义失败阻止stop并保留屏障。此evaluation子集的finance/requests/private-seal及stop/worker观测仍为synthetic；不能把此前proposal请求测试算作evaluation完整请求准入。normal-yield和rolling8在访问额外Native/context路径前明确拒绝。
+## 下一步验收
 
-原clock的Mac专用boot接口已有独立Linux候选，本地及AWS各19项通过。用户明确批准原两文件清单后，仅上传该精确工程包，复用已批准的普通Source对象，保护与checksum回验通过；没有混入财务/evaluation/计时04文件。实际Linux探针记录原Mac sysctl接口失败，候选通过原host/Python守卫并读内核boot，两次一致；原新clock建立/恢复一致，跨boot与截止时间延长被拒绝，恢复及拒绝前后文件字节不变。原validate/capture_or_load、Darwin取值体及其余AST保持不变，无随机/时间fallback。历史clock没有读或重释。该有限探针只有host/config/clock树，三文件118完整候选未安装或准入。worker/容器/平台容器均0后，实际回读实例stopped且保留卷，BOOTSTRAP_ONLY与停止保护保留。首次拒绝和后续具体用户授权分别留档，本申请已完成。内核boot_id语义参照[官方文档](https://docs.kernel.org/admin-guide/sysctl/kernel.html#random)。
+先建立原规范目录下的全新合成fixture与native Linux探针，验证同一ledger、真实flock、相同metadata视图及原财务拒绝，再按具体有限范围进行云测和idle/stop回读。并继续补原private Git seal、可信OS观测与完整科学准入；正式研究状态供应和跨主机接管须等用户明确切换，工程实现不等待原Supervisor回复。
 
-离线04计时修订独立复现11个consumer和7个时钟域检查。观察器只从原owner已检查的clock binding读回哈希验证后的记录域，不查询观察主机boot，也不再接受任意构造器clock。四参数回调、两份Source overlay与observer必须成套匹配，03和04不能混用；新观察器实例应按一次Source绑定evaluation创建，status或旧文件存在都不能当作当前测量成功。它与Linux候选的9字段schema相容。四文件118候选的116 Python仅做静态语法和清单验证，114基础文件未变；没有启用新Source、替代完整原准入或获得真实提速数据。
-
-新增evaluation联合适配在同一独立manifest、memory/runtime与真实drain上实际执行原公司terminal和physical_requests。两个合成公司分别走wave与rolling4，完整reservation/payload、生成/count intent、编号/响应/raw哈希与公司退出/checkpoint/UUID/区间/持久事件一起校验。新增14项通过；修改入口的既有20项回归通过。联合工厂拒绝未给出原请求源码时退回terminal-only；请求和terminal分别重验，拒绝沿用缓存成功。缺响应、计数不符或后续boot漂移阻止stop且不写新提交intent。该新路径已有四个原验证面，剩余finance/private-seal及OS快照/stop为显式synthetic。它没有新增云上传、真实科研或全25公司准入证明，也不继承旧proposal19的route证明。
-
-新财务请求行适配先核验原Source并执行原memory，再以原只读URI与事务检查编号请求的UUID、模型、预留、结算状态和charge。18项本地检查通过，覆盖未结算/缺行/超额/非整型、重复ID、配置错误、遗漏回执，以及数据库哈希/类型/权限/硬链接/sidecar/WAL格式拒绝。只读连接禁止写入和ATTACH，成功或失败均关闭；前后单文件字节保持一致。正例仅使用原历史legacy分支与虚构数据，带amendment的runtime不能降级到该分支取得通过。原amended-cap校验实际执行并拒绝缺失grant，复制一个合成grant也无法替代缺少的历史Git/prefix依赖。此回执明确不是完整finance关闭验证，没有提供stop的finance回调；原生产路径、预算常量和历史账本未读取或修改。本项没有云传输/开机或Devin/模型调用，也没有改变此前四原面evaluation接线。
-
-原完整预算核心现已实际接入，新增12项本地检查和共享只读context的18项回归通过。原Git授权与实现blob子检查在新建合成仓库通过；原完整预算函数仍按固定历史前缀拒绝虚构账本，没有替换前缀或制造完整财务正例。条件finance回调仅在原函数及其全部实际适用依赖返回后给digest；真实drain下的财务拒绝阻止stop且无提交intent。原with和contextlib.closing均关闭只读连接。原12文件核心模式保留，16文件模式另接原只读model/additional历史依赖；完整财务正例仍未取得，生产配置未启用。
-
-计时05增量的比较9项和停止9项在本部署副本独立复现。原模块恢复显式增量后保持一致，原stop代码及03/04不变；外部candidate源码未读取，新候选从本工程已批准副本重构。公司终态report和条件财务report现有明确的已校验terminal/runtime绑定，接口smoke通过；只有同一lease下整个原关闭验证成功后才可消费。完整C3仍缺原比较结果实际保存/归档seal、所有窗口的原闭合和当前主机时钟样本，不能从run_id、单面last_report、六个合成digest或上次clock探针推导完成时间。没有向其他聊天回复、云/模型操作或新科研owner。
-
-公开目录不含实际云标识、私有Source版本、内部回执、原研究源码包或私有Git祖先；原函数接入的私有工程代码与详细回执在受控交付目录中。PR继续保持草稿。
-
-规范财务只读路径profile现已接入原共享context、memory函数与受限Git入口，新增10项和请求行18/预算核心12/memory18回归通过。账本保持在原独立目录，population回执与账本收据使用同一精确artifact父目录manifest；不把fixture路径写回历史绑定。Mac和非独立部署命名空间会在原路径IO前拒绝。Linux正向仅做内存平台模拟与实际路由截点，尚未做该profile的Linux文件系统验收。原memory模块默认全局根与runtime/tasks根的差异已记录：只选用原函数并显式提供runtime根，不初始化原模块，不能据此授予Source准入。
-
-原model/additional历史财务函数新增13项本地检查通过，旧核心12项与规范profile10项回归通过；初版12项也单独留档。16文件模式实际执行原read_grant、历史授权、window及来源注册规则；新建合成Git上的模型授权子检查通过，required grant缺失、金额/类型/窗口改变、混合来源根和未注册Source均拒绝。真实只读SQLite上的完整16文件入口仍由原固定历史前缀拒绝虚构历史，数据库不变。原追加授权的固定人类确认没有伪造；额外路径集合不能扩大显式manifest范围。16文件模式保持原边界；新的18文件模式已接原Reader、epoch与panel/training只读函数。完整财务/Source/C3/生产准入仍未通过。本单元没有云、Devin、模型或原Supervisor操作。
-
-原历史Reader增量采用真实原class实例，不使用继承或isinstance替身；原read/pin、来源注册、Git缓存、epoch边界与装饰器保持原定义，入口及IO依赖额外收窄到独立manifest/受限Git。13项检查覆盖当前/旧标签实际Git读回、commit切换清缓存、嵌套epoch深拷贝与退出变更拒绝、budget/clock/owner持续鲜读、extra不能扩大范围，以及18文件预算入口的原固定历史拒绝。正确合成目录中的原panel代码已越过真实Reader身份检查并读回登记Source，随后按缺失的固定授权拒绝；原training固定split也未伪造。没有读取真实QA、研究状态或旧路径。
-
-原Reader路由还发现并复现了此前规范profile的工程bug：源码仓库不能从账本artifact父目录推断，否则原Reader会把回执当作未登记Git来源。新增11项中这一项首次失败，原日志和代码保留；修复后11/11。源码仓库现显式位于独立部署目录，与原ledger/population标签分开，不改历史Source绑定或原Reader的路由规则。Mac原路径IO前拒绝仍保留；该profile尚未在实际Linux文件系统验收，完整财务和生产仍未准入。
+可选计时03/04/05分别留档，默认关闭；已独立复现的批次/比较/停机观察仍含明确合成依赖。新送达的计时增量尚未计入本工程验收。完整科研耗时仍需要实际保存的比较结果、归档seal、最终memory/财务关闭和当前主机时钟；历史clock或digest形状不能替代这些端点。
