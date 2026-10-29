@@ -11,8 +11,9 @@
 | Linux Python声明兼容候选 | 本地源码级8/8；AWS与上述检查合并46/46，并实际通过Python3.12.3主机核验 | 候选恢复已测量的Linux字面量，同时保留实际解释器核验；原历史解析器未改 |
 | 原owner锁与持久停机屏障接入 | 本地及AWS新16/16，使用真实竞争进程与flock | 复用原全局锁位置；原函数的preflight为合成探针，停在claim/clock/budget/client之前；未启动科学owner |
 | 规范路径容器验收 | 本地与AWS新增7/7；4个实际容器场景通过 | 只读挂载新建合成材料，原memory函数在原规范绝对路径读回；两个接受、两个拒绝，全部字节保持不变 |
-| 原物理请求与完整反馈接入 | 新本地19/19，尚未云测 | 原生成/count/响应/raw哈希/完整user反馈与Controller公共panel恢复函数实际执行；只启用普通proposal，完整task与其他route尚未准入 |
-| 可选批次计时补丁离线审阅 | 独立本地11/11 | 默认关闭，原batch审计一次；回调位于原财务/清理/Native检查之后，依赖的合成stub明确标注，不能当作这些验证已接通 |
+| 原物理请求与完整反馈接入 | 本地及AWS新19/19 | 原生成/count/响应/raw哈希/完整user反馈与Controller公共panel恢复函数实际执行；只启用普通proposal，完整task与其他route尚未准入 |
+| 可选批次计时补丁离线审阅 | 独立本地及AWS11/11 | 默认关闭，原batch审计一次；回调位于原财务/清理/Native检查之后，依赖的合成stub明确标注，不能当作这些验证已接通 |
+| 原公司批次terminal接线 | 新本地20/20，未加入本次云包 | 完整wave2..4/rolling4原退出、checkpoint、UUID归属、physical interval/并发及持久事件验证；其他路由与实时OS来源仍待接入 |
 | 停机链路 | 原memory、清理或请求拒绝会阻止stop；执行身份不符会阻止验证；重复key不重复提交；丢ACK不重发 | 已在独立目录接入真实lease和持久屏障；本地新普通proposal请求函数已接入同一真实lease；terminal/finance/private-seal仍合成，完整请求准入和真实生产停机未启用 |
 
 只读元数据适配器按独立manifest检查规范路径、文件大小和哈希，拒绝未列明/符号链接/重复JSON字段/非有限数字，不跟随JSON里的目标。Devin只获得这个通用工具与合成brief，不接触内部源码、状态、云绑定或凭据。
@@ -31,10 +32,14 @@ Linux候选的118文件清单在实机回读时与本地预期一致。该候选
 
 有限云端检查结束后按bootstrap空闲检查停机，保留卷和代码；存储继续计费。后续继续其余真实关闭验证接线和未来接管的路径配置。没有启动科学owner、复制memory/账本或改动原实验调度，也没有同规则完整科研轮次的提速倍数。
 
-新请求适配层把原physical_requests、完整反馈包含检查、Controller严格JSON与panel恢复接入相同memory/runtime/manifest和真实owner drain。核对完整reservation与HTTP payload、唯一生成、连续编号、响应/raw及计数哈希和输入；仅assistant出现或部分user反馈会拒绝。raw仅哈希不解码。19项扩测发现并修复了boot身份提前拒绝后残留上次cleanup成功报告；测试fixture的共享反馈绑定也已补齐，原断言保留。此块仅本地验收，未计入AWS通过数。
+新请求适配层把原physical_requests、完整反馈包含检查、Controller严格JSON与panel恢复接入相同memory/runtime/manifest和真实owner drain。核对完整reservation与HTTP payload、唯一生成、连续编号、响应/raw及计数哈希和输入；仅assistant出现或部分user反馈会拒绝。raw仅哈希不解码。19项扩测发现并修复了boot身份提前拒绝后残留上次cleanup成功报告；测试fixture的共享反馈绑定也已补齐，原断言保留。该19项随后按用户批准的原清单在AWS通过。
 
-用户授权的可选计时补丁在独立副本审阅，基础Source与既有批准包哈希一致；没有覆盖现有两文件候选。默认关闭路径保持原结果、读取与调用顺序，计时写入/读取/clock失败保持原科研结果，输入通过深拷贝隔离，系统中断继续传播。独立11项的finance/Native/task/cleanup/physical-request依赖仍明确为合成stub。它只观察批次审计；完整25公司、归档、memory写回及最终财务关闭事件仍缺，不能据此声称科研提速。
+用户授权的可选计时补丁在独立副本审阅，基础Source与既有批准包哈希一致；没有覆盖现有两文件候选。默认关闭路径保持原结果、读取与调用顺序，计时写入/读取/clock失败保持原科研结果，输入通过深拷贝隔离，系统中断继续传播。独立本地与AWS11项的finance/Native/task/cleanup/physical-request依赖仍明确为合成stub。它只观察批次审计；完整25公司、归档、memory写回及最终财务关闭事件仍缺，不能据此声称科研提速。
 
-本轮新S3上传被自动审批拒绝，具体payload和目标清单已准备并等待明确授权；未上传、未启动实例或运行这19+11项云测。独立本地工程继续推进。此前云端有限检查的成功记录仍保留，不能混作本轮云验收。
+新S3上传曾被自动审批拒绝；用户随后明确批准该精确清单，原包未改，已完成加密上传、AWS19+11项通过、代码哈希回验和空闲扫描后停机。新增公司20项不在获批包内，保持本地结果，未擅自扩大云测范围。
+
+公司terminal适配实际执行原八个批次函数，保留完整有序结果前提，拒绝PID/true-exit/checkpoint/UUID/预留/区间/事件不匹配。它与原memory/cleanup及真实drain共用执行身份；语义失败阻止stop并保留屏障。此evaluation子集的finance/requests/private-seal及stop/worker观测仍为synthetic；不能把此前proposal请求测试算作evaluation完整请求准入。normal-yield和rolling8在访问额外Native/context路径前明确拒绝。
+
+后续发现的真实启动兼容项是原clock仍无条件调用Mac boot接口。下一块需要受审的Linux boot身份分支，保留原validate/capture_or_load、同boot、单调时钟及截止时间不可续期规则；目前只是静态发现，未启动科学owner或重释历史Mac clock。
 
 公开目录不含实际云标识、私有Source版本、内部回执、原研究源码包或私有Git祖先；原函数接入的私有工程代码与详细回执在受控交付目录中。PR继续保持草稿。
