@@ -15,6 +15,7 @@
 | 可选批次计时补丁离线审阅 | 独立本地及AWS11/11 | 默认关闭，原batch审计一次；回调位于原财务/清理/Native检查之后，依赖的合成stub明确标注，不能当作这些验证已接通 |
 | 原公司批次terminal接线 | 新本地20/20，未加入本次云包 | 完整wave2..4/rolling4原退出、checkpoint、UUID归属、physical interval/并发及持久事件验证；其他路由与实时OS来源仍待接入 |
 | 原evaluation请求与terminal联合接线 | 新本地14/14，修改入口的原20项回归通过，未云测 | 两公司wave/rolling4同一metadata/runtime下，实际原memory/cleanup/terminal/physical_requests与真实drain相连；财务/私有Git/OS来源仍未验 |
+| 原财务请求行检查 | 本地18/18，未云测 | 原只读SQLite请求行与原memory在新建合成DB上执行；完整历史grant/Source/prefix与finance关闭面仍未接通 |
 | Linux boot时钟候选 | 新本地19/19；真实Linux探针待具体新两文件上传审批 | 只增加Linux身份来源；原Darwin体与validate/capture AST不变，保持窗口与origin；本地host/kernel明确为合成 |
 | owner-clock计时修订04 | 独立离线11+7通过，未云测 | 第四参数来自原checked owner.clock，不接受构造器自造时钟域；03及其AWS结果原样保留 |
 | 停机链路 | 原memory、清理或请求拒绝会阻止stop；执行身份不符会阻止验证；重复key不重复提交；丢ACK不重发 | 已接真实lease和持久屏障；普通proposal原请求及本地完整evaluation四原面分别有明确证据；finance/private-seal和真实OS来源仍未验，生产停机未启用 |
@@ -48,5 +49,7 @@ Linux候选的118文件清单在实机回读时与本地预期一致。该候选
 离线04计时修订独立复现11个consumer和7个时钟域检查。观察器只从原owner已检查的clock binding读回哈希验证后的记录域，不查询观察主机boot，也不再接受任意构造器clock。四参数回调、两份Source overlay与observer必须成套匹配，03和04不能混用；新观察器实例应按一次Source绑定evaluation创建，status或旧文件存在都不能当作当前测量成功。它与Linux候选的9字段schema相容。四文件118候选的116 Python仅做静态语法和清单验证，114基础文件未变；没有启用新Source、替代完整原准入或获得真实提速数据。
 
 新增evaluation联合适配在同一独立manifest、memory/runtime与真实drain上实际执行原公司terminal和physical_requests。两个合成公司分别走wave与rolling4，完整reservation/payload、生成/count intent、编号/响应/raw哈希与公司退出/checkpoint/UUID/区间/持久事件一起校验。新增14项通过；修改入口的既有20项回归通过。联合工厂拒绝未给出原请求源码时退回terminal-only；请求和terminal分别重验，拒绝沿用缓存成功。缺响应、计数不符或后续boot漂移阻止stop且不写新提交intent。该新路径已有四个原验证面，剩余finance/private-seal及OS快照/stop为显式synthetic。它没有新增云上传、真实科研或全25公司准入证明，也不继承旧proposal19的route证明。
+
+新财务请求行适配先核验原Source并执行原memory，再以原只读URI与事务检查编号请求的UUID、模型、预留、结算状态和charge。18项本地检查通过，覆盖未结算/缺行/超额/非整型、重复ID、配置错误、遗漏回执，以及数据库哈希/类型/权限/硬链接/sidecar/WAL格式拒绝。只读连接禁止写入和ATTACH，成功或失败均关闭；前后单文件字节保持一致。正例仅使用原历史legacy分支与虚构数据，带amendment的runtime不能降级到该分支取得通过。原amended-cap校验实际执行并拒绝缺失grant，复制一个合成grant也无法替代缺少的历史Git/prefix依赖。此回执明确不是完整finance关闭验证，没有提供stop的finance回调；原生产路径、预算常量和历史账本未读取或修改。本项没有云传输/开机或Devin/模型调用，也没有改变此前四原面evaluation接线。
 
 公开目录不含实际云标识、私有Source版本、内部回执、原研究源码包或私有Git祖先；原函数接入的私有工程代码与详细回执在受控交付目录中。PR继续保持草稿。
