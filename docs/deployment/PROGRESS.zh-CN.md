@@ -16,12 +16,14 @@
 | 五原面联合收尾 | 新本地10/10，变更后的Reader13/核心12回归通过 | memory/cleanup/terminal/requests实际通过后，真实财务按原规则拒绝虚构历史；无停机intent |
 | 规范五面与owner路径 | 新本地7/7，受影响的8组122项回归通过；native保护/原财务路由8项及fixture10项通过 | 独立mount/network与临时文件系统探针已写好；尚未实际Linux云测 |
 | 执行前归属与后代检查 | 新本地16/16；真实pipe/exec/wait与真实drain | cgroup字段为自有临时文件模拟；Native未验收，当前仅允许固定零模型fixture |
+| Docker/共享账本观测 | 新本地11+9项；实际原Docker身份函数、原pending SQL与原memory门禁 | Docker输出/socket模拟；账本为新建合成SQLite，原完整财务门禁仍须通过 |
+| 主机身份与统一Snapshot | 新本地主机5项、联合10项；实际生产接口按同runtime/owner接线 | IMDS/host/cgroup模拟；真实子进程退出和只读合成账本参与联测，Native仍待验收 |
 | 主进程内核退出码 | 新本地12/12，涉及原memory/五面接线的退出码一致性 | Mac实际子进程wait；Linux pidfd后端为模拟，后代/容器未据此推断清空 |
 | 私有Git回读适配 | 新本地14/14；实际原memory及新建Git仓库的真实blob回读 | 新只读工程实现，原归档写入器未在快照中；只核对明确声明的artifact，非真实科研归档准入 |
 
 ## 当前接线
 
-五面联合收尾由工程自己构造真实财务验证器，不接受一个返回成功的财务占位回调。相同root、runtime和terminal绑定先后用于原memory、cleanup、公司终态/物理请求和财务；原owner锁贯穿验证。终态和请求共用一次实际联合审计，避免两次公司扫描。其后仍须配置独立原private-seal适配器，以及真实OS观测与完整task/Source/Native准入。
+五面联合收尾由工程自己构造真实财务验证器，不接受一个返回成功的财务占位回调。相同root、runtime和terminal绑定先后用于原memory、cleanup、公司终态/物理请求和财务；原owner锁贯穿验证。终态和请求共用一次实际联合审计，避免两次公司扫描。private-seal有新只读工程适配，统一OS观测生产接口也已接线；二者的原生/原归档验收与完整task/Source/Native准入仍须完成。
 
 新增10项检查实际覆盖：前四面通过后，原财务固定历史拒绝和未结算行拒绝；runtime/terminal错接在财务前被拦截；active memory、缺raw、错误boot均不能提交停机；失败后清空所有可被误用的成功报告。数据库字节不变，持久drain保留，停机journal为空。私有seal和OS在这些输入中仍明确合成，没有完整财务成功替身。
 
@@ -33,13 +35,23 @@
 
 新增private-seal只读适配先运行真实原memory，再核对声明的实际Git ref/commit、Source祖先、每个明确artifact的blob类型/长度/字节，以及HEAD和无暂存更改的index前后不变。14项在全新合成仓库中通过，覆盖同尺寸篡改、缺blob、错ref、无Source祖先、漏清单、暂存index、变HEAD及外部Git存储。它可作为同一真实drain内的明确回调；当前仅支持自有工程目录，规范Linux路径未启用。保存的118文件不包含原归档写入器，所以这部分明确标为新工程只读实现，不声称原collector已验收，也不读取真实私有Git祖先。
 
-主进程退出码新增明确的父进程生产接口，只接受持有的真实Popen子进程，从内核wait状态取得退出码；不接受PID/JSON回执、不发信号、不启动进程。Linux实现要求pidfd并使用waitid(P_PIDFD)，缺少能力不降为按PID等待；Mac便携工程验证使用waitpid，不能算Linux原生通过。12项覆盖活动子进程、0/1/17和信号退出、别处已回收/缓存篡改/父进程身份改变，以及在真实drain下将实际退出码接入原memory和五面验证：真实0到达原财务拒绝，真实1不能复用成功memory。后代进程、Docker、账户结算和当前host身份仍明确待接。Python对进程返回码及wait接口的语义见[官方subprocess文档](https://docs.python.org/3.12/library/subprocess.html)和[官方os文档](https://docs.python.org/3.12/library/os.html#os.pidfd_open)。
+主进程退出码新增明确的父进程生产接口，只接受持有的真实Popen子进程，从内核wait状态取得退出码；不接受PID/JSON回执、不发信号、不启动进程。Linux实现要求pidfd并使用waitid(P_PIDFD)，缺少能力不降为按PID等待；Mac便携工程验证使用waitpid，不能算Linux原生通过。12项覆盖活动子进程、0/1/17和信号退出、别处已回收/缓存篡改/父进程身份改变，以及在真实drain下将实际退出码接入原memory和五面验证：真实0到达原财务拒绝，真实1不能复用成功memory。后代进程、Docker和当前host现有独立观测实现，仍待原生验收；账户结算继续由原完整财务门禁决定。Python对进程返回码及wait接口的语义见[官方subprocess文档](https://docs.python.org/3.12/library/subprocess.html)和[官方os文档](https://docs.python.org/3.12/library/os.html#os.pidfd_open)。
 
 新增执行前归属协议：子shim先进入当前coordinator子层的独立cgroup，原参数在父进程确认归属并写耐久放行intent前不能执行；代码不改controller、CPU、内存、重试或原时限设置。收尾在同一真实drain下要求主进程内核退出，并检查子树population，避免只看主PID退出或当前层PID清单。其依据是[cgroup v2官方接口](https://docs.kernel.org/admin-guide/cgroup-v2.html)的子树population语义；这是进程观测实现，不代表完整停止准入。
 
 本地16项包含真实pipe/exec/parent-wait，cgroup文件和归属明确模拟；没有在Mac读取Linux内核路径。当前bootstrap入口只允许哈希固定的零模型marker/exit fixture，任意/科学argv在启动前被拒绝，child放行后也独立检查fixture。Native cgroup建立/继承/原生pidfd尚未执行，不计为云端成功。后代仍有population、直接PID未空、错误owner、身份变动、缺字段或冻结均拒绝；不能用该局部报告填零容器/账本。失败放行前关闭pipe后子shim不执行argv，可回收已知空组；放行后日志丢失保留同一子进程身份，禁止重发或宣称未执行。新代码未加入待授权的既有V2包。
 
+统一观测现由实际组件类构造typed Snapshot。Docker在派发前调用真实原freeze函数，收尾时前后复核固定CLI、环境、context、daemon和同一socket；只读统计独立实例的全部活动容器，包含无标签容器。非零返回、错误输出、身份变化均不能转成零。空白私有Docker config避免读取已有context或凭据，接口没有run/stop/rm操作。11项仅注入合成CLI输出/socket，并实际运行鉴别后的原函数。
+
+pending观测在同一真实drain里运行实际原memory门禁和原共享账本未结算SQL；独立SHA绑定数据库，只读事务前后核对文件不变，不创建、结算、退款或重置账本。9项使用全新合成SQLite，覆盖其他角色的未结算行、settled_upper_bound、NULL状态、边车文件和哈希变化；该计数不代替原完整财务准入。
+
+主机观测接口使用内核boot、实际宿主Python及IMDSv2实例身份；只请求短期token和identity document，禁用代理与重定向，不读取IAM凭据、持久化token或使用旧host回执。实现依据[AWS IMDSv2文档](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html)和[实例身份文档](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-identity-documents.html)；这是本机身份绑定，非远程密码学证明或完整Source准入。5项为合成HTTP检查，没有真实元数据请求。
+
+联合10项在实际子进程wait、原memory、只读合成账本和真实drain下检查同owner/runtime的全部字段；Docker/host/cgroup仍明确模拟。真实原四面通过后财务BudgetStop继续拒绝，未提交停机intent；退出1、后代存活、容器/pending非零、host漂移和runtime错接均拒绝并清空报告。入口仍只允许固定零模型fixture，新组件均未并入既有待授权V2云测包。
+
 ## 已保留的工程故障
+
+本轮Docker测试首次因fixture方法命名覆盖unittest.run，在执行测试方法前失败，原日志与修订已保留；重命名后11项通过，固定CLI预期哈希后再验11项。该故障是测试入口错误，未记为生产故障或虚报11项已执行。
 
 新scope联测首次确认runtime绑定可被启动后的可变字典重新标记，1项负例真实失败已保留；固定捕获时的execution/runtime、scope名与journal后阻断。补不可变性后原owner负例提前被拦截，已保留该测试失败并改成真实另一owner lease来继续测试原join边界，未放宽拒绝条件。最终16项通过。
 
@@ -57,6 +69,6 @@
 
 ## 下一步验收
 
-按已准备的具体范围执行native Linux云测及idle/stop回读；上传新包目前等待单独授权，本地工程继续推进。继续补私有Git适配的规范路径与原归档协议确认、可信OS观测及完整科学准入；正式研究状态供应和跨主机接管须等用户明确切换，工程实现不等待原Supervisor回复。
+按已准备的具体范围执行native Linux云测及idle/stop回读；上传新包目前等待单独授权，本地工程继续推进。统一OS观测已实现、原生验收另列，不能扩大既有V2范围。继续补私有Git适配的规范路径与原归档协议确认、完整task/Source/Native门禁及可审查恢复；正式研究状态供应和跨主机接管须等用户明确切换，工程实现不等待原Supervisor回复。
 
 可选计时03/04/05分别留档，默认关闭；已独立复现的批次/比较/停机观察仍含明确合成依赖。新送达的计时增量尚未计入本工程验收。完整科研耗时仍需要实际保存的比较结果、归档seal、最终memory/财务关闭和当前主机时钟；历史clock或digest形状不能替代这些端点。
