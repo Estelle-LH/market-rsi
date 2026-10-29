@@ -16,7 +16,7 @@
 | 原公司批次terminal接线 | 新本地20/20，未加入本次云包 | 完整wave2..4/rolling4原退出、checkpoint、UUID归属、physical interval/并发及持久事件验证；其他路由与实时OS来源仍待接入 |
 | 原evaluation请求与terminal联合接线 | 新本地14/14，修改入口的原20项回归通过，未云测 | 两公司wave/rolling4同一metadata/runtime下，实际原memory/cleanup/terminal/physical_requests与真实drain相连；财务/私有Git/OS来源仍未验 |
 | 原财务请求行检查 | 本地18/18，未云测 | 原只读SQLite请求行与原memory在新建合成DB上执行；完整历史grant/Source/prefix与finance关闭面仍未接通 |
-| 原完整预算核心接线 | 本地12/12；共享context18项回归通过 | 原完整函数及真实Git授权子检查执行，固定历史前缀拒绝虚构历史；仅fixture路径，canonical生产profile与model/additional依赖仍缺 |
+| 原完整预算核心接线 | 本地12/12；共享context18项回归通过 | 原完整函数及真实Git授权子检查执行，固定历史前缀拒绝虚构历史；规范只读profile已接线；原model/additional历史依赖另有13项本地验收，完整财务正例仍未取得 |
 | 可选比较/停止观察05 | 独立离线9+9通过 | 原比较返回与原durable-stop提交位置，默认关闭；其余依赖明确stub，完整C3仍缺真实终点 |
 | Linux boot时钟候选 | 本地及AWS19/19；实际host/kernel/clock探针通过，已停机 | 原Mac接口在Linux实际失败；候选经原host守卫读取内核boot，原跨boot/不续期及回读字节检查通过；未安装完整三文件118候选或准入科研 |
 | owner-clock计时修订04 | 独立离线11+7通过，未云测 | 第四参数来自原checked owner.clock，不接受构造器自造时钟域；03及其AWS结果原样保留 |
@@ -54,8 +54,12 @@ Linux候选的118文件清单在实机回读时与本地预期一致。该候选
 
 新财务请求行适配先核验原Source并执行原memory，再以原只读URI与事务检查编号请求的UUID、模型、预留、结算状态和charge。18项本地检查通过，覆盖未结算/缺行/超额/非整型、重复ID、配置错误、遗漏回执，以及数据库哈希/类型/权限/硬链接/sidecar/WAL格式拒绝。只读连接禁止写入和ATTACH，成功或失败均关闭；前后单文件字节保持一致。正例仅使用原历史legacy分支与虚构数据，带amendment的runtime不能降级到该分支取得通过。原amended-cap校验实际执行并拒绝缺失grant，复制一个合成grant也无法替代缺少的历史Git/prefix依赖。此回执明确不是完整finance关闭验证，没有提供stop的finance回调；原生产路径、预算常量和历史账本未读取或修改。本项没有云传输/开机或Devin/模型调用，也没有改变此前四原面evaluation接线。
 
-原完整预算核心现已实际接入，新增12项本地检查和共享只读context的18项回归通过。原Git授权与实现blob子检查在新建合成仓库通过；原完整预算函数仍按固定历史前缀拒绝虚构账本，没有替换前缀或制造完整财务正例。条件finance回调仅在原函数及其全部实际适用依赖返回后给digest；真实drain下的财务拒绝阻止stop且无提交intent。原with和contextlib.closing均关闭只读连接。当前ledger/repo绑定只属于fixture，canonical生产路径profile与model/additional grant依赖仍未接通，不能提升为生产配置。
+原完整预算核心现已实际接入，新增12项本地检查和共享只读context的18项回归通过。原Git授权与实现blob子检查在新建合成仓库通过；原完整预算函数仍按固定历史前缀拒绝虚构账本，没有替换前缀或制造完整财务正例。条件finance回调仅在原函数及其全部实际适用依赖返回后给digest；真实drain下的财务拒绝阻止stop且无提交intent。原with和contextlib.closing均关闭只读连接。原12文件核心模式保留，16文件模式另接原只读model/additional历史依赖；完整财务正例仍未取得，生产配置未启用。
 
 计时05增量的比较9项和停止9项在本部署副本独立复现。原模块恢复显式增量后保持一致，原stop代码及03/04不变；外部candidate源码未读取，新候选从本工程已批准副本重构。公司终态report和条件财务report现有明确的已校验terminal/runtime绑定，接口smoke通过；只有同一lease下整个原关闭验证成功后才可消费。完整C3仍缺原比较结果实际保存/归档seal、所有窗口的原闭合和当前主机时钟样本，不能从run_id、单面last_report、六个合成digest或上次clock探针推导完成时间。没有向其他聊天回复、云/模型操作或新科研owner。
 
 公开目录不含实际云标识、私有Source版本、内部回执、原研究源码包或私有Git祖先；原函数接入的私有工程代码与详细回执在受控交付目录中。PR继续保持草稿。
+
+规范财务只读路径profile现已接入原共享context、memory函数与受限Git入口，新增10项和请求行18/预算核心12/memory18回归通过。账本保持在原独立目录，population回执与账本收据使用同一精确artifact父目录manifest；不把fixture路径写回历史绑定。Mac和非独立部署命名空间会在原路径IO前拒绝。Linux正向仅做内存平台模拟与实际路由截点，尚未做该profile的Linux文件系统验收。原memory模块默认全局根与runtime/tasks根的差异已记录：只选用原函数并显式提供runtime根，不初始化原模块，不能据此授予Source准入。
+
+原model/additional历史财务函数新增13项本地检查通过，旧核心12项与规范profile10项回归通过；初版12项也单独留档。16文件模式实际执行原read_grant、历史授权、window及来源注册规则；新建合成Git上的模型授权子检查通过，required grant缺失、金额/类型/窗口改变、混合来源根和未注册Source均拒绝。真实只读SQLite上的完整16文件入口仍由原固定历史前缀拒绝虚构历史，数据库不变。原追加授权的固定人类确认没有伪造；额外路径集合不能扩大显式manifest范围。panel/training和原历史Reader身份仍明确阻断，未提供成功替身；完整财务/Source/C3/生产准入仍未通过。本单元没有云、Devin、模型或原Supervisor操作。
