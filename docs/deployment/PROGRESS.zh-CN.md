@@ -16,7 +16,7 @@
 | 原公司批次terminal接线 | 新本地20/20，未加入本次云包 | 完整wave2..4/rolling4原退出、checkpoint、UUID归属、physical interval/并发及持久事件验证；其他路由与实时OS来源仍待接入 |
 | 原evaluation请求与terminal联合接线 | 新本地14/14，修改入口的原20项回归通过，未云测 | 两公司wave/rolling4同一metadata/runtime下，实际原memory/cleanup/terminal/physical_requests与真实drain相连；财务/私有Git/OS来源仍未验 |
 | 原财务请求行检查 | 本地18/18，未云测 | 原只读SQLite请求行与原memory在新建合成DB上执行；完整历史grant/Source/prefix与finance关闭面仍未接通 |
-| Linux boot时钟候选 | 新本地19/19；真实Linux探针待具体新两文件上传审批 | 只增加Linux身份来源；原Darwin体与validate/capture AST不变，保持窗口与origin；本地host/kernel明确为合成 |
+| Linux boot时钟候选 | 本地及AWS19/19；实际host/kernel/clock探针通过，已停机 | 原Mac接口在Linux实际失败；候选经原host守卫读取内核boot，原跨boot/不续期及回读字节检查通过；未安装完整三文件118候选或准入科研 |
 | owner-clock计时修订04 | 独立离线11+7通过，未云测 | 第四参数来自原checked owner.clock，不接受构造器自造时钟域；03及其AWS结果原样保留 |
 | 停机链路 | 原memory、清理或请求拒绝会阻止stop；执行身份不符会阻止验证；重复key不重复提交；丢ACK不重发 | 已接真实lease和持久屏障；普通proposal原请求及本地完整evaluation四原面分别有明确证据；finance/private-seal和真实OS来源仍未验，生产停机未启用 |
 
@@ -44,7 +44,7 @@ Linux候选的118文件清单在实机回读时与本地预期一致。该候选
 
 公司terminal适配实际执行原八个批次函数，保留完整有序结果前提，拒绝PID/true-exit/checkpoint/UUID/预留/区间/事件不匹配。它与原memory/cleanup及真实drain共用执行身份；语义失败阻止stop并保留屏障。此evaluation子集的finance/requests/private-seal及stop/worker观测仍为synthetic；不能把此前proposal请求测试算作evaluation完整请求准入。normal-yield和rolling8在访问额外Native/context路径前明确拒绝。
 
-原clock的Mac专用boot接口已有独立Linux候选，本地19项通过：原validate/capture_or_load、Darwin取值体和其他模块AST保持精确不变，只在已有测量host/Python守卫后读取有界内核boot UUID，无随机/时间fallback。恢复时不重建origin或续期；跨boot、配置/窗口漂移、残缺seal和非规范文件拒绝。本地Linux/host是显式mock，真实Linux探针还未运行。新两文件传输被自动审批限制为需单独明确授权，具体清单已提交；本轮无新上传或实例启动，之前获批23文件的云验收仍有效。内核boot_id语义参照[官方文档](https://docs.kernel.org/admin-guide/sysctl/kernel.html#random)。
+原clock的Mac专用boot接口已有独立Linux候选，本地及AWS各19项通过。用户明确批准原两文件清单后，仅上传该精确工程包，复用已批准的普通Source对象，保护与checksum回验通过；没有混入财务/evaluation/计时04文件。实际Linux探针记录原Mac sysctl接口失败，候选通过原host/Python守卫并读内核boot，两次一致；原新clock建立/恢复一致，跨boot与截止时间延长被拒绝，恢复及拒绝前后文件字节不变。原validate/capture_or_load、Darwin取值体及其余AST保持不变，无随机/时间fallback。历史clock没有读或重释。该有限探针只有host/config/clock树，三文件118完整候选未安装或准入。worker/容器/平台容器均0后，实际回读实例stopped且保留卷，BOOTSTRAP_ONLY与停止保护保留。首次拒绝和后续具体用户授权分别留档，本申请已完成。内核boot_id语义参照[官方文档](https://docs.kernel.org/admin-guide/sysctl/kernel.html#random)。
 
 离线04计时修订独立复现11个consumer和7个时钟域检查。观察器只从原owner已检查的clock binding读回哈希验证后的记录域，不查询观察主机boot，也不再接受任意构造器clock。四参数回调、两份Source overlay与observer必须成套匹配，03和04不能混用；新观察器实例应按一次Source绑定evaluation创建，status或旧文件存在都不能当作当前测量成功。它与Linux候选的9字段schema相容。四文件118候选的116 Python仅做静态语法和清单验证，114基础文件未变；没有启用新Source、替代完整原准入或获得真实提速数据。
 
