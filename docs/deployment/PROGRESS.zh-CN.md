@@ -15,6 +15,7 @@
 | 原财务与历史Reader | 核心12、请求行18、历史grant13、真实Reader13本地通过 | 固定历史前缀、固定split及授权未伪造，完整财务正例尚无 |
 | 五原面联合收尾 | 新本地10/10，变更后的Reader13/核心12回归通过 | memory/cleanup/terminal/requests实际通过后，真实财务按原规则拒绝虚构历史；无停机intent |
 | 规范五面与owner路径 | 新本地7/7，受影响的8组122项回归通过；native保护/原财务路由8项及fixture10项通过 | 独立mount/network与临时文件系统探针已写好；尚未实际Linux云测 |
+| 执行前归属与后代检查 | 新本地16/16；真实pipe/exec/wait与真实drain | cgroup字段为自有临时文件模拟；Native未验收，当前仅允许固定零模型fixture |
 | 主进程内核退出码 | 新本地12/12，涉及原memory/五面接线的退出码一致性 | Mac实际子进程wait；Linux pidfd后端为模拟，后代/容器未据此推断清空 |
 | 私有Git回读适配 | 新本地14/14；实际原memory及新建Git仓库的真实blob回读 | 新只读工程实现，原归档写入器未在快照中；只核对明确声明的artifact，非真实科研归档准入 |
 
@@ -34,7 +35,13 @@
 
 主进程退出码新增明确的父进程生产接口，只接受持有的真实Popen子进程，从内核wait状态取得退出码；不接受PID/JSON回执、不发信号、不启动进程。Linux实现要求pidfd并使用waitid(P_PIDFD)，缺少能力不降为按PID等待；Mac便携工程验证使用waitpid，不能算Linux原生通过。12项覆盖活动子进程、0/1/17和信号退出、别处已回收/缓存篡改/父进程身份改变，以及在真实drain下将实际退出码接入原memory和五面验证：真实0到达原财务拒绝，真实1不能复用成功memory。后代进程、Docker、账户结算和当前host身份仍明确待接。Python对进程返回码及wait接口的语义见[官方subprocess文档](https://docs.python.org/3.12/library/subprocess.html)和[官方os文档](https://docs.python.org/3.12/library/os.html#os.pidfd_open)。
 
+新增执行前归属协议：子shim先进入当前coordinator子层的独立cgroup，原参数在父进程确认归属并写耐久放行intent前不能执行；代码不改controller、CPU、内存、重试或原时限设置。收尾在同一真实drain下要求主进程内核退出，并检查子树population，避免只看主PID退出或当前层PID清单。其依据是[cgroup v2官方接口](https://docs.kernel.org/admin-guide/cgroup-v2.html)的子树population语义；这是进程观测实现，不代表完整停止准入。
+
+本地16项包含真实pipe/exec/parent-wait，cgroup文件和归属明确模拟；没有在Mac读取Linux内核路径。当前bootstrap入口只允许哈希固定的零模型marker/exit fixture，任意/科学argv在启动前被拒绝，child放行后也独立检查fixture。Native cgroup建立/继承/原生pidfd尚未执行，不计为云端成功。后代仍有population、直接PID未空、错误owner、身份变动、缺字段或冻结均拒绝；不能用该局部报告填零容器/账本。失败放行前关闭pipe后子shim不执行argv，可回收已知空组；放行后日志丢失保留同一子进程身份，禁止重发或宣称未执行。新代码未加入待授权的既有V2包。
+
 ## 已保留的工程故障
+
+新scope联测首次确认runtime绑定可被启动后的可变字典重新标记，1项负例真实失败已保留；固定捕获时的execution/runtime、scope名与journal后阻断。补不可变性后原owner负例提前被拦截，已保留该测试失败并改成真实另一owner lease来继续测试原join边界，未放宽拒绝条件。最终16项通过。
 
 父进程联测首次暴露native探针的异常分类错误：真实原代码抛BudgetStop（RuntimeError子类），且消息带完整“no refund/reset”后缀。旧探针按缩短消息和基础异常名称匹配，会误报真实原财务拒绝。首失败和旧代码/包完整留档；修复为原 subtype及完整消息，新8项实际原代码路由回归通过，无预算/历史规则改动。旧具体云测请求撤回执行，修复后的V2精确包与18+1检查单另列，等待具体授权，不扩大旧批准。
 
