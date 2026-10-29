@@ -14,6 +14,8 @@
 | 原物理请求与完整反馈接入 | 本地及AWS新19/19 | 原生成/count/响应/raw哈希/完整user反馈与Controller公共panel恢复函数实际执行；只启用普通proposal，完整task与其他route尚未准入 |
 | 可选批次计时补丁离线审阅 | 独立本地及AWS11/11 | 默认关闭，原batch审计一次；回调位于原财务/清理/Native检查之后，依赖的合成stub明确标注，不能当作这些验证已接通 |
 | 原公司批次terminal接线 | 新本地20/20，未加入本次云包 | 完整wave2..4/rolling4原退出、checkpoint、UUID归属、physical interval/并发及持久事件验证；其他路由与实时OS来源仍待接入 |
+| Linux boot时钟候选 | 新本地19/19；真实Linux探针待具体新两文件上传审批 | 只增加Linux身份来源；原Darwin体与validate/capture AST不变，保持窗口与origin；本地host/kernel明确为合成 |
+| owner-clock计时修订04 | 独立离线11+7通过，未云测 | 第四参数来自原checked owner.clock，不接受构造器自造时钟域；03及其AWS结果原样保留 |
 | 停机链路 | 原memory、清理或请求拒绝会阻止stop；执行身份不符会阻止验证；重复key不重复提交；丢ACK不重发 | 已在独立目录接入真实lease和持久屏障；本地新普通proposal请求函数已接入同一真实lease；terminal/finance/private-seal仍合成，完整请求准入和真实生产停机未启用 |
 
 只读元数据适配器按独立manifest检查规范路径、文件大小和哈希，拒绝未列明/符号链接/重复JSON字段/非有限数字，不跟随JSON里的目标。Devin只获得这个通用工具与合成brief，不接触内部源码、状态、云绑定或凭据。
@@ -40,6 +42,8 @@ Linux候选的118文件清单在实机回读时与本地预期一致。该候选
 
 公司terminal适配实际执行原八个批次函数，保留完整有序结果前提，拒绝PID/true-exit/checkpoint/UUID/预留/区间/事件不匹配。它与原memory/cleanup及真实drain共用执行身份；语义失败阻止stop并保留屏障。此evaluation子集的finance/requests/private-seal及stop/worker观测仍为synthetic；不能把此前proposal请求测试算作evaluation完整请求准入。normal-yield和rolling8在访问额外Native/context路径前明确拒绝。
 
-后续发现的真实启动兼容项是原clock仍无条件调用Mac boot接口。下一块需要受审的Linux boot身份分支，保留原validate/capture_or_load、同boot、单调时钟及截止时间不可续期规则；目前只是静态发现，未启动科学owner或重释历史Mac clock。
+原clock的Mac专用boot接口已有独立Linux候选，本地19项通过：原validate/capture_or_load、Darwin取值体和其他模块AST保持精确不变，只在已有测量host/Python守卫后读取有界内核boot UUID，无随机/时间fallback。恢复时不重建origin或续期；跨boot、配置/窗口漂移、残缺seal和非规范文件拒绝。本地Linux/host是显式mock，真实Linux探针还未运行。新两文件传输被自动审批限制为需单独明确授权，具体清单已提交；本轮无新上传或实例启动，之前获批23文件的云验收仍有效。内核boot_id语义参照[官方文档](https://docs.kernel.org/admin-guide/sysctl/kernel.html#random)。
+
+离线04计时修订独立复现11个consumer和7个时钟域检查。观察器只从原owner已检查的clock binding读回哈希验证后的记录域，不查询观察主机boot，也不再接受任意构造器clock。四参数回调、两份Source overlay与observer必须成套匹配，03和04不能混用；新观察器实例应按一次Source绑定evaluation创建，status或旧文件存在都不能当作当前测量成功。它与Linux候选的9字段schema相容。四文件118候选的116 Python仅做静态语法和清单验证，114基础文件未变；没有启用新Source、替代完整原准入或获得真实提速数据。
 
 公开目录不含实际云标识、私有Source版本、内部回执、原研究源码包或私有Git祖先；原函数接入的私有工程代码与详细回执在受控交付目录中。PR继续保持草稿。
