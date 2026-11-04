@@ -30,7 +30,9 @@ def _nonfinite(unused):
 
 
 class BoundMetadata:
-    def __init__(self, root, manifest, expected_manifest_sha256):
+    def __init__(self, root, manifest, expected_manifest_sha256, *, max_file_bytes=1024 * 1024):
+        if type(max_file_bytes) is not int or not 1 <= max_file_bytes <= 4 * 1024 * 1024:
+            raise MetadataError('bounded explicit file byte limit required')
         if type(manifest) is not list or not 1 <= len(manifest) <= 64:
             raise MetadataError('bounded explicit metadata manifest required')
         try:
@@ -50,7 +52,7 @@ class BoundMetadata:
                     or str(PurePosixPath(name)) != name or '..' in PurePosixPath(name).parts
                     or name in ('.', '..') or name in entries):
                 raise MetadataError('unique canonical relative metadata path required')
-            if (type(row['size']) is not int or not 0 <= row['size'] <= 1024 * 1024
+            if (type(row['size']) is not int or not 0 <= row['size'] <= max_file_bytes
                     or type(row['sha256']) is not str
                     or re.fullmatch('[0-9a-f]{64}', row['sha256']) is None):
                 raise MetadataError('bounded byte size and digest required')

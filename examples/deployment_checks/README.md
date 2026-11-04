@@ -8,7 +8,7 @@ From the repository root:
 python3 -I -B -m unittest discover -s examples/deployment_checks -p 'test_*.py' -v
 ```
 
-The suite contains 30 guest-probe tests, 13 identity-diagnostic tests, 31 bundle tests, 16 artifact-transport tests, 14 command-journal tests, 16 stop-sequence tests and 17 bounded-metadata tests (137 total). The complete public fixture revision passes under Python 3.12.3 both locally and on AWS. The stop sequence has synthetic adapter coverage only; no fixture performs a real cloud stop.
+The original core revision contains 137 synthetic checks across guest probes, identity diagnostics, bundle installation, artifact transport, command journals, stop sequencing and bounded metadata. That revision passed under Python 3.12.3 locally and on AWS. Additional focused modules record their own validation scope below. The stop sequence has synthetic adapter coverage only; no fixture performs a real cloud stop.
 
 ## Guest probe
 
@@ -57,6 +57,8 @@ The first 15-method test run retained one failure against an overbroad requireme
 `bound_metadata.py` adapts `pin(path)` and `read(binding)` to a separately authenticated, explicit manifest of ordinary JSON metadata. It rejects noncanonical paths, symlinks, unlisted reads, changed sizes/hashes, duplicate JSON fields and nonfinite values. It uses bounded regular-file reads, keeps a defensive audit of verified files, and never follows references stored inside JSON. Exceptions suppress filesystem error messages that might contain private data. The private root and manifest are trusted inputs; this is not a boundary against a malicious process with the same filesystem authority.
 
 Devin independently wrote and ran 17 tests. The same tests pass under the exact cloud Python 3.12.3. A separate isolated integration uses the adapter to execute the authenticated original memory-gate functions unchanged over fresh synthetic metadata. Its 18 cases, including stop-sequence wiring, pass locally and on AWS. That private integration is not included in this public fixture directory: the original module is not imported, real research state is not read, and the other five closure verifiers remain synthetic callbacks. These results do not grant production admission.
+
+The default metadata file limit remains 1 MiB. A caller can explicitly select `max_file_bytes` as an exact integer from 1 through 4 MiB; the independent 64-entry and 4 MiB total manifest limits still apply. Seven additional public synthetic tests cover the larger-file opt-in, unchanged default refusal, integer/type bounds, the total limit, digest drift and symlinks. These seven tests and the original bounded-metadata tests passed locally under Python 3.12.3. This option does not establish workload admission.
 
 ## Optional native numerical probe
 
