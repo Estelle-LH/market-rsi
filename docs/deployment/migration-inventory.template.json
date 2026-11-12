@@ -1,0 +1,55 @@
+{
+  "schema": "public-migration-inventory-template-v1",
+  "status": "PLAN_ONLY_NOT_LIVE_ADMISSION",
+  "source_revision": null,
+  "source_manifest_sha256": null,
+  "source_root": null,
+  "destination_root": null,
+  "path_mapping": [],
+  "entries": [],
+  "entry_fields": [
+    "relative_path",
+    "source_canonical_path",
+    "destination_canonical_path",
+    "type",
+    "size_bytes",
+    "sha256",
+    "purpose",
+    "transfer_scope",
+    "evidence_dependencies",
+    "mutability",
+    "owner_export_receipt"
+  ],
+  "categories": [
+    "source_and_configuration",
+    "linux_runtime_and_image",
+    "approved_static_inputs",
+    "consistent_continuation_state",
+    "operational_configuration"
+  ],
+  "memory_bundle_roles": [
+    "authoritative_current",
+    "immutable_predecessor_update_or_bootstrap",
+    "original_terminal",
+    "closure_metadata",
+    "private_seal_metadata",
+    "source_runtime_bindings",
+    "chronology_and_failure_evidence"
+  ],
+  "handoff": {
+    "source_dispatch_frozen": false,
+    "original_closure_verified": false,
+    "destination_restore_verified": false,
+    "unique_writer_handoff_verified": false,
+    "destination_dispatch_enabled": false
+  },
+  "constraints": {
+    "preserve_original_model_resources_budget_retry_rules": true,
+    "docker_identity_query_timeout_seconds": 8,
+    "rewrite_historical_bindings": false,
+    "symlink_substitution": false,
+    "public_memory_projection_is_restore_package": false,
+    "unknown_request_replay": false
+  },
+  "secrets_and_live_state": "Populate a private operational inventory separately; do not commit credentials, live state or recovery payloads."
+}
