@@ -41,11 +41,20 @@ def _new(path, value):
     return hashlib.sha256(raw).hexdigest()
 
 
+def _unique(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise JournalError('duplicate journal field')
+        result[key] = value
+    return result
+
+
 def _read(path):
     if path.is_symlink() or not path.is_file() or path.stat().st_size > 16384:
         raise JournalError('bounded ordinary journal file required')
     raw = path.read_bytes()
-    return json.loads(raw), hashlib.sha256(raw).hexdigest()
+    return json.loads(raw, object_pairs_hook=_unique), hashlib.sha256(raw).hexdigest()
 
 
 def _identity(value):
