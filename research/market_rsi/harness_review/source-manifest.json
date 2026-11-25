@@ -1,5 +1,5 @@
 {
-  "original_source": "9022aeb400efa332ddeb8e2ec883f7ff9ab72651",
+  "original_source": "6c053da9fbc789768befcf96015883b86b134d04",
   "files": [
     {
       "file": "source/feedback_linked_loop.py",
@@ -69,6 +69,20 @@
       "functions": [
         "declared_test"
       ]
+    },
+    {
+      "file": "source/earnings_population_independent_q12.py",
+      "original_path": "tools/earnings_population_independent_q12.py",
+      "functions": [
+        "scientific_question",
+        "context",
+        "check_child"
+      ]
+    },
+    {
+      "file": "source/earnings_population_q12_public.py",
+      "original_path": "tools/earnings_population_q12_public.py",
+      "functions": null
     }
   ]
 }

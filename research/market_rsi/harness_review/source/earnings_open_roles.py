@@ -87,6 +87,13 @@ class _OpenRole:
                 self.budget.active()
         reader = getattr(type(self.broker), 'external_memory_guard', None)
         public_guard = reader(self.broker) if callable(reader) else None
+        request_validator=public_guard.validate_request if public_guard is not None else None
+        from earnings_population_independent_q12 import selected as q12_selected
+        if self.role=='review' and q12_selected(getattr(self,'review_runtime',None)):
+            from earnings_population_q12_public import check_request
+            if request_validator is not None:
+                raise ValueError('Q12 Review must use the original independent review boundary')
+            request_validator=check_request
         first_tool_free = max(1, self.max_turns-2) if delivery_repair or normal_delivery_repair else self.max_turns
         memory_schedule = (dict(memory_max_turns=self.max_turns, memory_first_tool_free_turn=first_tool_free)
             if {'research_memory','record_research_memory'} <= {row['name'] for row in self.definitions} else {})
@@ -152,9 +159,15 @@ class _OpenRole:
                             pass  # This optional diagnostic cannot replace the original refusal.
                         raise BudgetStop('Mandatory memory is incomplete at the original final turn; no final generation')
                     request = deepcopy(initial_request)
-                    request.update(input=deepcopy(history),
+                    outgoing_history = deepcopy(history)
+                    if public_guard is not None:
+                        outgoing_history = public_guard.provider_history(outgoing_history)
+                    request.update(input=outgoing_history,
                         instructions=instructions+(FINALIZE+self._final_instruction() if final else ''),
                         tool_choice='none' if final else 'auto')
+                    if (self.role=='controller' and turn==8 and final and memory_ready
+                            and public_guard is not None and public_guard.omit_q12_final_tool_declarations()):
+                        request['tools']=[]
                     if (public_guard is not None and memory_schedule and not final and not memory_ready
                             and first_tool_free >= 3 and turn == first_tool_free-1):
                         # Consume the last ORIGINAL tool-enabled generation,
@@ -188,13 +201,13 @@ class _OpenRole:
                             and public_guard is not None and public_guard.controller_precommit_enabled() else None),
                         prepared_count_context=self.binding,
                         **({'citation_handles':citations} if citations is not None else {}),
-                        **({'request_validator':public_guard.validate_request} if public_guard is not None else {}),
+                        **({'request_validator':request_validator} if request_validator is not None else {}),
                         **({'controller_completion_request': controller_completion,
                             'controller_min_headroom': self.controller_min_headroom}
                             if controller_completion is not None else {}))
                     request,prepared_count=packed if type(packed) is tuple else (packed,None)
-                    if public_guard is not None:
-                        public_guard.validate_request(request)  # Read-only; never alter PreparedCount input.
+                    if request_validator is not None:
+                        request_validator(request)  # Read-only; never alter PreparedCount input.
                     final=final or request['tool_choice']=='none'
                     capture(); timely()
                     budgeted_response(e.ReceiptHTTP(transport,output),request,ctx['rates'],limits,self.budget,output,turn,

@@ -105,6 +105,10 @@ class PopulationReviewer(_OpenRole):
 
     def review(self, prompt, slot):
         frozen = deepcopy(prompt)
+        from earnings_population_independent_q12 import selected as q12_selected
+        if q12_selected(getattr(self,'review_runtime',None)):
+            from earnings_population_q12_public import project
+            frozen=project(frozen)
         fields = {'candidate_id': {'type': 'string', 'enum': [frozen['candidate_id']]},
             'accepted_for_exploration': {'type': 'boolean'},
             'rationale': {'type': 'string', 'minLength': 1, 'maxLength': 1000}}

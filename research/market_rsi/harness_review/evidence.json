@@ -13,5 +13,13 @@
     "scale_max": 5,
     "selected": "incumbent",
     "data_scope": "reused training panel"
+  },
+  "q12_run_239": {
+    "controller_completed": true,
+    "author_completed": true,
+    "review_provider_calls": 0,
+    "candidate_frozen": false,
+    "companies_scored": 0,
+    "targets_scored": 0
   }
 }

@@ -6,6 +6,9 @@ def research_task(value):
         from earnings_population_root_reentry import is_root,context
         if is_root(origin):
             root=context(origin)
+            import earnings_population_independent_q12 as q12
+            if q12.is_origin(origin):
+                return q12.research_objective(root['contract'])
             return (f"Continue the SAME experiment at global logical{origin['logical_round']}/root-child{origin['root_child_ordinal']} from original unscored R0/H0 "
                 f"{origin['parent']['id']}. Its score is NULL, not the saved plain Round0 mean3.00. "
                 'Read complete latest25 public outcomes, separate saved baseline3.00 and prediction champion3.18, '
@@ -185,6 +188,7 @@ def selection(manager, role, args, kwargs):
 
 
 def freeze(result_binding, output):
+    from earnings_population_runtime import ROOT
     verified = closed_evidence(result_binding,proposal=True); value = verified['runtime']
     descriptor = dict(schema='earnings_training25_clean_frozen_candidate_v1',policy=POLICY,
         authority=value['sources'][PLAN],split=SPLIT,round0=ROUND0,
@@ -194,7 +198,7 @@ def freeze(result_binding, output):
             'tools/earnings_open_worker.py','tools/earnings_population_execution.py')},
         forecast_limits=value['limits']['forecast'],rates=value['rates'])
     if second_round(value):descriptor.update(learning_round=value['clean_learning_round'],parent_basis=verified['task']['round2_origin'])
-    if Path(output).parent != training.ROOT: raise ValueError('Own immutable descriptor path required')
+    if Path(output).parent != ROOT: raise ValueError('Own immutable descriptor path required')
     return engine.save(Path(output),descriptor)
 
 

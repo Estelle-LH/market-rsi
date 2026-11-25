@@ -1,0 +1,26 @@
+--- a/tools/earnings_population_coevolution.py
++++ b/tools/earnings_population_coevolution.py
+@@ -492,11 +492,18 @@
+ 
+ def declared_test(origin):
+     """Small literal projection into C/A/Review, not just an unread path/hash."""
+-    claim=expansion(origin)
+-    frontier=saved(claim['frontier'])
+-    from earnings_population_layered import slot_resolution
+-    plan=None if 'substitution' not in claim else e.strict_json((e.REPO/PLAN).read_bytes())
+-    resolved=slot_resolution(frontier,claim,frontier_binding=claim['frontier'],plan=plan)
++    import earnings_population_independent_q12 as q12
++
++    if q12.is_origin(origin):
++        context = q12.context(origin)
++        claim, frontier = context['claim'], context['frontier']
++        resolved = dict(contract=context['contract'], slot_hypothesis_id=claim['hypothesis_id'])
++    else:
++        claim = expansion(origin)
++        frontier = saved(claim['frontier'])
++        from earnings_population_layered import slot_resolution
++        plan = None if 'substitution' not in claim else e.strict_json((e.REPO/PLAN).read_bytes())
++        resolved = slot_resolution(frontier, claim, frontier_binding=claim['frontier'], plan=plan)
+     hypothesis=resolved['contract']
+     return dict(generation=claim['generation'],logical_round=claim['logical_round'],
+         actual_parent_id=claim['parent_id'],

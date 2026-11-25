@@ -170,12 +170,22 @@ def within_slot_context(runtime,task,origin,*,chosen=None):
             or task.get('mode')!='proposal' or task.get('frozen_candidate') is not None or origin is None):
         return None
     import earnings_population_coevolution as policy
+    import earnings_population_independent_q12 as q12
+    from earnings_population_clean_slate import followup_plan
     from pathlib import Path
     from market_rsi import digest
     from earnings_population_roles import scientific
-    plan=saved(runtime['sources'][policy.PLAN])
+    plan=saved(runtime['sources'][followup_plan(runtime['clean_learning_round'])])
     if plan.get('technical_continuation') is not None:return None
-    claim=policy.expansion(origin,plan);frontier=saved(claim['frontier'])
+    q12_slot = None
+    if q12.is_origin(origin):
+        if runtime.get('id') != q12.ID or task.get('round2_origin') != plan['origin']:
+            raise ValueError('Exact independent Q12 proposal and task origin required')
+        q12_slot = q12.context(origin, plan)
+        claim, frontier = q12_slot['claim'], q12_slot['frontier']
+    else:
+        claim = policy.expansion(origin, plan)
+        frontier = saved(claim['frontier'])
     if frontier.get('schema')!=TRANSITION_SCHEMA:return None
     decision_path=Path(runtime['slots']['controller'][0])/'population-decision.json'
     if (decision_path!=Path(runtime['root'])/'roles/controller-01/population-decision.json'
@@ -184,7 +194,11 @@ def within_slot_context(runtime,task,origin,*,chosen=None):
     bound=dict(path=str(decision_path),sha256=e.digest(decision_path.read_bytes()))
     decision=saved(bound)
     if chosen is not None and chosen!=decision:raise ValueError('Author decision differs from actual current Controller')
-    resolved=slot_resolution(frontier,claim,frontier_binding=claim['frontier'],plan=plan)
+    if q12_slot is None:
+        resolved = slot_resolution(frontier, claim, frontier_binding=claim['frontier'], plan=plan)
+    else:
+        # Q12 authenticates this exact H-only slot against the original sixteen questions.
+        resolved = dict(contract=q12_slot['contract'], slot_hypothesis_id=claim['hypothesis_id'])
     axis=resolved['contract']['change_axis']
     if (decision.get('parent_pair_sha256')!=origin['parent']['id']
             or decision.get('feedback_sha256')!=digest(task['feedback'])
