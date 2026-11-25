@@ -1,0 +1,74 @@
+{
+  "original_source": "9022aeb400efa332ddeb8e2ec883f7ff9ab72651",
+  "files": [
+    {
+      "file": "source/feedback_linked_loop.py",
+      "original_path": "research/market_rsi/supervisor_harness/feedback_linked_loop.py",
+      "functions": null
+    },
+    {
+      "file": "source/earnings_population_loop.py",
+      "original_path": "tools/earnings_population_loop.py",
+      "functions": null
+    },
+    {
+      "file": "source/earnings_population_services.py",
+      "original_path": "tools/earnings_population_services.py",
+      "functions": [
+        "Services.author",
+        "Services.review",
+        "Services.review_outcome"
+      ]
+    },
+    {
+      "file": "source/earnings_population_roles.py",
+      "original_path": "tools/earnings_population_roles.py",
+      "functions": [
+        "PopulationController",
+        "PopulationReviewer"
+      ]
+    },
+    {
+      "file": "source/earnings_open_roles.py",
+      "original_path": "tools/earnings_open_roles.py",
+      "functions": [
+        "_initial_open_request",
+        "_OpenRole._run_open"
+      ]
+    },
+    {
+      "file": "source/earnings_population_run.py",
+      "original_path": "tools/earnings_population_run.py",
+      "functions": [
+        "execute",
+        "_execute"
+      ]
+    },
+    {
+      "file": "source/earnings_population_clean_slate.py",
+      "original_path": "tools/earnings_population_clean_slate.py",
+      "functions": [
+        "research_task",
+        "selection",
+        "freeze",
+        "compare"
+      ]
+    },
+    {
+      "file": "source/earnings_population_layered.py",
+      "original_path": "tools/earnings_population_layered.py",
+      "functions": [
+        "child_breadth",
+        "slot_resolution",
+        "within_slot_context"
+      ]
+    },
+    {
+      "file": "source/earnings_population_coevolution.py",
+      "original_path": "tools/earnings_population_coevolution.py",
+      "functions": [
+        "declared_test"
+      ]
+    }
+  ]
+}

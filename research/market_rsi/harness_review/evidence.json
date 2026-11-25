@@ -1,0 +1,17 @@
+{
+  "last_complete_training_panel": {
+    "proposal": 222,
+    "evaluation_windows": [
+      223,
+      224,
+      225
+    ],
+    "companies": 25,
+    "targets": 125,
+    "candidate_mean": 3.04,
+    "incumbent_mean": 3.18,
+    "scale_max": 5,
+    "selected": "incumbent",
+    "data_scope": "reused training panel"
+  }
+}
