@@ -1,0 +1,12 @@
+{
+  "round17_incumbent": {
+    "proposal": 154,
+    "companies": 25,
+    "targets": 125,
+    "total_points": 79.5,
+    "candidate_mean": 3.18,
+    "scale_max": 5,
+    "selected": "candidate",
+    "data_scope": "reused training panel"
+  }
+}
