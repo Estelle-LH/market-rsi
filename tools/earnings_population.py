@@ -119,11 +119,42 @@ def validate(state):
                 raise ValueError('Selection parent differs from preceding journal')
             replay['stable_id'] = body['after']
             replay['explorers'].remove(body['after'])
+        elif kind == 'frontier_projection':
+            before = [replay['stable_id'], *replay['explorers']]
+            after = body.get('after', [])
+            _bindings(body.get('evidence'))
+            if (body.get('before') != before or not body.get('reason')
+                    or not 1 <= len(after) <= 3 or len(set(after)) != len(after)
+                    or any(v not in replay['versions'] for v in after)):
+                raise ValueError('Exact registered global frontier projection required')
+            replay['stable_id'], replay['explorers'] = after[0], list(after[1:])
         else:
             raise ValueError('Unknown population transition')
     if any(digest(state[k]) != digest(v) for k, v in replay.items()):
         raise ValueError('Current population differs from retained journal replay')
     return state
+
+
+def project_frontier(state, incumbent, explorers, *, reason, evidence):
+    """Replayable membership only; no synthetic scores, reset or Native adoption.
+
+    The trusted coevolution policy verifies full-panel incumbent and explorer
+    eligibility. Parking an explorer in a serial working view retains its code,
+    observations, exposure and journal; it does not erase global membership.
+    """
+    validate(state)
+    _bindings(evidence)
+    after = [incumbent, *explorers]
+    if (type(explorers) is not list or not 1 <= len(after) <= 3
+            or len(set(after)) != len(after) or any(v not in state['versions'] for v in after)
+            or type(reason) is not str or not reason.strip()):
+        raise ValueError('At most three registered frontier members and reason required')
+    result = deepcopy(state)
+    before = [result['stable_id'], *result['explorers']]
+    result['stable_id'], result['explorers'] = incumbent, list(explorers)
+    _event(result, 'frontier_projection', dict(before=before, after=after,
+        reason=reason, evidence=evidence))
+    return validate(result)
 
 
 def retain(state, child, *, reason, evidence):

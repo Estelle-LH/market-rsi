@@ -388,13 +388,17 @@ class PopulationAuthorAndFailureTests(unittest.TestCase):
             'hypothesis': 'Synthetic method change', 'expected_effect': 'Synthetic contract only',
             'retire_branch_id': 'c'*64}
         seen = []
-        def author(scientific, before, slot):
+        def author(scientific, before, slot, *, parent_binding):
             seen.append(deepcopy(scientific))
+            self.assertEqual(parent_binding, self.fixture.version['R'])
             Path(slot).mkdir(parents=True)
-            return engine.save(Path(slot)/'response.json', {
+            delta = {
                 'decision_sha256': digest(scientific),
-                'source_text': "PROGRAM={'axis':'R'}\ndef run(payload): return {'new_method': True}\n",
-                'test_text': "CASES=[{'input': {}, 'expected': {'new_method': True}}]"})
+                'parent_source_sha256': parent_binding['sha256'],
+                'edits': [{'kind': 'replace', 'old_text': 'def run(p): return {}',
+                           'new_text': "def run(p): return {'new_method': True}"}],
+                'test_text': "CASES=[{'input': {}, 'expected': {'new_method': True}}]"}
+            return engine.save(Path(slot)/'response.json', self.fixture_response(delta))
         self.owner.role = Mock(return_value=SimpleNamespace(author=author))
         slot = self.fixture.root/'roles'/'author-01'
         child = self.owner.author(chosen, self.state, str(slot))
@@ -405,8 +409,17 @@ class PopulationAuthorAndFailureTests(unittest.TestCase):
         projection = engine.read(engine.pin(slot/'scientific-decision-projection.json'))
         self.assertEqual(projection['population_decision'], chosen)
         self.assertEqual(projection['scientific_decision'], seen[0])
+        assembly = engine.read(engine.pin(slot/'delta-assembly.json'))
+        self.assertEqual(assembly['parent_source'], self.fixture.version['R'])
+        self.assertEqual(assembly['source'], child['R'])
+        self.assertEqual(child['author'], 'model:DeltaAuthor')
         self.assertIn(child['id'], self.owner.authored)
         self.assertFalse(self.fixture.marker.exists())
+
+    @staticmethod
+    def fixture_response(value):
+        return {'status': 'completed', 'output': [{'type': 'message', 'role': 'assistant',
+            'content': [{'type': 'output_text', 'text': json.dumps(value)}]}]}
 
     def test_failed_author_cases_reject_before_independent_paid_review(self):
         child = self.fixture.version

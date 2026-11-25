@@ -6,7 +6,7 @@ import tempfile
 import edgar_forecast_openai as forecast
 from supervisor_harness import capacity_feedback_engine as engine
 
-SCORER = Path('/Users/estelle/.codex/worktrees/3c5e/self-evolving-v18-local/artifacts/earnings-overnight-20261012/exact-benchmark/scripts/edgar_forecast_bench.py')
+SCORER = Path('/__LOCAL_RESEARCH_HOME__/.codex/worktrees/3c5e/self-evolving-v18-local/artifacts/earnings-overnight-20261012/exact-benchmark/scripts/edgar_forecast_bench.py')
 
 
 def make_kernel(root):

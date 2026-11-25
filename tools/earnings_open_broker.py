@@ -26,7 +26,7 @@ DEFINITIONS = [*deepcopy(TOOLS), *deepcopy(LITERATURE_TOOLS),
         {'source':{'type':'string'},'payload_json':{'type':'string'}})]
 REFERENCE_TOOL = function('read_reference_program',
     'Read a page of the exact failed R development reference, not the selected program. Character offsets; use next_offset. Read-only hashed source, never executed by this tool.',
-    {'offset':{'type':'integer','minimum':0,'maximum':64000},
+    {'offset':{'type':'integer','minimum':0,'maximum':65536},
      'characters':{'type':'integer','minimum':1,'maximum':6000}})
 HUMAN_REPAIR_DISPATCH = {
     'schema':'earnings_human_repair_dispatch_v1',
@@ -80,7 +80,7 @@ class ResearchBroker:
                 or value['dispatch']!=HUMAN_REPAIR_DISPATCH):
             raise ValueError('Exact explicitly human-authorized initial R repair dispatch required')
         source=engine.activation._read(value['prior_candidate']['source']).decode('utf-8')
-        if len(source.encode())>64_000:raise ValueError('Prior public source exceeds context bound')
+        if len(source.encode())>65_536:raise ValueError('Prior public source exceeds context bound')
         delivery=value['prior_candidate'].get('source_delivery','inline')
         if delivery not in ('inline','paged_reference') or ('source_delivery' in value['prior_candidate'] and delivery!='paged_reference'):
             raise ValueError('Only the explicit paged reference extension is supported')

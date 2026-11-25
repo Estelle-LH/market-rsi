@@ -4,6 +4,7 @@ import argparse
 from fractions import Fraction
 import http.client
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -11,6 +12,8 @@ import stat
 import subprocess
 import time
 import uuid
+import weakref
+from copy import deepcopy
 
 from edgar_forecast_budget import PilotBudget, BudgetStop
 from edgar_forecast_model_pilot import digest, write_json, strict_single_number
@@ -18,7 +21,7 @@ from edgar_forecast_tools import FilingTools, TOOLS
 
 REPO = Path(__file__).resolve().parents[1]
 RUNTIME = REPO / "benchmarks/edgar_forecast/openai_runtime.json"
-PILOT = Path("/Users/estelle/.codex/worktrees/3c5e/self-evolving-v18-local/artifacts/edgar-model-scoring-20261007/pilot-01")
+PILOT = Path("/__LOCAL_RESEARCH_HOME__/.codex/worktrees/3c5e/self-evolving-v18-local/artifacts/edgar-model-scoring-20261007/pilot-01")
 PLAN_HASH = "ecdaf186eda9212539eec3ad19ab1f28b233c2e7f1471d4b529cad5a0088fc81"
 KEYS = PILOT.parent / "provider-keys.env"
 INSTRUCTIONS = ("Forecast using only the supplied local question document and filing tools. "
@@ -87,6 +90,138 @@ def token(value):
     return value
 
 
+_PREPARED_COUNTS = weakref.WeakKeyDictionary()
+
+
+class PreparedCount:
+    """Opaque, process-local capability; bytes/provenance stay on disk."""
+    __slots__ = ('__weakref__',)
+
+    def __new__(cls):
+        raise TypeError('Only a successful original context count can mint a handoff')
+
+
+def _prepared_bytes(value):
+    return json.dumps(value, sort_keys=True, ensure_ascii=False, allow_nan=False).encode()
+
+
+def _prepared_file(path):
+    path = Path(path)
+    if not path.is_absolute() or path.resolve() != path:
+        raise ValueError('Canonical prepared-count receipt required')
+    with os.fdopen(os.open(path, os.O_RDONLY | os.O_NOFOLLOW), 'rb') as stream:
+        info = os.fstat(stream.fileno())
+        if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1:
+            raise ValueError('Regular single-link prepared-count receipt required')
+        return stream.read()
+
+
+def _prepared_read(binding):
+    if (type(binding) is not dict or set(binding) != {'path', 'sha256'}
+            or type(binding['path']) is not str or str(Path(binding['path'])) != binding['path']
+            or type(binding['sha256']) is not str or not re.fullmatch('[0-9a-f]{64}', binding['sha256'])):
+        raise ValueError('Exact prepared-count receipt binding required')
+    raw = _prepared_file(binding['path'])
+    if digest(raw) != binding['sha256']:
+        raise ValueError('Prepared-count receipt bytes changed')
+    return raw
+
+
+def _prepared_pin(path):
+    return {'path': str(path), 'sha256': digest(_prepared_file(path))}
+
+
+def _prepare_count(request, counted, output, turn, source_context, context_path, count_path, intent_path):
+    """Called only after pack's actual provider count and original receipts."""
+    proof = dict(schema='earnings_prepared_count_handoff_v1', slot=str(output), turn=turn,
+        request_sha256=digest(_prepared_bytes(request)), model=request['model'],
+        source_context=deepcopy(source_context), context_receipt=_prepared_pin(context_path),
+        count_receipt=_prepared_pin(count_path), provider_count_intent=_prepared_pin(intent_path),
+        provider_count_response=_prepared_pin(intent_path.with_name(intent_path.name.replace('.intent.json','.response.json'))),
+        producer_source=_prepared_pin(Path(__file__).with_name('earnings_open_context.py')),
+        consumer_source=_prepared_pin(Path(__file__)))
+    raw = intent_path.with_name(intent_path.name.replace('.intent.json','.raw.bin'))
+    proof['provider_count_raw'] = _prepared_pin(raw) if raw.exists() else None
+    handle = object.__new__(PreparedCount)
+    _PREPARED_COUNTS[handle] = dict(proof=proof, counted=deepcopy(counted),
+        pid=os.getpid(), identity=(output.stat().st_dev,output.stat().st_ino), used=False)
+    _verify_prepared_count(handle, request, output, turn)
+    return handle
+
+
+def _verify_prepared_count(handle, request, output, turn, rates=None, config=None, *, consuming=False):
+    entry = _PREPARED_COUNTS.get(handle) if type(handle) is PreparedCount else None
+    if entry is None or entry['pid'] != os.getpid() or entry['used'] and not consuming:
+        raise ValueError('Unknown, copied, foreign-process or consumed prepared count')
+    proof = entry['proof']; source = json.loads(_prepared_read(proof['source_context']))
+    if (type(turn) is not int or not 1 <= turn <= 99 or turn != proof['turn']
+            or str(output) != proof['slot'] or output.resolve() != output or not output.is_dir()
+            or (output.stat().st_dev,output.stat().st_ino) != entry['identity']
+            or str(output) not in source['slots'] or str(output.parent.parent) != source['root']
+            or not re.fullmatch('[0-9a-f]{40}',source['source_commit'])
+            or request.get('model') != proof['model'] or request['model'] != source['rates']['api_model']
+            or request.get('reasoning') != {'effort':source['rates']['effort']}
+            or digest(_prepared_bytes(request)) != proof['request_sha256']
+            or rates is not None and rates != source['rates']
+            or any(type(n) is not int for n in source['limits'].values())
+            or config is not None and (config != source['limits'] or any(type(n) is not int for n in config.values()))):
+        raise ValueError('Prepared count changed payload/model/slot/turn/source context')
+    context_path=Path(proof['context_receipt']['path'])
+    intent_path=Path(proof['provider_count_intent']['path'])
+    if (context_path.parent != output
+            or not re.fullmatch(f'{turn:02d}-context-0[1-4]\\.json',context_path.name)
+            or proof['count_receipt']['path'] != str(context_path.with_name(context_path.stem+'-count.json'))
+            or intent_path.parent != output or not re.fullmatch(r'http-[0-9a-f-]+\.intent\.json',intent_path.name)
+            or proof['provider_count_response']['path'] != str(intent_path.with_name(intent_path.name.replace('.intent.json','.response.json')))):
+        raise ValueError('Prepared count receipts escaped their exact slot/turn')
+    context = json.loads(_prepared_read(proof['context_receipt']))
+    counted = json.loads(_prepared_read(proof['count_receipt']))
+    intent = json.loads(_prepared_read(proof['provider_count_intent']))
+    response = json.loads(_prepared_read(proof['provider_count_response']))
+    for key in ('producer_source','consumer_source'):
+        _prepared_read(proof[key])
+    count = token(counted['input_tokens'])
+    if (type(source['limits'].get('max_input_tokens')) is not int
+            or count > source['limits']['max_input_tokens']
+            or context.get('effective_request_sha256') != proof['request_sha256']
+            or context.get('max_input_tokens') != source['limits']['max_input_tokens']
+            or intent.get('endpoint') != '/v1/responses/input_tokens'
+            or intent.get('payload') != request or response != counted or counted != entry['counted']):
+        raise ValueError('Prepared count differs from original successful provider/context receipts')
+    prefix = Path(proof['provider_count_intent']['path'])
+    raw = prefix.with_name(prefix.name.replace('.intent.json','.raw.bin'))
+    if prefix.with_name(prefix.name.replace('.intent.json','.failed.json')).exists():
+        raise ValueError('Failed provider count cannot be reused')
+    if raw.exists() != (proof['provider_count_raw'] is not None):
+        raise ValueError('Original count raw-receipt presence changed')
+    if proof['provider_count_raw'] is not None and json.loads(_prepared_read(proof['provider_count_raw'])) != {
+            k:v for k,v in counted.items() if k != '_request_id'}:
+        raise ValueError('Prepared count raw/decoded provider response differs')
+    return entry
+
+
+def _consume_prepared_count(handle, request, rates, config, output, turn):
+    from earnings_http import save_bytes
+    entry = _PREPARED_COUNTS.get(handle) if type(handle) is PreparedCount else None
+    if entry is None or entry['pid'] != os.getpid() or entry['used']:
+        raise ValueError('Unknown, copied, foreign-process or consumed prepared count')
+    entry['used'] = True
+    original=Path(entry['proof']['slot'])
+    if original.resolve()!=original or (original.stat().st_dev,original.stat().st_ino)!=entry['identity']:
+        raise ValueError('Prepared-count original slot changed')
+    save_bytes(original/f"{entry['proof']['turn']:02d}-prepared-count-consumed.json", _prepared_bytes(dict(
+        schema='earnings_prepared_count_consumed_v1', handoff_sha256=digest(_prepared_bytes(entry['proof'])),
+        reservation_or_generation_started=False, phase='consumed_before_validation_and_reservation',
+        snapshot_only=True, dispatch_status='not_asserted_by_this_marker')))
+    _verify_prepared_count(handle, request, output, turn, rates, config, consuming=True)
+    # Exclusive durable provenance consumes this slot/turn before reserve/send;
+    # failed reservation or dispatch never returns it to the pool.
+    save_bytes(output/f'{turn:02d}-prepared-count-reuse.json', _prepared_bytes(dict(
+        entry['proof'], reused_original_provider_count=True, new_count_http_request=False,
+        count_response_sha256=digest(_prepared_bytes(entry['counted'])))))
+    return deepcopy(entry['counted'])
+
+
 def unit(rate):
     value = Fraction(rate) * 1000  # USD/million -> nano-USD/token
     if value.denominator != 1 or value <= 0:
@@ -115,7 +250,8 @@ def forecast_finalization_needed(input_tokens, config):
                             - min(FORECAST_FINAL_INPUT_RESERVE, cap // 16))
 
 
-def budgeted_response(client, request, rates, config, budget, output, turn, *, completion_request=None):
+def budgeted_response(client, request, rates, config, budget, output, turn, *, completion_request=None,
+                      prepared_count=None):
     # Only forecast opts in. Other roles keep their original count/send path.
     if completion_request is not None and (
             type(completion_request) is not dict or completion_request.get('tool_choice') != 'none'
@@ -126,10 +262,13 @@ def budgeted_response(client, request, rates, config, budget, output, turn, *, c
             or completion_request.get('input', [])[:-1] != request['input']
             or len(completion_request.get('input', [])) != len(request['input']) + 1):
         raise ValueError('Finalization must retain exact history/model and close tools')
+    if prepared_count is not None and completion_request is not None:
+        raise ValueError('Prepared context count cannot be mixed with forecast finalization')
     budget.active()
     if completion_request is not None:
         write_json(output / f'{turn:02d}-research-request.json', request)
-    counted = client.post("/v1/responses/input_tokens", request)
+    counted = (client.post("/v1/responses/input_tokens", request) if prepared_count is None else
+               _consume_prepared_count(prepared_count, request, rates, config, output, turn))
     write_json(output / (f'{turn:02d}-research-count.json' if completion_request is not None
                          else f'{turn:02d}-count.json'), counted)
     count = token(counted["input_tokens"])
@@ -253,8 +392,25 @@ def research_recipe_messages(recipe, parent_research_recipe=None):
     return messages
 
 
+def capacity_forecast_closing_policy():
+    """Declared engineering policy; neither a longer wall nor a research gain."""
+    return {"schema": "capacity_forecast_closing_policy_v1", "reserve_seconds": 600,
+            "deadline_source": "original_native_absolute_monotonic",
+            "scope": "capacity_forecasts_only", "history_policy": "retain_all",
+            "retry_allowed": False}
+
+
 def forecast(client, rates, config, company, budget, output, *, research_recipe=None, parent_research_recipe=None,
-             capacity_worker=None):
+             capacity_worker=None, capacity_deadline_monotonic=None):
+    if capacity_deadline_monotonic is not None:
+        if (capacity_worker is None or type(capacity_deadline_monotonic) not in (int, float)
+                or not math.isfinite(capacity_deadline_monotonic)):
+            raise ValueError("Finite original capacity deadline requires a capacity worker")
+        now = time.monotonic()
+        if capacity_deadline_monotonic <= now:
+            raise BudgetStop("Original capacity deadline already expired")
+        if capacity_deadline_monotonic > now + config["company_wall_seconds"]:
+            raise ValueError("Capacity deadline cannot extend the original company wall")
     recipe_messages = research_recipe_messages(research_recipe, parent_research_recipe)
     if capacity_worker is not None:
         from earnings_capacity_worker import CapacityWorker
@@ -272,13 +428,30 @@ def forecast(client, rates, config, company, budget, output, *, research_recipe=
     for turn in range(1, config["max_turns_per_company"] + 1):
         if time.monotonic() - start > config["company_wall_seconds"]:
             raise BudgetStop("Company wall-clock limit")
-        final_turn = turn == config["max_turns_per_company"]
+        if capacity_worker is not None:
+            capacity_worker._check()
+        # The outer deadline predates setup. Recheck after potentially costly
+        # integrity validation; never replace it with a fresh relative timer.
+        checked_at = time.monotonic()
+        remaining = (None if capacity_deadline_monotonic is None
+                     else capacity_deadline_monotonic - checked_at)
+        if remaining is not None and remaining <= 0:
+            raise BudgetStop("Original capacity deadline expired before generation")
+        deadline_final = (remaining is not None
+                          and remaining <= capacity_forecast_closing_policy()["reserve_seconds"])
+        final_turn = turn == config["max_turns_per_company"] or deadline_final
+        if deadline_final:
+            write_json(output / f"{turn:02d}-deadline-closing.json", {
+                "schema": "capacity_forecast_deadline_closing_v1", "turn": turn,
+                "reason": "time_reserve", "policy": capacity_forecast_closing_policy(),
+                "deadline_monotonic": capacity_deadline_monotonic,
+                "checked_monotonic": checked_at, "remaining_seconds": remaining,
+                "turn_ceiling_also_reached": turn == config["max_turns_per_company"],
+                "history_items": len(history), "targets": targets})
         request = final_request(history, rates, targets) if final_turn else {
             "model": rates["api_model"], "input": history, "instructions": INSTRUCTIONS,
             "reasoning": {"effort": rates["effort"]}, "parallel_tool_calls": False,
             "tools": TOOLS if capacity_worker is None else capacity_worker.definitions}
-        if capacity_worker is not None:
-            capacity_worker._check()
         limits = turn_config(config, final_turn)
         if final_turn:
             response = budgeted_response(client, request, rates, limits, budget, output, turn)

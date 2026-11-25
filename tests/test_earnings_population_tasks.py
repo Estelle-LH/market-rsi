@@ -2,7 +2,6 @@
 from copy import deepcopy
 import hashlib
 import json
-import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -87,8 +86,6 @@ class BindingHelpers(unittest.TestCase):
             tasks._cutoff('20260230')
 
 
-@unittest.skipUnless(os.environ.get('MARKET_RSI_RESIDENT_DATA_TESTS') == '1',
-    'Opt-in local resident snapshots; data is deliberately not published')
 class RealResidentPublicData(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

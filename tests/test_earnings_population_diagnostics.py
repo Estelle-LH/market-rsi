@@ -59,6 +59,33 @@ class DiagnosticProjectionTests(unittest.TestCase):
         result = self.project({'coverage': {'extracted_cells': 1_000_000_000}})
         self.assertEqual(result['program_reported_coverage']['extracted_cells'], 1_000_000_000)
 
+    def test_successful_search_transport_survives_without_claiming_financial_extraction(self):
+        result = self.project({'coverage': {'accepted_searches': 8, 'failed_requests': 0,
+                                           'accepted_reads': 0, 'extracted_cells': 0}})
+        self.assertEqual(result['program_reported_coverage'],
+                         {'accepted_searches': 8, 'failed_requests': 0,
+                          'accepted_reads': 0, 'extracted_cells': 0})
+        self.assertTrue(all(row['status'] == 'unreported' for row in result['reported_target_completion']))
+        self.assertIn('not independently verified financial correctness', result['limitation'])
+
+    def test_search_and_failure_counters_keep_original_strict_integer_bounds(self):
+        for key in ('accepted_searches', 'failed_requests'):
+            for value in (True, False, -1, 1_000_000_001, 8.0, '8', None, 'PRIVATE_VALUE'):
+                with self.subTest(key=key, value=value):
+                    result = self.project({'coverage': {key: value}})
+                    self.assertNotIn(key, result['program_reported_coverage'])
+                    self.assertIn('invalid_coverage_counter', result['diagnostic_flags'])
+                    self.assertNotIn('PRIVATE_VALUE', json.dumps(result))
+
+    def test_search_and_failure_boundary_counters_do_not_copy_arbitrary_claims(self):
+        result = self.project({'coverage': {'accepted_searches': 1_000_000_000, 'failed_requests': 0,
+                                           'financially_correct': True, 'search_reason': 'PRIVATE_VALUE'},
+                               'targets': [{'target_id': 'T001', 'status': 'evidence_ready'}]})
+        self.assertEqual(result['program_reported_coverage'],
+                         {'accepted_searches': 1_000_000_000, 'failed_requests': 0})
+        self.assertNotIn('PRIVATE_VALUE', json.dumps(result))
+        self.assertEqual(result['reported_target_completion'][0]['status'], 'unreported')
+
     def test_malformed_or_financial_coverage_never_becomes_valid_counter(self):
         for value in (True, False, -1, 1.5, '104', None, float('nan'), float('inf'),
                       1_000_000_001, {'actual_value': 'PRIVATE_ACTUAL'}):

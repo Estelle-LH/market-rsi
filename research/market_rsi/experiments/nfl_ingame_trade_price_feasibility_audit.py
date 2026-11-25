@@ -17,7 +17,7 @@ from pathlib import Path
 
 import numpy as np
 
-SOURCE_ROOT = Path("/Users/estelle/Library/Application Support/MarketRSI/"
+SOURCE_ROOT = Path("/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI/"
                    "self-evolving-v18-local/artifacts/nfl-2025-train-refresh-20260922-01")
 
 

@@ -19,7 +19,7 @@ THREADS = {name: "1" for name in (
     "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
     "NUMEXPR_NUM_THREADS", "VECLIB_MAXIMUM_THREADS")}
 THREADS["PYTHONHASHSEED"] = "0"
-TRAIN = Path("/Users/estelle/Library/Application Support/MarketRSI/"
+TRAIN = Path("/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI/"
              "self-evolving-v18-local/artifacts/nfl-2025-train-refresh-20260922-01")
 REQUEST_FIELDS = {"attempt_id", "candidate_id", "module", "source_commit",
     "files", "python", "python_sha256", "memory", "memory_sha256",

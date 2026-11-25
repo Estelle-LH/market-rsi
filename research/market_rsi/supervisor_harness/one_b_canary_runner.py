@@ -411,7 +411,7 @@ def run_parent(*, root: Path, budget: PaidBudget,
 
 
 def _require_live_runtime() -> None:
-    allowed = Path("/Users/estelle/Library/Application Support/MarketRSI").resolve()
+    allowed = Path("/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI").resolve()
     if (sys.prefix == sys.base_prefix
             or not Path(sys.prefix).resolve().is_relative_to(allowed)
             or not Path(sys.executable).absolute().is_relative_to(allowed)
@@ -421,7 +421,7 @@ def _require_live_runtime() -> None:
 
 
 def _require_local_path(path: Path, label: str) -> None:
-    allowed = Path("/Users/estelle/Library/Application Support/MarketRSI").resolve()
+    allowed = Path("/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI").resolve()
     candidate = Path(path)
     if candidate.is_symlink() or not candidate.resolve().is_relative_to(allowed):
         raise ValueError(f"{label} must be a non-symlink local MarketRSI path")

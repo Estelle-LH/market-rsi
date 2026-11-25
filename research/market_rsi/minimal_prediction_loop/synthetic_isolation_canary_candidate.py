@@ -48,11 +48,11 @@ _SOURCE_PATHS = {
     _SOURCE_DIRECTORY / "candidate.py",
 }
 _ABSENT_PATHS = (
-    Path("/Users/estelle/Library/Application Support/MarketRSI/"
+    Path("/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI/"
          "synthetic-adapter-canaries/"
          "market-rsi-real-candidate-isolation-canary-20260929-01/"
          "adapter-host-decoy-synthetic.txt"),
-    Path("/Users/estelle/Library/Application Support/MarketRSI/"
+    Path("/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI/"
          "synthetic-adapter-canaries/"
          "market-rsi-real-candidate-isolation-canary-20260929-01/"
          "protocol-host-decoy-synthetic.txt"),
@@ -62,8 +62,8 @@ _ABSENT_PATHS = (
     Path("/root/.aws"),
     Path("/root/.config/gcloud"),
     Path("/root/.ssh"),
-    Path("/home/estelle/.aws"),
-    Path("/home/estelle/.ssh"),
+    Path("/__LOCAL_RESEARCH_HOME__/.aws"),
+    Path("/__LOCAL_RESEARCH_HOME__/.ssh"),
 )
 _EXPECTED_TMPFS_BYTES = 64 * 1024 * 1024
 _EXPECTED_MEMORY_BYTES = 512 * 1024 * 1024

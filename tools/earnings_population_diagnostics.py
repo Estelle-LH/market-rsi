@@ -15,7 +15,7 @@ from earnings_research_state import ResearchState
 from market_rsi import digest
 from supervisor_harness import capacity_feedback_engine as engine
 
-COVERAGE = {'accepted_reads', 'requested_reads', 'failed_reads', 'extracted_cells',
+COVERAGE = {'accepted_reads', 'accepted_searches', 'requested_reads', 'failed_reads', 'failed_requests', 'extracted_cells',
     'omitted_cells', 'records', 'facts', 'calculations', 'assumptions',
     'observations', 'omitted_items'}
 LIMITATION = 'Program-reported capability diagnostics from a verified execution; not independently verified financial correctness or a prediction-gain claim.'

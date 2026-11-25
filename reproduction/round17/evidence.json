@@ -1,0 +1,22 @@
+{
+  "decision": "ADOPT_CANDIDATE",
+  "evaluation_windows": [
+    155,
+    156,
+    158
+  ],
+  "logical_round": 17,
+  "mean": 3.18,
+  "original_comparison_sha256": "ebde16bd9fb506c73d717bc568cdaecaae434a7f4bb2204cf3dedcb37262386a",
+  "original_source": "217b13e28cceaba628a5fe057f6860b56ecbd978",
+  "points": 79.5,
+  "program_sha256": {
+    "H": "6d80fa56d0625188f4357d791a725083a6bab75119c0736424516b3dc5681350",
+    "R": "75f698c2a138d6ddbc94b01c9f9eca3cd1d8043f8a3ac02ab24c1656bee06f54"
+  },
+  "proposal": 154,
+  "scale_max": 5,
+  "scope": "reused training panel",
+  "score_targets": 125,
+  "scored_companies": 25
+}

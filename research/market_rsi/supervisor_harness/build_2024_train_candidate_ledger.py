@@ -16,7 +16,7 @@ from typing import Mapping
 
 SCHEMA = "market_rsi_2024_train_candidate_denominator_v1"
 CANONICAL_REPO = Path(
-    "/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local"
+    "/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI/self-evolving-v18-local"
 )
 SOURCE_ROOT = Path("artifacts/nfl-2024-refresh-20260921-01")
 SOURCE_FILES = {

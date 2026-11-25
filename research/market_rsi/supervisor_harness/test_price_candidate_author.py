@@ -99,7 +99,7 @@ class SourceGuardTests(TestCase):
                 a.validate_source(source, is_test=is_test)
 
     def test_actual_preserved_completed_author_response_ast(self):
-        path = Path('/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/author/author-r0001-64dda21a4401/response.json')
+        path = Path('/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/author/author-r0001-64dda21a4401/response.json')
         if not path.exists(): self.skipTest('immutable local completed-author evidence not installed')
         self.assertEqual(a.h.w.sha(path), '9c4a41d8495ebfd4a4739d1c682192e1d97ff7da3f52a6b2d600e1858f8ad2a5')
         response = json.loads(path.read_text())
@@ -107,7 +107,7 @@ class SourceGuardTests(TestCase):
         self.assertEqual(a.validate_source(response['test_source'], is_test=True)['ast_nodes'], 813)
 
     def test_actual_preserved_round2_completed_author_response_ast(self):
-        path = Path('/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/author/author-r0002-5918dea0ccc1/response.json')
+        path = Path('/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts/market-rsi-price-auto-loop-20261006-01/role_calls/author/author-r0002-5918dea0ccc1/response.json')
         if not path.exists(): self.skipTest('immutable local completed-author evidence not installed')
         self.assertEqual(a.h.w.sha(path), '329a34d10076a2eb40bad763bad95bb813bd9a5ed6f23c3c0f9f3f6d54caf2cd')
         response = json.loads(path.read_text())

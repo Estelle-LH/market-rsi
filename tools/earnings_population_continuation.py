@@ -1,5 +1,6 @@
 """Read-only completed-window inheritance; historical code is checked in Git."""
 from contextlib import contextmanager
+from contextvars import ContextVar
 from copy import deepcopy
 import fcntl
 from functools import lru_cache
@@ -15,24 +16,120 @@ import earnings_population_tasks as tasks
 from earnings_population_runtime import EXTRA_BASELINE, EXTRA_CAP
 from market_rsi import digest
 from supervisor_harness.feedback_linked_loop import STAGES
+from earnings_population_source_history import source_name, bindings as source_bindings, runtime_metadata
 
 OWNED = tasks.ARTIFACTS / 'edgar-population-20261016'
 LEDGER = e.PILOT / 'api-budget.sqlite3'
 REPO = Path(__file__).resolve().parents[1]
 DRIVER = 'research/market_rsi/supervisor_harness/feedback_linked_loop.py'
 ID = re.compile(r'edgar-population-20261016-[0-9]{2}')
+_VALIDATION_EPOCH = ContextVar('earnings_population_validation_epoch', default=None)
+_EPOCH_MAX_BYTES = 32 * 1024 * 1024
+_EPOCH_MAX_ENTRIES = 4096
 
 
-@lru_cache(maxsize=2048)
+def _artifact_bytes(path):
+    if path.resolve() != path:
+        raise ValueError('Canonical non-symlink historical path required')
+    if not path.is_file():
+        raise ValueError('Missing original historical artifact')
+    return path.read_bytes()
+
+
+class _ValidationEpoch:
+    """One verified snapshot; final bytes are rechecked before caller release."""
+    def __init__(self):
+        self.entries, self.bytes = {}, 0
+
+    def read(self, path, sha256, *, binary):
+        key = (path, sha256)
+        entry = self.entries.get(key)
+        if entry is None:
+            raw = _artifact_bytes(path)
+            if hashlib.sha256(raw).hexdigest() != sha256:
+                raise ValueError('Historical artifact/source hash differs')
+            entry = {'raw': raw}
+            # Optional storage only: saturation preserves the original read path.
+            if (len(self.entries) < _EPOCH_MAX_ENTRIES
+                    and self.bytes + len(raw) <= _EPOCH_MAX_BYTES):
+                self.entries[key] = entry
+                self.bytes += len(raw)
+        if binary:
+            return entry['raw']
+        if 'decoded' not in entry:
+            entry['decoded'] = e.strict_json(entry['raw'])
+        return deepcopy(entry['decoded'])
+
+    def verify(self):
+        for (path, sha256) in self.entries:
+            if hashlib.sha256(_artifact_bytes(path)).hexdigest() != sha256:
+                raise ValueError('Historical artifact/source hash differs at validation epoch exit')
+
+
+@contextmanager
+def validation_epoch():
+    """Share nested historical reads only inside one original preflight call."""
+    epoch = _VALIDATION_EPOCH.get()
+    outer = epoch is None
+    if outer:
+        epoch = _ValidationEpoch()
+    token = _VALIDATION_EPOCH.set(epoch)
+    try:
+        yield
+        if outer:
+            epoch.verify()
+    finally:
+        _VALIDATION_EPOCH.reset(token)
+
+
+def _epoch_eligible(path, reader):
+    # Historical sources retain their original Git path. Dynamic authority and
+    # accounting proofs are deliberately never served from an epoch snapshot.
+    return (path != reader.ledger
+        and not any(word in path.name.lower() for word in ('clock', 'budget', 'ledger', 'owner'))
+        and '.capacity-runtime-claims' not in path.parts
+        and not path.name.endswith('.claim.json')
+        and path.name != 'claim.json')
+
+
+@lru_cache(maxsize=4096)
 def _git(repo, commit, name):
     return subprocess.run(['git', 'show', commit + ':' + name], cwd=repo,
                           check=True, capture_output=True).stdout
+
+
+def _contains(parts, prefix):
+    # Reader paths are absolute. An empty/relative '.' prefix is not their root.
+    return bool(prefix) and parts[:len(prefix)] == prefix
 
 
 class _Reader:
     def __init__(self, root, ledger, repo, ident):
         self.root, self.ledger, self.repo, self.ident = root, ledger, repo, ident
         self.ids, self.extra, self.sources, self.commit, self.cache = {ident}, set(), {}, None, {}
+        self._root_policy, self._root_parts = None, ()
+
+    def register_sources(self, runtime):
+        commit = runtime.get('source_commit')
+        if type(commit) is not str or re.fullmatch('[0-9a-f]{40}', commit) is None:
+            raise ValueError('Exact original historical source commit required')
+        sources = source_bindings(runtime.get('sources'), self.repo)
+        if self.commit != commit:
+            self.cache.clear()
+        self.commit, self.sources = commit, sources
+
+    def _allowed_parts(self):
+        # Cache lexical construction only; these mutable policy inputs remain
+        # part of the key. Exact extra-file membership is checked fresh in read.
+        policy = (self.root, frozenset(self.ids), tasks.ARTIFACTS)
+        if policy != self._root_policy:
+            allowed = [self.root / kind / ident for ident in self.ids for kind in ('inputs', 'attempts')]
+            allowed += [Path('/private/tmp') / ('market-rsi-' + ident) for ident in self.ids]
+            allowed += [tasks.ARTIFACTS / 'edgar-research-objective-20261014',
+                Path('/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI/co-evo-earnings/episodes/edgar-research-20261015-09')]
+            self._root_parts = tuple(path.parts for path in allowed)
+            self._root_policy = policy
+        return self._root_parts
 
     def read(self, bound, *, binary=False):
         if (type(bound) is not dict or set(bound) != {'path', 'sha256'}
@@ -40,26 +137,29 @@ class _Reader:
                 or not re.fullmatch(r'[0-9a-f]{64}', bound['sha256'])):
             raise ValueError('Exact original binding required')
         path = Path(bound['path'])
-        if not path.is_absolute() or str(path) != bound['path'] or path.resolve() != path:
+        if not path.is_absolute() or str(path) != bound['path']:
             raise ValueError('Canonical non-symlink historical path required')
-        if path.is_relative_to(self.repo):
+        try:
+            name = source_name(bound['path'], self.repo)
+        except ValueError:
+            name = None
+        if name is not None:
+            if _contains(path.parts, self.repo.parts) and path.resolve() != path:
+                raise ValueError('Canonical non-symlink historical path required')
             if (self.commit is None or (str(path), bound['sha256']) not in self.sources
-                    and bound != tasks.RUNTIME):
+                    and bound != tasks.RUNTIME and not runtime_metadata(bound, self.repo)):
                 raise ValueError('Unregistered historical production source')
-            name = str(path.relative_to(self.repo))
             if name not in self.cache:
                 self.cache[name] = _git(self.repo, self.commit, name)
             raw = self.cache[name]
         else:
-            allowed = [self.root / kind / ident for ident in self.ids for kind in ('inputs', 'attempts')]
-            allowed += [Path('/private/tmp') / ('market-rsi-' + ident) for ident in self.ids]
-            allowed += [tasks.ARTIFACTS / 'edgar-research-objective-20261014',
-                Path('/Users/estelle/Library/Application Support/MarketRSI/co-evo-earnings/episodes/edgar-research-20261015-09')]
-            if path not in self.extra and not any(path.is_relative_to(p) for p in allowed):
+            allowed = self._allowed_parts()
+            if path not in self.extra and not any(_contains(path.parts, prefix) for prefix in allowed):
                 raise ValueError('Historical artifact outside exact owned roots')
-            if not path.is_file():
-                raise ValueError('Missing original historical artifact')
-            raw = path.read_bytes()
+            epoch = _VALIDATION_EPOCH.get()
+            if epoch is not None and _epoch_eligible(path, self):
+                return epoch.read(path, bound['sha256'], binary=binary)
+            raw = _artifact_bytes(path)
         if hashlib.sha256(raw).hexdigest() != bound['sha256']:
             raise ValueError('Historical artifact/source hash differs')
         return raw if binary else e.strict_json(raw)
@@ -84,6 +184,19 @@ class _Reader:
         if binding.get('path') != str(path):
             raise ValueError('Historical durable seal path differs')
         return self.read(binding)
+
+
+def expected_services(runtime):
+    plain = {role: {'function':'Services.'+role,
+        'module':runtime['sources']['tools/earnings_population_services.py']}
+        for role in ('controller', 'author', 'review', 'forecast')}
+    if 'validation_policy' not in runtime:
+        return plain
+    from earnings_population_live_guard import POLICY, enabled
+    if not enabled(runtime): raise ValueError('Explicit population validation policy required')
+    wrapper = runtime['sources']['tools/earnings_population_live_guard.py']
+    return {role:dict(module=wrapper, function='_role_boundary.<locals>.invoke',
+        validation_policy=POLICY, role=role, original=original) for role,original in plain.items()}
 
 
 @contextmanager
@@ -112,9 +225,7 @@ def _replay(path, reader, runtime):
                 or identity.get('adapter') != runtime['sources']['tools/earnings_population_loop.py']
                 or identity.get('admission') != {'function': 'execute.<locals>.admit',
                     'module': runtime['sources']['tools/earnings_population_run.py']}
-                or identity.get('services') != {role: {'function': 'Services.' + role,
-                    'module': runtime['sources']['tools/earnings_population_services.py']}
-                    for role in ('controller', 'author', 'review', 'forecast')}):
+                or identity.get('services') != expected_services(runtime)):
             raise ValueError('Historical handler identity differs')
     previous, expected_files = manifest['seed'], set()
     for index in range(1, manifest['max_rounds'] + 1):
@@ -171,10 +282,7 @@ def _load(binding, root, ledger, repo, seen):
             or runtime.get('ledger') != str(ledger) or claim.get('source_commit') != runtime.get('source_commit')
             or not re.fullmatch(r'[0-9a-f]{40}', runtime['source_commit'])):
         raise ValueError('Original completed owner/runtime identity differs')
-    reader.commit = runtime['source_commit']
-    if any(not Path(b['path']).is_relative_to(repo) for b in runtime['sources'].values()):
-        raise ValueError('Historical production source outside owned checkout')
-    reader.sources = {(b['path'], b['sha256']) for b in runtime['sources'].values()}
+    reader.register_sources(runtime)
     study = reader.read(runtime['forecast_study'])
     inherited, extra_evidence = None, []
     if study.get('continuation') is not None:

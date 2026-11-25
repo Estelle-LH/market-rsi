@@ -59,6 +59,16 @@ class ProgramTests(unittest.TestCase):
         for name in ('save_research_record','run_python','inspect_trace'):
             with self.assertRaises(ValueError): program(H.replace('median_estimate',name).encode(),'H')
 
+    def test_original_H_description_bound_is_visible_and_not_relaxed(self):
+        from earnings_open_roles import AUTHOR
+        self.assertIn('1..1000 Unicode characters',AUTHOR)
+        for description in ('x','x'*1000,'表'*1000):
+            source=H.replace('New algorithm',description)
+            self.assertEqual(program(source.encode(),'H')['tools'][0]['description'],description)
+        for size in (0,1001,1430):
+            with self.subTest(size=size),self.assertRaisesRegex(ValueError,'Unique typed program tool'):
+                program(H.replace('New algorithm','x'*size).encode(),'H')
+
     def test_schema_no_external_reference_and_exact_fields(self):
         self.assertEqual(schema(SPEC), SPEC)
         with self.assertRaises(ValueError): schema(dict(SPEC, **{'$ref':'file:///secret'}))

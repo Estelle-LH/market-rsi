@@ -100,7 +100,7 @@ class IndependentReviewTests(TestCase):
         receipt = candidate.parent / 'author_receipt.json'; review.w.save(receipt, author)
         h.spec.update(candidate_binding=review.r.pin(candidate), files={str(path.relative_to(h.repo)): review.w.sha(path)
             for path in (h.runner, candidate, test, receipt)}, python_binding={
-            'launch_path': '/Users/estelle/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python',
+            'launch_path': '/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI/runtimes/ds-py312-20260912-01/bin/python',
             'binary': review.r.pin(Path('/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12'))})
         return h.prepare()
 

@@ -579,7 +579,8 @@ class CapacityForecast:
                 rollout_seconds=self.runtime["company_wall_seconds"], captured_deadline=hard)
             with absolute_window(hard - time.monotonic()):
                 result.update(forecast(ReceiptHTTP(transport, output), ctx["rates"], self.runtime,
-                    worker.state_api.company, self.budget, output, capacity_worker=worker))
+                    worker.state_api.company, self.budget, output, capacity_worker=worker,
+                    capacity_deadline_monotonic=hard))
                 scorer, qa, targets = measurement.kernel(self.kernel, worker.files["questions.md"])
                 responses = sorted(output.glob("[0-9][0-9]-response.json"))
                 predictions = strict_predictions(strict_json(responses[-1].read_text()), targets)

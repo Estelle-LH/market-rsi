@@ -216,3 +216,4 @@ class PopulationExecutionGateTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             self.service.review({'id':'child'},{},str(self.root/'review'))
         self.service.role.assert_not_called();self.service.forecast.assert_not_called()
+

@@ -76,7 +76,10 @@ AUTHOR = (
     "and a callable run(payload), plus any desired implementation code. R metadata is {'axis':'R'}; H metadata "
     "is {'axis':'H','tools':[{'name':..., 'description':..., 'parameters':strict local JSON object schema}]}. "
     "H may define new tools or replace ordinary filing tools, but reserved broker/state operations remain "
-    "protected. Tool parameter schemas permit ONLY type, properties, required, additionalProperties, items, "
+    "protected. Each PROGRAM tool description must contain1..1000 Unicode characters; keep it brief and put "
+    "longer semantics in implementation comments or returned evidence, not the description. This is the "
+    "existing metadata bound, not the separate provider-tool description allowance. "
+    "Tool parameter schemas permit ONLY type, properties, required, additionalProperties, items, "
     "description, enum, minimum and maximum. Supported type values are object, array, string, integer, number, "
     "boolean and null (one explicit string, not a type union). Object schemas have at most16 properties, "
     "require every property and set additionalProperties=False; arrays declare items; nesting depth<=5. "
@@ -148,6 +151,21 @@ def _format(name, fields):
         "type": "object", "properties": fields, "required": list(fields), "additionalProperties": False}}
 
 
+def _initial_user_json(frozen, role):
+    """Lossless structural-whitespace packing for prospective clean15+ C input.
+
+    All fields and string contents survive JSON parsing exactly. No tool return,
+    model item, private continuity, resource limit or old packet is projected.
+    """
+    feedback = frozen.get('feedback') if type(frozen) is dict else None
+    compact = (role == 'controller' and type(feedback) is dict
+        and feedback.get('schema') == 'earnings_training25_public_summary_v1'
+        and type(feedback.get('logical_round')) is int and feedback['logical_round'] >= 14)
+    value = json.dumps(frozen, sort_keys=True, ensure_ascii=False, allow_nan=False,
+                       **({'separators': (',', ':')} if compact else {}))
+    return value, ('lossless_compact_initial_json_v1' if compact else None)
+
+
 class _OpenRole(_CapacityRole):
     def _final_instruction(self):
         return FINAL_AUTHOR if self.role == 'author' else FINAL_CONTROLLER
@@ -160,8 +178,8 @@ class _OpenRole(_CapacityRole):
         super().__init__(context_binding, budget=budget, client_factory=client_factory)
         if socket_timeout_seconds is not None and (self.role!='author'
                 or type(socket_timeout_seconds) is not int or socket_timeout_seconds!=900
-                or self.context['limits']['wall_seconds']!=900):
-            raise ValueError('Only an explicitly bound900-second Author socket may use its existing role window')
+                or self.context['limits']['wall_seconds'] not in (900,1200)):
+            raise ValueError('Only an explicitly bound900-second Author socket with a900/1200-second role window is permitted')
         self.socket_timeout_seconds=socket_timeout_seconds
         if (type(max_turns) is not int or not 1 <= max_turns <= 8
                 or type(max_tool_calls) is not int or not 1 <= max_tool_calls <= 24
@@ -224,12 +242,16 @@ class _OpenRole(_CapacityRole):
                 raise BudgetStop('Open-role original deadline reached')
             if check_budget:
                 self.budget.active()
+        initial_content, initial_policy = _initial_user_json(frozen, self.role)
         e.durable_json(output/'identity.json',{'context':self.binding,'source_commit':ctx['source_commit'],
             'evidence_scope':'source-bound open research transport; not empirical improvement',
-            'model_authorship_verified':False,'max_turns':self.max_turns,'max_tool_calls':self.max_tool_calls})
+            'model_authorship_verified':False,'max_turns':self.max_turns,'max_tool_calls':self.max_tool_calls,
+            **({'initial_user_serialization': initial_policy} if initial_policy else {})})
         e.durable_json(output/'effective-input.json',frozen)
         capture()
-        history = [{'role':'user','content':json.dumps(frozen,sort_keys=True,ensure_ascii=False,allow_nan=False)}]
+        history = [{'role':'user','content':initial_content}]
+        review_handoff = (self.role == 'review'
+            and response_format.get('name') == 'earnings_population_review_v1')
         failure, chosen, last_response = None, None, None
         seen, tool_calls, turn = set(), 0, 0
         started = time.monotonic()
@@ -253,13 +275,17 @@ class _OpenRole(_CapacityRole):
                         'tool_choice':'none' if final else 'auto','parallel_tool_calls':False,
                         'text':{'format':deepcopy(response_format)}}
                     completion=({**request,'tool_choice':'none',
-                        'instructions':instructions+FINALIZE+FINAL_AUTHOR}
-                        if self.role=='author' and not final else None)
-                    request=pack(e.ReceiptHTTP(transport,output),request,limits,output,turn,
-                        author_final=self.role=='author' and final,completion_request=completion)
+                        'instructions':instructions+FINALIZE+self._final_instruction()}
+                        if (self.role=='author' or review_handoff) and not final else None)
+                    packed=pack(e.ReceiptHTTP(transport,output),request,limits,output,turn,
+                        author_final=self.role=='author' and final,completion_request=completion,
+                        review_final=review_handoff and final,
+                        prepared_count_context=self.binding)
+                    request,prepared_count=packed if type(packed) is tuple else (packed,None)
                     final=final or request['tool_choice']=='none'
                     capture(); timely()
-                    budgeted_response(e.ReceiptHTTP(transport,output),request,ctx['rates'],limits,self.budget,output,turn)
+                    budgeted_response(e.ReceiptHTTP(transport,output),request,ctx['rates'],limits,self.budget,output,turn,
+                        **({} if prepared_count is None else {'prepared_count':prepared_count}))
                     last_response = output/f'{turn:02d}-response.json'
                     original = e.strict_json(last_response.read_text())
                     capture(); timely()

@@ -65,11 +65,6 @@ class OpenAssemblyTests(unittest.TestCase):
             return f.raw.company,ResearchState(f.raw.company,envelope['id'])
         with ExitStack() as stack:
             stack.enter_context(f.scope())
-            # Admission/grants are explicitly invented in this fixture. Keep
-            # production Python source identity checks, but do not require a
-            # private historical human-authority JSON to test mocked wiring.
-            public_sources = [name for name in task_module.sources() if name.endswith('.py')]
-            stack.enter_context(patch.object(task_module, 'sources', return_value=public_sources))
             for module in (admission,assembly,task_module):
                 stack.enter_context(patch.object(module,'admit',side_effect=invented_admission))
             stack.enter_context(patch.object(assembly,'provider_client',f.client_factory))

@@ -75,8 +75,12 @@ class OpenRoleTests(unittest.TestCase):
     def tool_response(self,*calls):
         return {'status':'completed','error':None,'output':[{'type':'reasoning','id':'synthetic_reasoning'},*calls]}
 
-    def fake_paid(self,client,request,rates,limits,budget,output,turn):
+    def fake_paid(self,client,request,rates,limits,budget,output,turn,*,prepared_count=None):
         # Deliberately mocked accounting: these are not original ledger/provider receipts.
+        # Accept the explicit packing handoff without pretending to consume it.
+        if prepared_count is not None:
+            from edgar_forecast_openai import PreparedCount
+            self.assertIs(type(prepared_count), PreparedCount)
         self.requests.append(deepcopy(request))
         value = self.generations.pop(0)
         if isinstance(value,BaseException):
@@ -310,7 +314,7 @@ class OpenRoleTests(unittest.TestCase):
 
     def test_opt_in_author_completion_ceiling_does_not_widen_legacy_author(self):
         ceiling=roles.role_limits()['author']
-        self.assertEqual(ceiling,{'max_input_tokens':24000,'max_output_tokens':49152,'wall_seconds':900})
+        self.assertEqual(ceiling,{'max_input_tokens':96000,'max_output_tokens':49152,'wall_seconds':1200})
         service=self.service(author=True,limits=ceiling)
         self.assertEqual(service.context['limits'],ceiling)
         from earnings_controller import CapacityAuthor

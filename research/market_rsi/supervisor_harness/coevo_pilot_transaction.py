@@ -43,7 +43,7 @@ LIMITS = {"candidate_attempts": 2, "statistical_fits": 8, "original_controller_d
     "sampled_rss_bytes": 1073741824, "paid_provider_calls": 0}
 TIMES = {"start_utc": "2026-10-06T17:31:25Z", "selection_cutoff_utc": "2026-10-06T18:11:25Z",
          "deadline_utc": "2026-10-06T18:16:25Z"}
-ROOT = Path("/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts") / BATCH
+ROOT = Path("/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts") / BATCH
 
 
 def input_limit(authorization, section="account_transfer", *, legacy=False):

@@ -31,7 +31,7 @@ ZERO = "B0-NoPriceChange"
 RECIPE = dict(loss="squared_error", max_iter=150, learning_rate=.05,
               max_leaf_nodes=15, min_samples_leaf=20, l2_regularization=10,
               early_stopping=False, random_state=SEED)
-STORE = Path("/Users/estelle/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts")
+STORE = Path("/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI/self-evolving-v18-local/artifacts")
 REPO = Path(__file__).resolve().parents[3]
 
 

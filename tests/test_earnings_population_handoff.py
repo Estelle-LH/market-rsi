@@ -174,7 +174,10 @@ class PopulationAuthorContextTests(unittest.TestCase):
             {'budget': transport.budget, 'client_factory': transport.factory})}
         chosen = transport.choice(); chosen['parent_pair_sha256'] = self.fixture.version['id']
         source = "PROGRAM={'axis':'R'}\ndef run(payload): return {'repair': 'model fixture implementation'}\n"
-        reply = {'decision_sha256': digest(chosen), 'source_text': source,
+        reply = {'decision_sha256': digest(chosen),
+                 'parent_source_sha256': self.fixture.r['sha256'],
+                 'edits': [{'kind': 'replace', 'old_text': Path(self.fixture.r['path']).read_text(),
+                            'new_text': source}],
                  'test_text': "CASES=[{'input': {}, 'expected': {'repair': 'model fixture implementation'}}]"}
         transport.generations = [transport.message(reply)]
         state = {'stable_id': self.fixture.version['id'], 'explorers': [],

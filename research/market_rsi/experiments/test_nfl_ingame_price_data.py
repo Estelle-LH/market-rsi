@@ -139,7 +139,7 @@ class PriceMaterializerTests(unittest.TestCase):
     def test_production_root_constant_and_fixture_escape(self):
         self.assertIn("nfl-2025-train-refresh-20260922-01", str(SOURCE_ROOT))
         with self.assertRaises(ValueError):
-            materialize("/Users/estelle/Downloads", allow_test_paths=True)
+            materialize("/__LOCAL_RESEARCH_HOME__/Downloads", allow_test_paths=True)
 
 
 if __name__ == "__main__":

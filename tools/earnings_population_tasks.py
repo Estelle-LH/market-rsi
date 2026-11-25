@@ -10,7 +10,7 @@ from edgar_forecast_audit import git_blob
 from edgar_forecast_model_pilot import safe_file
 from edgar_forecast_tools import FilingTools
 
-ARTIFACTS = Path('/Users/estelle/.codex/worktrees/3c5e/self-evolving-v18-local/artifacts')
+ARTIFACTS = Path('/__LOCAL_RESEARCH_HOME__/.codex/worktrees/3c5e/self-evolving-v18-local/artifacts')
 RECOVERY = ARTIFACTS / 'earnings-benchmark-recovery-20261014'
 DATASET = RECOVERY / 'upstream-git-01'
 REVISION = '6b406d516802d91f2c987390aac837e1a546602f'

@@ -43,7 +43,7 @@ result = {"schema": "market_rsi_guest_boundary_v1", "role": role,
           "peer_file_absent": not Path(peer).exists(),
           "paid_keys_absent": not any(os.environ.get(name) for name in
               ("TINKER_API_KEY", "E2B_API_KEY", "OPENAI_API_KEY", "ANTHROPIC_API_KEY")),
-          "host_home_absent": not Path("/Users/estelle").exists()}
+          "host_home_absent": not Path("/__LOCAL_RESEARCH_HOME__").exists()}
 print(json.dumps(result, sort_keys=True))
 if not all(result[key] for key in
            ("peer_file_absent", "paid_keys_absent", "host_home_absent")):
@@ -62,7 +62,7 @@ def _json(root: Path, name: str) -> dict:
 
 
 def _require_live_runtime() -> None:
-    allowed = Path("/Users/estelle/Library/Application Support/MarketRSI").resolve()
+    allowed = Path("/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI").resolve()
     if (sys.prefix == sys.base_prefix
             or not Path(sys.prefix).resolve().is_relative_to(allowed)
             or not Path(sys.executable).absolute().is_relative_to(allowed)
@@ -72,7 +72,7 @@ def _require_live_runtime() -> None:
 
 
 def _require_local_path(path: Path, label: str) -> None:
-    allowed = Path("/Users/estelle/Library/Application Support/MarketRSI").resolve()
+    allowed = Path("/__LOCAL_RESEARCH_HOME__/Library/Application Support/MarketRSI").resolve()
     if not Path(path).resolve().is_relative_to(allowed):
         raise ValueError(f"{label} must stay on the local MarketRSI volume")
 

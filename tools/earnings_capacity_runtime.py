@@ -30,7 +30,7 @@ CORE = {"runtime": __file__, "budget": inspect.getsourcefile(NightBudget),
 
 class _OwnedHTTP(RawOpenAIHTTP):
     """Preserve the original raw client/receipts while checking every send."""
-    def __init__(self, client, check, slots, rates, efforts=None):
+    def __init__(self, client, check, slots, rates, efforts=None, live_check=None):
         if not isinstance(client, RawOpenAIHTTP):
             raise ValueError("Explicit original raw transport required")
         self.original, self.check, self.slots, self.rates = client, check, slots, rates
@@ -39,6 +39,9 @@ class _OwnedHTTP(RawOpenAIHTTP):
                 or any(type(v) is not str or v not in {'max','high'} for v in efforts.values())):
             raise ValueError('Exact validated per-slot reasoning efforts required')
         self.efforts=None if efforts is None else dict(efforts)
+        if live_check is not None and not callable(live_check):
+            raise ValueError('Explicit trusted live HTTP guard required')
+        self.live_check = live_check
 
     timeout = property(lambda self: self.original.timeout,
                        lambda self, value: setattr(self.original, "timeout", value))
@@ -83,9 +86,10 @@ class _OwnedHTTP(RawOpenAIHTTP):
                     or count * ceiling + maximum * unit(self.rates["output"]) > record["reserved_nano_usd"]):
                 raise ValueError("Physical generation exceeds original reservation")
             loan = (record["request_id"], record["payload"]["model"], record["reserved_nano_usd"])
-        self.check(loan)
+        check = self.check if self.live_check is None else lambda loan: self.live_check(loan, prefix.parent)
+        check(loan)
         response = self.original.post(endpoint, payload)
-        self.check(loan)
+        check(loan)
         return response
 
 
@@ -251,6 +255,8 @@ def open_capacity_runtime(binding, *, client_factory, role_factories):
         identity = e.digest(value["id"].encode())
         e.durable_json(claims / (identity + ".json"), {"runtime": binding, "id": value["id"],
             "source_commit": value["source_commit"], "retry_allowed": False, "scope": "unverified_runtime_component"})
+        claim_path = claims / (identity + '.json')
+        claim_binding = {'path':str(claim_path), 'sha256':e.digest(claim_path.read_bytes())}
         budget, error, summary = None, None, None
         try:
             config = {"source_commit": value["source_commit"], "new_request_cutoff_utc": value["cutoff_utc"],
@@ -261,20 +267,62 @@ def open_capacity_runtime(binding, *, client_factory, role_factories):
             window, clock_binding = clock.capture_or_load(root, config)
             seal=Path(clock_binding['path']).with_name('clock.binding.json')
             seal_binding = {"path": str(seal),"sha256": e.digest(seal.read_bytes())}
-            budget = NightBudget(value["ledger"], baseline=value["baseline"], deadline_utc=value["cutoff_utc"],
+            budget_class, amended_kwargs = NightBudget, {}
+            if value['schema'] == 'earnings_population_runtime_v1' and 'budget_amendment' in value:
+                from earnings_population_budget import PopulationBudget
+                budget_class = PopulationBudget
+                amended_kwargs = {'amendment_binding': value['budget_amendment']}
+            if 'model_budget_amendment' in value:
+                if (value['schema'] != 'earnings_population_runtime_v1' or 'budget_amendment' not in value
+                        or type(value['model_budget_amendment']) is not dict
+                        or set(value['model_budget_amendment']) != {'path','sha256'}):
+                    raise ValueError('Named-model opt-in requires the original cumulative400 population owner')
+                amended_kwargs['model_amendment_binding'] = value['model_budget_amendment']
+            if 'panel_window_budget_authority' in value:
+                from earnings_population_panel_budget import PanelBudget, ceiling, PANEL_CAP
+                if value['schema'] != 'earnings_population_runtime_v1' or ceiling(value) != PANEL_CAP:
+                    raise ValueError('Explicit authenticated population panel50 owner required')
+                budget_class = PanelBudget
+            if 'additional_budget_amendment' in value:
+                from earnings_population_additional_budget import AdditionalBudget,runtime_grant
+                from contextlib import closing
+                import sqlite3
+                if 'panel_window_budget_authority' in value:
+                    raise ValueError('Additional100 cannot widen original window5')
+                with closing(sqlite3.connect(Path(value['ledger']).as_uri()+'?mode=ro',uri=True)) as db:
+                    runtime_grant(db,value)
+                budget_class = AdditionalBudget
+                amended_kwargs['additional_amendment_binding'] = value['additional_budget_amendment']
+            budget = budget_class(value["ledger"], baseline=value["baseline"], deadline_utc=value["cutoff_utc"],
                 clock=time.time, monotonic=time.monotonic, captured_deadline=window["cutoff_monotonic"],
                 additional_cap_nano_usd=value["additional_cap_nano_usd"],
+                **amended_kwargs,
                 **({"runtime_binding": binding} if value["additional_cap_nano_usd"] > 20_000_000_000 else {}))
             live = [True]
             efforts=value.get('role_efforts')
             slot_efforts=None if efforts is None else {slot:efforts[name]
                 for name,slots in value['slots'].items() for slot in slots}
             contexts, roles = {}, {}
-            def guard(loan=None):
+            validation = None
+            if value.get('schema') == 'earnings_population_runtime_v1' and 'validation_policy' in value:
+                from earnings_population_live_guard import enabled, RoleValidation
+                if not enabled(value): raise ValueError('Explicit population policy required')
+                validation = RoleValidation(binding, value, lambda: preflight_runtime(binding),
+                    owner_check=lambda slot: guard(slot=slot))
+            def guard(loan=None, slot=None):
                 if not live[0]: raise BudgetStop("Runtime owner already closed")
-                preflight_runtime(binding)
+                if slot is None:
+                    if validation is not None and 'clean_slate_policy' in value:
+                        validation.check_owner()
+                    else:
+                        preflight_runtime(binding)
+                else:
+                    if validation is None: raise ValueError('No opted-in live guard')
+                    validation.check(slot)
                 _read(clock_binding)
                 _read(seal_binding)
+                if validation is not None:
+                    _read(claim_binding)
                 if clock.capture_or_load(root, config, create=False)[1] != clock_binding:
                     raise ValueError("Original captured clock binding changed")
                 for bound in contexts.values(): _read(bound)
@@ -283,11 +331,15 @@ def open_capacity_runtime(binding, *, client_factory, role_factories):
                 if loan is None: budget.active()
                 else: budget.check_reserved(*loan)
             def guarded_factory():
+                if (validation is not None and 'clean_slate_policy' in value
+                        and (validation.current is None or not validation.current['registered'])):
+                    raise BudgetStop('Clean client requires its active registered real role')
                 guard()
                 client = client_factory()
                 guard()
                 return _OwnedHTTP(client, guard, {s: value["limits"][name]
-                    for name, slots in value["slots"].items() for s in slots}, value["rates"],efforts=slot_efforts)
+                    for name, slots in value["slots"].items() for s in slots}, value["rates"],efforts=slot_efforts,
+                    live_check=None if validation is None else lambda loan,slot: guard(loan,slot))
             for name in sorted(names):
                 guard()
                 path = root / ("context-" + name + ".json")
@@ -301,9 +353,12 @@ def open_capacity_runtime(binding, *, client_factory, role_factories):
                 contexts[name] = {"path": str(path), "sha256": e.digest(path.read_bytes())}
                 roles[name] = role_factories[name](dict(contexts[name]), budget=budget, client_factory=guarded_factory)
                 if not callable(roles[name]): raise ValueError("Role factory must return callable")
+                if validation is not None:
+                    roles[name] = validation.wrap(name, roles[name])
             guard()
             yield {"budget": budget, "window": deepcopy(window), "clock_binding": dict(clock_binding),
-                   "roles": roles, "context_bindings": {name: dict(bound) for name, bound in contexts.items()}}
+                   "roles": roles, "context_bindings": {name: dict(bound) for name, bound in contexts.items()},
+                   **({} if validation is None else {'register_case':validation.register_case})}
             guard()
         except BaseException as caught:
             error = type(caught).__name__

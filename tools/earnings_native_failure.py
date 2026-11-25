@@ -36,7 +36,19 @@ def _owned_requests(runtime):
     result=[]
     with sqlite3.connect(_path(runtime['ledger']).as_uri()+'?mode=ro',uri=True) as db:
         db.execute('BEGIN')
-        if db.execute('SELECT * FROM config').fetchall()!=[(1,200_000_000_000,100_000_000_000,0)]:
+        config=db.execute('SELECT * FROM config').fetchall()
+        if config==[(1,400_000_000_000,100_000_000_000,0)]:
+            amendment=runtime.get('budget_amendment')
+            if (runtime.get('schema')!='earnings_population_runtime_v1'
+                    or type(amendment) is not dict or set(amendment)!={'path','sha256'}
+                    or type(amendment['path']) is not str or not amendment['path']
+                    or type(amendment['sha256']) is not str
+                    or re.fullmatch(r'[0-9a-f]{64}',amendment['sha256']) is None):
+                raise ValueError('Explicit population cumulative400 amendment required for failure closure')
+            from earnings_population_budget import validate_cap
+            if validate_cap(db,amendment=amendment)!=400_000_000_000:
+                raise ValueError('Original cumulative400 grant did not validate')
+        elif config!=[(1,200_000_000_000,100_000_000_000,0)]:
             raise ValueError('Original unblocked ledger/caps required')
         for bound,value in records:
             row=db.execute('SELECT model,reserved,charged,status FROM requests WHERE id=?',
@@ -52,11 +64,28 @@ def _owned_requests(runtime):
     return result
 
 
-def _cleanup(root):
+def _cleanup(root, *, runtime=None, selected_slot=None):
     result=[];code=root/'code'
     if code.exists() and (not code.is_dir() or code.resolve()!=code):
         raise ValueError('Original code receipt directory required')
-    for call in sorted(code.glob('call-*')):
+    names={f'forecast-01-{i:02d}' for i in range(4)}
+    if runtime is not None:
+        from earnings_population_company_batch import rolling
+        if rolling(runtime):
+            if Path(runtime['root'])!=root:raise ValueError('Exact own cleanup runtime required')
+            names={Path(s).name for s in runtime['slots']['forecast']}
+            if names!={f'forecast-01-{i:02d}' for i in range(len(runtime['companies']))}:
+                raise ValueError('Exact declared logical company slots required')
+    if selected_slot is not None and selected_slot not in names:raise ValueError('Undeclared cleanup slot')
+    calls=list(code.glob('call-*')) if selected_slot is None else []
+    # Explicit company-batch runners have separate counters/directories. Their
+    # complete original Docker receipts are checked identically, never skipped.
+    for directory in sorted(code.glob('forecast-01-*')):
+        if (directory.name not in names
+                or directory.resolve()!=directory or not directory.is_dir()):
+            raise ValueError('Exact bounded isolated company code directory required')
+        if selected_slot is None or selected_slot==directory.name:calls.extend(directory.glob('call-*'))
+    for call in sorted(calls):
         if (not call.is_dir() or call.resolve()!=call
                 or re.fullmatch(r'call-[0-9a-f]{32}',call.name) is None):
             raise ValueError('Exact original code call directory required')
@@ -101,7 +130,7 @@ def close_failed_work(batch, *, runtime_binding, work_id, pair_sha256, output_ro
     if (len(rows)!=1 or rows[0]['status']!='claimed' or rows[0]['pair_sha256']!=pair_sha256
             or work_id not in before['active_attempt_ids']):
         raise ValueError('Exact active claimed work and selected pair required')
-    requests=_owned_requests(runtime);cleanup=_cleanup(root)
+    requests=_owned_requests(runtime);cleanup=_cleanup(root,runtime=runtime)
     prefix=[engine.pin(path) for path in sorted(batch.journal_dir.iterdir()) if path.is_file()]
     original_snapshot=engine.pin(batch.root/'batch.json');raw=e.checked(original_snapshot)
     # Freeze the old operational bytes before normal append-only advancement.
