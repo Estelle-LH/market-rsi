@@ -1,17 +1,15 @@
 # What can a new reader reproduce?
 
-A public clone currently supports **offline engineering and mechanism checks**.
-It does **not** yet contain a complete package for independently rerunning the
-reported 25-company financial results. This page makes that boundary explicit
-rather than treating a passing test suite or a saved prompt as score reproduction.
+The public `main` branch supports offline engineering checks. The [Round 17 source release](https://github.com/Estelle-LH/market-rsi/blob/77dec3448530d0e667ab6a5967292b313b6c990e/README.md) adds the historical run source and the exact frozen programs used to score **3.18 / 5**. It can verify those programs and recompute the historical score with the original comparison report supplied locally. A fresh model evaluation also needs the private dataset, scorer, and a newly reviewed runtime.
 
-## Three reproduction levels
+## Reproduction levels
 
 | Level | Available today? | What it establishes |
 | --- | --- | --- |
 | Public software checks | Yes: [Quickstart](QUICKSTART.md) | CLI, synthetic review/feedback/state/identity and R/H adapter behavior |
 | A synthetic two-round example | Yes: [engine fixture](../tests/test_capacity_feedback_engine.py) and [adapter fixture](../tests/test_earnings_capacity_adapter.py) | Actual fixture calculation, feedback consumption, state continuation, R/H selection and rollback |
-| The empirical TRAIN25 result or autonomous paid trajectory | Not from this clone alone | Requires the exact scientific source, data/scorer, configuration, model and authority bundle below |
+| Recompute the recorded Round 17 score | [Round 17 verifier](https://github.com/Estelle-LH/market-rsi/blob/77dec3448530d0e667ab6a5967292b313b6c990e/README.md#recompute-the-recorded-318-locally), with the exact archived comparison report supplied locally | Validates the report and sums all 125 target awards across 25 companies |
+| Run a fresh TRAIN25 model evaluation | Requires the local inputs below and fresh runtime admission | Repeats the evaluation procedure under the original source and scoring rules |
 
 The first two levels use human-authored/deterministic fixtures. They do not
 reproduce model-generated hypotheses, a financial score, or an independent
@@ -20,10 +18,8 @@ demonstration that a researcher improves.
 ## Which version are you looking at?
 
 The published earnings source is the reviewed source/contract snapshot described
-in [Earnings development](EARNINGS_DEVELOPMENT.md), through private checkpoint
-`c1b644b`. Later experiment results and the October 27 continuation prompt
-describe newer local experiment checkpoints; that private ancestry is not merged
-into public main.
+in [Earnings development](EARNINGS_DEVELOPMENT.md), through the checkpoint
+`c1b644b`. The separate [Round 17 source release](https://github.com/Estelle-LH/market-rsi/blob/77dec3448530d0e667ab6a5967292b313b6c990e/README.md) is an audited export from the historical harness checkpoint `217b13e`. It includes candidate 154's exact R/H programs. Later experiment reports and the October 27 continuation prompt refer to their own source and runtime state.
 
 For example, the public population implementation keeps one stable version and
 up to two explorers. The newer prompt's three-child/depth-layered search policy
@@ -35,7 +31,7 @@ runtime activation and empirical validation are separate statuses.
 
 | Material | Required record | Current public boundary |
 | --- | --- | --- |
-| Scientific source | Exact frozen candidate R/H, actual parent and comparator source/hashes; engineering deltas and test versions | Code framework is public; later experiment-specific candidates/bindings remain local |
+| Scientific source | Exact frozen candidate R/H, actual parent and comparator source/hashes; engineering deltas and test versions | The Round 17 harness and candidate 154 R/H are public. Other experiment-specific bindings remain local. |
 | Task and data | Ordered 25 company/task identities, target definitions, cutoffs, dataset version/hash and lawful acquisition instructions | Task scope and aggregate report are public; protected task bodies, data and answers are not included |
 | Scorer | Original version, metrics, fractional-award rule and frozen per-target definitions | Aggregate convention is documented; original empirical scorer checkout is local |
 | Model and runtime | Requested model, verified serving snapshot where known, effort, prompts, tools, resource limits and dependency versions | Some historical constants are in source; they are not a complete current run configuration |
