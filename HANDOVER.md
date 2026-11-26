@@ -6,6 +6,15 @@ This branch is the reviewable source handover for the historical Round 17 earnin
 
 The executable public-safe controls are in [`reproduction/round17/kit/`](reproduction/round17/kit/README.md).
 
+## Downloadable handover package
+
+- [Complete public source and reproduction kit](handover/round17-public-complete-kit-4d1c9d9df9.tar.gz)
+- [SHA-256 checksum](handover/round17-public-complete-kit-4d1c9d9df9.tar.gz.sha256)
+
+Package SHA-256: `f5220b7593263bdc743c48e6f177d66d4ad2b5c0743772b5d0c9ad1c2179c3b4`.
+
+The archive contains this complete public source tree, frozen programs, evidence bindings, verifier, environment inventory and executable reproduction controls. Machine-local paths, credentials, ledger contents and protected research artifacts are deliberately excluded.
+
 It does **not** contain provider credentials, the experiment ledger, sealed SEC inputs, QA bodies, per-target predictions, private runtime receipts, or machine-specific paths.
 
 ## Current verified state
