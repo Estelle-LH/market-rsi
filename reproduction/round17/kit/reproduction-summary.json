@@ -1,0 +1,25 @@
+{
+  "schema": "round17_fresh_reproduction_public_summary_v1",
+  "candidate_id": "2493840dd5316742386e4123999bb40ba8baac9cdb5251b216dbeed31fa26c74",
+  "source_commit": "217b13e28cceaba628a5fe057f6860b56ecbd978",
+  "R_sha256": "75f698c2a138d6ddbc94b01c9f9eca3cd1d8043f8a3ac02ab24c1656bee06f54",
+  "H_sha256": "6d80fa56d0625188f4357d791a725083a6bab75119c0736424516b3dc5681350",
+  "historical": {
+    "companies": 25,
+    "targets": 125,
+    "points": 79.5,
+    "mean": 3.18
+  },
+  "fresh_reproduction": {
+    "companies": 25,
+    "targets": 125,
+    "points": 81.0,
+    "mean": 3.24,
+    "window_company_counts": [10, 10, 5],
+    "total_cost_usd": 10.8757722,
+    "pending_requests_at_close": 0,
+    "all_owned_requests_settled": true,
+    "local_report_sha256": "82c4851e6ba82f0d78c20ffaa9117d2b9574ea45094755fa23a8031611672697"
+  },
+  "interpretation": "Same frozen candidate, opened-Train panel and scorer with fresh provider responses. The +0.06 mean difference is reproducibility/run-variance evidence, not a new algorithmic gain."
+}

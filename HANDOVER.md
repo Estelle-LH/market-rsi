@@ -4,6 +4,8 @@
 
 This branch is the reviewable source handover for the historical Round 17 earnings-research harness and its frozen 3.18 candidate. It contains the complete source export, exact frozen R/H programs, an offline verifier, and public-safe reproduction instructions.
 
+The executable public-safe controls are in [`reproduction/round17/kit/`](reproduction/round17/kit/README.md).
+
 It does **not** contain provider credentials, the experiment ledger, sealed SEC inputs, QA bodies, per-target predictions, private runtime receipts, or machine-specific paths.
 
 ## Current verified state

@@ -4,6 +4,8 @@ This standalone source branch contains the historical harness implementation at 
 
 For reviewer-facing status, live-run prerequisites, known operational issues and the next-step checklist, see [`HANDOVER.md`](HANDOVER.md).
 
+For executable environment checks, local-manifest verification, guarded launch and closure aggregation, see the [`Round 17 reproduction kit`](reproduction/round17/kit/README.md).
+
 The branch is a source export. Runtime evidence, sealed inputs, score rows, keys, the ledger and machine-specific campaign plans are kept outside Git. Some historical Python files had absolute workstation paths. This export replaces the personal home prefix in those files with `/__LOCAL_RESEARCH_HOME__`. The two frozen programs retain their original bytes and hashes. See `source-export.json` for the scope and path adjustments.
 
 ## Fresh full-panel reproduction (tested 2026-11-26)

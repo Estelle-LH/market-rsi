@@ -1,0 +1,33 @@
+{
+  "schema": "round17_local_artifact_manifest_v1",
+  "source": {
+    "path": "/absolute/path/to/exact-historical-source",
+    "commit": "217b13e28cceaba628a5fe057f6860b56ecbd978"
+  },
+  "python": {
+    "path": "/absolute/path/to/pinned/python3.12",
+    "sha256": "80ee2dd97bc26259d4e30853336f72ad38aa4aa0531bb196cc444d899422689d"
+  },
+  "credential": {
+    "path": "/absolute/path/to/provider-keys.env",
+    "required_key": "OPENAI_API_KEY",
+    "required_mode": "0600"
+  },
+  "ledger": {
+    "path": "/absolute/path/to/api-budget.sqlite3"
+  },
+  "artifacts": [
+    {
+      "name": "frozen_candidate",
+      "path": "/absolute/path/to/TRAIN25-CLEAN154-FROZEN-CANDIDATE.json",
+      "sha256": "05a73a86cafee6a3d63ffaff1f2249e8a405279e65f503f693d01e89367a949b",
+      "classification": "local_control"
+    },
+    {
+      "name": "historical_comparison",
+      "path": "/absolute/path/to/TRAIN25-CLEAN-ROUND17-FINAL-COMPARISON.json",
+      "sha256": "ebde16bd9fb506c73d717bc568cdaecaae434a7f4bb2204cf3dedcb37262386a",
+      "classification": "local_private"
+    }
+  ]
+}

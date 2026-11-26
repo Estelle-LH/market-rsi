@@ -1,0 +1,35 @@
+{
+  "schema": "round17_reproduction_environment_v1",
+  "observed_date": "2026-11-26",
+  "platform": {
+    "os": "macOS",
+    "release": "26.6.2",
+    "architecture": "arm64"
+  },
+  "python": {
+    "implementation": "CPython",
+    "version": "3.12.3",
+    "binary_sha256": "80ee2dd97bc26259d4e30853336f72ad38aa4aa0531bb196cc444d899422689d"
+  },
+  "packages": {
+    "joblib": "1.4.2",
+    "numpy": "1.26.4",
+    "scikit-learn": "1.6.1",
+    "scipy": "1.14.0",
+    "threadpoolctl": "3.5.0"
+  },
+  "docker": {
+    "client": "27.1.1",
+    "client_binary_sha256": "346b99a72cc44a7bdd91f6840aa46f14cdd9370b70eddcd7b0a48151fbfc060c",
+    "desktop": "4.91.0",
+    "engine": "29.8.0",
+    "server_architecture": "arm64",
+    "candidate_image": "python@sha256:78387bc3881b8273120a12ebe6c1ab22b018ccc2c9adf565ae1ac9b536e184ea"
+  },
+  "provider": {
+    "endpoint": "https://api.openai.com/v1/responses",
+    "model": "gpt-6.1-sol"
+  },
+  "historical_source_commit": "217b13e28cceaba628a5fe057f6860b56ecbd978",
+  "qualification": "Observed successful environment, not a claim that other patch versions are incompatible. Exact source and sealed runtime hashes remain authoritative."
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Estelle-LH/market-rsi/reproduction/round17/local-artifact-manifest.schema.json",
+  "title": "Round 17 local artifact manifest",
+  "type": "object",
+  "required": ["schema", "source", "python", "credential", "ledger", "artifacts"],
+  "properties": {
+    "schema": {"const": "round17_local_artifact_manifest_v1"},
+    "source": {
+      "type": "object",
+      "required": ["path", "commit"],
+      "properties": {
+        "path": {"type": "string"},
+        "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      },
+      "additionalProperties": false
+    },
+    "python": {"$ref": "#/$defs/fileBinding"},
+    "credential": {
+      "type": "object",
+      "required": ["path", "required_key", "required_mode"],
+      "properties": {
+        "path": {"type": "string"},
+        "required_key": {"const": "OPENAI_API_KEY"},
+        "required_mode": {"const": "0600"}
+      },
+      "additionalProperties": false
+    },
+    "ledger": {
+      "type": "object",
+      "required": ["path"],
+      "properties": {"path": {"type": "string"}},
+      "additionalProperties": false
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {"$ref": "#/$defs/fileBinding"},
+          {
+            "type": "object",
+            "required": ["name", "classification"],
+            "properties": {
+              "name": {"type": "string", "minLength": 1},
+              "classification": {"enum": ["public", "local_private", "local_control"]}
+            }
+          }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "fileBinding": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  },
+  "additionalProperties": true
+}
