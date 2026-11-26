@@ -2,6 +2,8 @@
 
 This standalone source branch contains the historical harness implementation at `217b13e28cceaba628a5fe057f6860b56ecbd978`, the exact frozen R/H programs used for candidate 154, and a local score verifier. The recorded training evaluation completed 25 companies and 125 targets over windows 155, 156, and 158. The candidate scored 79.5 points, or 3.18 / 5 per company, and became the incumbent.
 
+For reviewer-facing status, live-run prerequisites, known operational issues and the next-step checklist, see [`HANDOVER.md`](HANDOVER.md).
+
 The branch is a source export. Runtime evidence, sealed inputs, score rows, keys, the ledger and machine-specific campaign plans are kept outside Git. Some historical Python files had absolute workstation paths. This export replaces the personal home prefix in those files with `/__LOCAL_RESEARCH_HOME__`. The two frozen programs retain their original bytes and hashes. See `source-export.json` for the scope and path adjustments.
 
 ## Fresh full-panel reproduction (tested 2026-11-26)
